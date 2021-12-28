@@ -9,8 +9,8 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import kmg.core.infrastructure.types.DbDataTypeTypes;
-import kmg.core.infrastructure.types.DbTypes;
+import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
+import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
  * 挿入ＳＱＬデータシート作成ロジックインタフェース<br>
@@ -27,8 +27,8 @@ public interface InsertionSqlDataSheetCreationLogic {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param dbTypes
-     *                   ＤＢの種類
+     * @param kmgDbTypes
+     *                   ＫＭＧＤＢの種類
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap
@@ -36,7 +36,7 @@ public interface InsertionSqlDataSheetCreationLogic {
      * @param outputPath
      *                   出力パス
      */
-    void initialize(DbTypes dbTypes, Sheet inputSheet, Map<String, String> sqlIdMap, final Path outputPath);
+    void initialize(KmgDbTypes kmgDbTypes, Sheet inputSheet, Map<String, String> sqlIdMap, final Path outputPath);
 
     /**
      * テーブル論理名を返す<br>
@@ -140,14 +140,14 @@ public interface InsertionSqlDataSheetCreationLogic {
     short getColumnNum();
 
     /**
-     * ＤＢデータ型リストを返す<br>
+     * ＫＭＧＤＢデータ型リストを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
      * @return ＤＢデータ型リスト
      */
-    List<DbDataTypeTypes> getDbDataTypeList();
+    List<KmgDbDataTypeTypes> getKmgDbDataTypeList();
 
     /**
      * 挿入コメントを返す<br>

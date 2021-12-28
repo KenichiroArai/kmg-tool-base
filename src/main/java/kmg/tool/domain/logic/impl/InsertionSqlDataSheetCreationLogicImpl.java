@@ -15,13 +15,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.CharsetTypes;
-import kmg.core.infrastructure.types.DbDataTypeTypes;
-import kmg.core.infrastructure.types.DbTypes;
-import kmg.core.infrastructure.types.DelimiterTypes;
-import kmg.core.infrastructure.utils.ListUtils;
-import kmg.core.infrastructure.utils.LocalDateTimeUtils;
-import kmg.core.infrastructure.utils.LocalDateUtils;
+import kmg.core.infrastructure.types.KmgCharsetTypes;
+import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
+import kmg.core.infrastructure.types.KmgDbTypes;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.core.infrastructure.utils.KmgListUtils;
+import kmg.core.infrastructure.utils.KmgLocalDateTimeUtils;
+import kmg.core.infrastructure.utils.KmgLocalDateUtils;
 import kmg.tool.domain.logic.InsertionSqlDataSheetCreationLogic;
 import kmg.tool.infrastructure.utils.PoiUtils;
 
@@ -40,8 +40,8 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
     /** 挿入ＳＱＬテンプレート */
     private static final String INSERT_SQL_TEMPLATE = "INSERT INTO %s (%s) VALUES (%s);";
 
-    /** ＤＢの種類 */
-    private DbTypes dbTypes;
+    /** ＫＭＧＤＢの種類 */
+    private KmgDbTypes kmgDbTypes;
 
     /** 入力シート */
     private Sheet inputSheet;
@@ -79,8 +79,8 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
     /** カラム物理名リスト */
     private List<String> columnPhysicsNameList;
 
-    /** ＤＢデータ型リスト */
-    private List<DbDataTypeTypes> dbDataTypeList;
+    /** ＫＭＧＤＢデータ型リスト */
+    private List<KmgDbDataTypeTypes> dbDataTypeList;
 
     /** 挿入コメント */
     private String insertComment;
@@ -91,8 +91,8 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param dbTypes
-     *                   ＤＢの種類
+     * @param kmgDbTypes
+     *                   ＫＭＧＤＢの種類
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap
@@ -102,9 +102,9 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
      */
     @SuppressWarnings("hiding")
     @Override
-    public void initialize(final DbTypes dbTypes, final Sheet inputSheet, final Map<String, String> sqlIdMap,
+    public void initialize(final KmgDbTypes kmgDbTypes, final Sheet inputSheet, final Map<String, String> sqlIdMap,
         final Path outputPath) {
-        this.dbTypes = dbTypes;
+        this.kmgDbTypes = kmgDbTypes;
         this.inputSheet = inputSheet;
         this.sqlIdMap = sqlIdMap;
         this.outputPath = outputPath;
@@ -262,16 +262,16 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             return result;
         }
 
-        switch (this.dbTypes) {
+        switch (this.kmgDbTypes) {
         case NONE:
             break;
         case MYSQL:
         case ORACLE:
         case SQL_SERVER:
-            result = CharsetTypes.UTF8.toCharset();
+            result = KmgCharsetTypes.UTF8.toCharset();
             break;
         case POSTGRE_SQL:
-            result = CharsetTypes.MS932.toCharset();
+            result = KmgCharsetTypes.MS932.toCharset();
             break;
         default:
             break;
@@ -293,7 +293,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
     @Override
     public List<String> getColumnPhysicsNameList() {
         List<String> result = null;
-        if (ListUtils.isNotEmpty(this.columnPhysicsNameList)) {
+        if (KmgListUtils.isNotEmpty(this.columnPhysicsNameList)) {
             result = this.columnPhysicsNameList;
             return result;
         }
@@ -329,16 +329,16 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
     }
 
     /**
-     * ＤＢ型リストを返す<br>
+     * ＫＭＧＤＢ型リストを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return ＤＢ型リスト
+     * @return ＫＭＧＤＢ型リスト
      */
     @Override
-    public List<DbDataTypeTypes> getDbDataTypeList() {
-        List<DbDataTypeTypes> result = null;
+    public List<KmgDbDataTypeTypes> getKmgDbDataTypeList() {
+        List<KmgDbDataTypeTypes> result = null;
         if (this.dbDataTypeList != null) {
             result = this.dbDataTypeList;
             return result;
@@ -349,7 +349,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
         for (short cellNum = typeRow.getFirstCellNum(); cellNum < this.getColumnNum(); cellNum++) {
             final Cell typeCell = typeRow.getCell(cellNum);
 
-            final DbDataTypeTypes type = DbDataTypeTypes.getEnum(PoiUtils.getStringValue(typeCell));
+            final KmgDbDataTypeTypes type = KmgDbDataTypeTypes.getEnum(PoiUtils.getStringValue(typeCell));
             result.add(type);
         }
 
@@ -396,7 +396,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
 
         for (short cellNum = datasRow.getFirstCellNum(); cellNum < this.getColumnNum(); cellNum++) {
             final Cell dataCell = datasRow.getCell(cellNum);
-            final DbDataTypeTypes dDbDataType = this.getDbDataTypeList().get(cellNum);
+            final KmgDbDataTypeTypes kmgDbDataType = this.getKmgDbDataTypeList().get(cellNum);
 
             String outputData = null;
             final String dataStr = PoiUtils.getStringValue(dataCell);
@@ -405,11 +405,11 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
                 continue;
             }
 
-            switch (this.dbTypes) {
+            switch (this.kmgDbTypes) {
             case NONE:
                 break;
             case POSTGRE_SQL:
-                outputData = this.getOutputDataForPostgreSql(dataCell, dDbDataType);
+                outputData = this.getOutputDataForPostgreSql(dataCell, kmgDbDataType);
                 break;
             case MYSQL:
                 break;
@@ -424,7 +424,8 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
         }
 
         result = String.format(InsertionSqlDataSheetCreationLogicImpl.INSERT_SQL_TEMPLATE, this.getTablePhysicsName(),
-            DelimiterTypes.COMMA.joinAll(this.getColumnPhysicsNameList()), DelimiterTypes.COMMA.joinAll(dataList));
+            KmgDelimiterTypes.COMMA.joinAll(this.getColumnPhysicsNameList()),
+            KmgDelimiterTypes.COMMA.joinAll(dataList));
 
         return result;
     }
@@ -436,18 +437,18 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
      * @sine 1.0.0
      * @version 1.0.0
      * @param dataCell
-     *                    データセル
-     * @param dDbDataType
-     *                    ＤＢ型の種類
+     *                      データセル
+     * @param kmgDbDataType
+     *                      ＫＭＧＤＢ型の種類
      * @return 出力データ
      */
     @SuppressWarnings("static-method")
-    private String getOutputDataForPostgreSql(final Cell dataCell, final DbDataTypeTypes dDbDataType) {
+    private String getOutputDataForPostgreSql(final Cell dataCell, final KmgDbDataTypeTypes kmgDbDataType) {
 
         String result = null;
 
         String outputData = null;
-        switch (dDbDataType) {
+        switch (kmgDbDataType) {
         case NONE:
             // 指定無し
             outputData = PoiUtils.getStringValue(dataCell);
@@ -481,7 +482,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
                 outputData = dateStrTmp;
             } else {
                 final Date date = dataCell.getDateCellValue();
-                outputData = LocalDateUtils.formatYyyyMmDd(date);
+                outputData = KmgLocalDateUtils.formatYyyyMmDd(date);
             }
             outputData = String.format("'%s'", outputData);
             break;
@@ -495,7 +496,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
                 outputData = dateTimeStrTmp;
             } else {
                 final Date date = dataCell.getDateCellValue();
-                outputData = LocalDateTimeUtils.formatYyyyMmDdHhMmSsSss(date);
+                outputData = KmgLocalDateTimeUtils.formatYyyyMmDdHhMmSsSss(date);
             }
             outputData = String.format("'%s'", outputData);
             break;

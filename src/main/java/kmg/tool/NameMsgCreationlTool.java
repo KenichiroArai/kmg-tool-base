@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.DelimiterTypes;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
  * 名称・メッセージ作成ツール
@@ -72,7 +72,7 @@ public class NameMsgCreationlTool {
         try {
 
             template = Files.readAllLines(NameMsgCreationlTool.TEMPLATE_PATH).stream()
-                .collect(Collectors.joining(DelimiterTypes.LINE_SEPARATOR.get()));
+                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final FileNotFoundException e) {
             throw e;
@@ -87,7 +87,7 @@ public class NameMsgCreationlTool {
             while ((line = brInput.readLine()) != null) {
 
                 /* データ取得 */
-                final String[] inputDatas = DelimiterTypes.SERIES_HALF_SPACE.split(line);
+                final String[] inputDatas = KmgDelimiterTypes.SERIES_HALF_SPACE.split(line);
                 int dataIdx = 0;
                 final KmgString idData = new KmgString(inputDatas[dataIdx++]); // ID
                 final KmgString nameData = new KmgString(inputDatas[dataIdx++]); // 名称

@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.DbTypes;
+import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.domain.logic.InsertionSqlBasicInformationLogic;
 import kmg.tool.domain.logic.impl.InsertionSqlBasicInformationLogicImpl;
 import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
@@ -76,8 +76,8 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
             final InsertionSqlBasicInformationLogic insertionSqlFileCreationLogic = new InsertionSqlBasicInformationLogicImpl();
             insertionSqlFileCreationLogic.initialize(inputWb);
 
-            /* ＤＢの種類を取得 */
-            final DbTypes dbTypes = insertionSqlFileCreationLogic.getDbTypes();
+            /* ＫＭＧＤＢの種類を取得 */
+            final KmgDbTypes kmgDbTypes = insertionSqlFileCreationLogic.getKmgDbTypes();
 
             /* ＳＱＬＩＤマップ */
             final Map<String, String> sqlIdMap = insertionSqlFileCreationLogic.getSqlIdMap();
@@ -100,7 +100,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
                         continue;
                     }
                     final InsertionSqlDataSheetCreationService insertionSqlDataSheetCreationService = new InsertionSqlDataSheetCreationServiceImpl();
-                    insertionSqlDataSheetCreationService.initialize(dbTypes, wkSheet, sqlIdMap, this.outputPath);
+                    insertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap, this.outputPath);
                     service.execute(insertionSqlDataSheetCreationService);
                 }
             } finally {

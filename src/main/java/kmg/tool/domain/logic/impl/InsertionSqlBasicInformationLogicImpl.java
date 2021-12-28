@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import kmg.core.infrastructure.types.DbTypes;
+import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.domain.logic.InsertionSqlBasicInformationLogic;
 import kmg.tool.infrastructure.utils.PoiUtils;
 
@@ -39,21 +39,21 @@ public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicI
     }
 
     /**
-     * ＤＢの種類を返す<br>
+     * ＫＭＧＤＢの種類を返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return ＤＢの種類
+     * @return ＫＭＧＤＢの種類
      */
     @Override
-    public DbTypes getDbTypes() {
-        DbTypes result = null;
+    public KmgDbTypes getKmgDbTypes() {
+        KmgDbTypes result = null;
 
         final Sheet wkSheet = this.inputWk.getSheet(InsertionSqlBasicInformationLogic.SETTING_SHEET_NAME);
         final Cell wkCell = PoiUtils.getCell(wkSheet, 0, 1);
 
-        result = DbTypes.getEnum(PoiUtils.getStringValue(wkCell));
+        result = KmgDbTypes.getEnum(PoiUtils.getStringValue(wkCell));
 
         return result;
     }

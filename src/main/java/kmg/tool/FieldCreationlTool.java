@@ -13,8 +13,8 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.DelimiterTypes;
-import kmg.core.infrastructure.types.DbDataTypeTypes;
+import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
  * フィールド作成ツール
@@ -70,7 +70,7 @@ public class FieldCreationlTool {
         try {
 
             template = Files.readAllLines(FieldCreationlTool.TEMPLATE_PATH).stream()
-                .collect(Collectors.joining(DelimiterTypes.LINE_SEPARATOR.get()));
+                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final FileNotFoundException e) {
             throw e;
@@ -85,7 +85,7 @@ public class FieldCreationlTool {
             while ((line = brInput.readLine()) != null) {
 
                 /* データ取得 */
-                final String[] inputDatas = DelimiterTypes.SERIES_HALF_SPACE.split(line);
+                final String[] inputDatas = KmgDelimiterTypes.SERIES_HALF_SPACE.split(line);
                 int dataIdx = 0;
                 final String commentData = inputDatas[dataIdx++]; // コメント
                 final String fieldData = inputDatas[dataIdx++]; // フィールド名
@@ -95,7 +95,7 @@ public class FieldCreationlTool {
 
                 final String changeFieldData = new KmgString(fieldData).toCamelCase();
                 String changeTypeData = null;
-                final DbDataTypeTypes type = DbDataTypeTypes.getEnum(typeData);
+                final KmgDbDataTypeTypes type = KmgDbDataTypeTypes.getEnum(typeData);
                 if (type == null) {
                     changeTypeData = typeData;
                 } else {

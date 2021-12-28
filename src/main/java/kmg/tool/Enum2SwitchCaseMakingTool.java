@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import kmg.core.infrastructure.types.DelimiterTypes;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
  * 列挙型からcase作成ツール
@@ -67,7 +67,7 @@ public class Enum2SwitchCaseMakingTool {
         try {
 
             template = Files.readAllLines(Enum2SwitchCaseMakingTool.TEMPLATE_PATH).stream()
-                .collect(Collectors.joining(DelimiterTypes.LINE_SEPARATOR.get()));
+                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final FileNotFoundException e) {
             throw e;

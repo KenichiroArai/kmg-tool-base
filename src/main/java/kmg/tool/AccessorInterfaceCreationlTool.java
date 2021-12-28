@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.DelimiterTypes;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
  * アクセサ作成ツール
@@ -58,7 +58,7 @@ public class AccessorInterfaceCreationlTool {
         try {
 
             template = Files.readAllLines(AccessorInterfaceCreationlTool.TEMPLATE_PATH).stream()
-                .collect(Collectors.joining(DelimiterTypes.LINE_SEPARATOR.get()));
+                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final FileNotFoundException e) {
             throw e;

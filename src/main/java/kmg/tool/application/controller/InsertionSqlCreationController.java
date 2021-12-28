@@ -14,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import kmg.core.domain.model.PfaMeasModel;
+import kmg.core.domain.model.KmgPfaMeasModel;
 import kmg.tool.domain.service.InsertionSqlCreationService;
 import kmg.tool.domain.service.impl.InsertionSqlCreationServiceImpl;
 
@@ -155,7 +155,7 @@ public class InsertionSqlCreationController implements Initializable {
     @FXML
     private void onCalcRunClicked(final ActionEvent event) {
 
-        final PfaMeasModel pfaMeas = new PfaMeasModel();
+        final KmgPfaMeasModel pfaMeas = new KmgPfaMeasModel();
         pfaMeas.start();
         try {
             // メイン処理

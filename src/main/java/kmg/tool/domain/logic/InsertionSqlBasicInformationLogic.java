@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
-import kmg.core.infrastructure.types.DbTypes;
+import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
  * 挿入ＳＱＬ基本情報ロジックインタフェース<br>
@@ -33,14 +33,14 @@ public interface InsertionSqlBasicInformationLogic {
     void initialize(final Workbook inputWk);
 
     /**
-     * ＤＢの種類を返す<br>
+     * ＫＭＧＤＢの種類を返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return ＤＢの種類
+     * @return ＫＭＧＤＢの種類
      */
-    DbTypes getDbTypes();
+    KmgDbTypes getKmgDbTypes();
 
     /**
      * SQLIDマップ返す<br>

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Sheet;
 
-import kmg.core.infrastructure.types.DbTypes;
+import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
  * 挿入ＳＱＬデータシート作成サービスインタフェース<br>
@@ -22,8 +22,8 @@ public interface InsertionSqlDataSheetCreationService extends Runnable {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param dbTypes
-     *                   ＤＢの種類
+     * @param KmgDbTypes
+     *                   ＫＭＧＤＢの種類
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap
@@ -31,7 +31,7 @@ public interface InsertionSqlDataSheetCreationService extends Runnable {
      * @param outputPath
      *                   出力パス
      */
-    void initialize(DbTypes dbTypes, Sheet inputSheet, Map<String, String> sqlIdMap, final Path outputPath);
+    void initialize(KmgDbTypes KmgDbTypes, Sheet inputSheet, Map<String, String> sqlIdMap, final Path outputPath);
 
     /**
      * 挿入ＳＱＬを出力する<br>

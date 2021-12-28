@@ -10,7 +10,7 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import kmg.core.infrastructure.types.DbTypes;
+import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.domain.logic.InsertionSqlDataSheetCreationLogic;
 import kmg.tool.domain.logic.impl.InsertionSqlDataSheetCreationLogicImpl;
 import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
@@ -24,8 +24,8 @@ import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
  */
 public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDataSheetCreationService {
 
-    /** ＤＢの種類 */
-    private DbTypes dbTypes;
+    /** ＫＭＧＤＢの種類 */
+    private KmgDbTypes kmgDbTypes;
 
     /** 入力シート */
     private Sheet inputSheet;
@@ -42,8 +42,8 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param dbTypes
-     *                   ＤＢの種類
+     * @param kmgDbTypes
+     *                   ＫＭＧＤＢの種類
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap
@@ -53,9 +53,9 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
      */
     @SuppressWarnings("hiding")
     @Override
-    public void initialize(final DbTypes dbTypes, final Sheet inputSheet, final Map<String, String> sqlIdMap,
+    public void initialize(final KmgDbTypes kmgDbTypes, final Sheet inputSheet, final Map<String, String> sqlIdMap,
         final Path outputPath) {
-        this.dbTypes = dbTypes;
+        this.kmgDbTypes = kmgDbTypes;
         this.inputSheet = inputSheet;
         this.sqlIdMap = sqlIdMap;
         this.outputPath = outputPath;
@@ -72,7 +72,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
     public void outputInsertionSql() {
 
         final InsertionSqlDataSheetCreationLogic insertionSqlDataSheetCreationLogic = new InsertionSqlDataSheetCreationLogicImpl();
-        insertionSqlDataSheetCreationLogic.initialize(this.dbTypes, this.inputSheet, this.sqlIdMap, this.outputPath);
+        insertionSqlDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap, this.outputPath);
 
         /* 出力ファイルのディレクトリの作成 */
         try {
