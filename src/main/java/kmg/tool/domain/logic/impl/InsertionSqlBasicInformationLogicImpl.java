@@ -8,8 +8,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
+import kmg.core.infrastructure.utils.KmgPoiUtils;
 import kmg.tool.domain.logic.InsertionSqlBasicInformationLogic;
-import kmg.tool.infrastructure.utils.PoiUtils;
 
 /**
  * 挿入ＳＱＬ基本情報ロジック<br>
@@ -51,9 +51,9 @@ public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicI
         KmgDbTypes result = null;
 
         final Sheet wkSheet = this.inputWk.getSheet(InsertionSqlBasicInformationLogic.SETTING_SHEET_NAME);
-        final Cell wkCell = PoiUtils.getCell(wkSheet, 0, 1);
+        final Cell wkCell = KmgPoiUtils.getCell(wkSheet, 0, 1);
 
-        result = KmgDbTypes.getEnum(PoiUtils.getStringValue(wkCell));
+        result = KmgDbTypes.getEnum(KmgPoiUtils.getStringValue(wkCell));
 
         return result;
     }
@@ -74,12 +74,12 @@ public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicI
         for (int rowIdx = 1; rowIdx <= wkSheet.getLastRowNum(); rowIdx++) {
 
             // テーブル物理名を取得
-            final Cell tablePhysicsCell = PoiUtils.getCell(wkSheet, rowIdx, 2);
-            final String tablePhysicsStr = PoiUtils.getStringValue(tablePhysicsCell);
+            final Cell tablePhysicsCell = KmgPoiUtils.getCell(wkSheet, rowIdx, 2);
+            final String tablePhysicsStr = KmgPoiUtils.getStringValue(tablePhysicsCell);
 
             // SQLIDを取得
-            final Cell sqlIdCell = PoiUtils.getCell(wkSheet, rowIdx, 3);
-            final String sqlIdStr = PoiUtils.getStringValue(sqlIdCell);
+            final Cell sqlIdCell = KmgPoiUtils.getCell(wkSheet, rowIdx, 3);
+            final String sqlIdStr = KmgPoiUtils.getStringValue(sqlIdCell);
 
             // マップに追加
             result.put(tablePhysicsStr, sqlIdStr);

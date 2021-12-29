@@ -22,8 +22,8 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateTimeUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateUtils;
+import kmg.core.infrastructure.utils.KmgPoiUtils;
 import kmg.tool.domain.logic.InsertionSqlDataSheetCreationLogic;
-import kmg.tool.infrastructure.utils.PoiUtils;
 
 /**
  * 挿入ＳＱＬデータシート作成ロジック<br>
@@ -145,8 +145,8 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             result = this.tablePhysicsName;
             return result;
         }
-        final Cell wkCell = PoiUtils.getCell(this.inputSheet, 0, 0);
-        result = PoiUtils.getStringValue(wkCell);
+        final Cell wkCell = KmgPoiUtils.getCell(this.inputSheet, 0, 0);
+        result = KmgPoiUtils.getStringValue(wkCell);
         this.tablePhysicsName = result;
         return result;
     }
@@ -302,10 +302,10 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
         final Row physicsNameRow = this.inputSheet.getRow(2);
         for (short j = physicsNameRow.getFirstCellNum(); j <= physicsNameRow.getLastCellNum(); j++) {
             final Cell physicsNameCell = physicsNameRow.getCell(j);
-            if (PoiUtils.isEmptyCell(physicsNameCell)) {
+            if (KmgPoiUtils.isEmptyCell(physicsNameCell)) {
                 break;
             }
-            final String physicsName = PoiUtils.getStringValue(physicsNameCell);
+            final String physicsName = KmgPoiUtils.getStringValue(physicsNameCell);
             result.add(physicsName);
         }
 
@@ -349,7 +349,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
         for (short cellNum = typeRow.getFirstCellNum(); cellNum < this.getColumnNum(); cellNum++) {
             final Cell typeCell = typeRow.getCell(cellNum);
 
-            final KmgDbDataTypeTypes type = KmgDbDataTypeTypes.getEnum(PoiUtils.getStringValue(typeCell));
+            final KmgDbDataTypeTypes type = KmgDbDataTypeTypes.getEnum(KmgPoiUtils.getStringValue(typeCell));
             result.add(type);
         }
 
@@ -399,7 +399,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             final KmgDbDataTypeTypes kmgDbDataType = this.getKmgDbDataTypeList().get(cellNum);
 
             String outputData = null;
-            final String dataStr = PoiUtils.getStringValue(dataCell);
+            final String dataStr = KmgPoiUtils.getStringValue(dataCell);
             if (KmgString.isEmpty(dataStr)) {
                 dataList.add(outputData);
                 continue;
@@ -451,7 +451,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
         switch (kmgDbDataType) {
         case NONE:
             // 指定無し
-            outputData = PoiUtils.getStringValue(dataCell);
+            outputData = KmgPoiUtils.getStringValue(dataCell);
             outputData = String.format("'%s'", outputData);
             break;
         case INTEGER:
@@ -474,7 +474,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             break;
         case DATE:
             // 日付型
-            final String dateStrTmp = PoiUtils.getStringValue(dataCell);
+            final String dateStrTmp = KmgPoiUtils.getStringValue(dataCell);
             // TODO KenichiroArai 2021/07/15 列挙型
             if (KmgString.equals("-infinity", dateStrTmp)) {
                 outputData = dateStrTmp;
@@ -488,7 +488,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             break;
         case TIME:
             // 日時型
-            final String dateTimeStrTmp = PoiUtils.getStringValue(dataCell);
+            final String dateTimeStrTmp = KmgPoiUtils.getStringValue(dataCell);
             // TODO KenichiroArai 2021/07/15 列挙型
             if (KmgString.equals("-infinity", dateTimeStrTmp)) {
                 outputData = dateTimeStrTmp;
@@ -502,7 +502,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             break;
         case STRING:
             // 文字列型
-            outputData = PoiUtils.getStringValue(dataCell);
+            outputData = KmgPoiUtils.getStringValue(dataCell);
             outputData = String.format("'%s'", outputData);
             break;
         }
