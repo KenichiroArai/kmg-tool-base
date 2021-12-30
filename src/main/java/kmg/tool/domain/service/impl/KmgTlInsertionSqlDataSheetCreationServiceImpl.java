@@ -11,18 +11,18 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.domain.logic.InsertionSqlDataSheetCreationLogic;
-import kmg.tool.domain.logic.impl.InsertionSqlDataSheetCreationLogicImpl;
-import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
+import kmg.tool.domain.logic.KmgTlInsertionSqlDataSheetCreationLogic;
+import kmg.tool.domain.logic.impl.KmgTlInsertionSqlDataSheetCreationLogicImpl;
+import kmg.tool.domain.service.KmgTlInsertionSqlDataSheetCreationService;
 
 /**
- * 挿入ＳＱＬデータシート作成サービス<br>
+ * ＫＭＧツール挿入ＳＱＬデータシート作成サービス<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDataSheetCreationService {
+public class KmgTlInsertionSqlDataSheetCreationServiceImpl implements KmgTlInsertionSqlDataSheetCreationService {
 
     /** ＫＭＧＤＢの種類 */
     private KmgDbTypes kmgDbTypes;
@@ -71,36 +71,36 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
     @Override
     public void outputInsertionSql() {
 
-        final InsertionSqlDataSheetCreationLogic insertionSqlDataSheetCreationLogic = new InsertionSqlDataSheetCreationLogicImpl();
-        insertionSqlDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap, this.outputPath);
+        final KmgTlInsertionSqlDataSheetCreationLogic kmgTlInsertionSqlDataSheetCreationLogic = new KmgTlInsertionSqlDataSheetCreationLogicImpl();
+        kmgTlInsertionSqlDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap, this.outputPath);
 
         /* 出力ファイルのディレクトリの作成 */
         try {
-            insertionSqlDataSheetCreationLogic.createOutputFileDirectories();
+            kmgTlInsertionSqlDataSheetCreationLogic.createOutputFileDirectories();
         } catch (final IOException e) {
             e.printStackTrace();
             return;
         }
 
         /* 出力ファイルパスの取得 */
-        final Path outputFilePath = insertionSqlDataSheetCreationLogic.getOutputFilePath();
+        final Path outputFilePath = kmgTlInsertionSqlDataSheetCreationLogic.getOutputFilePath();
 
         /* 文字セットを取得 */
-        final Charset charset = insertionSqlDataSheetCreationLogic.getCharset();
+        final Charset charset = kmgTlInsertionSqlDataSheetCreationLogic.getCharset();
 
         try (BufferedWriter bw = Files.newBufferedWriter(outputFilePath, charset)) {
 
             /* 削除ＳＱＬの出力 */
-            final String deleteComment = insertionSqlDataSheetCreationLogic.getDeleteComment();
+            final String deleteComment = kmgTlInsertionSqlDataSheetCreationLogic.getDeleteComment();
             bw.write(deleteComment);
             bw.newLine();
-            final String deleteSql = insertionSqlDataSheetCreationLogic.getDeleteSql();
+            final String deleteSql = kmgTlInsertionSqlDataSheetCreationLogic.getDeleteSql();
             bw.write(deleteSql);
             bw.newLine();
             bw.newLine();
 
             /* 挿入ＳＱＬの出力 */
-            final String insertComment = insertionSqlDataSheetCreationLogic.getInsertComment();
+            final String insertComment = kmgTlInsertionSqlDataSheetCreationLogic.getInsertComment();
             bw.write(insertComment);
             bw.newLine();
             for (int rowIdx = 4; rowIdx <= this.inputSheet.getLastRowNum(); rowIdx++) {
@@ -109,7 +109,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
                     break;
                 }
 
-                final String datas = insertionSqlDataSheetCreationLogic.getInsertSql(datasRow);
+                final String datas = kmgTlInsertionSqlDataSheetCreationLogic.getInsertSql(datasRow);
                 bw.write(datas);
                 bw.write(System.lineSeparator());
             }

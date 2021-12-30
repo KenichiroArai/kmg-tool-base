@@ -15,19 +15,19 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.domain.logic.InsertionSqlBasicInformationLogic;
-import kmg.tool.domain.logic.impl.InsertionSqlBasicInformationLogicImpl;
-import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
-import kmg.tool.domain.service.InsertionSqlFileCreationService;
+import kmg.tool.domain.logic.KmgTlInsertionSqlBasicInformationLogic;
+import kmg.tool.domain.logic.impl.KmgTlInsertionSqlBasicInformationLogicImpl;
+import kmg.tool.domain.service.KmgTlInsertionSqlDataSheetCreationService;
+import kmg.tool.domain.service.KmgTlInsertionSqlFileCreationService;
 
 /**
- * 挿入ＳＱＬファイル作成サービス<br>
+ * ＫＭＧツール挿入ＳＱＬファイル作成サービス<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCreationService {
+public class KmgTlInsertionSqlFileCreationServiceImpl implements KmgTlInsertionSqlFileCreationService {
 
     /** 入力パス */
     private Path inputPath;
@@ -73,7 +73,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
         try (final FileInputStream is = new FileInputStream(this.inputPath.toFile());
             final Workbook inputWb = WorkbookFactory.create(is);) {
 
-            final InsertionSqlBasicInformationLogic insertionSqlFileCreationLogic = new InsertionSqlBasicInformationLogicImpl();
+            final KmgTlInsertionSqlBasicInformationLogic insertionSqlFileCreationLogic = new KmgTlInsertionSqlBasicInformationLogicImpl();
             insertionSqlFileCreationLogic.initialize(inputWb);
 
             /* ＫＭＧＤＢの種類を取得 */
@@ -93,15 +93,16 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
                     final Sheet wkSheet = inputWb.getSheetAt(i);
 
                     if (KmgString.equals(wkSheet.getSheetName(),
-                        InsertionSqlBasicInformationLogic.SETTING_SHEET_NAME)) {
+                        KmgTlInsertionSqlBasicInformationLogic.SETTING_SHEET_NAME)) {
                         continue;
                     }
-                    if (KmgString.equals(wkSheet.getSheetName(), InsertionSqlBasicInformationLogic.LIST_NAME)) {
+                    if (KmgString.equals(wkSheet.getSheetName(), KmgTlInsertionSqlBasicInformationLogic.LIST_NAME)) {
                         continue;
                     }
-                    final InsertionSqlDataSheetCreationService insertionSqlDataSheetCreationService = new InsertionSqlDataSheetCreationServiceImpl();
-                    insertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap, this.outputPath);
-                    service.execute(insertionSqlDataSheetCreationService);
+                    final KmgTlInsertionSqlDataSheetCreationService kmgTlInsertionSqlDataSheetCreationService = new KmgTlInsertionSqlDataSheetCreationServiceImpl();
+                    kmgTlInsertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap,
+                        this.outputPath);
+                    service.execute(kmgTlInsertionSqlDataSheetCreationService);
                 }
             } finally {
                 if (service != null) {

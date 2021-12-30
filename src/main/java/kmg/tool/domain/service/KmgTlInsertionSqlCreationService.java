@@ -3,13 +3,13 @@ package kmg.tool.domain.service;
 import java.nio.file.Path;
 
 /**
- * 挿入ＳＱＬファイル作成サービスインタフェース<br>
+ * ＫＭＧツール挿入ＳＱＬ作成サービスインタフェース<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public interface InsertionSqlFileCreationService {
+public interface KmgTlInsertionSqlCreationService {
 
     /**
      * 初期化する<br>

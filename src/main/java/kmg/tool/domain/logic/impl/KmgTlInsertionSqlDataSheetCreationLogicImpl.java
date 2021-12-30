@@ -23,16 +23,16 @@ import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateTimeUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateUtils;
 import kmg.core.infrastructure.utils.KmgPoiUtils;
-import kmg.tool.domain.logic.InsertionSqlDataSheetCreationLogic;
+import kmg.tool.domain.logic.KmgTlInsertionSqlDataSheetCreationLogic;
 
 /**
- * 挿入ＳＱＬデータシート作成ロジック<br>
+ * ＫＭＧツール挿入ＳＱＬデータシート作成ロジック<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataSheetCreationLogic {
+public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInsertionSqlDataSheetCreationLogic {
 
     /** 削除ＳＱＬテンプレート */
     private static final String DELETE_SQL_TEMPLATE = "DELETE FROM %s;";
@@ -241,7 +241,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             result = this.deleteSql;
             return result;
         }
-        result = String.format(InsertionSqlDataSheetCreationLogicImpl.DELETE_SQL_TEMPLATE, this.getTablePhysicsName());
+        result = String.format(KmgTlInsertionSqlDataSheetCreationLogicImpl.DELETE_SQL_TEMPLATE, this.getTablePhysicsName());
         this.deleteSql = result;
         return result;
     }
@@ -423,7 +423,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             dataList.add(outputData);
         }
 
-        result = String.format(InsertionSqlDataSheetCreationLogicImpl.INSERT_SQL_TEMPLATE, this.getTablePhysicsName(),
+        result = String.format(KmgTlInsertionSqlDataSheetCreationLogicImpl.INSERT_SQL_TEMPLATE, this.getTablePhysicsName(),
             KmgDelimiterTypes.COMMA.joinAll(this.getColumnPhysicsNameList()),
             KmgDelimiterTypes.COMMA.joinAll(dataList));
 

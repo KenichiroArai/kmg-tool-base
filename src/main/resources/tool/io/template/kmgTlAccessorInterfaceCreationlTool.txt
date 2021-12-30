@@ -1,0 +1,17 @@
+/**
+ * $nameを設定する<br>
+  * @author KenichiroArai
+  * @sine 1.0.0
+  * @version 1.0.0
+ * @param $item $name
+ */
+ void set$Item($type $item);
+
+ /**
+  * $nameを返す<br>
+  * @author KenichiroArai
+  * @sine 1.0.0
+  * @version 1.0.0
+  * @return $name
+  */
+ $type get$Item();

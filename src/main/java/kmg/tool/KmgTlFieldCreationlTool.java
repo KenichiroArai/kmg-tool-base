@@ -17,27 +17,27 @@ import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
- * フィールド作成ツール
+ * ＫＭＧツールフィールド作成ツール
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
 @SuppressWarnings("nls") // TODO KenichiroArai 2021/05/11 外部文字列化
-public class FieldCreationlTool {
+public class KmgTlFieldCreationlTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH = Paths.get(FieldCreationlTool.BASE_PATH.toString(),
+    private static final Path TEMPLATE_PATH = Paths.get(KmgTlFieldCreationlTool.BASE_PATH.toString(),
         "template/fieldCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
 
     /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(FieldCreationlTool.BASE_PATH.toString(), "input.txt");
+    private static final Path INPUT_PATH = Paths.get(KmgTlFieldCreationlTool.BASE_PATH.toString(), "input.txt");
 
     /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH = Paths.get(FieldCreationlTool.BASE_PATH.toString(), "output.txt");
+    private static final Path OUTPUT_PATH = Paths.get(KmgTlFieldCreationlTool.BASE_PATH.toString(), "output.txt");
 
     /** パラメータ：コメント */
     private static final String PARAM_COMMENT = "$comment";
@@ -69,7 +69,7 @@ public class FieldCreationlTool {
         String template = null;
         try {
 
-            template = Files.readAllLines(FieldCreationlTool.TEMPLATE_PATH).stream()
+            template = Files.readAllLines(KmgTlFieldCreationlTool.TEMPLATE_PATH).stream()
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final FileNotFoundException e) {
@@ -79,8 +79,8 @@ public class FieldCreationlTool {
         }
 
         /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(FieldCreationlTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(FieldCreationlTool.OUTPUT_PATH);) {
+        try (final BufferedReader brInput = Files.newBufferedReader(KmgTlFieldCreationlTool.INPUT_PATH);
+            final BufferedWriter bw = Files.newBufferedWriter(KmgTlFieldCreationlTool.OUTPUT_PATH);) {
             String line;
             while ((line = brInput.readLine()) != null) {
 
@@ -103,9 +103,9 @@ public class FieldCreationlTool {
                 }
 
                 String output = template;
-                output = output.replace(FieldCreationlTool.PARAM_COMMENT, commentData);
-                output = output.replace(FieldCreationlTool.PARAM_FIELD, changeFieldData);
-                output = output.replace(FieldCreationlTool.PARAM_TYPE, changeTypeData);
+                output = output.replace(KmgTlFieldCreationlTool.PARAM_COMMENT, commentData);
+                output = output.replace(KmgTlFieldCreationlTool.PARAM_FIELD, changeFieldData);
+                output = output.replace(KmgTlFieldCreationlTool.PARAM_TYPE, changeTypeData);
 
                 /* 出力 */
                 bw.write(output);
@@ -131,9 +131,9 @@ public class FieldCreationlTool {
      */
     public static void main(final String[] args) {
 
-        final Class<FieldCreationlTool> clasz = FieldCreationlTool.class;
+        final Class<KmgTlFieldCreationlTool> clasz = KmgTlFieldCreationlTool.class;
         try {
-            final FieldCreationlTool main = new FieldCreationlTool();
+            final KmgTlFieldCreationlTool main = new KmgTlFieldCreationlTool();
             if (main.run()) {
                 System.out.println(String.format("%s：失敗", clasz.toString()));
             }

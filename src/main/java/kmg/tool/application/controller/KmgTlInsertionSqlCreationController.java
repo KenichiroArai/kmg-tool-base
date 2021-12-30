@@ -15,17 +15,17 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import kmg.core.domain.model.KmgPfaMeasModel;
-import kmg.tool.domain.service.InsertionSqlCreationService;
-import kmg.tool.domain.service.impl.InsertionSqlCreationServiceImpl;
+import kmg.tool.domain.service.KmgTlInsertionSqlCreationService;
+import kmg.tool.domain.service.impl.KmgTlInsertionSqlCreationServiceImpl;
 
 /**
- * 挿入ＳＱＬ作成画面画面コントローラ<br>
+ * ＫＭＧツール挿入ＳＱＬ作成画面画面コントローラ<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public class InsertionSqlCreationController implements Initializable {
+public class KmgTlInsertionSqlCreationController implements Initializable {
 
     /** 入力ファイルテキストボックス */
     @FXML
@@ -183,7 +183,7 @@ public class InsertionSqlCreationController implements Initializable {
     protected void mainProc(final Path inputPath, final Path outputPath) {
 
         /* 挿入ＳＱＬ作成サービス */
-        final InsertionSqlCreationService insertSqlCreationService = new InsertionSqlCreationServiceImpl();
+        final KmgTlInsertionSqlCreationService insertSqlCreationService = new KmgTlInsertionSqlCreationServiceImpl();
         final short threadNum = Short.parseShort(this.txtThreadNum.getText());
         insertSqlCreationService.initialize(inputPath, outputPath, threadNum);
         insertSqlCreationService.outputInsertionSql();

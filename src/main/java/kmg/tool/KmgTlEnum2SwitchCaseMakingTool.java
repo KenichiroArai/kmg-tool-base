@@ -17,27 +17,27 @@ import java.util.stream.Collectors;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
- * 列挙型からcase作成ツール
+ * ＫＭＧツール列挙型からcase作成ツール
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
 @SuppressWarnings("nls") // TODO KenichiroArai 2021/07/14 外部文字列化
-public class Enum2SwitchCaseMakingTool {
+public class KmgTlEnum2SwitchCaseMakingTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH = Paths.get(Enum2SwitchCaseMakingTool.BASE_PATH.toString(),
+    private static final Path TEMPLATE_PATH = Paths.get(KmgTlEnum2SwitchCaseMakingTool.BASE_PATH.toString(),
         "template/enum2SwitchCaseMakingTool.txt"); // TODO KenichiroArai 2021/07/14 自動設定
 
     /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(Enum2SwitchCaseMakingTool.BASE_PATH.toString(), "input.txt");
+    private static final Path INPUT_PATH = Paths.get(KmgTlEnum2SwitchCaseMakingTool.BASE_PATH.toString(), "input.txt");
 
     /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH = Paths.get(Enum2SwitchCaseMakingTool.BASE_PATH.toString(), "output.txt");
+    private static final Path OUTPUT_PATH = Paths.get(KmgTlEnum2SwitchCaseMakingTool.BASE_PATH.toString(), "output.txt");
 
     /** パラメータ：項目 */
     private static final String PARAM_ITEM = "%item%";
@@ -66,7 +66,7 @@ public class Enum2SwitchCaseMakingTool {
         String template = null;
         try {
 
-            template = Files.readAllLines(Enum2SwitchCaseMakingTool.TEMPLATE_PATH).stream()
+            template = Files.readAllLines(KmgTlEnum2SwitchCaseMakingTool.TEMPLATE_PATH).stream()
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final FileNotFoundException e) {
@@ -76,8 +76,8 @@ public class Enum2SwitchCaseMakingTool {
         }
 
         /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(Enum2SwitchCaseMakingTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(Enum2SwitchCaseMakingTool.OUTPUT_PATH);) {
+        try (final BufferedReader brInput = Files.newBufferedReader(KmgTlEnum2SwitchCaseMakingTool.INPUT_PATH);
+            final BufferedWriter bw = Files.newBufferedWriter(KmgTlEnum2SwitchCaseMakingTool.OUTPUT_PATH);) {
             String line;
             while ((line = brInput.readLine()) != null) {
                 String output = template;
@@ -85,8 +85,8 @@ public class Enum2SwitchCaseMakingTool {
                 final Pattern patternComment = Pattern.compile("(\\w+)\\(\"(\\S+)\",");
                 final Matcher matcherComment = patternComment.matcher(line);
                 if (matcherComment.find()) {
-                    output = output.replace(Enum2SwitchCaseMakingTool.PARAM_ITEM, matcherComment.group(1));
-                    output = output.replace(Enum2SwitchCaseMakingTool.PARAM_ITEM_NAME, matcherComment.group(2));
+                    output = output.replace(KmgTlEnum2SwitchCaseMakingTool.PARAM_ITEM, matcherComment.group(1));
+                    output = output.replace(KmgTlEnum2SwitchCaseMakingTool.PARAM_ITEM_NAME, matcherComment.group(2));
                     bw.write(output);
                     bw.newLine();
                     continue;
@@ -112,9 +112,9 @@ public class Enum2SwitchCaseMakingTool {
      */
     public static void main(final String[] args) {
 
-        final Class<Enum2SwitchCaseMakingTool> clasz = Enum2SwitchCaseMakingTool.class;
+        final Class<KmgTlEnum2SwitchCaseMakingTool> clasz = KmgTlEnum2SwitchCaseMakingTool.class;
         try {
-            final Enum2SwitchCaseMakingTool main = new Enum2SwitchCaseMakingTool();
+            final KmgTlEnum2SwitchCaseMakingTool main = new KmgTlEnum2SwitchCaseMakingTool();
             if (main.run()) {
                 System.out.println(String.format("%s：失敗", clasz.toString()));
             }

@@ -13,13 +13,13 @@ import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
- * 挿入ＳＱＬデータシート作成ロジックインタフェース<br>
+ * ＫＭＧツール挿入ＳＱＬデータシート作成ロジックインタフェース<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public interface InsertionSqlDataSheetCreationLogic {
+public interface KmgTlInsertionSqlDataSheetCreationLogic {
 
     /**
      * 初期化する<br>

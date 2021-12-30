@@ -16,27 +16,27 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
- * 名称・メッセージ作成ツール
+ * ＫＭＧツール名称・メッセージ作成ツール
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
 @SuppressWarnings("nls") // TODO KenichiroArai 2021/05/12 外部文字列化
-public class NameMsgCreationlTool {
+public class KmgTlNameMsgCreationlTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH = Paths.get(NameMsgCreationlTool.BASE_PATH.toString(),
+    private static final Path TEMPLATE_PATH = Paths.get(KmgTlNameMsgCreationlTool.BASE_PATH.toString(),
         "template/nameMsgCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
 
     /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(NameMsgCreationlTool.BASE_PATH.toString(), "input.txt");
+    private static final Path INPUT_PATH = Paths.get(KmgTlNameMsgCreationlTool.BASE_PATH.toString(), "input.txt");
 
     /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH = Paths.get(NameMsgCreationlTool.BASE_PATH.toString(), "output.txt");
+    private static final Path OUTPUT_PATH = Paths.get(KmgTlNameMsgCreationlTool.BASE_PATH.toString(), "output.txt");
 
     /** パラメータ：コメント */
     private static final String PARAM_COMMENT = "$comment";
@@ -71,7 +71,7 @@ public class NameMsgCreationlTool {
         String template = null;
         try {
 
-            template = Files.readAllLines(NameMsgCreationlTool.TEMPLATE_PATH).stream()
+            template = Files.readAllLines(KmgTlNameMsgCreationlTool.TEMPLATE_PATH).stream()
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final FileNotFoundException e) {
@@ -81,8 +81,8 @@ public class NameMsgCreationlTool {
         }
 
         /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(NameMsgCreationlTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(NameMsgCreationlTool.OUTPUT_PATH);) {
+        try (final BufferedReader brInput = Files.newBufferedReader(KmgTlNameMsgCreationlTool.INPUT_PATH);
+            final BufferedWriter bw = Files.newBufferedWriter(KmgTlNameMsgCreationlTool.OUTPUT_PATH);) {
             String line;
             while ((line = brInput.readLine()) != null) {
 
@@ -94,10 +94,10 @@ public class NameMsgCreationlTool {
 
                 /* 変換処理 */
                 String output = template;
-                output = output.replace(NameMsgCreationlTool.PARAM_COMMENT, nameData.toString()); // コメント
-                output = output.replace(NameMsgCreationlTool.PARAM_KEY, idData.toString()); // キー
-                output = output.replace(NameMsgCreationlTool.PARAM_NAME, nameData.toString()); // 名称
-                output = output.replace(NameMsgCreationlTool.PARAM_VALUE, idData.toString()); // 値
+                output = output.replace(KmgTlNameMsgCreationlTool.PARAM_COMMENT, nameData.toString()); // コメント
+                output = output.replace(KmgTlNameMsgCreationlTool.PARAM_KEY, idData.toString()); // キー
+                output = output.replace(KmgTlNameMsgCreationlTool.PARAM_NAME, nameData.toString()); // 名称
+                output = output.replace(KmgTlNameMsgCreationlTool.PARAM_VALUE, idData.toString()); // 値
 
                 /* 出力 */
                 bw.write(output);
@@ -123,9 +123,9 @@ public class NameMsgCreationlTool {
      */
     public static void main(final String[] args) {
 
-        final Class<NameMsgCreationlTool> clasz = NameMsgCreationlTool.class;
+        final Class<KmgTlNameMsgCreationlTool> clasz = KmgTlNameMsgCreationlTool.class;
         try {
-            final NameMsgCreationlTool main = new NameMsgCreationlTool();
+            final KmgTlNameMsgCreationlTool main = new KmgTlNameMsgCreationlTool();
             if (main.run()) {
                 System.out.println(String.format("%s：失敗", clasz.toString()));
             }

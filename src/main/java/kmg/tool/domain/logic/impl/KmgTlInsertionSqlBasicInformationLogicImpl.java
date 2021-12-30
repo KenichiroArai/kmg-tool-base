@@ -9,16 +9,16 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.core.infrastructure.utils.KmgPoiUtils;
-import kmg.tool.domain.logic.InsertionSqlBasicInformationLogic;
+import kmg.tool.domain.logic.KmgTlInsertionSqlBasicInformationLogic;
 
 /**
- * 挿入ＳＱＬ基本情報ロジック<br>
+ * ＫＭＧツール挿入ＳＱＬ基本情報ロジック<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicInformationLogic {
+public class KmgTlInsertionSqlBasicInformationLogicImpl implements KmgTlInsertionSqlBasicInformationLogic {
 
     /** 入力ワークブック */
     private Workbook inputWk;
@@ -50,7 +50,7 @@ public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicI
     public KmgDbTypes getKmgDbTypes() {
         KmgDbTypes result = null;
 
-        final Sheet wkSheet = this.inputWk.getSheet(InsertionSqlBasicInformationLogic.SETTING_SHEET_NAME);
+        final Sheet wkSheet = this.inputWk.getSheet(KmgTlInsertionSqlBasicInformationLogic.SETTING_SHEET_NAME);
         final Cell wkCell = KmgPoiUtils.getCell(wkSheet, 0, 1);
 
         result = KmgDbTypes.getEnum(KmgPoiUtils.getStringValue(wkCell));
@@ -70,7 +70,7 @@ public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicI
     public Map<String, String> getSqlIdMap() {
         final Map<String, String> result = new HashMap<>();
 
-        final Sheet wkSheet = this.inputWk.getSheet(InsertionSqlBasicInformationLogic.LIST_NAME);
+        final Sheet wkSheet = this.inputWk.getSheet(KmgTlInsertionSqlBasicInformationLogic.LIST_NAME);
         for (int rowIdx = 1; rowIdx <= wkSheet.getLastRowNum(); rowIdx++) {
 
             // テーブル物理名を取得

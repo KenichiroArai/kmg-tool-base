@@ -8,13 +8,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
- * 挿入ＳＱＬデータシート作成サービスインタフェース<br>
+ * ＫＭＧツール挿入ＳＱＬデータシート作成サービスインタフェース<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public interface InsertionSqlDataSheetCreationService extends Runnable {
+public interface KmgTlInsertionSqlDataSheetCreationService extends Runnable {
 
     /**
      * 初期化する<br>

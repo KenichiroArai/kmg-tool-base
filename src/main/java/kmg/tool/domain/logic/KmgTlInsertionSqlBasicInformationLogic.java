@@ -7,13 +7,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
- * 挿入ＳＱＬ基本情報ロジックインタフェース<br>
+ * ＫＭＧツール挿入ＳＱＬ基本情報ロジックインタフェース<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public interface InsertionSqlBasicInformationLogic {
+public interface KmgTlInsertionSqlBasicInformationLogic {
 
     /** 設定シート名 */
     String SETTING_SHEET_NAME = "設定情報";

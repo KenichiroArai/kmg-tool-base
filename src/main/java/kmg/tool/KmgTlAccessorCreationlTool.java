@@ -18,25 +18,25 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
- * アクセサ作成ツール
+ * ＫＭＧツールアクセサ作成ツール
  *
  * @author KenichiroArai
  */
 @SuppressWarnings("nls") // TODO KenichiroArai 2021/05/11 外部文字列化
-public class AccessorCreationlTool {
+public class KmgTlAccessorCreationlTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH = Paths.get(AccessorCreationlTool.BASE_PATH.toString(),
+    private static final Path TEMPLATE_PATH = Paths.get(KmgTlAccessorCreationlTool.BASE_PATH.toString(),
         "template/accessorCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
 
     /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(AccessorCreationlTool.BASE_PATH.toString(), "input.txt");
+    private static final Path INPUT_PATH = Paths.get(KmgTlAccessorCreationlTool.BASE_PATH.toString(), "input.txt");
 
     /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH = Paths.get(AccessorCreationlTool.BASE_PATH.toString(), "output.txt");
+    private static final Path OUTPUT_PATH = Paths.get(KmgTlAccessorCreationlTool.BASE_PATH.toString(), "output.txt");
 
     /**
      * 走る
@@ -56,7 +56,7 @@ public class AccessorCreationlTool {
         String template = null;
         try {
 
-            template = Files.readAllLines(AccessorCreationlTool.TEMPLATE_PATH).stream()
+            template = Files.readAllLines(KmgTlAccessorCreationlTool.TEMPLATE_PATH).stream()
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final FileNotFoundException e) {
@@ -66,8 +66,8 @@ public class AccessorCreationlTool {
         }
 
         /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(AccessorCreationlTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(AccessorCreationlTool.OUTPUT_PATH);) {
+        try (final BufferedReader brInput = Files.newBufferedReader(KmgTlAccessorCreationlTool.INPUT_PATH);
+            final BufferedWriter bw = Files.newBufferedWriter(KmgTlAccessorCreationlTool.OUTPUT_PATH);) {
 
             String output = template;
             String line = null;
@@ -112,9 +112,9 @@ public class AccessorCreationlTool {
      */
     public static void main(final String[] args) {
 
-        final Class<AccessorCreationlTool> clasz = AccessorCreationlTool.class;
+        final Class<KmgTlAccessorCreationlTool> clasz = KmgTlAccessorCreationlTool.class;
         try {
-            final AccessorCreationlTool main = new AccessorCreationlTool();
+            final KmgTlAccessorCreationlTool main = new KmgTlAccessorCreationlTool();
             if (main.run()) {
                 System.out.println(String.format("%s：失敗", clasz.toString()));
             }

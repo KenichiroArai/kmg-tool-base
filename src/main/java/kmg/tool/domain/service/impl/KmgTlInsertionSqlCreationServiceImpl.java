@@ -2,17 +2,17 @@ package kmg.tool.domain.service.impl;
 
 import java.nio.file.Path;
 
-import kmg.tool.domain.service.InsertionSqlCreationService;
-import kmg.tool.domain.service.InsertionSqlFileCreationService;
+import kmg.tool.domain.service.KmgTlInsertionSqlCreationService;
+import kmg.tool.domain.service.KmgTlInsertionSqlFileCreationService;
 
 /**
- * 挿入ＳＱＬ作成サービス<br>
+ * ＫＭＧツール挿入ＳＱＬ作成サービス<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-public class InsertionSqlCreationServiceImpl implements InsertionSqlCreationService {
+public class KmgTlInsertionSqlCreationServiceImpl implements KmgTlInsertionSqlCreationService {
 
     /** 入力パス */
     private Path inputPath;
@@ -54,9 +54,9 @@ public class InsertionSqlCreationServiceImpl implements InsertionSqlCreationServ
     @Override
     public void outputInsertionSql() {
 
-        final InsertionSqlFileCreationService insertionSqlFileCreationService = new InsertionSqlFileCreationServiceImpl();
-        insertionSqlFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
-        insertionSqlFileCreationService.outputInsertionSql();
+        final KmgTlInsertionSqlFileCreationService kmgTlInsertionSqlFileCreationService = new KmgTlInsertionSqlFileCreationServiceImpl();
+        kmgTlInsertionSqlFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
+        kmgTlInsertionSqlFileCreationService.outputInsertionSql();
 
     }
 
