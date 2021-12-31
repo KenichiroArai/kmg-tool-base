@@ -30,7 +30,7 @@ public class KmgTlAccessorCreationlTool {
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH = Paths.get(KmgTlAccessorCreationlTool.BASE_PATH.toString(),
-        "template/accessorCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
+        "template/kmgTlAccessorCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(KmgTlAccessorCreationlTool.BASE_PATH.toString(), "input.txt");

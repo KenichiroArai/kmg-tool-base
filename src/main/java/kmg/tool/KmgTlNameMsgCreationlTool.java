@@ -30,7 +30,7 @@ public class KmgTlNameMsgCreationlTool {
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH = Paths.get(KmgTlNameMsgCreationlTool.BASE_PATH.toString(),
-        "template/nameMsgCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
+        "template/kmgTlNameMsgCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(KmgTlNameMsgCreationlTool.BASE_PATH.toString(), "input.txt");

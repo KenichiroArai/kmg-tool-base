@@ -30,10 +30,11 @@ public class KmgTlAccessorInterfaceCreationlTool {
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH = Paths.get(KmgTlAccessorInterfaceCreationlTool.BASE_PATH.toString(),
-        "template/accessorInterfaceCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
+        "template/kmgTlAccessorInterfaceCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
 
     /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(KmgTlAccessorInterfaceCreationlTool.BASE_PATH.toString(), "input.txt");
+    private static final Path INPUT_PATH = Paths.get(KmgTlAccessorInterfaceCreationlTool.BASE_PATH.toString(),
+        "input.txt");
 
     /** 出力ファイルパス */
     private static final Path OUTPUT_PATH = Paths.get(KmgTlAccessorInterfaceCreationlTool.BASE_PATH.toString(),

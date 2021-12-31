@@ -31,13 +31,14 @@ public class KmgTlEnum2SwitchCaseMakingTool {
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH = Paths.get(KmgTlEnum2SwitchCaseMakingTool.BASE_PATH.toString(),
-        "template/enum2SwitchCaseMakingTool.txt"); // TODO KenichiroArai 2021/07/14 自動設定
+        "template/kmgTlEnum2SwitchCaseMakingTool.txt"); // TODO KenichiroArai 2021/07/14 自動設定
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(KmgTlEnum2SwitchCaseMakingTool.BASE_PATH.toString(), "input.txt");
 
     /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH = Paths.get(KmgTlEnum2SwitchCaseMakingTool.BASE_PATH.toString(), "output.txt");
+    private static final Path OUTPUT_PATH = Paths.get(KmgTlEnum2SwitchCaseMakingTool.BASE_PATH.toString(),
+        "output.txt");
 
     /** パラメータ：項目 */
     private static final String PARAM_ITEM = "%item%";
