@@ -505,6 +505,9 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
             outputData = KmgPoiUtils.getStringValue(dataCell);
             outputData = String.format("'%s'", outputData);
             break;
+        default:
+            // デフォルト
+            break;
         }
 
         result = outputData;
