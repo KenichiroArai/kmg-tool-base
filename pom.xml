@@ -22,6 +22,14 @@
     </properties>
 
     <dependencies>
+
+        <!-- KMG Core -->
+        <dependency>
+            <groupId>kmg.core</groupId>
+            <artifactId>kmg-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,13 +68,6 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.5</version>
-        </dependency>
-
-        <!-- KMG Core -->
-        <dependency>
-            <groupId>kmg.core</groupId>
-            <artifactId>kmg-core</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <!-- テスト -->
