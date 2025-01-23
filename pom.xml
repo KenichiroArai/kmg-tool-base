@@ -13,7 +13,7 @@
     <groupId>kmg.tool</groupId>
     <artifactId>kmg-tool</artifactId>
     <version>1.0.0</version>
-    <name>KMG_TOOL</name>
+    <name>kmg-tool</name>
     <description>KMGツール</description>
 
     <properties>
