@@ -6,17 +6,21 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.4</version>
+        <version>3.4.1</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
+    
     <groupId>kmg.tool</groupId>
-    <artifactId>KMG_TOOL</artifactId>
+    <artifactId>kmg-tool</artifactId>
     <version>1.0.0</version>
     <name>KMG_TOOL</name>
-    <description>ＫＭＧツール</description>
+    <description>KMGツール</description>
+
     <properties>
-        <java.version>11</java.version>
+        <java.version>21</java.version>
+        <javafx.version>21.0.2</javafx.version>
     </properties>
+    
     <dependencies>
         <!-- Spring -->
         <dependency>
@@ -35,29 +39,27 @@
         </dependency>
 
         <!-- JavaFX -->
-        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>11.0.2</version>
+            <version>${javafx.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>11.0.2</version>
+            <version>${javafx.version}</version>
         </dependency>
 
         <!-- POI -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>5.0.0</version>
+            <version>5.2.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.0.0</version>
+            <version>5.2.5</version>
         </dependency>
 
         <!-- テスト -->
