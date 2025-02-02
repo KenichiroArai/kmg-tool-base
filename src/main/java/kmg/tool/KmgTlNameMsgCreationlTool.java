@@ -30,7 +30,7 @@ public class KmgTlNameMsgCreationlTool {
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH = Paths.get(KmgTlNameMsgCreationlTool.BASE_PATH.toString(),
-        "template/kmgTlNameMsgCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
+            "template/kmgTlNameMsgCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(KmgTlNameMsgCreationlTool.BASE_PATH.toString(), "input.txt");
@@ -69,28 +69,33 @@ public class KmgTlNameMsgCreationlTool {
 
         /* テンプレートの取得 */
         String template = null;
+
         try {
 
             template = Files.readAllLines(KmgTlNameMsgCreationlTool.TEMPLATE_PATH).stream()
-                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
+                    .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
-        } catch (final FileNotFoundException e) {
-            throw e;
         } catch (final IOException e) {
+
             throw e;
+
         }
 
         /* 入力から出力の処理 */
         try (final BufferedReader brInput = Files.newBufferedReader(KmgTlNameMsgCreationlTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(KmgTlNameMsgCreationlTool.OUTPUT_PATH);) {
+                final BufferedWriter bw = Files.newBufferedWriter(KmgTlNameMsgCreationlTool.OUTPUT_PATH);) {
+
             String line;
+
             while ((line = brInput.readLine()) != null) {
 
                 /* データ取得 */
-                final String[] inputDatas = KmgDelimiterTypes.SERIES_HALF_SPACE.split(line);
-                int dataIdx = 0;
-                final KmgString idData = new KmgString(inputDatas[dataIdx++]); // ID
-                final KmgString nameData = new KmgString(inputDatas[dataIdx++]); // 名称
+                final String[]  inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(line);
+                int             dataIdx    = 0;
+                final KmgString idData     = new KmgString(inputDatas[dataIdx]); // ID
+                dataIdx++;
+                final KmgString nameData = new KmgString(inputDatas[dataIdx]);
+                dataIdx++; // 名称
 
                 /* 変換処理 */
                 String output = template;
@@ -102,14 +107,17 @@ public class KmgTlNameMsgCreationlTool {
                 /* 出力 */
                 bw.write(output);
                 bw.write(System.lineSeparator());
+
             }
-        } catch (final FileNotFoundException e) {
-            throw e;
+
         } catch (final IOException e) {
+
             throw e;
+
         }
 
         return result;
+
     }
 
     /**
@@ -124,16 +132,26 @@ public class KmgTlNameMsgCreationlTool {
     public static void main(final String[] args) {
 
         final Class<KmgTlNameMsgCreationlTool> clasz = KmgTlNameMsgCreationlTool.class;
+
         try {
+
             final KmgTlNameMsgCreationlTool main = new KmgTlNameMsgCreationlTool();
+
             if (main.run()) {
+
                 System.out.println(String.format("%s：失敗", clasz.toString()));
+
             }
+
         } catch (final Exception e) {
+
             e.printStackTrace();
+
         } finally {
+
             System.out.println(String.format("%s：成功", clasz.toString()));
             System.out.println(String.format("%s：終了", clasz.toString()));
+
         }
 
     }
