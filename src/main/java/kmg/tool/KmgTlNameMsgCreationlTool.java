@@ -90,7 +90,7 @@ public class KmgTlNameMsgCreationlTool {
             while ((line = brInput.readLine()) != null) {
 
                 /* データ取得 */
-                final String[]  inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(line);
+                final String[]  inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(line, 2);
                 int             dataIdx    = 0;
                 final KmgString idData     = new KmgString(inputDatas[dataIdx]); // ID
                 dataIdx++;
