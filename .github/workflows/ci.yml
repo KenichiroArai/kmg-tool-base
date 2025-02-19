@@ -1,0 +1,72 @@
+name: Continuous Integration
+
+on:
+    pull_request:
+        branches:
+            - main
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    actions: write
+    security-events: write
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Set up JDK 21
+              uses: actions/setup-java@v4
+              with:
+                  java-version: "21"
+                  distribution: "temurin"
+                  cache: maven
+
+            - name: Configure Maven settings for GitHub Packages
+              run: |
+                  mkdir -p $HOME/.m2
+                  cat <<EOF > $HOME/.m2/settings.xml
+                  <settings>
+                    <servers>
+                      <server>
+                        <id>github</id>
+                        <username>${{ github.actor }}</username>
+                        <password>${{ secrets.GITHUB_TOKEN }}</password>
+                      </server>
+                    </servers>
+                  </settings>
+                  EOF
+
+            - name: Build with Maven
+              run: mvn -B package --file pom.xml
+
+            - name: Run tests with JVM options
+              run: mvn test -Djdk.instrument.traceUsage=true -DargLine="-XX:+EnableDynamicAgentLoading"
+
+            - name: Check Test Coverage
+              run: |
+                  COVERAGE=$(mvn jacoco:report | grep -A 1 "Total.*class" | grep "[0-9]\{1,3\}%" | grep -o "[0-9]\{1,3\}%" | cut -d'%' -f1)
+                  if [ "$COVERAGE" -lt 100 ]; then
+                    echo "Test coverage is below 100%. Current coverage: $COVERAGE%"
+                    exit 1
+                  else
+                    echo "Test coverage is 100%"
+                  fi
+
+            - name: Upload coverage report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: coverage-report
+                  path: target/site/jacoco/
+
+            - name: Dependency Review
+              uses: actions/dependency-review-action@v3
+              with:
+                  fail-on-severity: high
+                  deny-licenses: AGPL-1.0-or-later
+
+            - name: Update dependency graph
+              uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
