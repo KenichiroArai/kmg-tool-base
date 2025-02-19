@@ -32,7 +32,12 @@ jobs:
                   <settings>
                     <servers>
                       <server>
-                        <id>github</id>
+                        <id>github-kmg-core</id>
+                        <username>${{ github.actor }}</username>
+                        <password>${{ secrets.GITHUB_TOKEN }}</password>
+                      </server>
+                      <server>
+                        <id>github-kmg-foundation</id>
                         <username>${{ github.actor }}</username>
                         <password>${{ secrets.GITHUB_TOKEN }}</password>
                       </server>

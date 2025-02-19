@@ -31,7 +31,7 @@
             <version>0.1.0</version>
         </dependency>
 
-        <!-- KMG Foundation dependencyを追加 -->
+        <!-- KMG Foundation dependency-->
         <dependency>
             <groupId>kmg.foundation</groupId>
             <artifactId>kmg-foundation</artifactId>
