@@ -37,7 +37,12 @@ jobs:
               with:
                   servers: |
                       [{
-                        "id": "github",
+                        "id": "github-kmg-core",
+                        "username": "${{ github.actor }}",
+                        "password": "${{ secrets.GITHUB_TOKEN }}"
+                      },
+                      {
+                        "id": "github-kmg-foundation",
                         "username": "${{ github.actor }}",
                         "password": "${{ secrets.GITHUB_TOKEN }}"
                       }]
