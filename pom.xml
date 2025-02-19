@@ -112,4 +112,25 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>github-kmg-core</id>
+            <name>GitHub KenichiroArai Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/KenichiroArai/kmg-core-src</url>
+        </repository>
+        <repository>
+            <id>github-kmg-foundation</id>
+            <name>GitHub KenichiroArai Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/KenichiroArai/kmg-foundation-src</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>github-kmg-tool</id>
+            <name>GitHub KenichiroArai Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/KenichiroArai/kmg-tool-src</url>
+        </repository>
+    </distributionManagement>
+
 </project>
