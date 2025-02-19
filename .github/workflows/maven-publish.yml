@@ -28,7 +28,7 @@ jobs:
                   java-version: "21"
                   distribution: "temurin"
                   cache: maven
-                  server-id: github
+                  server-id: github-kmg-tool
                   settings-path: ${{ github.workspace }}
 
             # Maven設定の構成
@@ -37,12 +37,7 @@ jobs:
               with:
                   servers: |
                       [{
-                        "id": "github-kmg-core",
-                        "username": "${{ github.actor }}",
-                        "password": "${{ secrets.GITHUB_TOKEN }}"
-                      },
-                      {
-                        "id": "github-kmg-foundation",
+                        "id": "github-kmg-tool",
                         "username": "${{ github.actor }}",
                         "password": "${{ secrets.GITHUB_TOKEN }}"
                       }]
