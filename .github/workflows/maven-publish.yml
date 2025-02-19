@@ -40,6 +40,11 @@ jobs:
                         "id": "github-kmg-tool",
                         "username": "${{ github.actor }}",
                         "password": "${{ secrets.GITHUB_TOKEN }}"
+                      },
+                      {
+                        "id": "github-kmg-core",
+                        "username": "${{ github.actor }}",
+                        "password": "${{ secrets.GITHUB_TOKEN }}"
                       }]
 
             # バージョン情報の確認
