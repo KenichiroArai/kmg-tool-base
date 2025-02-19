@@ -31,6 +31,13 @@
             <version>0.1.0</version>
         </dependency>
 
+        <!-- KMG Foundation dependencyを追加 -->
+        <dependency>
+            <groupId>kmg.foundation</groupId>
+            <artifactId>kmg-foundation</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
