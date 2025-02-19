@@ -2,5 +2,14 @@
     "cSpell.words": ["directorytool"],
     "java.settings.url": ".settings\\org.eclipse.jdt.core.prefs",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "commentTranslate.targetLanguage": "ja"
+    "commentTranslate.targetLanguage": "ja",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "[bat]": {
+        "files.encoding": "shiftjis",
+        "files.autoGuessEncoding": false,
+        "files.eol": "\r\n"
+    },
+    "files.readonlyInclude": {
+        "**/.settings/**": true
+    }
 }
