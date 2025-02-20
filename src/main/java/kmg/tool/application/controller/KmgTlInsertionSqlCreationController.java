@@ -14,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import kmg.core.domain.model.KmgPfaMeasModel;
+import kmg.core.infrastructure.model.KmgPfaMeasModel;
 import kmg.tool.domain.service.KmgTlInsertionSqlCreationService;
 import kmg.tool.domain.service.impl.KmgTlInsertionSqlCreationServiceImpl;
 
