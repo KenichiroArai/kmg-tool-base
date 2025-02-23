@@ -48,7 +48,7 @@ public class JavadocAppenderTool {
      */
     public Boolean run() throws FileNotFoundException, IOException {
 
-        final boolean result = false;
+        final boolean result = true;
 
         /* タグマップの取得 */
         final Map<String, String> tagMap = this.getTagMap();
@@ -67,7 +67,7 @@ public class JavadocAppenderTool {
         /* 対象のJavaファイルをすべて読み込む */
         for (final Path javaFile : javaFileList) {
 
-            final StringBuilder javadocBuilder = new StringBuilder();
+            final StringBuilder fileContentBuilder = new StringBuilder();
 
             try (BufferedReader br = Files.newBufferedReader(javaFile)) {
 
@@ -83,7 +83,7 @@ public class JavadocAppenderTool {
                     if (trimmedLine.startsWith("/**")) {
 
                         isInJavadoc = true;
-                        javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                        fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
                         continue;
 
                     }
@@ -94,58 +94,63 @@ public class JavadocAppenderTool {
                         /* tagMapの内容を挿入 */
                         for (final Map.Entry<String, String> entry : tagMap.entrySet()) {
 
-                            javadocBuilder.append(" * ").append(entry.getKey()).append(" ").append(entry.getValue())
+                            fileContentBuilder.append(" * ").append(entry.getKey()).append(" ").append(entry.getValue())
                                 .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
 
                         }
 
                         isInJavadoc = false;
-                        javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                        System.out.println("Found Javadoc:");
-                        System.out.println(javadocBuilder.toString());
-                        javadocBuilder.setLength(0);
+                        fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
                         continue;
 
                     }
 
                     /* Javadoc内の行の処理 */
+                    if (isInJavadoc) {
+                        // Javadoc内の場合
 
-                    if (!isInJavadoc) {
-                        // Javadoc内ではない。
+                        // tagMapのキーに該当する行は追加しない
+                        boolean shouldSkip = false;
 
-                        continue;
+                        for (final String tag : tagMap.keySet()) {
 
-                    }
+                            if (!trimmedLine.contains(tag)) {
 
-                    // tagMapのキーに該当する行は追加しない
-                    boolean shouldSkip = false;
+                                continue;
 
-                    for (final String tag : tagMap.keySet()) {
+                            }
 
-                        if (!trimmedLine.contains(tag)) {
+                            shouldSkip = true;
+                            break;
+
+                        }
+
+                        if (shouldSkip) {
 
                             continue;
 
                         }
 
-                        shouldSkip = true;
-                        break;
-
                     }
-
-                    if (shouldSkip) {
-
-                        continue;
-
-                    }
-
-                    javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                    fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
 
                 }
 
             }
 
-            System.out.println(javadocBuilder.toString());
+            /* 修正した内容をファイルに書き込む */
+            // try {
+            //
+            // Files.writeString(javaFile, fileContentBuilder.toString());
+            //
+            // } catch (final IOException e) {
+            //
+            // System.err.println("Error writing to file: " + javaFile);
+            // e.printStackTrace();
+            // result = false;
+            //
+            // }
+            System.out.println(fileContentBuilder.toString());
 
         }
 
