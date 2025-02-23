@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import kmg.core.domain.service.KmgPfaMeasService;
+import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
@@ -57,14 +59,21 @@ public class JavadocAppenderTool {
         /* 対象のJavaファイルを取得 */
         final List<Path> javaFileList;
 
+        int fileCount = 0;
+
         try (final Stream<Path> streamPath = Files.walk(JavadocAppenderTool.INPUT_PATH)) {
 
             javaFileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
                 .collect(Collectors.toList());
 
+            fileCount += javaFileList.size();
+
         }
 
         /* 対象のJavaファイルをすべて読み込む */
+
+        int lineCount = 0;
+
         for (final Path javaFile : javaFileList) {
 
             final StringBuilder fileContentBuilder = new StringBuilder();
@@ -76,6 +85,8 @@ public class JavadocAppenderTool {
                 String  line        = null;
 
                 while ((line = br.readLine()) != null) {
+
+                    lineCount++;
 
                     final String trimmedLine = line.trim();
 
@@ -180,6 +191,9 @@ public class JavadocAppenderTool {
 
         }
 
+        System.out.println(String.format("fileCount: %d", fileCount));
+        System.out.println(String.format("lineCount: %d", lineCount));
+
         return result;
 
     }
@@ -242,6 +256,9 @@ public class JavadocAppenderTool {
 
         final Class<JavadocAppenderTool> clasz = JavadocAppenderTool.class;
 
+        final KmgPfaMeasService measService = new KmgPfaMeasServiceImpl(clasz.toString());
+        measService.start();
+
         try {
 
             final JavadocAppenderTool main = new JavadocAppenderTool();
@@ -259,7 +276,7 @@ public class JavadocAppenderTool {
         } finally {
 
             System.out.println(String.format("%s：成功", clasz.toString()));
-            System.out.println(String.format("%s：終了", clasz.toString()));
+            measService.end();
 
         }
 
