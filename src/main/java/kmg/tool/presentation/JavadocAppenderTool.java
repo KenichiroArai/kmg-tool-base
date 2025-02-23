@@ -67,14 +67,14 @@ public class JavadocAppenderTool {
         /* 対象のJavaファイルをすべて読み込む */
         for (final Path javaFile : javaFileList) {
 
+            final StringBuilder javadocBuilder = new StringBuilder();
+
             try (BufferedReader br = Files.newBufferedReader(javaFile)) {
 
-                /* 初期値の設定 */
-                String              line           = null;
-                boolean             isInJavadoc    = false;
-                final StringBuilder javadocBuilder = new StringBuilder();
-
                 /* 行ごとの読み込み */
+                boolean isInJavadoc = false;
+                String  line        = null;
+
                 while ((line = br.readLine()) != null) {
 
                     final String trimmedLine = line.trim();
@@ -101,15 +101,43 @@ public class JavadocAppenderTool {
                     }
 
                     /* Javadoc内の行の処理 */
-                    if (isInJavadoc) {
 
-                        javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                    if (!isInJavadoc) {
+                        // Javadoc内ではない。
+
+                        continue;
 
                     }
+
+                    // tagMapのキーに該当する行は追加しない
+                    boolean shouldSkip = false;
+
+                    for (final String tag : tagMap.keySet()) {
+
+                        if (!trimmedLine.contains(tag)) {
+
+                            continue;
+
+                        }
+
+                        shouldSkip = true;
+                        break;
+
+                    }
+
+                    if (shouldSkip) {
+
+                        continue;
+
+                    }
+
+                    javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
 
                 }
 
             }
+
+            System.out.println(javadocBuilder.toString());
 
         }
 
