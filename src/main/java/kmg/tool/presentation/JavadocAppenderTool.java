@@ -48,7 +48,7 @@ public class JavadocAppenderTool {
      */
     public Boolean run() throws FileNotFoundException, IOException {
 
-        final boolean result = true;
+        boolean result = true;
 
         /* タグマップの取得 */
         final Map<String, String> tagMap = this.getTagMap();
@@ -139,18 +139,17 @@ public class JavadocAppenderTool {
             }
 
             /* 修正した内容をファイルに書き込む */
-            // try {
-            //
-            // Files.writeString(javaFile, fileContentBuilder.toString());
-            //
-            // } catch (final IOException e) {
-            //
-            // System.err.println("Error writing to file: " + javaFile);
-            // e.printStackTrace();
-            // result = false;
-            //
-            // }
-            System.out.println(fileContentBuilder.toString());
+            try {
+
+                Files.writeString(javaFile, fileContentBuilder.toString());
+
+            } catch (final IOException e) {
+
+                System.err.println("Error writing to file: " + javaFile);
+                e.printStackTrace();
+                result = false;
+
+            }
 
         }
 
