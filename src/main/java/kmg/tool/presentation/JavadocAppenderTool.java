@@ -22,8 +22,8 @@ public class JavadocAppenderTool {
 
     /** テンプレートファイルパス */
     // TODO KenichiroArai 2025/02/23 自動設定
-    private static final Path TEMPLATE_PATH
-        = Paths.get(JavadocAppenderTool.BASE_PATH.toString(), "template/JavadocAppenderTool.txt");
+    private static final Path TEMPLATE_PATH = Paths.get(JavadocAppenderTool.BASE_PATH.toString(),
+            "template/JavadocAppenderTool.txt");
 
     /** 入力パス */
     private static final Path INPUT_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj\\kmg-core");
@@ -54,7 +54,15 @@ public class JavadocAppenderTool {
 
         /* 対象のJavaファイルを取得 */
         final List<Path> javaFiles = Files.walk(JavadocAppenderTool.INPUT_PATH).filter(Files::isRegularFile)
-            .filter(path -> path.toString().endsWith(".java")).collect(Collectors.toList());
+                .filter(path -> path.toString().endsWith(".java")).collect(Collectors.toList());
+
+        /* 対象のJavaファイルをすべて読み込む */
+        for (final Path javaFile : javaFiles) {
+
+            final String javaFileContent = Files.readString(javaFile);
+            System.out.println(javaFileContent);
+
+        }
 
         return result;
 
@@ -88,8 +96,8 @@ public class JavadocAppenderTool {
             }
 
             final String[] parts = KmgDelimiterTypes.SERIES_HALF_SPACE.split(trimmedLine, 2);
-            final String   tag   = parts[0].trim();
-            final String   value = parts[1].trim();
+            final String tag = parts[0].trim();
+            final String value = parts[1].trim();
             result.put(tag, value);
 
         }
