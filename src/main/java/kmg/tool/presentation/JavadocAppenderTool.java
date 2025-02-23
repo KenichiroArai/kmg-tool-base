@@ -49,41 +49,8 @@ public class JavadocAppenderTool {
 
         final Boolean result = Boolean.FALSE;
 
-        /* テンプレートの取得 */
-
-        // タグマップ。キー:タグ、値:テキスト
-        final Map<String, String> tagMap = new HashMap<>();
-
-        // テンプレートの読み込み
-        List<String> lines = null;
-
-        try {
-
-            lines = Files.readAllLines(JavadocAppenderTool.TEMPLATE_PATH);
-
-        } catch (final IOException e) {
-
-            throw e;
-
-        }
-
-        // タグマップの設定
-        for (final String line : lines) {
-
-            final String trimmedLine = line.trim();
-
-            if (!trimmedLine.startsWith(KmgDelimiterTypes.HALF_AT_SIGN.get())) {
-
-                continue;
-
-            }
-
-            final String[] parts = KmgDelimiterTypes.SERIES_HALF_SPACE.split(trimmedLine, 2);
-            final String   tag   = parts[0].trim();
-            final String   value = parts[1].trim();
-            tagMap.put(tag, value);
-
-        }
+        /* タグマップの取得 */
+        final Map<String, String> tagMap = this.getTagMap();
         System.out.println(tagMap.toString());
 
         /* 対象のJavaファイルを取得 */
@@ -91,7 +58,35 @@ public class JavadocAppenderTool {
             .filter(path -> path.toString().endsWith(".java")).collect(Collectors.toList());
 
         return result;
+    }
 
+    /**
+     * タグマップを取得する<br>
+     * 
+     * @return タグマップ
+     * @throws IOException 入出力例外
+     */
+    private Map<String, String> getTagMap() throws IOException {
+        final Map<String, String> result = new HashMap<>();
+
+        /* テンプレートの読み込み */
+        final List<String> lines = Files.readAllLines(JavadocAppenderTool.TEMPLATE_PATH);
+
+        /* タグマップの作成 */
+        for (final String line : lines) {
+            final String trimmedLine = line.trim();
+
+            if (!trimmedLine.startsWith(KmgDelimiterTypes.HALF_AT_SIGN.get())) {
+                continue;
+            }
+
+            final String[] parts = KmgDelimiterTypes.SERIES_HALF_SPACE.split(trimmedLine, 2);
+            final String tag = parts[0].trim();
+            final String value = parts[1].trim();
+            result.put(tag, value);
+        }
+
+        return result;
     }
 
     /**
