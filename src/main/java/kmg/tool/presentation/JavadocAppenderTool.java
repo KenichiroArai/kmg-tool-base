@@ -83,13 +83,35 @@ public class JavadocAppenderTool {
                     if (trimmedLine.startsWith("/**")) {
 
                         isInJavadoc = true;
-                        fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                        continue;
+
+                        if (!trimmedLine.endsWith("*/")) {
+
+                            // Javadocの開始行の末尾に*/がない（1行）場合
+
+                            fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                            continue;
+
+                        }
 
                     }
 
                     /* Javadocの終了判定 */
                     if (isInJavadoc && trimmedLine.endsWith("*/")) {
+
+                        isInJavadoc = false;
+
+                        if (trimmedLine.startsWith("/**")) {
+
+                            // Javadocの開始行と終了行が同じ場合
+
+                            fileContentBuilder.append("/**").append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+
+                            // lineからコメントを取得する
+                            final String comment = trimmedLine.substring(3, trimmedLine.length() - 2);
+
+                            fileContentBuilder.append(comment).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+
+                        }
 
                         /* tagMapの内容を挿入 */
                         for (final Map.Entry<String, String> entry : tagMap.entrySet()) {
@@ -99,39 +121,44 @@ public class JavadocAppenderTool {
 
                         }
 
-                        isInJavadoc = false;
-                        fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                        fileContentBuilder.append("*/").append(KmgDelimiterTypes.LINE_SEPARATOR.get());
                         continue;
 
                     }
 
                     /* Javadoc内の行の処理 */
-                    if (isInJavadoc) {
-                        // Javadoc内の場合
+                    if (!isInJavadoc) {
 
-                        // tagMapのキーに該当する行は追加しない
-                        boolean shouldSkip = false;
+                        fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
 
-                        for (final String tag : tagMap.keySet()) {
+                        continue;
 
-                            if (!trimmedLine.contains(tag)) {
+                    }
 
-                                continue;
+                    // Javadoc内の場合
 
-                            }
+                    // tagMapのキーに該当する行は追加しない
+                    boolean shouldSkip = false;
 
-                            shouldSkip = true;
-                            break;
+                    for (final String tag : tagMap.keySet()) {
 
-                        }
-
-                        if (shouldSkip) {
+                        if (!trimmedLine.contains(tag)) {
 
                             continue;
 
                         }
 
+                        shouldSkip = true;
+                        break;
+
                     }
+
+                    if (shouldSkip) {
+
+                        continue;
+
+                    }
+
                     fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
 
                 }
