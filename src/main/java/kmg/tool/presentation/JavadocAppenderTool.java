@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
@@ -21,6 +24,9 @@ public class JavadocAppenderTool {
     // TODO KenichiroArai 2025/02/23 自動設定
     private static final Path TEMPLATE_PATH
         = Paths.get(JavadocAppenderTool.BASE_PATH.toString(), "template/JavadocAppenderTool.txt");
+
+    /** 入力パス */
+    private static final Path INPUT_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj\\kmg-core");
 
     /**
      * 実行する<br>
@@ -44,18 +50,45 @@ public class JavadocAppenderTool {
         final Boolean result = Boolean.FALSE;
 
         /* テンプレートの取得 */
-        String template = null;
+
+        // タグマップ。キー:タグ、値:テキスト
+        final Map<String, String> tagMap = new HashMap<>();
+
+        // テンプレートの読み込み
+        List<String> lines = null;
 
         try {
 
-            template = Files.readAllLines(JavadocAppenderTool.TEMPLATE_PATH).stream()
-                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
+            lines = Files.readAllLines(JavadocAppenderTool.TEMPLATE_PATH);
 
         } catch (final IOException e) {
 
             throw e;
 
         }
+
+        // タグマップの設定
+        for (final String line : lines) {
+
+            final String trimmedLine = line.trim();
+
+            if (!trimmedLine.startsWith(KmgDelimiterTypes.HALF_AT_SIGN.get())) {
+
+                continue;
+
+            }
+
+            final String[] parts = KmgDelimiterTypes.SERIES_HALF_SPACE.split(trimmedLine, 2);
+            final String   tag   = parts[0].trim();
+            final String   value = parts[1].trim();
+            tagMap.put(tag, value);
+
+        }
+        System.out.println(tagMap.toString());
+
+        /* 対象のJavaファイルを取得 */
+        final List<Path> javaFiles = Files.walk(JavadocAppenderTool.INPUT_PATH).filter(Files::isRegularFile)
+            .filter(path -> path.toString().endsWith(".java")).collect(Collectors.toList());
 
         return result;
 
