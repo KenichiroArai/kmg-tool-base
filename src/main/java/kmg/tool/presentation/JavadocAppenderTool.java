@@ -44,7 +44,6 @@ public class JavadocAppenderTool {
      * @throws IOException
      *                               入出力例外
      */
-    @SuppressWarnings("static-method")
     public Boolean run() throws FileNotFoundException, IOException {
 
         final Boolean result = Boolean.FALSE;
@@ -58,15 +57,20 @@ public class JavadocAppenderTool {
             .filter(path -> path.toString().endsWith(".java")).collect(Collectors.toList());
 
         return result;
+
     }
 
     /**
      * タグマップを取得する<br>
-     * 
+     *
      * @return タグマップ
-     * @throws IOException 入出力例外
+     *
+     * @throws IOException
+     *                     入出力例外
      */
+    @SuppressWarnings("static-method")
     private Map<String, String> getTagMap() throws IOException {
+
         final Map<String, String> result = new HashMap<>();
 
         /* テンプレートの読み込み */
@@ -74,19 +78,24 @@ public class JavadocAppenderTool {
 
         /* タグマップの作成 */
         for (final String line : lines) {
+
             final String trimmedLine = line.trim();
 
             if (!trimmedLine.startsWith(KmgDelimiterTypes.HALF_AT_SIGN.get())) {
+
                 continue;
+
             }
 
             final String[] parts = KmgDelimiterTypes.SERIES_HALF_SPACE.split(trimmedLine, 2);
-            final String tag = parts[0].trim();
-            final String value = parts[1].trim();
+            final String   tag   = parts[0].trim();
+            final String   value = parts[1].trim();
             result.put(tag, value);
+
         }
 
         return result;
+
     }
 
     /**
