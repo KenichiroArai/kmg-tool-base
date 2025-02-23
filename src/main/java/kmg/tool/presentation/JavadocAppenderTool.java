@@ -1,5 +1,6 @@
 package kmg.tool.presentation;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
@@ -46,21 +48,32 @@ public class JavadocAppenderTool {
      */
     public Boolean run() throws FileNotFoundException, IOException {
 
-        final Boolean result = Boolean.FALSE;
+        final boolean result = false;
 
         /* タグマップの取得 */
         final Map<String, String> tagMap = this.getTagMap();
         System.out.println(tagMap.toString());
 
         /* 対象のJavaファイルを取得 */
-        final List<Path> javaFiles = Files.walk(JavadocAppenderTool.INPUT_PATH).filter(Files::isRegularFile)
-            .filter(path -> path.toString().endsWith(".java")).collect(Collectors.toList());
+        final List<Path> javaFileList;
+
+        try (final Stream<Path> streamPath = Files.walk(JavadocAppenderTool.INPUT_PATH)) {
+
+            javaFileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
+                .collect(Collectors.toList());
+
+        }
 
         /* 対象のJavaファイルをすべて読み込む */
-        for (final Path javaFile : javaFiles) {
+        for (final Path javaFile : javaFileList) {
 
-            final String javaFileContent = Files.readString(javaFile);
-            System.out.println(javaFileContent);
+            try (BufferedReader br = Files.newBufferedReader(javaFile)) {
+
+                final String javaFileContent
+                    = br.lines().collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
+                System.out.println(javaFileContent);
+
+            }
 
         }
 
