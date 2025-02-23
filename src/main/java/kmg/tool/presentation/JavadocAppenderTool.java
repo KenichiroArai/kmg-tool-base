@@ -91,6 +91,14 @@ public class JavadocAppenderTool {
                     /* Javadocの終了判定 */
                     if (isInJavadoc && trimmedLine.endsWith("*/")) {
 
+                        /* tagMapの内容を挿入 */
+                        for (final Map.Entry<String, String> entry : tagMap.entrySet()) {
+
+                            javadocBuilder.append(" * ").append(entry.getKey()).append(" ").append(entry.getValue())
+                                .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+
+                        }
+
                         isInJavadoc = false;
                         javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
                         System.out.println("Found Javadoc:");
