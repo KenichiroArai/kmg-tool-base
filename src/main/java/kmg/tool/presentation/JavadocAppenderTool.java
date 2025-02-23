@@ -263,19 +263,21 @@ public class JavadocAppenderTool {
 
             final JavadocAppenderTool main = new JavadocAppenderTool();
 
-            if (main.run()) {
+            if (!main.run()) {
 
                 System.out.println(String.format("%s：失敗", clasz.toString()));
 
             }
+            System.out.println(String.format("%s：成功", clasz.toString()));
 
         } catch (final Exception e) {
+
+            System.out.println(String.format("%s：例外発生", clasz.toString()));
 
             e.printStackTrace();
 
         } finally {
 
-            System.out.println(String.format("%s：成功", clasz.toString()));
             measService.end();
 
         }
