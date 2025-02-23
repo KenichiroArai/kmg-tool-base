@@ -129,7 +129,7 @@
         <repository>
             <id>github-kmg-tool</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/KenichiroArai/kmg-tool-src</url>
+            <url>https://maven.pkg.github.com/KenichiroArai/kmg-tool</url>
         </repository>
     </distributionManagement>
 
