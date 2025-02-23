@@ -254,14 +254,13 @@ public class JavadocAppenderTool {
      */
     public static void main(final String[] args) {
 
-        final Class<JavadocAppenderTool> clasz = JavadocAppenderTool.class;
-
-        final KmgPfaMeasService measService = new KmgPfaMeasServiceImpl(clasz.toString());
+        final Class<JavadocAppenderTool> clasz       = JavadocAppenderTool.class;
+        final KmgPfaMeasService          measService = new KmgPfaMeasServiceImpl(clasz.toString());
         measService.start();
 
-        try {
+        final JavadocAppenderTool main = new JavadocAppenderTool();
 
-            final JavadocAppenderTool main = new JavadocAppenderTool();
+        try {
 
             if (!main.run()) {
 
