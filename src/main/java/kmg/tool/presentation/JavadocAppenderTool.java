@@ -69,9 +69,45 @@ public class JavadocAppenderTool {
 
             try (BufferedReader br = Files.newBufferedReader(javaFile)) {
 
-                final String javaFileContent
-                    = br.lines().collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
-                System.out.println(javaFileContent);
+                /* 初期値の設定 */
+                String              line           = null;
+                boolean             isInJavadoc    = false;
+                final StringBuilder javadocBuilder = new StringBuilder();
+
+                /* 行ごとの読み込み */
+                while ((line = br.readLine()) != null) {
+
+                    final String trimmedLine = line.trim();
+
+                    /* Javadocの開始判定 */
+                    if (trimmedLine.startsWith("/**")) {
+
+                        isInJavadoc = true;
+                        javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                        continue;
+
+                    }
+
+                    /* Javadocの終了判定 */
+                    if (isInJavadoc && trimmedLine.endsWith("*/")) {
+
+                        isInJavadoc = false;
+                        javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                        System.out.println("Found Javadoc:");
+                        System.out.println(javadocBuilder.toString());
+                        javadocBuilder.setLength(0);
+                        continue;
+
+                    }
+
+                    /* Javadoc内の行の処理 */
+                    if (isInJavadoc) {
+
+                        javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+
+                    }
+
+                }
 
             }
 
