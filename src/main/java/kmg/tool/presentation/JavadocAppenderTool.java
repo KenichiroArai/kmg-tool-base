@@ -273,7 +273,8 @@ public class JavadocAppenderTool {
 
         }
 
-        return fileContentBuilder.toString();
+        String result = fileContentBuilder.toString();
+        return result;
 
     }
 
