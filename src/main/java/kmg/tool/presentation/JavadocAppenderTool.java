@@ -143,8 +143,9 @@ public class JavadocAppenderTool {
 
                 final String trimmedLine = line.trim();
 
-                /* Javadocの開始判定 */
                 if (trimmedLine.startsWith("/**")) {
+
+                    /* Javadocの開始 */
 
                     isInJavadoc = true;
                     javadocBuilder.setLength(0);
@@ -180,8 +181,9 @@ public class JavadocAppenderTool {
 
                 }
 
-                /* Javadocの終了判定 */
                 if (isInJavadoc && trimmedLine.endsWith("*/")) {
+
+                    /* Javadocの終了 */
 
                     isInJavadoc = false;
 
@@ -273,7 +275,7 @@ public class JavadocAppenderTool {
 
         }
 
-        String result = fileContentBuilder.toString();
+        final String result = fileContentBuilder.toString();
         return result;
 
     }
