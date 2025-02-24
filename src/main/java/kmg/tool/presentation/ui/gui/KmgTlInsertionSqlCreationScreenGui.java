@@ -1,4 +1,4 @@
-package kmg.tool.application.ui.gui;
+package kmg.tool.presentation.ui.gui;
 
 import java.io.IOException;
 import java.net.URL;
@@ -46,7 +46,8 @@ public class KmgTlInsertionSqlCreationScreenGui extends Application {
 
         stage.setTitle("挿入ＳＱＬ作成画面");
         try {
-            final URL url = this.getClass().getResource("KmgTlInsertionSqlCreationScreenGui.fxml");
+            final URL url = this.getClass()
+                    .getResource("/kmg/tool/application/ui/gui/KmgTlInsertionSqlCreationScreenGui.fxml");
             final FXMLLoader fxml = new FXMLLoader(url);
             final AnchorPane root = fxml.load();
             final Scene scene = new Scene(root);
