@@ -77,109 +77,15 @@ public class JavadocAppenderTool {
         for (final Path javaFile : javaFileList) {
 
             final StringBuilder fileContentBuilder = new StringBuilder();
+            final String        fileContent        = JavadocAppenderTool.getNewJavaFile(javaFile, fileContentBuilder,
+                tagMap);
 
-            try (BufferedReader br = Files.newBufferedReader(javaFile)) {
-
-                /* 行ごとの読み込み */
-                boolean isInJavadoc = false;
-                String  line        = null;
-
-                while ((line = br.readLine()) != null) {
-
-                    lineCount++;
-
-                    final String trimmedLine = line.trim();
-
-                    /* Javadocの開始判定 */
-                    if (trimmedLine.startsWith("/**")) {
-
-                        isInJavadoc = true;
-
-                        if (!trimmedLine.endsWith("*/")) {
-
-                            // Javadocの開始行の末尾に*/がない（1行）場合
-
-                            fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                            continue;
-
-                        }
-
-                    }
-
-                    /* Javadocの終了判定 */
-                    if (isInJavadoc && trimmedLine.endsWith("*/")) {
-
-                        isInJavadoc = false;
-
-                        if (trimmedLine.startsWith("/**")) {
-
-                            // Javadocの開始行と終了行が同じ場合
-
-                            fileContentBuilder.append("/**").append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-
-                            // lineからコメントを取得する
-                            final String comment = trimmedLine.substring(3, trimmedLine.length() - 2);
-
-                            fileContentBuilder.append(comment).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-
-                        }
-
-                        /* tagMapの内容を挿入 */
-                        for (final Map.Entry<String, String> entry : tagMap.entrySet()) {
-
-                            fileContentBuilder.append(" * ").append(entry.getKey()).append(" ").append(entry.getValue())
-                                .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-
-                        }
-
-                        fileContentBuilder.append("*/").append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                        continue;
-
-                    }
-
-                    /* Javadoc内の行の処理 */
-                    if (!isInJavadoc) {
-
-                        fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-
-                        continue;
-
-                    }
-
-                    // Javadoc内の場合
-
-                    // tagMapのキーに該当する行は追加しない
-                    boolean shouldSkip = false;
-
-                    for (final String tag : tagMap.keySet()) {
-
-                        if (!trimmedLine.contains(tag)) {
-
-                            continue;
-
-                        }
-
-                        shouldSkip = true;
-                        break;
-
-                    }
-
-                    if (shouldSkip) {
-
-                        continue;
-
-                    }
-
-                    fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-
-                }
-
-            }
+            lineCount += KmgDelimiterTypes.LINE_SEPARATOR.split(fileContent).length;
 
             /* 修正した内容をファイルに書き込む */
             try {
 
-                Files.writeString(javaFile, fileContentBuilder.toString());
+                Files.writeString(javaFile, fileContent);
 
             } catch (final IOException e) {
 
@@ -193,6 +99,132 @@ public class JavadocAppenderTool {
 
         System.out.println(String.format("fileCount: %d", fileCount));
         System.out.println(String.format("lineCount: %d", lineCount));
+
+        return result;
+
+    }
+
+    /**
+     * 新しいJavaファイルを返す。<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @param javaFile
+     *                           Javaファイル
+     * @param fileContentBuilder
+     *                           ファイル内容ビルダー
+     * @param tagMap
+     *                           タグマップ
+     *
+     * @throws IOException
+     *                     入出力例外
+     *
+     * @return ファイル内容
+     */
+    private static String getNewJavaFile(final Path javaFile, final StringBuilder fileContentBuilder,
+        final Map<String, String> tagMap) throws IOException {
+
+        try (BufferedReader br = Files.newBufferedReader(javaFile)) {
+
+            /* 行ごとの読み込み */
+            boolean isInJavadoc = false;
+            String  line        = null;
+
+            while ((line = br.readLine()) != null) {
+
+                final String trimmedLine = line.trim();
+
+                /* Javadocの開始判定 */
+                if (trimmedLine.startsWith("/**")) {
+
+                    isInJavadoc = true;
+
+                    if (!trimmedLine.endsWith("*/")) {
+
+                        // Javadocの開始行の末尾に*/がない（1行）場合
+
+                        fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                        continue;
+
+                    }
+
+                }
+
+                /* Javadocの終了判定 */
+                if (isInJavadoc && trimmedLine.endsWith("*/")) {
+
+                    isInJavadoc = false;
+
+                    if (trimmedLine.startsWith("/**")) {
+
+                        // Javadocの開始行と終了行が同じ場合
+
+                        fileContentBuilder.append("/**").append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+
+                        // lineからコメントを取得する
+                        final String comment = trimmedLine.substring(3, trimmedLine.length() - 2);
+
+                        fileContentBuilder.append(comment).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+
+                    }
+
+                    /* tagMapの内容を挿入 */
+                    for (final Map.Entry<String, String> entry : tagMap.entrySet()) {
+
+                        fileContentBuilder.append(" * ").append(entry.getKey()).append(" ").append(entry.getValue())
+                            .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+
+                    }
+
+                    fileContentBuilder.append("*/").append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                    continue;
+
+                }
+
+                /* Javadoc内の行の処理 */
+                if (!isInJavadoc) {
+
+                    fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+
+                    continue;
+
+                }
+
+                // Javadoc内の場合
+
+                // tagMapのキーに該当する行は追加しない
+                boolean shouldSkip = false;
+
+                for (final String tag : tagMap.keySet()) {
+
+                    if (!trimmedLine.contains(tag)) {
+
+                        continue;
+
+                    }
+
+                    shouldSkip = true;
+                    break;
+
+                }
+
+                if (shouldSkip) {
+
+                    continue;
+
+                }
+
+                fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+
+            }
+
+        }
+
+        final String result = fileContentBuilder.toString();
 
         return result;
 
