@@ -1,0 +1,302 @@
+Warning:  Javadoc Warnings
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/utils/KmgArrayUtils.java:17: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/utils/KmgArrayUtils.java:21: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/utils/KmgArrayUtils.java:52: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/utils/KmgArrayUtils.java:56: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:129: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:133: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:150: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:154: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:177: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:181: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:227: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:231: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:248: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:252: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:270: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:274: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:289: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:293: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:311: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:315: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:329: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:333: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:220: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:224: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:241: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:245: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:268: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:272: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:311: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:315: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:332: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:336: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:354: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:358: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:373: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:377: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:392: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:396: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:410: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:414: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:155: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:159: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:176: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:180: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:207: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:211: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:265: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:269: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:308: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:312: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:329: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:333: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:347: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:351: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:369: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:373: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:388: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:392: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:407: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:411: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:20: warning: Tag @author cannot be used in field documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:24: warning: Tag @version cannot be used in field documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:53: warning: Tag @author cannot be used in field documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:57: warning: Tag @version cannot be used in field documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:207: warning: Tag @author cannot be used in constructor documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:211: warning: Tag @version cannot be used in constructor documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:226: warning: Tag @author cannot be used in constructor documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:230: warning: Tag @version cannot be used in constructor documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:100: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:104: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:123: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:127: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:144: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:148: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:165: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:169: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:186: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:190: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:246: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:250: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:261: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:265: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:282: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:286: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:309: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:313: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:349: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:353: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:370: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:374: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:392: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:396: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:411: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:415: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:433: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:437: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:460: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:464: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:519: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @author KenichiroArai
+Warning:  ^
+Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:523: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
+Warning:  * @version 0.1.0
+Warning:  ^
+Warning: [WARNING] 100 warnings

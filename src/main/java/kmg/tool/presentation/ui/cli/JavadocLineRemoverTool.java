@@ -45,7 +45,8 @@ public class JavadocLineRemoverTool {
      * @throws IOException
      *                               入出力例外
      */
-    public static Boolean run() throws FileNotFoundException, IOException {
+    @SuppressWarnings("static-method")
+    public Boolean run() throws FileNotFoundException, IOException {
 
         final boolean result = true;
 
@@ -92,36 +93,48 @@ public class JavadocLineRemoverTool {
 
         try (final Stream<String> stream = Files.lines(JavadocLineRemoverTool.INPUT_PATH)) {
 
-            final Map<Path, List<Integer>> result = stream.filter(line -> line.contains(".java:")).map(line -> {
-
-                // ファイルパスと行番号を抽出
-                final String[] parts = KmgDelimiterTypes.COLON.split(line);
-
-                if (parts.length < 3) {
-
-                    return null;
-
-                }
-
-                try {
-
-                    final Path path       = Paths.get(parts[1].trim());
-                    final int  lineNumber = Integer.parseInt(parts[2].trim());
-                    return new SimpleEntry<>(path, lineNumber);
-
-                } catch (@SuppressWarnings("unused") final Exception e) {
-
-                    // 処理なし
-                }
-
-                return null;
-
-            }).filter(entry -> entry != null).collect(
-                Collectors.groupingBy(Map.Entry::getKey, Collectors.mapping(Map.Entry::getValue, Collectors.toList())));
+            final Map<Path, List<Integer>> result
+                = stream.filter(line -> line.contains(".java:")).map(JavadocLineRemoverTool::convertLineToPathLineEntry)
+                    .filter(entry -> entry != null).collect(Collectors.groupingBy(Map.Entry::getKey,
+                        Collectors.mapping(Map.Entry::getValue, Collectors.toList())));
 
             return result;
 
         }
+
+    }
+
+    /**
+     * 行文字列をパスと行番号のエントリに変換する
+     *
+     * @param line
+     *             行文字列
+     *
+     * @return パスと行番号のエントリ、変換できない場合はnull
+     */
+    private static SimpleEntry<Path, Integer> convertLineToPathLineEntry(final String line) {
+
+        // ファイルパスと行番号を抽出
+        final String[] parts = KmgDelimiterTypes.COLON.split(line);
+
+        if (parts.length < 3) {
+
+            return null;
+
+        }
+
+        try {
+
+            final Path path       = Paths.get(parts[1].trim());
+            final int  lineNumber = Integer.parseInt(parts[2].trim());
+            return new SimpleEntry<>(path, lineNumber);
+
+        } catch (@SuppressWarnings("unused") final Exception e) {
+
+            // 処理なし
+        }
+
+        return null;
 
     }
 
@@ -141,7 +154,7 @@ public class JavadocLineRemoverTool {
 
         try {
 
-            if (!JavadocLineRemoverTool.run()) {
+            if (!main.run()) {
 
                 System.out.println(String.format("%s：失敗", clasz.toString()));
 
