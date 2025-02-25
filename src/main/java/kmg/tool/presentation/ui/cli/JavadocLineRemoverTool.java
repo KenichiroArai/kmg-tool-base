@@ -60,9 +60,11 @@ public class JavadocLineRemoverTool {
 
         }
 
-        /* 対象のJavaファイルをすべて読み込む */
+        /* 対象のJavaファイルを書き換える */
 
         final int lineCount = 0;
+
+        /* 情報の出力 */
 
         System.out.println(String.format("fileCount: %d", fileCount));
         System.out.println(String.format("lineCount: %d", lineCount));
