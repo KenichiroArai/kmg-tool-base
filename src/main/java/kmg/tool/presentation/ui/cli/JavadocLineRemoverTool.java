@@ -32,6 +32,9 @@ public class JavadocLineRemoverTool {
     /** 対象パス */
     private static final Path TARGET_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj");
 
+    /** ホームランナーワークパスパターン */
+    private static final String HOME_RUNNER_WORK_PATH_PATTERN = "/home/runner/work/[\\w-]+/";
+
     /**
      * 実行する<br>
      *
@@ -134,7 +137,7 @@ public class JavadocLineRemoverTool {
 
         // 実際のファイルパスに変換
         String filePath = parts[1].trim();
-        filePath = filePath.replaceAll("/home/runner/work/[\\w-]+/", KmgString.EMPTY);
+        filePath = filePath.replaceAll(HOME_RUNNER_WORK_PATH_PATTERN, KmgString.EMPTY);
         filePath = Paths.get(JavadocLineRemoverTool.TARGET_PATH.toString(), filePath).toString();
 
         final Path path = Paths.get(filePath);
