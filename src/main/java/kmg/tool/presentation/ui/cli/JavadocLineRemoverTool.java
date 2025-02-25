@@ -29,8 +29,8 @@ public class JavadocLineRemoverTool {
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(JavadocLineRemoverTool.BASE_PATH.toString(), "input.txt");
 
-    /** Javaパス */
-    private static final Path JAVA_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj\\kmg-core");
+    /** 対象パス */
+    private static final Path TARGET_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj");
 
     /**
      * 実行する<br>
@@ -57,27 +57,12 @@ public class JavadocLineRemoverTool {
         final Map<Path, List<Integer>> inputMap = JavadocLineRemoverTool.getInputMap();
         System.out.println(inputMap.toString());
 
-        /* 対象のJavaファイルを取得 */
-        final List<Path> javaFileList;
+        /* Javadoc行を削除する */
 
-        int fileCount = 0;
-
-        try (final Stream<Path> streamPath = Files.walk(JavadocLineRemoverTool.JAVA_PATH)) {
-
-            javaFileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
-                .collect(Collectors.toList());
-
-            fileCount += javaFileList.size();
-
-        }
-
-        /* 対象のJavaファイルからJavadoc行を削除する */
-
-        final int lineCount = JavadocLineRemoverTool.deleteJavadocLines(javaFileList, inputMap);
+        final int lineCount = JavadocLineRemoverTool.deleteJavadocLines(inputMap);
 
         /* 情報の出力 */
 
-        System.out.println(String.format("fileCount: %d", fileCount));
         System.out.println(String.format("lineCount: %d", lineCount));
 
         return result;
@@ -147,8 +132,12 @@ public class JavadocLineRemoverTool {
 
         }
 
-        String filePath = parts[0].trim();
-        filePath = filePath.replace("\\home\\runner\\work\\kmg-core\\", KmgString.EMPTY);
+        // 実際のファイルパスに変換
+        String filePath = parts[1].trim();
+        filePath = filePath.replace("/home/runner/work/kmg-core/", KmgString.EMPTY);
+        System.out.println(filePath);
+        filePath = Paths.get(JavadocLineRemoverTool.TARGET_PATH.toString(), filePath).toString();
+
         final Path path = Paths.get(filePath);
 
         int lineNumber = 0;
@@ -171,23 +160,20 @@ public class JavadocLineRemoverTool {
     /**
      * Javadoc行を削除する
      *
-     * @param javaFileList
-     *                     Javaファイルのリスト
      * @param inputMap
-     *                     パスと行番号のマップ
+     *                 パスと行番号のマップ
      *
      * @return 削除した行数
      *
      * @throws IOException
      *                     入出力例外
      */
-    private static int deleteJavadocLines(final List<Path> javaFileList, final Map<Path, List<Integer>> inputMap)
-        throws IOException {
+    private static int deleteJavadocLines(final Map<Path, List<Integer>> inputMap) throws IOException {
 
         int result = 0;
 
         /* 対象のJavaファイルごとに処理 */
-        for (final Path javaFile : javaFileList) {
+        for (final Path javaFile : inputMap.keySet()) {
 
             /* 入力マップに含まれるファイルのみ処理 */
             if (!inputMap.containsKey(javaFile)) {
