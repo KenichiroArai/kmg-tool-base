@@ -134,8 +134,7 @@ public class JavadocLineRemoverTool {
 
         // 実際のファイルパスに変換
         String filePath = parts[1].trim();
-        filePath = filePath.replace("/home/runner/work/kmg-core/", KmgString.EMPTY);
-        System.out.println(filePath);
+        filePath = filePath.replaceAll("/home/runner/work/[\\w-]+/", KmgString.EMPTY);
         filePath = Paths.get(JavadocLineRemoverTool.TARGET_PATH.toString(), filePath).toString();
 
         final Path path = Paths.get(filePath);
