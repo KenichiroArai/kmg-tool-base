@@ -84,23 +84,31 @@ public class JavadocLineRemoverTool {
     /**
      * 入力ファイルからパスと行番号のマップを取得する
      *
-     * @return パスと行番号のマップ
+     * @return パスと行番号のリストのマップ
      *
      * @throws IOException
      *                     入出力例外
      */
     private static Map<Path, List<Integer>> getInputMap() throws IOException {
 
+        final Map<Path, List<Integer>> result;
+
         try (final Stream<String> stream = Files.lines(JavadocLineRemoverTool.INPUT_PATH)) {
 
-            final Map<Path, List<Integer>> result
-                = stream.filter(line -> line.contains(".java:")).map(JavadocLineRemoverTool::convertLineToPathLineEntry)
-                    .filter(entry -> entry != null).collect(Collectors.groupingBy(Map.Entry::getKey,
-                        Collectors.mapping(Map.Entry::getValue, Collectors.toList())));
+            // Javaファイルの行を抽出するストリームを作成する
+            final Stream<String> filteredLines = stream.filter(line -> line.contains(".java:"));
 
-            return result;
+            // ストリームから行をパスと行番号のエントリに変換する
+            final Stream<SimpleEntry<Path, Integer>> entries
+                = filteredLines.map(JavadocLineRemoverTool::convertLineToPathLineEntry).filter(entry -> entry != null);
+
+            // エントリからパスと行番号のリストのマップに変換する
+            result = entries.collect(
+                Collectors.groupingBy(Map.Entry::getKey, Collectors.mapping(Map.Entry::getValue, Collectors.toList())));
 
         }
+
+        return result;
 
     }
 
@@ -114,27 +122,33 @@ public class JavadocLineRemoverTool {
      */
     private static SimpleEntry<Path, Integer> convertLineToPathLineEntry(final String line) {
 
+        SimpleEntry<Path, Integer> result = null;
+
         // ファイルパスと行番号を抽出
         final String[] parts = KmgDelimiterTypes.COLON.split(line);
 
         if (parts.length < 3) {
 
-            return null;
+            return result;
 
         }
 
+        final Path path = Paths.get(parts[1].trim());
+
+        int lineNumber = 0;
+
         try {
 
-            final Path path       = Paths.get(parts[1].trim());
-            final int  lineNumber = Integer.parseInt(parts[2].trim());
-            return new SimpleEntry<>(path, lineNumber);
+            lineNumber = Integer.parseInt(parts[2].trim());
 
-        } catch (@SuppressWarnings("unused") final Exception e) {
+        } catch (@SuppressWarnings("unused") final NumberFormatException e) {
 
             // 処理なし
         }
 
-        return null;
+        result = new SimpleEntry<>(path, lineNumber);
+
+        return result;
 
     }
 
