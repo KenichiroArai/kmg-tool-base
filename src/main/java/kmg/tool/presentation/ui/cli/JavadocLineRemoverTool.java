@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
+import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
@@ -70,9 +71,9 @@ public class JavadocLineRemoverTool {
 
         }
 
-        /* 対象のJavaファイルを書き換える */
+        /* 対象のJavaファイルからJavadoc行を削除する */
 
-        final int lineCount = 0;
+        final int lineCount = JavadocLineRemoverTool.deleteJavadocLines(javaFileList, inputMap);
 
         /* 情報の出力 */
 
@@ -146,7 +147,9 @@ public class JavadocLineRemoverTool {
 
         }
 
-        final Path path = Paths.get(parts[1].trim());
+        String filePath = parts[0].trim();
+        filePath = filePath.replace("\\home\\runner\\work\\kmg-core\\", KmgString.EMPTY);
+        final Path path = Paths.get(filePath);
 
         int lineNumber = 0;
 
@@ -160,6 +163,65 @@ public class JavadocLineRemoverTool {
         }
 
         result = new SimpleEntry<>(path, lineNumber);
+
+        return result;
+
+    }
+
+    /**
+     * Javadoc行を削除する
+     *
+     * @param javaFileList
+     *                     Javaファイルのリスト
+     * @param inputMap
+     *                     パスと行番号のマップ
+     *
+     * @return 削除した行数
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    private static int deleteJavadocLines(final List<Path> javaFileList, final Map<Path, List<Integer>> inputMap)
+        throws IOException {
+
+        int result = 0;
+
+        /* 対象のJavaファイルごとに処理 */
+        for (final Path javaFile : javaFileList) {
+
+            /* 入力マップに含まれるファイルのみ処理 */
+            if (!inputMap.containsKey(javaFile)) {
+
+                continue;
+
+            }
+
+            /* ファイルの内容を読み込む */
+            final List<String> lines = Files.readAllLines(javaFile);
+
+            /* 削除対象の行番号リスト（降順）を取得 */
+            final List<Integer> lineNumbers = inputMap.get(javaFile);
+
+            /* 行番号ごとに行を削除（降順なので、インデックスの調整は不要） */
+            for (final Integer lineNumber : lineNumbers) {
+
+                /* 行番号は1から始まるが、リストのインデックスは0から始まるため調整 */
+                final int index = lineNumber - 1;
+
+                /* インデックスが有効範囲内かチェック */
+                if ((index >= 0) && (index < lines.size())) {
+
+                    lines.remove(index);
+                    result++;
+
+                }
+
+            }
+
+            /* 変更した内容をファイルに書き戻す */
+            Files.write(javaFile, lines);
+
+        }
 
         return result;
 
