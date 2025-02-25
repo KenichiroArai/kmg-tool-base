@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -84,7 +86,7 @@ public class JavadocLineRemoverTool {
     /**
      * 入力ファイルからパスと行番号のマップを取得する
      *
-     * @return パスと行番号のリストのマップ
+     * @return パスと行番号の降順のリストのマップ
      *
      * @throws IOException
      *                     入出力例外
@@ -103,8 +105,19 @@ public class JavadocLineRemoverTool {
                 = filteredLines.map(JavadocLineRemoverTool::convertLineToPathLineEntry).filter(entry -> entry != null);
 
             // エントリからパスと行番号のリストのマップに変換する
-            result = entries.collect(
+            final Map<Path, List<Integer>> pathLineMap = entries.collect(
                 Collectors.groupingBy(Map.Entry::getKey, Collectors.mapping(Map.Entry::getValue, Collectors.toList())));
+
+            // パスごとに行番号のリストを降順にソートする
+            final Map<Path, List<Integer>> sortedLineMap = new LinkedHashMap<>();
+            pathLineMap.forEach((path, lineNumbers) -> {
+
+                lineNumbers.sort(Comparator.reverseOrder());
+                sortedLineMap.put(path, lineNumbers);
+
+            });
+
+            result = sortedLineMap;
 
         }
 
