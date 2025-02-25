@@ -194,12 +194,21 @@ public class JavadocLineRemoverTool {
                 final int index = lineNumber - 1;
 
                 /* インデックスが有効範囲内かチェック */
-                if ((index >= 0) && (index < lines.size())) {
 
-                    lines.remove(index);
-                    result++;
+                if (index < 0) {
+
+                    continue;
 
                 }
+
+                if (index >= lines.size()) {
+
+                    continue;
+
+                }
+
+                lines.remove(index);
+                result++;
 
             }
 
