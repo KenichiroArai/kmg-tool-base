@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="85.0" prefWidth="303.0" xmlns="http://javafx.com/javafx/11.0.2"
-    xmlns:fx="http://javafx.com/fxml/1" fx:controller="kmg.tool.application.controller.KmgTlInsertionSqlCreationController">
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="kmg.tool.presentation.controller.KmgTlInsertionSqlCreationController">
     <children>
         <VBox prefHeight="118.0" prefWidth="662.0" spacing="5">
             <children>

@@ -24,14 +24,12 @@
 
     <dependencies>
 
-        <!-- KMG Core -->
+        <!-- KMG シリーズ -->
         <dependency>
             <groupId>kmg.core</groupId>
             <artifactId>kmg-core</artifactId>
             <version>0.1.0</version>
         </dependency>
-
-        <!-- KMG Foundation dependency-->
         <dependency>
             <groupId>kmg.foundation</groupId>
             <artifactId>kmg-foundation</artifactId>
@@ -94,6 +92,8 @@
 
     <build>
         <plugins>
+
+            <!-- Spring -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -101,18 +101,30 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+
+            <!-- JavaFX -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>kmg.tool.application.ui.gui.KmgTlInsertionSqlCreationScreenGui</mainClass>
+                    <mainClass>kmg.tool.presentation.ui.gui.KmgTlInsertionSqlCreationScreenGui</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>kmg.tool.presentation.ui.gui.KmgTlInsertionSqlCreationScreenGui</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
     <repositories>
+
+        <!-- KMG シリーズ -->
         <repository>
             <id>github-kmg-core</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
@@ -126,6 +138,8 @@
     </repositories>
 
     <distributionManagement>
+
+        <!-- KMG シリーズ -->
         <repository>
             <id>github-kmg-tool</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>

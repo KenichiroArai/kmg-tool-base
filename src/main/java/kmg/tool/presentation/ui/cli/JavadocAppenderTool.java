@@ -1,4 +1,4 @@
-package kmg.tool.presentation;
+package kmg.tool.presentation.ui.cli;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
