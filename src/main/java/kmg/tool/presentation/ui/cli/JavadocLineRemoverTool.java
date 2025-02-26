@@ -33,7 +33,7 @@ public class JavadocLineRemoverTool {
     private static final Path TARGET_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj");
 
     /** ホームランナーワークパスパターン */
-    private static final String HOME_RUNNER_WORK_PATH_PATTERN = "/home/runner/work/[\\w-]+/";
+    private static final String HOME_RUNNER_WORK_PATH_PATTERN = "";
 
     /**
      * 実行する<br>
@@ -126,19 +126,27 @@ public class JavadocLineRemoverTool {
 
         SimpleEntry<Path, Integer> result = null;
 
-        // ファイルパスと行番号を抽出
-        final String[] parts = KmgDelimiterTypes.COLON.split(line);
+        final String wkLine = line.replace("D:", "D\\");
 
-        if (parts.length < 3) {
+        // ファイルパスと行番号を抽出
+        final String[] parts = KmgDelimiterTypes.COLON.split(wkLine);
+
+        if (parts.length < 2) {
 
             return result;
 
         }
 
         // 実際のファイルパスに変換
-        String filePath = parts[1].trim();
-        filePath = filePath.replaceAll(HOME_RUNNER_WORK_PATH_PATTERN, KmgString.EMPTY);
-        filePath = Paths.get(JavadocLineRemoverTool.TARGET_PATH.toString(), filePath).toString();
+        String filePath = parts[0].trim();
+        filePath = filePath.replace("D\\", "D:");
+
+        if (KmgString.isNotEmpty(JavadocLineRemoverTool.HOME_RUNNER_WORK_PATH_PATTERN)) {
+
+            filePath = filePath.replace(JavadocLineRemoverTool.HOME_RUNNER_WORK_PATH_PATTERN, KmgString.EMPTY);
+            filePath = Paths.get(JavadocLineRemoverTool.TARGET_PATH.toString(), filePath).toString();
+
+        }
 
         final Path path = Paths.get(filePath);
 
@@ -146,7 +154,7 @@ public class JavadocLineRemoverTool {
 
         try {
 
-            lineNumber = Integer.parseInt(parts[2].trim());
+            lineNumber = Integer.parseInt(parts[1].trim());
 
         } catch (@SuppressWarnings("unused") final NumberFormatException e) {
 
