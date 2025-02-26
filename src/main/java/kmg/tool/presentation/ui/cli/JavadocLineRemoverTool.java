@@ -6,10 +6,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -57,7 +60,7 @@ public class JavadocLineRemoverTool {
         final boolean result = true;
 
         /* 入力からパスと行番号のマップ（ファイルパスと行番号のリスト、リストは行番号の降順）を取得 */
-        final Map<Path, List<Integer>> inputMap = JavadocLineRemoverTool.getInputMap();
+        final Map<Path, Set<Integer>> inputMap = JavadocLineRemoverTool.getInputMap();
         System.out.println(inputMap.toString());
 
         /* Javadoc行を削除する */
@@ -75,14 +78,14 @@ public class JavadocLineRemoverTool {
     /**
      * 入力ファイルからパスと行番号のマップを取得する
      *
-     * @return パスと行番号の降順のリストのマップ
+     * @return パスと行番号の降順のセットのマップ
      *
      * @throws IOException
      *                     入出力例外
      */
-    private static Map<Path, List<Integer>> getInputMap() throws IOException {
+    private static Map<Path, Set<Integer>> getInputMap() throws IOException {
 
-        final Map<Path, List<Integer>> result;
+        final Map<Path, Set<Integer>> result;
 
         try (final Stream<String> stream = Files.lines(JavadocLineRemoverTool.INPUT_PATH)) {
 
@@ -94,15 +97,17 @@ public class JavadocLineRemoverTool {
                 = filteredLines.map(JavadocLineRemoverTool::convertLineToPathLineEntry).filter(entry -> entry != null);
 
             // エントリからパスと行番号のリストのマップに変換する
-            final Map<Path, List<Integer>> pathLineMap = entries.collect(
-                Collectors.groupingBy(Map.Entry::getKey, Collectors.mapping(Map.Entry::getValue, Collectors.toList())));
+            final Map<Path, Set<Integer>> pathLineMap = entries.collect(
+                Collectors.groupingBy(Map.Entry::getKey, Collectors.mapping(Map.Entry::getValue, Collectors.toSet())));
 
             // パスごとに行番号のリストを降順にソートする
-            final Map<Path, List<Integer>> sortedLineMap = new LinkedHashMap<>();
+            final Map<Path, Set<Integer>> sortedLineMap = new LinkedHashMap<>();
             pathLineMap.forEach((path, lineNumbers) -> {
 
-                lineNumbers.sort(Comparator.reverseOrder());
-                sortedLineMap.put(path, lineNumbers);
+                // Setをソート可能なListに変換
+                final List<Integer> sortedLineNumbers = new ArrayList<>(lineNumbers);
+                sortedLineNumbers.sort(Comparator.reverseOrder());
+                sortedLineMap.put(path, new LinkedHashSet<>(sortedLineNumbers));
 
             });
 
@@ -166,7 +171,8 @@ public class JavadocLineRemoverTool {
 
         } catch (@SuppressWarnings("unused") final NumberFormatException e) {
 
-            // 処理なし
+            return result;
+
         }
 
         result = new SimpleEntry<>(path, lineNumber);
@@ -186,7 +192,7 @@ public class JavadocLineRemoverTool {
      * @throws IOException
      *                     入出力例外
      */
-    private static int deleteJavadocLines(final Map<Path, List<Integer>> inputMap) throws IOException {
+    private static int deleteJavadocLines(final Map<Path, Set<Integer>> inputMap) throws IOException {
 
         int result = 0;
 
@@ -204,7 +210,7 @@ public class JavadocLineRemoverTool {
             final List<String> lines = Files.readAllLines(javaFile);
 
             /* 削除対象の行番号リスト（降順）を取得 */
-            final List<Integer> lineNumbers = inputMap.get(javaFile);
+            final Set<Integer> lineNumbers = inputMap.get(javaFile);
 
             /* 行番号ごとに行を削除（降順なので、インデックスの調整は不要） */
             for (final Integer lineNumber : lineNumbers) {
