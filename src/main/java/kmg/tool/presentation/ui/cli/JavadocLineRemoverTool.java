@@ -126,7 +126,15 @@ public class JavadocLineRemoverTool {
 
         SimpleEntry<Path, Integer> result = null;
 
-        final String wkLine = line.replace("D:", "D\\");
+        String wkLine = line;
+
+        if (!wkLine.contains("@")) {
+
+            return result;
+
+        }
+
+        wkLine = wkLine.replace("D:", "D\\");
 
         // ファイルパスと行番号を抽出
         final String[] parts = KmgDelimiterTypes.COLON.split(wkLine);

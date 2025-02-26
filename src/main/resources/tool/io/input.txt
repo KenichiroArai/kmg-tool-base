@@ -1,302 +1,305 @@
-Warning:  Javadoc Warnings
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/utils/KmgArrayUtils.java:17: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/utils/KmgArrayUtils.java:21: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/utils/KmgArrayUtils.java:52: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/utils/KmgArrayUtils.java:56: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:129: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:133: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:150: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:154: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:177: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:181: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:227: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:231: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:248: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:252: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:270: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:274: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:289: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:293: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:311: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:315: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:329: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgCharsetTypes.java:333: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:220: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:224: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:241: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:245: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:268: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:272: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:311: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:315: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:332: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:336: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:354: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:358: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:373: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:377: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:392: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:396: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:410: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbDataTypeTypes.java:414: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:155: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:159: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:176: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:180: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:207: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:211: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:265: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:269: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:308: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:312: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:329: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:333: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:347: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:351: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:369: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:373: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:388: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:392: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:407: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDbTypes.java:411: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:20: warning: Tag @author cannot be used in field documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:24: warning: Tag @version cannot be used in field documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:53: warning: Tag @author cannot be used in field documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:57: warning: Tag @version cannot be used in field documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:207: warning: Tag @author cannot be used in constructor documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:211: warning: Tag @version cannot be used in constructor documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:226: warning: Tag @author cannot be used in constructor documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:230: warning: Tag @version cannot be used in constructor documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:100: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:104: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:123: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:127: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:144: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:148: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:165: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:169: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:186: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:190: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:246: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/type/KmgDecimal.java:250: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:261: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:265: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:282: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:286: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:309: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:313: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:349: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:353: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:370: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:374: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:392: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:396: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:411: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:415: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:433: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:437: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:460: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:464: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:519: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @author KenichiroArai
-Warning:  ^
-Warning:  /home/runner/work/kmg-core/kmg-core/src/main/java/kmg/core/infrastructure/types/KmgDelimiterTypes.java:523: warning: Tag @version cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-Warning:  * @version 0.1.0
-Warning:  ^
-Warning: [WARNING] 100 warnings
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\test\AbstractKmgTest.java:18: 警告: デフォルトのコンストラクタの使用で、コメントが指定されていません
+public abstract class AbstractKmgTest {
+                ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\test\AbstractKmgTest.java:23: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\test\AbstractKmgTest.java:27: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\doc\kmg\core\infrastructure\utils\KmgArrayUtils.htmlの生成中...
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\utils\KmgArrayUtils.java:73: 警告: @authorタグはconstructorドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\utils\KmgArrayUtils.java:77: 警告: @versionタグはconstructorドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\utils\KmgArrayUtils.java:17: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\utils\KmgArrayUtils.java:21: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\utils\KmgArrayUtils.java:52: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\utils\KmgArrayUtils.java:56: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\doc\kmg\core\infrastructure\utils\KmgArrayUtilsTest.htmlの生成中...
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:18: 警告: デフォルトのコンストラクタの使用で、コメントが指定されていません
+public class KmgArrayUtilsTest {
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:23: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:27: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:49: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:53: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:77: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:81: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:103: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:107: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:129: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:133: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:157: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\utils\KmgArrayUtilsTest.java:161: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\doc\kmg\core\infrastructure\types\KmgCharsetTypes.htmlの生成中...
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:63: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:67: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:85: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:89: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:96: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:100: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:107: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:111: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:118: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:122: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:195: 警告: @authorタグはconstructorドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:199: 警告: @versionタグはconstructorドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:129: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:133: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:150: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:154: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:177: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:181: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:227: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:231: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:248: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:252: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:270: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:274: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:289: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:293: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:311: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:315: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:329: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgCharsetTypes.java:333: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\doc\kmg\core\infrastructure\types\KmgCharsetTypesTest.htmlの生成中...
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:20: 警告: デフォルトのコンストラクタの使用で、コメントが指定されていません
+public class KmgCharsetTypesTest {
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:25: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:29: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:51: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:55: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:74: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:78: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:100: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:104: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:126: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:130: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:152: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:156: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:178: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:182: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:204: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:208: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:230: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:234: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:253: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:257: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:279: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:283: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:305: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:309: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:331: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:335: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:357: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\test\java\kmg\core\infrastructure\types\KmgCharsetTypesTest.java:361: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\doc\kmg\core\infrastructure\types\KmgDbDataTypeTypes.htmlの生成中...
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:154: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:158: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:176: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:180: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:187: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:191: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:198: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:202: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:209: 警告: @authorタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:213: 警告: @versionタグはfieldドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:286: 警告: @authorタグはconstructorドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:290: 警告: @versionタグはconstructorドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:220: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:224: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:241: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:245: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:268: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:272: 警告: @versionタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @version 0.1.0
+       ^
+D:\eclipse_git_wk\DictOpeProj\kmg-core\src\main\java\kmg\core\infrastructure\types\KmgDbDataTypeTypes.java:311: 警告: @authorタグはmethodドキュメント内では使用できません。使用できるのは次のタイプのドキュメント内のみです: overview, module, package, class/interface。
+     * @author KenichiroArai
+       ^
