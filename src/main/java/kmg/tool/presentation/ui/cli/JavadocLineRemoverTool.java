@@ -78,7 +78,7 @@ public class JavadocLineRemoverTool {
     /**
      * 入力ファイルからパスと行番号のマップを取得する
      *
-     * @return パスと行番号の降順のリストのマップ
+     * @return パスと行番号の降順のセットのマップ
      *
      * @throws IOException
      *                     入出力例外
