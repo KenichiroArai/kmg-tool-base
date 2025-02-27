@@ -13,16 +13,18 @@ import org.apache.poi.ss.usermodel.Sheet;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.domain.logic.KmgTlInsertionSqlDataSheetCreationLogic;
 import kmg.tool.domain.logic.impl.KmgTlInsertionSqlDataSheetCreationLogicImpl;
-import kmg.tool.domain.service.KmgTlInsertionSqlDataSheetCreationService;
+import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
 
 /**
- * ＫＭＧツール挿入ＳＱＬデータシート作成サービス<br>
+ * 挿入ＳＱＬデータシート作成サービス<br>
  *
  * @author KenichiroArai
+ *
  * @sine 1.0.0
+ *
  * @version 1.0.0
  */
-public class KmgTlInsertionSqlDataSheetCreationServiceImpl implements KmgTlInsertionSqlDataSheetCreationService {
+public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDataSheetCreationService {
 
     /** ＫＭＧＤＢの種類 */
     private KmgDbTypes kmgDbTypes;
@@ -40,8 +42,11 @@ public class KmgTlInsertionSqlDataSheetCreationServiceImpl implements KmgTlInser
      * 初期化する<br>
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @param kmgDbTypes
      *                   ＫＭＧＤＢの種類
      * @param inputSheet
@@ -55,31 +60,41 @@ public class KmgTlInsertionSqlDataSheetCreationServiceImpl implements KmgTlInser
     @Override
     public void initialize(final KmgDbTypes kmgDbTypes, final Sheet inputSheet, final Map<String, String> sqlIdMap,
         final Path outputPath) {
+
         this.kmgDbTypes = kmgDbTypes;
         this.inputSheet = inputSheet;
         this.sqlIdMap = sqlIdMap;
         this.outputPath = outputPath;
+
     }
 
     /**
      * 挿入ＳＱＬを出力する<br>
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
      */
     @Override
     public void outputInsertionSql() {
 
-        final KmgTlInsertionSqlDataSheetCreationLogic kmgTlInsertionSqlDataSheetCreationLogic = new KmgTlInsertionSqlDataSheetCreationLogicImpl();
-        kmgTlInsertionSqlDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap, this.outputPath);
+        final KmgTlInsertionSqlDataSheetCreationLogic kmgTlInsertionSqlDataSheetCreationLogic
+            = new KmgTlInsertionSqlDataSheetCreationLogicImpl();
+        kmgTlInsertionSqlDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap,
+            this.outputPath);
 
         /* 出力ファイルのディレクトリの作成 */
         try {
+
             kmgTlInsertionSqlDataSheetCreationLogic.createOutputFileDirectories();
+
         } catch (final IOException e) {
+
             e.printStackTrace();
             return;
+
         }
 
         /* 出力ファイルパスの取得 */
@@ -103,19 +118,28 @@ public class KmgTlInsertionSqlDataSheetCreationServiceImpl implements KmgTlInser
             final String insertComment = kmgTlInsertionSqlDataSheetCreationLogic.getInsertComment();
             bw.write(insertComment);
             bw.newLine();
+
             for (int rowIdx = 4; rowIdx <= this.inputSheet.getLastRowNum(); rowIdx++) {
+
                 final Row datasRow = this.inputSheet.getRow(rowIdx);
+
                 if (datasRow == null) {
+
                     break;
+
                 }
 
                 final String datas = kmgTlInsertionSqlDataSheetCreationLogic.getInsertSql(datasRow);
                 bw.write(datas);
                 bw.write(System.lineSeparator());
+
             }
+
         } catch (final IOException e) {
+
             e.printStackTrace();
             return;
+
         }
 
     }
@@ -124,12 +148,16 @@ public class KmgTlInsertionSqlDataSheetCreationServiceImpl implements KmgTlInser
      * 挿入ＳＱＬ出力を実行する<br>
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
      */
     @Override
     public void run() {
+
         this.outputInsertionSql();
+
     }
 
 }

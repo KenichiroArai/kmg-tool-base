@@ -17,17 +17,19 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.domain.logic.KmgTlInsertionSqlBasicInformationLogic;
 import kmg.tool.domain.logic.impl.KmgTlInsertionSqlBasicInformationLogicImpl;
-import kmg.tool.domain.service.KmgTlInsertionSqlDataSheetCreationService;
-import kmg.tool.domain.service.KmgTlInsertionSqlFileCreationService;
+import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
+import kmg.tool.domain.service.InsertionSqlFileCreationService;
 
 /**
- * ＫＭＧツール挿入ＳＱＬファイル作成サービス<br>
+ * 挿入ＳＱＬファイル作成サービス<br>
  *
  * @author KenichiroArai
+ *
  * @sine 1.0.0
+ *
  * @version 1.0.0
  */
-public class KmgTlInsertionSqlFileCreationServiceImpl implements KmgTlInsertionSqlFileCreationService {
+public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCreationService {
 
     /** 入力パス */
     private Path inputPath;
@@ -42,8 +44,11 @@ public class KmgTlInsertionSqlFileCreationServiceImpl implements KmgTlInsertionS
      * 初期化する<br>
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @param inputPath
      *                   入力パス
      * @param outputPath
@@ -54,16 +59,20 @@ public class KmgTlInsertionSqlFileCreationServiceImpl implements KmgTlInsertionS
     @SuppressWarnings("hiding")
     @Override
     public void initialize(final Path inputPath, final Path outputPath, final short threadNum) {
+
         this.inputPath = inputPath;
         this.outputPath = outputPath;
         this.threadNum = threadNum;
+
     }
 
     /**
      * 挿入ＳＱＬを出力する<br>
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
      */
     @Override
@@ -73,7 +82,8 @@ public class KmgTlInsertionSqlFileCreationServiceImpl implements KmgTlInsertionS
         try (final FileInputStream is = new FileInputStream(this.inputPath.toFile());
             final Workbook inputWb = WorkbookFactory.create(is);) {
 
-            final KmgTlInsertionSqlBasicInformationLogic insertionSqlFileCreationLogic = new KmgTlInsertionSqlBasicInformationLogicImpl();
+            final KmgTlInsertionSqlBasicInformationLogic insertionSqlFileCreationLogic
+                = new KmgTlInsertionSqlBasicInformationLogicImpl();
             insertionSqlFileCreationLogic.initialize(inputWb);
 
             /* ＫＭＧＤＢの種類を取得 */
@@ -83,43 +93,59 @@ public class KmgTlInsertionSqlFileCreationServiceImpl implements KmgTlInsertionS
             final Map<String, String> sqlIdMap = insertionSqlFileCreationLogic.getSqlIdMap();
 
             ExecutorService service = null;
+
             try {
+
                 if (this.threadNum > 0) {
+
                     service = Executors.newFixedThreadPool(this.threadNum);
+
                 } else {
+
                     service = Executors.newCachedThreadPool();
+
                 }
+
                 for (int i = 0; i < inputWb.getNumberOfSheets(); i++) {
+
                     final Sheet wkSheet = inputWb.getSheetAt(i);
 
                     if (KmgString.equals(wkSheet.getSheetName(),
                         KmgTlInsertionSqlBasicInformationLogic.SETTING_SHEET_NAME)) {
+
                         continue;
+
                     }
+
                     if (KmgString.equals(wkSheet.getSheetName(), KmgTlInsertionSqlBasicInformationLogic.LIST_NAME)) {
+
                         continue;
+
                     }
-                    final KmgTlInsertionSqlDataSheetCreationService kmgTlInsertionSqlDataSheetCreationService = new KmgTlInsertionSqlDataSheetCreationServiceImpl();
-                    kmgTlInsertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap,
-                        this.outputPath);
-                    service.execute(kmgTlInsertionSqlDataSheetCreationService);
+                    final InsertionSqlDataSheetCreationService insertionSqlDataSheetCreationService
+                        = new InsertionSqlDataSheetCreationServiceImpl();
+                    insertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap, this.outputPath);
+                    service.execute(insertionSqlDataSheetCreationService);
+
                 }
+
             } finally {
+
                 if (service != null) {
+
                     service.shutdown();
+
                 }
+
             }
 
-        } catch (final EncryptedDocumentException e) {
+        } catch (final EncryptedDocumentException | IOException e) {
+
             e.printStackTrace();
             return;
-        } catch (final FileNotFoundException e) {
-            e.printStackTrace();
-            return;
-        } catch (final IOException e) {
-            e.printStackTrace();
-            return;
+
         }
+
     }
 
 }
