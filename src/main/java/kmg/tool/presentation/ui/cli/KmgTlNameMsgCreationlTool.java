@@ -1,7 +1,7 @@
 /**
  * ＫＭＧ．ツール
  */
-package kmg.tool;
+package kmg.tool.presentation.ui.cli;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
