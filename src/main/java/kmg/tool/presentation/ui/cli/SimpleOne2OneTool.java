@@ -1,15 +1,16 @@
 package kmg.tool.presentation.ui.cli;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import kmg.tool.application.service.SimpleOne2OneService;
+
 /**
- * シンプル入力1ファイルから出力1ファイルへの変換ツール
+ * シンプル1入力ファイルから1出力ファイルへの変換ツール
  *
  * @author KenichiroArai
  */
@@ -24,42 +25,9 @@ public class SimpleOne2OneTool {
     /** 出力ファイルパス */
     private static final Path OUTPUT_PATH = Paths.get(SimpleOne2OneTool.BASE_PATH.toString(), "output.txt");
 
-    /**
-     * 走る
-     *
-     * @return TRUE：成功、FLASE：失敗
-     *
-     * @throws FileNotFoundException
-     *                               ファイルが存在しない例外
-     * @throws IOException
-     *                               入出力例外
-     */
-    @SuppressWarnings("static-method")
-    public Boolean run() throws FileNotFoundException, IOException {
-
-        final Boolean result = Boolean.FALSE;
-
-        /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(SimpleOne2OneTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(SimpleOne2OneTool.OUTPUT_PATH);) {
-
-            String line = null;
-
-            while ((line = brInput.readLine()) != null) {
-
-                bw.write(line);
-
-            }
-
-        } catch (final IOException e) {
-
-            throw e;
-
-        }
-
-        return result;
-
-    }
+    /** シンプル1入力ファイルから1出力ファイルへの変換ツールサービス */
+    @Autowired
+    private SimpleOne2OneService simpleOne2OneService;
 
     /**
      * エントリポイント
@@ -91,6 +59,27 @@ public class SimpleOne2OneTool {
             System.out.println(String.format("%s：終了", clasz.toString()));
 
         }
+
+    }
+
+    /**
+     * 走る
+     *
+     * @return TRUE：成功、FLASE：失敗
+     *
+     * @throws FileNotFoundException
+     *                               ファイルが存在しない例外
+     * @throws IOException
+     *                               入出力例外
+     */
+    public Boolean run() throws FileNotFoundException, IOException {
+
+        final Boolean result = Boolean.FALSE;
+
+        this.simpleOne2OneService.initialize(SimpleOne2OneTool.INPUT_PATH, SimpleOne2OneTool.OUTPUT_PATH);
+        this.simpleOne2OneService.process();
+
+        return result;
 
     }
 
