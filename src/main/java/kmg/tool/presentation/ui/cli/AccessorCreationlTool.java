@@ -26,11 +26,9 @@ public class AccessorCreationlTool {
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
+    // TODO KenichiroArai 2025/02/27 外部文字列化
     private static final Path TEMPLATE_PATH
-        = Paths.get(AccessorCreationlTool.BASE_PATH.toString(), "template/kmgTlAccessorCreationlTool.txt"); // TODO
-                                                                                                            // KenichiroArai
-                                                                                                            // 2021/05/28
-                                                                                                            // 自動設定
+        = Paths.get(AccessorCreationlTool.BASE_PATH.toString(), "template/kmgTlAccessorCreationlTool.txt");
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(AccessorCreationlTool.BASE_PATH.toString(), "input.txt");
