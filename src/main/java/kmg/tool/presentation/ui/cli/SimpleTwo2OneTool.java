@@ -12,26 +12,24 @@ import java.util.stream.Collectors;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
- * シンプル入力2ファイルと出力1ファイル変換ツール
+ * シンプル入力2ファイルから出力1ファイルへの変換ツール
  *
  * @author KenichiroArai
  */
-public class SimpleInput2Output1ConversionTool {
+public class SimpleTwo2OneTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH
-        = Paths.get(SimpleInput2Output1ConversionTool.BASE_PATH.toString(), "template/SimpleTemplate.txt");
+        = Paths.get(SimpleTwo2OneTool.BASE_PATH.toString(), "template/SimpleTemplate.txt");
 
     /** 入力ファイルパス */
-    private static final Path INPUT_PATH
-        = Paths.get(SimpleInput2Output1ConversionTool.BASE_PATH.toString(), "input.txt");
+    private static final Path INPUT_PATH = Paths.get(SimpleTwo2OneTool.BASE_PATH.toString(), "input.txt");
 
     /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH
-        = Paths.get(SimpleInput2Output1ConversionTool.BASE_PATH.toString(), "output.txt");
+    private static final Path OUTPUT_PATH = Paths.get(SimpleTwo2OneTool.BASE_PATH.toString(), "output.txt");
 
     /**
      * 走る
@@ -53,7 +51,7 @@ public class SimpleInput2Output1ConversionTool {
 
         try {
 
-            template = Files.readAllLines(SimpleInput2Output1ConversionTool.TEMPLATE_PATH).stream()
+            template = Files.readAllLines(SimpleTwo2OneTool.TEMPLATE_PATH).stream()
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final IOException e) {
@@ -63,8 +61,8 @@ public class SimpleInput2Output1ConversionTool {
         }
 
         /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(SimpleInput2Output1ConversionTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(SimpleInput2Output1ConversionTool.OUTPUT_PATH);) {
+        try (final BufferedReader brInput = Files.newBufferedReader(SimpleTwo2OneTool.INPUT_PATH);
+            final BufferedWriter bw = Files.newBufferedWriter(SimpleTwo2OneTool.OUTPUT_PATH);) {
 
             final StringBuilder output = new StringBuilder();
 
@@ -97,11 +95,11 @@ public class SimpleInput2Output1ConversionTool {
      */
     public static void main(final String[] args) {
 
-        final Class<SimpleInput2Output1ConversionTool> clasz = SimpleInput2Output1ConversionTool.class;
+        final Class<SimpleTwo2OneTool> clasz = SimpleTwo2OneTool.class;
 
         try {
 
-            final SimpleInput2Output1ConversionTool main = new SimpleInput2Output1ConversionTool();
+            final SimpleTwo2OneTool main = new SimpleTwo2OneTool();
 
             if (main.run()) {
 

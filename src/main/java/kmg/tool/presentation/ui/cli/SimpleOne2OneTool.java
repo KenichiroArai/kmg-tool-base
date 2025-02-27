@@ -9,22 +9,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * シンプル入力1ファイルと出力1ファイル変換ツール
+ * シンプル入力1ファイルから出力1ファイルへの変換ツール
  *
  * @author KenichiroArai
  */
-public class SimpleInput1Output1ConversionTool {
+public class SimpleOne2OneTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** 入力ファイルパス */
-    private static final Path INPUT_PATH
-        = Paths.get(SimpleInput1Output1ConversionTool.BASE_PATH.toString(), "input.txt");
+    private static final Path INPUT_PATH = Paths.get(SimpleOne2OneTool.BASE_PATH.toString(), "input.txt");
 
     /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH
-        = Paths.get(SimpleInput1Output1ConversionTool.BASE_PATH.toString(), "output.txt");
+    private static final Path OUTPUT_PATH = Paths.get(SimpleOne2OneTool.BASE_PATH.toString(), "output.txt");
 
     /**
      * 走る
@@ -42,8 +40,8 @@ public class SimpleInput1Output1ConversionTool {
         final Boolean result = Boolean.FALSE;
 
         /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(SimpleInput1Output1ConversionTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(SimpleInput1Output1ConversionTool.OUTPUT_PATH);) {
+        try (final BufferedReader brInput = Files.newBufferedReader(SimpleOne2OneTool.INPUT_PATH);
+            final BufferedWriter bw = Files.newBufferedWriter(SimpleOne2OneTool.OUTPUT_PATH);) {
 
             String line = null;
 
@@ -71,11 +69,11 @@ public class SimpleInput1Output1ConversionTool {
      */
     public static void main(final String[] args) {
 
-        final Class<SimpleInput1Output1ConversionTool> clasz = SimpleInput1Output1ConversionTool.class;
+        final Class<SimpleOne2OneTool> clasz = SimpleOne2OneTool.class;
 
         try {
 
-            final SimpleInput1Output1ConversionTool main = new SimpleInput1Output1ConversionTool();
+            final SimpleOne2OneTool main = new SimpleOne2OneTool();
 
             if (main.run()) {
 
