@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
- * シンプル入力2ファイルから出力1ファイルへの変換ツール
+ * シンプル2入力ファイルから1出力ファイルへの変換ツール
  *
  * @author KenichiroArai
  */
