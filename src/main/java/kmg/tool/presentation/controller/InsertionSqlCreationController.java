@@ -15,17 +15,19 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import kmg.core.infrastructure.model.KmgPfaMeasModel;
-import kmg.tool.domain.service.KmgTlInsertionSqlCreationService;
-import kmg.tool.domain.service.impl.KmgTlInsertionSqlCreationServiceImpl;
+import kmg.tool.domain.service.InsertionSqlCreationService;
+import kmg.tool.domain.service.impl.InsertionSqlCreationServiceImpl;
 
 /**
- * ＫＭＧツール挿入ＳＱＬ作成画面画面コントローラ<br>
+ * 挿入ＳＱＬ作成画面画面コントローラ<br>
  *
  * @author KenichiroArai
+ *
  * @sine 1.0.0
+ *
  * @version 1.0.0
  */
-public class KmgTlInsertionSqlCreationController implements Initializable {
+public class InsertionSqlCreationController implements Initializable {
 
     /** 入力ファイルテキストボックス */
     @FXML
@@ -63,8 +65,11 @@ public class KmgTlInsertionSqlCreationController implements Initializable {
      * 初期化<br>
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @param location
      *                  ロケーション
      * @param resources
@@ -83,18 +88,22 @@ public class KmgTlInsertionSqlCreationController implements Initializable {
 
         /* スレッド数の初期値を設定する */
         // ＣＰＵの論理プロセッサ数を取得
-        final Runtime runtime = Runtime.getRuntime();
-        final int threadNum = runtime.availableProcessors();
+        final Runtime runtime   = Runtime.getRuntime();
+        final int     threadNum = runtime.availableProcessors();
         // テキストボックスに設定
         this.txtThreadNum.setText(String.valueOf(threadNum));
+
     }
 
     /**
      * 入力ファイル読み込みボタンクリックイベント
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @param event
      *              アクションイベント
      */
@@ -104,24 +113,34 @@ public class KmgTlInsertionSqlCreationController implements Initializable {
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("ファイル選択");
         String defaultFilePath = this.txtInputFile.getText();
+
         if ((defaultFilePath == null) || defaultFilePath.isEmpty()) {
+
             defaultFilePath = "c:/";
+
         }
         File defaultFile = new File(defaultFilePath);
+
         if (defaultFile.isFile()) {
+
             defaultFile = defaultFile.getParentFile();
+
         }
         fileChooser.setInitialDirectory(defaultFile);
         final File file = fileChooser.showOpenDialog(null);
         this.txtInputFile.setText(file.getAbsolutePath());
+
     }
 
     /**
      * 出力ディレクトリ読み込みボタンクリックイベント
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @param event
      *              アクションイベント
      */
@@ -131,24 +150,34 @@ public class KmgTlInsertionSqlCreationController implements Initializable {
         final DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("ディレクトリ選択");
         String defaultFilePath = this.txtOutputDirectory.getText();
+
         if ((defaultFilePath == null) || defaultFilePath.isEmpty()) {
+
             defaultFilePath = "c:/";
+
         }
         File defaultFile = new File(defaultFilePath);
+
         if (defaultFile.isFile()) {
+
             defaultFile = defaultFile.getParentFile();
+
         }
         directoryChooser.setInitialDirectory(defaultFile);
         final File file = directoryChooser.showDialog(null);
         this.txtOutputDirectory.setText(file.getAbsolutePath());
+
     }
 
     /**
      * 実行ボタンクリックイベント
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @param event
      *              アクションイベント
      */
@@ -157,24 +186,33 @@ public class KmgTlInsertionSqlCreationController implements Initializable {
 
         final KmgPfaMeasModel pfaMeas = new KmgPfaMeasModel();
         pfaMeas.start();
+
         try {
+
             // メイン処理
-            final Path inputPath = Paths.get(this.txtInputFile.getText());
+            final Path inputPath  = Paths.get(this.txtInputFile.getText());
             final Path outputPath = Paths.get(this.txtOutputDirectory.getText());
             this.mainProc(inputPath, outputPath);
+
         } finally {
+
             pfaMeas.end();
             this.lblProcTime.setText(String.valueOf(pfaMeas.getElapsedTime()));
             this.lblProcTimeUnit.setText(pfaMeas.getTimeUnit().getUnitName());
+
         }
+
     }
 
     /**
      * メイン処理
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @param inputPath
      *                   入力パス
      * @param outputPath
@@ -183,8 +221,8 @@ public class KmgTlInsertionSqlCreationController implements Initializable {
     protected void mainProc(final Path inputPath, final Path outputPath) {
 
         /* 挿入ＳＱＬ作成サービス */
-        final KmgTlInsertionSqlCreationService insertSqlCreationService = new KmgTlInsertionSqlCreationServiceImpl();
-        final short threadNum = Short.parseShort(this.txtThreadNum.getText());
+        final InsertionSqlCreationService insertSqlCreationService = new InsertionSqlCreationServiceImpl();
+        final short                            threadNum                = Short.parseShort(this.txtThreadNum.getText());
         insertSqlCreationService.initialize(inputPath, outputPath, threadNum);
         insertSqlCreationService.outputInsertionSql();
 

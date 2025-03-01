@@ -2,7 +2,7 @@
 <!DOCTYPE logback>
 <configuration>
     <property resource="application.properties" />
-    <timestamp key="date" datePattern="yyyy-MM-dd"/>
+    <timestamp key="date" datePattern="yyyy-MM-dd" />
 
     <appender name="APPLIATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${logback.application.outpath}</file>
@@ -12,7 +12,7 @@
         </rollingPolicy>
         <encoder>
             <charset>UTF-8</charset>
-            <pattern>>${logback.application.pattern}</pattern>
+            <pattern>${logback.application.pattern}</pattern>
         </encoder>
     </appender>
 

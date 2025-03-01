@@ -8,20 +8,25 @@ import org.apache.poi.ss.usermodel.Sheet;
 import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
- * ＫＭＧツール挿入ＳＱＬデータシート作成サービスインタフェース<br>
+ * 挿入ＳＱＬデータシート作成サービスインタフェース<br>
  *
  * @author KenichiroArai
+ *
  * @sine 1.0.0
+ *
  * @version 1.0.0
  */
-public interface KmgTlInsertionSqlDataSheetCreationService extends Runnable {
+public interface InsertionSqlDataSheetCreationService extends Runnable {
 
     /**
      * 初期化する<br>
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @param KmgDbTypes
      *                   ＫＭＧＤＢの種類
      * @param inputSheet

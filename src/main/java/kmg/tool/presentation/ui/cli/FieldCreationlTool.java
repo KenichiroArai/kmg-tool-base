@@ -1,7 +1,4 @@
-/**
- * ＫＭＧ．ツール
- */
-package kmg.tool;
+package kmg.tool.presentation.ui.cli;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,27 +14,31 @@ import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
- * ＫＭＧツールフィールド作成ツール
+ * フィールド作成ツール
  *
  * @author KenichiroArai
+ *
  * @sine 1.0.0
+ *
  * @version 1.0.0
  */
 @SuppressWarnings("nls") // TODO KenichiroArai 2021/05/11 外部文字列化
-public class KmgTlFieldCreationlTool {
+public class FieldCreationlTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH = Paths.get(KmgTlFieldCreationlTool.BASE_PATH.toString(),
-        "template/kmgTlFieldCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
+    private static final Path TEMPLATE_PATH
+        = Paths.get(FieldCreationlTool.BASE_PATH.toString(), "template/kmgTlFieldCreationlTool.txt"); // TODO
+                                                                                                      // KenichiroArai
+                                                                                                      // 2021/05/28 自動設定
 
     /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(KmgTlFieldCreationlTool.BASE_PATH.toString(), "input.txt");
+    private static final Path INPUT_PATH = Paths.get(FieldCreationlTool.BASE_PATH.toString(), "input.txt");
 
     /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH = Paths.get(KmgTlFieldCreationlTool.BASE_PATH.toString(), "output.txt");
+    private static final Path OUTPUT_PATH = Paths.get(FieldCreationlTool.BASE_PATH.toString(), "output.txt");
 
     /** パラメータ：コメント */
     private static final String PARAM_COMMENT = "$comment";
@@ -52,9 +53,13 @@ public class KmgTlFieldCreationlTool {
      * 実行する<br>
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @return TRUE：成功、FLASE：失敗
+     *
      * @throws FileNotFoundException
      *                               ファイルが存在しない例外
      * @throws IOException
@@ -67,81 +72,106 @@ public class KmgTlFieldCreationlTool {
 
         /* テンプレートの取得 */
         String template = null;
+
         try {
 
-            template = Files.readAllLines(KmgTlFieldCreationlTool.TEMPLATE_PATH).stream()
+            template = Files.readAllLines(FieldCreationlTool.TEMPLATE_PATH).stream()
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
-        } catch (final FileNotFoundException e) {
-            throw e;
         } catch (final IOException e) {
+
             throw e;
+
         }
 
         /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(KmgTlFieldCreationlTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(KmgTlFieldCreationlTool.OUTPUT_PATH);) {
+        try (final BufferedReader brInput = Files.newBufferedReader(FieldCreationlTool.INPUT_PATH);
+            final BufferedWriter bw = Files.newBufferedWriter(FieldCreationlTool.OUTPUT_PATH);) {
+
             String line;
+
             while ((line = brInput.readLine()) != null) {
 
                 /* データ取得 */
-                final String[] inputDatas = KmgDelimiterTypes.SERIES_HALF_SPACE.split(line);
-                int dataIdx = 0;
-                final String commentData = inputDatas[dataIdx++]; // コメント
+                final String[] inputDatas  = KmgDelimiterTypes.SERIES_HALF_SPACE.split(line);
+                int            dataIdx     = 0;
+                final String   commentData = inputDatas[dataIdx];                            // コメント
+                dataIdx++;
                 final String fieldData = inputDatas[dataIdx++]; // フィールド名
-                final String typeData = inputDatas[dataIdx++]; // 型
+                final String typeData  = inputDatas[dataIdx++]; // 型
 
                 /* 変換処理 */
 
-                final String changeFieldData = new KmgString(fieldData).toCamelCase();
-                String changeTypeData = null;
-                final KmgDbDataTypeTypes type = KmgDbDataTypeTypes.getEnum(typeData);
+                final String             changeFieldData = new KmgString(fieldData).toCamelCase();
+                String                   changeTypeData  = null;
+                final KmgDbDataTypeTypes type            = KmgDbDataTypeTypes.getEnum(typeData);
+
                 if (type == null) {
+
                     changeTypeData = typeData;
+
                 } else {
+
                     changeTypeData = type.getType().getTypeName().replaceAll("(\\w+\\.)+", KmgString.EMPTY);
+
                 }
 
                 String output = template;
-                output = output.replace(KmgTlFieldCreationlTool.PARAM_COMMENT, commentData);
-                output = output.replace(KmgTlFieldCreationlTool.PARAM_FIELD, changeFieldData);
-                output = output.replace(KmgTlFieldCreationlTool.PARAM_TYPE, changeTypeData);
+                output = output.replace(FieldCreationlTool.PARAM_COMMENT, commentData);
+                output = output.replace(FieldCreationlTool.PARAM_FIELD, changeFieldData);
+                output = output.replace(FieldCreationlTool.PARAM_TYPE, changeTypeData);
 
                 /* 出力 */
                 bw.write(output);
                 bw.write(System.lineSeparator());
+
             }
-        } catch (final FileNotFoundException e) {
-            throw e;
+
         } catch (final IOException e) {
+
             throw e;
+
         }
 
         return result;
+
     }
 
     /**
      * エントリポイント<br>
      *
      * @author KenichiroArai
+     *
      * @sine 1.0.0
+     *
      * @version 1.0.0
+     *
      * @param args
      *             オプション
      */
     public static void main(final String[] args) {
 
-        final Class<KmgTlFieldCreationlTool> clasz = KmgTlFieldCreationlTool.class;
+        final Class<FieldCreationlTool> clasz = FieldCreationlTool.class;
+
         try {
-            final KmgTlFieldCreationlTool main = new KmgTlFieldCreationlTool();
+
+            final FieldCreationlTool main = new FieldCreationlTool();
+
             if (main.run()) {
+
                 System.out.println(String.format("%s：失敗", clasz.toString()));
+
             }
+
         } catch (final Exception e) {
+
             e.printStackTrace();
+
         } finally {
+
             System.out.println(String.format("%s：成功", clasz.toString()));
             System.out.println(String.format("%s：終了", clasz.toString()));
+
         }
 
     }
