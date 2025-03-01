@@ -1,7 +1,5 @@
 package kmg.tool.presentation.ui.cli.io;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,20 +35,11 @@ public class SimpleOne2OneTool extends AbstractIoTool {
 
         final SimpleOne2OneTool tool = ctx.getBean(SimpleOne2OneTool.class);
 
-        try {
+        /* 初期化 */
+        tool.initialize();
 
-            /* 初期化 */
-            tool.initialize();
-
-            /* 処理 */
-            tool.process();
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/01 例外処理
-            e.printStackTrace();
-
-        }
+        /* 処理 */
+        tool.process();
 
         ctx.close();
 

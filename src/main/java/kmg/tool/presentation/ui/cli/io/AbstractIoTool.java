@@ -1,6 +1,5 @@
 package kmg.tool.presentation.ui.cli.io;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -83,11 +82,8 @@ public abstract class AbstractIoTool extends AbstractTool {
      * 処理する
      *
      * @return true：成功、false：失敗
-     *
-     * @throws IOException
-     *                     入出力例外
      */
-    public boolean process() throws IOException {
+    public boolean process() {
 
         boolean result = false;
 
