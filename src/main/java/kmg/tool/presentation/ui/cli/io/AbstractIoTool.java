@@ -74,7 +74,7 @@ public abstract class AbstractIoTool extends AbstractTool {
      */
     public AbstractIoTool() {
 
-        this(LoggerFactory.getLogger(KmgPfaMeasServiceImpl.class));
+        this(LoggerFactory.getLogger(AbstractIoTool.class));
 
     }
 
