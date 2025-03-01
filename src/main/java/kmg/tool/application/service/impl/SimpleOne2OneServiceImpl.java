@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.springframework.stereotype.Service;
+
 import kmg.tool.application.service.SimpleOne2OneService;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツールサービス<br>
  */
+@Service
 public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
 
     /** 入力ファイルパス */
