@@ -3,6 +3,10 @@ package kmg.tool.presentation.ui.cli.io;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.tool.domain.service.One2OneService;
 import kmg.tool.presentation.ui.cli.AbstractTool;
 
@@ -19,6 +23,13 @@ public abstract class AbstractIoTool extends AbstractTool {
 
     /** 出力ファイルパス */
     private static final Path OUTPUT_PATH = Paths.get(AbstractIoTool.BASE_PATH.toString(), "output.txt");
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
 
     /**
      * 基準パスを返す。
@@ -57,6 +68,31 @@ public abstract class AbstractIoTool extends AbstractTool {
     }
 
     /**
+     * コンストラクタ<br>
+     *
+     * @since 0.1.0
+     */
+    public AbstractIoTool() {
+
+        this(LoggerFactory.getLogger(KmgPfaMeasServiceImpl.class));
+
+    }
+
+    /**
+     * テスト用コンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected AbstractIoTool(final Logger logger) {
+
+        this.logger = logger;
+
+    }
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗
@@ -70,7 +106,7 @@ public abstract class AbstractIoTool extends AbstractTool {
 
         if (!initializeResult) {
 
-            System.out.println(String.format("%s：初期化の失敗", this.getClass().toString()));
+            this.logger.error("初期化の失敗");
 
         }
 
@@ -88,26 +124,26 @@ public abstract class AbstractIoTool extends AbstractTool {
         boolean result = false;
 
         /* 開始 */
-        System.out.println(String.format("%s：開始", this.getClass().toString()));
+        this.logger.info("開始");
 
         /* 処理 */
         final boolean processResult = this.getOne2OneService().process();
 
         if (!processResult) {
 
-            System.out.println(String.format("%s：処理の失敗", this.getClass().toString()));
+            this.logger.error("処理の失敗");
             return result;
 
         }
 
         /* 成功 */
-        System.out.println(String.format("%s：成功", this.getClass().toString()));
+        this.logger.info("成功");
 
         result = true;
 
         /* 終了 */
 
-        System.out.println(String.format("%s：終了", this.getClass().toString()));
+        this.logger.info("終了");
 
         return result;
 
