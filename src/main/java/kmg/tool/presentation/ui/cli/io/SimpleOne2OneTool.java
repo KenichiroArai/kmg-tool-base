@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli;
+package kmg.tool.presentation.ui.cli.io;
 
 import java.io.IOException;
 

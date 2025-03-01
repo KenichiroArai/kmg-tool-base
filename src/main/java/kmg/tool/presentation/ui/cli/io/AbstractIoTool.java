@@ -1,10 +1,11 @@
-package kmg.tool.presentation.ui.cli;
+package kmg.tool.presentation.ui.cli.io;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import kmg.tool.domain.service.One2OneService;
+import kmg.tool.presentation.ui.cli.AbstractTool;
 
 /**
  * 入出力ツール抽象クラス
