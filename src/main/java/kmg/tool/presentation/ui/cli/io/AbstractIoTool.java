@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.tool.domain.service.One2OneService;
 import kmg.tool.presentation.ui.cli.AbstractTool;
@@ -123,27 +124,35 @@ public abstract class AbstractIoTool extends AbstractTool {
 
         boolean result = false;
 
-        /* 開始 */
-        this.logger.info("開始");
+        final KmgPfaMeasService measService = new KmgPfaMeasServiceImpl(this.getClass().toString());
 
-        /* 処理 */
-        final boolean processResult = this.getOne2OneService().process();
+        try {
 
-        if (!processResult) {
+            /* 開始 */
+            measService.start();
 
-            this.logger.error("処理の失敗");
-            return result;
+            /* 処理 */
+            final boolean processResult = this.getOne2OneService().process();
+
+            if (!processResult) {
+
+                this.logger.error("処理の失敗");
+                return result;
+
+            }
+
+            /* 成功 */
+            this.logger.info("成功");
+
+            result = true;
+
+        } finally {
+
+            /* 終了 */
+
+            measService.end();
 
         }
-
-        /* 成功 */
-        this.logger.info("成功");
-
-        result = true;
-
-        /* 終了 */
-
-        this.logger.info("終了");
 
         return result;
 
