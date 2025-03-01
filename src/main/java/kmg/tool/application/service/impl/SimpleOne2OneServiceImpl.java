@@ -63,6 +63,8 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
     /**
      * 初期化する
      *
+     * @return true：成功、false：失敗
+     *
      * @param inputPath
      *                   入力ファイルパス
      * @param outputPath
@@ -70,18 +72,26 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
      */
     @SuppressWarnings("hiding")
     @Override
-    public void initialize(final Path inputPath, final Path outputPath) {
+    public boolean initialize(final Path inputPath, final Path outputPath) {
+
+        final boolean result = true;
 
         this.inputPath = inputPath;
         this.outputPath = outputPath;
+
+        return result;
 
     }
 
     /**
      * 処理する
+     *
+     * @return true：成功、false：失敗
      */
     @Override
-    public void process() {
+    public boolean process() {
+
+        final boolean result = true;
 
         /* 入力から出力の処理 */
 
@@ -103,6 +113,8 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
             e.printStackTrace();
 
         }
+
+        return result;
 
     }
 
