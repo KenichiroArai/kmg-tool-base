@@ -33,6 +33,13 @@ public abstract class AbstractIoTool extends AbstractTool {
     private final Logger logger;
 
     /**
+     * ツール名
+     *
+     * @since 0.1.0
+     */
+    private final String toolName;
+
+    /**
      * 基準パスを返す。
      *
      * @return 基準パス
@@ -71,11 +78,14 @@ public abstract class AbstractIoTool extends AbstractTool {
     /**
      * コンストラクタ<br>
      *
+     * @param toolName
+     *                 ツール名
+     *
      * @since 0.1.0
      */
-    public AbstractIoTool() {
+    public AbstractIoTool(final String toolName) {
 
-        this(LoggerFactory.getLogger(AbstractIoTool.class));
+        this(LoggerFactory.getLogger(AbstractIoTool.class), toolName);
 
     }
 
@@ -85,11 +95,14 @@ public abstract class AbstractIoTool extends AbstractTool {
      * @since 0.1.0
      *
      * @param logger
-     *               ロガー
+     *                 ロガー
+     * @param toolName
+     *                 ツール名
      */
-    protected AbstractIoTool(final Logger logger) {
+    protected AbstractIoTool(final Logger logger, final String toolName) {
 
         this.logger = logger;
+        this.toolName = toolName;
 
     }
 
@@ -124,7 +137,7 @@ public abstract class AbstractIoTool extends AbstractTool {
 
         boolean result = false;
 
-        final KmgPfaMeasService measService = new KmgPfaMeasServiceImpl(this.getClass().toString());
+        final KmgPfaMeasService measService = new KmgPfaMeasServiceImpl(this.toolName);
 
         try {
 
@@ -136,13 +149,13 @@ public abstract class AbstractIoTool extends AbstractTool {
 
             if (!processResult) {
 
-                this.logger.error("処理の失敗");
+                measService.error();
                 return result;
 
             }
 
             /* 成功 */
-            this.logger.info("成功");
+            measService.info();
 
             result = true;
 
