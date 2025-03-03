@@ -8,6 +8,7 @@ import java.nio.file.Path;
 
 import org.springframework.stereotype.Service;
 
+import kmg.core.infrastructure.exception.KmgToolException;
 import kmg.tool.application.service.SimpleOne2OneService;
 
 /**
@@ -87,9 +88,12 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
      * 処理する
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
-    public boolean process() {
+    public boolean process() throws KmgToolException {
 
         boolean result = false;
 

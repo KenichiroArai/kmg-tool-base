@@ -2,6 +2,8 @@ package kmg.tool.domain.service;
 
 import java.nio.file.Path;
 
+import kmg.core.infrastructure.exception.KmgToolException;
+
 /**
  * 1入力ファイルから1出力ファイルへの変換ツールサービスインタフェース<br>
  */
@@ -42,6 +44,9 @@ public interface One2OneService extends IoService {
      *                   入力ファイルパス
      * @param outputPath
      *                   出力ファイルパス
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    boolean initialize(Path inputPath, Path outputPath);
+    boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
 }

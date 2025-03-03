@@ -3,6 +3,7 @@ package kmg.tool.presentation.ui.cli.io;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kmg.core.infrastructure.exception.KmgToolException;
 import kmg.tool.domain.service.One2OneService;
 
 /**
@@ -57,8 +58,19 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
 
         final boolean result = false;
 
-        final boolean initializeResult
-            = this.getIoService().initialize(AbstractIoTool.getInputPath(), AbstractIoTool.getOutputPath());
+        boolean initializeResult = false;
+
+        try {
+
+            initializeResult
+                = this.getIoService().initialize(AbstractIoTool.getInputPath(), AbstractIoTool.getOutputPath());
+
+        } catch (final KmgToolException e) {
+
+            // TODO 2025/03/04 例外処理
+            e.printStackTrace();
+
+        }
 
         if (!initializeResult) {
 
