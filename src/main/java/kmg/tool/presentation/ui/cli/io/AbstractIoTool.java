@@ -3,12 +3,9 @@ package kmg.tool.presentation.ui.cli.io;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
-import kmg.tool.domain.service.One2OneService;
+import kmg.tool.domain.service.IoService;
 import kmg.tool.presentation.ui.cli.AbstractTool;
 
 /**
@@ -24,13 +21,6 @@ public abstract class AbstractIoTool extends AbstractTool {
 
     /** 出力ファイルパス */
     private static final Path OUTPUT_PATH = Paths.get(AbstractIoTool.BASE_PATH.toString(), "output.txt");
-
-    /**
-     * ロガー
-     *
-     * @since 0.1.0
-     */
-    private final Logger logger;
 
     /**
      * ツール名
@@ -76,7 +66,7 @@ public abstract class AbstractIoTool extends AbstractTool {
     }
 
     /**
-     * コンストラクタ<br>
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
      * @param toolName
      *                 ツール名
@@ -85,23 +75,6 @@ public abstract class AbstractIoTool extends AbstractTool {
      */
     public AbstractIoTool(final String toolName) {
 
-        this(LoggerFactory.getLogger(AbstractIoTool.class), toolName);
-
-    }
-
-    /**
-     * テスト用コンストラクタ<br>
-     *
-     * @since 0.1.0
-     *
-     * @param logger
-     *                 ロガー
-     * @param toolName
-     *                 ツール名
-     */
-    protected AbstractIoTool(final Logger logger, final String toolName) {
-
-        this.logger = logger;
         this.toolName = toolName;
 
     }
@@ -124,7 +97,7 @@ public abstract class AbstractIoTool extends AbstractTool {
             measService.start();
 
             /* 処理 */
-            final boolean processResult = this.getOne2OneService().process();
+            final boolean processResult = this.getIoService().process();
 
             if (!processResult) {
 
@@ -156,32 +129,10 @@ public abstract class AbstractIoTool extends AbstractTool {
     }
 
     /**
-     * 初期化する
+     * 入出力サービスを返す。
      *
-     * @return true：成功、false：失敗
+     * @return 入出力サービス
      */
-    public boolean initialize() {
-
-        final boolean result = false;
-
-        final boolean initializeResult
-            = this.getOne2OneService().initialize(AbstractIoTool.getInputPath(), AbstractIoTool.getOutputPath());
-
-        if (!initializeResult) {
-
-            this.logger.error("初期化の失敗");
-
-        }
-
-        return result;
-
-    }
-
-    /**
-     * 1入力ファイルから1出力ファイルへの変換サービスを返す。
-     *
-     * @return 1入力ファイルから1出力ファイルへの変換サービス
-     */
-    protected abstract One2OneService getOne2OneService();
+    protected abstract IoService getIoService();
 
 }

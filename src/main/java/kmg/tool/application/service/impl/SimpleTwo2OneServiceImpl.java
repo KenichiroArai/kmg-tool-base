@@ -5,19 +5,24 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import kmg.tool.application.service.SimpleOne2OneService;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.tool.application.service.SimpleTwo2OneService;
 
 /**
- * シンプル1入力ファイルから1出力ファイルへの変換ツールサービス<br>
+ * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス<br>
  */
 @Service
-public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
+public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
     /** 入力ファイルパス */
     private Path inputPath;
+
+    /** テンプレートファイルパス */
+    private Path templatePath;
 
     /** 出力ファイルパス */
     private Path outputPath;
@@ -66,17 +71,20 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
      * @return true：成功、false：失敗
      *
      * @param inputPath
-     *                   入力ファイルパス
+     *                     入力ファイルパス
+     * @param templatePath
+     *                     テンプレートファイルパス
      * @param outputPath
-     *                   出力ファイルパス
+     *                     出力ファイルパス
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath, final Path outputPath) {
+    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) {
 
         final boolean result = true;
 
         this.inputPath = inputPath;
+        this.templatePath = templatePath;
         this.outputPath = outputPath;
 
         return result;
@@ -93,22 +101,43 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
 
         boolean result = false;
 
-        /* 入力から出力の処理 */
+        /* テンプレートの取得 */
+        String template = null;
 
+        try {
+
+            template = Files.readAllLines(this.templatePath).stream()
+                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/04 例外処理
+            // throw e;
+            e.printStackTrace();
+            return result;
+
+        }
+
+        /* 入力から出力の処理 */
         try (final BufferedReader brInput = Files.newBufferedReader(this.inputPath);
-            final BufferedWriter bwOutput = Files.newBufferedWriter(this.outputPath);) {
+            final BufferedWriter bw = Files.newBufferedWriter(this.outputPath);) {
+
+            final StringBuilder output = new StringBuilder();
 
             String line = null;
 
             while ((line = brInput.readLine()) != null) {
 
-                bwOutput.write(line);
+                final String wk = template.replace("{ name }", line);
+                output.append(wk);
 
             }
 
+            bw.write(output.toString());
+
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/02/27 例外処理
+            // TODO KenichiroArai 2025/03/04 例外処理
             // throw e;
             e.printStackTrace();
 

@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.tool.application.service.SimpleOne2OneService;
-import kmg.tool.domain.service.One2OneService;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツール
@@ -16,7 +15,7 @@ import kmg.tool.domain.service.One2OneService;
 @SpringBootApplication(scanBasePackages = {
     "kmg.tool"
 })
-public class SimpleOne2OneTool extends AbstractIoTool {
+public class SimpleOne2OneTool extends AbstractOne2OneTool {
 
     /** ツール名 */
     private static final String TOOL_NAME = "シンプル1入力ファイルから1出力ファイルへの変換ツール";
@@ -58,14 +57,14 @@ public class SimpleOne2OneTool extends AbstractIoTool {
     }
 
     /**
-     * 1入力ファイルから1出力ファイルへの変換サービスを返す。
+     * シンプル1入力ファイルから1出力ファイルへの変換サービスを返す。
      *
-     * @return 1入力ファイルから1出力ファイルへの変換サービス
+     * @return シンプル1入力ファイルから1出力ファイルへの変換サービス
      */
     @Override
-    protected One2OneService getOne2OneService() {
+    protected SimpleOne2OneService getIoService() {
 
-        final One2OneService result = this.simpleOne2OneService;
+        final SimpleOne2OneService result = this.simpleOne2OneService;
 
         return result;
 
