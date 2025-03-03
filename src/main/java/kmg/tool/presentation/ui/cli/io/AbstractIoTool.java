@@ -128,13 +128,13 @@ public abstract class AbstractIoTool extends AbstractTool {
 
             if (!processResult) {
 
-                measService.error();
+                measService.error("失敗");
                 return result;
 
             }
 
             /* 成功 */
-            measService.info();
+            measService.info("成功");
 
             result = true;
 
