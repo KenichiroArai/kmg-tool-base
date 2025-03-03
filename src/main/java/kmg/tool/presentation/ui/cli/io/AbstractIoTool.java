@@ -128,7 +128,7 @@ public abstract class AbstractIoTool extends AbstractTool {
 
             if (!processResult) {
 
-                measService.error("失敗");
+                measService.warn("失敗");
                 return result;
 
             }
@@ -137,6 +137,11 @@ public abstract class AbstractIoTool extends AbstractTool {
             measService.info("成功");
 
             result = true;
+
+        } catch (final Exception e) {
+
+            /* 失敗 */
+            measService.error("例外発生", e);
 
         } finally {
 
