@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import kmg.core.infrastructure.model.KmgPfaMeasModel;
+import kmg.core.infrastructure.model.impl.KmgPfaMeasModelImpl;
 import kmg.tool.domain.service.InsertionSqlCreationService;
 import kmg.tool.domain.service.impl.InsertionSqlCreationServiceImpl;
 
@@ -92,6 +93,30 @@ public class InsertionSqlCreationController implements Initializable {
         final int     threadNum = runtime.availableProcessors();
         // テキストボックスに設定
         this.txtThreadNum.setText(String.valueOf(threadNum));
+
+    }
+
+    /**
+     * メイン処理
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @param inputPath
+     *                   入力パス
+     * @param outputPath
+     *                   出力パス
+     */
+    protected void mainProc(final Path inputPath, final Path outputPath) {
+
+        /* 挿入ＳＱＬ作成サービス */
+        final InsertionSqlCreationService insertSqlCreationService = new InsertionSqlCreationServiceImpl();
+        final short                       threadNum                = Short.parseShort(this.txtThreadNum.getText());
+        insertSqlCreationService.initialize(inputPath, outputPath, threadNum);
+        insertSqlCreationService.outputInsertionSql();
 
     }
 
@@ -184,7 +209,7 @@ public class InsertionSqlCreationController implements Initializable {
     @FXML
     private void onCalcRunClicked(final ActionEvent event) {
 
-        final KmgPfaMeasModel pfaMeas = new KmgPfaMeasModel();
+        final KmgPfaMeasModel pfaMeas = new KmgPfaMeasModelImpl();
         pfaMeas.start();
 
         try {
@@ -201,30 +226,6 @@ public class InsertionSqlCreationController implements Initializable {
             this.lblProcTimeUnit.setText(pfaMeas.getTimeUnit().getUnitName());
 
         }
-
-    }
-
-    /**
-     * メイン処理
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
-     *
-     * @param inputPath
-     *                   入力パス
-     * @param outputPath
-     *                   出力パス
-     */
-    protected void mainProc(final Path inputPath, final Path outputPath) {
-
-        /* 挿入ＳＱＬ作成サービス */
-        final InsertionSqlCreationService insertSqlCreationService = new InsertionSqlCreationServiceImpl();
-        final short                            threadNum                = Short.parseShort(this.txtThreadNum.getText());
-        insertSqlCreationService.initialize(inputPath, outputPath, threadNum);
-        insertSqlCreationService.outputInsertionSql();
 
     }
 }

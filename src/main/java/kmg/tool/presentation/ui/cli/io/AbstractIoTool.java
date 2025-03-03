@@ -3,11 +3,9 @@ package kmg.tool.presentation.ui.cli.io;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
-import kmg.tool.domain.service.One2OneService;
+import kmg.tool.domain.service.IoService;
 import kmg.tool.presentation.ui.cli.AbstractTool;
 
 /**
@@ -25,11 +23,11 @@ public abstract class AbstractIoTool extends AbstractTool {
     private static final Path OUTPUT_PATH = Paths.get(AbstractIoTool.BASE_PATH.toString(), "output.txt");
 
     /**
-     * ロガー
+     * ツール名
      *
      * @since 0.1.0
      */
-    private final Logger logger;
+    private final String toolName;
 
     /**
      * 基準パスを返す。
@@ -68,92 +66,73 @@ public abstract class AbstractIoTool extends AbstractTool {
     }
 
     /**
-     * コンストラクタ<br>
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @param toolName
+     *                 ツール名
      *
      * @since 0.1.0
      */
-    public AbstractIoTool() {
+    public AbstractIoTool(final String toolName) {
 
-        this(LoggerFactory.getLogger(KmgPfaMeasServiceImpl.class));
-
-    }
-
-    /**
-     * テスト用コンストラクタ<br>
-     *
-     * @since 0.1.0
-     *
-     * @param logger
-     *               ロガー
-     */
-    protected AbstractIoTool(final Logger logger) {
-
-        this.logger = logger;
+        this.toolName = toolName;
 
     }
 
     /**
-     * 初期化する
+     * 実行する
      *
      * @return true：成功、false：失敗
      */
-    public boolean initialize() {
-
-        final boolean result = false;
-
-        final boolean initializeResult
-            = this.getOne2OneService().initialize(AbstractIoTool.getInputPath(), AbstractIoTool.getOutputPath());
-
-        if (!initializeResult) {
-
-            this.logger.error("初期化の失敗");
-
-        }
-
-        return result;
-
-    }
-
-    /**
-     * 処理する
-     *
-     * @return true：成功、false：失敗
-     */
-    public boolean process() {
+    @Override
+    public boolean execute() {
 
         boolean result = false;
 
-        /* 開始 */
-        this.logger.info("開始");
+        final KmgPfaMeasService measService = new KmgPfaMeasServiceImpl(this.toolName);
 
-        /* 処理 */
-        final boolean processResult = this.getOne2OneService().process();
+        try {
 
-        if (!processResult) {
+            /* 開始 */
+            measService.start();
 
-            this.logger.error("処理の失敗");
-            return result;
+            /* 処理 */
+            final boolean processResult = this.getIoService().process();
+
+            if (!processResult) {
+
+                measService.warn("失敗");
+                return result;
+
+            }
+
+            /* 成功 */
+            measService.info("成功");
+
+            result = true;
+
+        } catch (final Exception e) {
+
+            /* 失敗 */
+            measService.error("例外発生", e);
+
+        } finally {
+
+            /* 終了 */
+
+            measService.end();
 
         }
-
-        /* 成功 */
-        this.logger.info("成功");
-
-        result = true;
-
-        /* 終了 */
-
-        this.logger.info("終了");
 
         return result;
 
     }
 
     /**
-     * 1入力ファイルから1出力ファイルへの変換サービスを返す。
+     * 入出力サービスを返す。
      *
-     * @return 1入力ファイルから1出力ファイルへの変換サービス
+     * @return 入出力サービス
      */
-    protected abstract One2OneService getOne2OneService();
+    protected abstract IoService getIoService();
 
 }

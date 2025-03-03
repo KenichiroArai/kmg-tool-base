@@ -5,6 +5,11 @@ package kmg.tool.presentation.ui.cli;
  */
 public abstract class AbstractTool {
 
-    // 処理なし
+    /**
+     * 実行する
+     *
+     * @return true：成功、false：失敗
+     */
+    public abstract boolean execute();
 
 }
