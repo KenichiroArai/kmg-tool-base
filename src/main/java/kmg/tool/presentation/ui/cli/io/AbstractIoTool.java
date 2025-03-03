@@ -107,33 +107,12 @@ public abstract class AbstractIoTool extends AbstractTool {
     }
 
     /**
-     * 初期化する
+     * 実行する
      *
      * @return true：成功、false：失敗
      */
-    public boolean initialize() {
-
-        final boolean result = false;
-
-        final boolean initializeResult
-            = this.getOne2OneService().initialize(AbstractIoTool.getInputPath(), AbstractIoTool.getOutputPath());
-
-        if (!initializeResult) {
-
-            this.logger.error("初期化の失敗");
-
-        }
-
-        return result;
-
-    }
-
-    /**
-     * 処理する
-     *
-     * @return true：成功、false：失敗
-     */
-    public boolean process() {
+    @Override
+    public boolean execute() {
 
         boolean result = false;
 
@@ -164,6 +143,28 @@ public abstract class AbstractIoTool extends AbstractTool {
             /* 終了 */
 
             measService.end();
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 初期化する
+     *
+     * @return true：成功、false：失敗
+     */
+    public boolean initialize() {
+
+        final boolean result = false;
+
+        final boolean initializeResult
+            = this.getOne2OneService().initialize(AbstractIoTool.getInputPath(), AbstractIoTool.getOutputPath());
+
+        if (!initializeResult) {
+
+            this.logger.error("初期化の失敗");
 
         }
 

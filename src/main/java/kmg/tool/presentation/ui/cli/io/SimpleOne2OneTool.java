@@ -41,8 +41,8 @@ public class SimpleOne2OneTool extends AbstractIoTool {
         /* 初期化 */
         tool.initialize();
 
-        /* 処理 */
-        tool.process();
+        /* 実行 */
+        tool.execute();
 
         ctx.close();
 
