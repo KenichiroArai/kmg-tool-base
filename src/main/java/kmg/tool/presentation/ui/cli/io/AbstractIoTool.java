@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.tool.domain.service.IoService;
-import kmg.tool.domain.types.KmgToolLogMessageTypes;
+import kmg.tool.domain.types.KmgToolMsgMessageTypes;
 import kmg.tool.infrastructure.context.KmgMessageSource;
 import kmg.tool.presentation.ui.cli.AbstractTool;
 
@@ -110,7 +110,7 @@ public abstract class AbstractIoTool extends AbstractTool {
             if (!processResult) {
 
                 /* ログの出力 */
-                final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOLLOGW41000;
+                final KmgToolMsgMessageTypes logType     = KmgToolMsgMessageTypes.KMGTOOLMSGW41000;
                 final Object[]               messageArgs = {};
                 final String                 msg         = this.messageSource.getMessage(logType, messageArgs);
                 measService.warn(msg);
@@ -121,7 +121,7 @@ public abstract class AbstractIoTool extends AbstractTool {
 
             /* 成功 */
             // ログの出力
-            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOLLOGI41001;
+            final KmgToolMsgMessageTypes logType     = KmgToolMsgMessageTypes.KMGTOOLMSGI41001;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getMessage(logType, messageArgs);
             measService.info(msg);
@@ -132,7 +132,7 @@ public abstract class AbstractIoTool extends AbstractTool {
 
             /* 失敗 */
             // ログの出力
-            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOLLOGE41002;
+            final KmgToolMsgMessageTypes logType     = KmgToolMsgMessageTypes.KMGTOOLMSGE41002;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getMessage(logType, messageArgs);
             measService.error(msg, e);

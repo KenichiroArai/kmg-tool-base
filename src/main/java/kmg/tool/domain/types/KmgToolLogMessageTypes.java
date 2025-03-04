@@ -30,7 +30,7 @@ public enum KmgToolLogMessageTypes implements KmgToolMessageTypes {
     NONE("指定無し"),
 
     /**
-     * 失敗
+     * 初期化の失敗
      *
      * @author KenichiroArai
      *
@@ -38,10 +38,10 @@ public enum KmgToolLogMessageTypes implements KmgToolMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLLOGW41000("KMGTOOLLOGW41000"),
+    KMGTOOLLOGE41000("KMGTOOLLOGE41000"),
 
     /**
-     * 成功
+     * 初期化の失敗
      *
      * @author KenichiroArai
      *
@@ -49,18 +49,7 @@ public enum KmgToolLogMessageTypes implements KmgToolMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLLOGI41001("KMGTOOLLOGI41001"),
-
-    /**
-     * 例外発生
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOLLOGE41002("KMGTOOLLOGE41002"),
+    KMGTOOLLOGE41001("KMGTOOLLOGE41001"),
 
     /* 定義：終了 */
     ;

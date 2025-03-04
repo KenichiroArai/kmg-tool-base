@@ -29,7 +29,41 @@ public enum KmgToolMsgMessageTypes implements KmgToolMessageTypes {
      */
     NONE("指定無し"),
 
+    /**
+     * 失敗
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLMSGW41000("KMGTOOLMSGW41000"),
+
+    /**
+     * 成功
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLMSGI41001("KMGTOOLMSGI41001"),
+
+    /**
+     * 例外発生
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLMSGE41002("KMGTOOLMSGE41002"),
+
     /* 定義：終了 */
+
     ;
 
     /**
