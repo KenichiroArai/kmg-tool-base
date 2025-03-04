@@ -1,5 +1,6 @@
-package kmg.core.infrastructure.exception;
+package kmg.tool.infrastructure.exception;
 
+import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.tool.infrastructure.common.KmgToolMessageTypes;
 
 /**

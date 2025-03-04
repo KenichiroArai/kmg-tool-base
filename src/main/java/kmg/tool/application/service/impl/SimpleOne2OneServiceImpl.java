@@ -8,8 +8,8 @@ import java.nio.file.Path;
 
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.exception.KmgToolException;
 import kmg.tool.application.service.SimpleOne2OneService;
+import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツールサービス<br>

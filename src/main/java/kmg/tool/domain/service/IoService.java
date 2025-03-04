@@ -1,6 +1,6 @@
 package kmg.tool.domain.service;
 
-import kmg.core.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * 入出力サービスインタフェース

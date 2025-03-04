@@ -3,8 +3,8 @@ package kmg.tool.presentation.ui.cli.io;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kmg.core.infrastructure.exception.KmgToolException;
 import kmg.tool.domain.service.One2OneService;
+import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * 1入力ファイルから1出力ファイルへの変換ツールサービス抽象クラス

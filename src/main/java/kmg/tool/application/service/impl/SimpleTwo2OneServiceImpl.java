@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.exception.KmgToolException;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.service.SimpleTwo2OneService;
+import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス<br>
