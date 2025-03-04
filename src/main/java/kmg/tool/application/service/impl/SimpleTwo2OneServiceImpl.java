@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import kmg.core.infrastructure.exception.KmgToolException;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.service.SimpleTwo2OneService;
 
@@ -95,9 +96,12 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
      * 処理する
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
-    public boolean process() {
+    public boolean process() throws KmgToolException {
 
         boolean result = false;
 
