@@ -12,7 +12,7 @@ import kmg.tool.infrastructure.common.KmgToolMessageTypes;
  *
  * @since 0.1.0
  *
- * @version 0.2.0
+ * @version 0.1.0
  */
 public enum KmgToolLogMessageTypes implements KmgToolMessageTypes {
 
@@ -28,6 +28,39 @@ public enum KmgToolLogMessageTypes implements KmgToolMessageTypes {
      * @version 0.1.0
      */
     NONE("指定無し"),
+
+    /**
+     * 失敗
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLLOGW41000("KMGTOOLLOGW41000"),
+
+    /**
+     * 成功
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLLOGI41001("KMGTOOLLOGI41001"),
+
+    /**
+     * 例外発生
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLLOGE41002("KMGTOOLLOGE41002"),
 
     /* 定義：終了 */
     ;
