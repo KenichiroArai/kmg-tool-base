@@ -6,9 +6,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.service.SimpleOne2OneService;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -16,6 +19,10 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 @Service
 public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
+
+    /** メッセージソース */
+    @Autowired
+    private KmgMessageSource messageSource;
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -112,9 +119,10 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/02/27 例外処理
-            // throw e;
-            e.printStackTrace();
+            // 例外をスローする
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI31000;
+            final Object[]               messageArgs = {};
+            throw new KmgToolException(msgType, messageArgs, e);
 
         }
 

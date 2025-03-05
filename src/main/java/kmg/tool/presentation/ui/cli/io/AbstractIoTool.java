@@ -109,10 +109,10 @@ public abstract class AbstractIoTool extends AbstractTool {
 
             if (!processResult) {
 
-                /* ログの出力 */
-                final KmgToolGenMessageTypes logType     = KmgToolGenMessageTypes.KMGTOOLGENW41000;
+                /* メッセージの出力 */
+                final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI41000;
                 final Object[]               messageArgs = {};
-                final String                 msg         = this.messageSource.getMsgMessage(logType, messageArgs);
+                final String                 msg         = this.messageSource.getMsgMessage(msgType, messageArgs);
                 measService.warn(msg);
 
                 return result;
@@ -120,10 +120,10 @@ public abstract class AbstractIoTool extends AbstractTool {
             }
 
             /* 成功 */
-            // ログの出力
-            final KmgToolGenMessageTypes logType     = KmgToolGenMessageTypes.KMGTOOLGENI41001;
+            // メッセージの出力
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI41001;
             final Object[]               messageArgs = {};
-            final String                 msg         = this.messageSource.getMsgMessage(logType, messageArgs);
+            final String                 msg         = this.messageSource.getMsgMessage(msgType, messageArgs);
             measService.info(msg);
 
             result = true;
@@ -131,10 +131,10 @@ public abstract class AbstractIoTool extends AbstractTool {
         } catch (final Exception e) {
 
             /* 失敗 */
-            // ログの出力
-            final KmgToolGenMessageTypes logType     = KmgToolGenMessageTypes.KMGTOOLGENE41002;
+            // メッセージの出力
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI41002;
             final Object[]               messageArgs = {};
-            final String                 msg         = this.messageSource.getMsgMessage(logType, messageArgs);
+            final String                 msg         = this.messageSource.getMsgMessage(msgType, messageArgs);
             measService.error(msg, e);
 
         } finally {

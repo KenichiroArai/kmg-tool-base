@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.service.SimpleTwo2OneService;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -141,9 +142,10 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/04 例外処理
-            // throw e;
-            e.printStackTrace();
+            // 例外をスローする
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI31001;
+            final Object[]               messageArgs = {};
+            throw new KmgToolException(msgType, messageArgs, e);
 
         }
 

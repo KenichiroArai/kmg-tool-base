@@ -30,6 +30,28 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     NONE("指定無し"),
 
     /**
+     * ファイル処理に失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLGENI31000("KMGTOOLGENI31000"),
+
+    /**
+     * ファイル処理に失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLGENI31001("KMGTOOLGENI31001"),
+
+    /**
      * 失敗
      *
      * @author KenichiroArai
@@ -38,7 +60,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLGENW41000("KMGTOOLGENW41000"),
+    KMGTOOLGENI41000("KMGTOOLGENI41000"),
 
     /**
      * 成功
@@ -60,29 +82,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLGENE41002("KMGTOOLGENE41002"),
-
-    /**
-     * ファイル処理に失敗しました。
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOLGENE41003("KMGTOOLGENE41003"),
-
-    /**
-     * ファイル処理に失敗しました。
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOLGENE41004("KMGTOOLGENE41004"),
+    KMGTOOLGENI41002("KMGTOOLGENI41002"),
 
     /* 定義：終了 */
 
