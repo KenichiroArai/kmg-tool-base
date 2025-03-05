@@ -11,7 +11,7 @@ import kmg.core.infrastructure.common.KmgComLogMessageTypes;
  *
  * @version 0.2.0
  */
-public interface KmgToolCommonLogMessageTypes extends KmgToolCommonMessageTypes, KmgComLogMessageTypes {
+public interface KmgToolComLogMessageTypes extends KmgToolComMessageTypes, KmgComLogMessageTypes {
 
     // 処理なし
 

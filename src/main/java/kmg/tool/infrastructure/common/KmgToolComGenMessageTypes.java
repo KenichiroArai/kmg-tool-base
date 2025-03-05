@@ -11,7 +11,7 @@ import kmg.core.infrastructure.common.KmgComGenMessageTypes;
  *
  * @version 0.1.0
  */
-public interface KmgToolCommonGenMessageTypes extends KmgToolCommonMessageTypes, KmgComGenMessageTypes {
+public interface KmgToolComGenMessageTypes extends KmgToolComMessageTypes, KmgComGenMessageTypes {
 
     // 処理なし
 
