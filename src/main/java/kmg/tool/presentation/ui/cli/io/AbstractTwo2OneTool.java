@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.Two2OneService;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
@@ -115,15 +116,8 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      */
     private Path getDefaultTemplatePath() {
 
-        Path   result    = null;
-        String className = this.getClass().getSimpleName();
-
-        // $$がある場合は、その前の部分だけを使用する
-        if (className.contains("$$")) {
-
-            className = className.substring(0, className.indexOf("$$"));
-
-        }
+        Path         result    = null;
+        final String className = KmgPathUtils.getSimpleClassName(this.getClass());
 
         final String templateFileName = String.format("template/%s.txt", className);
         result = Paths.get(AbstractIoTool.getBasePath().toString(), templateFileName);
