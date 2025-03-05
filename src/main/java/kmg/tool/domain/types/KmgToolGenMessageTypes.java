@@ -52,6 +52,17 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOLGENI31001("KMGTOOLGENI31001"),
 
     /**
+     * テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLGENI31002("KMGTOOLGENI31002"),
+
+    /**
      * 失敗
      *
      * @author KenichiroArai

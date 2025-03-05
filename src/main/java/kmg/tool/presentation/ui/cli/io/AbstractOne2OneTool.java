@@ -74,8 +74,11 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
 
         } catch (final KmgToolException e) {
 
-            // TODO 2025/03/04 例外処理
-            e.printStackTrace();
+            // ログの出力
+            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOLLOGE31000;
+            final Object[]               messageArgs = {};
+            final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
+            this.logger.error(msg, e);
 
         }
 

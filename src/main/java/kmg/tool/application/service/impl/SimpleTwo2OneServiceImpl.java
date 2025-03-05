@@ -116,10 +116,12 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/04 例外処理
-            // throw e;
-            e.printStackTrace();
-            return result;
+            // 例外をスローする
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI31002;
+            final Object[]               messageArgs = {
+                this.templatePath.toString()
+            };
+            throw new KmgToolException(msgType, messageArgs, e);
 
         }
 

@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.service.SimpleOne2OneService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -19,10 +17,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 @Service
 public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
-
-    /** メッセージソース */
-    @Autowired
-    private KmgMessageSource messageSource;
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -77,10 +71,13 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
      *                   入力ファイルパス
      * @param outputPath
      *                   出力ファイルパス
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath, final Path outputPath) {
+    public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolException {
 
         final boolean result = true;
 
