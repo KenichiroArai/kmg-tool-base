@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
+import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.IoService;
 import kmg.tool.domain.types.KmgToolMsgMessageTypes;
-import kmg.tool.infrastructure.context.KmgMessageSource;
 import kmg.tool.presentation.ui.cli.AbstractTool;
 
 /**

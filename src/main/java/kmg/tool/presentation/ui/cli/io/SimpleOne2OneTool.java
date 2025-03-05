@@ -13,7 +13,7 @@ import kmg.tool.application.service.SimpleOne2OneService;
  * @author KenichiroArai
  */
 @SpringBootApplication(scanBasePackages = {
-    "kmg.tool"
+    "kmg"
 })
 public class SimpleOne2OneTool extends AbstractOne2OneTool {
 
