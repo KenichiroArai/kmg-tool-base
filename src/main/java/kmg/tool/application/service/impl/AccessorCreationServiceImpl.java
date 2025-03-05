@@ -34,57 +34,108 @@ public class AccessorCreationServiceImpl implements AccessorCreationService {
     /** 出力ファイルパス */
     private Path outputPath;
 
-    /** テンプレート */
-    private String template;
+    /**
+     * 入力ファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return 入力ファイルパス
+     */
+    @Override
+    public Path getInputPath() {
+
+        final Path result = this.inputPath;
+        return result;
+
+    }
 
     /**
-     * {@inheritDoc}
+     * 出力ファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return 出力ファイルパス
      */
+    @Override
+    public Path getOutputPath() {
+
+        final Path result = this.outputPath;
+        return result;
+
+    }
+
+    /**
+     * 初期化する
+     *
+     * @return true：成功、false：失敗
+     *
+     * @param inputPath
+     *                     入力ファイルパス
+     * @param templatePath
+     *                     テンプレートファイルパス
+     * @param outputPath
+     *                     出力ファイルパス
+     */
+    @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) {
 
-        boolean result = false;
+        final boolean result = true;
 
-        /* 入力ファイルパスの設定 */
         this.inputPath = inputPath;
-
-        /* テンプレートファイルパスの設定 */
         this.templatePath = templatePath;
-
-        /* 出力ファイルパスの設定 */
         this.outputPath = outputPath;
-
-        /* テンプレートの取得 */
-        try {
-
-            this.template = Files.readAllLines(this.templatePath).stream()
-                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
-            result = true;
-
-        } catch (final IOException e) {
-
-            e.printStackTrace();
-            return result;
-
-        }
 
         return result;
 
     }
 
     /**
-     * {@inheritDoc}
+     * 処理する
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
     public boolean process() throws KmgToolException {
 
         boolean result = false;
 
+        /* テンプレートの取得 */
+        String template = null;
+
+        try {
+
+            template = Files.readAllLines(this.templatePath).stream()
+                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
+
+        } catch (final IOException e) {
+
+            // 例外をスローする
+            // TODO KenichiroArai 2025/03/06 ログメッセージ
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs = {
+                this.templatePath.toString()
+            };
+            throw new KmgToolException(msgType, messageArgs, e);
+
+        }
+
         /* 入力から出力の処理 */
         try (final BufferedReader brInput = Files.newBufferedReader(this.inputPath);
             final BufferedWriter bw = Files.newBufferedWriter(this.outputPath);) {
 
-            String output = this.template;
+            String output = template;
             String line   = null;
 
             while ((line = brInput.readLine()) != null) {
@@ -112,7 +163,7 @@ public class AccessorCreationServiceImpl implements AccessorCreationService {
                         matcherSrc.group(3).substring(0, 1).toUpperCase() + matcherSrc.group(3).substring(1));
                     bw.write(output);
                     bw.write(System.lineSeparator());
-                    output = this.template;
+                    output = template;
 
                 }
 
@@ -122,8 +173,8 @@ public class AccessorCreationServiceImpl implements AccessorCreationService {
 
         } catch (final IOException e) {
 
-            // KmgToolExceptionが適切なメッセージタイプと一緒に例外をスローします
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.KMGTOOLGENI41002;
+            // TODO KenichiroArai 2025/03/06 ログメッセージ
+            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
             throw new KmgToolException(msgType, e);
 
         }

@@ -16,13 +16,12 @@ import kmg.tool.domain.types.KmgToolLogMessageTypes;
  */
 public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
-    /** デフォルトのテンプレートファイルパス */
-    private static final Path DEFAULT_TEMPLATE_PATH
-        = Paths.get(AbstractIoTool.getBasePath().toString(), "template/SimpleTemplate.txt");
-
     /** メッセージソース */
     @Autowired
     private KmgMessageSource messageSource;
+
+    /** テンプレートファイルパス */
+    private final Path templatePath;
 
     /**
      * ロガー
@@ -30,18 +29,6 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      * @since 0.1.0
      */
     private final Logger logger;
-
-    /**
-     * テンプレートファイルパス
-     *
-     * @return テンプレートファイルパス
-     */
-    public static Path getTemplatePath() {
-
-        final Path result = AbstractTwo2OneTool.DEFAULT_TEMPLATE_PATH;
-        return result;
-
-    }
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
@@ -71,6 +58,19 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
         super(toolName);
         this.logger = logger;
+        this.templatePath = this.getDefaultTemplatePath();
+
+    }
+
+    /**
+     * テンプレートファイルパス
+     *
+     * @return テンプレートファイルパス
+     */
+    public Path getTemplatePath() {
+
+        final Path result = this.templatePath;
+        return result;
 
     }
 
@@ -84,7 +84,7 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
         final boolean result = false;
 
         final boolean initializeResult = this.getIoService().initialize(AbstractIoTool.getInputPath(),
-            AbstractTwo2OneTool.getTemplatePath(), AbstractIoTool.getOutputPath());
+            this.getTemplatePath(), AbstractIoTool.getOutputPath());
 
         if (!initializeResult) {
 
@@ -107,5 +107,19 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      */
     @Override
     protected abstract Two2OneService getIoService();
+
+    /**
+     * デフォルトテンプレートパスを返す。
+     *
+     * @return デフォルトテンプレートパス
+     */
+    private Path getDefaultTemplatePath() {
+
+        Path         result           = null;
+        final String templateFileName = String.format("template/%s.txt", this.getClass().getSimpleName());
+        result = Paths.get(AbstractIoTool.getBasePath().toString(), templateFileName);
+        return result;
+
+    }
 
 }
