@@ -3,7 +3,7 @@ package kmg.tool.domain.types;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.tool.infrastructure.common.KmgToolMessageTypes;
+import kmg.tool.infrastructure.common.KmgToolCommonMessageTypes;
 
 /**
  * KMGツールログメッセージの種類<br>
@@ -14,7 +14,7 @@ import kmg.tool.infrastructure.common.KmgToolMessageTypes;
  *
  * @version 0.1.0
  */
-public enum KmgToolLogMessageTypes implements KmgToolMessageTypes {
+public enum KmgToolLogMessageTypes implements KmgToolCommonMessageTypes {
 
     /* 定義：開始 */
 
