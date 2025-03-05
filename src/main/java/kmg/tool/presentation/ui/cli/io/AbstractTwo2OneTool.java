@@ -16,8 +16,8 @@ import kmg.tool.domain.types.KmgToolLogMessageTypes;
  */
 public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
-    /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH
+    /** デフォルトのテンプレートファイルパス */
+    private static final Path DEFAULT_TEMPLATE_PATH
         = Paths.get(AbstractIoTool.getBasePath().toString(), "template/SimpleTemplate.txt");
 
     /** メッセージソース */
@@ -30,6 +30,18 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      * @since 0.1.0
      */
     private final Logger logger;
+
+    /**
+     * テンプレートファイルパス
+     *
+     * @return テンプレートファイルパス
+     */
+    public static Path getTemplatePath() {
+
+        final Path result = AbstractTwo2OneTool.DEFAULT_TEMPLATE_PATH;
+        return result;
+
+    }
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
@@ -72,7 +84,7 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
         final boolean result = false;
 
         final boolean initializeResult = this.getIoService().initialize(AbstractIoTool.getInputPath(),
-            AbstractTwo2OneTool.TEMPLATE_PATH, AbstractIoTool.getOutputPath());
+            AbstractTwo2OneTool.getTemplatePath(), AbstractIoTool.getOutputPath());
 
         if (!initializeResult) {
 
