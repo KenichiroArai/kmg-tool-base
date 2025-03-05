@@ -62,6 +62,28 @@ public enum KmgToolMsgMessageTypes implements KmgToolComGenMessageTypes {
      */
     KMGTOOLMSGE41002("KMGTOOLMSGE41002"),
 
+    /**
+     * ファイル処理に失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLMSGE41003("KMGTOOLMSGE41003"),
+
+    /**
+     * ファイル処理に失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOLMSGE41004("KMGTOOLMSGE41004"),
+
     /* 定義：終了 */
 
     ;
