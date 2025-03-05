@@ -115,8 +115,17 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      */
     private Path getDefaultTemplatePath() {
 
-        Path         result           = null;
-        final String templateFileName = String.format("template/%s.txt", this.getClass().getSimpleName());
+        Path   result    = null;
+        String className = this.getClass().getSimpleName();
+
+        // $$がある場合は、その前の部分だけを使用する
+        if (className.contains("$$")) {
+
+            className = className.substring(0, className.indexOf("$$"));
+
+        }
+
+        final String templateFileName = String.format("template/%s.txt", className);
         result = Paths.get(AbstractIoTool.getBasePath().toString(), templateFileName);
         return result;
 
