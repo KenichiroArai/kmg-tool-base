@@ -117,7 +117,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
         } catch (final IOException e) {
 
             // 例外をスローする
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI31002;
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31002;
             final Object[]               messageArgs = {
                 this.templatePath.toString()
             };
@@ -145,7 +145,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
         } catch (final IOException e) {
 
             // 例外をスローする
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI31001;
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31001;
             final Object[]               messageArgs = {};
             throw new KmgToolException(msgType, messageArgs, e);
 

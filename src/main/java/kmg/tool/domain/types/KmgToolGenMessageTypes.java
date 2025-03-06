@@ -38,7 +38,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLGENI31000("KMGTOOLGENI31000"),
+    KMGTOOL_GEN31000("KMGTOOL_GEN31000"),
 
     /**
      * ファイル処理に失敗しました。
@@ -49,7 +49,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLGENI31001("KMGTOOLGENI31001"),
+    KMGTOOL_GEN31001("KMGTOOL_GEN31001"),
 
     /**
      * テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]
@@ -60,7 +60,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLGENI31002("KMGTOOLGENI31002"),
+    KMGTOOL_GEN31002("KMGTOOL_GEN31002"),
 
     /**
      * 失敗
@@ -71,7 +71,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLGENI41000("KMGTOOLGENI41000"),
+    KMGTOOL_GEN41000("KMGTOOL_GEN41000"),
 
     /**
      * 成功
@@ -82,7 +82,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLGENI41001("KMGTOOLGENI41001"),
+    KMGTOOL_GEN41001("KMGTOOL_GEN41001"),
 
     /**
      * 例外発生
@@ -93,7 +93,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLGENI41002("KMGTOOLGENI41002"),
+    KMGTOOL_GEN41002("KMGTOOL_GEN41002"),
 
     /* 定義：終了 */
 

@@ -110,7 +110,7 @@ public abstract class AbstractIoTool extends AbstractTool {
             if (!processResult) {
 
                 /* メッセージの出力 */
-                final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI41000;
+                final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41000;
                 final Object[]               messageArgs = {};
                 final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
                 measService.warn(msg);
@@ -121,7 +121,7 @@ public abstract class AbstractIoTool extends AbstractTool {
 
             /* 成功 */
             // メッセージの出力
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI41001;
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41001;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
@@ -132,7 +132,7 @@ public abstract class AbstractIoTool extends AbstractTool {
 
             /* 失敗 */
             // メッセージの出力
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOLGENI41002;
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41002;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);

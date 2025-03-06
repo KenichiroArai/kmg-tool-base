@@ -38,7 +38,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLLOGE41000("KMGTOOLLOGE41000"),
+    KMGTOOL_LOG41000("KMGTOOL_LOG41000"),
 
     /**
      * 初期化の失敗
@@ -49,7 +49,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLLOGE41001("KMGTOOLLOGE41001"),
+    KMGTOOL_LOG41001("KMGTOOL_LOG41001"),
 
     /**
      * 初期化で例外が発生しました。
@@ -60,7 +60,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOLLOGE41002("KMGTOOLLOGE41002"),
+    KMGTOOL_LOG41002("KMGTOOL_LOG41002"),
 
     /* 定義：終了 */
     ;

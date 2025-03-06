@@ -75,7 +75,7 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
         } catch (final KmgToolException e) {
 
             // ログの出力
-            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOLLOGE41002;
+            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41002;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);
@@ -85,7 +85,7 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
         if (!initializeResult) {
 
             // ログの出力
-            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOLLOGE41000;
+            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41000;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg);
