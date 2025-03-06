@@ -1,10 +1,12 @@
 columns:
   - key: "名称"
     placeholder: "{name}"
-  - key: "項目"
-    placeholder: "{item}"
   - key: "型"
     placeholder: "{type}"
+  - key: "項目"
+    placeholder: "{item}"
+  - key: "先頭大文字項目"
+    placeholder: "{Item}"
 
 template: |
     /**
