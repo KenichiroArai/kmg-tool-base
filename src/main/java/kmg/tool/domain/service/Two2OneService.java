@@ -34,6 +34,19 @@ public interface Two2OneService extends IoService {
     Path getOutputPath();
 
     /**
+     * テンプレートファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return テンプレートファイルパス
+     */
+    Path getTemplatePath();
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗
