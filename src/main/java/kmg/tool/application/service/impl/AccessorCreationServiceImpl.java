@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
+import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.tool.application.service.AccessorCreationService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -42,7 +43,22 @@ public class AccessorCreationServiceImpl extends DynamicTemplateConversionServic
         /* 入力から出力の処理 */
         final List<List<String>> csv = new ArrayList<>();
 
-        final Path csvPath = Path.of("");
+        Path csvPath = null;
+
+        /* 一時ファイルの作成 */
+        try {
+
+            final String fileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
+            csvPath = Files.createTempFile(fileNameOnly, "Temp.csv");
+            csvPath.toFile().deleteOnExit();
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/06 メッセージ
+            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
+            throw new KmgToolException(msgType, e);
+
+        }
 
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
             final BufferedWriter bw = Files.newBufferedWriter(csvPath);) {
