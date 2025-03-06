@@ -10,11 +10,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.tool.application.service.AccessorCreationService;
+import kmg.tool.application.service.DynamicTemplateConversionService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -24,8 +26,103 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @author KenichiroArai
  */
 @Service
-public class AccessorCreationServiceImpl extends DynamicTemplateConversionServiceImpl
-    implements AccessorCreationService {
+public class AccessorCreationServiceImpl implements AccessorCreationService {
+
+    /** 入力ファイルパス */
+    private Path inputPath;
+
+    /** テンプレートファイルパス */
+    private Path templatePath;
+
+    /** 出力ファイルパス */
+    private Path outputPath;
+
+    /** 動的変換サービス */
+    @Autowired
+    private DynamicTemplateConversionService dynamicTemplateConversionService;
+
+    /**
+     * 入力ファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return 入力ファイルパス
+     */
+    @Override
+    public Path getInputPath() {
+
+        final Path result = this.inputPath;
+        return result;
+
+    }
+
+    /**
+     * 出力ファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return 出力ファイルパス
+     */
+    @Override
+    public Path getOutputPath() {
+
+        final Path result = this.outputPath;
+        return result;
+
+    }
+
+    /**
+     * テンプレートファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return テンプレートファイルパス
+     */
+    @Override
+    public Path getTemplatePath() {
+
+        final Path result = this.templatePath;
+        return result;
+
+    }
+
+    /**
+     * 初期化する
+     *
+     * @return true：成功、false：失敗
+     *
+     * @param inputPath
+     *                     入力ファイルパス
+     * @param templatePath
+     *                     テンプレートファイルパス
+     * @param outputPath
+     *                     出力ファイルパス
+     */
+    @SuppressWarnings("hiding")
+    @Override
+    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) {
+
+        final boolean result = true;
+
+        this.inputPath = inputPath;
+        this.templatePath = templatePath;
+        this.outputPath = outputPath;
+
+        return result;
+
+    }
 
     /**
      * 処理する
@@ -60,14 +157,13 @@ public class AccessorCreationServiceImpl extends DynamicTemplateConversionServic
 
         }
 
+        /* 入力ファイルからCSV形式に変換してCSVファイルに出力する */
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
-            final BufferedWriter bw = Files.newBufferedWriter(csvPath);) {
+            final BufferedWriter brOutput = Files.newBufferedWriter(csvPath);) {
 
             String line = null;
 
             while ((line = brInput.readLine()) != null) {
-
-                // final String[] keyArrays = columnMappings.values().toArray(new String[0]);
 
                 line = line.replace("final", KmgString.EMPTY);
                 line = line.replace("static", KmgString.EMPTY);
@@ -98,8 +194,8 @@ public class AccessorCreationServiceImpl extends DynamicTemplateConversionServic
                 csvLine.add(matcherSrc.group(3));
                 csvLine.add(matcherSrc.group(3).substring(0, 1).toUpperCase() + matcherSrc.group(3).substring(1));
 
-                bw.write(String.join(",", csvLine));
-                bw.write(System.lineSeparator());
+                brOutput.write(String.join(",", csvLine));
+                brOutput.write(System.lineSeparator());
 
             }
 
@@ -113,7 +209,8 @@ public class AccessorCreationServiceImpl extends DynamicTemplateConversionServic
 
         }
 
-        result = super.process();
+        this.dynamicTemplateConversionService.initialize(csvPath, this.templatePath, this.outputPath);
+        this.dynamicTemplateConversionService.process();
 
         return result;
 
