@@ -68,6 +68,25 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
     }
 
     /**
+     * テンプレートファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return テンプレートファイルパス
+     */
+    @Override
+    public Path getTemplatePath() {
+
+        final Path result = this.templatePath;
+        return result;
+
+    }
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗

@@ -1,13 +1,11 @@
 package kmg.tool.application.service;
 
-import kmg.tool.domain.service.Two2OneService;
-
 /**
  * アクセサ作成サービスインタフェース<br>
  *
  * @author KenichiroArai
  */
-public interface AccessorCreationService extends Two2OneService {
+public interface AccessorCreationService extends DynamicTemplateConversionService {
 
     // 処理なし
 

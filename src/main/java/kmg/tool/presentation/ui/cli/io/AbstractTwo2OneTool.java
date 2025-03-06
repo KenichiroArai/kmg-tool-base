@@ -32,7 +32,7 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
     private final Logger logger;
 
     /**
-     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     * 標準ロガーを使用して初期化するコンストラクタ<br>
      *
      * @param toolName
      *                 ツール名
@@ -46,7 +46,7 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
     }
 
     /**
-     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     * カスタムロガーを使用して初期化するコンストラクタ<br>
      *
      * @since 0.1.0
      *

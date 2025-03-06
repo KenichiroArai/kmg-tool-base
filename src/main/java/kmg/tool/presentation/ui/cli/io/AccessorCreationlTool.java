@@ -28,7 +28,7 @@ import kmg.tool.application.service.AccessorCreationService;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class AccessorCreationlTool extends AbstractTwo2OneTool {
+public class AccessorCreationlTool extends AbstractDynamicTemplateConversionTool {
 
     /**
      * <h3>ツール名</h3>
