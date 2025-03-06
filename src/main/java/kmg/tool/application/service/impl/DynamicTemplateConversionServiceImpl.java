@@ -5,7 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -130,7 +130,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         /* テンプレートの取得 */
         String                    template       = null;
-        final Map<String, String> columnMappings = new HashMap<>();
+        final Map<String, String> columnMappings = new LinkedHashMap<>();
 
         final Yaml yaml = new Yaml();
 
@@ -184,13 +184,9 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
                     final String key   = keyArrays[i];
                     final String value = csvLine[i];
 
-                    System.out.println(String.format("%s, %s", key, value));
-
                     out = out.replace(key, value);
 
                 }
-
-                System.out.println();
 
                 bwOutput.write(out);
                 bwOutput.newLine();
