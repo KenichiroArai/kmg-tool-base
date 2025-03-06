@@ -3,8 +3,6 @@ columns:
     placeholder: "{name}"
   - key: "項目"
     placeholder: "{item}"
-  - key: "項目先頭大文字"
-    placeholder: "{Item}"
   - key: "型"
     placeholder: "{type}"
 

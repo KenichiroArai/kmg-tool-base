@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import java.util.regex.Pattern;
 import org.yaml.snakeyaml.Yaml;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.service.DynamicTemplateConversionService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -130,10 +128,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         boolean result = false;
 
-        /* CSVデータの取得 */
-        final List<String[]> csvData = this.getInputFile2Csv();
-        System.out.println(csvData);
-
         /* テンプレートの取得 */
         String                    template       = null;
         final Map<String, String> columnMappings = new HashMap<>();
@@ -150,7 +144,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         } catch (final IOException e) {
 
             // 例外をスローする
-            // TODO KenichiroArai 2025/03/06 ログメッセージ
+            // TODO KenichiroArai 2025/03/06 メッセージ
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {
                 this.templatePath.toString()
@@ -181,6 +175,8 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
             while ((line = brInput.readLine()) != null) {
 
+                final String[] keyArrays = columnMappings.values().toArray(new String[0]);
+
                 line = line.replace("final", KmgString.EMPTY);
                 line = line.replace("static", KmgString.EMPTY);
                 final Pattern patternComment = Pattern.compile("/\\*\\* (\\S+)");
@@ -188,7 +184,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
                 if (matcherComment.find()) {
 
-                    output = output.replace("$name", matcherComment.group(1));
+                    output = output.replace(keyArrays[0], matcherComment.group(1));
                     continue;
 
                 }
@@ -202,11 +198,9 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
                 }
 
-                columnMappings.get(line);
-
-                output = output.replace("$type", matcherSrc.group(1));
-                output = output.replace("$item", matcherSrc.group(3));
-                output = output.replace("$Item",
+                output = output.replace(keyArrays[1], matcherSrc.group(3));
+                output = output.replace(keyArrays[2], matcherSrc.group(1));
+                output = output.replace("{Item}",
                     matcherSrc.group(3).substring(0, 1).toUpperCase() + matcherSrc.group(3).substring(1));
                 bw.write(output);
                 bw.write(System.lineSeparator());
@@ -215,41 +209,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
             }
 
             result = true;
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/06 メッセージ
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
-
-        }
-
-        return result;
-
-    }
-
-    /**
-     * 入力ファイルを読み込みCSV（行ごとのリスト）を返す。
-     *
-     * @return CSV（行ごとのリスト）
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    private List<String[]> getInputFile2Csv() throws KmgToolException {
-
-        final List<String[]> result = new ArrayList<>();
-
-        /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath())) {
-
-            String line;
-
-            while ((line = brInput.readLine()) != null) {
-
-                result.add(KmgDelimiterTypes.COMMA.split(line));
-
-            }
 
         } catch (final IOException e) {
 
