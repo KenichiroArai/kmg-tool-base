@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.tool.application.logic.io.AccessorCreationLogic;
 import kmg.tool.application.service.io.AccessorCreationService;
 import kmg.tool.domain.service.io.AbstractInputCsvTemplateOutputProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
@@ -26,6 +28,10 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputProcessorService
     implements AccessorCreationService {
+
+    /** アクセサ作成ロジック */
+    @Autowired
+    private AccessorCreationLogic accessorCreationLogic;
 
     /**
      * CSVファイルに書き込む。<br>
@@ -54,10 +60,6 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             while ((line = brInput.readLine()) != null) {
 
-                // 不要な修飾子を削除
-                line = line.replace("final", KmgString.EMPTY);
-                line = line.replace("static", KmgString.EMPTY);
-
                 // Javadocコメントの正規表現パターン
                 final Pattern patternComment = Pattern.compile("/\\*\\* (\\S+)");
                 final Matcher matcherComment = patternComment.matcher(line);
@@ -76,6 +78,10 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                     continue;
 
                 }
+
+                // 不要な修飾子を削除
+                line = line.replace("final", KmgString.EMPTY);
+                line = line.replace("static", KmgString.EMPTY);
 
                 // privateフィールド宣言の正規表現パターン
                 final Pattern patternSrc = Pattern.compile("private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);");
