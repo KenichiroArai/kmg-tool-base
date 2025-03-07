@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgPathUtils;
+import kmg.tool.application.service.AbstractInputCsvTemplateOutputProcessorService;
 import kmg.tool.application.service.AccessorCreationService;
 import kmg.tool.application.service.DynamicTemplateConversionService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
@@ -26,7 +27,8 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @author KenichiroArai
  */
 @Service
-public class AccessorCreationServiceImpl implements AccessorCreationService {
+public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputProcessorService
+    implements AccessorCreationService {
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -37,7 +39,7 @@ public class AccessorCreationServiceImpl implements AccessorCreationService {
     /** 出力ファイルパス */
     private Path outputPath;
 
-    /** 動的変換サービス */
+    /** テンプレートの動的変換サービス */
     @Autowired
     private DynamicTemplateConversionService dynamicTemplateConversionService;
 
