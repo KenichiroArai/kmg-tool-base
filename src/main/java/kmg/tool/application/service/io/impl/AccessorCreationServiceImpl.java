@@ -40,10 +40,11 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         final boolean result = false;
 
+        /* 入力ファイルからCSV形式に変換してCSVファイルに出力する */
+
         // CSVデータを格納するリスト
         final List<List<String>> csvData = new ArrayList<>();
 
-        /* 入力ファイルからCSV形式に変換してCSVファイルに出力する */
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
             final BufferedWriter brOutput = Files.newBufferedWriter(this.getCsvPath());) {
 
@@ -57,16 +58,17 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 line = line.replace("final", KmgString.EMPTY);
                 line = line.replace("static", KmgString.EMPTY);
 
-                // JavaDocコメントの正規表現パターン
+                // Javadocコメントの正規表現パターン
                 final Pattern patternComment = Pattern.compile("/\\*\\* (\\S+)");
                 final Matcher matcherComment = patternComment.matcher(line);
 
-                // JavaDocコメントが見つかった場合
+                // Javadocコメントか
                 if (matcherComment.find()) {
+                    // コメントの場合
 
                     // 新しいCSV行を作成
                     final List<String> csvLine = new ArrayList<>();
-                    // JavaDocコメントの内容を追加
+                    // Javadocコメントの内容を追加
                     csvLine.add(matcherComment.group(1));
                     // CSVデータに行を追加
                     csvData.add(csvLine);
@@ -79,8 +81,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 final Pattern patternSrc = Pattern.compile("private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);");
                 final Matcher matcherSrc = patternSrc.matcher(line);
 
-                // privateフィールド宣言が見つからない場合
+                // privateフィールド宣言ではないか
                 if (!matcherSrc.find()) {
+                    // 宣言ではないか
 
                     continue;
 
@@ -95,7 +98,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 final String capitalizedFieldName = KmgString.capitalize(fieldName); // 先頭大文字項目
 
                 // テンプレートの各カラムに対応する値を設定
-                // カラム1：名称（既にJavaDocコメントから設定済み）
+                // カラム1：名称（既にJavadocコメントから設定済み）
                 // カラム2：型
                 csvLine.add(fieldType);
                 // カラム3：項目
