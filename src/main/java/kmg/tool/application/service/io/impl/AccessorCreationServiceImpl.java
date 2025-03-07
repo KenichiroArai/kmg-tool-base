@@ -28,7 +28,10 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
     implements AccessorCreationService {
 
     /**
-     * CSVファイルに書き込む。
+     * CSVファイルに書き込む。<br>
+     * <p>
+     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
+     * </p>
      *
      * @return true：成功、false：失敗
      *
@@ -40,8 +43,6 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         final boolean result = false;
 
-        /* 入力ファイルからCSV形式に変換してCSVファイルに出力する */
-
         // CSVデータを格納するリスト
         final List<List<String>> csvData = new ArrayList<>();
 
@@ -51,7 +52,6 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
             // 読み込んだ行データ
             String line = null;
 
-            // 入力ファイルを1行ずつ読み込む
             while ((line = brInput.readLine()) != null) {
 
                 // 不要な修飾子を削除
