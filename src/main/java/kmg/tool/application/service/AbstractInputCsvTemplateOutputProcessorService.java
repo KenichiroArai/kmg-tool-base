@@ -1,18 +1,11 @@
 package kmg.tool.application.service;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.tool.domain.service.Two2OneService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
@@ -134,15 +127,16 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
         throws KmgToolException {
 
-        final boolean result = true;
+        boolean result = false;
 
         this.inputPath = inputPath;
         this.templatePath = templatePath;
         this.outputPath = outputPath;
 
         // 一時ファイルの作成
-        this.csvPath = this.createTempCsv();
+        this.csvPath = this.createTempCsvFile();
 
+        result = true;
         return result;
 
     }
@@ -160,63 +154,13 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
 
         boolean result = false;
 
-        /* 入力から出力の処理 */
-        final List<List<String>> csv = new ArrayList<>();
+        /* CSVファイルに書き込む */
+        result = this.writeCsvFile();
 
-        /* 入力ファイルからCSV形式に変換してCSVファイルに出力する */
-        try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
-            final BufferedWriter brOutput = Files.newBufferedWriter(this.getCsvPath());) {
-
-            String line = null;
-
-            while ((line = brInput.readLine()) != null) {
-
-                line = line.replace("final", KmgString.EMPTY);
-                line = line.replace("static", KmgString.EMPTY);
-                final Pattern patternComment = Pattern.compile("/\\*\\* (\\S+)");
-                final Matcher matcherComment = patternComment.matcher(line);
-
-                if (matcherComment.find()) {
-
-                    final List<String> csvLine = new ArrayList<>();
-                    csvLine.add(matcherComment.group(1));
-                    csv.add(csvLine);
-
-                    continue;
-
-                }
-
-                final Pattern patternSrc = Pattern.compile("private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);");
-                final Matcher matcherSrc = patternSrc.matcher(line);
-
-                if (!matcherSrc.find()) {
-
-                    continue;
-
-                }
-
-                final List<String> csvLine = csv.getLast();
-                csvLine.add(matcherSrc.group(1));
-                csvLine.add(matcherSrc.group(3));
-                csvLine.add(matcherSrc.group(3).substring(0, 1).toUpperCase() + matcherSrc.group(3).substring(1));
-
-                brOutput.write(String.join(",", csvLine));
-                brOutput.write(System.lineSeparator());
-
-            }
-
-            result = true;
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/06 メッセージ
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
-
-        }
-
-        this.dynamicTemplateConversionService.initialize(this.getCsvPath(), this.templatePath, this.outputPath);
-        this.dynamicTemplateConversionService.process();
+        /* テンプレートの動的変換サービスで出力ファイルに出力する */
+        result
+            = this.dynamicTemplateConversionService.initialize(this.getCsvPath(), this.templatePath, this.outputPath);
+        result = this.dynamicTemplateConversionService.process();
 
         return result;
 
@@ -230,7 +174,7 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    protected Path createTempCsv() throws KmgToolException {
+    protected Path createTempCsvFile() throws KmgToolException {
 
         Path result = null;
 
@@ -251,5 +195,15 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
         return result;
 
     }
+
+    /**
+     * CSVファイルに書き込む。
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    protected abstract boolean writeCsvFile() throws KmgToolException;
 
 }
