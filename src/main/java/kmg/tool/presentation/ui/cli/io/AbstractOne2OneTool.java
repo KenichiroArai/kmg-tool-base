@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.service.One2OneService;
+import kmg.tool.domain.service.io.One2OneService;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

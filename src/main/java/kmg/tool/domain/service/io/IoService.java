@@ -1,4 +1,4 @@
-package kmg.tool.domain.service;
+package kmg.tool.domain.service.io;
 
 import kmg.tool.infrastructure.exception.KmgToolException;
 

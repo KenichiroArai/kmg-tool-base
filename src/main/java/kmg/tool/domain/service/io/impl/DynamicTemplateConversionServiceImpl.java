@@ -1,4 +1,4 @@
-package kmg.tool.domain.service.impl;
+package kmg.tool.domain.service.io.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.domain.service.DynamicTemplateConversionService;
+import kmg.tool.domain.service.io.DynamicTemplateConversionService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

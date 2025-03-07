@@ -1,4 +1,4 @@
-package kmg.tool.domain.service;
+package kmg.tool.domain.service.io;
 
 /**
  * テンプレートの動的変換サービスインタフェース

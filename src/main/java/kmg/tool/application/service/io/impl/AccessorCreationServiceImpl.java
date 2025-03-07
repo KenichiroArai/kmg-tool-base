@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.tool.application.service.io.AccessorCreationService;
-import kmg.tool.domain.service.AbstractInputCsvTemplateOutputProcessorService;
+import kmg.tool.domain.service.io.AbstractInputCsvTemplateOutputProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
