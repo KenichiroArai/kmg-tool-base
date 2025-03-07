@@ -40,6 +40,24 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
     private DynamicTemplateConversionService dynamicTemplateConversionService;
 
     /**
+     * CSVファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return CSVファイルパス
+     */
+    public Path getCsvPath() {
+
+        final Path result = this.csvPath;
+        return result;
+
+    }
+
+    /**
      * 入力ファイルパスを返す<br>
      *
      * @author KenichiroArai
@@ -122,20 +140,8 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
         this.templatePath = templatePath;
         this.outputPath = outputPath;
 
-        /* 一時ファイルの作成 */
-        try {
-
-            final String fileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
-            this.csvPath = Files.createTempFile(fileNameOnly, "Temp.csv");
-            this.csvPath.toFile().deleteOnExit();
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/06 メッセージ
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
-
-        }
+        // 一時ファイルの作成
+        this.csvPath = this.createTempCsv();
 
         return result;
 
@@ -217,19 +223,31 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
     }
 
     /**
-     * CSVファイルパスを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
+     * 一時的なCSVファイルを作成する。
      *
      * @return CSVファイルパス
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    protected Path getCsvPath() {
+    protected Path createTempCsv() throws KmgToolException {
 
-        final Path result = this.csvPath;
+        Path result = null;
+
+        try {
+
+            final String fileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
+            result = Files.createTempFile(fileNameOnly, "Temp.csv");
+            result.toFile().deleteOnExit();
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/06 メッセージ
+            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
+            throw new KmgToolException(msgType, e);
+
+        }
+
         return result;
 
     }
