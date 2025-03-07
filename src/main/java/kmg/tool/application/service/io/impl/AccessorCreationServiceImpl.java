@@ -90,10 +90,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 final List<String> csvLine = csvData.getLast();
 
                 // フィールドの情報を取得
-                final String fieldType            = matcherSrc.group(1);                                     // 型
-                final String fieldName            = matcherSrc.group(3);                                     // 項目名
-                final String capitalizedFieldName = KmgString.concat(fieldName.substring(0, 1).toUpperCase(),
-                    fieldName.substring(1));                                                                 // 先頭大文字項目
+                final String fieldType            = matcherSrc.group(1);             // 型
+                final String fieldName            = matcherSrc.group(3);             // 項目名
+                final String capitalizedFieldName = KmgString.capitalize(fieldName); // 先頭大文字項目
 
                 // テンプレートの各カラムに対応する値を設定
                 // カラム1：名称（既にJavaDocコメントから設定済み）
