@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.utils.KmgPathUtils;
-import kmg.tool.application.service.DynamicTemplateConversionService;
+import kmg.tool.domain.service.DynamicTemplateConversionService;
 import kmg.tool.domain.service.Two2OneService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;

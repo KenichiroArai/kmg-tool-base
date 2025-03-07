@@ -1,6 +1,4 @@
-package kmg.tool.application.service;
-
-import kmg.tool.domain.service.Two2OneService;
+package kmg.tool.domain.service;
 
 /**
  * テンプレートの動的変換サービスインタフェース
