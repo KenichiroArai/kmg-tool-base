@@ -88,12 +88,21 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
                 // 最後に追加したCSV行を取得
                 final List<String> csvLine = csvData.getLast();
-                // フィールドの型を追加
-                csvLine.add(matcherSrc.group(1));
-                // フィールド名を追加
-                csvLine.add(matcherSrc.group(3));
-                // アクセサメソッド名（先頭大文字）を追加
-                csvLine.add(matcherSrc.group(3).substring(0, 1).toUpperCase() + matcherSrc.group(3).substring(1));
+
+                // フィールドの情報を取得
+                final String fieldType            = matcherSrc.group(1);                                     // 型
+                final String fieldName            = matcherSrc.group(3);                                     // 項目名
+                final String capitalizedFieldName = KmgString.concat(fieldName.substring(0, 1).toUpperCase(),
+                    fieldName.substring(1));                                                                 // 先頭大文字項目
+
+                // テンプレートの各カラムに対応する値を設定
+                // カラム1：名称（既にJavaDocコメントから設定済み）
+                // カラム2：型
+                csvLine.add(fieldType);
+                // カラム3：項目
+                csvLine.add(fieldName);
+                // カラム4：先頭大文字項目
+                csvLine.add(capitalizedFieldName);
 
                 // CSVファイルに行を書き込む
                 brOutput.write(KmgDelimiterTypes.COMMA.join(csvLine));
