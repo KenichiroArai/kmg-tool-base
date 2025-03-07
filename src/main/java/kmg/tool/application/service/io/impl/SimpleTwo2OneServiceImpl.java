@@ -1,4 +1,4 @@
-package kmg.tool.application.service.impl;
+package kmg.tool.application.service.io.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.service.SimpleTwo2OneService;
+import kmg.tool.application.service.io.SimpleTwo2OneService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

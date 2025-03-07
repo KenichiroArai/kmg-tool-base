@@ -1,4 +1,4 @@
-package kmg.tool.application.service.impl;
+package kmg.tool.application.service.io.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,7 +8,7 @@ import java.nio.file.Path;
 
 import org.springframework.stereotype.Service;
 
-import kmg.tool.application.service.SimpleOne2OneService;
+import kmg.tool.application.service.io.SimpleOne2OneService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

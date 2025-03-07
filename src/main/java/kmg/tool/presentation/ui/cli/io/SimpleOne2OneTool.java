@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.application.service.SimpleOne2OneService;
+import kmg.tool.application.service.io.SimpleOne2OneService;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツール

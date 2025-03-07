@@ -1,4 +1,4 @@
-package kmg.tool.application.service.impl;
+package kmg.tool.application.service.io.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.tool.application.service.AccessorCreationService;
+import kmg.tool.application.service.io.AccessorCreationService;
 import kmg.tool.domain.service.AbstractInputCsvTemplateOutputProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
