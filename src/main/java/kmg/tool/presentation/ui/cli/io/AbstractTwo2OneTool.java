@@ -11,6 +11,7 @@ import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.Two2OneService;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
+import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス抽象クラス
@@ -84,8 +85,20 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
         final boolean result = false;
 
-        final boolean initializeResult = this.getIoService().initialize(AbstractIoTool.getInputPath(),
-            this.getTemplatePath(), AbstractIoTool.getOutputPath());
+        boolean initializeResult;
+
+        try {
+
+            initializeResult = this.getIoService().initialize(AbstractIoTool.getInputPath(), this.getTemplatePath(),
+                AbstractIoTool.getOutputPath());
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/07 ログメッセージ
+            e.printStackTrace();
+            return result;
+
+        }
 
         if (!initializeResult) {
 

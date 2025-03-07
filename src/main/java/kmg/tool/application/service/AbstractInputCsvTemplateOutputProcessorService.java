@@ -32,6 +32,9 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
     /** 出力ファイルパス */
     private Path outputPath;
 
+    /** CSVファイルパス */
+    private Path csvPath;
+
     /** テンプレートの動的変換サービス */
     @Autowired
     private DynamicTemplateConversionService dynamicTemplateConversionService;
@@ -104,16 +107,35 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
      *                     テンプレートファイルパス
      * @param outputPath
      *                     出力ファイルパス
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) {
+    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
+        throws KmgToolException {
 
         final boolean result = true;
 
         this.inputPath = inputPath;
         this.templatePath = templatePath;
         this.outputPath = outputPath;
+
+        /* 一時ファイルの作成 */
+        try {
+
+            final String fileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
+            this.csvPath = Files.createTempFile(fileNameOnly, "Temp.csv");
+            this.csvPath.toFile().deleteOnExit();
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/06 メッセージ
+            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
+            throw new KmgToolException(msgType, e);
+
+        }
 
         return result;
 
@@ -135,26 +157,9 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
         /* 入力から出力の処理 */
         final List<List<String>> csv = new ArrayList<>();
 
-        Path csvPath = null;
-
-        /* 一時ファイルの作成 */
-        try {
-
-            final String fileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
-            csvPath = Files.createTempFile(fileNameOnly, "Temp.csv");
-            csvPath.toFile().deleteOnExit();
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/06 メッセージ
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
-
-        }
-
         /* 入力ファイルからCSV形式に変換してCSVファイルに出力する */
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
-            final BufferedWriter brOutput = Files.newBufferedWriter(csvPath);) {
+            final BufferedWriter brOutput = Files.newBufferedWriter(this.getCsvPath());) {
 
             String line = null;
 
@@ -204,9 +209,27 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
 
         }
 
-        this.dynamicTemplateConversionService.initialize(csvPath, this.templatePath, this.outputPath);
+        this.dynamicTemplateConversionService.initialize(this.getCsvPath(), this.templatePath, this.outputPath);
         this.dynamicTemplateConversionService.process();
 
+        return result;
+
+    }
+
+    /**
+     * CSVファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return CSVファイルパス
+     */
+    protected Path getCsvPath() {
+
+        final Path result = this.csvPath;
         return result;
 
     }
