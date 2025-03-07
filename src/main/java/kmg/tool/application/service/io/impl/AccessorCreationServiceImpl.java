@@ -55,8 +55,8 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
             // 読み込んだ行データ
             String line = null;
 
-            // CSVデータを格納するリスト
-            List<String> csvData = new ArrayList<>();
+            // 1行分のCSVを格納するリスト
+            List<String> csvLine = new ArrayList<>();
 
             while ((line = brInput.readLine()) != null) {
 
@@ -68,8 +68,11 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 if (matcherComment.find()) {
                     // コメントの場合
 
-                    // Javadocコメントの内容を追加
-                    csvData.add(matcherComment.group(1));
+                    // Javadocコメントから名称を取得
+                    final String col1Name = matcherComment.group(1);
+
+                    // カラム1：名称
+                    csvLine.add(col1Name);
 
                     continue;
 
@@ -91,28 +94,24 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
                 }
 
-                // 最後に追加したCSV行を取得
-                final List<String> csvLine = csvData;
-
                 // フィールドの情報を取得
-                final String fieldType            = matcherSrc.group(1);             // 型
-                final String fieldName            = matcherSrc.group(3);             // 項目名
-                final String capitalizedFieldName = KmgString.capitalize(fieldName); // 先頭大文字項目
+                final String col2Type            = matcherSrc.group(1);            // 型
+                final String col3Item            = matcherSrc.group(3);            // 項目名
+                final String col3CapitalizedItem = KmgString.capitalize(col3Item); // 先頭大文字項目
 
                 // テンプレートの各カラムに対応する値を設定
-                // カラム1：名称（既にJavadocコメントから設定済み）
                 // カラム2：型
-                csvLine.add(fieldType);
+                csvLine.add(col2Type);
                 // カラム3：項目
-                csvLine.add(fieldName);
+                csvLine.add(col3Item);
                 // カラム4：先頭大文字項目
-                csvLine.add(capitalizedFieldName);
+                csvLine.add(col3CapitalizedItem);
 
                 // CSVファイルに行を書き込む
                 brOutput.write(KmgDelimiterTypes.COMMA.join(csvLine));
                 brOutput.write(System.lineSeparator());
 
-                csvData = new ArrayList<>();
+                csvLine = new ArrayList<>();
 
             }
 
