@@ -60,16 +60,10 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             while ((line = brInput.readLine()) != null) {
 
-                // Javadocコメントの正規表現パターン
-                final Pattern patternComment = Pattern.compile("/\\*\\* (\\S+)");
-                final Matcher matcherComment = patternComment.matcher(line);
+                // Javadocコメントから名称を取得
+                final String col1Name = this.accessorCreationLogic.getJavadocComment(line);
 
-                // Javadocコメントか
-                if (matcherComment.find()) {
-                    // コメントの場合
-
-                    // Javadocコメントから名称を取得
-                    final String col1Name = matcherComment.group(1);
+                if (col1Name != null) {
 
                     // カラム1：名称
                     csvLine.add(col1Name);
