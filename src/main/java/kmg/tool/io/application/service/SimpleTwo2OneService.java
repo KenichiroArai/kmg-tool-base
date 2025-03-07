@@ -1,6 +1,6 @@
-package kmg.tool.application.service.io;
+package kmg.tool.io.application.service;
 
-import kmg.tool.domain.service.io.Two2OneService;
+import kmg.tool.io.domain.service.Two2OneService;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービスインタフェース<br>

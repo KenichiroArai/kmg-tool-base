@@ -1,4 +1,4 @@
-package kmg.tool.application.service.io.impl;
+package kmg.tool.io.application.service.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,9 +8,9 @@ import java.nio.file.Path;
 
 import org.springframework.stereotype.Service;
 
-import kmg.tool.application.service.io.SimpleOne2OneService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.io.application.service.SimpleOne2OneService;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツールサービス<br>

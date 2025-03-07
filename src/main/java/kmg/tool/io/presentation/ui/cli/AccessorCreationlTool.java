@@ -1,11 +1,11 @@
-package kmg.tool.presentation.ui.cli.io;
+package kmg.tool.io.presentation.ui.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.application.service.io.AccessorCreationService;
+import kmg.tool.io.application.service.AccessorCreationService;
 
 /**
  * <h2>アクセサ作成ツール</h2>

@@ -1,27 +1,24 @@
-package kmg.tool.domain.service.io.impl;
+package kmg.tool.io.application.service.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.Yaml;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.domain.service.io.DynamicTemplateConversionService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.io.application.service.SimpleTwo2OneService;
 
 /**
- * テンプレートの動的変換サービス
+ * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス<br>
  */
 @Service
-public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConversionService {
+public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -129,23 +126,17 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         boolean result = false;
 
         /* テンプレートの取得 */
-        String                    template       = null;
-        final Map<String, String> columnMappings = new LinkedHashMap<>();
-
-        final Yaml yaml = new Yaml();
-
-        String templateContent = null;
+        String template = null;
 
         try {
 
-            // Pathオブジェクトから文字列内容を読み取る
-            templateContent = Files.readString(this.getTemplatePath());
+            template = Files.readAllLines(this.templatePath).stream()
+                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
         } catch (final IOException e) {
 
             // 例外をスローする
-            // TODO KenichiroArai 2025/03/06 メッセージ
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31002;
             final Object[]               messageArgs = {
                 this.templatePath.toString()
             };
@@ -153,62 +144,33 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         }
 
-        final Map<String, Object> yamlData = yaml.load(templateContent);
+        /* 入力から出力の処理 */
+        try (final BufferedReader brInput = Files.newBufferedReader(this.inputPath);
+            final BufferedWriter bw = Files.newBufferedWriter(this.outputPath);) {
 
-        @SuppressWarnings("unchecked")
-        final List<Map<String, String>> columns = (List<Map<String, String>>) yamlData.get("columns");
+            final StringBuilder output = new StringBuilder();
 
-        for (final Map<String, String> col : columns) {
-
-            columnMappings.put(col.get("key"), col.get("placeholder"));
-
-        }
-
-        template = (String) yamlData.get("template");
-
-        /* 入力ファイルからCSV形式に変換してCSVファイルに出力する */
-        try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
-            final BufferedWriter bwOutput = Files.newBufferedWriter(this.getOutputPath());) {
-
-            String out  = template;
             String line = null;
 
             while ((line = brInput.readLine()) != null) {
 
-                final String[] csvLine = KmgDelimiterTypes.COMMA.split(line);
-
-                final String[] keyArrays = columnMappings.values().toArray(new String[0]);
-
-                for (int i = 0; i < csvLine.length; i++) {
-
-                    final String key   = keyArrays[i];
-                    final String value = csvLine[i];
-
-                    out = out.replace(key, value);
-
-                }
-
-                bwOutput.write(out);
-                bwOutput.newLine();
-
-                out = template;
+                final String wk = template.replace("{ name }", line);
+                output.append(wk);
 
             }
+
+            bw.write(output.toString());
 
         } catch (final IOException e) {
 
             // 例外をスローする
-            // TODO KenichiroArai 2025/03/07 メッセージ
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs = {
-                this.templatePath.toString()
-            };
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31001;
+            final Object[]               messageArgs = {};
             throw new KmgToolException(msgType, messageArgs, e);
 
         }
 
         result = true;
-
         return result;
 
     }

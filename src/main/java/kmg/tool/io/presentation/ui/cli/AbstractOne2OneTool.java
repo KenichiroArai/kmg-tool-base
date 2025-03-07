@@ -1,13 +1,13 @@
-package kmg.tool.presentation.ui.cli.io;
+package kmg.tool.io.presentation.ui.cli;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.service.io.One2OneService;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.io.domain.service.One2OneService;
 
 /**
  * 1入力ファイルから1出力ファイルへの変換ツールサービス抽象クラス

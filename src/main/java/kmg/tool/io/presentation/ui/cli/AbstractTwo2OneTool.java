@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli.io;
+package kmg.tool.io.presentation.ui.cli;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.service.io.Two2OneService;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.io.domain.service.Two2OneService;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス抽象クラス
