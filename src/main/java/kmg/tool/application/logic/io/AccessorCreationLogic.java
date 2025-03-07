@@ -7,6 +7,6 @@ package kmg.tool.application.logic.io;
  */
 public interface AccessorCreationLogic {
 
-    // 処理なし
+    // void hoge(String line);
 
 }

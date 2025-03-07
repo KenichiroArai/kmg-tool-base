@@ -49,14 +49,14 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         final boolean result = false;
 
-        // CSVデータを格納するリスト
-        final List<List<String>> csvData = new ArrayList<>();
-
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
             final BufferedWriter brOutput = Files.newBufferedWriter(this.getCsvPath());) {
 
             // 読み込んだ行データ
             String line = null;
+
+            // CSVデータを格納するリスト
+            List<String> csvData = new ArrayList<>();
 
             while ((line = brInput.readLine()) != null) {
 
@@ -68,12 +68,8 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 if (matcherComment.find()) {
                     // コメントの場合
 
-                    // 新しいCSV行を作成
-                    final List<String> csvLine = new ArrayList<>();
                     // Javadocコメントの内容を追加
-                    csvLine.add(matcherComment.group(1));
-                    // CSVデータに行を追加
-                    csvData.add(csvLine);
+                    csvData.add(matcherComment.group(1));
 
                     continue;
 
@@ -96,7 +92,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 }
 
                 // 最後に追加したCSV行を取得
-                final List<String> csvLine = csvData.getLast();
+                final List<String> csvLine = csvData;
 
                 // フィールドの情報を取得
                 final String fieldType            = matcherSrc.group(1);             // 型
@@ -115,6 +111,8 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 // CSVファイルに行を書き込む
                 brOutput.write(KmgDelimiterTypes.COMMA.join(csvLine));
                 brOutput.write(System.lineSeparator());
+
+                csvData = new ArrayList<>();
 
             }
 
