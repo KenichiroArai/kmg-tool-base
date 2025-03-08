@@ -20,6 +20,9 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** Javadocコメントの正規表現パターン */
     private static final String JAVADOC_COMMENT_PATTERN = "/\\*\\* (\\S+)";
 
+    /** privateフィールド宣言の正規表現パターン */
+    private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);";
+
     /** 1行データ */
     private String line;
 
@@ -51,8 +54,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         boolean result = false;
 
-        // privateフィールド宣言の正規表現パターン
-        final Pattern patternSrc = Pattern.compile("private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);");
+        // privateフィールド宣言を正規表現でグループ化する
+        final Pattern patternSrc = Pattern.compile(AccessorCreationLogicImpl.PRIVATE_FIELD_PATTERN);
         final Matcher matcherSrc = patternSrc.matcher(this.line);
 
         // privateフィールド宣言ではないか
