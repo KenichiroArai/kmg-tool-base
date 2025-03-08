@@ -88,7 +88,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/06 メッセージ
+            // TODO KenichiroArai 2025/03/08 メッセージ KMGTOOL_GEN31003=CSVファイル書き込み処理中にエラーが発生しました。入力ファイル=[{0}], 出力ファイル=[{1}]
             final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
             throw new KmgToolException(msgType, e);
 
@@ -145,22 +145,12 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         boolean result = false;
 
-        // 不要な修飾子を削除
+        /* 不要な修飾子を削除する */
         this.accessorCreationLogic.removeModifier();
 
-        boolean convertFieldsFlg = false;
+        /* 型、項目名、先頭大文字項目に追加する */
 
-        try {
-
-            convertFieldsFlg = this.accessorCreationLogic.convertFields();
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/06 メッセージ
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
-
-        }
+        final boolean convertFieldsFlg = this.accessorCreationLogic.convertFields();
 
         if (!convertFieldsFlg) {
 
