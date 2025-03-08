@@ -513,6 +513,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
                 this.writer.write(KmgDelimiterTypes.COMMA.join(csvRow));
                 this.writer.write(System.lineSeparator());
+                this.writer.flush();
 
             } catch (final IOException e) {
 

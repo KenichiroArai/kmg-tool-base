@@ -1,5 +1,7 @@
 package kmg.tool.application.service.io.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,41 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputProcessorService
     implements AccessorCreationService {
 
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
     /** アクセサ作成ロジック */
     @Autowired
     private AccessorCreationLogic accessorCreationLogic;
+
+    /**
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     */
+    public AccessorCreationServiceImpl() {
+
+        this(LoggerFactory.getLogger(AccessorCreationServiceImpl.class));
+
+    }
+
+    /**
+     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected AccessorCreationServiceImpl(final Logger logger) {
+
+        this.logger = logger;
+
+    }
 
     /**
      * CSVファイルに書き込む。<br>
@@ -37,10 +71,19 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         final boolean result = false;
 
+        // TODO KenichiroArai 2025/03/08 ログ
+        this.logger.info("アクセサ作成開始");
+
         /* アクセサ作成ロジックの初期化 */
+
+        // TODO KenichiroArai 2025/03/08 ログ
+        this.logger.info("アクセサ作成ロジックの初期化");
         this.accessorCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
 
         /* 書き込み対象に行を追加する */
+
+        // TODO KenichiroArai 2025/03/08 ログ
+        this.logger.info("書き込み対象に行を追加する");
         this.accessorCreationLogic.addOneLineOfDataToCsvRows();
 
         while (this.accessorCreationLogic.readOneLineOfData()) {
@@ -76,6 +119,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             /* 書き込み対象に行を追加する */
             this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+
+            // TODO KenichiroArai 2025/03/08 ログ
+            this.logger.info("書き込む");
 
         }
 
