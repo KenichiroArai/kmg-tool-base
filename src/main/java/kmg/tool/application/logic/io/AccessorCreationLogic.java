@@ -1,5 +1,8 @@
 package kmg.tool.application.logic.io;
 
+import java.nio.file.Path;
+import java.util.List;
+
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -8,6 +11,48 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @author KenichiroArai
  */
 public interface AccessorCreationLogic {
+
+    /**
+     * 先頭大文字項目を書き込み対象に追加する。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean addCapitalizedItemToCsvRows();
+
+    /**
+     * 項目名を書き込み対象に追加する。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean addItemToCsvRows();
+
+    /**
+     * Javadocコメントを書き込み対象に追加する。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean addJavadocCommentToCsvRows();
+
+    /**
+     * 型情報を書き込み対象に追加する。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean addTypeToCsvRows();
+
+    /**
+     * 書き込み対象のCSVデータのリストをクリアする。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean clearCsvRows();
+
+    /**
+     * 処理中のデータをクリアする。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean clearProcessingData();
 
     /**
      * フィールド宣言から型、項目名、先頭大文字項目に変換する。
@@ -41,9 +86,16 @@ public interface AccessorCreationLogic {
     String getConvertedLine();
 
     /**
+     * 書き込み対象のCSVデータのリストを返す。
+     *
+     * @return 書き込み対象のCSVデータのリスト
+     */
+    List<List<String>> getCsvRows();
+
+    /**
      * 項目名返す。
      *
-     * @return item 項目名
+     * @return 項目名
      */
     String getItem();
 
@@ -55,31 +107,43 @@ public interface AccessorCreationLogic {
     String getJavadocComment();
 
     /**
-     * 1行データを返す。
+     * 読み込んだ１行データを返す。
      *
-     * @return 1行データ
+     * @return 読み込んだ１行データ
      */
-    String getLine();
+    String getLineOfDataRead();
 
     /**
      * 型を返す。
      *
-     * @return tyep 型
+     * @return 型
      */
     String getTyep();
 
     /**
      * 初期化する。
      *
-     * @param line
-     *             1行データ
-     *
      * @return true：成功、false：失敗
+     *
+     * @param inputPath
+     *                   入力ファイルパス
+     * @param outputPath
+     *                   出力ファイルパス
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean initialize(String line) throws KmgToolException;
+    boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
+
+    /**
+     * 1行データを読み込む。
+     *
+     * @return true：データあり、false：データなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean readOneLineOfData() throws KmgToolException;
 
     /**
      * 不要な修飾子を削除する。
@@ -88,4 +152,16 @@ public interface AccessorCreationLogic {
      */
     boolean removeModifier();
 
+    /**
+     * CSVファイルに書き込む。<br>
+     * <p>
+     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
+     * </p>
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean writeCsvFile() throws KmgToolException;
 }

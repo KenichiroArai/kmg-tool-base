@@ -1,20 +1,11 @@
 package kmg.tool.application.service.io.impl;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
 import kmg.tool.application.service.io.AccessorCreationService;
 import kmg.tool.domain.service.io.AbstractInputCsvTemplateOutputProcessorService;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -46,51 +37,39 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         final boolean result = false;
 
-        try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
-            final BufferedWriter brOutput = Files.newBufferedWriter(this.getCsvPath());) {
+        /* アクセサ作成ロジックの初期化 */
+        this.accessorCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
 
-            // 1行分のCSVを格納するリスト
-            List<String> csvLine = new ArrayList<>();
+        while (this.accessorCreationLogic.readOneLineOfData()) {
 
-            // 読み込んだ行データ
-            String line = null;
+            /* カラム1：名称を追加する */
+            final boolean addNameColumnFlg = this.addNameColumn();
 
-            while ((line = brInput.readLine()) != null) {
+            if (addNameColumnFlg) {
 
-                /* アクセサ作成ロジックの初期化 */
-                this.accessorCreationLogic.initialize(line);
-
-                /* カラム1：名称を追加する */
-                final boolean addNameColumnFlg = this.addNameColumn(csvLine);
-
-                if (addNameColumnFlg) {
-
-                    continue;
-
-                }
-
-                /* 残りのカラムを追加する */
-                final boolean addRemainingColumnsFlg = this.addRemainingColumns(csvLine);
-
-                if (!addRemainingColumnsFlg) {
-
-                    continue;
-
-                }
-
-                /* CSVファイルに行を書き込む */
-                brOutput.write(KmgDelimiterTypes.COMMA.join(csvLine));
-                brOutput.write(System.lineSeparator());
-
-                csvLine = new ArrayList<>();
+                continue;
 
             }
 
-        } catch (final IOException e) {
+            /* 残りのカラムを追加する */
+            final boolean addRemainingColumnsFlg = this.addRemainingColumns();
 
-            // TODO KenichiroArai 2025/03/08 メッセージ KMGTOOL_GEN31003=CSVファイル書き込み処理中にエラーが発生しました。入力ファイル=[{0}], 出力ファイル=[{1}]
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
+            if (!addRemainingColumnsFlg) {
+
+                continue;
+
+            }
+
+            /* CSVファイルに行を書き込む */
+            this.accessorCreationLogic.writeCsvFile();
+
+            /* クリア処理 */
+
+            // 書き込み対象のCSVデータのリストをクリアする
+            this.accessorCreationLogic.clearCsvRows();
+
+            // 処理中のデータをクリアする
+            this.accessorCreationLogic.clearProcessingData();
 
         }
 
@@ -101,12 +80,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
     /**
      * 1行分のCSVを格納するリストにカラム1：名称を追加する。
      *
-     * @param csvLine
-     *                1行分のCSVを格納するリスト
-     *
      * @return true：追加した、false：追加していない
      */
-    private boolean addNameColumn(final List<String> csvLine) {
+    private boolean addNameColumn() {
 
         boolean result = false;
 
@@ -119,11 +95,8 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         }
 
-        // Javadocコメントから名称を取得
-        final String col1Name = this.accessorCreationLogic.getJavadocComment();
-
-        // カラム1：名称
-        csvLine.add(col1Name);
+        // カラム1：名称を書き込み対象に追加する。
+        this.accessorCreationLogic.addJavadocCommentToCsvRows();
 
         result = true;
         return result;
@@ -133,15 +106,12 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
     /**
      * 1行分のCSVを格納するリストに残りのカラムを追加する。
      *
-     * @param csvLine
-     *                1行分のCSVを格納するリスト
-     *
      * @return true：追加した、false：追加していない
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    private boolean addRemainingColumns(final List<String> csvLine) throws KmgToolException {
+    private boolean addRemainingColumns() throws KmgToolException {
 
         boolean result = false;
 
@@ -150,6 +120,16 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         /* 型、項目名、先頭大文字項目に追加する */
 
+        // 1行データを読み込む
+        final boolean readResult = this.accessorCreationLogic.readOneLineOfData();
+
+        if (!readResult) {
+
+            return result;
+
+        }
+
+        // フィールド宣言から型、項目名、先頭大文字項目に変換する。
         final boolean convertFieldsFlg = this.accessorCreationLogic.convertFields();
 
         if (!convertFieldsFlg) {
@@ -158,18 +138,13 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         }
 
-        // フィールドの情報を取得
-        final String col2Type            = this.accessorCreationLogic.getTyep();            // 型
-        final String col3Item            = this.accessorCreationLogic.getItem();            // 項目名
-        final String col3CapitalizedItem = this.accessorCreationLogic.getCapitalizedItem(); // 先頭大文字項目
-
-        // テンプレートの各カラムに対応する値を設定
+        // テンプレートの各カラムに対応する値をを書き込み対象に追加する
         // カラム2：型
-        csvLine.add(col2Type);
+        this.accessorCreationLogic.addTypeToCsvRows();
         // カラム3：項目
-        csvLine.add(col3Item);
+        this.accessorCreationLogic.addItemToCsvRows();
         // カラム4：先頭大文字項目
-        csvLine.add(col3CapitalizedItem);
+        this.accessorCreationLogic.addCapitalizedItemToCsvRows();
 
         result = true;
 

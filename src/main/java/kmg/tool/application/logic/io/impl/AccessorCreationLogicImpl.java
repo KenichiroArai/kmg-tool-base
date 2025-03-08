@@ -1,12 +1,21 @@
 package kmg.tool.application.logic.io.impl;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -23,8 +32,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** privateフィールド宣言の正規表現パターン */
     private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);";
 
-    /** 1行データ */
-    private String line;
+    /** 読み込んだ１行データ */
+    private String lineOfDataRead;
 
     /** 変換後の1行データ */
     private String convertedLine;
@@ -41,6 +50,143 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** 先頭大文字項目 */
     private String capitalizedItem;
 
+    /** 入力ファイルパス */
+    private Path inputPath;
+
+    /** 出力ファイルパス */
+    private Path outputPath;
+
+    /** 書き込み対象のCSVデータのリスト */
+    private List<List<String>> csvRows;
+
+    /** 入力ファイルのBufferedReader */
+    private BufferedReader reader;
+
+    /** 出力ファイルのBufferedReader */
+    private BufferedWriter writer;
+
+    /**
+     * 先頭大文字項目を書き込み対象に追加する。
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    public boolean addCapitalizedItemToCsvRows() {
+
+        boolean result = false;
+
+        if ((this.capitalizedItem == null) || (this.csvRows == null)) {
+
+            return result;
+
+        }
+
+        final List<String> row = new ArrayList<>();
+        row.add(this.capitalizedItem);
+        this.csvRows.add(row);
+        result = true;
+
+        return result;
+
+    }
+
+    /**
+     * 項目名を書き込み対象に追加する。
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    public boolean addItemToCsvRows() {
+
+        boolean result = false;
+
+        if ((this.item == null) || (this.csvRows == null)) {
+
+            return result;
+
+        }
+
+        final List<String> row = new ArrayList<>();
+        row.add(this.item);
+        this.csvRows.add(row);
+        result = true;
+
+        return result;
+
+    }
+
+    /**
+     * Javadocコメントを書き込み対象に追加する。
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    public boolean addJavadocCommentToCsvRows() {
+
+        boolean result = false;
+
+        if ((this.javadocComment == null) || (this.csvRows == null)) {
+
+            return result;
+
+        }
+
+        final List<String> row = new ArrayList<>();
+        row.add(this.javadocComment);
+        this.csvRows.add(row);
+        result = true;
+
+        return result;
+
+    }
+
+    /**
+     * 型情報を書き込み対象に追加する。
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    public boolean addTypeToCsvRows() {
+
+        boolean result = false;
+
+        if ((this.tyep == null) || (this.csvRows == null)) {
+
+            return result;
+
+        }
+
+        final List<String> row = new ArrayList<>();
+        row.add(this.tyep);
+        this.csvRows.add(row);
+        result = true;
+
+        return result;
+
+    }
+
+    /**
+     * 処理中のデータをクリアする。
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    public boolean clearProcessingData() {
+
+        boolean result = false;
+
+        this.lineOfDataRead = null;
+        this.convertedLine = null;
+        this.javadocComment = null;
+        this.tyep = null;
+        this.item = null;
+        this.capitalizedItem = null;
+
+        result = true;
+        return result;
+
+    }
+
     /**
      * フィールド宣言から型、項目名、先頭大文字項目に変換する。
      *
@@ -56,7 +202,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         // privateフィールド宣言を正規表現でグループ化する
         final Pattern patternSrc = Pattern.compile(AccessorCreationLogicImpl.PRIVATE_FIELD_PATTERN);
-        final Matcher matcherSrc = patternSrc.matcher(this.line);
+        final Matcher matcherSrc = patternSrc.matcher(this.lineOfDataRead);
 
         // privateフィールド宣言ではないか
         if (!matcherSrc.find()) {
@@ -88,7 +234,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         // Javadocコメントかを正規表現で判断する
         final Pattern pattern = Pattern.compile(AccessorCreationLogicImpl.JAVADOC_COMMENT_PATTERN);
-        final Matcher matcher = pattern.matcher(this.line);
+        final Matcher matcher = pattern.matcher(this.lineOfDataRead);
 
         // Javadocコメントはないか
         if (!matcher.find()) {
@@ -131,9 +277,22 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
+     * 書き込み対象のCSVデータのリストを返す。
+     *
+     * @return 書き込み対象のCSVデータのリスト
+     */
+    @Override
+    public List<List<String>> getCsvRows() {
+
+        final List<List<String>> result = this.csvRows;
+        return result;
+
+    }
+
+    /**
      * 項目名返す。
      *
-     * @return item 項目名
+     * @return 項目名
      */
     @Override
     public String getItem() {
@@ -157,14 +316,14 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
-     * 1行データを返す。
+     * 読み込んだ１行データを返す。
      *
-     * @return 1行データ
+     * @return 読み込んだ１行データ
      */
     @Override
-    public String getLine() {
+    public String getLineOfDataRead() {
 
-        final String result = this.line;
+        final String result = this.lineOfDataRead;
         return result;
 
     }
@@ -172,7 +331,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /**
      * 型を返す。
      *
-     * @return tyep 型
+     * @return 型
      */
     @Override
     public String getTyep() {
@@ -187,20 +346,83 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @param line
-     *             1行データ
+     * @param inputPath
+     *                   入力ファイルパス
+     * @param outputPath
+     *                   出力ファイルパス
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final String line) throws KmgToolException {
+    public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolException {
 
         boolean result = false;
 
-        this.line = line;
-        this.convertedLine = line;
+        this.inputPath = inputPath;
+        this.outputPath = outputPath;
+
+        /* 読み込みと書き込みのインスタンス変数の初期化 */
+        this.clearProcessingData();
+
+        /* ファイルを開く */
+        try {
+
+            // 入力ファイルを開く
+            this.reader = Files.newBufferedReader(this.inputPath);
+
+            // 出力ファイルを開く
+            this.writer = Files.newBufferedWriter(this.outputPath);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/08 例外
+            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
+            throw new KmgToolException(msgType, e);
+
+        }
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 1行データを読み込む。
+     *
+     * @return true：データあり、false：データなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean readOneLineOfData() throws KmgToolException {
+
+        boolean result = false;
+
+        try {
+
+            // 1行読み込み
+            this.lineOfDataRead = this.reader.readLine();
+
+            // ファイルの終わりに達した場合
+            if (this.lineOfDataRead == null) {
+
+                return result;
+
+            }
+
+        } catch (final IOException e) {
+
+            // 読み込み失敗
+            this.lineOfDataRead = null;
+
+            // TODO KenichiroArai 2025/03/08 例外
+            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
+            throw new KmgToolException(msgType, e);
+
+        }
 
         result = true;
         return result;
@@ -219,6 +441,40 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         this.convertedLine = this.convertedLine.replace("final", KmgString.EMPTY);
         this.convertedLine = this.convertedLine.replace("static", KmgString.EMPTY);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * CSVファイルに書き込む。<br>
+     * <p>
+     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
+     * </p>
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean writeCsvFile() throws KmgToolException {
+
+        boolean result = false;
+
+        try {
+
+            this.writer.write(KmgDelimiterTypes.COMMA.join(this.csvRows));
+            this.writer.write(System.lineSeparator());
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/08 例外
+            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
+            throw new KmgToolException(msgType, e);
+
+        }
 
         result = true;
         return result;
