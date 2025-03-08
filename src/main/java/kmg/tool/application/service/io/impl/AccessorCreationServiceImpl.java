@@ -78,7 +78,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
                 }
 
-                // CSVファイルに行を書き込む
+                /* CSVファイルに行を書き込む */
                 brOutput.write(KmgDelimiterTypes.COMMA.join(csvLine));
                 brOutput.write(System.lineSeparator());
 
