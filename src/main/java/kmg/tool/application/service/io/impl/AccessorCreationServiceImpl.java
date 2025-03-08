@@ -40,6 +40,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         /* アクセサ作成ロジックの初期化 */
         this.accessorCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
 
+        /* 書き込み対象に行を追加する */
+        this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+
         while (this.accessorCreationLogic.readOneLineOfData()) {
 
             /* カラム1：名称を追加する */
@@ -70,6 +73,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             // 処理中のデータをクリアする
             this.accessorCreationLogic.clearProcessingData();
+
+            /* 書き込み対象に行を追加する */
+            this.accessorCreationLogic.addOneLineOfDataToCsvRows();
 
         }
 
@@ -119,15 +125,6 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         this.accessorCreationLogic.removeModifier();
 
         /* 型、項目名、先頭大文字項目に追加する */
-
-        // 1行データを読み込む
-        final boolean readResult = this.accessorCreationLogic.readOneLineOfData();
-
-        if (!readResult) {
-
-            return result;
-
-        }
 
         // フィールド宣言から型、項目名、先頭大文字項目に変換する。
         final boolean convertFieldsFlg = this.accessorCreationLogic.convertFields();

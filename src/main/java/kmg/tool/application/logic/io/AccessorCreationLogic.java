@@ -34,6 +34,13 @@ public interface AccessorCreationLogic {
     boolean addJavadocCommentToCsvRows();
 
     /**
+     * 書き込み対象に行を追加する。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean addOneLineOfDataToCsvRows();
+
+    /**
      * 型情報を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
