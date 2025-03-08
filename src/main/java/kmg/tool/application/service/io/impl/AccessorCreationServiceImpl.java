@@ -6,13 +6,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
 import kmg.tool.application.service.io.AccessorCreationService;
@@ -60,38 +57,45 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             while ((line = brInput.readLine()) != null) {
 
-                // Javadocコメントから名称を取得
-                final String col1Name = this.accessorCreationLogic.getJavadocComment(line);
+                /* アクセサ作成ロジックの初期化 */
+                this.accessorCreationLogic.initialize(line);
 
-                if (col1Name != null) {
+                /* カラム1：名称を追加する */
+
+                // Javadocコメントに変換
+                final boolean convertJavadocCommentFlg = this.accessorCreationLogic.convertJavadocComment();
+
+                if (convertJavadocCommentFlg) {
+
+                    // Javadocコメントから名称を取得
+                    final String col1Name = this.accessorCreationLogic.getJavadocComment();
+
+                    System.out.println(col1Name);
 
                     // カラム1：名称
                     csvLine.add(col1Name);
 
-                    continue;
-
                 }
 
+                /* 残りのカラムを追加する */
+
                 // 不要な修飾子を削除
-                line = line.replace("final", KmgString.EMPTY);
-                line = line.replace("static", KmgString.EMPTY);
+                this.accessorCreationLogic.removeModifier();
 
-                // privateフィールド宣言の正規表現パターン
-                final Pattern patternSrc = Pattern.compile("private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);");
-                final Matcher matcherSrc = patternSrc.matcher(line);
+                final boolean convertFieldsFlg = this.accessorCreationLogic.convertFields();
 
-                // privateフィールド宣言ではないか
-                if (!matcherSrc.find()) {
-                    // 宣言ではないか
+                System.out.println(convertFieldsFlg);
+
+                if (!convertFieldsFlg) {
 
                     continue;
 
                 }
 
                 // フィールドの情報を取得
-                final String col2Type            = matcherSrc.group(1);            // 型
-                final String col3Item            = matcherSrc.group(3);            // 項目名
-                final String col3CapitalizedItem = KmgString.capitalize(col3Item); // 先頭大文字項目
+                final String col2Type            = this.accessorCreationLogic.getTyep();            // 型
+                final String col3Item            = this.accessorCreationLogic.getItem();            // 項目名
+                final String col3CapitalizedItem = this.accessorCreationLogic.getCapitalizedItem(); // 先頭大文字項目
 
                 // テンプレートの各カラムに対応する値を設定
                 // カラム2：型
