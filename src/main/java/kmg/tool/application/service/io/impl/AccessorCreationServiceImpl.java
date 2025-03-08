@@ -61,19 +61,11 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 this.accessorCreationLogic.initialize(line);
 
                 /* カラム1：名称を追加する */
+                final boolean addNameColumnFlg = this.addNameColumn(csvLine);
 
-                // Javadocコメントに変換
-                final boolean convertJavadocCommentFlg = this.accessorCreationLogic.convertJavadocComment();
+                if (addNameColumnFlg) {
 
-                if (convertJavadocCommentFlg) {
-
-                    // Javadocコメントから名称を取得
-                    final String col1Name = this.accessorCreationLogic.getJavadocComment();
-
-                    System.out.println(col1Name);
-
-                    // カラム1：名称
-                    csvLine.add(col1Name);
+                    continue;
 
                 }
 
@@ -83,8 +75,6 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 this.accessorCreationLogic.removeModifier();
 
                 final boolean convertFieldsFlg = this.accessorCreationLogic.convertFields();
-
-                System.out.println(convertFieldsFlg);
 
                 if (!convertFieldsFlg) {
 
@@ -121,6 +111,38 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         }
 
+        return result;
+
+    }
+
+    /**
+     * 1行分のCSVを格納するリストにカラム1：名称を追加する。
+     *
+     * @param csvLine
+     *                1行分のCSVを格納するリスト
+     *
+     * @return true：追加した、false：追加していない
+     */
+    private boolean addNameColumn(final List<String> csvLine) {
+
+        boolean result = false;
+
+        // Javadocコメントに変換
+        final boolean convertJavadocCommentFlg = this.accessorCreationLogic.convertJavadocComment();
+
+        if (!convertJavadocCommentFlg) {
+
+            return result;
+
+        }
+
+        // Javadocコメントから名称を取得
+        final String col1Name = this.accessorCreationLogic.getJavadocComment();
+
+        // カラム1：名称
+        csvLine.add(col1Name);
+
+        result = true;
         return result;
 
     }
