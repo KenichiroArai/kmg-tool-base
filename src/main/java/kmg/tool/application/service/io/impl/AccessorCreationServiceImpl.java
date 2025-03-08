@@ -49,11 +49,11 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
             final BufferedWriter brOutput = Files.newBufferedWriter(this.getCsvPath());) {
 
-            // 読み込んだ行データ
-            String line = null;
-
             // 1行分のCSVを格納するリスト
             List<String> csvLine = new ArrayList<>();
+
+            // 読み込んだ行データ
+            String line = null;
 
             while ((line = brInput.readLine()) != null) {
 
@@ -70,30 +70,13 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 }
 
                 /* 残りのカラムを追加する */
+                final boolean addRemainingColumnsFlg = this.addRemainingColumns(csvLine);
 
-                // 不要な修飾子を削除
-                this.accessorCreationLogic.removeModifier();
-
-                final boolean convertFieldsFlg = this.accessorCreationLogic.convertFields();
-
-                if (!convertFieldsFlg) {
+                if (!addRemainingColumnsFlg) {
 
                     continue;
 
                 }
-
-                // フィールドの情報を取得
-                final String col2Type            = this.accessorCreationLogic.getTyep();            // 型
-                final String col3Item            = this.accessorCreationLogic.getItem();            // 項目名
-                final String col3CapitalizedItem = this.accessorCreationLogic.getCapitalizedItem(); // 先頭大文字項目
-
-                // テンプレートの各カラムに対応する値を設定
-                // カラム2：型
-                csvLine.add(col2Type);
-                // カラム3：項目
-                csvLine.add(col3Item);
-                // カラム4：先頭大文字項目
-                csvLine.add(col3CapitalizedItem);
 
                 // CSVファイルに行を書き込む
                 brOutput.write(KmgDelimiterTypes.COMMA.join(csvLine));
@@ -143,6 +126,63 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         csvLine.add(col1Name);
 
         result = true;
+        return result;
+
+    }
+
+    /**
+     * 1行分のCSVを格納するリストに残りのカラムを追加する。
+     *
+     * @param csvLine
+     *                1行分のCSVを格納するリスト
+     *
+     * @return true：追加した、false：追加していない
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private boolean addRemainingColumns(final List<String> csvLine) throws KmgToolException {
+
+        boolean result = false;
+
+        // 不要な修飾子を削除
+        this.accessorCreationLogic.removeModifier();
+
+        boolean convertFieldsFlg = false;
+
+        try {
+
+            convertFieldsFlg = this.accessorCreationLogic.convertFields();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/06 メッセージ
+            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
+            throw new KmgToolException(msgType, e);
+
+        }
+
+        if (!convertFieldsFlg) {
+
+            return result;
+
+        }
+
+        // フィールドの情報を取得
+        final String col2Type            = this.accessorCreationLogic.getTyep();            // 型
+        final String col3Item            = this.accessorCreationLogic.getItem();            // 項目名
+        final String col3CapitalizedItem = this.accessorCreationLogic.getCapitalizedItem(); // 先頭大文字項目
+
+        // テンプレートの各カラムに対応する値を設定
+        // カラム2：型
+        csvLine.add(col2Type);
+        // カラム3：項目
+        csvLine.add(col3Item);
+        // カラム4：先頭大文字項目
+        csvLine.add(col3CapitalizedItem);
+
+        result = true;
+
         return result;
 
     }
