@@ -444,7 +444,9 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    @SuppressWarnings("hiding")
+    @SuppressWarnings({
+        "hiding", "resource"
+    })
     @Override
     public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolException {
 
