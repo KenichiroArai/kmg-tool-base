@@ -487,8 +487,9 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
             this.lineOfDataRead = this.reader.readLine();
             this.convertedLine = this.lineOfDataRead;
 
-            // ファイルの終わりに達した場合
+            // ファイルの終わりに達したか
             if (this.lineOfDataRead == null) {
+                // 達した場合
 
                 return result;
 
@@ -496,7 +497,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/09 例外：
+            // TODO KenichiroArai 2025/03/09 例外：KMGTOOL_GEN32006=1行読み込みに失敗しました。
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs, e);
