@@ -16,36 +16,51 @@ public interface AccessorCreationLogic {
      * 先頭大文字項目を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    boolean addCapitalizedItemToCsvRows();
+    boolean addCapitalizedItemToCsvRows() throws KmgToolException;
 
     /**
      * 項目名を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    boolean addItemToCsvRows();
+    boolean addItemToCsvRows() throws KmgToolException;
 
     /**
      * Javadocコメントを書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    boolean addJavadocCommentToCsvRows();
+    boolean addJavadocCommentToCsvRows() throws KmgToolException;
 
     /**
      * 書き込み対象に行を追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    boolean addOneLineOfDataToCsvRows();
+    boolean addOneLineOfDataToCsvRows() throws KmgToolException;
 
     /**
      * 型情報を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    boolean addTypeToCsvRows();
+    boolean addTypeToCsvRows() throws KmgToolException;
 
     /**
      * 書き込み対象のCSVデータのリストをクリアする。

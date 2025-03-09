@@ -133,8 +133,11 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
      * 1行分のCSVを格納するリストにカラム1：名称を追加する。
      *
      * @return true：追加した、false：追加していない
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    private boolean addNameColumn() {
+    private boolean addNameColumn() throws KmgToolException {
 
         boolean result = false;
 

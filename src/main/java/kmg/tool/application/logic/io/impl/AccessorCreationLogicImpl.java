@@ -78,15 +78,20 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * 先頭大文字項目を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
-    public boolean addCapitalizedItemToCsvRows() {
+    public boolean addCapitalizedItemToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
         if (this.capitalizedItem == null) {
 
-            return result;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32000;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolException(messageTypes, messageArgs);
 
         }
 
@@ -103,15 +108,20 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * 項目名を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
-    public boolean addItemToCsvRows() {
+    public boolean addItemToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
         if (this.item == null) {
 
-            return result;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32001;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolException(messageTypes, messageArgs);
 
         }
 
@@ -128,15 +138,20 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * Javadocコメントを書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
-    public boolean addJavadocCommentToCsvRows() {
+    public boolean addJavadocCommentToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
         if (this.javadocComment == null) {
 
-            return result;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32002;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolException(messageTypes, messageArgs);
 
         }
 
@@ -153,9 +168,12 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * 書き込み対象に行を追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
-    public boolean addOneLineOfDataToCsvRows() {
+    public boolean addOneLineOfDataToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
@@ -171,15 +189,20 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * 型情報を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
-    public boolean addTypeToCsvRows() {
+    public boolean addTypeToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
         if (this.tyep == null) {
 
-            return result;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32003;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolException(messageTypes, messageArgs);
 
         }
 
@@ -413,19 +436,34 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         this.clearCsvRows();
 
         /* ファイルを開く */
+
+        // 入力ファイルを開く
         try {
 
-            // 入力ファイルを開く
             this.reader = Files.newBufferedReader(this.inputPath);
 
-            // 出力ファイルを開く
+        } catch (final IOException e) {
+
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32004;
+            final Object[]               messageArgs  = {
+                this.inputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
+
+        // 出力ファイルを開く
+        try {
+
             this.writer = Files.newBufferedWriter(this.outputPath);
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/08 例外
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
+            final Object[]               messageArgs  = {
+                this.outputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
 
         }
 
@@ -462,9 +500,10 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/08 例外
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
+            // TODO KenichiroArai 2025/03/09 例外：
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolException(messageTypes, messageArgs, e);
 
         }
 
@@ -516,9 +555,10 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/03/08 例外
-                final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-                throw new KmgToolException(msgType, e);
+                // TODO KenichiroArai 2025/03/09 例外：
+                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+                final Object[]               messageArgs  = {};
+                throw new KmgToolException(messageTypes, messageArgs, e);
 
             }
 
@@ -530,9 +570,10 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/08 例外
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
+            // TODO KenichiroArai 2025/03/09 例外：
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolException(messageTypes, messageArgs, e);
 
         }
 

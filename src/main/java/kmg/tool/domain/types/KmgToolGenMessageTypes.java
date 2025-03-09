@@ -63,6 +63,72 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN31002("テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]"),
 
     /**
+     * 先頭大文字項目がnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32000("KMGTOOL_GEN32000"),
+
+    /**
+     * 項目名がnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32001("KMGTOOL_GEN32001"),
+
+    /**
+     * Javadocコメントがnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32002("KMGTOOL_GEN32002"),
+
+    /**
+     * 型情報がnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32003("KMGTOOL_GEN32003"),
+
+    /**
+     * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32004("KMGTOOL_GEN32004"),
+
+    /**
+     * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32005("KMGTOOL_GEN32005"),
+
+    /**
      * 失敗
      *
      * @author KenichiroArai
