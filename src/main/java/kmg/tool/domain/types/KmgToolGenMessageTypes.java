@@ -129,6 +129,39 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN32005("KMGTOOL_GEN32005"),
 
     /**
+     * 1行読み込みに失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32006("KMGTOOL_GEN32006"),
+
+    /**
+     * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32007("KMGTOOL_GEN32007"),
+
+    /**
+     * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32008("KMGTOOL_GEN32008"),
+
+    /**
      * 失敗
      *
      * @author KenichiroArai

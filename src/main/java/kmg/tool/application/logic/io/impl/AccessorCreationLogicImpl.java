@@ -497,8 +497,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/09 例外：KMGTOOL_GEN32006=1行読み込みに失敗しました。
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32006;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs, e);
 
@@ -552,9 +551,10 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/03/09 例外：
-                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
-                final Object[]               messageArgs  = {};
+                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32007;
+                final Object[]               messageArgs  = {
+                    this.outputPath.toString()
+                };
                 throw new KmgToolException(messageTypes, messageArgs, e);
 
             }
@@ -567,9 +567,10 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/09 例外：
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs  = {};
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32008;
+            final Object[]               messageArgs  = {
+                this.outputPath.toString()
+            };
             throw new KmgToolException(messageTypes, messageArgs, e);
 
         }
