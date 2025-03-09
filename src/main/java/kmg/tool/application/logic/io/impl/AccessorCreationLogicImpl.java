@@ -444,9 +444,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    @SuppressWarnings({
-        "hiding", "resource"
-    })
+    @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolException {
 
@@ -463,34 +461,10 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         /* ファイルを開く */
 
         // 入力ファイルを開く
-        try {
-
-            this.reader = Files.newBufferedReader(this.inputPath);
-
-        } catch (final IOException e) {
-
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32004;
-            final Object[]               messageArgs  = {
-                this.inputPath.toString()
-            };
-            throw new KmgToolException(messageTypes, messageArgs, e);
-
-        }
+        this.openInputFile();
 
         // 出力ファイルを開く
-        try {
-
-            this.writer = Files.newBufferedWriter(this.outputPath);
-
-        } catch (final IOException e) {
-
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
-            final Object[]               messageArgs  = {
-                this.outputPath.toString()
-            };
-            throw new KmgToolException(messageTypes, messageArgs, e);
-
-        }
+        this.openOutputFile();
 
         result = true;
         return result;
@@ -606,6 +580,56 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         result = true;
         return result;
+
+    }
+
+    /**
+     * 入力ファイルを開く
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @SuppressWarnings("resource")
+    private void openInputFile() throws KmgToolException {
+
+        try {
+
+            this.reader = Files.newBufferedReader(this.inputPath);
+
+        } catch (final IOException e) {
+
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32004;
+            final Object[]               messageArgs  = {
+                this.inputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
+
+    }
+
+    /**
+     * 出力ファイルを開く
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @SuppressWarnings("resource")
+    private void openOutputFile() throws KmgToolException {
+
+        try {
+
+            this.writer = Files.newBufferedWriter(this.outputPath);
+
+        } catch (final IOException e) {
+
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
+            final Object[]               messageArgs  = {
+                this.outputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
 
     }
 
