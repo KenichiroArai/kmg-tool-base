@@ -69,59 +69,79 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
     @Override
     protected boolean writeCsvFile() throws KmgToolException {
 
-        final boolean result = false;
+        boolean result = false;
 
         // TODO KenichiroArai 2025/03/09 ログ
         this.logger.debug("CSVファイルに書き込む開始");
 
-        /* アクセサ作成ロジックの初期化 */
-        this.accessorCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
+        try {
 
-        /* 書き込み対象に行を追加する */
-        this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+            /* アクセサ作成ロジックの初期化 */
+            this.accessorCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
 
-        do {
+            /* 書き込み対象に行を追加する */
+            this.accessorCreationLogic.addOneLineOfDataToCsvRows();
 
-            /* 1行データを読み込む */
-            final boolean readFlg = this.readOneLineData();
+            do {
 
-            if (!readFlg) {
+                /* 1行データを読み込む */
+                final boolean readFlg = this.readOneLineData();
 
-                break;
+                if (!readFlg) {
 
-            }
+                    break;
 
-            /* カラムを追加する */
-            final boolean processedFlg = this.processColumns();
+                }
 
-            if (!processedFlg) {
+                /* カラムを追加する */
+                final boolean processedFlg = this.processColumns();
 
-                continue;
+                if (!processedFlg) {
 
-            }
+                    continue;
 
-            /* CSVファイルに行を書き込む */
+                }
+
+                /* CSVファイルに行を書き込む */
+                try {
+
+                    this.accessorCreationLogic.writeCsvFile();
+
+                } catch (final KmgToolException e) {
+
+                    // TODO KenichiroArai 2025/03/09 ログ
+                    this.logger.error("CSVファイルに書き込み中にエラーが発生しました", e);
+                    throw e;
+
+                }
+
+                // TODO KenichiroArai 2025/03/09 ログ
+                this.logger.debug(String.format("書き込み完了。名称=[%s], 項目名=[%s]",
+                    this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem()));
+
+                /* クリア処理 */
+                this.clearAndPrepareNextLine();
+
+            } while (true);
+
+            result = true;
+
+        } finally {
+
+            /* リソースのクローズ処理 */
             try {
 
-                this.accessorCreationLogic.writeCsvFile();
+                this.accessorCreationLogic.close();
 
             } catch (final KmgToolException e) {
 
-                // TODO KenichiroArai 2025/03/09 ログ
-                this.logger.error("CSVファイルに書き込み中にエラーが発生しました", e);
-                throw e;
+                // TODO KenichiroArai 2025/03/09 クローズ処理でエラーが発生した場合もログに出力するだけで例外は再スローしない
+                this.logger.error("リソースのクローズ処理中にエラーが発生しました", e);
+                throw new KmgToolException(null, e);
 
             }
 
-            // TODO KenichiroArai 2025/03/09 ログ
-            this.logger.debug(String.format("書き込み完了。名称=[%s], 項目名=[%s]", this.accessorCreationLogic.getJavadocComment(),
-                this.accessorCreationLogic.getItem()));
-
-            /* クリア処理 */
-            this.clearAndPrepareNextLine();
-
-        } while (true);
-
+        }
         return result;
 
     }

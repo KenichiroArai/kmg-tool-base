@@ -186,4 +186,14 @@ public interface AccessorCreationLogic {
      *                          KMGツール例外
      */
     boolean writeCsvFile() throws KmgToolException;
+
+    /**
+     * リソースをクローズする。
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean close() throws KmgToolException;
 }

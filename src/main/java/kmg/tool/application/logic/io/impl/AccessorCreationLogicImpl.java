@@ -251,6 +251,64 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
+     * リソースをクローズする。
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean close() throws KmgToolException {
+
+        boolean result = false;
+
+        /* リーダーのクローズ */
+        if (this.reader != null) {
+
+            try {
+
+                this.reader.close();
+                this.reader = null;
+
+            } catch (final IOException e) {
+
+                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32009;
+                final Object[]               messageArgs  = {
+                    this.inputPath.toString()
+                };
+                throw new KmgToolException(messageTypes, messageArgs, e);
+
+            }
+
+        }
+
+        /* ライターのクローズ */
+        if (this.writer != null) {
+
+            try {
+
+                this.writer.close();
+                this.writer = null;
+
+            } catch (final IOException e) {
+
+                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32010;
+                final Object[]               messageArgs  = {
+                    this.outputPath.toString()
+                };
+                throw new KmgToolException(messageTypes, messageArgs, e);
+
+            }
+
+        }
+
+        result = true;
+        return result;
+
+    }
+
+    /**
      * フィールド宣言から型、項目名、先頭大文字項目に変換する。
      *
      * @return true：変換あり、false：変換なし

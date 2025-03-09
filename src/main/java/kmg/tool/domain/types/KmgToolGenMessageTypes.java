@@ -162,6 +162,28 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN32008("KMGTOOL_GEN32008"),
 
     /**
+     * 入力ファイルのクローズに失敗しました。入力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32009("入力ファイルのクローズに失敗しました。入力ファイルパス=[{0}]"),
+
+    /**
+     * 出力ファイルのクローズに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32010("出力ファイルのクローズに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
      * 失敗
      *
      * @author KenichiroArai
