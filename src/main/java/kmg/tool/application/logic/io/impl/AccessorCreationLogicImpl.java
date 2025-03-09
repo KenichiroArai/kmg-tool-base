@@ -253,58 +253,27 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /**
      * リソースをクローズする。
      *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws IOException
+     *                     入出力例外
      */
     @Override
-    public boolean close() throws KmgToolException {
-
-        boolean result = false;
+    public void close() throws IOException {
 
         /* リーダーのクローズ */
         if (this.reader != null) {
 
-            try {
-
-                this.reader.close();
-                this.reader = null;
-
-            } catch (final IOException e) {
-
-                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32009;
-                final Object[]               messageArgs  = {
-                    this.inputPath.toString()
-                };
-                throw new KmgToolException(messageTypes, messageArgs, e);
-
-            }
+            this.reader.close();
+            this.reader = null;
 
         }
 
         /* ライターのクローズ */
         if (this.writer != null) {
 
-            try {
-
-                this.writer.close();
-                this.writer = null;
-
-            } catch (final IOException e) {
-
-                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32010;
-                final Object[]               messageArgs  = {
-                    this.outputPath.toString()
-                };
-                throw new KmgToolException(messageTypes, messageArgs, e);
-
-            }
+            this.writer.close();
+            this.writer = null;
 
         }
-
-        result = true;
-        return result;
 
     }
 

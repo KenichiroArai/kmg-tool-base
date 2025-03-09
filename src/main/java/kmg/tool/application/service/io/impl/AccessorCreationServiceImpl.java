@@ -1,5 +1,7 @@
 package kmg.tool.application.service.io.impl;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,7 +135,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
                 this.accessorCreationLogic.close();
 
-            } catch (final KmgToolException e) {
+            } catch (final IOException e) {
 
                 // TODO KenichiroArai 2025/03/09 クローズ処理でエラーが発生した場合もログに出力するだけで例外は再スローしない
                 this.logger.error("リソースのクローズ処理中にエラーが発生しました", e);

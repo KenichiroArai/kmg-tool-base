@@ -1,5 +1,7 @@
 package kmg.tool.application.logic.io;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  *
  * @author KenichiroArai
  */
-public interface AccessorCreationLogic {
+public interface AccessorCreationLogic extends Closeable {
 
     /**
      * 先頭大文字項目を書き込み対象に追加する。
@@ -75,6 +77,15 @@ public interface AccessorCreationLogic {
      * @return true：成功、false：失敗
      */
     boolean clearProcessingData();
+
+    /**
+     * リソースをクローズする。
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    @Override
+    void close() throws IOException;
 
     /**
      * フィールド宣言から型、項目名、先頭大文字項目に変換する。
@@ -186,14 +197,4 @@ public interface AccessorCreationLogic {
      *                          KMGツール例外
      */
     boolean writeCsvFile() throws KmgToolException;
-
-    /**
-     * リソースをクローズする。
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean close() throws KmgToolException;
 }
