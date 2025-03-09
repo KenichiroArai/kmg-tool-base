@@ -82,28 +82,73 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         this.accessorCreationLogic.addOneLineOfDataToCsvRows();
 
-        while (this.accessorCreationLogic.readOneLineOfData()) {
+        do {
 
-            /* カラム1：名称を追加する */
-            final boolean addNameColumnFlg = this.addNameColumn();
+            /* 1行データを読み込む */
 
-            if (addNameColumnFlg) {
+            boolean readFlg = false;
 
-                continue;
+            try {
+
+                readFlg = this.accessorCreationLogic.readOneLineOfData();
+
+            } catch (final KmgToolException e) {
+
+                // TODO KenichiroArai 2025/03/09 ログ
+                this.logger.error("1行データの読み込み中にエラーが発生しました", e);
+                throw e;
 
             }
 
-            /* 残りのカラムを追加する */
-            final boolean addRemainingColumnsFlg = this.addRemainingColumns();
+            if (!readFlg) {
 
-            if (!addRemainingColumnsFlg) {
+                break;
 
-                continue;
+            }
+
+            /* カラムを追加する */
+
+            try {
+
+                // カラム1：名称を追加する
+                final boolean addNameColumnFlg = this.addNameColumn();
+
+                if (addNameColumnFlg) {
+
+                    continue;
+
+                }
+
+                // 残りのカラムを追加する
+                final boolean addRemainingColumnsFlg = this.addRemainingColumns();
+
+                if (!addRemainingColumnsFlg) {
+
+                    continue;
+
+                }
+
+            } catch (final KmgToolException e) {
+
+                // TODO KenichiroArai 2025/03/09 ログ
+                this.logger.error("カラムの追加中にエラーが発生しました", e);
+                throw e;
 
             }
 
             /* CSVファイルに行を書き込む */
-            this.accessorCreationLogic.writeCsvFile();
+
+            try {
+
+                this.accessorCreationLogic.writeCsvFile();
+
+            } catch (final KmgToolException e) {
+
+                // TODO KenichiroArai 2025/03/09 ログ
+                this.logger.error("CSVファイルに書き込み中にエラーが発生しました", e);
+                throw e;
+
+            }
 
             // TODO KenichiroArai 2025/03/09 ログ
             this.logger.debug(String.format("書き込み完了。名称=[%s], 項目名=[%s]", this.accessorCreationLogic.getJavadocComment(),
@@ -111,16 +156,26 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             /* クリア処理 */
 
-            // 書き込み対象のCSVデータのリストをクリアする
-            this.accessorCreationLogic.clearCsvRows();
+            try {
 
-            // 処理中のデータをクリアする
-            this.accessorCreationLogic.clearProcessingData();
+                // 書き込み対象のCSVデータのリストをクリアする
+                this.accessorCreationLogic.clearCsvRows();
 
-            /* 書き込み対象に行を追加する */
-            this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+                // 処理中のデータをクリアする
+                this.accessorCreationLogic.clearProcessingData();
 
-        }
+                /* 書き込み対象に行を追加する */
+                this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+
+            } catch (final KmgToolException e) {
+
+                // TODO KenichiroArai 2025/03/09 ログ
+                this.logger.error("クリア処理中にエラーが発生しました", e);
+                throw e;
+
+            }
+
+        } while (true);
 
         return result;
 
