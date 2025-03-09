@@ -75,30 +75,15 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         this.logger.debug("CSVファイルに書き込む開始");
 
         /* アクセサ作成ロジックの初期化 */
-
         this.accessorCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
 
         /* 書き込み対象に行を追加する */
-
         this.accessorCreationLogic.addOneLineOfDataToCsvRows();
 
         do {
 
             /* 1行データを読み込む */
-
-            boolean readFlg = false;
-
-            try {
-
-                readFlg = this.accessorCreationLogic.readOneLineOfData();
-
-            } catch (final KmgToolException e) {
-
-                // TODO KenichiroArai 2025/03/09 ログ
-                this.logger.error("1行データの読み込み中にエラーが発生しました", e);
-                throw e;
-
-            }
+            final boolean readFlg = this.readOneLineData();
 
             if (!readFlg) {
 
@@ -107,37 +92,15 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
             }
 
             /* カラムを追加する */
+            final boolean processedFlg = this.processColumns();
 
-            try {
+            if (!processedFlg) {
 
-                // カラム1：名称を追加する
-                final boolean addNameColumnFlg = this.addNameColumn();
-
-                if (addNameColumnFlg) {
-
-                    continue;
-
-                }
-
-                // 残りのカラムを追加する
-                final boolean addRemainingColumnsFlg = this.addRemainingColumns();
-
-                if (!addRemainingColumnsFlg) {
-
-                    continue;
-
-                }
-
-            } catch (final KmgToolException e) {
-
-                // TODO KenichiroArai 2025/03/09 ログ
-                this.logger.error("カラムの追加中にエラーが発生しました", e);
-                throw e;
+                continue;
 
             }
 
             /* CSVファイルに行を書き込む */
-
             try {
 
                 this.accessorCreationLogic.writeCsvFile();
@@ -155,25 +118,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 this.accessorCreationLogic.getItem()));
 
             /* クリア処理 */
-
-            try {
-
-                // 書き込み対象のCSVデータのリストをクリアする
-                this.accessorCreationLogic.clearCsvRows();
-
-                // 処理中のデータをクリアする
-                this.accessorCreationLogic.clearProcessingData();
-
-                /* 書き込み対象に行を追加する */
-                this.accessorCreationLogic.addOneLineOfDataToCsvRows();
-
-            } catch (final KmgToolException e) {
-
-                // TODO KenichiroArai 2025/03/09 ログ
-                this.logger.error("クリア処理中にエラーが発生しました", e);
-                throw e;
-
-            }
+            this.clearAndPrepareNextLine();
 
         } while (true);
 
@@ -245,6 +190,107 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         this.accessorCreationLogic.addCapitalizedItemToCsvRows();
 
         result = true;
+
+        return result;
+
+    }
+
+    /**
+     * データをクリアして次の行の準備をする。
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private void clearAndPrepareNextLine() throws KmgToolException {
+
+        try {
+
+            // 書き込み対象のCSVデータのリストをクリアする
+            this.accessorCreationLogic.clearCsvRows();
+
+            // 処理中のデータをクリアする
+            this.accessorCreationLogic.clearProcessingData();
+
+            /* 書き込み対象に行を追加する */
+            this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/09 ログ
+            this.logger.error("クリア処理中にエラーが発生しました", e);
+            throw e;
+
+        }
+
+    }
+
+    /**
+     * カラムを処理する。
+     *
+     * @return true：処理成功、false：処理スキップ
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private boolean processColumns() throws KmgToolException {
+
+        final boolean result = true;
+
+        try {
+
+            // カラム1：名称を追加する
+            final boolean addNameColumnFlg = this.addNameColumn();
+
+            if (addNameColumnFlg) {
+
+                return false;
+
+            }
+
+            // 残りのカラムを追加する
+            final boolean addRemainingColumnsFlg = this.addRemainingColumns();
+
+            if (!addRemainingColumnsFlg) {
+
+                return false;
+
+            }
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/09 ログ
+            this.logger.error("カラムの追加中にエラーが発生しました", e);
+            throw e;
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 1行データを読み込む。
+     *
+     * @return true：読み込み成功、false：読み込み終了
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private boolean readOneLineData() throws KmgToolException {
+
+        boolean result = false;
+
+        try {
+
+            result = this.accessorCreationLogic.readOneLineOfData();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/09 ログ
+            this.logger.error("1行データの読み込み中にエラーが発生しました", e);
+            throw e;
+
+        }
 
         return result;
 

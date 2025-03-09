@@ -97,7 +97,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         final List<String> row = this.csvRows.getLast();
         row.add(this.capitalizedItem);
-        this.csvRows.add(row);
         result = true;
 
         return result;
@@ -127,7 +126,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         final List<String> row = this.csvRows.getLast();
         row.add(this.item);
-        this.csvRows.add(row);
         result = true;
 
         return result;
@@ -157,7 +155,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         final List<String> row = this.csvRows.getLast();
         row.add(this.javadocComment);
-        this.csvRows.add(row);
         result = true;
 
         return result;
@@ -208,7 +205,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         final List<String> row = this.csvRows.getLast();
         row.add(this.tyep);
-        this.csvRows.add(row);
         result = true;
 
         return result;
