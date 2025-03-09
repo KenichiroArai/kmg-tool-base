@@ -259,21 +259,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     @Override
     public void close() throws IOException {
 
-        /* リーダーのクローズ */
-        if (this.reader != null) {
-
-            this.reader.close();
-            this.reader = null;
-
-        }
-
-        /* ライターのクローズ */
-        if (this.writer != null) {
-
-            this.writer.close();
-            this.writer = null;
-
-        }
+        this.closeReader();
+        this.closeWriter();
 
     }
 
@@ -580,6 +567,44 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         result = true;
         return result;
+
+    }
+
+    /**
+     * リーダーリソースをクローズする。
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    private void closeReader() throws IOException {
+
+        if (this.reader == null) {
+
+            return;
+
+        }
+
+        this.reader.close();
+        this.reader = null;
+
+    }
+
+    /**
+     * ライターリソースをクローズする。
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    private void closeWriter() throws IOException {
+
+        if (this.writer == null) {
+
+            return;
+
+        }
+
+        this.writer.close();
+        this.writer = null;
 
     }
 
