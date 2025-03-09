@@ -513,7 +513,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
                 this.writer.write(KmgDelimiterTypes.COMMA.join(csvRow));
                 this.writer.write(System.lineSeparator());
-                this.writer.flush();
 
             } catch (final IOException e) {
 
@@ -522,6 +521,18 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
                 throw new KmgToolException(msgType, e);
 
             }
+
+        }
+
+        try {
+
+            this.writer.flush();
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/08 例外
+            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
+            throw new KmgToolException(msgType, e);
 
         }
 
