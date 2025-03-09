@@ -84,7 +84,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         boolean result = false;
 
-        if ((this.capitalizedItem == null) || (this.csvRows == null)) {
+        if (this.capitalizedItem == null) {
 
             return result;
 
@@ -109,7 +109,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         boolean result = false;
 
-        if ((this.item == null) || (this.csvRows == null)) {
+        if (this.item == null) {
 
             return result;
 
@@ -134,7 +134,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         boolean result = false;
 
-        if ((this.javadocComment == null) || (this.csvRows == null)) {
+        if (this.javadocComment == null) {
 
             return result;
 
@@ -177,7 +177,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         boolean result = false;
 
-        if ((this.tyep == null) || (this.csvRows == null)) {
+        if (this.tyep == null) {
 
             return result;
 
