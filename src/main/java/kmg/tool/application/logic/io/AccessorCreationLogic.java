@@ -169,11 +169,11 @@ public interface AccessorCreationLogic extends Closeable {
     boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
 
     /**
-     * Javadocコメント中かを返す。
+     * Javadocの解析中かを返す。
      *
-     * @return true：Javadocコメント中、false：Javadocコメント外
+     * @return true：Javadoc解析中、false：Javadoc解析外
      */
-    boolean isJavadocCommentFlg();
+    boolean isInJavadocParsing();
 
     /**
      * 1行データを読み込む。

@@ -38,8 +38,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** 変換後の1行データ */
     private String convertedLine;
 
-    /** Javadocのコメント中か */
-    private boolean javadocCommentFlg;
+    /** Javadocの解析中かを管理するフラグ */
+    private boolean inJavadocParsing;
 
     /** Javadocコメント */
     private String javadocComment;
@@ -313,7 +313,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         boolean result = false;
 
         // Javadocコメント中か
-        if (!this.javadocCommentFlg) {
+        if (!this.inJavadocParsing) {
             // コメント中ではない場合
 
             // Javadocコメントの開始かを正規表現で判断する
@@ -328,7 +328,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
             }
 
-            this.javadocCommentFlg = true;
+            this.inJavadocParsing = true;
 
         }
 
@@ -343,7 +343,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
             // Javadocコメントを設定
             this.javadocComment = commentMatcher.group(1);
 
-            this.javadocCommentFlg = false;
+            this.inJavadocParsing = false;
 
             result = true;
             return result;
@@ -365,7 +365,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         // Javadocコメントを設定
         this.javadocComment = commentMatcher.group(1);
 
-        this.javadocCommentFlg = false;
+        this.inJavadocParsing = false;
 
         result = true;
         return result;
@@ -502,14 +502,12 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
-     * Javadocコメント中かを返す。
-     *
-     * @return true：Javadocコメント中、false：Javadocコメント外
+     * {@inheritDoc}
      */
     @Override
-    public boolean isJavadocCommentFlg() {
+    public boolean isInJavadocParsing() {
 
-        final boolean result = this.javadocCommentFlg;
+        final boolean result = this.inJavadocParsing;
         return result;
 
     }
