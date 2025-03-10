@@ -11,23 +11,21 @@ columns:
 template: |
     /**
      * {name}を設定する<br>
-      * @author KenichiroArai
-      * @sine 0.1.0
-      * @version 0.1.0
+     * @author KenichiroArai
+     * @sine 0.1.0
      * @param {item} {name}
      */
-     public void set{Item}({type} {item}) {
+    public void set{Item}({type} {item}) {
         this.{item} = {item};
-     }
+    }
     
-     /**
-      * {name}を返す<br>
-      * @author KenichiroArai
-      * @sine 0.1.0
-      * @version 0.1.0
-      * @return {name}
-      */
-     public {type} get{Item}() {
-        {type} result = this.{item};
-        return result;
-     }
+    /**
+     * {name}を返す<br>
+     * @author KenichiroArai
+     * @sine 0.1.0
+     * @return {name}
+     */
+    public {type} get{Item}() {
+       {type} result = this.{item};
+       return result;
+    }
