@@ -11,6 +11,7 @@ import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
 import kmg.tool.application.service.io.AccessorCreationService;
 import kmg.tool.domain.service.io.AbstractInputCsvTemplateOutputProcessorService;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -83,10 +84,11 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         boolean result = false;
 
-        final KmgToolLogMessageTypes startMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
-        final Object[]               startMsgArgs  = {};
-        final String                 startMsg      = this.messageSource.getLogMessage(startMsgTypes, startMsgArgs);
-        this.logger.debug(startMsg);
+        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+        final Object[]               startLogMsgArgs  = {};
+        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+            startLogMsgArgs);
+        this.logger.debug(startLogMsg);
 
         try {
 
@@ -123,20 +125,21 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
                 } catch (final KmgToolException e) {
 
-                    final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
-                    final Object[]               msgArgs  = {};
-                    final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
-                    this.logger.error(msg, e);
+                    final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
+                    final Object[]               logMsgArgs  = {};
+                    final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes,
+                        logMsgArgs);
+                    this.logger.error(logMsg, e);
                     throw e;
 
                 }
 
-                final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32002;
-                final Object[]               msgArgs  = {
+                final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32002;
+                final Object[]               logMsgArgs  = {
                     this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
                 };
-                final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
-                this.logger.debug(msg);
+                final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+                this.logger.debug(logMsg);
 
                 /* クリア処理 */
                 this.clearAndPrepareNextLine();
@@ -154,15 +157,26 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             } catch (final IOException e) {
 
-                final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32003;
-                final Object[]               msgArgs  = {
+                final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32003;
+                final Object[]               logMsgArgs  = {
                     this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
                 };
-                final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
-                this.logger.error(msg, e);
+                final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+                this.logger.error(logMsg, e);
 
-                // TODO KenichiroArai 2025/03/09 例外
-                throw new KmgToolException(null, e);
+                final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31003;
+                final Object[]               genMsgArgs  = {
+                    this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+                };
+                throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+            } finally {
+
+                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32007;
+                final Object[]               endLogMsgArgs  = {};
+                final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
+                    endLogMsgArgs);
+                this.logger.debug(endLogMsg);
 
             }
 
@@ -261,12 +275,12 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32004;
-            final Object[]               msgArgs  = {
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32004;
+            final Object[]               logMsgArgs  = {
                 this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
             };
-            final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
-            this.logger.error(msg, e);
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
 
             throw e;
 
@@ -308,12 +322,12 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32005;
-            final Object[]               msgArgs  = {
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32005;
+            final Object[]               logMsgArgs  = {
                 this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
             };
-            final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
-            this.logger.error(msg, e);
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
 
             throw e;
 
@@ -341,12 +355,12 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32006;
-            final Object[]               msgArgs  = {
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32006;
+            final Object[]               logMsgArgs  = {
                 this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
             };
-            final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
-            this.logger.error(msg, e);
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
 
             throw e;
 

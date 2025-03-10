@@ -38,7 +38,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG32000("KMGTOOL_LOG32000"),
+    KMGTOOL_LOG32000("CSVファイルに書き込む処理を開始します。"),
 
     /**
      * CSVファイルに書き込み中にエラーが発生しました。
@@ -49,7 +49,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG32001("KMGTOOL_LOG32001"),
+    KMGTOOL_LOG32001("CSVファイルに書き込み中にエラーが発生しました。"),
 
     /**
      * CSVファイルに書き込み完了。名称=[{0}], 項目名=[{1}]
@@ -60,7 +60,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG32002("KMGTOOL_LOG32002"),
+    KMGTOOL_LOG32002("CSVファイルに書き込み完了。名称=[{0}], 項目名=[{1}]"),
 
     /**
      * リソースのクローズ処理中にエラーが発生しました。
@@ -71,7 +71,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG32003("KMGTOOL_LOG32003"),
+    KMGTOOL_LOG32003("リソースのクローズ処理中にエラーが発生しました。"),
 
     /**
      * クリア処理中にエラーが発生しました。
@@ -82,7 +82,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG32004("KMGTOOL_LOG32004"),
+    KMGTOOL_LOG32004("クリア処理中にエラーが発生しました。"),
 
     /**
      * カラムの追加中にエラーが発生しました。
@@ -93,7 +93,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG32005("KMGTOOL_LOG32005"),
+    KMGTOOL_LOG32005("カラムの追加中にエラーが発生しました。"),
 
     /**
      * 1行データの読み込み中にエラーが発生しました。
@@ -104,7 +104,18 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG32006("KMGTOOL_LOG32006"),
+    KMGTOOL_LOG32006("1行データの読み込み中にエラーが発生しました。"),
+
+    /**
+     * CSVファイルに書き込む処理を終了します。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32007("CSVファイルに書き込む処理を終了します。"),
 
     /**
      * 初期化の失敗
