@@ -24,6 +24,12 @@
         </encoder>
     </appender>
 
+    <!-- kmg.toolパッケージ用のロガー設定 -->
+    <logger name="kmg.tool" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="APPLIATION_LOG" />
+    </logger>
+
     <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="APPLIATION_LOG" />

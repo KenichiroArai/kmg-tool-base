@@ -3,9 +3,13 @@ package kmg.tool.presentation.ui.cli.io;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
-import kmg.tool.domain.service.IoService;
+import kmg.foundation.infrastructure.context.KmgMessageSource;
+import kmg.tool.domain.service.io.IoService;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.presentation.ui.cli.AbstractTool;
 
 /**
@@ -21,6 +25,10 @@ public abstract class AbstractIoTool extends AbstractTool {
 
     /** 出力ファイルパス */
     private static final Path OUTPUT_PATH = Paths.get(AbstractIoTool.BASE_PATH.toString(), "output.txt");
+
+    /** メッセージソース */
+    @Autowired
+    private KmgMessageSource messageSource;
 
     /**
      * ツール名
@@ -101,20 +109,33 @@ public abstract class AbstractIoTool extends AbstractTool {
 
             if (!processResult) {
 
-                measService.warn("失敗");
+                /* メッセージの出力 */
+                final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41000;
+                final Object[]               messageArgs = {};
+                final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+                measService.warn(msg);
+
                 return result;
 
             }
 
             /* 成功 */
-            measService.info("成功");
+            // メッセージの出力
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41001;
+            final Object[]               messageArgs = {};
+            final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+            measService.info(msg);
 
             result = true;
 
         } catch (final Exception e) {
 
             /* 失敗 */
-            measService.error("例外発生", e);
+            // メッセージの出力
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41002;
+            final Object[]               messageArgs = {};
+            final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+            measService.error(msg, e);
 
         } finally {
 

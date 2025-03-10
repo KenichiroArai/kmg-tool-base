@@ -2,9 +2,12 @@ package kmg.tool.presentation.ui.cli.io;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import kmg.core.infrastructure.exception.KmgToolException;
-import kmg.tool.domain.service.One2OneService;
+import kmg.foundation.infrastructure.context.KmgMessageSource;
+import kmg.tool.domain.service.io.One2OneService;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
+import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * 1入力ファイルから1出力ファイルへの変換ツールサービス抽象クラス
@@ -17,6 +20,10 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
      * @since 0.1.0
      */
     private final Logger logger;
+
+    /** メッセージソース */
+    @Autowired
+    private KmgMessageSource messageSource;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
@@ -67,14 +74,21 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
 
         } catch (final KmgToolException e) {
 
-            // TODO 2025/03/04 例外処理
-            e.printStackTrace();
+            // ログの出力
+            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41002;
+            final Object[]               messageArgs = {};
+            final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
+            this.logger.error(msg, e);
 
         }
 
         if (!initializeResult) {
 
-            this.logger.error("初期化の失敗");
+            // ログの出力
+            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41000;
+            final Object[]               messageArgs = {};
+            final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
+            this.logger.error(msg);
 
         }
 

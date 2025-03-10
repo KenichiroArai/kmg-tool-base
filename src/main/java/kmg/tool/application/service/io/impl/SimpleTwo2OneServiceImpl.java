@@ -1,4 +1,4 @@
-package kmg.tool.application.service.impl;
+package kmg.tool.application.service.io.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.service.SimpleTwo2OneService;
+import kmg.tool.application.service.io.SimpleTwo2OneService;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス<br>
@@ -66,6 +68,25 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
     }
 
     /**
+     * テンプレートファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return テンプレートファイルパス
+     */
+    @Override
+    public Path getTemplatePath() {
+
+        final Path result = this.templatePath;
+        return result;
+
+    }
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗
@@ -95,9 +116,12 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
      * 処理する
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
-    public boolean process() {
+    public boolean process() throws KmgToolException {
 
         boolean result = false;
 
@@ -111,10 +135,12 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/04 例外処理
-            // throw e;
-            e.printStackTrace();
-            return result;
+            // 例外をスローする
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31002;
+            final Object[]               messageArgs = {
+                this.templatePath.toString()
+            };
+            throw new KmgToolException(msgType, messageArgs, e);
 
         }
 
@@ -137,9 +163,10 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/04 例外処理
-            // throw e;
-            e.printStackTrace();
+            // 例外をスローする
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31001;
+            final Object[]               messageArgs = {};
+            throw new KmgToolException(msgType, messageArgs, e);
 
         }
 
