@@ -299,10 +299,15 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         try {
 
             // カラム1：名称を追加する
-            final boolean addNameColumnFlg = this.addNameColumn();
+            this.addNameColumn();
 
-            if (addNameColumnFlg) {
+            final String javadocComment = this.accessorCreationLogic.getJavadocComment();
 
+            // Javadocコメントが設定されていない
+            if (javadocComment == null) {
+                // 設定されていない場合
+
+                // Javadocコメントが先に設定されていないと残りのカラム情報は読み込めないため、処理をスキップさせる
                 return result;
 
             }

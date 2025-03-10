@@ -26,8 +26,8 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
-    /** Javadocコメントの正規表現パターン */
-    private static final String JAVADOC_COMMENT_PATTERN = "/\\*\\* (\\S+)";
+    /** Javadocコメントの開始の正規表現パターン */
+    private static final String JAVADOC_COMMENT_START_PATTERN = "/\\*\\*";
 
     /** privateフィールド宣言の正規表現パターン */
     private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);";
@@ -37,6 +37,9 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
     /** 変換後の1行データ */
     private String convertedLine;
+
+    /** Javadocのコメント中か */
+    private boolean javadocCommentFlg;
 
     /** Javadocコメント */
     private String javadocComment;
@@ -309,20 +312,60 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         boolean result = false;
 
-        // Javadocコメントかを正規表現で判断する
-        final Pattern pattern = Pattern.compile(AccessorCreationLogicImpl.JAVADOC_COMMENT_PATTERN);
-        final Matcher matcher = pattern.matcher(this.convertedLine);
+        // Javadocコメント中か
+        if (!this.javadocCommentFlg) {
+            // コメント中ではない場合
 
-        // Javadocコメントはないか
-        if (!matcher.find()) {
-            // コメントはないの場合
+            // Javadocコメントの開始かを正規表現で判断する
+            final Pattern startPattern = Pattern.compile(AccessorCreationLogicImpl.JAVADOC_COMMENT_START_PATTERN);
+            final Matcher startMatcher = startPattern.matcher(this.convertedLine);
 
+            // Javadocコメントの開始ではないか
+            if (!startMatcher.find()) {
+                // 開始ではないの場合
+
+                return result;
+
+            }
+
+            this.javadocCommentFlg = true;
+
+        }
+
+        // Javadocコメントのコメントを正規表現で判断する
+        Pattern commentPattern = Pattern.compile("/\\*\\*\s+(\\S+)\s+\\*/");
+        Matcher commentMatcher = commentPattern.matcher(this.convertedLine);
+
+        // Javadocコメントのコメントか
+        if (commentMatcher.find()) {
+            // コメントの場合
+
+            // Javadocコメントを設定
+            this.javadocComment = commentMatcher.group(1);
+
+            this.javadocCommentFlg = false;
+
+            result = true;
+            return result;
+
+        }
+
+        // Javadocコメントのコメントを正規表現で判断する
+        commentPattern = Pattern.compile("/\\*\\*(\\S+)");
+        commentMatcher = commentPattern.matcher(this.convertedLine);
+
+        // Javadocコメントのコメントではないか
+        if (!commentMatcher.find()) {
+
+            // コメントではないの場合
             return result;
 
         }
 
         // Javadocコメントを設定
-        this.javadocComment = matcher.group(1);
+        this.javadocComment = commentMatcher.group(1);
+
+        this.javadocCommentFlg = false;
 
         result = true;
         return result;
@@ -454,6 +497,19 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         this.openOutputFile();
 
         result = true;
+        return result;
+
+    }
+
+    /**
+     * Javadocコメント中かを返す。
+     *
+     * @return true：Javadocコメント中、false：Javadocコメント外
+     */
+    @Override
+    public boolean isJavadocCommentFlg() {
+
+        final boolean result = this.javadocCommentFlg;
         return result;
 
     }
