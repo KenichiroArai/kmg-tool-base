@@ -101,18 +101,18 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
             do {
 
                 /* 1行データを読み込む */
-                final boolean readFlg = this.readOneLineData();
+                final boolean isRead = this.readOneLineData();
 
-                if (!readFlg) {
+                if (!isRead) {
 
                     break;
 
                 }
 
                 /* カラムを追加する */
-                final boolean processedFlg = this.processColumns();
+                final boolean isProcessed = this.processColumns();
 
-                if (!processedFlg) {
+                if (!isProcessed) {
 
                     continue;
 
@@ -163,9 +163,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         boolean result = false;
 
         // Javadocコメントに変換
-        final boolean convertJavadocCommentFlg = this.accessorCreationLogic.convertJavadocComment();
+        final boolean isConvertJavadocComment = this.accessorCreationLogic.convertJavadocComment();
 
-        if (!convertJavadocCommentFlg) {
+        if (!isConvertJavadocComment) {
 
             return result;
 
@@ -197,9 +197,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         /* 型、項目名、先頭大文字項目に追加する */
 
         // フィールド宣言から型、項目名、先頭大文字項目に変換する。
-        final boolean convertFieldsFlg = this.accessorCreationLogic.convertFields();
+        final boolean isConvertFields = this.accessorCreationLogic.convertFields();
 
-        if (!convertFieldsFlg) {
+        if (!isConvertFields) {
 
             return result;
 
@@ -313,9 +313,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
             }
 
             // 残りのカラムを追加する
-            final boolean addRemainingColumnsFlg = this.addRemainingColumns();
+            final boolean isAddRemainingColumns = this.addRemainingColumns();
 
-            if (!addRemainingColumnsFlg) {
+            if (!isAddRemainingColumns) {
 
                 return result;
 

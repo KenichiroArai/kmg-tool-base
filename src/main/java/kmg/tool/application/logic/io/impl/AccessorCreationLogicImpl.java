@@ -346,9 +346,10 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         final Pattern singleLinePattern = Pattern.compile(AccessorCreationLogicImpl.SINGLE_LINE_JAVADOC_PATTERN);
         final Matcher singleLineMatcher = singleLinePattern.matcher(this.convertedLine);
+        final boolean isSingleLineMatch = singleLineMatcher.find();
 
         // 1行完結型のJavadocでないか
-        if (singleLineMatcher.find()) {
+        if (isSingleLineMatch) {
             // 1行完結型のJavadocでない場合
 
             // コメント部分を抽出して設定
@@ -369,9 +370,10 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         final Pattern multiLineStartPattern = Pattern
             .compile(AccessorCreationLogicImpl.MULTI_LINE_JAVADOC_START_PATTERN);
         final Matcher multiLineStartMatcher = multiLineStartPattern.matcher(this.convertedLine);
+        final boolean isMultiLineStartMatch = multiLineStartMatcher.find();
 
         // 複数行Javadocの開始行でないか
-        if (!multiLineStartMatcher.find()) {
+        if (!isMultiLineStartMatch) {
             // 開始行でない場合
 
             return result;
