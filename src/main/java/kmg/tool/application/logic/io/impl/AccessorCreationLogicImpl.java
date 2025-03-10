@@ -29,6 +29,12 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** Javadocコメントの開始の正規表現パターン */
     private static final String JAVADOC_COMMENT_START_PATTERN = "/\\*\\*";
 
+    /** 1行Javadocコメントの正規表現パターン */
+    private static final String SINGLE_LINE_JAVADOC_PATTERN = "/\\*\\*\\s+(\\S+)\\s+\\*/";
+
+    /** 複数行Javadocコメント開始の正規表現パターン */
+    private static final String MULTI_LINE_JAVADOC_START_PATTERN = "/\\*\\*(\\S+)";
+
     /** privateフィールド宣言の正規表現パターン */
     private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);";
 
@@ -312,62 +318,74 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         boolean result = false;
 
-        // Javadocコメント中か
-        if (!this.inJavadocParsing) {
-            // コメント中ではない場合
+        /* Javadocの解析中を開始する */
 
-            // Javadocコメントの開始かを正規表現で判断する
-            final Pattern startPattern = Pattern.compile(AccessorCreationLogicImpl.JAVADOC_COMMENT_START_PATTERN);
-            final Matcher startMatcher = startPattern.matcher(this.convertedLine);
+        // Javadocの解析中でないか
+        if (!this.inJavadocParsing) {
+            // 解析中ではない場合
+
+            // Javadocコメントの開始判定
+            final Pattern javadocStartPattern = Pattern
+                .compile(AccessorCreationLogicImpl.JAVADOC_COMMENT_START_PATTERN);
+            final Matcher javadocStartMatcher = javadocStartPattern.matcher(this.convertedLine);
 
             // Javadocコメントの開始ではないか
-            if (!startMatcher.find()) {
-                // 開始ではないの場合
+            if (!javadocStartMatcher.find()) {
+                // 開始でない場合
 
                 return result;
 
             }
 
+            // Javadocコメント解析中に設定
             this.inJavadocParsing = true;
 
         }
 
-        // Javadocコメントのコメントを正規表現で判断する
-        Pattern commentPattern = Pattern.compile("/\\*\\*\s+(\\S+)\s+\\*/");
-        Matcher commentMatcher = commentPattern.matcher(this.convertedLine);
+        /* 1行完結型のJavadocの処理 */
 
-        // Javadocコメントのコメントか
-        if (commentMatcher.find()) {
-            // コメントの場合
+        final Pattern singleLinePattern = Pattern.compile(AccessorCreationLogicImpl.SINGLE_LINE_JAVADOC_PATTERN);
+        final Matcher singleLineMatcher = singleLinePattern.matcher(this.convertedLine);
 
-            // Javadocコメントを設定
-            this.javadocComment = commentMatcher.group(1);
+        // 1行完結型のJavadocでないか
+        if (singleLineMatcher.find()) {
+            // 1行完結型のJavadocでない場合
 
+            // コメント部分を抽出して設定
+            this.javadocComment = singleLineMatcher.group(1);
+
+            // Javadocコメント解析終了
             this.inJavadocParsing = false;
 
             result = true;
+
             return result;
 
         }
 
-        // Javadocコメントのコメントを正規表現で判断する
-        commentPattern = Pattern.compile("/\\*\\*(\\S+)");
-        commentMatcher = commentPattern.matcher(this.convertedLine);
+        /* 複数行Javadocの処理 */
 
-        // Javadocコメントのコメントではないか
-        if (!commentMatcher.find()) {
+        // 複数行Javadocの開始行を正規表現でグループ化する
+        final Pattern multiLineStartPattern = Pattern
+            .compile(AccessorCreationLogicImpl.MULTI_LINE_JAVADOC_START_PATTERN);
+        final Matcher multiLineStartMatcher = multiLineStartPattern.matcher(this.convertedLine);
 
-            // コメントではないの場合
+        // 複数行Javadocの開始行でないか
+        if (!multiLineStartMatcher.find()) {
+            // 開始行でない場合
+
             return result;
 
         }
 
-        // Javadocコメントを設定
-        this.javadocComment = commentMatcher.group(1);
+        // コメント部分を抽出して設定
+        this.javadocComment = multiLineStartMatcher.group(1);
 
+        // Javadocコメント解析終了
         this.inJavadocParsing = false;
 
         result = true;
+
         return result;
 
     }
