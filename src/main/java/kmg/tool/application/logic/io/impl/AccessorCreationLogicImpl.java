@@ -38,7 +38,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** 変換後の1行データ */
     private String convertedLine;
 
-    /** Javadocの解析中かを管理するフラグ */
+    /** Javadocの解析中かを管理する */
     private boolean inJavadocParsing;
 
     /** Javadocコメント */
@@ -502,7 +502,9 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
-     * {@inheritDoc}
+     * Javadocの解析中かを返す。
+     *
+     * @return true：Javadoc解析中、false：Javadoc解析外
      */
     @Override
     public boolean isInJavadocParsing() {
