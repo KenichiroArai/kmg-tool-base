@@ -1,8 +1,0 @@
-    /** 入力パス */
-    private Path inputPath;
-
-    /** 出力パス */
-    private Path outputPath;
-
-    /** スレッド数 */
-    private short threadNum;

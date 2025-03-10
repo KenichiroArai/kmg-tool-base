@@ -7,9 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
 import kmg.tool.application.service.io.AccessorCreationService;
 import kmg.tool.domain.service.io.AbstractInputCsvTemplateOutputProcessorService;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -27,6 +29,14 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
      * @since 0.1.0
      */
     private final Logger logger;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private KmgMessageSource messageSource;
 
     /** アクセサ作成ロジック */
     @Autowired
@@ -73,8 +83,10 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/03/09 ログ
-        this.logger.debug("CSVファイルに書き込む開始");
+        final KmgToolLogMessageTypes startMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+        final Object[]               startMsgArgs  = {};
+        final String                 startMsg      = this.messageSource.getLogMessage(startMsgTypes, startMsgArgs);
+        this.logger.debug(startMsg);
 
         try {
 
@@ -111,15 +123,20 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
                 } catch (final KmgToolException e) {
 
-                    // TODO KenichiroArai 2025/03/09 ログ
-                    this.logger.error("CSVファイルに書き込み中にエラーが発生しました", e);
+                    final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
+                    final Object[]               msgArgs  = {};
+                    final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
+                    this.logger.error(msg, e);
                     throw e;
 
                 }
 
-                // TODO KenichiroArai 2025/03/09 ログ
-                this.logger.debug(String.format("書き込み完了。名称=[%s], 項目名=[%s]",
-                    this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem()));
+                final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32002;
+                final Object[]               msgArgs  = {
+                    this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+                };
+                final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
+                this.logger.debug(msg);
 
                 /* クリア処理 */
                 this.clearAndPrepareNextLine();
@@ -137,8 +154,14 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/03/09 クローズ処理でエラーが発生した場合もログに出力するだけで例外は再スローしない
-                this.logger.error("リソースのクローズ処理中にエラーが発生しました", e);
+                final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32003;
+                final Object[]               msgArgs  = {
+                    this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+                };
+                final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
+                this.logger.error(msg, e);
+
+                // TODO KenichiroArai 2025/03/09 例外
                 throw new KmgToolException(null, e);
 
             }
@@ -238,8 +261,13 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/09 ログ
-            this.logger.error("クリア処理中にエラーが発生しました", e);
+            final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32004;
+            final Object[]               msgArgs  = {
+                this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+            };
+            final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
+            this.logger.error(msg, e);
+
             throw e;
 
         }
@@ -280,8 +308,13 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/09 ログ
-            this.logger.error("カラムの追加中にエラーが発生しました", e);
+            final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32005;
+            final Object[]               msgArgs  = {
+                this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+            };
+            final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
+            this.logger.error(msg, e);
+
             throw e;
 
         }
@@ -308,8 +341,13 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/09 ログ
-            this.logger.error("1行データの読み込み中にエラーが発生しました", e);
+            final KmgToolLogMessageTypes msgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32006;
+            final Object[]               msgArgs  = {
+                this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+            };
+            final String                 msg      = this.messageSource.getLogMessage(msgTypes, msgArgs);
+            this.logger.error(msg, e);
+
             throw e;
 
         }
