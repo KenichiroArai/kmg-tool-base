@@ -119,27 +119,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
                 }
 
                 /* CSVファイルに行を書き込む */
-                try {
-
-                    this.accessorCreationLogic.writeCsvFile();
-
-                } catch (final KmgToolException e) {
-
-                    final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
-                    final Object[]               logMsgArgs  = {};
-                    final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes,
-                        logMsgArgs);
-                    this.logger.error(logMsg, e);
-                    throw e;
-
-                }
-
-                final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32002;
-                final Object[]               logMsgArgs  = {
-                    this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
-                };
-                final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-                this.logger.debug(logMsg);
+                this.writeCsvFileLine();
 
                 /* クリア処理 */
                 this.clearAndPrepareNextLine();
@@ -314,7 +294,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
      */
     private boolean processColumns() throws KmgToolException {
 
-        final boolean result = true;
+        boolean result = false;
 
         try {
 
@@ -323,7 +303,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             if (addNameColumnFlg) {
 
-                return false;
+                return result;
 
             }
 
@@ -332,7 +312,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             if (!addRemainingColumnsFlg) {
 
-                return false;
+                return result;
 
             }
 
@@ -349,6 +329,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         }
 
+        result = true;
         return result;
 
     }
@@ -383,6 +364,37 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         }
 
         return result;
+
+    }
+
+    /**
+     * CSVファイルに行を書き込む。
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private void writeCsvFileLine() throws KmgToolException {
+
+        try {
+
+            this.accessorCreationLogic.writeCsvFile();
+
+        } catch (final KmgToolException e) {
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+            throw e;
+
+        }
+
+        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32002;
+        final Object[]               logMsgArgs  = {
+            this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+        };
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        this.logger.debug(logMsg);
 
     }
 }
