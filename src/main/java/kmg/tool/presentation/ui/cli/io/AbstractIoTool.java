@@ -78,12 +78,18 @@ public abstract class AbstractIoTool extends AbstractTool {
      */
     public static Path getBasePath() {
 
-        if (PRIMARY_BASE_PATH.toFile().exists()) {
+        Path result = null;
 
-            return PRIMARY_BASE_PATH;
+        if (AbstractIoTool.PRIMARY_BASE_PATH.toFile().exists()) {
+
+            result = AbstractIoTool.PRIMARY_BASE_PATH;
+            return result;
 
         }
-        return SECONDARY_BASE_PATH;
+
+        result = AbstractIoTool.SECONDARY_BASE_PATH;
+
+        return result;
 
     }
 
@@ -94,7 +100,9 @@ public abstract class AbstractIoTool extends AbstractTool {
      */
     public static Path getInputPath() {
 
-        return Paths.get(getBasePath().toString(), INPUT_FILE_NAME.toString());
+        final Path result
+            = Paths.get(AbstractIoTool.getBasePath().toString(), AbstractIoTool.INPUT_FILE_NAME.toString());
+        return result;
 
     }
 
@@ -105,7 +113,9 @@ public abstract class AbstractIoTool extends AbstractTool {
      */
     public static Path getOutputPath() {
 
-        return Paths.get(getBasePath().toString(), OUTPUT_FILE_NAME.toString());
+        final Path result
+            = Paths.get(AbstractIoTool.getBasePath().toString(), AbstractIoTool.OUTPUT_FILE_NAME.toString());
+        return result;
 
     }
 
