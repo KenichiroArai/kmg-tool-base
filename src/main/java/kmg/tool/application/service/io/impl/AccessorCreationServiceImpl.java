@@ -163,7 +163,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         boolean result = false;
 
         // Javadocコメントに変換
-        final boolean isConvertJavadocComment = this.accessorCreationLogic.convertJavadocComment();
+        final boolean isConvertJavadocComment = this.accessorCreationLogic.convertJavadoc();
 
         if (!isConvertJavadocComment) {
 

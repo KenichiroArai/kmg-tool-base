@@ -98,11 +98,11 @@ public interface AccessorCreationLogic extends Closeable {
     boolean convertFields() throws KmgToolException;
 
     /**
-     * Javadocコメントに変換する。
+     * Javadocの変換を行う。
      *
      * @return true：変換あり、false：変換なし
      */
-    boolean convertJavadocComment();
+    boolean convertJavadoc();
 
     /**
      * 先頭大文字項目返す。

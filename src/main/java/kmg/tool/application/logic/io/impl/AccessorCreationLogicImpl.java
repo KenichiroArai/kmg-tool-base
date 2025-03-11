@@ -314,7 +314,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * @return true：変換あり、false：変換なし
      */
     @Override
-    public boolean convertJavadocComment() {
+    public boolean convertJavadoc() {
 
         boolean result = false;
 
@@ -324,12 +324,12 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         if (!this.inJavadocParsing) {
             // 解析中ではない場合
 
-            // Javadocコメントの開始判定
+            // Javadocの開始判定
             final Pattern javadocStartPattern = Pattern
                 .compile(AccessorCreationLogicImpl.JAVADOC_COMMENT_START_PATTERN);
             final Matcher javadocStartMatcher = javadocStartPattern.matcher(this.convertedLine);
 
-            // Javadocコメントの開始ではないか
+            // Javadocの開始ではないか
             if (!javadocStartMatcher.find()) {
                 // 開始でない場合
 
@@ -337,7 +337,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
             }
 
-            // Javadocコメント解析中に設定
+            // Javadoc解析中に設定
             this.inJavadocParsing = true;
 
         }
@@ -355,7 +355,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
             // コメント部分を抽出して設定
             this.javadocComment = singleLineMatcher.group(1);
 
-            // Javadocコメント解析終了
+            // Javadoc解析終了
             this.inJavadocParsing = false;
 
             result = true;
@@ -383,7 +383,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         // コメント部分を抽出して設定
         this.javadocComment = multiLineStartMatcher.group(1);
 
-        // Javadocコメント解析終了
+        // Javadoc解析終了
         this.inJavadocParsing = false;
 
         result = true;
