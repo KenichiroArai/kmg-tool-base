@@ -22,15 +22,15 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** テンプレートファイルパス */
-    private final Path templatePath;
-
     /**
      * ロガー
      *
      * @since 0.1.0
      */
     private final Logger logger;
+
+    /** テンプレートファイルパス */
+    private final Path templatePath;
 
     /**
      * 標準ロガーを使用して初期化するコンストラクタ<br>
@@ -129,11 +129,24 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      */
     private Path getDefaultTemplatePath() {
 
-        Path         result    = null;
-        final String className = KmgPathUtils.getSimpleClassName(this.getClass());
-
+        Path         result           = null;
+        final String className        = KmgPathUtils.getSimpleClassName(this.getClass());
         final String templateFileName = String.format("template/%s.txt", className);
-        result = Paths.get(AbstractIoTool.getBasePath().toString(), templateFileName);
+
+        // work/ioディレクトリにあるテンプレートファイルをチェック
+        final Path primaryPath = Paths.get("work/io", templateFileName);
+
+        if (primaryPath.toFile().exists()) {
+
+            result = primaryPath;
+            return result;
+
+        }
+
+        // src/main/resources/tool/ioディレクトリにあるテンプレートファイルを使用
+        final Path secondaryPath = Paths.get("src/main/resources/tool/io", templateFileName);
+        result = secondaryPath;
+
         return result;
 
     }
