@@ -94,27 +94,55 @@ public abstract class AbstractIoTool extends AbstractTool {
     }
 
     /**
-     * 入力ファイルパスを返す。
+     * 入力ファイルパスを返す。 優先パスに入力ファイルが存在すればそちらを使用し、なければ代替パスを使用する。
      *
      * @return 入力ファイルパス
      */
     public static Path getInputPath() {
 
-        final Path result
-            = Paths.get(AbstractIoTool.getBasePath().toString(), AbstractIoTool.INPUT_FILE_NAME.toString());
+        Path result = null;
+
+        final Path primaryPath
+            = Paths.get(AbstractIoTool.PRIMARY_BASE_PATH.toString(), AbstractIoTool.INPUT_FILE_NAME.toString());
+
+        if (primaryPath.toFile().exists()) {
+
+            result = primaryPath;
+            return result;
+
+        }
+
+        final Path secondaryPath
+            = Paths.get(AbstractIoTool.SECONDARY_BASE_PATH.toString(), AbstractIoTool.INPUT_FILE_NAME.toString());
+
+        result = secondaryPath;
         return result;
 
     }
 
     /**
-     * 出力ファイルパスを返す。
+     * 出力ファイルパスを返す。 優先パスに出力ファイルが存在すればそちらを使用し、なければ代替パスを使用する。
      *
      * @return 出力ファイルパス
      */
     public static Path getOutputPath() {
 
-        final Path result
-            = Paths.get(AbstractIoTool.getBasePath().toString(), AbstractIoTool.OUTPUT_FILE_NAME.toString());
+        Path result = null;
+
+        final Path primaryPath
+            = Paths.get(AbstractIoTool.PRIMARY_BASE_PATH.toString(), AbstractIoTool.OUTPUT_FILE_NAME.toString());
+
+        if (primaryPath.toFile().exists()) {
+
+            result = primaryPath;
+            return result;
+
+        }
+
+        final Path secondaryPath
+            = Paths.get(AbstractIoTool.SECONDARY_BASE_PATH.toString(), AbstractIoTool.OUTPUT_FILE_NAME.toString());
+
+        result = secondaryPath;
         return result;
 
     }
