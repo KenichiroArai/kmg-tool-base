@@ -303,7 +303,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             final String javadocComment = this.accessorCreationLogic.getJavadocComment();
 
-            // Javadocコメントが設定されていない
+            // Javadocコメントが設定されていないか
             if (javadocComment == null) {
                 // 設定されていない場合
 
