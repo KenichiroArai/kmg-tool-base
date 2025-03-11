@@ -14,17 +14,51 @@ import kmg.tool.presentation.ui.cli.AbstractTool;
 
 /**
  * 入出力ツール抽象クラス
+ * <p>
+ * このクラスは入出力処理の基本機能を提供します。 入力ファイルと出力ファイルのパスは以下の優先順位で決定されます：
+ * </p>
+ * <ol>
+ * <li>work/ioディレクトリが存在する場合：work/io/[input|output].txt</li>
+ * <li>work/ioディレクトリが存在しない場合：src/main/resources/tool/io/[input|output].txt</li>
+ * </ol>
+ * <p>
+ * 使用例：
+ * </p>
+ *
+ * <pre>
+ * public class CustomIoTool extends AbstractIoTool {
+ *     private final IoService ioService;
+ *
+ *     public CustomIoTool(String toolName, IoService ioService) {
+ *         super(toolName);
+ *         this.ioService = ioService;
+ *     }
+ *
+ *     {@literal @}Override
+ *     protected IoService getIoService() {
+ *         return this.ioService;
+ *     }
+ * }
+ *
+ * // ツールの使用
+ * IoService ioService = new CustomIoService();
+ * CustomIoTool tool = new CustomIoTool("カスタムツール", ioService);
+ * boolean success = tool.execute();
+ * </pre>
  */
 public abstract class AbstractIoTool extends AbstractTool {
 
-    /** 基準パス */
-    private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
+    /** 優先的に使用する基準パス */
+    private static final Path PRIMARY_BASE_PATH = Paths.get("work/io");
 
-    /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(AbstractIoTool.BASE_PATH.toString(), "input.txt");
+    /** 代替の基準パス */
+    private static final Path SECONDARY_BASE_PATH = Paths.get("src/main/resources/tool/io");
 
-    /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH = Paths.get(AbstractIoTool.BASE_PATH.toString(), "output.txt");
+    /** 入力ファイル名 */
+    private static final Path INPUT_FILE_NAME = Paths.get("input.txt");
+
+    /** 出力ファイル名 */
+    private static final Path OUTPUT_FILE_NAME = Paths.get("output.txt");
 
     /** メッセージソース */
     @Autowired
@@ -44,8 +78,12 @@ public abstract class AbstractIoTool extends AbstractTool {
      */
     public static Path getBasePath() {
 
-        final Path result = AbstractIoTool.BASE_PATH;
-        return result;
+        if (PRIMARY_BASE_PATH.toFile().exists()) {
+
+            return PRIMARY_BASE_PATH;
+
+        }
+        return SECONDARY_BASE_PATH;
 
     }
 
@@ -56,8 +94,7 @@ public abstract class AbstractIoTool extends AbstractTool {
      */
     public static Path getInputPath() {
 
-        final Path result = AbstractIoTool.INPUT_PATH;
-        return result;
+        return Paths.get(getBasePath().toString(), INPUT_FILE_NAME.toString());
 
     }
 
@@ -68,8 +105,7 @@ public abstract class AbstractIoTool extends AbstractTool {
      */
     public static Path getOutputPath() {
 
-        final Path result = AbstractIoTool.OUTPUT_PATH;
-        return result;
+        return Paths.get(getBasePath().toString(), OUTPUT_FILE_NAME.toString());
 
     }
 
