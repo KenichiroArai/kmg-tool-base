@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -584,8 +585,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         boolean result = false;
 
-        this.convertedLine = this.convertedLine.replace("final", KmgString.EMPTY);
-        this.convertedLine = this.convertedLine.replace("static", KmgString.EMPTY);
+        this.convertedLine = this.convertedLine.replace(KmgJavaKeywordTypes.FINAL.getKey(), KmgString.EMPTY);
+        this.convertedLine = this.convertedLine.replace(KmgJavaKeywordTypes.STATIC.getKey(), KmgString.EMPTY);
 
         result = true;
         return result;
