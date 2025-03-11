@@ -15,6 +15,9 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 public abstract class AbstractInputCsvTemplateOutputProcessorService implements Two2OneService {
 
+    /** 一時CSVファイルのサフィックスと拡張子 */
+    private static final String TEMP_CSV_FILE_SUFFIX_EXTENSION = "Temp.csv";
+
     /** 入力ファイルパス */
     private Path inputPath;
 
@@ -177,17 +180,21 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
 
         Path result = null;
 
+        final String csvFileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
+        final String suffixExtension = AbstractInputCsvTemplateOutputProcessorService.TEMP_CSV_FILE_SUFFIX_EXTENSION;
+
         try {
 
-            final String fileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
-            result = Files.createTempFile(fileNameOnly, "Temp.csv");
+            result = Files.createTempFile(csvFileNameOnly, suffixExtension);
             result.toFile().deleteOnExit();
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/06 メッセージ
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
+            final KmgToolGenMessageTypes genMsgType = KmgToolGenMessageTypes.KMGTOOL_GEN12000;
+            final Object[]               getMsgArgs = {
+                csvFileNameOnly, suffixExtension,
+            };
+            throw new KmgToolException(genMsgType, getMsgArgs, e);
 
         }
 

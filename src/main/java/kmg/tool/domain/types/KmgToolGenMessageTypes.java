@@ -30,6 +30,17 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     NONE("指定無し"),
 
     /**
+     * 一時的なCSVファイルの作成に失敗しました。CSVファイル名のみ=[{0}]、サフィックスと拡張子=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN12000("一時的なCSVファイルの作成に失敗しました。CSVファイル名のみ=[{0}]、サフィックスと拡張子=[{1}]"),
+
+    /**
      * ファイル処理に失敗しました。
      *
      * @author KenichiroArai
