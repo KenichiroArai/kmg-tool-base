@@ -31,3 +31,7 @@ bin/
 
 # logs
 logs/
+
+# 作業フォルダ内
+work/**
+!work/io/README.md
