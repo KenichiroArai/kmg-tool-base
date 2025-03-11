@@ -148,6 +148,34 @@ public abstract class AbstractIoTool extends AbstractTool {
     }
 
     /**
+     * 優先的に使用する基準パスを取得します。
+     *
+     * @return 優先的に使用する基準パス
+     *
+     * @since 0.1.0
+     */
+    public static Path getPrimaryBasePath() {
+
+        final Path result = AbstractIoTool.PRIMARY_BASE_PATH;
+        return result;
+
+    }
+
+    /**
+     * 代替の基準パスを取得します。
+     *
+     * @return 代替の基準パス
+     *
+     * @since 0.1.0
+     */
+    public static Path getSecondaryBasePath() {
+
+        final Path result = AbstractIoTool.SECONDARY_BASE_PATH;
+        return result;
+
+    }
+
+    /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
      * @param toolName
