@@ -1,14 +1,19 @@
-columns:
-  - key: "名称"
-    placeholder: "{name}"
-  - key: "型"
-    placeholder: "{type}"
-  - key: "項目"
-    placeholder: "{item}"
-  - key: "先頭大文字項目"
-    placeholder: "{Item}"
+# プレースホルダーの定義
+# displayName: 画面表示用の名称
+# replacementPattern: 置換対象のパターン
+placeholderDefinitions:
+    - displayName: "名称"
+      replacementPattern: "{name}"
+    - displayName: "型"
+      replacementPattern: "{type}"
+    - displayName: "項目"
+      replacementPattern: "{item}"
+    - displayName: "先頭大文字項目"
+      replacementPattern: "{Item}"
 
-template: |
+# テンプレートの内容
+# {name}, {type}, {item}, {Item}のプレースホルダーが実際の値に置換される
+templateContent: |
     /**
      * {name}を設定する<br>
      * @author KenichiroArai
@@ -18,7 +23,7 @@ template: |
     public void set{Item}({type} {item}) {
         this.{item} = {item};
     }
-    
+
     /**
      * {name}を返す<br>
      * @author KenichiroArai

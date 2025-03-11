@@ -129,10 +129,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         boolean result = false;
 
         /* テンプレートの取得 */
-        String                    template       = null;
         final Map<String, String> columnMappings = new LinkedHashMap<>();
-
-        final Yaml yaml = new Yaml();
 
         String templateContent = null;
 
@@ -143,8 +140,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         } catch (final IOException e) {
 
-            // 例外をスローする
-            // TODO KenichiroArai 2025/03/06 メッセージ
+            // TODO KenichiroArai 2025/03/06 例外メッセージ
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {
                 this.templatePath.toString()
@@ -153,18 +149,20 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         }
 
+        final Yaml                yaml     = new Yaml();
         final Map<String, Object> yamlData = yaml.load(templateContent);
 
         @SuppressWarnings("unchecked")
-        final List<Map<String, String>> columns = (List<Map<String, String>>) yamlData.get("columns");
+        final List<Map<String, String>> columns = (List<Map<String, String>>) yamlData.get("placeholderDefinitions");
 
         for (final Map<String, String> col : columns) {
 
-            columnMappings.put(col.get("key"), col.get("placeholder"));
+            // 表示名をキーとして、置換パターンを値として設定
+            columnMappings.put(col.get("displayName"), col.get("replacementPattern"));
 
         }
 
-        template = (String) yamlData.get("template");
+        final String template = (String) yamlData.get("templateContent");
 
         /* 入力ファイルからCSV形式に変換してCSVファイルに出力する */
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
