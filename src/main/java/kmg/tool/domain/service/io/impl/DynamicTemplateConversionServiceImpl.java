@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
     private Path outputPath;
 
     /**
-     * YAMLデータからプレースホルダー定義を抽出する<br>
+     * YAMLデータからCSVプレースホルダー定義を抽出する<br>
      *
      * @author KenichiroArai
      *
@@ -44,27 +46,166 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
      * @param yamlData
      *                 解析されたYAMLデータ
      *
-     * @return プレースホルダーの定義マップ
+     * @return CSVプレースホルダーの定義マップ
      */
-    private static Map<String, String> extractPlaceholderDefinitions(final Map<String, Object> yamlData) {
+    private static Map<String, String> extractCsvPlaceholderDefinitions(final Map<String, Object> yamlData) {
 
         final Map<String, String> result = new LinkedHashMap<>();
 
-        // プレースホルダー定義を取得する
-        @SuppressWarnings("unchecked") // TODO KenichiroArai 2025/03/12 型変化の対応
-        final List<Map<String, String>> placeholderDefinitions = (List<Map<String, String>>) yamlData
-            .get(DynamicTemplateConversionKeyTypes.PLACEHOLDER_DEFINITIONS.getKey());
+        // CSVプレースホルダー定義を取得する
+        @SuppressWarnings("unchecked")
+        final List<Map<String, String>> csvPlaceholders
+            = (List<Map<String, String>>) yamlData.get(DynamicTemplateConversionKeyTypes.CSV_PLACEHOLDERS.getKey());
 
-        // 表示名と置換パターンのマッピングを作成
-        for (final Map<String, String> placeholderMap : placeholderDefinitions) {
+        if (csvPlaceholders != null) {
 
-            result.put(placeholderMap.get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey()),
-                placeholderMap.get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey()));
+            for (final Map<String, String> placeholderMap : csvPlaceholders) {
+
+                result.put(placeholderMap.get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey()),
+                    placeholderMap.get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey()));
+
+            }
 
         }
 
         return result;
 
+    }
+
+    /**
+     * YAMLデータから派生プレースホルダー定義を抽出する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @param yamlData
+     *                 解析されたYAMLデータ
+     *
+     * @return 派生プレースホルダーの定義リスト
+     */
+    private static List<DerivedPlaceholder> extractDerivedPlaceholderDefinitions(final Map<String, Object> yamlData) {
+
+        final List<DerivedPlaceholder> result = new ArrayList<>();
+
+        // 派生プレースホルダー定義を取得する
+        @SuppressWarnings("unchecked")
+        final List<Map<String, String>> derivedPlaceholders
+            = (List<Map<String, String>>) yamlData.get(DynamicTemplateConversionKeyTypes.DERIVED_PLACEHOLDERS.getKey());
+
+        if (derivedPlaceholders != null) {
+
+            for (final Map<String, String> placeholderMap : derivedPlaceholders) {
+
+                final String displayName        = placeholderMap
+                    .get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey());
+                final String replacementPattern = placeholderMap
+                    .get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey());
+                final String sourceKey          = placeholderMap
+                    .get(DynamicTemplateConversionKeyTypes.SOURCE_KEY.getKey());
+                final String transformation     = placeholderMap
+                    .get(DynamicTemplateConversionKeyTypes.TRANSFORMATION.getKey());
+
+                result.add(new DerivedPlaceholder(displayName, replacementPattern, sourceKey, transformation));
+
+            }
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 派生プレースホルダー定義を保持するクラス
+     */
+    private static class DerivedPlaceholder {
+
+        /**
+         * 表示名
+         */
+        private final String displayName;
+
+        /**
+         * 置換パターン
+         */
+        private final String replacementPattern;
+
+        /**
+         * ソースキー
+         */
+        private final String sourceKey;
+
+        /**
+         * 変換処理
+         */
+        private final String transformation;
+
+        /**
+         * コンストラクタ
+         *
+         * @param displayName
+         *                           表示名
+         * @param replacementPattern
+         *                           置換パターン
+         * @param sourceKey
+         *                           ソースキー
+         * @param transformation
+         *                           変換処理
+         */
+        public DerivedPlaceholder(String displayName, String replacementPattern, String sourceKey,
+            String transformation) {
+
+            this.displayName = displayName;
+            this.replacementPattern = replacementPattern;
+            this.sourceKey = sourceKey;
+            this.transformation = transformation;
+
+        }
+
+        /**
+         * 表示名を返す
+         *
+         * @return 表示名
+         */
+        public String getDisplayName() {
+
+            return displayName;
+
+        }
+
+        /**
+         * 置換パターンを返す
+         *
+         * @return 置換パターン
+         */
+        public String getReplacementPattern() {
+
+            return replacementPattern;
+
+        }
+
+        /**
+         * ソースキーを返す
+         *
+         * @return ソースキー
+         */
+        public String getSourceKey() {
+
+            return sourceKey;
+
+        }
+
+        /**
+         * 変換処理を返す
+         *
+         * @return 変換処理
+         */
+        public String getTransformation() {
+
+            return transformation;
+
+        }
     }
 
     /**
@@ -166,14 +307,14 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         /* テンプレートの読み込みと解析 */
         final Map<String, Object> yamlData = this.loadAndParseTemplate();
 
-        /* プレースホルダー定義の取得と変換 */
-        final Map<String, String> placeholderDefinitionMap = DynamicTemplateConversionServiceImpl
-            .extractPlaceholderDefinitions(yamlData);
-        final String              templateContent          = (String) yamlData
+        /* プレースホルダー定義の取得 */
+        final Map<String, String>      csvPlaceholderMap   = extractCsvPlaceholderDefinitions(yamlData);
+        final List<DerivedPlaceholder> derivedPlaceholders = extractDerivedPlaceholderDefinitions(yamlData);
+        final String                   templateContent     = (String) yamlData
             .get(DynamicTemplateConversionKeyTypes.TEMPLATE_CONTENT.getKey());
 
         /* 入力ファイルの処理と出力 */
-        this.processInputAndGenerateOutput(placeholderDefinitionMap, templateContent);
+        this.processInputAndGenerateOutput(csvPlaceholderMap, derivedPlaceholders, templateContent);
 
         result = true;
         return result;
@@ -221,19 +362,22 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
      *
      * @sine 1.0.0
      *
-     * @param placeholderDefinitionMap
-     *                                 プレースホルダーの定義マップ
+     * @param csvPlaceholderMap
+     *                            CSVプレースホルダーの定義マップ
+     * @param derivedPlaceholders
+     *                            派生プレースホルダーの定義リスト
      * @param templateContent
-     *                                 テンプレートの内容
+     *                            テンプレートの内容
      *
      * @throws KmgToolException
      *                          入出力処理に失敗した場合
      */
-    private void processInputAndGenerateOutput(final Map<String, String> placeholderDefinitionMap,
-        final String templateContent) throws KmgToolException {
+    private void processInputAndGenerateOutput(final Map<String, String> csvPlaceholderMap,
+        final List<DerivedPlaceholder> derivedPlaceholders, final String templateContent) throws KmgToolException {
 
-        // プレースホルダーのキー配列を取得
-        final String[] placeholderArrays = placeholderDefinitionMap.values().toArray(new String[0]);
+        // CSVプレースホルダーのキー配列を取得
+        final String[] csvPlaceholderKeys     = csvPlaceholderMap.keySet().toArray(new String[0]);
+        final String[] csvPlaceholderPatterns = csvPlaceholderMap.values().toArray(new String[0]);
 
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
             final BufferedWriter bwOutput = Files.newBufferedWriter(this.getOutputPath())) {
@@ -246,12 +390,43 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
                 String         out     = templateContent;
                 final String[] csvLine = KmgDelimiterTypes.COMMA.split(line);
 
-                // 各プレースホルダーを対応する値で置換
-                for (int i = 0; i < placeholderArrays.length; i++) {
+                // CSV値を一時保存するマップ
+                final Map<String, String> csvValues = new HashMap<>();
 
-                    final String placeholder = placeholderArrays[i];
-                    final String value       = csvLine[i];
-                    out = out.replace(placeholder, value);
+                // 各CSVプレースホルダーを対応する値で置換
+                for (int i = 0; i < csvPlaceholderPatterns.length; i++) {
+
+                    if (i < csvLine.length) {
+
+                        final String key     = csvPlaceholderKeys[i];
+                        final String pattern = csvPlaceholderPatterns[i];
+                        final String value   = csvLine[i];
+
+                        // 値を保存
+                        csvValues.put(key, value);
+
+                        // テンプレートを置換
+                        out = out.replace(pattern, value);
+
+                    }
+
+                }
+
+                // 派生プレースホルダーを処理
+                for (DerivedPlaceholder derivedPlaceholder : derivedPlaceholders) {
+
+                    final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
+
+                    if (sourceValue != null) {
+
+                        // 変換処理を適用
+                        final String derivedValue
+                            = applyTransformation(sourceValue, derivedPlaceholder.getTransformation());
+
+                        // テンプレートを置換
+                        out = out.replace(derivedPlaceholder.getReplacementPattern(), derivedValue);
+
+                    }
 
                 }
 
@@ -269,6 +444,55 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
                 this.templatePath.toString()
             };
             throw new KmgToolException(msgType, messageArgs, e);
+
+        }
+
+    }
+
+    /**
+     * 指定された変換処理を値に適用する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @param value
+     *                       元の値
+     * @param transformation
+     *                       適用する変換処理
+     *
+     * @return 変換後の値
+     */
+    private String applyTransformation(String value, String transformation) {
+
+        if (value == null) {
+
+            return "";
+
+        }
+
+        switch (transformation) {
+
+            case "capitalizeFirst":
+                // 最初の文字を大文字に変換
+                if (!value.isEmpty()) {
+
+                    return Character.toUpperCase(value.charAt(0)) + (value.length() > 1 ? value.substring(1) : "");
+
+                }
+                return value;
+
+            case "toUpperCase":
+                // すべて大文字に変換
+                return value.toUpperCase();
+
+            case "toLowerCase":
+                // すべて小文字に変換
+                return value.toLowerCase();
+
+            // 他の変換処理をここに追加可能
+            default:
+                return value;
 
         }
 

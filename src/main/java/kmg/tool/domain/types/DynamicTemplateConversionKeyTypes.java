@@ -29,14 +29,23 @@ public enum DynamicTemplateConversionKeyTypes implements KmgComTypes<String> {
      */
     NONE("指定無し", "None", "指定無し"),
 
-    /** プレースホルダー定義のキー */
-    PLACEHOLDER_DEFINITIONS("プレースホルダー定義", "placeholderDefinitions", "プレースホルダー定義のキー"),
+    /** CSVプレースホルダー定義のキー */
+    CSV_PLACEHOLDERS("CSVプレースホルダー定義", "csvPlaceholders", "CSVから直接取得するプレースホルダー定義のキー"),
+
+    /** 派生プレースホルダー定義のキー */
+    DERIVED_PLACEHOLDERS("派生プレースホルダー定義", "derivedPlaceholders", "他のプレースホルダーから派生するプレースホルダー定義のキー"),
 
     /** 表示名のキー */
     DISPLAY_NAME("表示名", "displayName", "表示名のキー"),
 
     /** 置換パターンのキー */
     REPLACEMENT_PATTERN("置換パターン", "replacementPattern", "置換パターンのキー"),
+
+    /** ソースキーのキー */
+    SOURCE_KEY("ソースキー", "sourceKey", "変換元となるプレースホルダーのキー"),
+
+    /** 変換処理のキー */
+    TRANSFORMATION("変換処理", "transformation", "変換処理のキー"),
 
     /** テンプレート内容のキー */
     TEMPLATE_CONTENT("テンプレート内容", "templateContent", "テンプレート内容のキー"),
