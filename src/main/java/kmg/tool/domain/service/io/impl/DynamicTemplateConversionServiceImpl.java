@@ -130,12 +130,12 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         /* テンプレートの取得 */
 
-        String templateContent = null;
+        // テンプレートの読み込み
+        String template = null;
 
         try {
 
-            // Pathオブジェクトから文字列内容を読み取る
-            templateContent = Files.readString(this.getTemplatePath());
+            template = Files.readString(this.getTemplatePath());
 
         } catch (final IOException e) {
 
@@ -148,31 +148,37 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         }
 
+        // YAML形式に変換
         final Yaml                yaml     = new Yaml();
-        final Map<String, Object> yamlData = yaml.load(templateContent);
+        final Map<String, Object> yamlData = yaml.load(template);
 
+        // プレースホルダー定義を取得する
         @SuppressWarnings("unchecked")
-        final List<Map<String, String>> columns = (List<Map<String, String>>) yamlData.get("placeholderDefinitions");
+        final List<Map<String, String>> placeholderDefinitions
+            = (List<Map<String, String>>) yamlData.get("placeholderDefinitions");
 
         final Map<String, String> columnMappings = new LinkedHashMap<>();
 
-        for (final Map<String, String> col : columns) {
+        for (final Map<String, String> placeholderMap : placeholderDefinitions) {
 
             // 表示名をキーとして、置換パターンを値として設定
-            columnMappings.put(col.get("displayName"), col.get("replacementPattern"));
+            columnMappings.put(placeholderMap.get("displayName"), placeholderMap.get("replacementPattern"));
 
         }
 
-        final String template = (String) yamlData.get("templateContent");
+        // テンプレート内容を取得する
+        final String templateContent = (String) yamlData.get("templateContent");
 
-        /* 入力ファイルからCSV形式に変換してCSVファイルに出力する */
+        /* テンプレート内容をプレースホルダー定義に基づいて変換し、出力する */
+
+        String line = null;
+
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
             final BufferedWriter bwOutput = Files.newBufferedWriter(this.getOutputPath());) {
 
-            String out  = template;
-            String line = null;
-
             while ((line = brInput.readLine()) != null) {
+
+                String out = templateContent;
 
                 final String[] csvLine = KmgDelimiterTypes.COMMA.split(line);
 
@@ -189,8 +195,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
                 bwOutput.write(out);
                 bwOutput.newLine();
-
-                out = template;
 
             }
 
