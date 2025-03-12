@@ -193,12 +193,11 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         Map<String, Object> result = null;
 
-        String template = null;
+        final Yaml yaml = new Yaml();
 
         try {
 
-            // テンプレートファイルを読み込む
-            template = Files.readString(this.getTemplatePath());
+            result = yaml.load(Files.newInputStream(this.getTemplatePath()));
 
         } catch (final IOException e) {
 
@@ -210,10 +209,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
             throw new KmgToolException(msgType, messageArgs, e);
 
         }
-
-        // YAML形式に変換
-        final Yaml yaml = new Yaml();
-        result = yaml.load(template);
 
         return result;
 
