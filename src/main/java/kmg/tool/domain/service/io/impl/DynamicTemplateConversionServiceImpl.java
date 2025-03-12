@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.foundation.infrastructure.utils.KmgYamlUtils;
@@ -129,6 +130,66 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
     private Path outputPath;
 
     /**
+     * 指定された変換処理を値に適用する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @param value
+     *                       元の値
+     * @param transformation
+     *                       適用する変換処理
+     *
+     * @return 変換後の値
+     */
+    private static String applyTransformation(final String value, final String transformation) {
+
+        String result = KmgString.EMPTY;
+
+        if (value == null) {
+
+            return result;
+
+        }
+
+        switch (transformation) {
+
+            case "capitalizeFirst":
+                // 最初の文字を大文字に変換
+                if (!value.isEmpty()) {
+
+                    result = Character.toUpperCase(value.charAt(0)) + (value.length() > 1 ? value.substring(1) : "");
+
+                } else {
+
+                    result = value;
+
+                }
+                break;
+
+            case "toUpperCase":
+                // すべて大文字に変換
+                result = value.toUpperCase();
+                break;
+
+            case "toLowerCase":
+                // すべて小文字に変換
+                result = value.toLowerCase();
+                break;
+
+            // 他の変換処理をここに追加可能
+            default:
+                result = value;
+                break;
+
+        }
+
+        return result;
+
+    }
+
+    /**
      * YAMLデータからCSVプレースホルダー定義を抽出する<br>
      *
      * @author KenichiroArai
@@ -149,14 +210,16 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         final List<Map<String, String>> csvPlaceholders
             = (List<Map<String, String>>) yamlData.get(DynamicTemplateConversionKeyTypes.CSV_PLACEHOLDERS.getKey());
 
-        if (csvPlaceholders != null) {
+        if (csvPlaceholders == null) {
 
-            for (final Map<String, String> placeholderMap : csvPlaceholders) {
+            return result;
 
-                result.put(placeholderMap.get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey()),
-                    placeholderMap.get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey()));
+        }
 
-            }
+        for (final Map<String, String> placeholderMap : csvPlaceholders) {
+
+            result.put(placeholderMap.get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey()),
+                placeholderMap.get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey()));
 
         }
 
@@ -185,22 +248,25 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         final List<Map<String, String>> derivedPlaceholders
             = (List<Map<String, String>>) yamlData.get(DynamicTemplateConversionKeyTypes.DERIVED_PLACEHOLDERS.getKey());
 
-        if (derivedPlaceholders != null) {
+        if (derivedPlaceholders == null) {
 
-            for (final Map<String, String> placeholderMap : derivedPlaceholders) {
+            return result;
 
-                final String displayName        = placeholderMap
-                    .get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey());
-                final String replacementPattern = placeholderMap
-                    .get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey());
-                final String sourceKey          = placeholderMap
-                    .get(DynamicTemplateConversionKeyTypes.SOURCE_KEY.getKey());
-                final String transformation     = placeholderMap
-                    .get(DynamicTemplateConversionKeyTypes.TRANSFORMATION.getKey());
+        }
 
-                result.add(new DerivedPlaceholder(displayName, replacementPattern, sourceKey, transformation));
+        for (final Map<String, String> placeholderMap : derivedPlaceholders) {
 
-            }
+            final String displayName        = placeholderMap
+                .get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey());
+            final String replacementPattern = placeholderMap
+                .get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey());
+            final String sourceKey          = placeholderMap.get(DynamicTemplateConversionKeyTypes.SOURCE_KEY.getKey());
+            final String transformation     = placeholderMap
+                .get(DynamicTemplateConversionKeyTypes.TRANSFORMATION.getKey());
+
+            final DerivedPlaceholder derivedPlaceholder
+                = new DerivedPlaceholder(displayName, replacementPattern, sourceKey, transformation);
+            result.add(derivedPlaceholder);
 
         }
 
@@ -324,55 +390,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
     }
 
     /**
-     * 指定された変換処理を値に適用する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @param value
-     *                       元の値
-     * @param transformation
-     *                       適用する変換処理
-     *
-     * @return 変換後の値
-     */
-    private String applyTransformation(final String value, final String transformation) {
-
-        if (value == null) {
-
-            return "";
-
-        }
-
-        switch (transformation) {
-
-            case "capitalizeFirst":
-                // 最初の文字を大文字に変換
-                if (!value.isEmpty()) {
-
-                    return Character.toUpperCase(value.charAt(0)) + (value.length() > 1 ? value.substring(1) : "");
-
-                }
-                return value;
-
-            case "toUpperCase":
-                // すべて大文字に変換
-                return value.toUpperCase();
-
-            case "toLowerCase":
-                // すべて小文字に変換
-                return value.toLowerCase();
-
-            // 他の変換処理をここに追加可能
-            default:
-                return value;
-
-        }
-
-    }
-
-    /**
      * テンプレートファイルを読み込みYAMLとして解析する<br>
      *
      * @author KenichiroArai
@@ -447,19 +464,21 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
                 // 各CSVプレースホルダーを対応する値で置換
                 for (int i = 0; i < csvPlaceholderPatterns.length; i++) {
 
-                    if (i < csvLine.length) {
+                    if (i >= csvLine.length) {
 
-                        final String key     = csvPlaceholderKeys[i];
-                        final String pattern = csvPlaceholderPatterns[i];
-                        final String value   = csvLine[i];
-
-                        // 値を保存
-                        csvValues.put(key, value);
-
-                        // テンプレートを置換
-                        out = out.replace(pattern, value);
+                        continue;
 
                     }
+
+                    final String key     = csvPlaceholderKeys[i];
+                    final String pattern = csvPlaceholderPatterns[i];
+                    final String value   = csvLine[i];
+
+                    // 値を保存
+                    csvValues.put(key, value);
+
+                    // テンプレートを置換
+                    out = out.replace(pattern, value);
 
                 }
 
@@ -468,16 +487,18 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
                     final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
 
-                    if (sourceValue != null) {
+                    if (sourceValue == null) {
 
-                        // 変換処理を適用
-                        final String derivedValue
-                            = this.applyTransformation(sourceValue, derivedPlaceholder.getTransformation());
-
-                        // テンプレートを置換
-                        out = out.replace(derivedPlaceholder.getReplacementPattern(), derivedValue);
+                        continue;
 
                     }
+
+                    // 変換処理を適用
+                    final String derivedValue = DynamicTemplateConversionServiceImpl.applyTransformation(sourceValue,
+                        derivedPlaceholder.getTransformation());
+
+                    // テンプレートを置換
+                    out = out.replace(derivedPlaceholder.getReplacementPattern(), derivedValue);
 
                 }
 
