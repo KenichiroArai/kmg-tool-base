@@ -33,6 +33,39 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
     private Path outputPath;
 
     /**
+     * YAMLデータからプレースホルダー定義を抽出する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @param yamlData
+     *                 解析されたYAMLデータ
+     *
+     * @return プレースホルダーの定義マップ
+     */
+    private static Map<String, String> extractPlaceholderDefinitions(final Map<String, Object> yamlData) {
+
+        final Map<String, String> result = new LinkedHashMap<>();
+
+        // プレースホルダー定義を取得する
+        @SuppressWarnings("unchecked") // TODO KenichiroArai 2025/03/12 型変化の対応
+        final List<Map<String, String>> placeholderDefinitions
+            = (List<Map<String, String>>) yamlData.get("placeholderDefinitions");
+
+        // 表示名と置換パターンのマッピングを作成
+
+        for (final Map<String, String> placeholderMap : placeholderDefinitions) {
+
+            result.put(placeholderMap.get("displayName"), placeholderMap.get("replacementPattern"));
+
+        }
+
+        return result;
+
+    }
+
+    /**
      * 入力ファイルパスを返す<br>
      *
      * @author KenichiroArai
@@ -128,18 +161,48 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         boolean result = false;
 
-        /* テンプレートの取得 */
+        /* テンプレートの読み込みと解析 */
+        final Map<String, Object> yamlData = this.loadAndParseTemplate();
 
-        // テンプレートの読み込み
+        /* プレースホルダー定義の取得と変換 */
+        final Map<String, String> columnMappings  = DynamicTemplateConversionServiceImpl
+            .extractPlaceholderDefinitions(yamlData);
+        final String              templateContent = (String) yamlData.get("templateContent");
+
+        /* 入力ファイルの処理と出力 */
+        this.processInputAndGenerateOutput(columnMappings, templateContent);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * テンプレートファイルを読み込みYAMLとして解析する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @return 解析されたYAMLデータ
+     *
+     * @throws KmgToolException
+     *                          テンプレートの読み込みに失敗した場合
+     */
+    private Map<String, Object> loadAndParseTemplate() throws KmgToolException {
+
+        Map<String, Object> result = null;
+
         String template = null;
 
         try {
 
+            // テンプレートファイルを読み込む
             template = Files.readString(this.getTemplatePath());
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/06 例外メッセージ
+            // TODO KenichiroArai 2025/03/12 例外
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {
                 this.templatePath.toString()
@@ -149,50 +212,54 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         }
 
         // YAML形式に変換
-        final Yaml                yaml     = new Yaml();
-        final Map<String, Object> yamlData = yaml.load(template);
+        final Yaml yaml = new Yaml();
+        result = yaml.load(template);
 
-        // プレースホルダー定義を取得する
-        @SuppressWarnings("unchecked")
-        final List<Map<String, String>> placeholderDefinitions
-            = (List<Map<String, String>>) yamlData.get("placeholderDefinitions");
+        return result;
 
-        final Map<String, String> columnMappings = new LinkedHashMap<>();
+    }
 
-        for (final Map<String, String> placeholderMap : placeholderDefinitions) {
-
-            // 表示名をキーとして、置換パターンを値として設定
-            columnMappings.put(placeholderMap.get("displayName"), placeholderMap.get("replacementPattern"));
-
-        }
-
-        // テンプレート内容を取得する
-        final String templateContent = (String) yamlData.get("templateContent");
-
-        /* テンプレート内容をプレースホルダー定義に基づいて変換し、出力する */
-
-        String line = null;
+    /**
+     * 入力ファイルを処理し、テンプレートに基づいて出力を生成する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @param columnMappings
+     *                        プレースホルダーの定義マップ
+     * @param templateContent
+     *                        テンプレートの内容
+     *
+     * @throws KmgToolException
+     *                          入出力処理に失敗した場合
+     */
+    private void processInputAndGenerateOutput(final Map<String, String> columnMappings, final String templateContent)
+        throws KmgToolException {
 
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
-            final BufferedWriter bwOutput = Files.newBufferedWriter(this.getOutputPath());) {
+            final BufferedWriter bwOutput = Files.newBufferedWriter(this.getOutputPath())) {
 
+            String line;
+            // プレースホルダーのキー配列を取得
+            final String[] keyArrays = columnMappings.values().toArray(new String[0]);
+
+            // 入力ファイルを1行ずつ処理
             while ((line = brInput.readLine()) != null) {
 
-                String out = templateContent;
-
+                String         out     = templateContent;
                 final String[] csvLine = KmgDelimiterTypes.COMMA.split(line);
 
-                final String[] keyArrays = columnMappings.values().toArray(new String[0]);
-
+                // 各プレースホルダーを対応する値で置換
                 for (int i = 0; i < csvLine.length; i++) {
 
                     final String key   = keyArrays[i];
                     final String value = csvLine[i];
-
                     out = out.replace(key, value);
 
                 }
 
+                // 変換結果を出力
                 bwOutput.write(out);
                 bwOutput.newLine();
 
@@ -200,8 +267,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         } catch (final IOException e) {
 
-            // 例外をスローする
-            // TODO KenichiroArai 2025/03/07 メッセージ
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {
                 this.templatePath.toString()
@@ -209,10 +274,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
             throw new KmgToolException(msgType, messageArgs, e);
 
         }
-
-        result = true;
-
-        return result;
 
     }
 
