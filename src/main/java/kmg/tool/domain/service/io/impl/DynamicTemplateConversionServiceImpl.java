@@ -3,6 +3,7 @@ package kmg.tool.domain.service.io.impl;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
@@ -195,9 +196,9 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         final Yaml yaml = new Yaml();
 
-        try {
+        try (InputStream inputStream = Files.newInputStream(this.getTemplatePath())) {
 
-            result = yaml.load(Files.newInputStream(this.getTemplatePath()));
+            result = yaml.load(inputStream);
 
         } catch (final IOException e) {
 
