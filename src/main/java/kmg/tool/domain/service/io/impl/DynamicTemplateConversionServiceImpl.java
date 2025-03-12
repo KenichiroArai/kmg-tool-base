@@ -15,6 +15,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.foundation.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.domain.service.io.DynamicTemplateConversionService;
+import kmg.tool.domain.types.DynamicTemplateConversionKeyTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -23,18 +24,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 @Service
 public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConversionService {
-
-    /** プレースホルダー定義のキー */
-    private static final String KEY_PLACEHOLDER_DEFINITIONS = "placeholderDefinitions";
-
-    /** 表示名のキー */
-    private static final String KEY_DISPLAY_NAME = "displayName";
-
-    /** 置換パターンのキー */
-    private static final String KEY_REPLACEMENT_PATTERN = "replacementPattern";
-
-    /** テンプレート内容のキー */
-    private static final String KEY_TEMPLATE_CONTENT = "templateContent";
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -64,13 +53,13 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         // プレースホルダー定義を取得する
         @SuppressWarnings("unchecked") // TODO KenichiroArai 2025/03/12 型変化の対応
         final List<Map<String, String>> placeholderDefinitions = (List<Map<String, String>>) yamlData
-            .get(DynamicTemplateConversionServiceImpl.KEY_PLACEHOLDER_DEFINITIONS);
+            .get(DynamicTemplateConversionKeyTypes.PLACEHOLDER_DEFINITIONS.getKey());
 
         // 表示名と置換パターンのマッピングを作成
         for (final Map<String, String> placeholderMap : placeholderDefinitions) {
 
-            result.put(placeholderMap.get(DynamicTemplateConversionServiceImpl.KEY_DISPLAY_NAME),
-                placeholderMap.get(DynamicTemplateConversionServiceImpl.KEY_REPLACEMENT_PATTERN));
+            result.put(placeholderMap.get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey()),
+                placeholderMap.get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey()));
 
         }
 
@@ -181,7 +170,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         final Map<String, String> placeholderDefinitionMap = DynamicTemplateConversionServiceImpl
             .extractPlaceholderDefinitions(yamlData);
         final String              templateContent          = (String) yamlData
-            .get(DynamicTemplateConversionServiceImpl.KEY_TEMPLATE_CONTENT);
+            .get(DynamicTemplateConversionKeyTypes.TEMPLATE_CONTENT.getKey());
 
         /* 入力ファイルの処理と出力 */
         this.processInputAndGenerateOutput(placeholderDefinitionMap, templateContent);
