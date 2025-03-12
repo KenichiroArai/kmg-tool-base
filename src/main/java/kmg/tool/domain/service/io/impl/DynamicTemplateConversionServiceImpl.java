@@ -3,7 +3,6 @@ package kmg.tool.domain.service.io.impl;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
@@ -11,9 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.Yaml;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.foundation.infrastructure.exception.KmgFoundationException;
+import kmg.foundation.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.domain.service.io.DynamicTemplateConversionService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -194,13 +194,11 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         Map<String, Object> result = null;
 
-        final Yaml yaml = new Yaml();
+        try {
 
-        try (InputStream inputStream = Files.newInputStream(this.getTemplatePath())) {
+            result = KmgYamlUtils.load(this.getTemplatePath());
 
-            result = yaml.load(inputStream);
-
-        } catch (final IOException e) {
+        } catch (final KmgFoundationException e) {
 
             // TODO KenichiroArai 2025/03/12 例外
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
