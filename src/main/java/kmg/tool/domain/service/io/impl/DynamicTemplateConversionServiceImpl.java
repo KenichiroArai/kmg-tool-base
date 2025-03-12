@@ -12,7 +12,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.foundation.infrastructure.exception.KmgFoundationException;
+import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.foundation.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.domain.service.io.DynamicTemplateConversionService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
@@ -198,7 +198,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
             result = KmgYamlUtils.load(this.getTemplatePath());
 
-        } catch (final KmgFoundationException e) {
+        } catch (final KmgFundException e) {
 
             // TODO KenichiroArai 2025/03/12 例外
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
