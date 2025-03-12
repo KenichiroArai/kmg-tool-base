@@ -82,7 +82,8 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
          */
         public String getDisplayName() {
 
-            return this.displayName;
+            final String result = this.displayName;
+            return result;
 
         }
 
@@ -93,7 +94,8 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
          */
         public String getReplacementPattern() {
 
-            return this.replacementPattern;
+            final String result = this.replacementPattern;
+            return result;
 
         }
 
@@ -104,7 +106,8 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
          */
         public String getSourceKey() {
 
-            return this.sourceKey;
+            final String result = this.sourceKey;
+            return result;
 
         }
 
@@ -115,7 +118,8 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
          */
         public String getTransformation() {
 
-            return this.transformation;
+            final String result = this.transformation;
+            return result;
 
         }
     }
