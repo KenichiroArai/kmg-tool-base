@@ -129,7 +129,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         boolean result = false;
 
         /* テンプレートの取得 */
-        final Map<String, String> columnMappings = new LinkedHashMap<>();
 
         String templateContent = null;
 
@@ -154,6 +153,8 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         @SuppressWarnings("unchecked")
         final List<Map<String, String>> columns = (List<Map<String, String>>) yamlData.get("placeholderDefinitions");
+
+        final Map<String, String> columnMappings = new LinkedHashMap<>();
 
         for (final Map<String, String> col : columns) {
 
