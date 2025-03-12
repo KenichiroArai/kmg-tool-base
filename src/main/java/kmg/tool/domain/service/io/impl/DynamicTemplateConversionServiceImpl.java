@@ -24,6 +24,18 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConversionService {
 
+    /** プレースホルダー定義のキー */
+    private static final String KEY_PLACEHOLDER_DEFINITIONS = "placeholderDefinitions";
+
+    /** 表示名のキー */
+    private static final String KEY_DISPLAY_NAME = "displayName";
+
+    /** 置換パターンのキー */
+    private static final String KEY_REPLACEMENT_PATTERN = "replacementPattern";
+
+    /** テンプレート内容のキー */
+    private static final String KEY_TEMPLATE_CONTENT = "templateContent";
+
     /** 入力ファイルパス */
     private Path inputPath;
 
@@ -51,14 +63,14 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         // プレースホルダー定義を取得する
         @SuppressWarnings("unchecked") // TODO KenichiroArai 2025/03/12 型変化の対応
-        final List<Map<String, String>> placeholderDefinitions
-            = (List<Map<String, String>>) yamlData.get("placeholderDefinitions");
+        final List<Map<String, String>> placeholderDefinitions = (List<Map<String, String>>) yamlData
+            .get(DynamicTemplateConversionServiceImpl.KEY_PLACEHOLDER_DEFINITIONS);
 
         // 表示名と置換パターンのマッピングを作成
-
         for (final Map<String, String> placeholderMap : placeholderDefinitions) {
 
-            result.put(placeholderMap.get("displayName"), placeholderMap.get("replacementPattern"));
+            result.put(placeholderMap.get(DynamicTemplateConversionServiceImpl.KEY_DISPLAY_NAME),
+                placeholderMap.get(DynamicTemplateConversionServiceImpl.KEY_REPLACEMENT_PATTERN));
 
         }
 
@@ -168,7 +180,8 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         /* プレースホルダー定義の取得と変換 */
         final Map<String, String> columnMappings  = DynamicTemplateConversionServiceImpl
             .extractPlaceholderDefinitions(yamlData);
-        final String              templateContent = (String) yamlData.get("templateContent");
+        final String              templateContent = (String) yamlData
+            .get(DynamicTemplateConversionServiceImpl.KEY_TEMPLATE_CONTENT);
 
         /* 入力ファイルの処理と出力 */
         this.processInputAndGenerateOutput(columnMappings, templateContent);
@@ -200,7 +213,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         } catch (final KmgFundException e) {
 
-            final KmgToolGenMessageTypes genMsgType     = KmgToolGenMessageTypes.KMGTOOL_GEN12001;
+            final KmgToolGenMessageTypes genMsgType = KmgToolGenMessageTypes.KMGTOOL_GEN12001;
             final Object[]               genMsgArgs = {
                 this.templatePath.toString()
             };
@@ -261,6 +274,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         } catch (final IOException e) {
 
+            // TODO KenichiroArai 2025/03/12 例外
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {
                 this.templatePath.toString()
