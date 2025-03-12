@@ -178,13 +178,13 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         final Map<String, Object> yamlData = this.loadAndParseTemplate();
 
         /* プレースホルダー定義の取得と変換 */
-        final Map<String, String> columnMappings  = DynamicTemplateConversionServiceImpl
+        final Map<String, String> placeholderDefinitionMap = DynamicTemplateConversionServiceImpl
             .extractPlaceholderDefinitions(yamlData);
-        final String              templateContent = (String) yamlData
+        final String              templateContent          = (String) yamlData
             .get(DynamicTemplateConversionServiceImpl.KEY_TEMPLATE_CONTENT);
 
         /* 入力ファイルの処理と出力 */
-        this.processInputAndGenerateOutput(columnMappings, templateContent);
+        this.processInputAndGenerateOutput(placeholderDefinitionMap, templateContent);
 
         result = true;
         return result;
@@ -232,19 +232,19 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
      *
      * @sine 1.0.0
      *
-     * @param columnMappings
-     *                        プレースホルダーの定義マップ
+     * @param placeholderDefinitionMap
+     *                                 プレースホルダーの定義マップ
      * @param templateContent
-     *                        テンプレートの内容
+     *                                 テンプレートの内容
      *
      * @throws KmgToolException
      *                          入出力処理に失敗した場合
      */
-    private void processInputAndGenerateOutput(final Map<String, String> columnMappings, final String templateContent)
-        throws KmgToolException {
+    private void processInputAndGenerateOutput(final Map<String, String> placeholderDefinitionMap,
+        final String templateContent) throws KmgToolException {
 
         // プレースホルダーのキー配列を取得
-        final String[] keyArrays = columnMappings.values().toArray(new String[0]);
+        final String[] placeholderArrays = placeholderDefinitionMap.values().toArray(new String[0]);
 
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
             final BufferedWriter bwOutput = Files.newBufferedWriter(this.getOutputPath())) {
@@ -258,11 +258,11 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
                 final String[] csvLine = KmgDelimiterTypes.COMMA.split(line);
 
                 // 各プレースホルダーを対応する値で置換
-                for (int i = 0; i < csvLine.length; i++) {
+                for (int i = 0; i < placeholderArrays.length; i++) {
 
-                    final String key   = keyArrays[i];
-                    final String value = csvLine[i];
-                    out = out.replace(key, value);
+                    final String placeholder = placeholderArrays[i];
+                    final String value       = csvLine[i];
+                    out = out.replace(placeholder, value);
 
                 }
 
