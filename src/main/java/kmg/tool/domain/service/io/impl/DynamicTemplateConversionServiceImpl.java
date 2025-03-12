@@ -1,33 +1,51 @@
 package kmg.tool.domain.service.io.impl;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.foundation.infrastructure.exception.KmgFundException;
-import kmg.foundation.infrastructure.utils.KmgYamlUtils;
+import kmg.foundation.infrastructure.context.KmgMessageSource;
+import kmg.tool.domain.logic.DynamicTemplateConversionLogic;
 import kmg.tool.domain.model.DerivedPlaceholderModel;
 import kmg.tool.domain.service.io.DynamicTemplateConversionService;
 import kmg.tool.domain.types.DynamicTemplateConversionKeyTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- * テンプレートの動的変換サービス
+ * テンプレートの動的変換サービス実装<br>
+ *
+ * @author KenichiroArai
  */
 @Service
 public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConversionService {
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private KmgMessageSource messageSource;
+
+    /** テンプレートの動的変換ロジック */
+    @Autowired
+    private DynamicTemplateConversionLogic dynamicTemplateConversionLogic;
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -39,148 +57,27 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
     private Path outputPath;
 
     /**
-     * 指定された変換処理を値に適用する<br>
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @param value
-     *                       元の値
-     * @param transformation
-     *                       適用する変換処理
-     *
-     * @return 変換後の値
+     * @since 0.1.0
      */
-    private static String applyTransformation(final String value, final String transformation) {
+    public DynamicTemplateConversionServiceImpl() {
 
-        String result = KmgString.EMPTY;
-
-        if (value == null) {
-
-            return result;
-
-        }
-
-        switch (transformation) {
-
-            case "capitalizeFirst":
-                // 最初の文字を大文字に変換
-                if (!value.isEmpty()) {
-
-                    result = Character.toUpperCase(value.charAt(0)) + (value.length() > 1 ? value.substring(1) : "");
-
-                } else {
-
-                    result = value;
-
-                }
-                break;
-
-            case "toUpperCase":
-                // すべて大文字に変換
-                result = value.toUpperCase();
-                break;
-
-            case "toLowerCase":
-                // すべて小文字に変換
-                result = value.toLowerCase();
-                break;
-
-            // 他の変換処理をここに追加可能
-            default:
-                result = value;
-                break;
-
-        }
-
-        return result;
+        this(LoggerFactory.getLogger(DynamicTemplateConversionServiceImpl.class));
 
     }
 
     /**
-     * YAMLデータからCSVプレースホルダー定義を抽出する<br>
+     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @author KenichiroArai
+     * @since 0.1.0
      *
-     * @sine 1.0.0
-     *
-     * @param yamlData
-     *                 解析されたYAMLデータ
-     *
-     * @return CSVプレースホルダーの定義マップ
+     * @param logger
+     *               ロガー
      */
-    private static Map<String, String> extractCsvPlaceholderDefinitions(final Map<String, Object> yamlData) {
+    protected DynamicTemplateConversionServiceImpl(final Logger logger) {
 
-        final Map<String, String> result = new LinkedHashMap<>();
-
-        // CSVプレースホルダー定義を取得する
-        @SuppressWarnings("unchecked")
-        final List<Map<String, String>> csvPlaceholders
-            = (List<Map<String, String>>) yamlData.get(DynamicTemplateConversionKeyTypes.CSV_PLACEHOLDERS.getKey());
-
-        if (csvPlaceholders == null) {
-
-            return result;
-
-        }
-
-        for (final Map<String, String> placeholderMap : csvPlaceholders) {
-
-            result.put(placeholderMap.get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey()),
-                placeholderMap.get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey()));
-
-        }
-
-        return result;
-
-    }
-
-    /**
-     * YAMLデータから派生プレースホルダー定義を抽出する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @param yamlData
-     *                 解析されたYAMLデータ
-     *
-     * @return 派生プレースホルダーの定義リスト
-     */
-    private static List<DerivedPlaceholderModel> extractDerivedPlaceholderModelDefinitions(
-        final Map<String, Object> yamlData) {
-
-        final List<DerivedPlaceholderModel> result = new ArrayList<>();
-
-        // 派生プレースホルダー定義を取得する
-        @SuppressWarnings("unchecked")
-        final List<Map<String, String>> derivedPlaceholders
-            = (List<Map<String, String>>) yamlData.get(DynamicTemplateConversionKeyTypes.DERIVED_PLACEHOLDERS.getKey());
-
-        if (derivedPlaceholders == null) {
-
-            return result;
-
-        }
-
-        for (final Map<String, String> placeholderMap : derivedPlaceholders) {
-
-            final String displayName        = placeholderMap
-                .get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey());
-            final String replacementPattern = placeholderMap
-                .get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey());
-            final String sourceKey          = placeholderMap.get(DynamicTemplateConversionKeyTypes.SOURCE_KEY.getKey());
-            final String transformation     = placeholderMap
-                .get(DynamicTemplateConversionKeyTypes.TRANSFORMATION.getKey());
-
-            final DerivedPlaceholderModel derivedPlaceholder
-                = new DerivedPlaceholderModel(displayName, replacementPattern, sourceKey, transformation);
-            result.add(derivedPlaceholder);
-
-        }
-
-        return result;
+        this.logger = logger;
 
     }
 
@@ -252,10 +149,14 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
      *                     テンプレートファイルパス
      * @param outputPath
      *                     出力ファイルパス
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) {
+    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
+        throws KmgToolException {
 
         final boolean result = true;
 
@@ -280,52 +181,60 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         boolean result = false;
 
-        /* テンプレートの読み込みと解析 */
-        final Map<String, Object> yamlData = this.loadAndParseTemplate();
-
-        /* プレースホルダー定義の取得 */
-        final Map<String, String>           csvPlaceholderMap   = DynamicTemplateConversionServiceImpl
-            .extractCsvPlaceholderDefinitions(yamlData);
-        final List<DerivedPlaceholderModel> derivedPlaceholders = DynamicTemplateConversionServiceImpl
-            .extractDerivedPlaceholderModelDefinitions(yamlData);
-        final String                        templateContent     = (String) yamlData
-            .get(DynamicTemplateConversionKeyTypes.TEMPLATE_CONTENT.getKey());
-
-        /* 入力ファイルの処理と出力 */
-        this.processInputAndGenerateOutput(csvPlaceholderMap, derivedPlaceholders, templateContent);
-
-        result = true;
-        return result;
-
-    }
-
-    /**
-     * テンプレートファイルを読み込みYAMLとして解析する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @return 解析されたYAMLデータ
-     *
-     * @throws KmgToolException
-     *                          テンプレートの読み込みに失敗した場合
-     */
-    private Map<String, Object> loadAndParseTemplate() throws KmgToolException {
-
-        Map<String, Object> result = null;
+        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+        final Object[]               startLogMsgArgs  = {};
+        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+            startLogMsgArgs);
+        this.logger.debug(startLogMsg);
 
         try {
 
-            result = KmgYamlUtils.load(this.getTemplatePath());
+            /* ロジックの初期化 */
+            this.dynamicTemplateConversionLogic.initialize(this.getInputPath(), this.getTemplatePath(),
+                this.getOutputPath());
 
-        } catch (final KmgFundException e) {
+            /* テンプレートの読み込みと解析 */
+            final Map<String, Object> yamlData = this.dynamicTemplateConversionLogic.loadAndParseTemplate();
 
-            final KmgToolGenMessageTypes genMsgType = KmgToolGenMessageTypes.KMGTOOL_GEN12001;
-            final Object[]               genMsgArgs = {
-                this.templatePath.toString()
-            };
-            throw new KmgToolException(genMsgType, genMsgArgs, e);
+            /* プレースホルダー定義の取得 */
+            final Map<String, String>           csvPlaceholderMap   = this.dynamicTemplateConversionLogic
+                .extractCsvPlaceholderDefinitions(yamlData);
+            final List<DerivedPlaceholderModel> derivedPlaceholders = this.dynamicTemplateConversionLogic
+                .extractDerivedPlaceholderDefinitions(yamlData);
+            final String                        templateContent     = (String) yamlData
+                .get(DynamicTemplateConversionKeyTypes.TEMPLATE_CONTENT.getKey());
+
+            /* 入力ファイルの処理と出力 */
+            this.dynamicTemplateConversionLogic.processInputAndGenerateOutput(csvPlaceholderMap, derivedPlaceholders,
+                templateContent);
+
+            result = true;
+
+        } catch (final KmgToolException e) {
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        } finally {
+
+            try {
+
+                /* リソースのクローズ処理 */
+                this.closeLogic();
+
+            } finally {
+
+                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32007;
+                final Object[]               endLogMsgArgs  = {};
+                final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
+                    endLogMsgArgs);
+                this.logger.debug(endLogMsg);
+
+            }
 
         }
 
@@ -334,101 +243,29 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
     }
 
     /**
-     * 入力ファイルを処理し、テンプレートに基づいて出力を生成する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @param csvPlaceholderMap
-     *                            CSVプレースホルダーの定義マップ
-     * @param derivedPlaceholders
-     *                            派生プレースホルダーの定義リスト
-     * @param templateContent
-     *                            テンプレートの内容
+     * ロジックをクローズする。
      *
      * @throws KmgToolException
-     *                          入出力処理に失敗した場合
+     *                          KMGツール例外
      */
-    private void processInputAndGenerateOutput(final Map<String, String> csvPlaceholderMap,
-        final List<DerivedPlaceholderModel> derivedPlaceholders, final String templateContent) throws KmgToolException {
+    private void closeLogic() throws KmgToolException {
 
-        // CSVプレースホルダーのキー配列を取得
-        final String[] csvPlaceholderKeys     = csvPlaceholderMap.keySet().toArray(new String[0]);
-        final String[] csvPlaceholderPatterns = csvPlaceholderMap.values().toArray(new String[0]);
+        try {
 
-        try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
-            final BufferedWriter bwOutput = Files.newBufferedWriter(this.getOutputPath())) {
-
-            String line;
-
-            // 入力ファイルを1行ずつ処理
-            while ((line = brInput.readLine()) != null) {
-
-                String         out     = templateContent;
-                final String[] csvLine = KmgDelimiterTypes.COMMA.split(line);
-
-                // CSV値を一時保存するマップ
-                final Map<String, String> csvValues = new HashMap<>();
-
-                // 各CSVプレースホルダーを対応する値で置換
-                for (int i = 0; i < csvPlaceholderPatterns.length; i++) {
-
-                    if (i >= csvLine.length) {
-
-                        continue;
-
-                    }
-
-                    final String key     = csvPlaceholderKeys[i];
-                    final String pattern = csvPlaceholderPatterns[i];
-                    final String value   = csvLine[i];
-
-                    // 値を保存
-                    csvValues.put(key, value);
-
-                    // テンプレートを置換
-                    out = out.replace(pattern, value);
-
-                }
-
-                // 派生プレースホルダーを処理
-                for (final DerivedPlaceholderModel derivedPlaceholder : derivedPlaceholders) {
-
-                    final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
-
-                    if (sourceValue == null) {
-
-                        continue;
-
-                    }
-
-                    // 変換処理を適用
-                    final String derivedValue = DynamicTemplateConversionServiceImpl.applyTransformation(sourceValue,
-                        derivedPlaceholder.getTransformation());
-
-                    // テンプレートを置換
-                    out = out.replace(derivedPlaceholder.getReplacementPattern(), derivedValue);
-
-                }
-
-                // 変換結果を出力
-                bwOutput.write(out);
-                bwOutput.newLine();
-
-            }
+            this.dynamicTemplateConversionLogic.close();
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/12 例外
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs = {
-                this.templatePath.toString()
-            };
-            throw new KmgToolException(msgType, messageArgs, e);
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32003;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31003;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
         }
 
     }
-
 }
