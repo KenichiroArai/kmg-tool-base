@@ -27,6 +27,98 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConversionService {
 
+    /**
+     * 派生プレースホルダー定義を保持するクラス
+     */
+    private static class DerivedPlaceholder {
+
+        /**
+         * 表示名
+         */
+        private final String displayName;
+
+        /**
+         * 置換パターン
+         */
+        private final String replacementPattern;
+
+        /**
+         * ソースキー
+         */
+        private final String sourceKey;
+
+        /**
+         * 変換処理
+         */
+        private final String transformation;
+
+        /**
+         * コンストラクタ
+         *
+         * @param displayName
+         *                           表示名
+         * @param replacementPattern
+         *                           置換パターン
+         * @param sourceKey
+         *                           ソースキー
+         * @param transformation
+         *                           変換処理
+         */
+        public DerivedPlaceholder(final String displayName, final String replacementPattern, final String sourceKey,
+            final String transformation) {
+
+            this.displayName = displayName;
+            this.replacementPattern = replacementPattern;
+            this.sourceKey = sourceKey;
+            this.transformation = transformation;
+
+        }
+
+        /**
+         * 表示名を返す
+         *
+         * @return 表示名
+         */
+        public String getDisplayName() {
+
+            return this.displayName;
+
+        }
+
+        /**
+         * 置換パターンを返す
+         *
+         * @return 置換パターン
+         */
+        public String getReplacementPattern() {
+
+            return this.replacementPattern;
+
+        }
+
+        /**
+         * ソースキーを返す
+         *
+         * @return ソースキー
+         */
+        public String getSourceKey() {
+
+            return this.sourceKey;
+
+        }
+
+        /**
+         * 変換処理を返す
+         *
+         * @return 変換処理
+         */
+        public String getTransformation() {
+
+            return this.transformation;
+
+        }
+    }
+
     /** 入力ファイルパス */
     private Path inputPath;
 
@@ -114,98 +206,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         return result;
 
-    }
-
-    /**
-     * 派生プレースホルダー定義を保持するクラス
-     */
-    private static class DerivedPlaceholder {
-
-        /**
-         * 表示名
-         */
-        private final String displayName;
-
-        /**
-         * 置換パターン
-         */
-        private final String replacementPattern;
-
-        /**
-         * ソースキー
-         */
-        private final String sourceKey;
-
-        /**
-         * 変換処理
-         */
-        private final String transformation;
-
-        /**
-         * コンストラクタ
-         *
-         * @param displayName
-         *                           表示名
-         * @param replacementPattern
-         *                           置換パターン
-         * @param sourceKey
-         *                           ソースキー
-         * @param transformation
-         *                           変換処理
-         */
-        public DerivedPlaceholder(String displayName, String replacementPattern, String sourceKey,
-            String transformation) {
-
-            this.displayName = displayName;
-            this.replacementPattern = replacementPattern;
-            this.sourceKey = sourceKey;
-            this.transformation = transformation;
-
-        }
-
-        /**
-         * 表示名を返す
-         *
-         * @return 表示名
-         */
-        public String getDisplayName() {
-
-            return displayName;
-
-        }
-
-        /**
-         * 置換パターンを返す
-         *
-         * @return 置換パターン
-         */
-        public String getReplacementPattern() {
-
-            return replacementPattern;
-
-        }
-
-        /**
-         * ソースキーを返す
-         *
-         * @return ソースキー
-         */
-        public String getSourceKey() {
-
-            return sourceKey;
-
-        }
-
-        /**
-         * 変換処理を返す
-         *
-         * @return 変換処理
-         */
-        public String getTransformation() {
-
-            return transformation;
-
-        }
     }
 
     /**
@@ -308,8 +308,10 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         final Map<String, Object> yamlData = this.loadAndParseTemplate();
 
         /* プレースホルダー定義の取得 */
-        final Map<String, String>      csvPlaceholderMap   = extractCsvPlaceholderDefinitions(yamlData);
-        final List<DerivedPlaceholder> derivedPlaceholders = extractDerivedPlaceholderDefinitions(yamlData);
+        final Map<String, String>      csvPlaceholderMap   = DynamicTemplateConversionServiceImpl
+            .extractCsvPlaceholderDefinitions(yamlData);
+        final List<DerivedPlaceholder> derivedPlaceholders = DynamicTemplateConversionServiceImpl
+            .extractDerivedPlaceholderDefinitions(yamlData);
         final String                   templateContent     = (String) yamlData
             .get(DynamicTemplateConversionKeyTypes.TEMPLATE_CONTENT.getKey());
 
@@ -318,6 +320,55 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         result = true;
         return result;
+
+    }
+
+    /**
+     * 指定された変換処理を値に適用する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @param value
+     *                       元の値
+     * @param transformation
+     *                       適用する変換処理
+     *
+     * @return 変換後の値
+     */
+    private String applyTransformation(final String value, final String transformation) {
+
+        if (value == null) {
+
+            return "";
+
+        }
+
+        switch (transformation) {
+
+            case "capitalizeFirst":
+                // 最初の文字を大文字に変換
+                if (!value.isEmpty()) {
+
+                    return Character.toUpperCase(value.charAt(0)) + (value.length() > 1 ? value.substring(1) : "");
+
+                }
+                return value;
+
+            case "toUpperCase":
+                // すべて大文字に変換
+                return value.toUpperCase();
+
+            case "toLowerCase":
+                // すべて小文字に変換
+                return value.toLowerCase();
+
+            // 他の変換処理をここに追加可能
+            default:
+                return value;
+
+        }
 
     }
 
@@ -413,7 +464,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
                 }
 
                 // 派生プレースホルダーを処理
-                for (DerivedPlaceholder derivedPlaceholder : derivedPlaceholders) {
+                for (final DerivedPlaceholder derivedPlaceholder : derivedPlaceholders) {
 
                     final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
 
@@ -421,7 +472,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
                         // 変換処理を適用
                         final String derivedValue
-                            = applyTransformation(sourceValue, derivedPlaceholder.getTransformation());
+                            = this.applyTransformation(sourceValue, derivedPlaceholder.getTransformation());
 
                         // テンプレートを置換
                         out = out.replace(derivedPlaceholder.getReplacementPattern(), derivedValue);
@@ -444,55 +495,6 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
                 this.templatePath.toString()
             };
             throw new KmgToolException(msgType, messageArgs, e);
-
-        }
-
-    }
-
-    /**
-     * 指定された変換処理を値に適用する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @param value
-     *                       元の値
-     * @param transformation
-     *                       適用する変換処理
-     *
-     * @return 変換後の値
-     */
-    private String applyTransformation(String value, String transformation) {
-
-        if (value == null) {
-
-            return "";
-
-        }
-
-        switch (transformation) {
-
-            case "capitalizeFirst":
-                // 最初の文字を大文字に変換
-                if (!value.isEmpty()) {
-
-                    return Character.toUpperCase(value.charAt(0)) + (value.length() > 1 ? value.substring(1) : "");
-
-                }
-                return value;
-
-            case "toUpperCase":
-                // すべて大文字に変換
-                return value.toUpperCase();
-
-            case "toLowerCase":
-                // すべて小文字に変換
-                return value.toLowerCase();
-
-            // 他の変換処理をここに追加可能
-            default:
-                return value;
 
         }
 
