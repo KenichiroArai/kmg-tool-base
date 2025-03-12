@@ -57,9 +57,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** 項目名 */
     private String item;
 
-    /** 先頭大文字項目 */
-    private String capitalizedItem;
-
     /** 入力ファイルパス */
     private Path inputPath;
 
@@ -81,35 +78,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     public AccessorCreationLogicImpl() {
 
         this.csvRows = new ArrayList<>();
-
-    }
-
-    /**
-     * 先頭大文字項目を書き込み対象に追加する。
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean addCapitalizedItemToCsvRows() throws KmgToolException {
-
-        boolean result = false;
-
-        if (this.capitalizedItem == null) {
-
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32000;
-            final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
-
-        }
-
-        final List<String> row = this.csvRows.getLast();
-        row.add(this.capitalizedItem);
-        result = true;
-
-        return result;
 
     }
 
@@ -253,7 +221,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         this.javadocComment = null;
         this.tyep = null;
         this.item = null;
-        this.capitalizedItem = null;
 
         result = true;
         return result;
@@ -302,7 +269,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         // フィールドの情報を取得
         this.tyep = matcherSrc.group(1); // 型
         this.item = matcherSrc.group(3); // 項目名
-        this.capitalizedItem = KmgString.capitalize(this.item); // 先頭大文字項目
 
         result = true;
         return result;
@@ -389,19 +355,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         result = true;
 
-        return result;
-
-    }
-
-    /**
-     * 先頭大文字項目返す。
-     *
-     * @return capitalizedItem 先頭大文字項目
-     */
-    @Override
-    public String getCapitalizedItem() {
-
-        final String result = this.capitalizedItem;
         return result;
 
     }

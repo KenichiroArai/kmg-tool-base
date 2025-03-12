@@ -196,7 +196,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         /* 型、項目名、先頭大文字項目に追加する */
 
-        // フィールド宣言から型、項目名、先頭大文字項目に変換する。
+        // フィールド宣言から型、項目名に変換する。
         final boolean isConvertFields = this.accessorCreationLogic.convertFields();
 
         if (!isConvertFields) {
@@ -210,8 +210,6 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         this.accessorCreationLogic.addTypeToCsvRows();
         // カラム3：項目
         this.accessorCreationLogic.addItemToCsvRows();
-        // カラム4：先頭大文字項目
-        this.accessorCreationLogic.addCapitalizedItemToCsvRows();
 
         result = true;
 
