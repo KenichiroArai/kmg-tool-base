@@ -41,6 +41,17 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN12000("一時的なCSVファイルの作成に失敗しました。CSVファイル名のみ=[{0}]、サフィックスと拡張子=[{1}]"),
 
     /**
+     * テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0]}
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN12001("テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0]}"),
+
+    /**
      * ファイル処理に失敗しました。
      *
      * @author KenichiroArai

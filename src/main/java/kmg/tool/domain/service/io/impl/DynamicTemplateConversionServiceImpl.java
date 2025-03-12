@@ -200,12 +200,11 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         } catch (final KmgFundException e) {
 
-            // TODO KenichiroArai 2025/03/12 例外
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs = {
+            final KmgToolGenMessageTypes genMsgType     = KmgToolGenMessageTypes.KMGTOOL_GEN12001;
+            final Object[]               genMsgArgs = {
                 this.templatePath.toString()
             };
-            throw new KmgToolException(msgType, messageArgs, e);
+            throw new KmgToolException(genMsgType, genMsgArgs, e);
 
         }
 
