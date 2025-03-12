@@ -233,12 +233,13 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
     private void processInputAndGenerateOutput(final Map<String, String> columnMappings, final String templateContent)
         throws KmgToolException {
 
+        // プレースホルダーのキー配列を取得
+        final String[] keyArrays = columnMappings.values().toArray(new String[0]);
+
         try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
             final BufferedWriter bwOutput = Files.newBufferedWriter(this.getOutputPath())) {
 
             String line;
-            // プレースホルダーのキー配列を取得
-            final String[] keyArrays = columnMappings.values().toArray(new String[0]);
 
             // 入力ファイルを1行ずつ処理
             while ((line = brInput.readLine()) != null) {
