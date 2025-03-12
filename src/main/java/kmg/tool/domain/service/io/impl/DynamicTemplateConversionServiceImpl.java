@@ -17,6 +17,7 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.foundation.infrastructure.utils.KmgYamlUtils;
+import kmg.tool.domain.model.DerivedPlaceholderModel;
 import kmg.tool.domain.service.io.DynamicTemplateConversionService;
 import kmg.tool.domain.types.DynamicTemplateConversionKeyTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
@@ -27,102 +28,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 @Service
 public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConversionService {
-
-    /**
-     * 派生プレースホルダー定義を保持するクラス
-     */
-    private static class DerivedPlaceholder {
-
-        /**
-         * 表示名
-         */
-        private final String displayName;
-
-        /**
-         * 置換パターン
-         */
-        private final String replacementPattern;
-
-        /**
-         * ソースキー
-         */
-        private final String sourceKey;
-
-        /**
-         * 変換処理
-         */
-        private final String transformation;
-
-        /**
-         * コンストラクタ
-         *
-         * @param displayName
-         *                           表示名
-         * @param replacementPattern
-         *                           置換パターン
-         * @param sourceKey
-         *                           ソースキー
-         * @param transformation
-         *                           変換処理
-         */
-        public DerivedPlaceholder(final String displayName, final String replacementPattern, final String sourceKey,
-            final String transformation) {
-
-            this.displayName = displayName;
-            this.replacementPattern = replacementPattern;
-            this.sourceKey = sourceKey;
-            this.transformation = transformation;
-
-        }
-
-        /**
-         * 表示名を返す
-         *
-         * @return 表示名
-         */
-        public String getDisplayName() {
-
-            final String result = this.displayName;
-            return result;
-
-        }
-
-        /**
-         * 置換パターンを返す
-         *
-         * @return 置換パターン
-         */
-        public String getReplacementPattern() {
-
-            final String result = this.replacementPattern;
-            return result;
-
-        }
-
-        /**
-         * ソースキーを返す
-         *
-         * @return ソースキー
-         */
-        public String getSourceKey() {
-
-            final String result = this.sourceKey;
-            return result;
-
-        }
-
-        /**
-         * 変換処理を返す
-         *
-         * @return 変換処理
-         */
-        public String getTransformation() {
-
-            final String result = this.transformation;
-            return result;
-
-        }
-    }
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -243,9 +148,10 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
      *
      * @return 派生プレースホルダーの定義リスト
      */
-    private static List<DerivedPlaceholder> extractDerivedPlaceholderDefinitions(final Map<String, Object> yamlData) {
+    private static List<DerivedPlaceholderModel> extractDerivedPlaceholderModelDefinitions(
+        final Map<String, Object> yamlData) {
 
-        final List<DerivedPlaceholder> result = new ArrayList<>();
+        final List<DerivedPlaceholderModel> result = new ArrayList<>();
 
         // 派生プレースホルダー定義を取得する
         @SuppressWarnings("unchecked")
@@ -268,8 +174,8 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
             final String transformation     = placeholderMap
                 .get(DynamicTemplateConversionKeyTypes.TRANSFORMATION.getKey());
 
-            final DerivedPlaceholder derivedPlaceholder
-                = new DerivedPlaceholder(displayName, replacementPattern, sourceKey, transformation);
+            final DerivedPlaceholderModel derivedPlaceholder
+                = new DerivedPlaceholderModel(displayName, replacementPattern, sourceKey, transformation);
             result.add(derivedPlaceholder);
 
         }
@@ -378,11 +284,11 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         final Map<String, Object> yamlData = this.loadAndParseTemplate();
 
         /* プレースホルダー定義の取得 */
-        final Map<String, String>      csvPlaceholderMap   = DynamicTemplateConversionServiceImpl
+        final Map<String, String>           csvPlaceholderMap   = DynamicTemplateConversionServiceImpl
             .extractCsvPlaceholderDefinitions(yamlData);
-        final List<DerivedPlaceholder> derivedPlaceholders = DynamicTemplateConversionServiceImpl
-            .extractDerivedPlaceholderDefinitions(yamlData);
-        final String                   templateContent     = (String) yamlData
+        final List<DerivedPlaceholderModel> derivedPlaceholders = DynamicTemplateConversionServiceImpl
+            .extractDerivedPlaceholderModelDefinitions(yamlData);
+        final String                        templateContent     = (String) yamlData
             .get(DynamicTemplateConversionKeyTypes.TEMPLATE_CONTENT.getKey());
 
         /* 入力ファイルの処理と出力 */
@@ -445,7 +351,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
      *                          入出力処理に失敗した場合
      */
     private void processInputAndGenerateOutput(final Map<String, String> csvPlaceholderMap,
-        final List<DerivedPlaceholder> derivedPlaceholders, final String templateContent) throws KmgToolException {
+        final List<DerivedPlaceholderModel> derivedPlaceholders, final String templateContent) throws KmgToolException {
 
         // CSVプレースホルダーのキー配列を取得
         final String[] csvPlaceholderKeys     = csvPlaceholderMap.keySet().toArray(new String[0]);
@@ -487,7 +393,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
                 }
 
                 // 派生プレースホルダーを処理
-                for (final DerivedPlaceholder derivedPlaceholder : derivedPlaceholders) {
+                for (final DerivedPlaceholderModel derivedPlaceholder : derivedPlaceholders) {
 
                     final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
 
