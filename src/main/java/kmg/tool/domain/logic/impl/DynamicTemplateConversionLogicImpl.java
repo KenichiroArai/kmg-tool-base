@@ -21,6 +21,7 @@ import kmg.tool.domain.logic.DynamicTemplateConversionLogic;
 import kmg.tool.domain.model.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.types.DynamicTemplateConversionKeyTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.domain.types.DtcTransformationTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -65,9 +66,16 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
 
         }
 
-        switch (transformation) {
+        // 文字列のtransformationからTransformationTypes列挙型に変換
+        final DtcTransformationTypes transformationType = DtcTransformationTypes.getEnum(transformation);
 
-            case "capitalizeFirst":
+        switch (transformationType) {
+
+            case NONE:
+                result = value;
+                break;
+
+            case CAPITALIZE_FIRST:
                 // 最初の文字を大文字に変換
                 if (!value.isEmpty()) {
 
@@ -80,19 +88,14 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
                 }
                 break;
 
-            case "toUpperCase":
+            case TO_UPPER_CASE:
                 // すべて大文字に変換
                 result = value.toUpperCase();
                 break;
 
-            case "toLowerCase":
+            case TO_LOWER_CASE:
                 // すべて小文字に変換
                 result = value.toLowerCase();
-                break;
-
-            // 他の変換処理をここに追加可能
-            default:
-                result = value;
                 break;
 
         }
