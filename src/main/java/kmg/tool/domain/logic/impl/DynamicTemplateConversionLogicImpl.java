@@ -270,6 +270,7 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
      *                     出力ファイルパス
      */
     @Override
+    @SuppressWarnings("hiding")
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) {
 
         final boolean result = true;
@@ -336,7 +337,8 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
      */
     @Override
     public void processInputAndGenerateOutput(final Map<String, String> csvPlaceholderMap,
-        final List<DtcDerivedPlaceholderModel> derivedPlaceholders, final String templateContent) throws KmgToolException {
+        final List<DtcDerivedPlaceholderModel> derivedPlaceholders, final String templateContent)
+        throws KmgToolException {
 
         // CSVプレースホルダーのキー配列を取得
         final String[] csvPlaceholderKeys     = csvPlaceholderMap.keySet().toArray(new String[0]);
