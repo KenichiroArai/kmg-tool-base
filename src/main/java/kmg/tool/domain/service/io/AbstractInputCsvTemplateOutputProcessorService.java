@@ -32,7 +32,7 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
 
     /** テンプレートの動的変換サービス */
     @Autowired
-    private DynamicTemplateConversionService dynamicTemplateConversionService;
+    private DtcService dtcService;
 
     /**
      * CSVファイルパスを返す<br>
@@ -160,9 +160,8 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
         result = this.writeCsvFile();
 
         /* テンプレートの動的変換サービスで出力ファイルに出力する */
-        result
-            = this.dynamicTemplateConversionService.initialize(this.getCsvPath(), this.templatePath, this.outputPath);
-        result = this.dynamicTemplateConversionService.process();
+        result = this.dtcService.initialize(this.getCsvPath(), this.templatePath, this.outputPath);
+        result = this.dtcService.process();
 
         return result;
 

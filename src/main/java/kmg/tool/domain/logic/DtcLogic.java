@@ -14,7 +14,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  *
  * @author KenichiroArai
  */
-public interface DynamicTemplateConversionLogic extends Closeable {
+public interface DtcLogic extends Closeable {
 
     /**
      * 入力ファイルパスを返す<br>
@@ -129,7 +129,8 @@ public interface DynamicTemplateConversionLogic extends Closeable {
      *                          入出力処理に失敗した場合
      */
     void processInputAndGenerateOutput(final Map<String, String> csvPlaceholderMap,
-        final List<DtcDerivedPlaceholderModel> derivedPlaceholders, final String templateContent) throws KmgToolException;
+        final List<DtcDerivedPlaceholderModel> derivedPlaceholders, final String templateContent)
+        throws KmgToolException;
 
     /**
      * 指定された変換処理を値に適用する<br>

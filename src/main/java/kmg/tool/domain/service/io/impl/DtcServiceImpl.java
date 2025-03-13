@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.logic.DynamicTemplateConversionLogic;
+import kmg.tool.domain.logic.DtcLogic;
 import kmg.tool.domain.model.DtcDerivedPlaceholderModel;
-import kmg.tool.domain.service.io.DynamicTemplateConversionService;
-import kmg.tool.domain.types.DynamicTemplateConversionKeyTypes;
+import kmg.tool.domain.service.io.DtcService;
+import kmg.tool.domain.types.DtcKeyTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -26,7 +26,7 @@ import java.util.Map;
  * @author KenichiroArai
  */
 @Service
-public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConversionService {
+public class DtcServiceImpl implements DtcService {
 
     /**
      * ロガー
@@ -45,7 +45,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
     /** テンプレートの動的変換ロジック */
     @Autowired
-    private DynamicTemplateConversionLogic dynamicTemplateConversionLogic;
+    private DtcLogic dtcLogic;
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -61,9 +61,9 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
      *
      * @since 0.1.0
      */
-    public DynamicTemplateConversionServiceImpl() {
+    public DtcServiceImpl() {
 
-        this(LoggerFactory.getLogger(DynamicTemplateConversionServiceImpl.class));
+        this(LoggerFactory.getLogger(DtcServiceImpl.class));
 
     }
 
@@ -75,7 +75,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
      * @param logger
      *               ロガー
      */
-    protected DynamicTemplateConversionServiceImpl(final Logger logger) {
+    protected DtcServiceImpl(final Logger logger) {
 
         this.logger = logger;
 
@@ -190,23 +190,21 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
         try {
 
             /* ロジックの初期化 */
-            this.dynamicTemplateConversionLogic.initialize(this.getInputPath(), this.getTemplatePath(),
-                this.getOutputPath());
+            this.dtcLogic.initialize(this.getInputPath(), this.getTemplatePath(), this.getOutputPath());
 
             /* テンプレートの読み込みと解析 */
-            final Map<String, Object> yamlData = this.dynamicTemplateConversionLogic.loadAndParseTemplate();
+            final Map<String, Object> yamlData = this.dtcLogic.loadAndParseTemplate();
 
             /* プレースホルダー定義の取得 */
-            final Map<String, String>           csvPlaceholderMap   = this.dynamicTemplateConversionLogic
+            final Map<String, String>              csvPlaceholderMap   = this.dtcLogic
                 .extractCsvPlaceholderDefinitions(yamlData);
-            final List<DtcDerivedPlaceholderModel> derivedPlaceholders = this.dynamicTemplateConversionLogic
+            final List<DtcDerivedPlaceholderModel> derivedPlaceholders = this.dtcLogic
                 .extractDerivedPlaceholderDefinitions(yamlData);
-            final String                        templateContent     = (String) yamlData
-                .get(DynamicTemplateConversionKeyTypes.TEMPLATE_CONTENT.getKey());
+            final String                           templateContent     = (String) yamlData
+                .get(DtcKeyTypes.TEMPLATE_CONTENT.getKey());
 
             /* 入力ファイルの処理と出力 */
-            this.dynamicTemplateConversionLogic.processInputAndGenerateOutput(csvPlaceholderMap, derivedPlaceholders,
-                templateContent);
+            this.dtcLogic.processInputAndGenerateOutput(csvPlaceholderMap, derivedPlaceholders, templateContent);
 
             result = true;
 
@@ -252,7 +250,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
 
         try {
 
-            this.dynamicTemplateConversionLogic.close();
+            this.dtcLogic.close();
 
         } catch (final IOException e) {
 

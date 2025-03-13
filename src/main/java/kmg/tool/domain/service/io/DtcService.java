@@ -5,7 +5,7 @@ package kmg.tool.domain.service.io;
  *
  * @author KenichiroArai
  */
-public interface DynamicTemplateConversionService extends Two2OneService {
+public interface DtcService extends Two2OneService {
 
     // 処理なし
 

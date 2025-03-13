@@ -17,11 +17,11 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.foundation.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.domain.logic.DynamicTemplateConversionLogic;
+import kmg.tool.domain.logic.DtcLogic;
 import kmg.tool.domain.model.DtcDerivedPlaceholderModel;
-import kmg.tool.domain.types.DynamicTemplateConversionKeyTypes;
+import kmg.tool.domain.types.DtcKeyTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.domain.types.DtcTransformationTypes;
+import kmg.tool.domain.types.DtcTransformTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -30,7 +30,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @author KenichiroArai
  */
 @Service
-public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConversionLogic {
+public class DtcLogicImpl implements DtcLogic {
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -67,7 +67,7 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
         }
 
         // 文字列のtransformationからTransformationTypes列挙型に変換
-        final DtcTransformationTypes transformationType = DtcTransformationTypes.getEnum(transformation);
+        final DtcTransformTypes transformationType = DtcTransformTypes.getEnum(transformation);
 
         switch (transformationType) {
 
@@ -136,7 +136,7 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
         // CSVプレースホルダー定義を取得する
         @SuppressWarnings("unchecked")
         final List<Map<String, String>> csvPlaceholders
-            = (List<Map<String, String>>) yamlData.get(DynamicTemplateConversionKeyTypes.CSV_PLACEHOLDERS.getKey());
+            = (List<Map<String, String>>) yamlData.get(DtcKeyTypes.CSV_PLACEHOLDERS.getKey());
 
         if (csvPlaceholders == null) {
 
@@ -146,8 +146,8 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
 
         for (final Map<String, String> placeholderMap : csvPlaceholders) {
 
-            result.put(placeholderMap.get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey()),
-                placeholderMap.get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey()));
+            result.put(placeholderMap.get(DtcKeyTypes.DISPLAY_NAME.getKey()),
+                placeholderMap.get(DtcKeyTypes.REPLACEMENT_PATTERN.getKey()));
 
         }
 
@@ -175,7 +175,7 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
         // 派生プレースホルダー定義を取得する
         @SuppressWarnings("unchecked")
         final List<Map<String, String>> derivedPlaceholders
-            = (List<Map<String, String>>) yamlData.get(DynamicTemplateConversionKeyTypes.DERIVED_PLACEHOLDERS.getKey());
+            = (List<Map<String, String>>) yamlData.get(DtcKeyTypes.DERIVED_PLACEHOLDERS.getKey());
 
         if (derivedPlaceholders == null) {
 
@@ -185,13 +185,10 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
 
         for (final Map<String, String> placeholderMap : derivedPlaceholders) {
 
-            final String displayName        = placeholderMap
-                .get(DynamicTemplateConversionKeyTypes.DISPLAY_NAME.getKey());
-            final String replacementPattern = placeholderMap
-                .get(DynamicTemplateConversionKeyTypes.REPLACEMENT_PATTERN.getKey());
-            final String sourceKey          = placeholderMap.get(DynamicTemplateConversionKeyTypes.SOURCE_KEY.getKey());
-            final String transformation     = placeholderMap
-                .get(DynamicTemplateConversionKeyTypes.TRANSFORMATION.getKey());
+            final String displayName        = placeholderMap.get(DtcKeyTypes.DISPLAY_NAME.getKey());
+            final String replacementPattern = placeholderMap.get(DtcKeyTypes.REPLACEMENT_PATTERN.getKey());
+            final String sourceKey          = placeholderMap.get(DtcKeyTypes.SOURCE_KEY.getKey());
+            final String transformation     = placeholderMap.get(DtcKeyTypes.TRANSFORMATION.getKey());
 
             final DtcDerivedPlaceholderModel derivedPlaceholder
                 = new DtcDerivedPlaceholderModel(displayName, replacementPattern, sourceKey, transformation);

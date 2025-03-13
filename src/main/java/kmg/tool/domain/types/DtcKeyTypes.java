@@ -14,7 +14,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  *
  * @version 0.1.0
  */
-public enum DynamicTemplateConversionKeyTypes implements KmgComTypes<String> {
+public enum DtcKeyTypes implements KmgComTypes<String> {
 
     /* 定義：開始 */
 
@@ -58,14 +58,14 @@ public enum DynamicTemplateConversionKeyTypes implements KmgComTypes<String> {
      *
      * @since 0.1.0
      */
-    private static final Map<String, DynamicTemplateConversionKeyTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, DtcKeyTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final DynamicTemplateConversionKeyTypes type : DynamicTemplateConversionKeyTypes.values()) {
+        for (final DtcKeyTypes type : DtcKeyTypes.values()) {
 
-            DynamicTemplateConversionKeyTypes.VALUES_MAP.put(type.get(), type);
+            DtcKeyTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -99,9 +99,9 @@ public enum DynamicTemplateConversionKeyTypes implements KmgComTypes<String> {
      *
      * @return デフォルト値
      */
-    public static DynamicTemplateConversionKeyTypes getDefault() {
+    public static DtcKeyTypes getDefault() {
 
-        final DynamicTemplateConversionKeyTypes result = NONE;
+        final DtcKeyTypes result = NONE;
         return result;
 
     }
@@ -119,9 +119,9 @@ public enum DynamicTemplateConversionKeyTypes implements KmgComTypes<String> {
      *
      * @return 種類。指定無し（NONE）：キーが存在しない場合。
      */
-    public static DynamicTemplateConversionKeyTypes getEnum(final String key) {
+    public static DtcKeyTypes getEnum(final String key) {
 
-        DynamicTemplateConversionKeyTypes result = DynamicTemplateConversionKeyTypes.VALUES_MAP.get(key);
+        DtcKeyTypes result = DtcKeyTypes.VALUES_MAP.get(key);
 
         if (result == null) {
 
@@ -139,9 +139,9 @@ public enum DynamicTemplateConversionKeyTypes implements KmgComTypes<String> {
      *
      * @return 初期値
      */
-    public static DynamicTemplateConversionKeyTypes getInitValue() {
+    public static DtcKeyTypes getInitValue() {
 
-        final DynamicTemplateConversionKeyTypes result = NONE;
+        final DtcKeyTypes result = NONE;
         return result;
 
     }
@@ -158,7 +158,7 @@ public enum DynamicTemplateConversionKeyTypes implements KmgComTypes<String> {
      * @param detail
      *                    詳細情報
      */
-    DynamicTemplateConversionKeyTypes(final String displayName, final String key, final String detail) {
+    DtcKeyTypes(final String displayName, final String key, final String detail) {
 
         this.displayName = displayName;
         this.key = key;

@@ -17,7 +17,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  *
  * @version 0.1.0
  */
-public enum DtcTransformationTypes implements KmgComTypes<String> {
+public enum DtcTransformTypes implements KmgComTypes<String> {
 
     /* 定義：開始 */
 
@@ -49,14 +49,14 @@ public enum DtcTransformationTypes implements KmgComTypes<String> {
      *
      * @since 0.1.0
      */
-    private static final Map<String, DtcTransformationTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, DtcTransformTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final DtcTransformationTypes type : DtcTransformationTypes.values()) {
+        for (final DtcTransformTypes type : DtcTransformTypes.values()) {
 
-            DtcTransformationTypes.VALUES_MAP.put(type.get(), type);
+            DtcTransformTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -90,9 +90,9 @@ public enum DtcTransformationTypes implements KmgComTypes<String> {
      *
      * @return デフォルト値
      */
-    public static DtcTransformationTypes getDefault() {
+    public static DtcTransformTypes getDefault() {
 
-        final DtcTransformationTypes result = NONE;
+        final DtcTransformTypes result = NONE;
         return result;
 
     }
@@ -110,9 +110,9 @@ public enum DtcTransformationTypes implements KmgComTypes<String> {
      *
      * @return 種類。指定無し（NONE）：キーが存在しない場合。
      */
-    public static DtcTransformationTypes getEnum(final String key) {
+    public static DtcTransformTypes getEnum(final String key) {
 
-        DtcTransformationTypes result = DtcTransformationTypes.VALUES_MAP.get(key);
+        DtcTransformTypes result = DtcTransformTypes.VALUES_MAP.get(key);
 
         if (result == null) {
 
@@ -130,9 +130,9 @@ public enum DtcTransformationTypes implements KmgComTypes<String> {
      *
      * @return 初期値
      */
-    public static DtcTransformationTypes getInitValue() {
+    public static DtcTransformTypes getInitValue() {
 
-        final DtcTransformationTypes result = NONE;
+        final DtcTransformTypes result = NONE;
         return result;
 
     }
@@ -149,7 +149,7 @@ public enum DtcTransformationTypes implements KmgComTypes<String> {
      * @param detail
      *                    詳細情報
      */
-    DtcTransformationTypes(final String displayName, final String key, final String detail) {
+    DtcTransformTypes(final String displayName, final String key, final String detail) {
 
         this.displayName = displayName;
         this.key = key;
