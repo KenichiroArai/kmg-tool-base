@@ -1,9 +1,12 @@
 package kmg.tool.domain.model;
 
 /**
- * 派生プレースホルダー定義モデル
+ * テンプレートの動的変換派生プレースホルダー定義モデル<br>
+ * <p>
+ * 「Dtc」→「DynamicTemplateConversion」の略。
+ * </p>
  */
-public class DerivedPlaceholderModel {
+public class DtcDerivedPlaceholderModel {
 
     /**
      * 表示名
@@ -37,8 +40,8 @@ public class DerivedPlaceholderModel {
      * @param transformation
      *                           変換処理
      */
-    public DerivedPlaceholderModel(final String displayName, final String replacementPattern, final String sourceKey,
-        final String transformation) {
+    public DtcDerivedPlaceholderModel(final String displayName, final String replacementPattern,
+        final String sourceKey, final String transformation) {
 
         this.displayName = displayName;
         this.replacementPattern = replacementPattern;

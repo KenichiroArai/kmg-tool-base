@@ -18,7 +18,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.foundation.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.domain.logic.DynamicTemplateConversionLogic;
-import kmg.tool.domain.model.DerivedPlaceholderModel;
+import kmg.tool.domain.model.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.types.DynamicTemplateConversionKeyTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -165,9 +165,9 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
      * @return 派生プレースホルダーの定義リスト
      */
     @Override
-    public List<DerivedPlaceholderModel> extractDerivedPlaceholderDefinitions(final Map<String, Object> yamlData) {
+    public List<DtcDerivedPlaceholderModel> extractDerivedPlaceholderDefinitions(final Map<String, Object> yamlData) {
 
-        final List<DerivedPlaceholderModel> result = new ArrayList<>();
+        final List<DtcDerivedPlaceholderModel> result = new ArrayList<>();
 
         // 派生プレースホルダー定義を取得する
         @SuppressWarnings("unchecked")
@@ -190,8 +190,8 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
             final String transformation     = placeholderMap
                 .get(DynamicTemplateConversionKeyTypes.TRANSFORMATION.getKey());
 
-            final DerivedPlaceholderModel derivedPlaceholder
-                = new DerivedPlaceholderModel(displayName, replacementPattern, sourceKey, transformation);
+            final DtcDerivedPlaceholderModel derivedPlaceholder
+                = new DtcDerivedPlaceholderModel(displayName, replacementPattern, sourceKey, transformation);
             result.add(derivedPlaceholder);
 
         }
@@ -336,7 +336,7 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
      */
     @Override
     public void processInputAndGenerateOutput(final Map<String, String> csvPlaceholderMap,
-        final List<DerivedPlaceholderModel> derivedPlaceholders, final String templateContent) throws KmgToolException {
+        final List<DtcDerivedPlaceholderModel> derivedPlaceholders, final String templateContent) throws KmgToolException {
 
         // CSVプレースホルダーのキー配列を取得
         final String[] csvPlaceholderKeys     = csvPlaceholderMap.keySet().toArray(new String[0]);
@@ -378,7 +378,7 @@ public class DynamicTemplateConversionLogicImpl implements DynamicTemplateConver
                 }
 
                 // 派生プレースホルダーを処理
-                for (final DerivedPlaceholderModel derivedPlaceholder : derivedPlaceholders) {
+                for (final DtcDerivedPlaceholderModel derivedPlaceholder : derivedPlaceholders) {
 
                     final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
 

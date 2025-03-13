@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.logic.DynamicTemplateConversionLogic;
-import kmg.tool.domain.model.DerivedPlaceholderModel;
+import kmg.tool.domain.model.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.service.io.DynamicTemplateConversionService;
 import kmg.tool.domain.types.DynamicTemplateConversionKeyTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
@@ -199,7 +199,7 @@ public class DynamicTemplateConversionServiceImpl implements DynamicTemplateConv
             /* プレースホルダー定義の取得 */
             final Map<String, String>           csvPlaceholderMap   = this.dynamicTemplateConversionLogic
                 .extractCsvPlaceholderDefinitions(yamlData);
-            final List<DerivedPlaceholderModel> derivedPlaceholders = this.dynamicTemplateConversionLogic
+            final List<DtcDerivedPlaceholderModel> derivedPlaceholders = this.dynamicTemplateConversionLogic
                 .extractDerivedPlaceholderDefinitions(yamlData);
             final String                        templateContent     = (String) yamlData
                 .get(DynamicTemplateConversionKeyTypes.TEMPLATE_CONTENT.getKey());
