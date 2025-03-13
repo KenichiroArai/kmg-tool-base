@@ -40,8 +40,8 @@ public class DtcDerivedPlaceholderModel {
      * @param transformation
      *                           変換処理
      */
-    public DtcDerivedPlaceholderModel(final String displayName, final String replacementPattern,
-        final String sourceKey, final String transformation) {
+    public DtcDerivedPlaceholderModel(final String displayName, final String replacementPattern, final String sourceKey,
+        final String transformation) {
 
         this.displayName = displayName;
         this.replacementPattern = replacementPattern;

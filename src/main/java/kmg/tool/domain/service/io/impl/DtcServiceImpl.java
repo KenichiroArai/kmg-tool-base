@@ -2,6 +2,8 @@ package kmg.tool.domain.service.io.impl;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +19,11 @@ import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * テンプレートの動的変換サービス実装<br>
+ * <p>
+ * 「Dtc」→「DynamicTemplateConversion」の略。
+ * </p>
  *
  * @author KenichiroArai
  */

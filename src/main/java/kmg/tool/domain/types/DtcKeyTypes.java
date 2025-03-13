@@ -7,6 +7,9 @@ import kmg.core.infrastructure.common.KmgComTypes;
 
 /**
  * テンプレートの動的変換のキーの種類<br>
+ * <p>
+ * 「Dtc」→「DynamicTemplateConversion」の略。
+ * </p>
  *
  * @author KenichiroArai
  *

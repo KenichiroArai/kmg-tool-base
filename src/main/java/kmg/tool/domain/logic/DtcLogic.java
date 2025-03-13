@@ -11,10 +11,66 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * テンプレートの動的変換ロジックインタフェース<br>
+ * <p>
+ * 「Dtc」→「DynamicTemplateConversion」の略。
+ * </p>
  *
  * @author KenichiroArai
  */
 public interface DtcLogic extends Closeable {
+
+    /**
+     * 指定された変換処理を値に適用する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @param value
+     *                       元の値
+     * @param transformation
+     *                       適用する変換処理
+     *
+     * @return 変換後の値
+     */
+    String applyTransformation(final String value, final String transformation);
+
+    /**
+     * リソースをクローズする。
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    @Override
+    void close() throws IOException;
+
+    /**
+     * YAMLデータからCSVプレースホルダー定義を抽出する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @param yamlData
+     *                 解析されたYAMLデータ
+     *
+     * @return CSVプレースホルダーの定義マップ
+     */
+    Map<String, String> extractCsvPlaceholderDefinitions(final Map<String, Object> yamlData);
+
+    /**
+     * YAMLデータから派生プレースホルダー定義を抽出する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @param yamlData
+     *                 解析されたYAMLデータ
+     *
+     * @return 派生プレースホルダーの定義リスト
+     */
+    List<DtcDerivedPlaceholderModel> extractDerivedPlaceholderDefinitions(final Map<String, Object> yamlData);
 
     /**
      * 入力ファイルパスを返す<br>
@@ -84,34 +140,6 @@ public interface DtcLogic extends Closeable {
     Map<String, Object> loadAndParseTemplate() throws KmgToolException;
 
     /**
-     * YAMLデータからCSVプレースホルダー定義を抽出する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @param yamlData
-     *                 解析されたYAMLデータ
-     *
-     * @return CSVプレースホルダーの定義マップ
-     */
-    Map<String, String> extractCsvPlaceholderDefinitions(final Map<String, Object> yamlData);
-
-    /**
-     * YAMLデータから派生プレースホルダー定義を抽出する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @param yamlData
-     *                 解析されたYAMLデータ
-     *
-     * @return 派生プレースホルダーの定義リスト
-     */
-    List<DtcDerivedPlaceholderModel> extractDerivedPlaceholderDefinitions(final Map<String, Object> yamlData);
-
-    /**
      * 入力ファイルを処理し、テンプレートに基づいて出力を生成する<br>
      *
      * @author KenichiroArai
@@ -131,29 +159,4 @@ public interface DtcLogic extends Closeable {
     void processInputAndGenerateOutput(final Map<String, String> csvPlaceholderMap,
         final List<DtcDerivedPlaceholderModel> derivedPlaceholders, final String templateContent)
         throws KmgToolException;
-
-    /**
-     * 指定された変換処理を値に適用する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @param value
-     *                       元の値
-     * @param transformation
-     *                       適用する変換処理
-     *
-     * @return 変換後の値
-     */
-    String applyTransformation(final String value, final String transformation);
-
-    /**
-     * リソースをクローズする。
-     *
-     * @throws IOException
-     *                     入出力例外
-     */
-    @Override
-    void close() throws IOException;
 }

@@ -20,12 +20,15 @@ import kmg.foundation.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.domain.logic.DtcLogic;
 import kmg.tool.domain.model.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.types.DtcKeyTypes;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.DtcTransformTypes;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * テンプレートの動的変換ロジック実装<br>
+ * <p>
+ * 「Dtc」→「DynamicTemplateConversion」の略。
+ * </p>
  *
  * @author KenichiroArai
  */

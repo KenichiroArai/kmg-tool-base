@@ -2,6 +2,9 @@ package kmg.tool.domain.service.io;
 
 /**
  * テンプレートの動的変換サービスインタフェース<br>
+ * <p>
+ * 「Dtc」→「DynamicTemplateConversion」の略。
+ * </p>
  *
  * @author KenichiroArai
  */
