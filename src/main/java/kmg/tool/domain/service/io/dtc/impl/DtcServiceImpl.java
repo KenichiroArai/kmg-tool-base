@@ -256,9 +256,7 @@ public class DtcServiceImpl implements DtcService {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/14 例外処理
-
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN12002;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 

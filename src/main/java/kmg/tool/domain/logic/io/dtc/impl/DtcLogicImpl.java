@@ -410,10 +410,9 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/12 例外
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN12003;
             final Object[]               messageArgs = {
-                this.templatePath.toString()
+                this.inputPath.toString(), this.templatePath.toString(), this.outputPath.toString(),
             };
             throw new KmgToolException(msgType, messageArgs, e);
 
