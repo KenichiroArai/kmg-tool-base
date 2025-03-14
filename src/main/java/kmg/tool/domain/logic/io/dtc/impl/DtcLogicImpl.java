@@ -52,14 +52,14 @@ public class DtcLogicImpl implements DtcLogic {
      * @sine 1.0.0
      *
      * @param value
-     *                       元の値
-     * @param transformation
-     *                       適用する変換処理
+     *                          元の値
+     * @param dtcTransformTypes
+     *                          テンプレートの動的変換変換処理の種類
      *
      * @return 変換後の値
      */
     @Override
-    public String applyTransformation(final String value, final String transformation) {
+    public String applyTransformation(final String value, final DtcTransformTypes dtcTransformTypes) {
 
         String result = KmgString.EMPTY;
 
@@ -69,10 +69,7 @@ public class DtcLogicImpl implements DtcLogic {
 
         }
 
-        // 文字列のtransformationからTransformationTypes列挙型に変換
-        final DtcTransformTypes transformationType = DtcTransformTypes.getEnum(transformation);
-
-        switch (transformationType) {
+        switch (dtcTransformTypes) {
 
             case NONE:
                 result = value;
@@ -393,9 +390,12 @@ public class DtcLogicImpl implements DtcLogic {
 
                     }
 
+                    // テンプレートの動的変換変換処理変換
+                    final DtcTransformTypes transformationType
+                        = DtcTransformTypes.getEnum(derivedPlaceholder.getTransformation());
+
                     // 変換処理を適用
-                    final String derivedValue
-                        = this.applyTransformation(sourceValue, derivedPlaceholder.getTransformation());
+                    final String derivedValue = this.applyTransformation(sourceValue, transformationType);
 
                     // テンプレートを置換
                     out = out.replace(derivedPlaceholder.getReplacementPattern(), derivedValue);

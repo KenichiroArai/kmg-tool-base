@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
+import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -27,13 +28,13 @@ public interface DtcLogic extends Closeable {
      * @sine 1.0.0
      *
      * @param value
-     *                       元の値
-     * @param transformation
-     *                       適用する変換処理
+     *                          元の値
+     * @param dtcTransformTypes
+     *                          テンプレートの動的変換変換処理の種類
      *
      * @return 変換後の値
      */
-    String applyTransformation(final String value, final String transformation);
+    String applyTransformation(final String value, final DtcTransformTypes dtcTransformTypes);
 
     /**
      * リソースをクローズする。
