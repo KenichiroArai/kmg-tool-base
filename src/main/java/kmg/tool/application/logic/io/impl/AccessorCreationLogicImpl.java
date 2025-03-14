@@ -60,6 +60,18 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     @Autowired
     private KmgMessageSource messageSource;
 
+    /** 入力ファイルパス */
+    private Path inputPath;
+
+    /** 出力ファイルパス */
+    private Path outputPath;
+
+    /** 入力ファイルのBufferedReader */
+    private BufferedReader reader;
+
+    /** 出力ファイルのBufferedReader */
+    private BufferedWriter writer;
+
     /** 読み込んだ１行データ */
     private String lineOfDataRead;
 
@@ -78,20 +90,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** 項目名 */
     private String item;
 
-    /** 入力ファイルパス */
-    private Path inputPath;
-
-    /** 出力ファイルパス */
-    private Path outputPath;
-
     /** 書き込み対象のCSVデータのリスト */
     private final List<List<String>> csvRows;
-
-    /** 入力ファイルのBufferedReader */
-    private BufferedReader reader;
-
-    /** 出力ファイルのBufferedReader */
-    private BufferedWriter writer;
 
     /**
      * デフォルトコンストラクタ
