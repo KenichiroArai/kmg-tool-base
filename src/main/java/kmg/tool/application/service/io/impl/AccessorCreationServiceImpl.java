@@ -83,7 +83,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         boolean result = false;
 
-        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31000;
         final Object[]               startLogMsgArgs  = {};
         final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
             startLogMsgArgs);

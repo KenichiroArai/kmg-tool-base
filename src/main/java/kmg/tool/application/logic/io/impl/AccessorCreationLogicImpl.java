@@ -272,23 +272,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     @Override
     public void close() throws IOException {
 
-        try {
-
-            this.closeReader();
-            this.closeWriter();
-
-        } catch (final IOException e) {
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
-            final Object[]               logMsgArgs  = {
-                this.javadocComment, this.item,
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
-
-        }
+        this.closeReader();
+        this.closeWriter();
 
     }
 
@@ -668,8 +653,24 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         }
 
-        this.reader.close();
-        this.reader = null;
+        try {
+
+            this.reader.close();
+
+        } catch (final IOException e) {
+
+            this.reader = null;
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+            final Object[]               logMsgArgs  = {
+                this.inputPath.toString(),
+            };
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
 
     }
 
@@ -687,8 +688,24 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         }
 
-        this.writer.close();
-        this.writer = null;
+        try {
+
+            this.writer.close();
+
+        } catch (final IOException e) {
+
+            this.writer = null;
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
+            final Object[]               logMsgArgs  = {
+                this.outputPath.toString(),
+            };
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
 
     }
 
