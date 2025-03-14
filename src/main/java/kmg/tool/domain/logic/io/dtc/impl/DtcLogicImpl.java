@@ -46,6 +46,24 @@ public class DtcLogicImpl implements DtcLogic {
     /** 出力ファイルパス */
     private Path outputPath;
 
+    /** 入力ファイルのBufferedReader */
+    private BufferedReader reader;
+
+    /** 出力ファイルのBufferedWriter */
+    private BufferedWriter writer;
+
+    /** CSVプレースホルダーのキー配列 */
+    private String[] csvPlaceholderKeys;
+
+    /** CSVプレースホルダーのパターン配列 */
+    private String[] csvPlaceholderPatterns;
+
+    /** テンプレートの内容 */
+    private String templateContent;
+
+    /** 派生プレースホルダーの定義リスト */
+    private List<DtcDerivedPlaceholderModel> derivedPlaceholders;
+
     /**
      * リソースをクローズする。
      *
@@ -55,7 +73,9 @@ public class DtcLogicImpl implements DtcLogic {
     @Override
     public void close() throws IOException {
 
-        // 処理なし
+        this.closeReader();
+        this.closeWriter();
+
     }
 
     /**
@@ -282,76 +302,20 @@ public class DtcLogicImpl implements DtcLogic {
         final List<DtcDerivedPlaceholderModel> derivedPlaceholders, final String templateContent)
         throws KmgToolException {
 
-        // CSVプレースホルダーのキー配列を取得
-        final String[] csvPlaceholderKeys     = csvPlaceholderMap.keySet().toArray(new String[0]);
-        final String[] csvPlaceholderPatterns = csvPlaceholderMap.values().toArray(new String[0]);
+        // 処理に必要な情報を保存
+        this.csvPlaceholderKeys = csvPlaceholderMap.keySet().toArray(new String[0]);
+        this.csvPlaceholderPatterns = csvPlaceholderMap.values().toArray(new String[0]);
+        this.templateContent = templateContent;
+        this.derivedPlaceholders = derivedPlaceholders;
 
-        try (final BufferedReader brInput = Files.newBufferedReader(this.getInputPath());
-            final BufferedWriter bwOutput = Files.newBufferedWriter(this.getOutputPath())) {
+        try {
 
-            String line;
+            // 入出力ファイルを開く
+            this.openInputFile();
+            this.openOutputFile();
 
             // 入力ファイルを1行ずつ処理
-            while ((line = brInput.readLine()) != null) {
-
-                String         out     = templateContent;
-                final String[] csvLine = KmgDelimiterTypes.COMMA.split(line);
-
-                // CSV値を一時保存するマップ
-                final Map<String, String> csvValues = new HashMap<>();
-
-                // 各CSVプレースホルダーを対応する値で置換
-                for (int i = 0; i < csvPlaceholderPatterns.length; i++) {
-
-                    if (i >= csvLine.length) {
-
-                        continue;
-
-                    }
-
-                    final String key     = csvPlaceholderKeys[i];
-                    final String pattern = csvPlaceholderPatterns[i];
-                    final String value   = csvLine[i];
-
-                    // 値を保存
-                    csvValues.put(key, value);
-
-                    // テンプレートを置換
-                    out = out.replace(pattern, value);
-
-                }
-
-                // 派生プレースホルダーを処理
-                for (final DtcDerivedPlaceholderModel derivedPlaceholder : derivedPlaceholders) {
-
-                    final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
-
-                    if (sourceValue == null) {
-
-                        continue;
-
-                    }
-
-                    // テンプレートの動的変換変換処理変換
-                    final DtcTransformTypes transformationType
-                        = DtcTransformTypes.getEnum(derivedPlaceholder.getTransformation());
-
-                    // 変換処理を適用
-                    final DtcTransformModel dtcTransformModel
-                        = new DtcTransformModelImpl(sourceValue, transformationType);
-                    dtcTransformModel.apply();
-
-                    // テンプレートを置換
-                    out = out.replace(derivedPlaceholder.getReplacementPattern(),
-                        dtcTransformModel.getTransformedValue());
-
-                }
-
-                // 変換結果を出力
-                bwOutput.write(out);
-                bwOutput.newLine();
-
-            }
+            this.processInputFile();
 
         } catch (final IOException e) {
 
@@ -361,7 +325,219 @@ public class DtcLogicImpl implements DtcLogic {
             };
             throw new KmgToolException(msgType, messageArgs, e);
 
+        } finally {
+
+            try {
+
+                // リソースをクローズ
+                this.close();
+
+            } catch (final IOException e) {
+
+                // クローズ時のエラーは記録するが再スローしない
+            }
+
         }
+
+    }
+
+    /**
+     * 入力ファイルのリーダーをクローズする<br>
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    private void closeReader() throws IOException {
+
+        if (this.reader != null) {
+
+            this.reader.close();
+            this.reader = null;
+
+        }
+
+    }
+
+    /**
+     * 出力ファイルのライターをクローズする<br>
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    private void closeWriter() throws IOException {
+
+        if (this.writer != null) {
+
+            this.writer.close();
+            this.writer = null;
+
+        }
+
+    }
+
+    /**
+     * 入力ファイルを開く<br>
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    private void openInputFile() throws IOException {
+
+        this.reader = Files.newBufferedReader(this.inputPath);
+
+    }
+
+    /**
+     * 出力ファイルを開く<br>
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    private void openOutputFile() throws IOException {
+
+        this.writer = Files.newBufferedWriter(this.outputPath);
+
+    }
+
+    /**
+     * CSVプレースホルダーを処理する<br>
+     *
+     * @param template
+     *                  テンプレート
+     * @param csvLine
+     *                  CSV行データ
+     * @param csvValues
+     *                  CSV値を保存するマップ
+     *
+     * @return 処理後のテンプレート
+     */
+    private String processCsvPlaceholders(final String template, final String[] csvLine,
+        final Map<String, String> csvValues) {
+
+        String result = template;
+
+        // 各CSVプレースホルダーを対応する値で置換
+        for (int i = 0; i < this.csvPlaceholderPatterns.length; i++) {
+
+            if (i >= csvLine.length) {
+
+                continue;
+
+            }
+
+            final String key     = this.csvPlaceholderKeys[i];
+            final String pattern = this.csvPlaceholderPatterns[i];
+            final String value   = csvLine[i];
+
+            // 値を保存
+            csvValues.put(key, value);
+
+            // テンプレートを置換
+            result = result.replace(pattern, value);
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 派生プレースホルダーを処理する<br>
+     *
+     * @param template
+     *                  テンプレート
+     * @param csvValues
+     *                  CSV値を保存するマップ
+     *
+     * @return 処理後のテンプレート
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private String processDerivedPlaceholders(final String template, final Map<String, String> csvValues)
+        throws KmgToolException {
+
+        String result = template;
+
+        // 派生プレースホルダーを処理
+        for (final DtcDerivedPlaceholderModel derivedPlaceholder : this.derivedPlaceholders) {
+
+            final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
+
+            if (sourceValue == null) {
+
+                continue;
+
+            }
+
+            // テンプレートの動的変換変換処理変換
+            final DtcTransformTypes transformationType
+                = DtcTransformTypes.getEnum(derivedPlaceholder.getTransformation());
+
+            // 変換処理を適用
+            final DtcTransformModel dtcTransformModel = new DtcTransformModelImpl(sourceValue, transformationType);
+            dtcTransformModel.apply();
+
+            // テンプレートを置換
+            result
+                = result.replace(derivedPlaceholder.getReplacementPattern(), dtcTransformModel.getTransformedValue());
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 入力ファイルを1行ずつ処理する<br>
+     *
+     * @throws IOException
+     *                          入出力例外
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private void processInputFile() throws IOException, KmgToolException {
+
+        String line;
+
+        // 入力ファイルを1行ずつ処理
+        while ((line = this.reader.readLine()) != null) {
+
+            // 1行を処理して出力
+            final String processedLine = this.processLine(line);
+            this.writer.write(processedLine);
+            this.writer.newLine();
+
+        }
+
+    }
+
+    /**
+     * 1行のデータを処理する<br>
+     *
+     * @param line
+     *             処理する行
+     *
+     * @return 処理後の行
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private String processLine(final String line) throws KmgToolException {
+
+        String         out     = this.templateContent;
+        final String[] csvLine = KmgDelimiterTypes.COMMA.split(line);
+
+        // CSV値を一時保存するマップ
+        final Map<String, String> csvValues = new HashMap<>();
+
+        // CSVプレースホルダーを処理
+        out = this.processCsvPlaceholders(out, csvLine, csvValues);
+
+        // 派生プレースホルダーを処理
+        out = this.processDerivedPlaceholders(out, csvValues);
+
+        return out;
 
     }
 }
