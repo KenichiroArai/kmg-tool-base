@@ -1,4 +1,6 @@
-package kmg.tool.domain.service.io;
+package kmg.tool.domain.service.io.dtc;
+
+import kmg.tool.domain.service.io.Two2OneService;
 
 /**
  * テンプレートの動的変換サービスインタフェース<br>

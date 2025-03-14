@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.logic.io.dtc.DtcLogic;
 import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
-import kmg.tool.domain.service.io.DtcService;
+import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
