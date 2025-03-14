@@ -14,12 +14,13 @@ import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.logic.io.dtc.DtcLogic;
 import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.service.io.dtc.DtcService;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * テンプレートの動的変換サービス実装<br>
+ * テンプレートの動的変換サービス<br>
  * <p>
  * 「Dtc」→「DynamicTemplateConversion」の略。
  * </p>
@@ -182,8 +183,7 @@ public class DtcServiceImpl implements DtcService {
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/03/14 ログ
-        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.NONE;
+        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12000;
         final Object[]               startLogMsgArgs  = {};
         final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
             startLogMsgArgs);
@@ -212,8 +212,7 @@ public class DtcServiceImpl implements DtcService {
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/14 ログ
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12001;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -225,17 +224,15 @@ public class DtcServiceImpl implements DtcService {
             try {
 
                 /* リソースのクローズ処理 */
-                this.closeLogic();
+                this.closeDtcLogic();
 
             } finally {
 
-                // TODO KenichiroArai 2025/03/14 ログ処理
-
-                // final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32007;
-                // final Object[] endLogMsgArgs = {};
-                // final String endLogMsg = this.messageSource.getLogMessage(endLogMsgTypes,
-                // endLogMsgArgs);
-                // this.logger.debug(endLogMsg);
+                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12002;
+                final Object[]               endLogMsgArgs  = {};
+                final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
+                    endLogMsgArgs);
+                this.logger.debug(endLogMsg);
 
             }
 
@@ -246,12 +243,12 @@ public class DtcServiceImpl implements DtcService {
     }
 
     /**
-     * ロジックをクローズする。
+     * テンプレートの動的変換ロジックをクローズする。
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    private void closeLogic() throws KmgToolException {
+    private void closeDtcLogic() throws KmgToolException {
 
         try {
 
@@ -261,15 +258,9 @@ public class DtcServiceImpl implements DtcService {
 
             // TODO KenichiroArai 2025/03/14 例外処理
 
-            // final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32003;
-            // final Object[] logMsgArgs = {};
-            // final String logMsg = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            // this.logger.error(logMsg, e);
-            //
-            // final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31003;
-            // final Object[] genMsgArgs = {};
-            // throw new KmgToolException(genMsgTypes, genMsgArgs, e);
-            e.printStackTrace();
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
         }
 

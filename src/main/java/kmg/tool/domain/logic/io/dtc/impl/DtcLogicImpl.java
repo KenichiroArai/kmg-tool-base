@@ -116,7 +116,7 @@ public class DtcLogicImpl implements DtcLogic {
     @Override
     public void close() throws IOException {
 
-        // クローズするリソースがない場合は何もしない
+        // 処理なし
     }
 
     /**
