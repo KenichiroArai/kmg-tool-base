@@ -62,27 +62,6 @@ public class DtcTransformModel {
     }
 
     /**
-     * 文字列の最初の文字を大文字に変換<br>
-     *
-     * @return 最初の文字を大文字に変換した値
-     */
-    public String capitalize() {
-
-        String result;
-
-        if (this.originalValue.isEmpty()) {
-
-            result = this.originalValue;
-            return result;
-
-        }
-
-        result = KmgString.capitalize(this.originalValue);
-        return result;
-
-    }
-
-    /**
      * 元の値を返す<br>
      *
      * @return 元の値
@@ -111,12 +90,33 @@ public class DtcTransformModel {
     }
 
     /**
+     * 文字列の最初の文字を大文字に変換<br>
+     *
+     * @return 最初の文字を大文字に変換した値
+     */
+    private String capitalize() {
+
+        String result;
+
+        if (this.originalValue.isEmpty()) {
+
+            result = this.originalValue;
+            return result;
+
+        }
+
+        result = KmgString.capitalize(this.originalValue);
+        return result;
+
+    }
+
+    /**
      * 変換なし<br>
      * 元の値をそのまま返す
      *
      * @return 元の値
      */
-    public String none() {
+    private String none() {
 
         String result;
 
@@ -130,7 +130,7 @@ public class DtcTransformModel {
      *
      * @return すべて小文字に変換した値
      */
-    public String toLowerCase() {
+    private String toLowerCase() {
 
         String result;
 
@@ -144,7 +144,7 @@ public class DtcTransformModel {
      *
      * @return すべて大文字に変換した値
      */
-    public String toUpperCase() {
+    private String toUpperCase() {
 
         String result;
 

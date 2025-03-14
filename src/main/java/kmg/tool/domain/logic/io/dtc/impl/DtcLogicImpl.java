@@ -336,7 +336,8 @@ public class DtcLogicImpl implements DtcLogic {
 
                     // 変換処理を適用
                     final DtcTransformModel dtcTransformModel = new DtcTransformModel(sourceValue);
-                    final String            derivedValue      = dtcTransformModel.apply(transformationType);
+                    dtcTransformModel.apply(transformationType);
+                    final String derivedValue = dtcTransformModel.getTransformedValue();
 
                     // テンプレートを置換
                     out = out.replace(derivedPlaceholder.getReplacementPattern(), derivedValue);
