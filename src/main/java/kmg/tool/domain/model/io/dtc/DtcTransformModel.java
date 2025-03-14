@@ -5,9 +5,6 @@ import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
 
 /**
  * テンプレートの動的変換モデル<br>
- * <p>
- * 文字列変換処理の各種メソッドを提供します。
- * </p>
  *
  * @author KenichiroArai
  *
@@ -18,6 +15,9 @@ public class DtcTransformModel {
     /** 元の値 */
     private final String originalValue;
 
+    /** 変換処理の種類 */
+    private DtcTransformTypes dtcTransformTypes;
+
     /** 変換後の値 */
     private String transformedValue;
 
@@ -25,9 +25,13 @@ public class DtcTransformModel {
      * コンストラクタ<br>
      *
      * @param value
-     *              元の値
+     *                          元の値
+     * @param dtcTransformTypes
+     *                          変換処理の種類
      */
-    public DtcTransformModel(final String value) {
+    public DtcTransformModel(final String value, final DtcTransformTypes dtcTransformTypes) {
+
+        this.dtcTransformTypes = dtcTransformTypes;
 
         if (value == null) {
 
@@ -44,20 +48,10 @@ public class DtcTransformModel {
 
     /**
      * 指定された変換処理を適用する<br>
-     *
-     * @param dtcTransformTypes
-     *                          テンプレートの動的変換変換処理の種類
      */
-    public void apply(final DtcTransformTypes dtcTransformTypes) {
+    public void apply() {
 
-        switch (dtcTransformTypes) {
-
-            case NONE          -> this.transformedValue = this.none();
-            case CAPITALIZE    -> this.transformedValue = this.capitalize();
-            case TO_UPPER_CASE -> this.transformedValue = this.toUpperCase();
-            case TO_LOWER_CASE -> this.transformedValue = this.toLowerCase();
-
-        }
+        this.transformedValue = this.dtcTransformTypes.transform(this.originalValue);
 
     }
 
@@ -85,70 +79,6 @@ public class DtcTransformModel {
         String result;
 
         result = this.transformedValue;
-        return result;
-
-    }
-
-    /**
-     * 文字列の最初の文字を大文字に変換<br>
-     *
-     * @return 最初の文字を大文字に変換した値
-     */
-    private String capitalize() {
-
-        String result;
-
-        if (this.originalValue.isEmpty()) {
-
-            result = this.originalValue;
-            return result;
-
-        }
-
-        result = KmgString.capitalize(this.originalValue);
-        return result;
-
-    }
-
-    /**
-     * 変換なし<br>
-     * 元の値をそのまま返す
-     *
-     * @return 元の値
-     */
-    private String none() {
-
-        String result;
-
-        result = this.originalValue;
-        return result;
-
-    }
-
-    /**
-     * すべて小文字に変換<br>
-     *
-     * @return すべて小文字に変換した値
-     */
-    private String toLowerCase() {
-
-        String result;
-
-        result = this.originalValue.toLowerCase();
-        return result;
-
-    }
-
-    /**
-     * すべて大文字に変換<br>
-     *
-     * @return すべて大文字に変換した値
-     */
-    private String toUpperCase() {
-
-        String result;
-
-        result = this.originalValue.toUpperCase();
         return result;
 
     }

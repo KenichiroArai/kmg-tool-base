@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import kmg.core.infrastructure.common.KmgComTypes;
+import kmg.core.infrastructure.type.KmgString;
 
 /**
  * テンプレートの動的変換変換処理の種類<br>
@@ -138,6 +139,29 @@ public enum DtcTransformTypes implements KmgComTypes<String> {
     }
 
     /**
+     * 文字列の最初の文字を大文字に変換<br>
+     *
+     * @param value
+     *              変換対象の文字列
+     *
+     * @return 最初の文字を大文字に変換した値
+     *
+     * @since 0.1.0
+     */
+    private static String capitalize(final String value) {
+
+        if (value.isEmpty()) {
+
+            return value;
+
+        }
+
+        final String result = KmgString.capitalize(value);
+        return result;
+
+    }
+
+    /**
      * コンストラクタ<br>
      *
      * @since 0.1.0
@@ -235,6 +259,39 @@ public enum DtcTransformTypes implements KmgComTypes<String> {
     public String toString() {
 
         final String result = this.getKey();
+        return result;
+
+    }
+
+    /**
+     * 指定された文字列を変換する<br>
+     *
+     * @param value
+     *              変換対象の文字列
+     *
+     * @return 変換後の文字列
+     *
+     * @since 0.1.0
+     */
+    public String transform(final String value) {
+
+        String result = value;
+
+        if (KmgString.isEmpty(result)) {
+
+            return result;
+
+        }
+
+        result = switch (this) {
+
+            case NONE          -> value;
+            case CAPITALIZE    -> DtcTransformTypes.capitalize(value);
+            case TO_UPPER_CASE -> value.toUpperCase();
+            case TO_LOWER_CASE -> value.toLowerCase();
+
+        };
+
         return result;
 
     }

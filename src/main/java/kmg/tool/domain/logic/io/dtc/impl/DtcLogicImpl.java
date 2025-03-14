@@ -335,12 +335,12 @@ public class DtcLogicImpl implements DtcLogic {
                         = DtcTransformTypes.getEnum(derivedPlaceholder.getTransformation());
 
                     // 変換処理を適用
-                    final DtcTransformModel dtcTransformModel = new DtcTransformModel(sourceValue);
-                    dtcTransformModel.apply(transformationType);
-                    final String derivedValue = dtcTransformModel.getTransformedValue();
+                    final DtcTransformModel dtcTransformModel = new DtcTransformModel(sourceValue, transformationType);
+                    dtcTransformModel.apply();
 
                     // テンプレートを置換
-                    out = out.replace(derivedPlaceholder.getReplacementPattern(), derivedValue);
+                    out = out.replace(derivedPlaceholder.getReplacementPattern(),
+                        dtcTransformModel.getTransformedValue());
 
                 }
 
