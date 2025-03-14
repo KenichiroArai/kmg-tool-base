@@ -10,13 +10,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
+import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -38,6 +43,21 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
     /** privateフィールド宣言の正規表現パターン */
     private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);";
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private KmgMessageSource messageSource;
 
     /** 読み込んだ１行データ */
     private String lineOfDataRead;
@@ -76,6 +96,22 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * デフォルトコンストラクタ
      */
     public AccessorCreationLogicImpl() {
+
+        this(LoggerFactory.getLogger(AccessorCreationLogicImpl.class));
+
+    }
+
+    /**
+     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected AccessorCreationLogicImpl(final Logger logger) {
+
+        this.logger = logger;
 
         this.csvRows = new ArrayList<>();
 
@@ -236,8 +272,23 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     @Override
     public void close() throws IOException {
 
-        this.closeReader();
-        this.closeWriter();
+        try {
+
+            this.closeReader();
+            this.closeWriter();
+
+        } catch (final IOException e) {
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+            final Object[]               logMsgArgs  = {
+                this.javadocComment, this.item,
+            };
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
 
     }
 

@@ -21,8 +21,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @author KenichiroArai
  */
 @Service
-public class AccessorCreationServiceImpl extends AbstractIctoProcessorService
-    implements AccessorCreationService {
+public class AccessorCreationServiceImpl extends AbstractIctoProcessorService implements AccessorCreationService {
 
     /**
      * ロガー
@@ -137,7 +136,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService
 
             } finally {
 
-                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32007;
+                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31006;
                 final Object[]               endLogMsgArgs  = {};
                 final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
                     endLogMsgArgs);
@@ -238,7 +237,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32004;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31003;
             final Object[]               logMsgArgs  = {
                 this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
             };
@@ -264,13 +263,6 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService
             this.accessorCreationLogic.close();
 
         } catch (final IOException e) {
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32003;
-            final Object[]               logMsgArgs  = {
-                this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
 
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31003;
             final Object[]               genMsgArgs  = {
@@ -321,7 +313,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32005;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31004;
             final Object[]               logMsgArgs  = {
                 this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
             };
@@ -355,7 +347,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32006;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31005;
             final Object[]               logMsgArgs  = {
                 this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
             };
@@ -384,7 +376,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31001;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -392,7 +384,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService
 
         }
 
-        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32002;
+        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31002;
         final Object[]               logMsgArgs  = {
             this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
         };
