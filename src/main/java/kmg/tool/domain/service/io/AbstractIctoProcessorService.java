@@ -14,7 +14,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 /**
  * 入力、CSV、テンプレート、出力の処理サービス抽象クラス
  */
-public abstract class AbstractInputCsvTemplateOutputProcessorService implements Two2OneService {
+public abstract class AbstractIctoProcessorService implements Two2OneService {
 
     /** 一時CSVファイルのサフィックスと拡張子 */
     private static final String TEMP_CSV_FILE_SUFFIX_EXTENSION = "Temp.csv";
@@ -181,7 +181,7 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
         Path result = null;
 
         final String csvFileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
-        final String suffixExtension = AbstractInputCsvTemplateOutputProcessorService.TEMP_CSV_FILE_SUFFIX_EXTENSION;
+        final String suffixExtension = AbstractIctoProcessorService.TEMP_CSV_FILE_SUFFIX_EXTENSION;
 
         try {
 
