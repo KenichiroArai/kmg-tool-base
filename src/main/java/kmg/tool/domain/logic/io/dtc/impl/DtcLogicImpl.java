@@ -13,12 +13,12 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.foundation.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.domain.logic.io.dtc.DtcLogic;
 import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
+import kmg.tool.domain.model.io.dtc.DtcTransformModel;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
 import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
@@ -43,66 +43,6 @@ public class DtcLogicImpl implements DtcLogic {
 
     /** 出力ファイルパス */
     private Path outputPath;
-
-    /**
-     * 指定された変換処理を値に適用する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @param value
-     *                          元の値
-     * @param dtcTransformTypes
-     *                          テンプレートの動的変換変換処理の種類
-     *
-     * @return 変換後の値
-     */
-    @Override
-    public String applyTransformation(final String value, final DtcTransformTypes dtcTransformTypes) {
-
-        String result = KmgString.EMPTY;
-
-        if (value == null) {
-
-            return result;
-
-        }
-
-        switch (dtcTransformTypes) {
-
-            case NONE:
-                result = value;
-                break;
-
-            case CAPITALIZE:
-                // 文字列の最初の文字を大文字に変換
-                if (!value.isEmpty()) {
-
-                    result = KmgString.capitalize(value);
-
-                } else {
-
-                    result = value;
-
-                }
-                break;
-
-            case TO_UPPER_CASE:
-                // すべて大文字に変換
-                result = value.toUpperCase();
-                break;
-
-            case TO_LOWER_CASE:
-                // すべて小文字に変換
-                result = value.toLowerCase();
-                break;
-
-        }
-
-        return result;
-
-    }
 
     /**
      * リソースをクローズする。
@@ -395,7 +335,8 @@ public class DtcLogicImpl implements DtcLogic {
                         = DtcTransformTypes.getEnum(derivedPlaceholder.getTransformation());
 
                     // 変換処理を適用
-                    final String derivedValue = this.applyTransformation(sourceValue, transformationType);
+                    final DtcTransformModel dtcTransformModel = new DtcTransformModel(sourceValue);
+                    final String            derivedValue      = dtcTransformModel.apply(transformationType);
 
                     // テンプレートを置換
                     out = out.replace(derivedPlaceholder.getReplacementPattern(), derivedValue);
