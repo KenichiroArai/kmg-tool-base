@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic;
+package kmg.tool.domain.logic.io.dtc;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
-import kmg.tool.domain.model.DtcDerivedPlaceholderModel;
+import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**

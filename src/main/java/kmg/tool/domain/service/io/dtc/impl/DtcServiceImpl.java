@@ -1,4 +1,4 @@
-package kmg.tool.domain.service.io.impl;
+package kmg.tool.domain.service.io.dtc.impl;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.logic.DtcLogic;
-import kmg.tool.domain.model.DtcDerivedPlaceholderModel;
+import kmg.tool.domain.logic.io.dtc.DtcLogic;
+import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.service.io.DtcService;
-import kmg.tool.domain.types.DtcKeyTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
+import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**

@@ -1,4 +1,4 @@
-package kmg.tool.domain.model;
+package kmg.tool.domain.model.io.dtc;
 
 /**
  * テンプレートの動的変換派生プレースホルダー定義モデル<br>

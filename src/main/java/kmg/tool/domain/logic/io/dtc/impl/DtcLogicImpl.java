@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic.impl;
+package kmg.tool.domain.logic.io.dtc.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,11 +17,11 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.foundation.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.domain.logic.DtcLogic;
-import kmg.tool.domain.model.DtcDerivedPlaceholderModel;
-import kmg.tool.domain.types.DtcKeyTypes;
-import kmg.tool.domain.types.DtcTransformTypes;
+import kmg.tool.domain.logic.io.dtc.DtcLogic;
+import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
+import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
