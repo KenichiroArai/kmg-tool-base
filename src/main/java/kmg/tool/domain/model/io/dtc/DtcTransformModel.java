@@ -16,7 +16,10 @@ import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
 public class DtcTransformModel {
 
     /** 元の値 */
-    private final String value;
+    private final String originalValue;
+
+    /** 変換後の値 */
+    private String transformedValue;
 
     /**
      * コンストラクタ<br>
@@ -28,12 +31,14 @@ public class DtcTransformModel {
 
         if (value == null) {
 
-            this.value = KmgString.EMPTY;
+            this.originalValue = KmgString.EMPTY;
+            this.transformedValue = KmgString.EMPTY;
             return;
 
         }
 
-        this.value = value;
+        this.originalValue = value;
+        this.transformedValue = value;
 
     }
 
@@ -42,23 +47,17 @@ public class DtcTransformModel {
      *
      * @param dtcTransformTypes
      *                          テンプレートの動的変換変換処理の種類
-     *
-     * @return 変換後の値
      */
-    public String apply(final DtcTransformTypes dtcTransformTypes) {
+    public void apply(final DtcTransformTypes dtcTransformTypes) {
 
-        String result = KmgString.EMPTY;
+        switch (dtcTransformTypes) {
 
-        result = switch (dtcTransformTypes) {
+            case NONE          -> this.transformedValue = this.none();
+            case CAPITALIZE    -> this.transformedValue = this.capitalize();
+            case TO_UPPER_CASE -> this.transformedValue = this.toUpperCase();
+            case TO_LOWER_CASE -> this.transformedValue = this.toLowerCase();
 
-            case NONE          -> this.none();
-            case CAPITALIZE    -> this.capitalize();
-            case TO_UPPER_CASE -> this.toUpperCase();
-            case TO_LOWER_CASE -> this.toLowerCase();
-
-        };
-
-        return result;
+        }
 
     }
 
@@ -71,14 +70,14 @@ public class DtcTransformModel {
 
         String result;
 
-        if (this.value.isEmpty()) {
+        if (this.originalValue.isEmpty()) {
 
-            result = this.value;
+            result = this.originalValue;
             return result;
 
         }
 
-        result = KmgString.capitalize(this.value);
+        result = KmgString.capitalize(this.originalValue);
         return result;
 
     }
@@ -88,11 +87,25 @@ public class DtcTransformModel {
      *
      * @return 元の値
      */
-    public String getValue() {
+    public String getOriginalValue() {
 
         String result;
 
-        result = this.value;
+        result = this.originalValue;
+        return result;
+
+    }
+
+    /**
+     * 変換後の値を返す<br>
+     *
+     * @return 変換後の値
+     */
+    public String getTransformedValue() {
+
+        String result;
+
+        result = this.transformedValue;
         return result;
 
     }
@@ -107,7 +120,7 @@ public class DtcTransformModel {
 
         String result;
 
-        result = this.value;
+        result = this.originalValue;
         return result;
 
     }
@@ -121,7 +134,7 @@ public class DtcTransformModel {
 
         String result;
 
-        result = this.value.toLowerCase();
+        result = this.originalValue.toLowerCase();
         return result;
 
     }
@@ -135,7 +148,7 @@ public class DtcTransformModel {
 
         String result;
 
-        result = this.value.toUpperCase();
+        result = this.originalValue.toUpperCase();
         return result;
 
     }
