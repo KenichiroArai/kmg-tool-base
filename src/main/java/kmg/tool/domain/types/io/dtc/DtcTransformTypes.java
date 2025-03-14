@@ -32,8 +32,8 @@ public enum DtcTransformTypes implements KmgComTypes<String> {
      */
     NONE("指定無し", "none", "指定無し"),
 
-    /** 最初の文字を大文字に変換 */
-    CAPITALIZE_FIRST("最初の文字を大文字に変換", "capitalizeFirst", "文字列の最初の文字を大文字に変換する"),
+    /** 文字列の最初の文字を大文字に変換 */
+    CAPITALIZE("文字列の最初の文字を大文字に変換", "capitalize", "文字列の最初の文字を大文字に変換する"),
 
     /** すべて大文字に変換 */
     TO_UPPER_CASE("すべて大文字に変換", "toUpperCase", "文字列のすべての文字を大文字に変換する"),

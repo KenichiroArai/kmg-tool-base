@@ -78,11 +78,11 @@ public class DtcLogicImpl implements DtcLogic {
                 result = value;
                 break;
 
-            case CAPITALIZE_FIRST:
-                // 最初の文字を大文字に変換
+            case CAPITALIZE:
+                // 文字列の最初の文字を大文字に変換
                 if (!value.isEmpty()) {
 
-                    result = Character.toUpperCase(value.charAt(0)) + (value.length() > 1 ? value.substring(1) : "");
+                    result = KmgString.capitalize(value);
 
                 } else {
 

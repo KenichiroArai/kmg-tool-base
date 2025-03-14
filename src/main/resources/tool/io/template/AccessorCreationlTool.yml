@@ -16,12 +16,12 @@ csvPlaceholders:
 # transformation: 適用する変換処理
 derivedPlaceholders:
     - displayName: "先頭大文字項目"
-      replacementPattern: "{Item}"
+      replacementPattern: "{capitalize}"
       sourceKey: "項目"
-      transformation: "capitalizeFirst"
+      transformation: "capitalize"
 
 # テンプレートの内容
-# {name}, {type}, {item}, {Item}のプレースホルダーが実際の値に置換される
+# {name}, {type}, {item}, {capitalize}のプレースホルダーが実際の値に置換される
 templateContent: |
     /**
      * {name}を設定する<br>
@@ -29,7 +29,7 @@ templateContent: |
      * @sine 0.1.0
      * @param {item} {name}
      */
-    public void set{Item}({type} {item}) {
+    public void set{capitalize}({type} {item}) {
         this.{item} = {item};
     }
 
@@ -39,7 +39,7 @@ templateContent: |
      * @sine 0.1.0
      * @return {name}
      */
-    public {type} get{Item}() {
+    public {type} get{capitalize}() {
        {type} result = this.{item};
        return result;
     }
