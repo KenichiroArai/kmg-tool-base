@@ -20,6 +20,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
+import kmg.tool.application.types.io.AccessorRegexGroupTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -303,8 +304,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         }
 
         // フィールドの情報を取得
-        this.tyep = matcherSrc.group(1); // 型
-        this.item = matcherSrc.group(3); // 項目名
+        this.tyep = matcherSrc.group(AccessorRegexGroupTypes.PRIVATE_FIELD_TYPE.getGroupIndex()); // 型
+        this.item = matcherSrc.group(AccessorRegexGroupTypes.PRIVATE_FIELD_ITEM_NAME.getGroupIndex()); // 項目名
 
         result = true;
         return result;
@@ -356,7 +357,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
             // 1行完結型のJavadocでない場合
 
             // コメント部分を抽出して設定
-            this.javadocComment = singleLineMatcher.group(1);
+            this.javadocComment
+                = singleLineMatcher.group(AccessorRegexGroupTypes.SINGLE_LINE_JAVADOC_COMMENT.getGroupIndex());
 
             // Javadoc解析終了
             this.inJavadocParsing = false;
@@ -384,7 +386,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         }
 
         // コメント部分を抽出して設定
-        this.javadocComment = multiLineStartMatcher.group(1);
+        this.javadocComment
+            = multiLineStartMatcher.group(AccessorRegexGroupTypes.MULTI_LINE_JAVADOC_COMMENT.getGroupIndex());
 
         // Javadoc解析終了
         this.inJavadocParsing = false;
