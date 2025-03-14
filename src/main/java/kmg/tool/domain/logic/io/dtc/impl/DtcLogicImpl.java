@@ -19,6 +19,8 @@ import kmg.foundation.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.domain.logic.io.dtc.DtcLogic;
 import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.model.io.dtc.DtcTransformModel;
+import kmg.tool.domain.model.io.dtc.impl.DtcDerivedPlaceholderModelImpl;
+import kmg.tool.domain.model.io.dtc.impl.DtcTransformModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
 import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
@@ -131,7 +133,7 @@ public class DtcLogicImpl implements DtcLogic {
             final String transformation     = placeholderMap.get(DtcKeyTypes.TRANSFORMATION.getKey());
 
             final DtcDerivedPlaceholderModel derivedPlaceholder
-                = new DtcDerivedPlaceholderModel(displayName, replacementPattern, sourceKey, transformation);
+                = new DtcDerivedPlaceholderModelImpl(displayName, replacementPattern, sourceKey, transformation);
             result.add(derivedPlaceholder);
 
         }
@@ -335,7 +337,8 @@ public class DtcLogicImpl implements DtcLogic {
                         = DtcTransformTypes.getEnum(derivedPlaceholder.getTransformation());
 
                     // 変換処理を適用
-                    final DtcTransformModel dtcTransformModel = new DtcTransformModel(sourceValue, transformationType);
+                    final DtcTransformModel dtcTransformModel
+                        = new DtcTransformModelImpl(sourceValue, transformationType);
                     dtcTransformModel.apply();
 
                     // テンプレートを置換
