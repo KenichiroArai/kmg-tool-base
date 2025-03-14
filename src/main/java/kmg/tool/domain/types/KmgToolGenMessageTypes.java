@@ -96,17 +96,6 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN31003("リソースのクローズ処理中にエラーが発生しました。"),
 
     /**
-     * 先頭大文字項目がnullです。
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32000("KMGTOOL_GEN32000"),
-
-    /**
      * 項目名がnullです。
      *
      * @author KenichiroArai
