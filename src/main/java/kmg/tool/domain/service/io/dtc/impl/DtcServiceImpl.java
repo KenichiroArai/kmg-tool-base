@@ -193,15 +193,22 @@ public class DtcServiceImpl implements DtcService {
 
         try {
 
-            /* テンプレートの動的変換ロジッ の初期化 */
+            /* テンプレートの動的変換ロジックの初期化 */
             this.dtcLogic.initialize(this.getInputPath(), this.getTemplatePath(), this.getOutputPath());
 
-            /* テンプレートの読み込みと解析 */
-            this.dtcLogic.loadAndParseTemplate();
+            /* テンプレートの読み込む */
+            this.dtcLogic.loadTemplate();
+
+            /* テンプレートコンテンツを読み込む */
+            this.dtcLogic.loadTemplateContent();
 
             /* プレースホルダー定義の取得 */
-            this.dtcLogic.extractCsvPlaceholderDefinitions();
-            this.dtcLogic.extractDerivedPlaceholderDefinitions();
+
+            // CSVプレースホルダー定義を読み込む
+            this.dtcLogic.loadCsvPlaceholderDefinitions();
+
+            // 派生プレースホルダー定義を読み込む
+            this.dtcLogic.loadDerivedPlaceholderDefinitions();
 
             /* 入力ファイルの処理と出力 */
             this.dtcLogic.processInputAndGenerateOutput();

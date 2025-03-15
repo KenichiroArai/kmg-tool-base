@@ -27,28 +27,6 @@ public interface DtcLogic extends Closeable {
     void close() throws IOException;
 
     /**
-     * YAMLデータからCSVプレースホルダー定義を抽出する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @return true：成功、false：失敗
-     */
-    boolean extractCsvPlaceholderDefinitions();
-
-    /**
-     * YAMLデータから派生プレースホルダー定義を抽出する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @return true：成功、false：失敗
-     */
-    boolean extractDerivedPlaceholderDefinitions();
-
-    /**
      * 入力ファイルパスを返す<br>
      *
      * @author KenichiroArai
@@ -109,7 +87,7 @@ public interface DtcLogic extends Closeable {
     boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath);
 
     /**
-     * テンプレートファイルを読み込みYAMLとして解析する<br>
+     * CSVプレースホルダー定義を読み込む<br>
      *
      * @author KenichiroArai
      *
@@ -120,7 +98,49 @@ public interface DtcLogic extends Closeable {
      * @throws KmgToolException
      *                          テンプレートの読み込みに失敗した場合
      */
-    boolean loadAndParseTemplate() throws KmgToolException;
+    boolean loadCsvPlaceholderDefinitions() throws KmgToolException;
+
+    /**
+     * 派生プレースホルダー定義を読み込む<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          テンプレートの読み込みに失敗した場合
+     */
+    boolean loadDerivedPlaceholderDefinitions() throws KmgToolException;
+
+    /**
+     * テンプレートファイルを読み込む<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          テンプレートの読み込みに失敗した場合
+     */
+    boolean loadTemplate() throws KmgToolException;
+
+    /**
+     * テンプレートコンテンツを読み込む<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          テンプレートコンテンツの読み込みに失敗した場合
+     */
+    boolean loadTemplateContent() throws KmgToolException;
 
     /**
      * 入力ファイルを処理し、テンプレートに基づいて出力を生成する<br>
