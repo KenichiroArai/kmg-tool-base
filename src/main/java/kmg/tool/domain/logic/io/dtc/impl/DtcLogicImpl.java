@@ -69,6 +69,9 @@ public class DtcLogicImpl implements DtcLogic {
     /** テンプレートの内容 */
     private String templateContent;
 
+    /** 出力の内容 */
+    private String outputContent;
+
     /**
      * デフォルトコンストラクタ
      */
@@ -96,6 +99,7 @@ public class DtcLogicImpl implements DtcLogic {
         this.templateContent = null;
         this.csvPlaceholderMap.clear();
         this.derivedPlaceholders.clear();
+        this.outputContent = null;
 
         result = true;
         return result;
@@ -393,11 +397,21 @@ public class DtcLogicImpl implements DtcLogic {
     @Override
     public void processInputAndGenerateOutput() throws KmgToolException {
 
+        this.outputContent = this.templateContent;
+        final String[] csvLine = KmgDelimiterTypes.COMMA.split(this.convertedLine);
+
+        // CSV値を一時保存するマップ
+        final Map<String, String> csvValues = new HashMap<>();
+
+        // CSVプレースホルダーを処理
+        this.processCsvPlaceholders(csvLine, csvValues);
+
+        // 派生プレースホルダーを処理
+        this.processDerivedPlaceholders(csvValues);
+
         try {
 
-            // 1行を処理して出力
-            final String processedLine = this.processLine(this.convertedLine);
-            this.writer.write(processedLine);
+            this.writer.write(this.outputContent);
             this.writer.newLine();
 
         } catch (final IOException e) {
@@ -546,19 +560,12 @@ public class DtcLogicImpl implements DtcLogic {
     /**
      * CSVプレースホルダーを処理する<br>
      *
-     * @param template
-     *                  テンプレート
      * @param csvLine
      *                  CSV行データ
      * @param csvValues
      *                  CSV値を保存するマップ
-     *
-     * @return 処理後のテンプレート
      */
-    private String processCsvPlaceholders(final String template, final String[] csvLine,
-        final Map<String, String> csvValues) {
-
-        String result = template;
+    private void processCsvPlaceholders(final String[] csvLine, final Map<String, String> csvValues) {
 
         // CSVプレースホルダーのキー配列
         final String[] csvPlaceholderKeys = this.csvPlaceholderMap.keySet().toArray(new String[0]);
@@ -583,31 +590,22 @@ public class DtcLogicImpl implements DtcLogic {
             csvValues.put(key, value);
 
             // テンプレートを置換
-            result = result.replace(pattern, value);
+            this.outputContent = this.outputContent.replace(pattern, value);
 
         }
-
-        return result;
 
     }
 
     /**
      * 派生プレースホルダーを処理する<br>
      *
-     * @param template
-     *                  テンプレート
      * @param csvValues
      *                  CSV値を保存するマップ
-     *
-     * @return 処理後のテンプレート
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    private String processDerivedPlaceholders(final String template, final Map<String, String> csvValues)
-        throws KmgToolException {
-
-        String result = template;
+    private void processDerivedPlaceholders(final Map<String, String> csvValues) throws KmgToolException {
 
         // 派生プレースホルダーを処理
         for (final DtcDerivedPlaceholderModel derivedPlaceholder : this.derivedPlaceholders) {
@@ -629,41 +627,11 @@ public class DtcLogicImpl implements DtcLogic {
             dtcTransformModel.apply();
 
             // テンプレートを置換
-            result
-                = result.replace(derivedPlaceholder.getReplacementPattern(), dtcTransformModel.getTransformedValue());
+            this.outputContent = this.outputContent.replace(derivedPlaceholder.getReplacementPattern(),
+                dtcTransformModel.getTransformedValue());
 
         }
 
-        return result;
-
     }
 
-    /**
-     * 1行のデータを処理する<br>
-     *
-     * @param line
-     *             処理する行
-     *
-     * @return 処理後の行
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    private String processLine(final String line) throws KmgToolException {
-
-        String         result  = this.templateContent;
-        final String[] csvLine = KmgDelimiterTypes.COMMA.split(line);
-
-        // CSV値を一時保存するマップ
-        final Map<String, String> csvValues = new HashMap<>();
-
-        // CSVプレースホルダーを処理
-        result = this.processCsvPlaceholders(result, csvLine, csvValues);
-
-        // 派生プレースホルダーを処理
-        result = this.processDerivedPlaceholders(result, csvValues);
-
-        return result;
-
-    }
 }
