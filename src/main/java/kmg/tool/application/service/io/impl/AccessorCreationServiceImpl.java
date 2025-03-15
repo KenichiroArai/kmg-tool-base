@@ -358,9 +358,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
         } catch (final KmgToolException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31005;
-            final Object[]               logMsgArgs  = {
-                this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
-            };
+            final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
 

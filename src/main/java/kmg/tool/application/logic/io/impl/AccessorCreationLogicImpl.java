@@ -496,7 +496,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         this.inputPath = inputPath;
         this.outputPath = outputPath;
 
-        /* 読み込みと書き込みのインスタンス変数の初期化 */
+        /* データのクリア */
         this.clearProcessingData();
 
         this.clearCsvRows();
