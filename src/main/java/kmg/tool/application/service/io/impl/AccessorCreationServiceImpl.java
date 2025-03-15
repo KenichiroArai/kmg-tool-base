@@ -127,6 +127,16 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
             result = true;
 
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/15 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
         } finally {
 
             try {
