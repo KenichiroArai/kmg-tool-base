@@ -137,9 +137,13 @@ public class DtcServiceImpl implements DtcService {
     }
 
     /**
-     * 初期化する
+     * 初期化する<br>
      *
-     * @return true：成功、false：失敗
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
      *
      * @param inputPath
      *                     入力ファイルパス
@@ -147,6 +151,8 @@ public class DtcServiceImpl implements DtcService {
      *                     テンプレートファイルパス
      * @param outputPath
      *                     出力ファイルパス
+     *
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
