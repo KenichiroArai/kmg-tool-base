@@ -211,7 +211,22 @@ public class DtcServiceImpl implements DtcService {
             this.dtcLogic.loadDerivedPlaceholderDefinitions();
 
             /* 入力ファイルの処理と出力 */
-            this.dtcLogic.processInputAndGenerateOutput();
+
+            do {
+
+                /* 1行データを読み込む */
+                final boolean isRead = this.readOneLineData();
+
+                if (!isRead) {
+
+                    break;
+
+                }
+
+                // TODO KenichiroArai 2025/03/16 処理
+                this.dtcLogic.processInputAndGenerateOutput();
+
+            } while (true);
 
             result = true;
 
@@ -266,6 +281,38 @@ public class DtcServiceImpl implements DtcService {
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
         }
+
+    }
+
+    /**
+     * 1行データを読み込む。
+     *
+     * @return true：読み込み成功、false：読み込み終了
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private boolean readOneLineData() throws KmgToolException {
+
+        boolean result = false;
+
+        try {
+
+            result = this.dtcLogic.readOneLineOfData();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/16 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
+
+        return result;
 
     }
 }

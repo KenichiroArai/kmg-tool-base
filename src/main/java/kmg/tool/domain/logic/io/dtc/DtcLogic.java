@@ -18,11 +18,11 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface DtcLogic extends Closeable {
 
     /**
-     * 読み込み処理をクリアする。
+     * 読み込み中のデータをクリアする。
      *
      * @return true：成功、false：失敗
      */
-    boolean clearReadProcess();
+    boolean clearReadingData();
 
     /**
      * リソースをクローズする。
@@ -163,4 +163,14 @@ public interface DtcLogic extends Closeable {
      *                          入出力処理に失敗した場合
      */
     void processInputAndGenerateOutput() throws KmgToolException;
+
+    /**
+     * 1行データを読み込む。
+     *
+     * @return true：データあり、false：データなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean readOneLineOfData() throws KmgToolException;
 }

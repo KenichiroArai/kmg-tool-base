@@ -51,6 +51,12 @@ public class DtcLogicImpl implements DtcLogic {
     /** 出力ファイルのBufferedWriter */
     private BufferedWriter writer;
 
+    /** 読み込んだ１行データ */
+    private String lineOfDataRead;
+
+    /** 変換後の1行データ */
+    private String convertedLine;
+
     /** YAMLデータ */
     private final Map<String, Object> yamlData;
 
@@ -75,15 +81,17 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * 読み込み処理をクリアする。
+     * 読み込み中のデータをクリアする。
      *
      * @return true：成功、false：失敗
      */
     @Override
-    public boolean clearReadProcess() {
+    public boolean clearReadingData() {
 
         boolean result = false;
 
+        this.lineOfDataRead = null;
+        this.convertedLine = null;
         this.yamlData.clear();
         this.templateContent = null;
         this.csvPlaceholderMap.clear();
@@ -210,8 +218,8 @@ public class DtcLogicImpl implements DtcLogic {
         this.templatePath = templatePath;
         this.outputPath = outputPath;
 
-        /* 読み込みと書き込みのインスタンス変数の初期化 */
-        this.clearReadProcess();
+        /* データのクリア */
+        this.clearReadingData();
 
         /* ファイルを開く */
 
@@ -387,8 +395,10 @@ public class DtcLogicImpl implements DtcLogic {
 
         try {
 
-            // 入力ファイルを1行ずつ処理
-            this.processInputFile();
+            // 1行を処理して出力
+            final String processedLine = this.processLine(this.convertedLine);
+            this.writer.write(processedLine);
+            this.writer.newLine();
 
         } catch (final IOException e) {
 
@@ -398,19 +408,48 @@ public class DtcLogicImpl implements DtcLogic {
             };
             throw new KmgToolException(msgType, messageArgs, e);
 
-        } finally {
+        }
 
-            try {
+    }
 
-                // リソースをクローズ
-                this.close();
+    /**
+     * 1行データを読み込む。
+     *
+     * @return true：データあり、false：データなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean readOneLineOfData() throws KmgToolException {
 
-            } catch (final IOException e) {
+        boolean result = false;
 
-                // TODO KenichiroArai 2025/03/15 例外処理
+        try {
+
+            // 1行読み込み
+            this.lineOfDataRead = this.reader.readLine();
+            this.convertedLine = this.lineOfDataRead;
+
+            // ファイルの終わりに達したか
+            if (this.lineOfDataRead == null) {
+                // 達した場合
+
+                return result;
+
             }
 
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/16 例外処理
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
         }
+
+        result = true;
+        return result;
 
     }
 
@@ -596,30 +635,6 @@ public class DtcLogicImpl implements DtcLogic {
         }
 
         return result;
-
-    }
-
-    /**
-     * 入力ファイルを1行ずつ処理する<br>
-     *
-     * @throws IOException
-     *                          入出力例外
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    private void processInputFile() throws IOException, KmgToolException {
-
-        String line;
-
-        // 入力ファイルを1行ずつ処理
-        while ((line = this.reader.readLine()) != null) {
-
-            // 1行を処理して出力
-            final String processedLine = this.processLine(line);
-            this.writer.write(processedLine);
-            this.writer.newLine();
-
-        }
 
     }
 
