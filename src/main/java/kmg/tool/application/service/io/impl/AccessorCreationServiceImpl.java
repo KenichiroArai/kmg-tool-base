@@ -141,7 +141,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
             try {
 
-                /* リソースのクローズ処理 */
+                /* アクセサ作成ロジックのクローズ処理 */
                 this.closeAccessorCreationLogic();
 
             } finally {
