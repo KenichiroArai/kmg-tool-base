@@ -18,6 +18,13 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface DtcLogic extends Closeable {
 
     /**
+     * 読み込み処理をクリアする。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean clearReadProcess();
+
+    /**
      * リソースをクローズする。
      *
      * @throws IOException
@@ -75,16 +82,19 @@ public interface DtcLogic extends Closeable {
     /**
      * 初期化する
      *
-     * @return true：成功、false：失敗
-     *
      * @param inputPath
      *                     入力ファイルパス
      * @param templatePath
      *                     テンプレートファイルパス
      * @param outputPath
      *                     出力ファイルパス
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     *
+     * @return true：成功、false：失敗
      */
-    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath);
+    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) throws KmgToolException;
 
     /**
      * CSVプレースホルダー定義を読み込む<br>

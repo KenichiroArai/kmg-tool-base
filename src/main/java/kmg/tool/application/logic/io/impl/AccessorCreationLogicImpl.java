@@ -477,12 +477,12 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /**
      * 初期化する。
      *
-     * @return true：成功、false：失敗
-     *
      * @param inputPath
      *                   入力ファイルパス
      * @param outputPath
      *                   出力ファイルパス
+     *
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外

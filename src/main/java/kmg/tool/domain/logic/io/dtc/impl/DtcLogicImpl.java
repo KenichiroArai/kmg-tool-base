@@ -75,6 +75,26 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
+     * 読み込み処理をクリアする。
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    public boolean clearReadProcess() {
+
+        boolean result = false;
+
+        this.yamlData.clear();
+        this.templateContent = null;
+        this.csvPlaceholderMap.clear();
+        this.derivedPlaceholders.clear();
+
+        result = true;
+        return result;
+
+    }
+
+    /**
      * リソースをクローズする。
      *
      * @throws IOException
@@ -175,17 +195,33 @@ public class DtcLogicImpl implements DtcLogic {
      *                     出力ファイルパス
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
     @SuppressWarnings("hiding")
-    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) {
+    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
+        throws KmgToolException {
 
-        final boolean result = true;
+        boolean result = false;
 
         this.inputPath = inputPath;
         this.templatePath = templatePath;
         this.outputPath = outputPath;
 
+        /* 読み込みと書き込みのインスタンス変数の初期化 */
+        this.clearReadProcess();
+
+        /* ファイルを開く */
+
+        // 入力ファイルを開く
+        this.openInputFile();
+
+        // 出力ファイルを開く
+        this.openOutputFile();
+
+        result = true;
         return result;
 
     }
@@ -351,10 +387,6 @@ public class DtcLogicImpl implements DtcLogic {
 
         try {
 
-            // 入出力ファイルを開く
-            this.openInputFile();
-            this.openOutputFile();
-
             // 入力ファイルを1行ずつ処理
             this.processInputFile();
 
@@ -423,24 +455,52 @@ public class DtcLogicImpl implements DtcLogic {
     /**
      * 入力ファイルを開く<br>
      *
-     * @throws IOException
-     *                     入出力例外
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    private void openInputFile() throws IOException {
+    @SuppressWarnings("resource")
+    private void openInputFile() throws KmgToolException {
 
-        this.reader = Files.newBufferedReader(this.inputPath);
+        try {
+
+            this.reader = Files.newBufferedReader(this.inputPath);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/15 例外処理
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs  = {
+                this.inputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
 
     }
 
     /**
-     * 出力ファイルを開く<br>
+     * 出力ファイルを開く
      *
-     * @throws IOException
-     *                     入出力例外
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    private void openOutputFile() throws IOException {
+    @SuppressWarnings("resource")
+    private void openOutputFile() throws KmgToolException {
 
-        this.writer = Files.newBufferedWriter(this.outputPath);
+        try {
+
+            this.writer = Files.newBufferedWriter(this.outputPath);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/15 例外処理
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs  = {
+                this.outputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
 
     }
 
