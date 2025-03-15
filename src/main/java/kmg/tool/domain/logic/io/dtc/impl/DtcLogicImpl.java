@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,17 +51,34 @@ public class DtcLogicImpl implements DtcLogic {
     /** 出力ファイルのBufferedWriter */
     private BufferedWriter writer;
 
+    /** YAMLデータ */
+    private final Map<String, Object> yamlData;
+
+    /** CSVプレースホルダーの定義マップ */
+    private final Map<String, String> csvPlaceholderMap;
+
+    /** 派生プレースホルダーの定義リスト */
+    private final List<DtcDerivedPlaceholderModel> derivedPlaceholders;
+
+    /** テンプレートの内容 */
+    private String templateContent;
+
     /** CSVプレースホルダーのキー配列 */
     private String[] csvPlaceholderKeys;
 
     /** CSVプレースホルダーのパターン配列 */
     private String[] csvPlaceholderPatterns;
 
-    /** テンプレートの内容 */
-    private String templateContent;
+    /**
+     * デフォルトコンストラクタ
+     */
+    public DtcLogicImpl() {
 
-    /** 派生プレースホルダーの定義リスト */
-    private List<DtcDerivedPlaceholderModel> derivedPlaceholders;
+        this.yamlData = new HashMap<>();
+        this.csvPlaceholderMap = new HashMap<>();
+        this.derivedPlaceholders = new ArrayList<>();
+
+    }
 
     /**
      * リソースをクローズする。
@@ -85,20 +101,17 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @sine 1.0.0
      *
-     * @param yamlData
-     *                 解析されたYAMLデータ
-     *
-     * @return CSVプレースホルダーの定義マップ
+     * @return true：成功、false：失敗
      */
     @Override
-    public Map<String, String> extractCsvPlaceholderDefinitions(final Map<String, Object> yamlData) {
+    public boolean extractCsvPlaceholderDefinitions() {
 
-        final Map<String, String> result = new LinkedHashMap<>();
+        boolean result = false;
 
         // CSVプレースホルダー定義を取得する
         @SuppressWarnings("unchecked")
         final List<Map<String, String>> csvPlaceholders
-            = (List<Map<String, String>>) yamlData.get(DtcKeyTypes.CSV_PLACEHOLDERS.getKey());
+            = (List<Map<String, String>>) this.yamlData.get(DtcKeyTypes.CSV_PLACEHOLDERS.getKey());
 
         if (csvPlaceholders == null) {
 
@@ -108,11 +121,12 @@ public class DtcLogicImpl implements DtcLogic {
 
         for (final Map<String, String> placeholderMap : csvPlaceholders) {
 
-            result.put(placeholderMap.get(DtcKeyTypes.DISPLAY_NAME.getKey()),
+            this.csvPlaceholderMap.put(placeholderMap.get(DtcKeyTypes.DISPLAY_NAME.getKey()),
                 placeholderMap.get(DtcKeyTypes.REPLACEMENT_PATTERN.getKey()));
 
         }
 
+        result = true;
         return result;
 
     }
@@ -124,28 +138,25 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @sine 1.0.0
      *
-     * @param yamlData
-     *                 解析されたYAMLデータ
-     *
-     * @return 派生プレースホルダーの定義リスト
+     * @return true：成功、false：失敗
      */
     @Override
-    public List<DtcDerivedPlaceholderModel> extractDerivedPlaceholderDefinitions(final Map<String, Object> yamlData) {
+    public boolean extractDerivedPlaceholderDefinitions() {
 
-        final List<DtcDerivedPlaceholderModel> result = new ArrayList<>();
+        boolean result = false;
 
         // 派生プレースホルダー定義を取得する
         @SuppressWarnings("unchecked")
-        final List<Map<String, String>> derivedPlaceholders
-            = (List<Map<String, String>>) yamlData.get(DtcKeyTypes.DERIVED_PLACEHOLDERS.getKey());
+        final List<Map<String, String>> derivedPlaceholdersTmp
+            = (List<Map<String, String>>) this.yamlData.get(DtcKeyTypes.DERIVED_PLACEHOLDERS.getKey());
 
-        if (derivedPlaceholders == null) {
+        if (derivedPlaceholdersTmp == null) {
 
             return result;
 
         }
 
-        for (final Map<String, String> placeholderMap : derivedPlaceholders) {
+        for (final Map<String, String> placeholderMap : derivedPlaceholdersTmp) {
 
             final String displayName        = placeholderMap.get(DtcKeyTypes.DISPLAY_NAME.getKey());
             final String replacementPattern = placeholderMap.get(DtcKeyTypes.REPLACEMENT_PATTERN.getKey());
@@ -154,10 +165,11 @@ public class DtcLogicImpl implements DtcLogic {
 
             final DtcDerivedPlaceholderModel derivedPlaceholder
                 = new DtcDerivedPlaceholderModelImpl(displayName, replacementPattern, sourceKey, transformation);
-            result.add(derivedPlaceholder);
+            this.derivedPlaceholders.add(derivedPlaceholder);
 
         }
 
+        result = true;
         return result;
 
     }
@@ -220,6 +232,19 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
+     * YAMLデータを返す。
+     *
+     * @return YAMLデータ
+     */
+    @Override
+    public Map<String, Object> getYamlData() {
+
+        final Map<String, Object> result = this.yamlData;
+        return result;
+
+    }
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗
@@ -252,19 +277,25 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @sine 1.0.0
      *
-     * @return 解析されたYAMLデータ
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          テンプレートの読み込みに失敗した場合
      */
     @Override
-    public Map<String, Object> loadAndParseTemplate() throws KmgToolException {
+    public boolean loadAndParseTemplate() throws KmgToolException {
 
-        Map<String, Object> result = null;
+        boolean result = false;
 
         try {
 
-            result = KmgYamlUtils.load(this.getTemplatePath());
+            this.yamlData.putAll(KmgYamlUtils.load(this.getTemplatePath()));
+
+            /* プレースホルダー定義の取得 */
+            // TODO KenichiroArai 2025/03/15 タイミングを整える
+            this.templateContent = (String) this.yamlData.get(DtcKeyTypes.TEMPLATE_CONTENT.getKey());
+
+            result = true;
 
         } catch (final KmgFundException e) {
 
@@ -287,26 +318,15 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @sine 1.0.0
      *
-     * @param csvPlaceholderMap
-     *                            CSVプレースホルダーの定義マップ
-     * @param derivedPlaceholders
-     *                            派生プレースホルダーの定義リスト
-     * @param templateContent
-     *                            テンプレートの内容
-     *
      * @throws KmgToolException
      *                          入出力処理に失敗した場合
      */
     @Override
-    public void processInputAndGenerateOutput(final Map<String, String> csvPlaceholderMap,
-        final List<DtcDerivedPlaceholderModel> derivedPlaceholders, final String templateContent)
-        throws KmgToolException {
+    public void processInputAndGenerateOutput() throws KmgToolException {
 
         // 処理に必要な情報を保存
-        this.csvPlaceholderKeys = csvPlaceholderMap.keySet().toArray(new String[0]);
-        this.csvPlaceholderPatterns = csvPlaceholderMap.values().toArray(new String[0]);
-        this.templateContent = templateContent;
-        this.derivedPlaceholders = derivedPlaceholders;
+        this.csvPlaceholderKeys = this.csvPlaceholderMap.keySet().toArray(new String[0]);
+        this.csvPlaceholderPatterns = this.csvPlaceholderMap.values().toArray(new String[0]);
 
         try {
 

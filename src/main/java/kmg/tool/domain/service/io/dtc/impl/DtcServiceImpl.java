@@ -2,8 +2,6 @@ package kmg.tool.domain.service.io.dtc.impl;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +10,9 @@ import org.springframework.stereotype.Service;
 
 import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.logic.io.dtc.DtcLogic;
-import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -191,22 +187,18 @@ public class DtcServiceImpl implements DtcService {
 
         try {
 
-            /* ロジックの初期化 */
+            /* テンプレートの動的変換ロジッ の初期化 */
             this.dtcLogic.initialize(this.getInputPath(), this.getTemplatePath(), this.getOutputPath());
 
             /* テンプレートの読み込みと解析 */
-            final Map<String, Object> yamlData = this.dtcLogic.loadAndParseTemplate();
+            this.dtcLogic.loadAndParseTemplate();
 
             /* プレースホルダー定義の取得 */
-            final Map<String, String>              csvPlaceholderMap   = this.dtcLogic
-                .extractCsvPlaceholderDefinitions(yamlData);
-            final List<DtcDerivedPlaceholderModel> derivedPlaceholders = this.dtcLogic
-                .extractDerivedPlaceholderDefinitions(yamlData);
-            final String                           templateContent     = (String) yamlData
-                .get(DtcKeyTypes.TEMPLATE_CONTENT.getKey());
+            this.dtcLogic.extractCsvPlaceholderDefinitions();
+            this.dtcLogic.extractDerivedPlaceholderDefinitions();
 
             /* 入力ファイルの処理と出力 */
-            this.dtcLogic.processInputAndGenerateOutput(csvPlaceholderMap, derivedPlaceholders, templateContent);
+            this.dtcLogic.processInputAndGenerateOutput();
 
             result = true;
 

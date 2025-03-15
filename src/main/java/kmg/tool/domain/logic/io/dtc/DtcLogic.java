@@ -3,10 +3,8 @@ package kmg.tool.domain.logic.io.dtc;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 
-import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -35,12 +33,9 @@ public interface DtcLogic extends Closeable {
      *
      * @sine 1.0.0
      *
-     * @param yamlData
-     *                 解析されたYAMLデータ
-     *
-     * @return CSVプレースホルダーの定義マップ
+     * @return true：成功、false：失敗
      */
-    Map<String, String> extractCsvPlaceholderDefinitions(final Map<String, Object> yamlData);
+    boolean extractCsvPlaceholderDefinitions();
 
     /**
      * YAMLデータから派生プレースホルダー定義を抽出する<br>
@@ -49,12 +44,9 @@ public interface DtcLogic extends Closeable {
      *
      * @sine 1.0.0
      *
-     * @param yamlData
-     *                 解析されたYAMLデータ
-     *
-     * @return 派生プレースホルダーの定義リスト
+     * @return true：成功、false：失敗
      */
-    List<DtcDerivedPlaceholderModel> extractDerivedPlaceholderDefinitions(final Map<String, Object> yamlData);
+    boolean extractDerivedPlaceholderDefinitions();
 
     /**
      * 入力ファイルパスを返す<br>
@@ -96,6 +88,13 @@ public interface DtcLogic extends Closeable {
     Path getTemplatePath();
 
     /**
+     * YAMLデータを返す。
+     *
+     * @return YAMLデータ
+     */
+    Map<String, Object> getYamlData();
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗
@@ -116,12 +115,12 @@ public interface DtcLogic extends Closeable {
      *
      * @sine 1.0.0
      *
-     * @return 解析されたYAMLデータ
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          テンプレートの読み込みに失敗した場合
      */
-    Map<String, Object> loadAndParseTemplate() throws KmgToolException;
+    boolean loadAndParseTemplate() throws KmgToolException;
 
     /**
      * 入力ファイルを処理し、テンプレートに基づいて出力を生成する<br>
@@ -130,17 +129,8 @@ public interface DtcLogic extends Closeable {
      *
      * @sine 1.0.0
      *
-     * @param csvPlaceholderMap
-     *                            CSVプレースホルダーの定義マップ
-     * @param derivedPlaceholders
-     *                            派生プレースホルダーの定義リスト
-     * @param templateContent
-     *                            テンプレートの内容
-     *
      * @throws KmgToolException
      *                          入出力処理に失敗した場合
      */
-    void processInputAndGenerateOutput(final Map<String, String> csvPlaceholderMap,
-        final List<DtcDerivedPlaceholderModel> derivedPlaceholders, final String templateContent)
-        throws KmgToolException;
+    void processInputAndGenerateOutput() throws KmgToolException;
 }
