@@ -63,12 +63,6 @@ public class DtcLogicImpl implements DtcLogic {
     /** テンプレートの内容 */
     private String templateContent;
 
-    /** CSVプレースホルダーのキー配列 */
-    private String[] csvPlaceholderKeys;
-
-    /** CSVプレースホルダーのパターン配列 */
-    private String[] csvPlaceholderPatterns;
-
     /**
      * デフォルトコンストラクタ
      */
@@ -355,10 +349,6 @@ public class DtcLogicImpl implements DtcLogic {
     @Override
     public void processInputAndGenerateOutput() throws KmgToolException {
 
-        // 処理に必要な情報を保存
-        this.csvPlaceholderKeys = this.csvPlaceholderMap.keySet().toArray(new String[0]);
-        this.csvPlaceholderPatterns = this.csvPlaceholderMap.values().toArray(new String[0]);
-
         try {
 
             // 入出力ファイルを開く
@@ -471,8 +461,14 @@ public class DtcLogicImpl implements DtcLogic {
 
         String result = template;
 
+        // CSVプレースホルダーのキー配列
+        final String[] csvPlaceholderKeys = this.csvPlaceholderMap.keySet().toArray(new String[0]);
+
+        // CSVプレースホルダーのパターン配列
+        final String[] csvPlaceholderPatterns = this.csvPlaceholderMap.values().toArray(new String[0]);
+
         // 各CSVプレースホルダーを対応する値で置換
-        for (int i = 0; i < this.csvPlaceholderPatterns.length; i++) {
+        for (int i = 0; i < csvPlaceholderPatterns.length; i++) {
 
             if (i >= csvLine.length) {
 
@@ -480,8 +476,8 @@ public class DtcLogicImpl implements DtcLogic {
 
             }
 
-            final String key     = this.csvPlaceholderKeys[i];
-            final String pattern = this.csvPlaceholderPatterns[i];
+            final String key     = csvPlaceholderKeys[i];
+            final String pattern = csvPlaceholderPatterns[i];
             final String value   = csvLine[i];
 
             // 値を保存
