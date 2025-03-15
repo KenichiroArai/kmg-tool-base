@@ -409,21 +409,6 @@ public class DtcLogicImpl implements DtcLogic {
         // 派生プレースホルダーを処理
         this.processDerivedPlaceholders(csvValues);
 
-        try {
-
-            this.writer.write(this.outputContent);
-            this.writer.newLine();
-
-        } catch (final IOException e) {
-
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN12003;
-            final Object[]               messageArgs = {
-                this.inputPath.toString(), this.templatePath.toString(), this.outputPath.toString(),
-            };
-            throw new KmgToolException(msgType, messageArgs, e);
-
-        }
-
     }
 
     /**
@@ -459,6 +444,40 @@ public class DtcLogicImpl implements DtcLogic {
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 書き込む
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean write() throws KmgToolException {
+
+        boolean result = false;
+
+        try {
+
+            this.writer.write(this.outputContent);
+            this.writer.newLine();
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/16 例外処理のメッセージを変更する
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN12003;
+            final Object[]               messageArgs = {
+                this.inputPath.toString(), this.templatePath.toString(), this.outputPath.toString(),
+            };
+            throw new KmgToolException(msgType, messageArgs, e);
 
         }
 

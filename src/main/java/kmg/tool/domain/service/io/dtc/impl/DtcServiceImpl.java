@@ -226,6 +226,12 @@ public class DtcServiceImpl implements DtcService {
                 // TODO KenichiroArai 2025/03/16 処理
                 this.dtcLogic.processInputAndGenerateOutput();
 
+                /* 書き込む */
+                this.dtcLogic.write();
+
+                /* クリア処理 */
+                // TODO KenichiroArai 2025/03/16 クリア処理
+
             } while (true);
 
             result = true;
@@ -243,7 +249,7 @@ public class DtcServiceImpl implements DtcService {
 
             try {
 
-                /* リソースのクローズ処理 */
+                /* テンプレートの動的変換ロジックのクローズ処理 */
                 this.closeDtcLogic();
 
             } finally {
