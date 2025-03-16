@@ -3,7 +3,6 @@ package kmg.tool.domain.logic.io.dtc;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Map;
 
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -95,13 +94,6 @@ public interface DtcLogic extends Closeable {
     Path getTemplatePath();
 
     /**
-     * YAMLデータを返す。
-     *
-     * @return YAMLデータ
-     */
-    Map<String, Object> getYamlData();
-
-    /**
      * 初期化する
      *
      * @param inputPath
@@ -119,34 +111,6 @@ public interface DtcLogic extends Closeable {
     boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) throws KmgToolException;
 
     /**
-     * CSVプレースホルダー定義を読み込む<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          テンプレートの読み込みに失敗した場合
-     */
-    boolean loadCsvPlaceholderDefinitions() throws KmgToolException;
-
-    /**
-     * 派生プレースホルダー定義を読み込む<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          テンプレートの読み込みに失敗した場合
-     */
-    boolean loadDerivedPlaceholderDefinitions() throws KmgToolException;
-
-    /**
      * テンプレートファイルを読み込む<br>
      *
      * @author KenichiroArai
@@ -159,20 +123,6 @@ public interface DtcLogic extends Closeable {
      *                          テンプレートの読み込みに失敗した場合
      */
     boolean loadTemplate() throws KmgToolException;
-
-    /**
-     * テンプレートコンテンツを読み込む<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          テンプレートコンテンツの読み込みに失敗した場合
-     */
-    boolean loadTemplateContent() throws KmgToolException;
 
     /**
      * 入力ファイルを処理し、テンプレートに基づいて出力を生成する<br>
