@@ -212,8 +212,11 @@ public class DtcServiceImpl implements DtcService {
 
                 }
 
-                // TODO KenichiroArai 2025/03/16 処理
-                this.dtcLogic.processInputAndGenerateOutput();
+                /* 入力ファイルからテンプレートに基づいて変換する */
+                this.dtcLogic.applyTemplateToInputFile();
+
+                /* 出力バッファに追加する */
+                this.dtcLogic.addOutputBufferContent();
 
                 /* 書き込む */
                 this.dtcLogic.write();

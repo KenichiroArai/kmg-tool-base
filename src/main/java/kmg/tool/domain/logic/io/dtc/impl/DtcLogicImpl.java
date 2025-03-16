@@ -84,6 +84,52 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
+     * 出力バッファに追加する
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean addOutputBufferContent() throws KmgToolException {
+
+        boolean result = false;
+
+        this.outputBufferContent.append(this.contentsOfOneItem);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 入力ファイルからテンプレートに基づいて変換する。
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public void applyTemplateToInputFile() throws KmgToolException {
+
+        this.contentsOfOneItem = this.templateContent;
+
+        // CSV値を一時保存するマップ
+        final Map<String, String> csvValues = new HashMap<>();
+
+        // CSVプレースホルダーを処理
+        this.processCsvPlaceholders(csvValues);
+
+        // 派生プレースホルダーを処理
+        this.processDerivedPlaceholders(csvValues);
+
+    }
+
+    /**
      * 出力バッファコンテンツをクリアする
      *
      * @throws KmgToolException
@@ -305,36 +351,6 @@ public class DtcLogicImpl implements DtcLogic {
 
         result = true;
         return result;
-
-    }
-
-    /**
-     * 入力ファイルを処理し、テンプレートに基づいて出力を生成する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @throws KmgToolException
-     *                          入出力処理に失敗した場合
-     */
-    @Override
-    public void processInputAndGenerateOutput() throws KmgToolException {
-
-        this.contentsOfOneItem = this.templateContent;
-        final String[] csvLine = KmgDelimiterTypes.COMMA.split(this.convertedLine);
-
-        // CSV値を一時保存するマップ
-        final Map<String, String> csvValues = new HashMap<>();
-
-        // CSVプレースホルダーを処理
-        this.processCsvPlaceholders(csvLine, csvValues);
-
-        // 派生プレースホルダーを処理
-        this.processDerivedPlaceholders(csvValues);
-
-        // 出力バッファに追加する
-        this.outputBufferContent.append(this.contentsOfOneItem);
 
     }
 
@@ -622,12 +638,12 @@ public class DtcLogicImpl implements DtcLogic {
     /**
      * CSVプレースホルダーを処理する<br>
      *
-     * @param csvLine
-     *                  CSV行データ
      * @param csvValues
      *                  CSV値を保存するマップ
      */
-    private void processCsvPlaceholders(final String[] csvLine, final Map<String, String> csvValues) {
+    private void processCsvPlaceholders(final Map<String, String> csvValues) {
+
+        final String[] csvLine = KmgDelimiterTypes.COMMA.split(this.convertedLine);
 
         // CSVプレースホルダーのキー配列
         final String[] csvPlaceholderKeys = this.csvPlaceholderMap.keySet().toArray(new String[0]);

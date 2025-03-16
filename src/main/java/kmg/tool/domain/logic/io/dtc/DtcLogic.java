@@ -17,6 +17,28 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface DtcLogic extends Closeable {
 
     /**
+     * 出力バッファに追加する
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean addOutputBufferContent() throws KmgToolException;
+
+    /**
+     * 入力ファイルからテンプレートに基づいて変換する。
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @throws KmgToolException
+     *                          入出力処理に失敗した場合
+     */
+    void applyTemplateToInputFile() throws KmgToolException;
+
+    /**
      * 出力バッファコンテンツをクリアする
      *
      * @throws KmgToolException
@@ -123,18 +145,6 @@ public interface DtcLogic extends Closeable {
      *                          テンプレートの読み込みに失敗した場合
      */
     boolean loadTemplate() throws KmgToolException;
-
-    /**
-     * 入力ファイルを処理し、テンプレートに基づいて出力を生成する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @throws KmgToolException
-     *                          入出力処理に失敗した場合
-     */
-    void processInputAndGenerateOutput() throws KmgToolException;
 
     /**
      * 1行データを読み込む。
