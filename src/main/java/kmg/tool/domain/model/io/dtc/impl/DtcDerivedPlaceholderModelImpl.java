@@ -1,6 +1,7 @@
 package kmg.tool.domain.model.io.dtc.impl;
 
 import kmg.tool.domain.model.io.dtc.DtcDerivedPlaceholderModel;
+import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
 
 /**
  * テンプレートの動的変換派生プレースホルダー定義モデル実装<br>
@@ -26,9 +27,9 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     private final String sourceKey;
 
     /**
-     * 変換処理
+     * 変換処理の種類
      */
-    private final String transformation;
+    private final DtcTransformTypes transformTypes;
 
     /**
      * コンストラクタ
@@ -39,16 +40,16 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
      *                           置換パターン
      * @param sourceKey
      *                           ソースキー
-     * @param transformation
-     *                           変換処理
+     * @param transformTypes
+     *                           変換処理の種類
      */
     public DtcDerivedPlaceholderModelImpl(final String displayName, final String replacementPattern,
-        final String sourceKey, final String transformation) {
+        final String sourceKey, final DtcTransformTypes transformTypes) {
 
         this.displayName = displayName;
         this.replacementPattern = replacementPattern;
         this.sourceKey = sourceKey;
-        this.transformation = transformation;
+        this.transformTypes = transformTypes;
 
     }
 
@@ -92,14 +93,14 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     }
 
     /**
-     * 変換処理を返す
+     * 変換処理の種類を返す
      *
-     * @return 変換処理
+     * @return 変換処理の種類
      */
     @Override
-    public String getTransformation() {
+    public DtcTransformTypes getTransformationTypes() {
 
-        final String result = this.transformation;
+        final DtcTransformTypes result = this.transformTypes;
         return result;
 
     }

@@ -1,5 +1,7 @@
 package kmg.tool.domain.model.io.dtc;
 
+import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
+
 /**
  * テンプレートの動的変換派生プレースホルダー定義モデル<br>
  * <p>
@@ -30,10 +32,10 @@ public interface DtcDerivedPlaceholderModel {
     String getSourceKey();
 
     /**
-     * 変換処理を返す
+     * 変換処理の種類を返す
      *
-     * @return 変換処理
+     * @return 換処理の種類
      */
-    String getTransformation();
+    DtcTransformTypes getTransformationTypes();
 
 }

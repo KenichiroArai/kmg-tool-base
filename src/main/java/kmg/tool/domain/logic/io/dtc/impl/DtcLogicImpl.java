@@ -542,13 +542,14 @@ public class DtcLogicImpl implements DtcLogic {
 
         for (final Map<String, String> placeholderMap : derivedPlaceholdersTmp) {
 
-            final String displayName        = placeholderMap.get(DtcKeyTypes.DISPLAY_NAME.getKey());
-            final String replacementPattern = placeholderMap.get(DtcKeyTypes.REPLACEMENT_PATTERN.getKey());
-            final String sourceKey          = placeholderMap.get(DtcKeyTypes.SOURCE_KEY.getKey());
-            final String transformation     = placeholderMap.get(DtcKeyTypes.TRANSFORMATION.getKey());
+            final String            displayName        = placeholderMap.get(DtcKeyTypes.DISPLAY_NAME.getKey());
+            final String            replacementPattern = placeholderMap.get(DtcKeyTypes.REPLACEMENT_PATTERN.getKey());
+            final String            sourceKey          = placeholderMap.get(DtcKeyTypes.SOURCE_KEY.getKey());
+            final DtcTransformTypes transformTypes     = DtcTransformTypes
+                .getEnum(placeholderMap.get(DtcKeyTypes.TRANSFORMATION.getKey()));
 
             final DtcDerivedPlaceholderModel derivedPlaceholder
-                = new DtcDerivedPlaceholderModelImpl(displayName, replacementPattern, sourceKey, transformation);
+                = new DtcDerivedPlaceholderModelImpl(displayName, replacementPattern, sourceKey, transformTypes);
             this.derivedPlaceholders.add(derivedPlaceholder);
 
         }
@@ -671,10 +672,10 @@ public class DtcLogicImpl implements DtcLogic {
 
             } catch (final ArrayIndexOutOfBoundsException e) {
 
-                // TODO KenichiroArai 2025/03/16 例外処理 "CSVの列が不足しています。ファイル: {0}, プレースホルダー: {1}, 位置: {2}
+                // TODO KenichiroArai 2025/03/16 例外処理 "CSVの列が不足しています。入力ファイルパス: [{0}], プレースホルダーキー: [{1}], 列: [{2}] 番目
                 final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
                 final Object[]               messageArgs  = {
-                    this.outputPath.toString(), key, i,
+                    this.inputPath.toString(), key, i + 1,
                 };
                 throw new KmgToolException(messageTypes, messageArgs, e);
 
@@ -711,12 +712,9 @@ public class DtcLogicImpl implements DtcLogic {
 
             }
 
-            // テンプレートの動的変換変換処理変換
-            final DtcTransformTypes transformationType
-                = DtcTransformTypes.getEnum(derivedPlaceholder.getTransformation());
-
             // 変換処理を適用
-            final DtcTransformModel dtcTransformModel = new DtcTransformModelImpl(sourceValue, transformationType);
+            final DtcTransformModel dtcTransformModel
+                = new DtcTransformModelImpl(sourceValue, derivedPlaceholder.getTransformationTypes());
             dtcTransformModel.apply();
 
             // テンプレートを置換
