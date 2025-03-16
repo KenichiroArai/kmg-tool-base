@@ -384,9 +384,11 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/16 例外処理
+            // TODO KenichiroArai 2025/03/16 例外処理 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs  = {};
+            final Object[]               messageArgs  = {
+                this.inputPath.toString(),
+            };
             throw new KmgToolException(messageTypes, messageArgs, e);
 
         }
@@ -416,7 +418,8 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/16 例外処理のメッセージを変更する
+            // TODO KenichiroArai 2025/03/16 例外処理のメッセージを変更する 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}], テンプレートパス：[{1}],
+            // 出力ファイルパス=[{2}]
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN12003;
             final Object[]               messageArgs = {
                 this.inputPath.toString(), this.templatePath.toString(), this.outputPath.toString(),
@@ -600,7 +603,7 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/15 例外処理
+            // TODO KenichiroArai 2025/03/15 例外処理 入力ファイルを開くことができませんでした。入力ファイルパス：[{0}]
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {
                 this.inputPath.toString()
@@ -626,7 +629,7 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/15 例外処理
+            // TODO KenichiroArai 2025/03/15 例外処理 出力ファイルを開くことができませんでした。出力ファイルパス：[{0}]
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
@@ -672,7 +675,7 @@ public class DtcLogicImpl implements DtcLogic {
 
             } catch (final ArrayIndexOutOfBoundsException e) {
 
-                // TODO KenichiroArai 2025/03/16 例外処理 "CSVの列が不足しています。入力ファイルパス: [{0}], プレースホルダーキー: [{1}], 列: [{2}] 番目
+                // TODO KenichiroArai 2025/03/16 例外処理 CSVの列が不足しています。入力ファイルパス: [{0}], プレースホルダーキー: [{1}], 列: [{2}] 番目
                 final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
                 final Object[]               messageArgs  = {
                     this.inputPath.toString(), key, i + 1,
