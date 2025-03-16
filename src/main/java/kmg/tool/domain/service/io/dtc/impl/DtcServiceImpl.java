@@ -230,7 +230,7 @@ public class DtcServiceImpl implements DtcService {
                 this.dtcLogic.write();
 
                 /* クリア処理 */
-                // TODO KenichiroArai 2025/03/16 クリア処理
+                this.dtcLogic.clearOutputBufferContent();
 
             } while (true);
 

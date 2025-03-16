@@ -51,7 +51,7 @@ public class DtcLogicImpl implements DtcLogic {
     /** 出力ファイルのBufferedWriter */
     private BufferedWriter writer;
 
-    /** 読み込んだ１行データ */
+    /** 読み込んだ1行データ */
     private String lineOfDataRead;
 
     /** 変換後の1行データ */
@@ -69,8 +69,11 @@ public class DtcLogicImpl implements DtcLogic {
     /** テンプレートの内容 */
     private String templateContent;
 
-    /** 出力の内容 */
-    private String outputContent;
+    /** 1件分の内容 */
+    private String contentsOfOneItem;
+
+    /** 出力バッファの内容 */
+    private final StringBuilder outputBufferContent;
 
     /**
      * デフォルトコンストラクタ
@@ -80,6 +83,20 @@ public class DtcLogicImpl implements DtcLogic {
         this.yamlData = new HashMap<>();
         this.csvPlaceholderMap = new HashMap<>();
         this.derivedPlaceholders = new ArrayList<>();
+        this.outputBufferContent = new StringBuilder();
+
+    }
+
+    /**
+     * 出力バッファコンテンツをクリアする
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public void clearOutputBufferContent() throws KmgToolException {
+
+        this.outputBufferContent.setLength(0);
 
     }
 
@@ -87,9 +104,12 @@ public class DtcLogicImpl implements DtcLogic {
      * 読み込み中のデータをクリアする。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
     @Override
-    public boolean clearReadingData() {
+    public boolean clearReadingData() throws KmgToolException {
 
         boolean result = false;
 
@@ -99,7 +119,8 @@ public class DtcLogicImpl implements DtcLogic {
         this.templateContent = null;
         this.csvPlaceholderMap.clear();
         this.derivedPlaceholders.clear();
-        this.outputContent = null;
+        this.contentsOfOneItem = null;
+        this.clearOutputBufferContent();
 
         result = true;
         return result;
@@ -117,6 +138,23 @@ public class DtcLogicImpl implements DtcLogic {
 
         this.closeReader();
         this.closeWriter();
+
+    }
+
+    /**
+     * 1件分の内容を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 1件分の内容
+     */
+    @Override
+    public String getContentsOfOneItem() {
+
+        final String result = this.contentsOfOneItem;
+        return result;
 
     }
 
@@ -397,7 +435,7 @@ public class DtcLogicImpl implements DtcLogic {
     @Override
     public void processInputAndGenerateOutput() throws KmgToolException {
 
-        this.outputContent = this.templateContent;
+        this.contentsOfOneItem = this.templateContent;
         final String[] csvLine = KmgDelimiterTypes.COMMA.split(this.convertedLine);
 
         // CSV値を一時保存するマップ
@@ -408,6 +446,9 @@ public class DtcLogicImpl implements DtcLogic {
 
         // 派生プレースホルダーを処理
         this.processDerivedPlaceholders(csvValues);
+
+        // 出力バッファに追加する
+        this.outputBufferContent.append(this.contentsOfOneItem);
 
     }
 
@@ -467,7 +508,7 @@ public class DtcLogicImpl implements DtcLogic {
 
         try {
 
-            this.writer.write(this.outputContent);
+            this.writer.write(this.outputBufferContent.toString());
             this.writer.newLine();
 
         } catch (final IOException e) {
@@ -609,7 +650,7 @@ public class DtcLogicImpl implements DtcLogic {
             csvValues.put(key, value);
 
             // テンプレートを置換
-            this.outputContent = this.outputContent.replace(pattern, value);
+            this.contentsOfOneItem = this.contentsOfOneItem.replace(pattern, value);
 
         }
 
@@ -646,7 +687,7 @@ public class DtcLogicImpl implements DtcLogic {
             dtcTransformModel.apply();
 
             // テンプレートを置換
-            this.outputContent = this.outputContent.replace(derivedPlaceholder.getReplacementPattern(),
+            this.contentsOfOneItem = this.contentsOfOneItem.replace(derivedPlaceholder.getReplacementPattern(),
                 dtcTransformModel.getTransformedValue());
 
         }

@@ -18,11 +18,22 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface DtcLogic extends Closeable {
 
     /**
+     * 出力バッファコンテンツをクリアする
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    void clearOutputBufferContent() throws KmgToolException;
+
+    /**
      * 読み込み中のデータをクリアする。
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    boolean clearReadingData();
+    boolean clearReadingData() throws KmgToolException;
 
     /**
      * リソースをクローズする。
@@ -32,6 +43,17 @@ public interface DtcLogic extends Closeable {
      */
     @Override
     void close() throws IOException;
+
+    /**
+     * 1件分の内容を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 1件分の内容
+     */
+    String getContentsOfOneItem();
 
     /**
      * 入力ファイルパスを返す<br>
