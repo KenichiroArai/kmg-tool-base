@@ -10,12 +10,19 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
+import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
+import kmg.tool.application.types.io.AccessorRegexGroupTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -26,17 +33,53 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
-    /** Javadocコメントの正規表現パターン */
-    private static final String JAVADOC_COMMENT_PATTERN = "/\\*\\* (\\S+)";
+    /** Javadocコメントの開始の正規表現パターン */
+    private static final String JAVADOC_COMMENT_START_PATTERN = "/\\*\\*";
+
+    /** 1行Javadocコメントの正規表現パターン */
+    private static final String SINGLE_LINE_JAVADOC_PATTERN = "/\\*\\*\\s+(\\S+)\\s+\\*/";
+
+    /** 複数行Javadocコメント開始の正規表現パターン */
+    private static final String MULTI_LINE_JAVADOC_START_PATTERN = "/\\*\\*(\\S+)";
 
     /** privateフィールド宣言の正規表現パターン */
     private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);";
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private KmgMessageSource messageSource;
+
+    /** 入力ファイルパス */
+    private Path inputPath;
+
+    /** 出力ファイルパス */
+    private Path outputPath;
+
+    /** 入力ファイルのBufferedReader */
+    private BufferedReader reader;
+
+    /** 出力ファイルのBufferedReader */
+    private BufferedWriter writer;
 
     /** 読み込んだ１行データ */
     private String lineOfDataRead;
 
     /** 変換後の1行データ */
     private String convertedLine;
+
+    /** Javadocの解析中かを管理する */
+    private boolean inJavadocParsing;
 
     /** Javadocコメント */
     private String javadocComment;
@@ -47,59 +90,31 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** 項目名 */
     private String item;
 
-    /** 先頭大文字項目 */
-    private String capitalizedItem;
-
-    /** 入力ファイルパス */
-    private Path inputPath;
-
-    /** 出力ファイルパス */
-    private Path outputPath;
-
     /** 書き込み対象のCSVデータのリスト */
     private final List<List<String>> csvRows;
-
-    /** 入力ファイルのBufferedReader */
-    private BufferedReader reader;
-
-    /** 出力ファイルのBufferedReader */
-    private BufferedWriter writer;
 
     /**
      * デフォルトコンストラクタ
      */
     public AccessorCreationLogicImpl() {
 
-        this.csvRows = new ArrayList<>();
+        this(LoggerFactory.getLogger(AccessorCreationLogicImpl.class));
 
     }
 
     /**
-     * 先頭大文字項目を書き込み対象に追加する。
+     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @return true：成功、false：失敗
+     * @since 0.1.0
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @param logger
+     *               ロガー
      */
-    @Override
-    public boolean addCapitalizedItemToCsvRows() throws KmgToolException {
+    protected AccessorCreationLogicImpl(final Logger logger) {
 
-        boolean result = false;
+        this.logger = logger;
 
-        if (this.capitalizedItem == null) {
-
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32000;
-            final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
-
-        }
-
-        final List<String> row = this.csvRows.getLast();
-        row.add(this.capitalizedItem);
-        result = true;
-
-        return result;
+        this.csvRows = new ArrayList<>();
 
     }
 
@@ -243,7 +258,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         this.javadocComment = null;
         this.tyep = null;
         this.item = null;
-        this.capitalizedItem = null;
 
         result = true;
         return result;
@@ -290,9 +304,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         }
 
         // フィールドの情報を取得
-        this.tyep = matcherSrc.group(1); // 型
-        this.item = matcherSrc.group(3); // 項目名
-        this.capitalizedItem = KmgString.capitalize(this.item); // 先頭大文字項目
+        this.tyep = matcherSrc.group(AccessorRegexGroupTypes.PRIVATE_FIELD_TYPE.getGroupIndex()); // 型
+        this.item = matcherSrc.group(AccessorRegexGroupTypes.PRIVATE_FIELD_ITEM_NAME.getGroupIndex()); // 項目名
 
         result = true;
         return result;
@@ -305,39 +318,82 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      * @return true：変換あり、false：変換なし
      */
     @Override
-    public boolean convertJavadocComment() {
+    public boolean convertJavadoc() {
 
         boolean result = false;
 
-        // Javadocコメントかを正規表現で判断する
-        final Pattern pattern = Pattern.compile(AccessorCreationLogicImpl.JAVADOC_COMMENT_PATTERN);
-        final Matcher matcher = pattern.matcher(this.convertedLine);
+        /* Javadocの解析中を開始する */
 
-        // Javadocコメントはないか
-        if (!matcher.find()) {
-            // コメントはないの場合
+        // Javadocの解析中でないか
+        if (!this.inJavadocParsing) {
+            // 解析中ではない場合
+
+            // Javadocの開始判定
+            final Pattern javadocStartPattern = Pattern
+                .compile(AccessorCreationLogicImpl.JAVADOC_COMMENT_START_PATTERN);
+            final Matcher javadocStartMatcher = javadocStartPattern.matcher(this.convertedLine);
+
+            // Javadocの開始ではないか
+            if (!javadocStartMatcher.find()) {
+                // 開始でない場合
+
+                return result;
+
+            }
+
+            // Javadoc解析中に設定
+            this.inJavadocParsing = true;
+
+        }
+
+        /* 1行完結型のJavadocの処理 */
+
+        final Pattern singleLinePattern = Pattern.compile(AccessorCreationLogicImpl.SINGLE_LINE_JAVADOC_PATTERN);
+        final Matcher singleLineMatcher = singleLinePattern.matcher(this.convertedLine);
+        final boolean isSingleLineMatch = singleLineMatcher.find();
+
+        // 1行完結型のJavadocでないか
+        if (isSingleLineMatch) {
+            // 1行完結型のJavadocでない場合
+
+            // コメント部分を抽出して設定
+            this.javadocComment
+                = singleLineMatcher.group(AccessorRegexGroupTypes.SINGLE_LINE_JAVADOC_COMMENT.getGroupIndex());
+
+            // Javadoc解析終了
+            this.inJavadocParsing = false;
+
+            result = true;
 
             return result;
 
         }
 
-        // Javadocコメントを設定
-        this.javadocComment = matcher.group(1);
+        /* 複数行Javadocの処理 */
+
+        // 複数行Javadocの開始行を正規表現でグループ化する
+        final Pattern multiLineStartPattern = Pattern
+            .compile(AccessorCreationLogicImpl.MULTI_LINE_JAVADOC_START_PATTERN);
+        final Matcher multiLineStartMatcher = multiLineStartPattern.matcher(this.convertedLine);
+        final boolean isMultiLineStartMatch = multiLineStartMatcher.find();
+
+        // 複数行Javadocの開始行でないか
+        if (!isMultiLineStartMatch) {
+            // 開始行でない場合
+
+            return result;
+
+        }
+
+        // コメント部分を抽出して設定
+        this.javadocComment
+            = multiLineStartMatcher.group(AccessorRegexGroupTypes.MULTI_LINE_JAVADOC_COMMENT.getGroupIndex());
+
+        // Javadoc解析終了
+        this.inJavadocParsing = false;
 
         result = true;
-        return result;
 
-    }
-
-    /**
-     * 先頭大文字項目返す。
-     *
-     * @return capitalizedItem 先頭大文字項目
-     */
-    @Override
-    public String getCapitalizedItem() {
-
-        final String result = this.capitalizedItem;
         return result;
 
     }
@@ -421,12 +477,12 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /**
      * 初期化する。
      *
-     * @return true：成功、false：失敗
-     *
      * @param inputPath
      *                   入力ファイルパス
      * @param outputPath
      *                   出力ファイルパス
+     *
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
@@ -440,7 +496,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         this.inputPath = inputPath;
         this.outputPath = outputPath;
 
-        /* 読み込みと書き込みのインスタンス変数の初期化 */
+        /* データのクリア */
         this.clearProcessingData();
 
         this.clearCsvRows();
@@ -454,6 +510,19 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         this.openOutputFile();
 
         result = true;
+        return result;
+
+    }
+
+    /**
+     * Javadocの解析中かを返す。
+     *
+     * @return true：Javadoc解析中、false：Javadoc解析外
+     */
+    @Override
+    public boolean isInJavadocParsing() {
+
+        final boolean result = this.inJavadocParsing;
         return result;
 
     }
@@ -508,8 +577,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         boolean result = false;
 
-        this.convertedLine = this.convertedLine.replace("final", KmgString.EMPTY);
-        this.convertedLine = this.convertedLine.replace("static", KmgString.EMPTY);
+        this.convertedLine = this.convertedLine.replace(KmgJavaKeywordTypes.FINAL.getKey(), KmgString.EMPTY);
+        this.convertedLine = this.convertedLine.replace(KmgJavaKeywordTypes.STATIC.getKey(), KmgString.EMPTY);
 
         result = true;
         return result;
@@ -587,8 +656,24 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         }
 
-        this.reader.close();
-        this.reader = null;
+        try {
+
+            this.reader.close();
+
+        } catch (final IOException e) {
+
+            this.reader = null;
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+            final Object[]               logMsgArgs  = {
+                this.inputPath.toString(),
+            };
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
 
     }
 
@@ -606,8 +691,24 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         }
 
-        this.writer.close();
-        this.writer = null;
+        try {
+
+            this.writer.close();
+
+        } catch (final IOException e) {
+
+            this.writer = null;
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
+            final Object[]               logMsgArgs  = {
+                this.outputPath.toString(),
+            };
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
 
     }
 

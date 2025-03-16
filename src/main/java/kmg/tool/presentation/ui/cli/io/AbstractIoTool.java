@@ -14,17 +14,51 @@ import kmg.tool.presentation.ui.cli.AbstractTool;
 
 /**
  * 入出力ツール抽象クラス
+ * <p>
+ * このクラスは入出力処理の基本機能を提供します。 入力ファイルと出力ファイルのパスは以下の優先順位で決定されます：
+ * </p>
+ * <ol>
+ * <li>work/ioディレクトリが存在する場合：work/io/[input|output].txt</li>
+ * <li>work/ioディレクトリが存在しない場合：src/main/resources/tool/io/[input|output].txt</li>
+ * </ol>
+ * <p>
+ * 使用例：
+ * </p>
+ *
+ * <pre>
+ * public class CustomIoTool extends AbstractIoTool {
+ *     private final IoService ioService;
+ *
+ *     public CustomIoTool(String toolName, IoService ioService) {
+ *         super(toolName);
+ *         this.ioService = ioService;
+ *     }
+ *
+ *     {@literal @}Override
+ *     protected IoService getIoService() {
+ *         return this.ioService;
+ *     }
+ * }
+ *
+ * // ツールの使用
+ * IoService ioService = new CustomIoService();
+ * CustomIoTool tool = new CustomIoTool("カスタムツール", ioService);
+ * boolean success = tool.execute();
+ * </pre>
  */
 public abstract class AbstractIoTool extends AbstractTool {
 
-    /** 基準パス */
-    private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
+    /** 優先的に使用する基準パス */
+    private static final Path PRIMARY_BASE_PATH = Paths.get("work/io");
 
-    /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(AbstractIoTool.BASE_PATH.toString(), "input.txt");
+    /** 代替の基準パス */
+    private static final Path SECONDARY_BASE_PATH = Paths.get("src/main/resources/tool/io");
 
-    /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH = Paths.get(AbstractIoTool.BASE_PATH.toString(), "output.txt");
+    /** 入力ファイル名 */
+    private static final Path INPUT_FILE_NAME = Paths.get("input.txt");
+
+    /** 出力ファイル名 */
+    private static final Path OUTPUT_FILE_NAME = Paths.get("output.txt");
 
     /** メッセージソース */
     @Autowired
@@ -44,31 +78,99 @@ public abstract class AbstractIoTool extends AbstractTool {
      */
     public static Path getBasePath() {
 
-        final Path result = AbstractIoTool.BASE_PATH;
+        Path result = null;
+
+        if (AbstractIoTool.PRIMARY_BASE_PATH.toFile().exists()) {
+
+            result = AbstractIoTool.PRIMARY_BASE_PATH;
+            return result;
+
+        }
+
+        result = AbstractIoTool.SECONDARY_BASE_PATH;
+
         return result;
 
     }
 
     /**
-     * 入力ファイルパスを返す。
+     * 入力ファイルパスを返す。 優先パスに入力ファイルが存在すればそちらを使用し、なければ代替パスを使用する。
      *
      * @return 入力ファイルパス
      */
     public static Path getInputPath() {
 
-        final Path result = AbstractIoTool.INPUT_PATH;
+        Path result = null;
+
+        final Path primaryPath
+            = Paths.get(AbstractIoTool.PRIMARY_BASE_PATH.toString(), AbstractIoTool.INPUT_FILE_NAME.toString());
+
+        if (primaryPath.toFile().exists()) {
+
+            result = primaryPath;
+            return result;
+
+        }
+
+        final Path secondaryPath
+            = Paths.get(AbstractIoTool.SECONDARY_BASE_PATH.toString(), AbstractIoTool.INPUT_FILE_NAME.toString());
+
+        result = secondaryPath;
         return result;
 
     }
 
     /**
-     * 出力ファイルパスを返す。
+     * 出力ファイルパスを返す。 優先パスに出力ファイルが存在すればそちらを使用し、なければ代替パスを使用する。
      *
      * @return 出力ファイルパス
      */
     public static Path getOutputPath() {
 
-        final Path result = AbstractIoTool.OUTPUT_PATH;
+        Path result = null;
+
+        final Path primaryPath
+            = Paths.get(AbstractIoTool.PRIMARY_BASE_PATH.toString(), AbstractIoTool.OUTPUT_FILE_NAME.toString());
+
+        if (primaryPath.toFile().exists()) {
+
+            result = primaryPath;
+            return result;
+
+        }
+
+        final Path secondaryPath
+            = Paths.get(AbstractIoTool.SECONDARY_BASE_PATH.toString(), AbstractIoTool.OUTPUT_FILE_NAME.toString());
+
+        result = secondaryPath;
+        return result;
+
+    }
+
+    /**
+     * 優先的に使用する基準パスを取得します。
+     *
+     * @return 優先的に使用する基準パス
+     *
+     * @since 0.1.0
+     */
+    public static Path getPrimaryBasePath() {
+
+        final Path result = AbstractIoTool.PRIMARY_BASE_PATH;
+        return result;
+
+    }
+
+    /**
+     * 代替の基準パスを取得します。
+     *
+     * @return 代替の基準パス
+     *
+     * @since 0.1.0
+     */
+    public static Path getSecondaryBasePath() {
+
+        final Path result = AbstractIoTool.SECONDARY_BASE_PATH;
         return result;
 
     }

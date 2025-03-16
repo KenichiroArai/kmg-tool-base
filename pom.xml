@@ -77,13 +77,6 @@
             <version>5.2.5</version>
         </dependency>
 
-        <!-- YAML -->
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-        </dependency>
-
-
         <!-- テスト -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

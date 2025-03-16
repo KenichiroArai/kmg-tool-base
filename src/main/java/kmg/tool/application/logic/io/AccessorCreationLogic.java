@@ -15,16 +15,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface AccessorCreationLogic extends Closeable {
 
     /**
-     * 先頭大文字項目を書き込み対象に追加する。
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean addCapitalizedItemToCsvRows() throws KmgToolException;
-
-    /**
      * 項目名を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
@@ -98,18 +88,11 @@ public interface AccessorCreationLogic extends Closeable {
     boolean convertFields() throws KmgToolException;
 
     /**
-     * Javadocコメントに変換する。
+     * Javadocの変換を行う。
      *
      * @return true：変換あり、false：変換なし
      */
-    boolean convertJavadocComment();
-
-    /**
-     * 先頭大文字項目返す。
-     *
-     * @return capitalizedItem 先頭大文字項目
-     */
-    String getCapitalizedItem();
+    boolean convertJavadoc();
 
     /**
      * 変換後の1行データを返す。
@@ -167,6 +150,13 @@ public interface AccessorCreationLogic extends Closeable {
      *                          KMGツール例外
      */
     boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
+
+    /**
+     * Javadocの解析中かを返す。
+     *
+     * @return true：Javadoc解析中、false：Javadoc解析外
+     */
+    boolean isInJavadocParsing();
 
     /**
      * 1行データを読み込む。

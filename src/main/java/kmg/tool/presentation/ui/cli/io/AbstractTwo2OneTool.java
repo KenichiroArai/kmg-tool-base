@@ -18,12 +18,12 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
+    /** テンプレートファイルのパスフォーマット */
+    private static final String TEMPLATE_FILE_PATH_FORMAT = "template/%s.yml";
+
     /** メッセージソース */
     @Autowired
     private KmgMessageSource messageSource;
-
-    /** テンプレートファイルパス */
-    private final Path templatePath;
 
     /**
      * ロガー
@@ -31,6 +31,9 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      * @since 0.1.0
      */
     private final Logger logger;
+
+    /** テンプレートファイルパス */
+    private final Path templatePath;
 
     /**
      * 標準ロガーを使用して初期化するコンストラクタ<br>
@@ -129,11 +132,24 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      */
     private Path getDefaultTemplatePath() {
 
-        Path         result    = null;
-        final String className = KmgPathUtils.getSimpleClassName(this.getClass());
+        Path         result           = null;
+        final String className        = KmgPathUtils.getSimpleClassName(this.getClass());
+        final String templateFileName = String.format(AbstractTwo2OneTool.TEMPLATE_FILE_PATH_FORMAT, className);
 
-        final String templateFileName = String.format("template/%s.txt", className);
-        result = Paths.get(AbstractIoTool.getBasePath().toString(), templateFileName);
+        // 優先パスがあれば採用する
+        final Path primaryPath = Paths.get(AbstractIoTool.getPrimaryBasePath().toString(), templateFileName);
+
+        if (primaryPath.toFile().exists()) {
+
+            result = primaryPath;
+            return result;
+
+        }
+
+        // 優先パスがないため、代替パスを採用する
+        final Path secondaryPath = Paths.get(AbstractIoTool.getSecondaryBasePath().toString(), templateFileName);
+        result = secondaryPath;
+
         return result;
 
     }

@@ -7,13 +7,17 @@ import java.nio.file.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.utils.KmgPathUtils;
+import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * 入力、CSV、テンプレート、出力の処理サービス抽象クラス
  */
-public abstract class AbstractInputCsvTemplateOutputProcessorService implements Two2OneService {
+public abstract class AbstractIctoProcessorService implements Two2OneService {
+
+    /** 一時CSVファイルのサフィックスと拡張子 */
+    private static final String TEMP_CSV_FILE_SUFFIX_EXTENSION = "Temp.csv";
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -29,7 +33,7 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
 
     /** テンプレートの動的変換サービス */
     @Autowired
-    private DynamicTemplateConversionService dynamicTemplateConversionService;
+    private DtcService dtcService;
 
     /**
      * CSVファイルパスを返す<br>
@@ -157,9 +161,8 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
         result = this.writeCsvFile();
 
         /* テンプレートの動的変換サービスで出力ファイルに出力する */
-        result
-            = this.dynamicTemplateConversionService.initialize(this.getCsvPath(), this.templatePath, this.outputPath);
-        result = this.dynamicTemplateConversionService.process();
+        result = this.dtcService.initialize(this.getCsvPath(), this.templatePath, this.outputPath);
+        result = this.dtcService.process();
 
         return result;
 
@@ -177,17 +180,21 @@ public abstract class AbstractInputCsvTemplateOutputProcessorService implements 
 
         Path result = null;
 
+        final String csvFileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
+        final String suffixExtension = AbstractIctoProcessorService.TEMP_CSV_FILE_SUFFIX_EXTENSION;
+
         try {
 
-            final String fileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
-            result = Files.createTempFile(fileNameOnly, "Temp.csv");
+            result = Files.createTempFile(csvFileNameOnly, suffixExtension);
             result.toFile().deleteOnExit();
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/06 メッセージ
-            final KmgToolGenMessageTypes msgType = KmgToolGenMessageTypes.NONE;
-            throw new KmgToolException(msgType, e);
+            final KmgToolGenMessageTypes genMsgType = KmgToolGenMessageTypes.KMGTOOL_GEN12000;
+            final Object[]               getMsgArgs = {
+                csvFileNameOnly, suffixExtension,
+            };
+            throw new KmgToolException(genMsgType, getMsgArgs, e);
 
         }
 

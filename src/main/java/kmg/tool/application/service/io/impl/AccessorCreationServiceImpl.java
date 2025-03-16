@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.io.AccessorCreationLogic;
 import kmg.tool.application.service.io.AccessorCreationService;
-import kmg.tool.domain.service.io.AbstractInputCsvTemplateOutputProcessorService;
+import kmg.tool.domain.service.io.AbstractIctoProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -21,8 +21,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @author KenichiroArai
  */
 @Service
-public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputProcessorService
-    implements AccessorCreationService {
+public class AccessorCreationServiceImpl extends AbstractIctoProcessorService implements AccessorCreationService {
 
     /**
      * ロガー
@@ -84,7 +83,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         boolean result = false;
 
-        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31000;
         final Object[]               startLogMsgArgs  = {};
         final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
             startLogMsgArgs);
@@ -101,45 +100,25 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
             do {
 
                 /* 1行データを読み込む */
-                final boolean readFlg = this.readOneLineData();
+                final boolean isRead = this.readOneLineData();
 
-                if (!readFlg) {
+                if (!isRead) {
 
                     break;
 
                 }
 
                 /* カラムを追加する */
-                final boolean processedFlg = this.processColumns();
+                final boolean isProcessed = this.processColumns();
 
-                if (!processedFlg) {
+                if (!isProcessed) {
 
                     continue;
 
                 }
 
                 /* CSVファイルに行を書き込む */
-                try {
-
-                    this.accessorCreationLogic.writeCsvFile();
-
-                } catch (final KmgToolException e) {
-
-                    final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
-                    final Object[]               logMsgArgs  = {};
-                    final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes,
-                        logMsgArgs);
-                    this.logger.error(logMsg, e);
-                    throw e;
-
-                }
-
-                final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32002;
-                final Object[]               logMsgArgs  = {
-                    this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
-                };
-                final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-                this.logger.debug(logMsg);
+                this.writeCsvFileLine();
 
                 /* クリア処理 */
                 this.clearAndPrepareNextLine();
@@ -148,31 +127,25 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
             result = true;
 
+        } catch (final KmgToolException e) {
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31007;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
         } finally {
 
-            /* リソースのクローズ処理 */
             try {
 
-                this.accessorCreationLogic.close();
-
-            } catch (final IOException e) {
-
-                final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32003;
-                final Object[]               logMsgArgs  = {
-                    this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
-                };
-                final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-                this.logger.error(logMsg, e);
-
-                final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31003;
-                final Object[]               genMsgArgs  = {
-                    this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
-                };
-                throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+                /* アクセサ作成ロジックのクローズ処理 */
+                this.closeAccessorCreationLogic();
 
             } finally {
 
-                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32007;
+                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31006;
                 final Object[]               endLogMsgArgs  = {};
                 final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
                     endLogMsgArgs);
@@ -198,9 +171,9 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         boolean result = false;
 
         // Javadocコメントに変換
-        final boolean convertJavadocCommentFlg = this.accessorCreationLogic.convertJavadocComment();
+        final boolean isConvertJavadocComment = this.accessorCreationLogic.convertJavadoc();
 
-        if (!convertJavadocCommentFlg) {
+        if (!isConvertJavadocComment) {
 
             return result;
 
@@ -231,10 +204,10 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         /* 型、項目名、先頭大文字項目に追加する */
 
-        // フィールド宣言から型、項目名、先頭大文字項目に変換する。
-        final boolean convertFieldsFlg = this.accessorCreationLogic.convertFields();
+        // フィールド宣言から型、項目名に変換する。
+        final boolean isConvertFields = this.accessorCreationLogic.convertFields();
 
-        if (!convertFieldsFlg) {
+        if (!isConvertFields) {
 
             return result;
 
@@ -245,8 +218,6 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         this.accessorCreationLogic.addTypeToCsvRows();
         // カラム3：項目
         this.accessorCreationLogic.addItemToCsvRows();
-        // カラム4：先頭大文字項目
-        this.accessorCreationLogic.addCapitalizedItemToCsvRows();
 
         result = true;
 
@@ -275,7 +246,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32004;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31003;
             final Object[]               logMsgArgs  = {
                 this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
             };
@@ -283,6 +254,30 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
             this.logger.error(logMsg, e);
 
             throw e;
+
+        }
+
+    }
+
+    /**
+     * アクセサ作成ロジックをクローズする。
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private void closeAccessorCreationLogic() throws KmgToolException {
+
+        try {
+
+            this.accessorCreationLogic.close();
+
+        } catch (final IOException e) {
+
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31003;
+            final Object[]               genMsgArgs  = {
+                this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+            };
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -298,31 +293,36 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
      */
     private boolean processColumns() throws KmgToolException {
 
-        final boolean result = true;
+        boolean result = false;
 
         try {
 
             // カラム1：名称を追加する
-            final boolean addNameColumnFlg = this.addNameColumn();
+            this.addNameColumn();
 
-            if (addNameColumnFlg) {
+            final String javadocComment = this.accessorCreationLogic.getJavadocComment();
 
-                return false;
+            // Javadocコメントが設定されていないか
+            if (javadocComment == null) {
+                // 設定されていない場合
+
+                // Javadocコメントが先に設定されていないと残りのカラム情報は読み込めないため、処理をスキップさせる
+                return result;
 
             }
 
             // 残りのカラムを追加する
-            final boolean addRemainingColumnsFlg = this.addRemainingColumns();
+            final boolean isAddRemainingColumns = this.addRemainingColumns();
 
-            if (!addRemainingColumnsFlg) {
+            if (!isAddRemainingColumns) {
 
-                return false;
+                return result;
 
             }
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32005;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31004;
             final Object[]               logMsgArgs  = {
                 this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
             };
@@ -333,6 +333,7 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         }
 
+        result = true;
         return result;
 
     }
@@ -355,10 +356,8 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32006;
-            final Object[]               logMsgArgs  = {
-                this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
-            };
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31005;
+            final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
 
@@ -367,6 +366,37 @@ public class AccessorCreationServiceImpl extends AbstractInputCsvTemplateOutputP
         }
 
         return result;
+
+    }
+
+    /**
+     * CSVファイルに行を書き込む。
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private void writeCsvFileLine() throws KmgToolException {
+
+        try {
+
+            this.accessorCreationLogic.writeCsvFile();
+
+        } catch (final KmgToolException e) {
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31001;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+            throw e;
+
+        }
+
+        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31002;
+        final Object[]               logMsgArgs  = {
+            this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+        };
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        this.logger.debug(logMsg);
 
     }
 }
