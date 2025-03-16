@@ -230,7 +230,6 @@ public class DtcServiceImpl implements DtcService {
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/16 ログ - テンプレートの動的変換中にエラーが発生しました。テンプレートファイルパス：[{0}]
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12001;
             final Object[]               logMsgArgs  = {
                 this.getTemplatePath().toString(),
@@ -303,8 +302,7 @@ public class DtcServiceImpl implements DtcService {
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/16 ログ - データの1行読み込み中にエラーが発生しました。入力ファイルパス=[{0}}
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12003;
             final Object[]               logMsgArgs  = {
                 this.inputPath.toString(),
             };
