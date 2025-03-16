@@ -30,8 +30,15 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * <p>
  * 「Dtc」→「DynamicTemplateConversion」の略。
  * </p>
+ * <p>
+ * このクラスはテンプレートファイルを入力ファイルのデータに基づいて動的に変換するロジックを実装します。 CSVデータとテンプレートを組み合わせて、動的なコンテンツ生成を行います。
+ * </p>
  *
  * @author KenichiroArai
+ *
+ * @version 1.0.0
+ *
+ * @since 1.0.0
  */
 @Service
 public class DtcLogicImpl implements DtcLogic {
@@ -84,12 +91,15 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * 出力バッファに追加する
+     * 出力バッファに追加する<br>
+     * <p>
+     * 現在の1件分の内容（contentsOfOneItem）を出力バッファに追加します。 変換処理が完了したテンプレートの内容をバッファに蓄積するために使用します。
+     * </p>
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - バッファ操作中にエラーが発生した場合
      */
     @Override
     public boolean addOutputBufferContent() throws KmgToolException {
@@ -104,14 +114,17 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * 入力ファイルからテンプレートに基づいて変換する。
+     * 入力ファイルからテンプレートに基づいて変換する。<br>
+     * <p>
+     * 現在読み込まれている入力ファイルの1行データに対して、テンプレートを適用し変換処理を行います。 CSVプレースホルダーと派生プレースホルダーの両方を処理します。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - 変換処理中にエラーが発生した場合
      */
     @Override
     public void applyTemplateToInputFile() throws KmgToolException {
@@ -131,10 +144,13 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * 出力バッファコンテンツをクリアする
+     * 出力バッファコンテンツをクリアする<br>
+     * <p>
+     * 出力バッファの内容を空にします。新しい出力処理を開始する前に使用します。
+     * </p>
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - バッファクリア中にエラーが発生した場合
      */
     @Override
     public void clearOutputBufferContent() throws KmgToolException {
@@ -144,12 +160,15 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * 読み込み中のデータをクリアする。
+     * 読み込み中のデータをクリアする。<br>
+     * <p>
+     * 現在読み込まれているデータや変換状態をすべてクリアします。 新しい処理を開始する前に内部状態をリセットするために使用します。
+     * </p>
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - データクリア中にエラーが発生した場合
      */
     @Override
     public boolean clearReadingData() throws KmgToolException {
@@ -170,10 +189,13 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * リソースをクローズする。
+     * リソースをクローズする。<br>
+     * <p>
+     * 入力ファイルリーダーと出力ファイルライターをクローズします。 リソースリークを防ぐために使用します。
+     * </p>
      *
      * @throws IOException
-     *                     入出力例外
+     *                     入出力例外 - ファイルクローズ中にエラーが発生した場合
      */
     @Override
     public void close() throws IOException {
@@ -185,12 +207,15 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 1件分の内容を返す<br>
+     * <p>
+     * 現在処理中の1件分のテンプレート変換後の内容を返します。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
-     * @return 1件分の内容
+     * @return 1件分の内容 - テンプレート変換後のコンテンツ
      */
     @Override
     public String getContentsOfOneItem() {
@@ -202,14 +227,17 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 入力ファイルパスを返す<br>
+     * <p>
+     * 現在処理中の入力ファイルのパスを返します。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
-     * @return 入力ファイルパス
+     * @return 入力ファイルパス - 処理対象の入力ファイルのパス
      */
     @Override
     public Path getInputPath() {
@@ -221,14 +249,17 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 出力ファイルパスを返す<br>
+     * <p>
+     * 現在処理中の出力ファイルのパスを返します。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
-     * @return 出力ファイルパス
+     * @return 出力ファイルパス - 処理結果を書き込む出力ファイルのパス
      */
     @Override
     public Path getOutputPath() {
@@ -240,14 +271,17 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * テンプレートファイルパスを返す<br>
+     * <p>
+     * 現在処理中のテンプレートファイルのパスを返します。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
-     * @return テンプレートファイルパス
+     * @return テンプレートファイルパス - 変換に使用するテンプレートファイルのパス
      */
     @Override
     public Path getTemplatePath() {
@@ -259,24 +293,27 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 初期化する<br>
+     * <p>
+     * 入力ファイル、テンプレートファイル、出力ファイルのパスを設定し、 処理に必要なリソースを初期化します。入力ファイルと出力ファイルを開きます。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
      * @param inputPath
-     *                     入力ファイルパス
+     *                     入力ファイルパス - 処理対象のCSVデータファイルのパス
      * @param templatePath
-     *                     テンプレートファイルパス
+     *                     テンプレートファイルパス - 変換に使用するテンプレート定義ファイルのパス
      * @param outputPath
-     *                     出力ファイルパス
+     *                     出力ファイルパス - 変換結果を書き込むファイルのパス
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - 初期化処理中にエラーが発生した場合
      */
     @Override
     @SuppressWarnings("hiding")
@@ -307,15 +344,18 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * テンプレートファイルを読み込む<br>
+     * <p>
+     * YAMLフォーマットのテンプレート定義ファイルを読み込み、 テンプレートコンテンツ、CSVプレースホルダー定義、派生プレースホルダー定義を取得します。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
-     *                          テンプレートの読み込みに失敗した場合
+     *                          テンプレートの読み込みに失敗した場合 - ファイルが存在しない、フォーマットが不正など
      */
     @Override
     public boolean loadTemplate() throws KmgToolException {
@@ -356,12 +396,15 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * 1行データを読み込む。
+     * 1行データを読み込む。<br>
+     * <p>
+     * 入力ファイルから1行のデータを読み込みます。 読み込んだデータは内部変数に保存され、後続の処理で使用されます。
+     * </p>
      *
-     * @return true：データあり、false：データなし
+     * @return true：データあり、false：データなし（ファイル終端に達した場合）
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - 読み込み処理中にエラーが発生した場合
      */
     @Override
     public boolean readOneLineOfData() throws KmgToolException {
@@ -399,12 +442,15 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * 出力バッファを書き込む
+     * 出力バッファを書き込む<br>
+     * <p>
+     * 出力バッファに蓄積された内容を出力ファイルに書き込みます。 書き込み後は自動的に改行が追加されます。
+     * </p>
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - 書き込み処理中にエラーが発生した場合
      */
     @Override
     public boolean writeOutputBuffer() throws KmgToolException {
@@ -435,9 +481,12 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 入力ファイルのリーダーをクローズする<br>
+     * <p>
+     * 入力ファイルのBufferedReaderをクローズします。 リーダーがnullの場合は何もしません。
+     * </p>
      *
      * @throws IOException
-     *                     入出力例外
+     *                     入出力例外 - ファイルクローズ中にエラーが発生した場合
      */
     private void closeReader() throws IOException {
 
@@ -454,9 +503,12 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 出力ファイルのライターをクローズする<br>
+     * <p>
+     * 出力ファイルのBufferedWriterをクローズします。 ライターがnullの場合は何もしません。
+     * </p>
      *
      * @throws IOException
-     *                     入出力例外
+     *                     入出力例外 - ファイルクローズ中にエラーが発生した場合
      */
     private void closeWriter() throws IOException {
 
@@ -473,18 +525,21 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * CSVプレースホルダー定義を読み込む<br>
+     * <p>
+     * YAMLデータからCSVプレースホルダー定義を読み込み、内部マップに格納します。 プレースホルダー定義がない場合は何もしません。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @param yamlData
-     *                 YAMLデータ
+     *                 YAMLデータ - テンプレート定義ファイルから読み込まれたデータ
      *
-     * @return true：成功、false：失敗
+     * @return true：成功、false：失敗（プレースホルダー定義がない場合）
      *
      * @throws KmgToolException
-     *                          テンプレートの読み込みに失敗した場合
+     *                          テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など
      */
     private boolean loadCsvPlaceholderDefinitions(final Map<String, Object> yamlData) throws KmgToolException {
 
@@ -515,18 +570,21 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 派生プレースホルダー定義を読み込む<br>
+     * <p>
+     * YAMLデータから派生プレースホルダー定義を読み込み、内部リストに格納します。 派生プレースホルダー定義がない場合は何もしません。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @param yamlData
-     *                 YAMLデータ
+     *                 YAMLデータ - テンプレート定義ファイルから読み込まれたデータ
      *
-     * @return true：成功、false：失敗
+     * @return true：成功、false：失敗（派生プレースホルダー定義がない場合）
      *
      * @throws KmgToolException
-     *                          テンプレートの読み込みに失敗した場合
+     *                          テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など
      */
     private boolean loadDerivedPlaceholderDefinitions(final Map<String, Object> yamlData) throws KmgToolException {
 
@@ -564,18 +622,21 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * テンプレートコンテンツを読み込む<br>
+     * <p>
+     * YAMLデータからテンプレートコンテンツを読み込み、内部変数に格納します。 テンプレートコンテンツは変換処理の基本となるテキストです。
+     * </p>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @param yamlData
-     *                 YAMLデータ
+     *                 YAMLデータ - テンプレート定義ファイルから読み込まれたデータ
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
-     *                          テンプレートコンテンツの読み込みに失敗した場合
+     *                          テンプレートコンテンツの読み込みに失敗した場合 - YAMLデータの形式が不正など
      */
     private boolean loadTemplateContent(final Map<String, Object> yamlData) throws KmgToolException {
 
@@ -590,9 +651,12 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 入力ファイルを開く<br>
+     * <p>
+     * 指定された入力ファイルパスからBufferedReaderを作成し、内部変数に格納します。 入力ファイルが存在しない場合や読み込めない場合は例外をスローします。
+     * </p>
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - ファイルオープン中にエラーが発生した場合
      */
     @SuppressWarnings("resource")
     private void openInputFile() throws KmgToolException {
@@ -615,10 +679,13 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * 出力ファイルを開く
+     * 出力ファイルを開く<br>
+     * <p>
+     * 指定された出力ファイルパスからBufferedWriterを作成し、内部変数に格納します。 出力ファイルが作成できない場合や書き込めない場合は例外をスローします。
+     * </p>
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - ファイルオープン中にエラーが発生した場合
      */
     @SuppressWarnings("resource")
     private void openOutputFile() throws KmgToolException {
@@ -642,12 +709,15 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * CSVプレースホルダーを処理する<br>
+     * <p>
+     * 現在読み込まれているCSV行データを解析し、CSVプレースホルダーを対応する値で置換します。 置換された値はcsvValuesマップに保存され、後続の派生プレースホルダー処理で使用されます。
+     * </p>
      *
      * @param csvValues
-     *                  CSV値を保存するマップ
+     *                  CSV値を保存するマップ - キーはプレースホルダー名、値はCSVから読み取った値
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - CSV行の列数が不足している場合など
      */
     private void processCsvPlaceholders(final Map<String, String> csvValues) throws KmgToolException {
 
@@ -696,12 +766,15 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 派生プレースホルダーを処理する<br>
+     * <p>
+     * CSVプレースホルダー処理で得られた値を元に、派生プレースホルダーの変換処理を行います。 各派生プレースホルダーに対して、指定された変換タイプに基づいて値を変換し、 テンプレート内の対応するパターンを置換します。
+     * </p>
      *
      * @param csvValues
-     *                  CSV値を保存するマップ
+     *                  CSV値を保存するマップ - キーはプレースホルダー名、値はCSVから読み取った値
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          KMGツール例外 - 変換処理中にエラーが発生した場合
      */
     private void processDerivedPlaceholders(final Map<String, String> csvValues) throws KmgToolException {
 
