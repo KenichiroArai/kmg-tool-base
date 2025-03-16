@@ -116,15 +116,16 @@ public class DtcLogicImpl implements DtcLogic {
     @Override
     public void applyTemplateToInputFile() throws KmgToolException {
 
+        /* 1件分の内容をコンテンツの内容で初期化 */
         this.contentsOfOneItem = this.templateContent;
 
-        // CSV値を一時保存するマップ
+        /* CSV値を一時保存するマップ */
         final Map<String, String> csvValues = new HashMap<>();
 
-        // CSVプレースホルダーを処理
+        /* CSVプレースホルダーを処理 */
         this.processCsvPlaceholders(csvValues);
 
-        // 派生プレースホルダーを処理
+        /* 派生プレースホルダーを処理 */
         this.processDerivedPlaceholders(csvValues);
 
     }
@@ -640,9 +641,15 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @param csvValues
      *                  CSV値を保存するマップ
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
      */
-    private void processCsvPlaceholders(final Map<String, String> csvValues) {
+    private void processCsvPlaceholders(final Map<String, String> csvValues) throws KmgToolException {
 
+        /* 置換前の準備 */
+
+        // CSV行に分割
         final String[] csvLine = KmgDelimiterTypes.COMMA.split(this.convertedLine);
 
         // CSVプレースホルダーのキー配列
@@ -651,18 +658,27 @@ public class DtcLogicImpl implements DtcLogic {
         // CSVプレースホルダーのパターン配列
         final String[] csvPlaceholderPatterns = this.csvPlaceholderMap.values().toArray(new String[0]);
 
-        // 各CSVプレースホルダーを対応する値で置換
-        for (int i = 0; i < csvPlaceholderPatterns.length; i++) {
-
-            if (i >= csvLine.length) {
-
-                continue;
-
-            }
+        /* 各CSVプレースホルダーを対応する値で置換 */
+        for (int i = 0; i < csvPlaceholderKeys.length; i++) {
 
             final String key     = csvPlaceholderKeys[i];
             final String pattern = csvPlaceholderPatterns[i];
-            final String value   = csvLine[i];
+            String       value;
+
+            try {
+
+                value = csvLine[i];
+
+            } catch (final ArrayIndexOutOfBoundsException e) {
+
+                // TODO KenichiroArai 2025/03/16 例外処理 "CSVの列が不足しています。ファイル: {0}, プレースホルダー: {1}, 位置: {2}
+                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+                final Object[]               messageArgs  = {
+                    this.outputPath.toString(), key, i,
+                };
+                throw new KmgToolException(messageTypes, messageArgs, e);
+
+            }
 
             // 値を保存
             csvValues.put(key, value);
@@ -685,7 +701,6 @@ public class DtcLogicImpl implements DtcLogic {
      */
     private void processDerivedPlaceholders(final Map<String, String> csvValues) throws KmgToolException {
 
-        // 派生プレースホルダーを処理
         for (final DtcDerivedPlaceholderModel derivedPlaceholder : this.derivedPlaceholders) {
 
             final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
