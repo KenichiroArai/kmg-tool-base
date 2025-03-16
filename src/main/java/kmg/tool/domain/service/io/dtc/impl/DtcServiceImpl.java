@@ -218,10 +218,10 @@ public class DtcServiceImpl implements DtcService {
                 /* 出力バッファに追加する */
                 this.dtcLogic.addOutputBufferContent();
 
-                /* 書き込む */
-                this.dtcLogic.write();
+                /* 出力バッファを書き込む */
+                this.dtcLogic.writeOutputBuffer();
 
-                /* クリア処理 */
+                /* 出力バッファをクリアする */
                 this.dtcLogic.clearOutputBufferContent();
 
             } while (true);

@@ -396,7 +396,7 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * 書き込む
+     * 出力バッファを書き込む
      *
      * @return true：成功、false：失敗
      *
@@ -404,7 +404,7 @@ public class DtcLogicImpl implements DtcLogic {
      *                          KMGツール例外
      */
     @Override
-    public boolean write() throws KmgToolException {
+    public boolean writeOutputBuffer() throws KmgToolException {
 
         boolean result = false;
 

@@ -157,12 +157,12 @@ public interface DtcLogic extends Closeable {
     boolean readOneLineOfData() throws KmgToolException;
 
     /**
-     * 書き込む
+     * 出力バッファを書き込む
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean write() throws KmgToolException;
+    boolean writeOutputBuffer() throws KmgToolException;
 }
