@@ -8,7 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import kmg.tool.application.service.io.AccessorCreationService;
 
 /**
- * <h2>アクセサインタフェース作成ツール</h2>
+ * <h2>インタフェースのアクセサ作成ツール</h2>
  * <p>
  * Javaクラスのフィールドに対するインタフェース用のアクセサメソッド（getterおよびsetter）を自動生成するためのツールです。
  * </p>
@@ -28,7 +28,7 @@ import kmg.tool.application.service.io.AccessorCreationService;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class AccessorInterfaceCreationlTool extends AbstractDynamicTemplateConversionTool {
+public class InterfaceAccessorCreationlTool extends AbstractDynamicTemplateConversionTool {
 
     /**
      * <h3>ツール名</h3>
@@ -36,7 +36,7 @@ public class AccessorInterfaceCreationlTool extends AbstractDynamicTemplateConve
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "アクセサインタフェース作成ツール";
+    private static final String TOOL_NAME = "インタフェースのアクセサ作成ツール";
 
     /**
      * <h3>アクセサ作成サービス</h3>
@@ -76,9 +76,9 @@ public class AccessorInterfaceCreationlTool extends AbstractDynamicTemplateConve
     public static void main(final String[] args) {
 
         @SuppressWarnings("resource")
-        final ConfigurableApplicationContext ctx = SpringApplication.run(AccessorInterfaceCreationlTool.class, args);
+        final ConfigurableApplicationContext ctx = SpringApplication.run(InterfaceAccessorCreationlTool.class, args);
 
-        final AccessorInterfaceCreationlTool tool = ctx.getBean(AccessorInterfaceCreationlTool.class);
+        final InterfaceAccessorCreationlTool tool = ctx.getBean(InterfaceAccessorCreationlTool.class);
 
         /* 初期化 */
         tool.initialize();
@@ -93,15 +93,15 @@ public class AccessorInterfaceCreationlTool extends AbstractDynamicTemplateConve
     /**
      * <h3>コンストラクタ</h3>
      * <p>
-     * アクセサインタフェース作成ツールのインスタンスを生成します。
+     * インタフェースのアクセサ作成ツールのインスタンスを生成します。
      * </p>
      * <p>
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
      */
-    public AccessorInterfaceCreationlTool() {
+    public InterfaceAccessorCreationlTool() {
 
-        super(AccessorInterfaceCreationlTool.TOOL_NAME);
+        super(InterfaceAccessorCreationlTool.TOOL_NAME);
 
     }
 
