@@ -1,17 +1,40 @@
-/**
- * $nameを設定する<br>
-  * @author KenichiroArai
-  * @sine 1.0.0
-  * @version 1.0.0
- * @param $item $name
- */
- void set$Item($type $item);
+# CSVから直接取得するプレースホルダー定義
+# displayName: 画面表示用の名称
+# replacementPattern: 置換対象のパターン
+csvPlaceholders:
+    - displayName: "名称"
+      replacementPattern: "{name}"
+    - displayName: "型"
+      replacementPattern: "{type}"
+    - displayName: "項目"
+      replacementPattern: "{item}"
 
- /**
-  * $nameを返す<br>
-  * @author KenichiroArai
-  * @sine 1.0.0
-  * @version 1.0.0
-  * @return $name
-  */
- $type get$Item();
+# CSVから取得した値を変換して生成するプレースホルダー定義
+# displayName: 画面表示用の名称
+# replacementPattern: 置換対象のパターン
+# sourceKey: 変換元となるCSVプレースホルダーのdisplayName
+# transformation: 適用する変換処理
+derivedPlaceholders:
+    - displayName: "先頭大文字項目"
+      replacementPattern: "{capitalize}"
+      sourceKey: "項目"
+      transformation: "capitalize"
+
+# テンプレートの内容
+# {name}, {type}, {item}, {capitalize}のプレースホルダーが実際の値に置換される
+templateContent: |
+    /**
+     * {name}を設定する<br>
+     * @author KenichiroArai
+     * @sine 0.1.0
+     * @param {item} {name}
+     */
+    void set{capitalize}({type} {item});
+
+    /**
+     * {name}を返す<br>
+     * @author KenichiroArai
+     * @sine 0.1.0
+     * @return {name}
+     */
+    {type} get{capitalize}();
