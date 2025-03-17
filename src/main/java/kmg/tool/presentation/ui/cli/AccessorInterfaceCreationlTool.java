@@ -15,19 +15,18 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
- * アクセサ作成ツール
+ * アクセサインタフェース作成ツール
  *
  * @author KenichiroArai
  */
-@SuppressWarnings("nls") // TODO KenichiroArai 2021/05/28 外部文字列化
 public class AccessorInterfaceCreationlTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH = Paths.get(AccessorInterfaceCreationlTool.BASE_PATH.toString(),
-        "template/kmgTlAccessorInterfaceCreationlTool.txt"); // TODO KenichiroArai 2021/05/28 自動設定
+    private static final Path TEMPLATE_PATH
+        = Paths.get(AccessorInterfaceCreationlTool.BASE_PATH.toString(), "template/AccessorInterfaceCreationlTool.xml");
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(AccessorInterfaceCreationlTool.BASE_PATH.toString(), "input.txt");
@@ -35,6 +34,39 @@ public class AccessorInterfaceCreationlTool {
     /** 出力ファイルパス */
     private static final Path OUTPUT_PATH
         = Paths.get(AccessorInterfaceCreationlTool.BASE_PATH.toString(), "output.txt");
+
+    /**
+     * エントリポイント
+     *
+     * @param args
+     *             オプション
+     */
+    public static void main(final String[] args) {
+
+        final Class<AccessorInterfaceCreationlTool> clasz = AccessorInterfaceCreationlTool.class;
+
+        try {
+
+            final AccessorInterfaceCreationlTool main = new AccessorInterfaceCreationlTool();
+
+            if (main.run()) {
+
+                System.out.println(String.format("%s：失敗", clasz.toString()));
+
+            }
+
+        } catch (final Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            System.out.println(String.format("%s：成功", clasz.toString()));
+            System.out.println(String.format("%s：終了", clasz.toString()));
+
+        }
+
+    }
 
     /**
      * 走る
@@ -127,39 +159,6 @@ public class AccessorInterfaceCreationlTool {
         }
 
         return result;
-
-    }
-
-    /**
-     * エントリポイント
-     *
-     * @param args
-     *             オプション
-     */
-    public static void main(final String[] args) {
-
-        final Class<AccessorInterfaceCreationlTool> clasz = AccessorInterfaceCreationlTool.class;
-
-        try {
-
-            final AccessorInterfaceCreationlTool main = new AccessorInterfaceCreationlTool();
-
-            if (main.run()) {
-
-                System.out.println(String.format("%s：失敗", clasz.toString()));
-
-            }
-
-        } catch (final Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            System.out.println(String.format("%s：成功", clasz.toString()));
-            System.out.println(String.format("%s：終了", clasz.toString()));
-
-        }
 
     }
 
