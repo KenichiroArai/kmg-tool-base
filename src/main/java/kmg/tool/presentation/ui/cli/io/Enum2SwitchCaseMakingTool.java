@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli;
+package kmg.tool.presentation.ui.cli.io;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
- * 列挙型からcase作成ツール
+ * 列挙型からcase文作成ツール
  *
  * @author KenichiroArai
  *
@@ -22,7 +22,6 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
  *
  * @version 1.0.0
  */
-@SuppressWarnings("nls") // TODO KenichiroArai 2021/07/14 外部文字列化
 public class Enum2SwitchCaseMakingTool {
 
     /** 基準パス */
@@ -30,10 +29,7 @@ public class Enum2SwitchCaseMakingTool {
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH
-        = Paths.get(Enum2SwitchCaseMakingTool.BASE_PATH.toString(), "template/kmgTlEnum2SwitchCaseMakingTool.txt"); // TODO
-                                                                                                                    // KenichiroArai
-                                                                                                                    // 2021/07/14
-                                                                                                                    // 自動設定
+        = Paths.get(Enum2SwitchCaseMakingTool.BASE_PATH.toString(), "template/Enum2SwitchCaseMakingTool.yml");
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(Enum2SwitchCaseMakingTool.BASE_PATH.toString(), "input.txt");
@@ -46,6 +42,45 @@ public class Enum2SwitchCaseMakingTool {
 
     /** パラメータ：項目名 */
     private static final String PARAM_ITEM_NAME = "%itemName%";
+
+    /**
+     * エントリポイント<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @param args
+     *             オプション
+     */
+    public static void main(final String[] args) {
+
+        final Class<Enum2SwitchCaseMakingTool> clasz = Enum2SwitchCaseMakingTool.class;
+
+        try {
+
+            final Enum2SwitchCaseMakingTool main = new Enum2SwitchCaseMakingTool();
+
+            if (main.run()) {
+
+                System.out.println(String.format("%s：失敗", clasz.toString()));
+
+            }
+
+        } catch (final Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            System.out.println(String.format("%s：成功", clasz.toString()));
+            System.out.println(String.format("%s：終了", clasz.toString()));
+
+        }
+
+    }
 
     /**
      * 実行する<br>
@@ -114,45 +149,6 @@ public class Enum2SwitchCaseMakingTool {
         }
 
         return result;
-
-    }
-
-    /**
-     * エントリポイント<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
-     *
-     * @param args
-     *             オプション
-     */
-    public static void main(final String[] args) {
-
-        final Class<Enum2SwitchCaseMakingTool> clasz = Enum2SwitchCaseMakingTool.class;
-
-        try {
-
-            final Enum2SwitchCaseMakingTool main = new Enum2SwitchCaseMakingTool();
-
-            if (main.run()) {
-
-                System.out.println(String.format("%s：失敗", clasz.toString()));
-
-            }
-
-        } catch (final Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            System.out.println(String.format("%s：成功", clasz.toString()));
-            System.out.println(String.format("%s：終了", clasz.toString()));
-
-        }
 
     }
 
