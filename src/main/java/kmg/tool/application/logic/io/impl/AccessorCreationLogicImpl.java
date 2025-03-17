@@ -113,7 +113,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     protected AccessorCreationLogicImpl(final Logger logger) {
 
         this.logger = logger;
-
         this.csvRows = new ArrayList<>();
 
     }
@@ -544,21 +543,22 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
             // 1行読み込み
             this.lineOfDataRead = this.reader.readLine();
-            this.convertedLine = this.lineOfDataRead;
-
-            // ファイルの終わりに達したか
-            if (this.lineOfDataRead == null) {
-                // 達した場合
-
-                return result;
-
-            }
 
         } catch (final IOException e) {
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32006;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
+
+        this.convertedLine = this.lineOfDataRead;
+
+        // ファイルの終わりに達したか
+        if (this.lineOfDataRead == null) {
+            // 達した場合
+
+            return result;
 
         }
 
