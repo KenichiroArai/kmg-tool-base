@@ -1,3 +1,22 @@
-case %item%:
-    // %itemName%
-    break;
+# CSVから直接取得するプレースホルダー定義
+# displayName: 画面表示用の名称
+# replacementPattern: 置換対象のパターン
+csvPlaceholders:
+    - displayName: "項目"
+      replacementPattern: "{item}"
+    - displayName: "項目名"
+      replacementPattern: "{itemName}"
+
+# CSVから取得した値を変換して生成するプレースホルダー定義
+# displayName: 画面表示用の名称
+# replacementPattern: 置換対象のパターン
+# sourceKey: 変換元となるCSVプレースホルダーのdisplayName
+# transformation: 適用する変換処理
+derivedPlaceholders: []
+
+# テンプレートの内容
+# {item}, {itemName}のプレースホルダーが実際の値に置換される
+templateContent: |
+    case {item}:
+        // {itemName}
+        break;
