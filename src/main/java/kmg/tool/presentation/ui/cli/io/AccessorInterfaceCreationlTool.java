@@ -1,165 +1,127 @@
 package kmg.tool.presentation.ui.cli.io;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.tool.application.service.io.AccessorCreationService;
 
 /**
- * アクセサインタフェース作成ツール
+ * <h2>アクセサインタフェース作成ツール</h2>
+ * <p>
+ * Javaクラスのフィールドに対するインタフェース用のアクセサメソッド（getterおよびsetter）を自動生成するためのツールです。
+ * </p>
+ * <p>
+ * このツールは入力ファイルとテンプレートファイルを使用して、アクセサメソッドを含む出力ファイルを生成します。
+ * </p>
+ * <p>
+ * AbstractTwo2OneToolを継承しており、2つの入力ファイルから1つの出力ファイルを生成する処理を実装しています。
+ * </p>
  *
  * @author KenichiroArai
+ *
+ * @version 1.0.0
+ *
+ * @since 1.0.0
  */
-public class AccessorInterfaceCreationlTool {
-
-    /** 基準パス */
-    private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
-
-    /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH
-        = Paths.get(AccessorInterfaceCreationlTool.BASE_PATH.toString(), "template/AccessorInterfaceCreationlTool.xml");
-
-    /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(AccessorInterfaceCreationlTool.BASE_PATH.toString(), "input.txt");
-
-    /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH
-        = Paths.get(AccessorInterfaceCreationlTool.BASE_PATH.toString(), "output.txt");
+@SpringBootApplication(scanBasePackages = {
+    "kmg"
+})
+public class AccessorInterfaceCreationlTool extends AbstractDynamicTemplateConversionTool {
 
     /**
-     * エントリポイント
+     * <h3>ツール名</h3>
+     * <p>
+     * このツールの表示名を定義します。
+     * </p>
+     */
+    private static final String TOOL_NAME = "アクセサインタフェース作成ツール";
+
+    /**
+     * <h3>アクセサ作成サービス</h3>
+     * <p>
+     * フィールド定義からアクセサメソッドを生成するためのサービスです。
+     * </p>
+     */
+    @Autowired
+    private AccessorCreationService accessorCreationService;
+
+    /**
+     * <h3>エントリポイント</h3>
+     * <p>
+     * アプリケーションの起動とツールの実行を行います。
+     * </p>
+     * <p>
+     * このメソッドはSpringBootアプリケーションとしてツールを起動し、 初期化処理と実行処理を順に行います。
+     * </p>
+     * <p>
+     * 処理終了後はSpringのコンテキストを閉じて、リソースを解放します。
+     * </p>
+     * <p>
+     * <strong>処理の流れ：</strong>
+     * </p>
+     * <ol>
+     * <li>SpringBootアプリケーションの起動</li>
+     * <li>ツールインスタンスの取得</li>
+     * <li>初期化処理の実行</li>
+     * <li>メイン処理の実行</li>
+     * <li>コンテキストのクローズ</li>
+     * </ol>
      *
      * @param args
-     *             オプション
+     *             コマンドライン引数。入力ファイルパス、テンプレートファイルパス、出力ファイルパスなどを指定できます。 <br>
+     *             ※引数の詳細は親クラスのドキュメントを参照してください。
      */
     public static void main(final String[] args) {
 
-        final Class<AccessorInterfaceCreationlTool> clasz = AccessorInterfaceCreationlTool.class;
+        @SuppressWarnings("resource")
+        final ConfigurableApplicationContext ctx = SpringApplication.run(AccessorInterfaceCreationlTool.class, args);
 
-        try {
+        final AccessorInterfaceCreationlTool tool = ctx.getBean(AccessorInterfaceCreationlTool.class);
 
-            final AccessorInterfaceCreationlTool main = new AccessorInterfaceCreationlTool();
+        /* 初期化 */
+        tool.initialize();
 
-            if (main.run()) {
+        /* 実行 */
+        tool.execute();
 
-                System.out.println(String.format("%s：失敗", clasz.toString()));
-
-            }
-
-        } catch (final Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            System.out.println(String.format("%s：成功", clasz.toString()));
-            System.out.println(String.format("%s：終了", clasz.toString()));
-
-        }
+        ctx.close();
 
     }
 
     /**
-     * 走る
-     *
-     * @return TRUE：成功、FLASE：失敗
-     *
-     * @throws FileNotFoundException
-     *                               ファイルが存在しない例外
-     * @throws IOException
-     *                               入出力例外
+     * <h3>コンストラクタ</h3>
+     * <p>
+     * アクセサインタフェース作成ツールのインスタンスを生成します。
+     * </p>
+     * <p>
+     * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
+     * </p>
      */
-    @SuppressWarnings("static-method")
-    public Boolean run() throws FileNotFoundException, IOException {
+    public AccessorInterfaceCreationlTool() {
 
-        final Boolean result = Boolean.FALSE;
+        super(AccessorInterfaceCreationlTool.TOOL_NAME);
 
-        /* テンプレートの取得 */
-        String template = null;
+    }
 
-        try {
+    /**
+     * <h3>アクセサ作成サービスを返す</h3>
+     * <p>
+     * AbstractTwo2OneToolの抽象メソッドを実装し、DI（依存性注入）された アクセサ作成サービスのインスタンスを返します。
+     * </p>
+     * <p>
+     * このメソッドは親クラスの処理から呼び出され、実際のアクセサ生成処理を担当する サービスを提供します。
+     * </p>
+     *
+     * @return アクセサ作成サービス このツールが使用するアクセサ作成サービスのインスタンス
+     */
+    @Override
+    protected AccessorCreationService getIoService() {
 
-            template = Files.readAllLines(AccessorInterfaceCreationlTool.TEMPLATE_PATH).stream()
-                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
-
-        } catch (final IOException e) {
-
-            throw e;
-
-        }
-
-        /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(AccessorInterfaceCreationlTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(AccessorInterfaceCreationlTool.OUTPUT_PATH);) {
-
-            String output = template;
-            String line   = null;
-
-            while ((line = brInput.readLine()) != null) {
-
-                line = line.replace("final", KmgString.EMPTY);
-                line = line.replace("static", KmgString.EMPTY);
-                final Pattern patternComment = Pattern.compile("/\\*\\* (\\S+)");
-                final Matcher matcherComment = patternComment.matcher(line);
-
-                if (matcherComment.find()) {
-
-                    output = output.replace("$name", matcherComment.group(1));
-                    continue;
-
-                }
-
-                Pattern patternSrc = Pattern.compile("private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);");
-                Matcher matcherSrc = patternSrc.matcher(line);
-
-                if (matcherSrc.find()) {
-
-                    output = output.replace("$type", matcherSrc.group(1));
-                    output = output.replace("$item", matcherSrc.group(3));
-                    output = output.replace("$Item",
-                        matcherSrc.group(3).substring(0, 1).toUpperCase() + matcherSrc.group(3).substring(1));
-                    bw.write(output);
-                    bw.write(System.lineSeparator());
-                    output = template;
-
-                } else {
-
-                    patternSrc = Pattern.compile("private\\s+(Map<\\w+,\\s+\\w+>)\\s+(\\w+);");
-                    matcherSrc = patternSrc.matcher(line);
-
-                    if (matcherSrc.find()) {
-
-                        output = output.replace("$type", matcherSrc.group(1));
-                        output = output.replace("$item", matcherSrc.group(2));
-                        output = output.replace("$Item",
-                            matcherSrc.group(2).substring(0, 1).toUpperCase() + matcherSrc.group(2).substring(1));
-                        bw.write(output);
-                        bw.write(System.lineSeparator());
-                        output = template;
-
-                    }
-
-                }
-
-            }
-
-        } catch (final IOException e) {
-
-            throw e;
-
-        }
+        final AccessorCreationService result = this.accessorCreationService;
 
         return result;
 
     }
-
 }
