@@ -121,7 +121,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
 
         if (this.itemName == null) {
 
-            // TODO KenichiroArai 2025/03/18 例外処理
+            // TODO KenichiroArai 2025/03/18 例外処理 - 項目名がnullです。
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
@@ -151,7 +151,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
 
         if (this.item == null) {
 
-            // TODO KenichiroArai 2025/03/18 例外処理
+            // TODO KenichiroArai 2025/03/18 例外処理 - 項目がnullです。
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
@@ -350,6 +350,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolException {
 
@@ -358,37 +359,18 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
         this.inputPath = inputPath;
         this.outputPath = outputPath;
 
-        /* 入力ファイルを開く */
-        try {
+        /* データのクリア */
+        this.clearProcessingData();
 
-            this.reader = Files.newBufferedReader(this.inputPath);
+        this.clearCsvRows();
 
-        } catch (final IOException e) {
+        /* ファイルを開く */
 
-            // TODO KenichiroArai 2025/03/18 例外処理
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs  = {
-                this.inputPath.toString()
-            };
-            throw new KmgToolException(messageTypes, messageArgs, e);
+        // 入力ファイルを開く
+        this.openInputFile();
 
-        }
-
-        /* 出力ファイルを開く */
-        try {
-
-            this.writer = Files.newBufferedWriter(this.outputPath);
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/18 例外処理
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs  = {
-                this.outputPath.toString()
-            };
-            throw new KmgToolException(messageTypes, messageArgs, e);
-
-        }
+        // 出力ファイルを開く
+        this.openOutputFile();
 
         result = true;
         return result;
@@ -414,7 +396,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/18 例外処理
+            // TODO KenichiroArai 2025/03/18 例外処理 - 1行読み込みに失敗しました。
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {
                 this.inputPath.toString()
@@ -423,6 +405,8 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
 
         }
 
+        this.convertedLine = this.lineOfDataRead;
+
         // 読み込んだデータがないか
         if (this.lineOfDataRead == null) {
             // 読み込んだデータがない場合
@@ -430,8 +414,6 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
             return result;
 
         }
-
-        this.convertedLine = this.lineOfDataRead;
 
         result = true;
         return result;
@@ -465,7 +447,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/03/18 例外処理
+                // TODO KenichiroArai 2025/03/18 例外処理 - CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
                 final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
                 final Object[]               messageArgs  = {
                     this.outputPath.toString()
@@ -483,7 +465,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/18 例外処理
+            // TODO KenichiroArai 2025/03/18 例外処理 - ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
@@ -519,7 +501,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
 
             this.reader = null;
 
-            // TODO KenichiroArai 2025/03/18 ログ
+            // TODO KenichiroArai 2025/03/18 ログ - リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
             final Object[]               logMsgArgs  = {
                 this.inputPath.toString(),
@@ -555,7 +537,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
 
             this.writer = null;
 
-            // TODO KenichiroArai 2025/03/18 ログ
+            // TODO KenichiroArai 2025/03/18 ログ - ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
             final Object[]               logMsgArgs  = {
                 this.outputPath.toString(),
@@ -564,6 +546,58 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
             this.logger.error(logMsg, e);
 
             throw e;
+
+        }
+
+    }
+
+    /**
+     * 入力ファイルを開く
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @SuppressWarnings("resource")
+    private void openInputFile() throws KmgToolException {
+
+        try {
+
+            this.reader = Files.newBufferedReader(this.inputPath);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/18 例外処理 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs  = {
+                this.inputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
+
+    }
+
+    /**
+     * 出力ファイルを開く
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @SuppressWarnings("resource")
+    private void openOutputFile() throws KmgToolException {
+
+        try {
+
+            this.writer = Files.newBufferedWriter(this.outputPath);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/18 例外処理 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
+            final Object[]               messageArgs  = {
+                this.outputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
 
         }
 
