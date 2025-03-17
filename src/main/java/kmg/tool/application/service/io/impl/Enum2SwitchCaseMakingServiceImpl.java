@@ -91,7 +91,8 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
 
         boolean result = false;
 
-        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31000;
+        // TODO KenichiroArai 2025/03/18 ログ
+        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.NONE;
         final Object[]               startLogMsgArgs  = {};
         final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
             startLogMsgArgs);
@@ -137,7 +138,8 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31007;
+            // TODO KenichiroArai 2025/03/18 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -153,7 +155,8 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
 
             } finally {
 
-                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31006;
+                // TODO KenichiroArai 2025/03/18 ログ
+                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.NONE;
                 final Object[]               endLogMsgArgs  = {};
                 final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
                     endLogMsgArgs);
@@ -164,6 +167,66 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
         }
 
         return result;
+
+    }
+
+    /**
+     * データをクリアして次の行の準備をする。
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private void clearAndPrepareNextLine() throws KmgToolException {
+
+        try {
+
+            // 書き込み対象のCSVデータのリストをクリアする
+            this.enum2SwitchCaseMakingLogic.clearCsvRows();
+
+            // 処理中のデータをクリアする
+            this.enum2SwitchCaseMakingLogic.clearProcessingData();
+
+            /* 書き込み対象に行を追加する */
+            this.enum2SwitchCaseMakingLogic.addOneLineOfDataToCsvRows();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/18 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final Object[]               logMsgArgs  = {
+                this.enum2SwitchCaseMakingLogic.getItem(), this.enum2SwitchCaseMakingLogic.getItemName(),
+            };
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
+
+    }
+
+    /**
+     * 列挙型からcase文作成ロジックをクローズする。
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private void closeEnum2SwitchCaseMakingLogic() throws KmgToolException {
+
+        try {
+
+            this.enum2SwitchCaseMakingLogic.close();
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/18 ログ
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {
+                this.enum2SwitchCaseMakingLogic.getItem(), this.enum2SwitchCaseMakingLogic.getItemName(),
+            };
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
 
     }
 
@@ -198,7 +261,8 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31004;
+            // TODO KenichiroArai 2025/03/18 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
             final Object[]               logMsgArgs  = {
                 this.enum2SwitchCaseMakingLogic.getItem(), this.enum2SwitchCaseMakingLogic.getItemName(),
             };
@@ -211,64 +275,6 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
 
         result = true;
         return result;
-
-    }
-
-    /**
-     * データをクリアして次の行の準備をする。
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    private void clearAndPrepareNextLine() throws KmgToolException {
-
-        try {
-
-            // 書き込み対象のCSVデータのリストをクリアする
-            this.enum2SwitchCaseMakingLogic.clearCsvRows();
-
-            // 処理中のデータをクリアする
-            this.enum2SwitchCaseMakingLogic.clearProcessingData();
-
-            /* 書き込み対象に行を追加する */
-            this.enum2SwitchCaseMakingLogic.addOneLineOfDataToCsvRows();
-
-        } catch (final KmgToolException e) {
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31003;
-            final Object[]               logMsgArgs  = {
-                this.enum2SwitchCaseMakingLogic.getItem(), this.enum2SwitchCaseMakingLogic.getItemName(),
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
-
-        }
-
-    }
-
-    /**
-     * 列挙型からcase文作成ロジックをクローズする。
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    private void closeEnum2SwitchCaseMakingLogic() throws KmgToolException {
-
-        try {
-
-            this.enum2SwitchCaseMakingLogic.close();
-
-        } catch (final IOException e) {
-
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31003;
-            final Object[]               genMsgArgs  = {
-                this.enum2SwitchCaseMakingLogic.getItem(), this.enum2SwitchCaseMakingLogic.getItemName(),
-            };
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
-
-        }
 
     }
 
@@ -290,7 +296,8 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31005;
+            // TODO KenichiroArai 2025/03/18 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -317,7 +324,8 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31001;
+            // TODO KenichiroArai 2025/03/18 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -325,7 +333,8 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
 
         }
 
-        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31002;
+        // TODO KenichiroArai 2025/03/18 ログ
+        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
         final Object[]               logMsgArgs  = {
             this.enum2SwitchCaseMakingLogic.getItem(), this.enum2SwitchCaseMakingLogic.getItemName(),
         };
