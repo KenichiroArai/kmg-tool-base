@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.io.Enum2SwitchCaseMakingLogic;
-import kmg.tool.application.service.io.Enum2SwitchCaseMakingService;
+import kmg.tool.application.logic.io.Enum2SwitchCaseCreationLogic;
+import kmg.tool.application.service.io.Enum2SwitchCaseCreationService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
@@ -28,8 +28,8 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @since 1.0.0
  */
 @Service
-public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorService
-    implements Enum2SwitchCaseMakingService {
+public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorService
+    implements Enum2SwitchCaseCreationService {
 
     /**
      * ロガー
@@ -48,16 +48,16 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
 
     /** 列挙型からcase文作成ロジック */
     @Autowired
-    private Enum2SwitchCaseMakingLogic enum2SwitchCaseMakingLogic;
+    private Enum2SwitchCaseCreationLogic enum2SwitchCaseMakingLogic;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
      * @since 1.0.0
      */
-    public Enum2SwitchCaseMakingServiceImpl() {
+    public Enum2SwitchCaseCreationServiceImpl() {
 
-        this(LoggerFactory.getLogger(Enum2SwitchCaseMakingServiceImpl.class));
+        this(LoggerFactory.getLogger(Enum2SwitchCaseCreationServiceImpl.class));
 
     }
 
@@ -69,7 +69,7 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
      * @param logger
      *               ロガー
      */
-    protected Enum2SwitchCaseMakingServiceImpl(final Logger logger) {
+    protected Enum2SwitchCaseCreationServiceImpl(final Logger logger) {
 
         this.logger = logger;
 
@@ -151,7 +151,7 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
             try {
 
                 /* 列挙型からcase文作成ロジックのクローズ処理 */
-                this.closeEnum2SwitchCaseMakingLogic();
+                this.closeEnum2SwitchCaseCreationLogic();
 
             } finally {
 
@@ -207,7 +207,7 @@ public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorServi
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    private void closeEnum2SwitchCaseMakingLogic() throws KmgToolException {
+    private void closeEnum2SwitchCaseCreationLogic() throws KmgToolException {
 
         try {
 

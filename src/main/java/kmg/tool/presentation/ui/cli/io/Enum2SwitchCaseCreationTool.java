@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.application.service.io.Enum2SwitchCaseMakingService;
+import kmg.tool.application.service.io.Enum2SwitchCaseCreationService;
 
 /**
  * <h2>列挙型からcase文作成ツール</h2>
@@ -28,7 +28,7 @@ import kmg.tool.application.service.io.Enum2SwitchCaseMakingService;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class Enum2SwitchCaseMakingTool extends AbstractDynamicTemplateConversionTool {
+public class Enum2SwitchCaseCreationTool extends AbstractDynamicTemplateConversionTool {
 
     /**
      * <h3>ツール名</h3>
@@ -45,7 +45,7 @@ public class Enum2SwitchCaseMakingTool extends AbstractDynamicTemplateConversion
      * </p>
      */
     @Autowired
-    private Enum2SwitchCaseMakingService enum2SwitchCaseMakingService;
+    private Enum2SwitchCaseCreationService enum2SwitchCaseMakingService;
 
     /**
      * <h3>エントリポイント</h3>
@@ -76,9 +76,9 @@ public class Enum2SwitchCaseMakingTool extends AbstractDynamicTemplateConversion
     public static void main(final String[] args) {
 
         @SuppressWarnings("resource")
-        final ConfigurableApplicationContext ctx = SpringApplication.run(Enum2SwitchCaseMakingTool.class, args);
+        final ConfigurableApplicationContext ctx = SpringApplication.run(Enum2SwitchCaseCreationTool.class, args);
 
-        final Enum2SwitchCaseMakingTool tool = ctx.getBean(Enum2SwitchCaseMakingTool.class);
+        final Enum2SwitchCaseCreationTool tool = ctx.getBean(Enum2SwitchCaseCreationTool.class);
 
         /* 初期化 */
         tool.initialize();
@@ -99,9 +99,9 @@ public class Enum2SwitchCaseMakingTool extends AbstractDynamicTemplateConversion
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
      */
-    public Enum2SwitchCaseMakingTool() {
+    public Enum2SwitchCaseCreationTool() {
 
-        super(Enum2SwitchCaseMakingTool.TOOL_NAME);
+        super(Enum2SwitchCaseCreationTool.TOOL_NAME);
 
     }
 
@@ -117,9 +117,9 @@ public class Enum2SwitchCaseMakingTool extends AbstractDynamicTemplateConversion
      * @return 列挙型からcase文作成サービス このツールが使用する列挙型からcase文作成サービスのインスタンス
      */
     @Override
-    protected Enum2SwitchCaseMakingService getIoService() {
+    protected Enum2SwitchCaseCreationService getIoService() {
 
-        final Enum2SwitchCaseMakingService result = this.enum2SwitchCaseMakingService;
+        final Enum2SwitchCaseCreationService result = this.enum2SwitchCaseMakingService;
 
         return result;
 

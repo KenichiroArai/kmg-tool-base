@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.io.Enum2SwitchCaseMakingLogic;
+import kmg.tool.application.logic.io.Enum2SwitchCaseCreationLogic;
 import kmg.tool.application.types.io.ConvertEnumDefinitionTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
@@ -36,7 +36,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @since 1.0.0
  */
 @Service
-public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogic {
+public class Enum2SwitchCaseCreationLogicImpl implements Enum2SwitchCaseCreationLogic {
 
     /** 列挙型定義の正規表現パターン */
     private static final String ENUM_DEFINITION_PATTERN = "(\\w+)\\(\"(\\S+)\",";
@@ -86,9 +86,9 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
     /**
      * デフォルトコンストラクタ
      */
-    public Enum2SwitchCaseMakingLogicImpl() {
+    public Enum2SwitchCaseCreationLogicImpl() {
 
-        this(LoggerFactory.getLogger(Enum2SwitchCaseMakingLogicImpl.class));
+        this(LoggerFactory.getLogger(Enum2SwitchCaseCreationLogicImpl.class));
 
     }
 
@@ -100,7 +100,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
      * @param logger
      *               ロガー
      */
-    protected Enum2SwitchCaseMakingLogicImpl(final Logger logger) {
+    protected Enum2SwitchCaseCreationLogicImpl(final Logger logger) {
 
         this.logger = logger;
         this.csvRows = new ArrayList<>();
@@ -251,7 +251,7 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
         boolean result = false;
 
         // 列挙型定義を正規表現でグループ化する
-        final Pattern patternSrc = Pattern.compile(Enum2SwitchCaseMakingLogicImpl.ENUM_DEFINITION_PATTERN);
+        final Pattern patternSrc = Pattern.compile(Enum2SwitchCaseCreationLogicImpl.ENUM_DEFINITION_PATTERN);
         final Matcher matcherSrc = patternSrc.matcher(this.convertedLine);
 
         // 列挙型定義ではないか

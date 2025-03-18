@@ -19,7 +19,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  *
  * @since 1.0.0
  */
-public interface Enum2SwitchCaseMakingLogic extends Closeable {
+public interface Enum2SwitchCaseCreationLogic extends Closeable {
 
     /**
      * 項目を書き込み対象に追加する。

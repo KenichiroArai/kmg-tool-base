@@ -14,7 +14,7 @@ import kmg.tool.domain.service.io.Two2OneService;
  *
  * @since 1.0.0
  */
-public interface Enum2SwitchCaseMakingService extends Two2OneService {
+public interface Enum2SwitchCaseCreationService extends Two2OneService {
 
     // 処理なし
 
