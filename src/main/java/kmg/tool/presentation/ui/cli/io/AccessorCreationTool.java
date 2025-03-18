@@ -28,7 +28,7 @@ import kmg.tool.application.service.io.AccessorCreationService;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class AccessorCreationlTool extends AbstractDynamicTemplateConversionTool {
+public class AccessorCreationTool extends AbstractDynamicTemplateConversionTool {
 
     /**
      * <h3>ツール名</h3>
@@ -76,9 +76,9 @@ public class AccessorCreationlTool extends AbstractDynamicTemplateConversionTool
     public static void main(final String[] args) {
 
         @SuppressWarnings("resource")
-        final ConfigurableApplicationContext ctx = SpringApplication.run(AccessorCreationlTool.class, args);
+        final ConfigurableApplicationContext ctx = SpringApplication.run(AccessorCreationTool.class, args);
 
-        final AccessorCreationlTool tool = ctx.getBean(AccessorCreationlTool.class);
+        final AccessorCreationTool tool = ctx.getBean(AccessorCreationTool.class);
 
         /* 初期化 */
         tool.initialize();
@@ -99,9 +99,9 @@ public class AccessorCreationlTool extends AbstractDynamicTemplateConversionTool
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
      */
-    public AccessorCreationlTool() {
+    public AccessorCreationTool() {
 
-        super(AccessorCreationlTool.TOOL_NAME);
+        super(AccessorCreationTool.TOOL_NAME);
 
     }
 
