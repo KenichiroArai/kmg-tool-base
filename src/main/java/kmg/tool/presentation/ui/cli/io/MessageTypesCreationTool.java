@@ -1,164 +1,127 @@
 package kmg.tool.presentation.ui.cli.io;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.tool.application.service.io.MessageTypesCreationService;
 
 /**
- * メッセージの種類作成ツール
+ * <h2>メッセージの種類作成ツール</h2>
+ * <p>
+ * メッセージの種類を定義するYMLファイルを自動生成するためのツールです。
+ * </p>
+ * <p>
+ * このツールは入力ファイルとテンプレートファイルを使用して、メッセージ種類の定義を含む出力ファイルを生成します。
+ * </p>
+ * <p>
+ * AbstractDynamicTemplateConversionToolを継承しており、動的テンプレート変換処理を実装しています。
+ * </p>
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
- *
  * @version 1.0.0
+ *
+ * @since 1.0.0
  */
-public class MessageTypesCreationTool {
-
-    /** 基準パス */
-    private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
-
-    /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH
-        = Paths.get(MessageTypesCreationTool.BASE_PATH.toString(), "template/MessageTypesCreationTool.yml");
-
-    /** 入力ファイルパス */
-    private static final Path INPUT_PATH = Paths.get(MessageTypesCreationTool.BASE_PATH.toString(), "input.txt");
-
-    /** 出力ファイルパス */
-    private static final Path OUTPUT_PATH = Paths.get(MessageTypesCreationTool.BASE_PATH.toString(), "output.txt");
-
-    /** パラメータ：コメント */
-    private static final String PARAM_COMMENT = "$comment";
-
-    /** パラメータ：キー */
-    private static final String PARAM_KEY = "$key";
-
-    /** パラメータ：名称 */
-    private static final String PARAM_NAME = "$name";
-
-    /** パラメータ：値 */
-    private static final String PARAM_VALUE = "$value";
+@SpringBootApplication(scanBasePackages = {
+    "kmg"
+})
+public class MessageTypesCreationTool extends AbstractDynamicTemplateConversionTool {
 
     /**
-     * エントリポイント<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
+     * <h3>ツール名</h3>
+     * <p>
+     * このツールの表示名を定義します。
+     * </p>
+     */
+    private static final String TOOL_NAME = "メッセージの種類作成ツール";
+
+    /**
+     * <h3>メッセージの種類作成サービス</h3>
+     * <p>
+     * メッセージ種類の定義を生成するためのサービスです。
+     * </p>
+     */
+    @Autowired
+    private MessageTypesCreationService messageTypesCreationService;
+
+    /**
+     * <h3>エントリポイント</h3>
+     * <p>
+     * アプリケーションの起動とツールの実行を行います。
+     * </p>
+     * <p>
+     * このメソッドはSpringBootアプリケーションとしてツールを起動し、 初期化処理と実行処理を順に行います。
+     * </p>
+     * <p>
+     * 処理終了後はSpringのコンテキストを閉じて、リソースを解放します。
+     * </p>
+     * <p>
+     * <strong>処理の流れ：</strong>
+     * </p>
+     * <ol>
+     * <li>SpringBootアプリケーションの起動</li>
+     * <li>ツールインスタンスの取得</li>
+     * <li>初期化処理の実行</li>
+     * <li>メイン処理の実行</li>
+     * <li>コンテキストのクローズ</li>
+     * </ol>
      *
      * @param args
-     *             オプション
+     *             コマンドライン引数。入力ファイルパス、テンプレートファイルパス、出力ファイルパスなどを指定できます。 <br>
+     *             ※引数の詳細は親クラスのドキュメントを参照してください。
      */
     public static void main(final String[] args) {
 
-        final Class<MessageTypesCreationTool> clasz = MessageTypesCreationTool.class;
+        @SuppressWarnings("resource")
+        final ConfigurableApplicationContext ctx = SpringApplication.run(MessageTypesCreationTool.class, args);
 
-        try {
+        final MessageTypesCreationTool tool = ctx.getBean(MessageTypesCreationTool.class);
 
-            final MessageTypesCreationTool main = new MessageTypesCreationTool();
+        /* 初期化 */
+        tool.initialize();
 
-            if (main.run()) {
+        /* 実行 */
+        tool.execute();
 
-                System.out.println(String.format("%s：失敗", clasz.toString()));
-
-            }
-
-        } catch (final Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            System.out.println(String.format("%s：成功", clasz.toString()));
-            System.out.println(String.format("%s：終了", clasz.toString()));
-
-        }
+        ctx.close();
 
     }
 
     /**
-     * 実行する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
-     *
-     * @return TRUE：成功、FLASE：失敗
-     *
-     * @throws FileNotFoundException
-     *                               ファイルが存在しない例外
-     * @throws IOException
-     *                               入出力例外
+     * <h3>コンストラクタ</h3>
+     * <p>
+     * メッセージの種類作成ツールのインスタンスを生成します。
+     * </p>
+     * <p>
+     * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
+     * </p>
      */
-    @SuppressWarnings("static-method")
-    public Boolean run() throws FileNotFoundException, IOException {
+    public MessageTypesCreationTool() {
 
-        final Boolean result = Boolean.FALSE;
+        super(MessageTypesCreationTool.TOOL_NAME);
 
-        /* テンプレートの取得 */
-        String template = null;
+    }
 
-        try {
+    /**
+     * <h3>メッセージの種類作成サービスを返す</h3>
+     * <p>
+     * AbstractDynamicTemplateConversionToolの抽象メソッドを実装し、DI（依存性注入）された メッセージの種類作成サービスのインスタンスを返します。
+     * </p>
+     * <p>
+     * このメソッドは親クラスの処理から呼び出され、実際のメッセージ種類生成処理を担当する サービスを提供します。
+     * </p>
+     *
+     * @return メッセージの種類作成サービス このツールが使用するメッセージの種類作成サービスのインスタンス
+     */
+    @Override
+    protected MessageTypesCreationService getIoService() {
 
-            template = Files.readAllLines(MessageTypesCreationTool.TEMPLATE_PATH).stream()
-                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
-
-        } catch (final IOException e) {
-
-            throw e;
-
-        }
-
-        /* 入力から出力の処理 */
-        try (final BufferedReader brInput = Files.newBufferedReader(MessageTypesCreationTool.INPUT_PATH);
-            final BufferedWriter bw = Files.newBufferedWriter(MessageTypesCreationTool.OUTPUT_PATH);) {
-
-            String line;
-
-            while ((line = brInput.readLine()) != null) {
-
-                /* データ取得 */
-                final String[]  inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(line, 2);
-                int             dataIdx    = 0;
-                final KmgString idData     = new KmgString(inputDatas[dataIdx]);         // ID
-                dataIdx++;
-                final KmgString nameData = new KmgString(inputDatas[dataIdx]);
-                dataIdx++; // 名称
-
-                /* 変換処理 */
-                String output = template;
-                output = output.replace(MessageTypesCreationTool.PARAM_COMMENT, nameData.toString()); // コメント
-                output = output.replace(MessageTypesCreationTool.PARAM_KEY, idData.toString()); // キー
-                output = output.replace(MessageTypesCreationTool.PARAM_NAME, nameData.toString()); // 名称
-                output = output.replace(MessageTypesCreationTool.PARAM_VALUE, idData.toString()); // 値
-
-                /* 出力 */
-                bw.write(output);
-                bw.write(System.lineSeparator());
-
-            }
-
-        } catch (final IOException e) {
-
-            throw e;
-
-        }
+        final MessageTypesCreationService result = this.messageTypesCreationService;
 
         return result;
 
     }
-
 }
