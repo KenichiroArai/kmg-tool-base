@@ -184,6 +184,116 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
     KMGTOOL_LOG32001("ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]"),
 
     /**
+     * CSVファイルに書き込む処理を開始します。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32002("CSVファイルに書き込む処理を開始します。"),
+
+    /**
+     * CSVファイルの書き込み処理中にエラーが発生しました。出力ファイルパス:[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32003("CSVファイルの書き込み処理中にエラーが発生しました。出力ファイルパス:[{0}]"),
+
+    /**
+     * CSVファイルに書き込む処理を終了します。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32004("CSVファイルに書き込む処理を終了します。"),
+
+    /**
+     * クリア処理中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32005("クリア処理中にエラーが発生しました。"),
+
+    /**
+     * カラムの追加中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32006("カラムの追加中にエラーが発生しました。"),
+
+    /**
+     * 1行データの読み込み中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32007("1行データの読み込み中にエラーが発生しました。"),
+
+    /**
+     * CSVファイルに書き込み中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32008("CSVファイルに書き込み中にエラーが発生しました。"),
+
+    /**
+     * CSVファイルに書き込み完了。名称=[{0}], 項目名=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32009("CSVファイルに書き込み完了。名称=[{0}], 項目名=[{1}]"),
+
+    /**
+     * リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32010("リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]"),
+
+    /**
+     * ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG32011("ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]"),
+
+    /**
      * 初期化の失敗
      *
      * @author KenichiroArai
