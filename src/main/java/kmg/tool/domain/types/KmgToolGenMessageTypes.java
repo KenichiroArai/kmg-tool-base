@@ -173,6 +173,17 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN31003("アクセサ作成ロジックをクローズ中にエラーが発生しました。"),
 
     /**
+     * 列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31004("列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。"),
+
+    /**
      * 項目名がnullです。
      *
      * @author KenichiroArai
@@ -259,6 +270,83 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      * @version 0.1.0
      */
     KMGTOOL_GEN32008("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
+     * 項目名がnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32009("項目名がnullです。"),
+
+    /**
+     * 項目名がnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32010("項目名がnullです。"),
+
+    /**
+     * 1行読み込みに失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32011("1行読み込みに失敗しました。"),
+
+    /**
+     * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32012("CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
+     * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32013("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
+     * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32014("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
+
+    /**
+     * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32015("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
      * 失敗

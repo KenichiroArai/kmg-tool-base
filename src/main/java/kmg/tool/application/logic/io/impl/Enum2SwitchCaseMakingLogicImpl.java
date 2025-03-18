@@ -15,47 +15,43 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.io.AccessorCreationLogic;
-import kmg.tool.application.types.io.AccessorRegexGroupTypes;
+import kmg.tool.application.logic.io.Enum2SwitchCaseMakingLogic;
+import kmg.tool.application.types.io.ConvertEnumDefinitionTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * アクセサ作成ロジック<br>
+ * <h2>列挙型からcase文作成ロジック実装クラス</h2>
+ * <p>
+ * 列挙型の定義からswitch-case文を自動生成するためのロジック実装クラスです。
+ * </p>
  *
  * @author KenichiroArai
+ *
+ * @version 1.0.0
+ *
+ * @since 1.0.0
  */
 @Service
-public class AccessorCreationLogicImpl implements AccessorCreationLogic {
+public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogic {
 
-    /** Javadocコメントの開始の正規表現パターン */
-    private static final String JAVADOC_COMMENT_START_PATTERN = "/\\*\\*";
-
-    /** 1行Javadocコメントの正規表現パターン */
-    private static final String SINGLE_LINE_JAVADOC_PATTERN = "/\\*\\*\\s+(\\S+)\\s+\\*/";
-
-    /** 複数行Javadocコメント開始の正規表現パターン */
-    private static final String MULTI_LINE_JAVADOC_START_PATTERN = "/\\*\\*(\\S+)";
-
-    /** privateフィールド宣言の正規表現パターン */
-    private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);";
+    /** 列挙型定義の正規表現パターン */
+    private static final String ENUM_DEFINITION_PATTERN = "(\\w+)\\(\"(\\S+)\",";
 
     /**
      * ロガー
      *
-     * @since 0.1.0
+     * @since 1.0.0
      */
     private final Logger logger;
 
     /**
      * KMGメッセージリソース
      *
-     * @since 0.1.0
+     * @since 1.0.0
      */
     @Autowired
     private KmgMessageSource messageSource;
@@ -69,7 +65,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** 入力ファイルのBufferedReader */
     private BufferedReader reader;
 
-    /** 出力ファイルのBufferedReader */
+    /** 出力ファイルのBufferedWriter */
     private BufferedWriter writer;
 
     /** 読み込んだ１行データ */
@@ -78,17 +74,11 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /** 変換後の1行データ */
     private String convertedLine;
 
-    /** Javadocの解析中かを管理する */
-    private boolean inJavadocParsing;
-
-    /** Javadocコメント */
-    private String javadocComment;
-
-    /** 型 */
-    private String tyep;
+    /** 項目 */
+    private String item;
 
     /** 項目名 */
-    private String item;
+    private String itemName;
 
     /** 書き込み対象のCSVデータのリスト */
     private final List<List<String>> csvRows;
@@ -96,21 +86,21 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     /**
      * デフォルトコンストラクタ
      */
-    public AccessorCreationLogicImpl() {
+    public Enum2SwitchCaseMakingLogicImpl() {
 
-        this(LoggerFactory.getLogger(AccessorCreationLogicImpl.class));
+        this(LoggerFactory.getLogger(Enum2SwitchCaseMakingLogicImpl.class));
 
     }
 
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @since 0.1.0
+     * @since 1.0.0
      *
      * @param logger
      *               ロガー
      */
-    protected AccessorCreationLogicImpl(final Logger logger) {
+    protected Enum2SwitchCaseMakingLogicImpl(final Logger logger) {
 
         this.logger = logger;
         this.csvRows = new ArrayList<>();
@@ -126,20 +116,20 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      *                          KMGツール例外
      */
     @Override
-    public boolean addItemToCsvRows() throws KmgToolException {
+    public boolean addItemNameToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
-        if (this.item == null) {
+        if (this.itemName == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32001;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32009;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
 
         }
 
         final List<String> row = this.csvRows.getLast();
-        row.add(this.item);
+        row.add(this.itemName);
         result = true;
 
         return result;
@@ -147,7 +137,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
-     * Javadocコメントを書き込み対象に追加する。
+     * 項目を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
      *
@@ -155,20 +145,20 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      *                          KMGツール例外
      */
     @Override
-    public boolean addJavadocCommentToCsvRows() throws KmgToolException {
+    public boolean addItemToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
-        if (this.javadocComment == null) {
+        if (this.item == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32002;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32010;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
 
         }
 
         final List<String> row = this.csvRows.getLast();
-        row.add(this.javadocComment);
+        row.add(this.item);
         result = true;
 
         return result;
@@ -192,35 +182,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         this.csvRows.add(newRow);
 
         result = true;
-        return result;
-
-    }
-
-    /**
-     * 型情報を書き込み対象に追加する。
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean addTypeToCsvRows() throws KmgToolException {
-
-        boolean result = false;
-
-        if (this.tyep == null) {
-
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32003;
-            final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
-
-        }
-
-        final List<String> row = this.csvRows.getLast();
-        row.add(this.tyep);
-        result = true;
-
         return result;
 
     }
@@ -254,9 +215,8 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         this.lineOfDataRead = null;
         this.convertedLine = null;
-        this.javadocComment = null;
-        this.tyep = null;
         this.item = null;
+        this.itemName = null;
 
         result = true;
         return result;
@@ -278,7 +238,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
-     * フィールド宣言から型、項目名、先頭大文字項目に変換する。
+     * 列挙型定義から項目と項目名に変換する。
      *
      * @return true：変換あり、false：変換なし
      *
@@ -286,119 +246,35 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
      *                          KMGツール例外
      */
     @Override
-    public boolean convertFields() throws KmgToolException {
+    public boolean convertEnumDefinition() throws KmgToolException {
 
         boolean result = false;
 
-        // privateフィールド宣言を正規表現でグループ化する
-        final Pattern patternSrc = Pattern.compile(AccessorCreationLogicImpl.PRIVATE_FIELD_PATTERN);
+        // 列挙型定義を正規表現でグループ化する
+        final Pattern patternSrc = Pattern.compile(Enum2SwitchCaseMakingLogicImpl.ENUM_DEFINITION_PATTERN);
         final Matcher matcherSrc = patternSrc.matcher(this.convertedLine);
 
-        // privateフィールド宣言ではないか
+        // 列挙型定義ではないか
         if (!matcherSrc.find()) {
-            // 宣言ではないか
+            // 定義ではない場合
 
             return result;
 
         }
 
-        // フィールドの情報を取得
-        this.tyep = matcherSrc.group(AccessorRegexGroupTypes.PRIVATE_FIELD_TYPE.getGroupIndex()); // 型
-        this.item = matcherSrc.group(AccessorRegexGroupTypes.PRIVATE_FIELD_ITEM_NAME.getGroupIndex()); // 項目名
+        // 列挙型の情報を取得
+        this.item = matcherSrc.group(ConvertEnumDefinitionTypes.ENUM_DEFINITION_CONSTANT_NAME.getGroupIndex()); // 項目
+        this.itemName = matcherSrc.group(ConvertEnumDefinitionTypes.ENUM_DEFINITION_DISPLAY_NAME.getGroupIndex()); // 項目名
 
         result = true;
-        return result;
-
-    }
-
-    /**
-     * Javadocコメントに変換する。
-     *
-     * @return true：変換あり、false：変換なし
-     */
-    @Override
-    public boolean convertJavadoc() {
-
-        boolean result = false;
-
-        /* Javadocの解析中を開始する */
-
-        // Javadocの解析中でないか
-        if (!this.inJavadocParsing) {
-            // 解析中ではない場合
-
-            // Javadocの開始判定
-            final Pattern javadocStartPattern = Pattern
-                .compile(AccessorCreationLogicImpl.JAVADOC_COMMENT_START_PATTERN);
-            final Matcher javadocStartMatcher = javadocStartPattern.matcher(this.convertedLine);
-
-            // Javadocの開始ではないか
-            if (!javadocStartMatcher.find()) {
-                // 開始でない場合
-
-                return result;
-
-            }
-
-            // Javadoc解析中に設定
-            this.inJavadocParsing = true;
-
-        }
-
-        /* 1行完結型のJavadocの処理 */
-
-        final Pattern singleLinePattern = Pattern.compile(AccessorCreationLogicImpl.SINGLE_LINE_JAVADOC_PATTERN);
-        final Matcher singleLineMatcher = singleLinePattern.matcher(this.convertedLine);
-        final boolean isSingleLineMatch = singleLineMatcher.find();
-
-        // 1行完結型のJavadocでないか
-        if (isSingleLineMatch) {
-            // 1行完結型のJavadocでない場合
-
-            // コメント部分を抽出して設定
-            this.javadocComment
-                = singleLineMatcher.group(AccessorRegexGroupTypes.SINGLE_LINE_JAVADOC_COMMENT.getGroupIndex());
-
-            // Javadoc解析終了
-            this.inJavadocParsing = false;
-
-            result = true;
-
-            return result;
-
-        }
-
-        /* 複数行Javadocの処理 */
-
-        // 複数行Javadocの開始行を正規表現でグループ化する
-        final Pattern multiLineStartPattern = Pattern
-            .compile(AccessorCreationLogicImpl.MULTI_LINE_JAVADOC_START_PATTERN);
-        final Matcher multiLineStartMatcher = multiLineStartPattern.matcher(this.convertedLine);
-        final boolean isMultiLineStartMatch = multiLineStartMatcher.find();
-
-        // 複数行Javadocの開始行でないか
-        if (!isMultiLineStartMatch) {
-            // 開始行でない場合
-
-            return result;
-
-        }
-
-        // コメント部分を抽出して設定
-        this.javadocComment
-            = multiLineStartMatcher.group(AccessorRegexGroupTypes.MULTI_LINE_JAVADOC_COMMENT.getGroupIndex());
-
-        // Javadoc解析終了
-        this.inJavadocParsing = false;
-
-        result = true;
-
         return result;
 
     }
 
     /**
      * 変換後の1行データを返す。
+     *
+     * @return 変換後の1行データ
      */
     @Override
     public String getConvertedLine() {
@@ -422,9 +298,9 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
-     * 項目名返す。
+     * 項目を返す。
      *
-     * @return 項目名
+     * @return 項目
      */
     @Override
     public String getItem() {
@@ -435,14 +311,14 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
-     * Javadocコメントを返す。
+     * 項目名を返す。
      *
-     * @return Javadocコメント。取得できない場合は、null
+     * @return 項目名
      */
     @Override
-    public String getJavadocComment() {
+    public String getItemName() {
 
-        final String result = this.javadocComment;
+        final String result = this.itemName;
         return result;
 
     }
@@ -461,27 +337,14 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
-     * 型を返す。
-     *
-     * @return 型
-     */
-    @Override
-    public String getTyep() {
-
-        final String result = this.tyep;
-        return result;
-
-    }
-
-    /**
      * 初期化する。
+     *
+     * @return true：成功、false：失敗
      *
      * @param inputPath
      *                   入力ファイルパス
      * @param outputPath
      *                   出力ファイルパス
-     *
-     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
@@ -514,19 +377,6 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
     }
 
     /**
-     * Javadocの解析中かを返す。
-     *
-     * @return true：Javadoc解析中、false：Javadoc解析外
-     */
-    @Override
-    public boolean isInJavadocParsing() {
-
-        final boolean result = this.inJavadocParsing;
-        return result;
-
-    }
-
-    /**
      * 1行データを読み込む。
      *
      * @return true：データあり、false：データなし
@@ -541,12 +391,11 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         try {
 
-            // 1行読み込み
             this.lineOfDataRead = this.reader.readLine();
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32006;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32011;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs, e);
 
@@ -554,31 +403,13 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         this.convertedLine = this.lineOfDataRead;
 
-        // ファイルの終わりに達したか
+        // 読み込んだデータがないか
         if (this.lineOfDataRead == null) {
-            // 達した場合
+            // 読み込んだデータがない場合
 
             return result;
 
         }
-
-        result = true;
-        return result;
-
-    }
-
-    /**
-     * 不要な修飾子を削除する。
-     *
-     * @return true：成功、false：失敗
-     */
-    @Override
-    public boolean removeModifier() {
-
-        boolean result = false;
-
-        this.convertedLine = this.convertedLine.replace(KmgJavaKeywordTypes.FINAL.getKey(), KmgString.EMPTY);
-        this.convertedLine = this.convertedLine.replace(KmgJavaKeywordTypes.STATIC.getKey(), KmgString.EMPTY);
 
         result = true;
         return result;
@@ -612,7 +443,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
             } catch (final IOException e) {
 
-                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32007;
+                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32012;
                 final Object[]               messageArgs  = {
                     this.outputPath.toString()
                 };
@@ -629,7 +460,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32008;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32013;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
@@ -664,7 +495,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
             this.reader = null;
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32010;
             final Object[]               logMsgArgs  = {
                 this.inputPath.toString(),
             };
@@ -699,7 +530,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
             this.writer = null;
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32011;
             final Object[]               logMsgArgs  = {
                 this.outputPath.toString(),
             };
@@ -727,7 +558,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32004;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32014;
             final Object[]               messageArgs  = {
                 this.inputPath.toString()
             };
@@ -752,7 +583,7 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32015;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
@@ -761,5 +592,4 @@ public class AccessorCreationLogicImpl implements AccessorCreationLogic {
         }
 
     }
-
 }

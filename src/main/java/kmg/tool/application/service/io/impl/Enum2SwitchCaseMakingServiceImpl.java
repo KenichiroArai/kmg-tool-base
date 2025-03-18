@@ -8,60 +8,68 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.io.AccessorCreationLogic;
-import kmg.tool.application.service.io.AccessorCreationService;
+import kmg.tool.application.logic.io.Enum2SwitchCaseMakingLogic;
+import kmg.tool.application.service.io.Enum2SwitchCaseMakingService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * アクセサ作成サービス<br>
+ * <h2>列挙型からcase文作成サービス実装クラス</h2>
+ * <p>
+ * 列挙型の定義からswitch-case文を自動生成するためのサービス実装クラスです。
+ * </p>
  *
  * @author KenichiroArai
+ *
+ * @version 1.0.0
+ *
+ * @since 1.0.0
  */
 @Service
-public class AccessorCreationServiceImpl extends AbstractIctoProcessorService implements AccessorCreationService {
+public class Enum2SwitchCaseMakingServiceImpl extends AbstractIctoProcessorService
+    implements Enum2SwitchCaseMakingService {
 
     /**
      * ロガー
      *
-     * @since 0.1.0
+     * @since 1.0.0
      */
     private final Logger logger;
 
     /**
      * KMGメッセージリソース
      *
-     * @since 0.1.0
+     * @since 1.0.0
      */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** アクセサ作成ロジック */
+    /** 列挙型からcase文作成ロジック */
     @Autowired
-    private AccessorCreationLogic accessorCreationLogic;
+    private Enum2SwitchCaseMakingLogic enum2SwitchCaseMakingLogic;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @since 0.1.0
+     * @since 1.0.0
      */
-    public AccessorCreationServiceImpl() {
+    public Enum2SwitchCaseMakingServiceImpl() {
 
-        this(LoggerFactory.getLogger(AccessorCreationServiceImpl.class));
+        this(LoggerFactory.getLogger(Enum2SwitchCaseMakingServiceImpl.class));
 
     }
 
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @since 0.1.0
+     * @since 1.0.0
      *
      * @param logger
      *               ロガー
      */
-    protected AccessorCreationServiceImpl(final Logger logger) {
+    protected Enum2SwitchCaseMakingServiceImpl(final Logger logger) {
 
         this.logger = logger;
 
@@ -83,7 +91,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         boolean result = false;
 
-        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31000;
+        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32002;
         final Object[]               startLogMsgArgs  = {};
         final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
             startLogMsgArgs);
@@ -91,11 +99,11 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         try {
 
-            /* アクセサ作成ロジックの初期化 */
-            this.accessorCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
+            /* 列挙型からcase文作成ロジックの初期化 */
+            this.enum2SwitchCaseMakingLogic.initialize(this.getInputPath(), this.getCsvPath());
 
             /* 書き込み対象に行を追加する */
-            this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+            this.enum2SwitchCaseMakingLogic.addOneLineOfDataToCsvRows();
 
             do {
 
@@ -129,7 +137,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31007;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32003;
             final Object[]               logMsgArgs  = {
                 this.getOutputPath().toString(),
             };
@@ -142,12 +150,12 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
             try {
 
-                /* アクセサ作成ロジックのクローズ処理 */
-                this.closeAccessorCreationLogic();
+                /* 列挙型からcase文作成ロジックのクローズ処理 */
+                this.closeEnum2SwitchCaseMakingLogic();
 
             } finally {
 
-                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31006;
+                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32004;
                 final Object[]               endLogMsgArgs  = {};
                 final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
                     endLogMsgArgs);
@@ -156,72 +164,6 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
             }
 
         }
-        return result;
-
-    }
-
-    /**
-     * 1行分のCSVを格納するリストにカラム1：名称を追加する。
-     *
-     * @return true：追加した、false：追加していない
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    private boolean addNameColumn() throws KmgToolException {
-
-        boolean result = false;
-
-        // Javadocコメントに変換
-        final boolean isConvertJavadocComment = this.accessorCreationLogic.convertJavadoc();
-
-        if (!isConvertJavadocComment) {
-
-            return result;
-
-        }
-
-        // カラム1：名称を書き込み対象に追加する。
-        this.accessorCreationLogic.addJavadocCommentToCsvRows();
-
-        result = true;
-        return result;
-
-    }
-
-    /**
-     * 1行分のCSVを格納するリストに残りのカラムを追加する。
-     *
-     * @return true：追加した、false：追加していない
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    private boolean addRemainingColumns() throws KmgToolException {
-
-        boolean result = false;
-
-        /* 不要な修飾子を削除する */
-        this.accessorCreationLogic.removeModifier();
-
-        /* 型、項目名、先頭大文字項目に追加する */
-
-        // フィールド宣言から型、項目名に変換する。
-        final boolean isConvertFields = this.accessorCreationLogic.convertFields();
-
-        if (!isConvertFields) {
-
-            return result;
-
-        }
-
-        // テンプレートの各カラムに対応する値をを書き込み対象に追加する
-        // カラム2：型
-        this.accessorCreationLogic.addTypeToCsvRows();
-        // カラム3：項目
-        this.accessorCreationLogic.addItemToCsvRows();
-
-        result = true;
 
         return result;
 
@@ -238,17 +180,17 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
         try {
 
             // 書き込み対象のCSVデータのリストをクリアする
-            this.accessorCreationLogic.clearCsvRows();
+            this.enum2SwitchCaseMakingLogic.clearCsvRows();
 
             // 処理中のデータをクリアする
-            this.accessorCreationLogic.clearProcessingData();
+            this.enum2SwitchCaseMakingLogic.clearProcessingData();
 
             /* 書き込み対象に行を追加する */
-            this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+            this.enum2SwitchCaseMakingLogic.addOneLineOfDataToCsvRows();
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31003;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32005;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -260,20 +202,20 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
     }
 
     /**
-     * アクセサ作成ロジックをクローズする。
+     * 列挙型からcase文作成ロジックをクローズする。
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    private void closeAccessorCreationLogic() throws KmgToolException {
+    private void closeEnum2SwitchCaseMakingLogic() throws KmgToolException {
 
         try {
 
-            this.accessorCreationLogic.close();
+            this.enum2SwitchCaseMakingLogic.close();
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31003;
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31004;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
@@ -295,32 +237,24 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         try {
 
-            // カラム1：名称を追加する
-            this.addNameColumn();
+            // 列挙型定義から項目と項目名に変換する
+            final boolean isConvertEnumDefinition = this.enum2SwitchCaseMakingLogic.convertEnumDefinition();
 
-            final String javadocComment = this.accessorCreationLogic.getJavadocComment();
-
-            // Javadocコメントが設定されていないか
-            if (javadocComment == null) {
-                // 設定されていない場合
-
-                // Javadocコメントが先に設定されていないと残りのカラム情報は読み込めないため、処理をスキップさせる
-                return result;
-
-            }
-
-            // 残りのカラムを追加する
-            final boolean isAddRemainingColumns = this.addRemainingColumns();
-
-            if (!isAddRemainingColumns) {
+            if (!isConvertEnumDefinition) {
 
                 return result;
 
             }
+
+            // 項目を書き込み対象に追加する
+            this.enum2SwitchCaseMakingLogic.addItemToCsvRows();
+
+            // 項目名を書き込み対象に追加する
+            this.enum2SwitchCaseMakingLogic.addItemNameToCsvRows();
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31004;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32006;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -348,11 +282,11 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         try {
 
-            result = this.accessorCreationLogic.readOneLineOfData();
+            result = this.enum2SwitchCaseMakingLogic.readOneLineOfData();
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31005;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32007;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -375,11 +309,11 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         try {
 
-            this.accessorCreationLogic.writeCsvFile();
+            this.enum2SwitchCaseMakingLogic.writeCsvFile();
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31001;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32008;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -387,9 +321,9 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         }
 
-        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31002;
+        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32009;
         final Object[]               logMsgArgs  = {
-            this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+            this.enum2SwitchCaseMakingLogic.getItem(), this.enum2SwitchCaseMakingLogic.getItemName(),
         };
         final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
         this.logger.debug(logMsg);
