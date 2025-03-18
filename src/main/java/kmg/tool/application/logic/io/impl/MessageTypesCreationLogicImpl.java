@@ -7,8 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +17,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.io.MessageTypesCreationLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -35,9 +34,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 @Service
 public class MessageTypesCreationLogicImpl implements MessageTypesCreationLogic {
-
-    /** メッセージ種類定義の正規表現パターン */
-    private static final String MESSAGE_TYPES_DEFINITION_PATTERN = "(\\S+)=(\\S+)";
 
     /**
      * ロガー
@@ -232,19 +228,8 @@ public class MessageTypesCreationLogicImpl implements MessageTypesCreationLogic 
     @Override
     public void close() throws IOException {
 
-        if (this.reader != null) {
-
-            this.reader.close();
-            this.reader = null;
-
-        }
-
-        if (this.writer != null) {
-
-            this.writer.close();
-            this.writer = null;
-
-        }
+        this.closeReader();
+        this.closeWriter();
 
     }
 
@@ -261,30 +246,26 @@ public class MessageTypesCreationLogicImpl implements MessageTypesCreationLogic 
 
         boolean result = false;
 
-        if (this.lineOfDataRead == null) {
+        // TODO KenichiroArai 2025/03/19 ハードコード
 
-            // TODO KenichiroArai 2025/03/18 メッセージ
+        // 項目と項目名に分ける
+        final String[] inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(this.convertedLine, 2);
+
+        // 項目と項目名に分かれないか
+        if (inputDatas.length > 2) {
+            // 分かれない場合
+
+            // TODO KenichiroArai 2025/03/19 例外処理
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
 
         }
 
-        // 正規表現パターンの作成とマッチング
-        final Pattern pattern = Pattern.compile(MessageTypesCreationLogicImpl.MESSAGE_TYPES_DEFINITION_PATTERN);
-        final Matcher matcher = pattern.matcher(this.lineOfDataRead);
-
-        // パターンにマッチするか確認
-        if (!matcher.find()) {
-
-            // マッチしない場合は何もせず終了
-            return result;
-
-        }
-
-        // グループ1は項目（ID）、グループ2は項目名（説明）
-        this.item = matcher.group(1);
-        this.itemName = matcher.group(2);
+        // 項目と項目名に設定
+        // TODO KenichiroArai 2025/03/19 ハードコード
+        this.item = inputDatas[0]; // 項目
+        this.itemName = inputDatas[1]; // 項目名
 
         result = true;
         return result;
@@ -369,39 +350,27 @@ public class MessageTypesCreationLogicImpl implements MessageTypesCreationLogic 
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolException {
 
         boolean result = false;
 
-        try {
+        this.inputPath = inputPath;
+        this.outputPath = outputPath;
 
-            // 入出力ファイルパスの設定
-            this.inputPath = inputPath;
-            this.outputPath = outputPath;
+        /* データのクリア */
+        this.clearProcessingData();
 
-            // 入力ファイルリーダーの作成
-            this.reader = Files.newBufferedReader(this.inputPath);
+        this.clearCsvRows();
 
-            // 出力ファイルライターの作成
-            this.writer = Files.newBufferedWriter(this.outputPath);
+        /* ファイルを開く */
 
-            // 処理中データの初期化
-            this.clearProcessingData();
+        // 入力ファイルを開く
+        this.openInputFile();
 
-            // CSVデータリストの初期化
-            this.clearCsvRows();
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/18 メッセージ
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {
-                inputPath, outputPath
-            };
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
-
-        }
+        // 出力ファイルを開く
+        this.openOutputFile();
 
         result = true;
         return result;
@@ -421,29 +390,9 @@ public class MessageTypesCreationLogicImpl implements MessageTypesCreationLogic 
 
         boolean result = false;
 
-        if (this.reader == null) {
-
-            // TODO KenichiroArai 2025/03/18 メッセージ
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
-
-        }
-
         try {
 
-            // 1行読み込み
             this.lineOfDataRead = this.reader.readLine();
-
-            // 読み込んだデータがなければfalse
-            if (this.lineOfDataRead == null) {
-
-                return result;
-
-            }
-
-            // データが存在した
-            result = true;
 
         } catch (final IOException e) {
 
@@ -454,6 +403,17 @@ public class MessageTypesCreationLogicImpl implements MessageTypesCreationLogic 
 
         }
 
+        this.convertedLine = this.lineOfDataRead;
+
+        // 読み込んだデータがないか
+        if (this.lineOfDataRead == null) {
+            // 読み込んだデータがない場合
+
+            return result;
+
+        }
+
+        result = true;
         return result;
 
     }
@@ -474,44 +434,170 @@ public class MessageTypesCreationLogicImpl implements MessageTypesCreationLogic 
 
         boolean result = false;
 
-        if (this.writer == null) {
+        /* CSVの書き込み処理 */
+        for (final List<String> csvRow : this.csvRows) {
 
-            // TODO KenichiroArai 2025/03/18 メッセージ
+            try {
+
+                final String csvLine = KmgDelimiterTypes.COMMA.join(csvRow);
+                this.writer.write(csvLine);
+                this.writer.write(System.lineSeparator());
+
+            } catch (final IOException e) {
+
+                // TODO KenichiroArai 2025/03/19 メッセージ
+                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+                final Object[]               messageArgs  = {
+                    this.outputPath.toString()
+                };
+                throw new KmgToolException(messageTypes, messageArgs, e);
+
+            }
+
+        }
+
+        /* バッファに残っているデータをファイルに書き込む */
+        try {
+
+            this.writer.flush();
+
+        } catch (final IOException e) {
+
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            final Object[]               messageArgs  = {
+                this.outputPath.toString()
+            };
+            // TODO KenichiroArai 2025/03/19 メッセージ
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * リーダーリソースをクローズする。
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    private void closeReader() throws IOException {
+
+        if (this.reader == null) {
+
+            return;
 
         }
 
         try {
 
-            // CSVRowsの内容をCSV形式で書き込む
-            for (final List<String> row : this.csvRows) {
-
-                // 行の内容をCSV形式に変換
-                final String csvLine = String.join(KmgDelimiterTypes.COMMA.get(), row);
-
-                // ファイルに書き込み
-                this.writer.write(csvLine);
-                this.writer.newLine();
-
-            }
-
-            // 書き込みをフラッシュ
-            this.writer.flush();
-
-            result = true;
+            this.reader.close();
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/18 メッセージ
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            this.reader = null;
+
+            // TODO KenichiroArai 2025/03/19 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final Object[]               logMsgArgs  = {
+                this.inputPath.toString(),
+            };
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
 
         }
 
-        return result;
+    }
+
+    /**
+     * ライターリソースをクローズする。
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    private void closeWriter() throws IOException {
+
+        if (this.writer == null) {
+
+            return;
+
+        }
+
+        try {
+
+            this.writer.close();
+
+        } catch (final IOException e) {
+
+            this.writer = null;
+
+            // TODO KenichiroArai 2025/03/19 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final Object[]               logMsgArgs  = {
+                this.outputPath.toString(),
+            };
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
+
+    }
+
+    /**
+     * 入力ファイルを開く
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @SuppressWarnings("resource")
+    private void openInputFile() throws KmgToolException {
+
+        try {
+
+            this.reader = Files.newBufferedReader(this.inputPath);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/19 例外処理
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs  = {
+                this.inputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
+
+    }
+
+    /**
+     * 出力ファイルを開く
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @SuppressWarnings("resource")
+    private void openOutputFile() throws KmgToolException {
+
+        try {
+
+            this.writer = Files.newBufferedWriter(this.outputPath);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/19 例外処理
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs  = {
+                this.outputPath.toString()
+            };
+            throw new KmgToolException(messageTypes, messageArgs, e);
+
+        }
 
     }
 }

@@ -1,7 +1,6 @@
 package kmg.tool.application.service.io.impl;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,38 +91,50 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         boolean result = false;
 
+        // TODO KenichiroArai 2025/03/19 ログ
+        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.NONE;
+        final Object[]               startLogMsgArgs  = {};
+        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+            startLogMsgArgs);
+        this.logger.debug(startLogMsg);
+
         try {
 
-            // 一時CSVファイルを作成
-            final Path csvPath = this.createTempCsvFile();
+            /* メッセージの種類作成ロジックを初期化 */
+            this.messageTypesCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
 
-            // メッセージの種類作成ロジックを初期化
-            result = this.messageTypesCreationLogic.initialize(this.getInputPath(), csvPath);
-
-            if (!result) {
-
-                this.closeMessageTypesCreationLogic();
-                return result;
-
-            }
-
-            // 最初の行を作成
+            /* 書き込み対象に行を追加する */
             this.messageTypesCreationLogic.addOneLineOfDataToCsvRows();
 
-            // 入力ファイルを読み込み処理
-            while (this.messageTypesCreationLogic.readOneLineOfData()) {
+            do {
 
-                // 読み込んだデータの処理
-                this.processItem();
+                /* 1行データを読み込む */
+                final boolean isRead = this.readOneLineData();
 
-                // 処理中のデータをクリア
-                this.messageTypesCreationLogic.clearProcessingData();
+                if (!isRead) {
 
-            }
+                    break;
 
-            // CSVファイルに書き込み
-            result = this.messageTypesCreationLogic.writeCsvFile();
-            this.closeMessageTypesCreationLogic();
+                }
+
+                /* カラムを追加する */
+                final boolean isProcessed = this.processColumns();
+
+                if (!isProcessed) {
+
+                    continue;
+
+                }
+
+                /* CSVファイルに行を書き込む */
+                this.writeCsvFileLine();
+
+                /* クリア処理 */
+                this.clearAndPrepareNextLine();
+
+            } while (true);
+
+            result = true;
 
         } catch (final KmgToolException e) {
 
@@ -133,22 +144,62 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
 
+            throw e;
+
+        } finally {
+
             try {
 
+                /* メッセージの種類作成ロジックをクローズ処理 */
                 this.closeMessageTypesCreationLogic();
 
-            } catch (final KmgToolException e1) {
+            } finally {
 
-                // ロジッククローズエラーはスローしない
-                e1.printStackTrace();
+                // TODO KenichiroArai 2025/03/19 ログ
+                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.NONE;
+                final Object[]               endLogMsgArgs  = {};
+                final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
+                    endLogMsgArgs);
+                this.logger.debug(endLogMsg);
 
             }
-
-            throw e;
 
         }
 
         return result;
+
+    }
+
+    /**
+     * データをクリアして次の行の準備をする。
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private void clearAndPrepareNextLine() throws KmgToolException {
+
+        try {
+
+            // 書き込み対象のCSVデータのリストをクリアする
+            this.messageTypesCreationLogic.clearCsvRows();
+
+            // 処理中のデータをクリアする
+            this.messageTypesCreationLogic.clearProcessingData();
+
+            /* 書き込み対象に行を追加する */
+            this.messageTypesCreationLogic.addOneLineOfDataToCsvRows();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/19 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32005;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
 
     }
 
@@ -176,14 +227,14 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
     }
 
     /**
-     * 項目を処理する。
+     * カラムを処理する。
      *
      * @return true：処理成功、false：処理スキップ
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    private boolean processItem() throws KmgToolException {
+    private boolean processColumns() throws KmgToolException {
 
         boolean result = false;
 
@@ -198,9 +249,6 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
                 return result;
 
             }
-
-            // 新しい行を作成
-            this.messageTypesCreationLogic.addOneLineOfDataToCsvRows();
 
             // 項目を書き込み対象に追加する
             this.messageTypesCreationLogic.addItemToCsvRows();
@@ -222,6 +270,72 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         result = true;
         return result;
+
+    }
+
+    /**
+     * 1行データを読み込む。
+     *
+     * @return true：読み込み成功、false：読み込み終了
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private boolean readOneLineData() throws KmgToolException {
+
+        boolean result = false;
+
+        try {
+
+            result = this.messageTypesCreationLogic.readOneLineOfData();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/19 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * CSVファイルに行を書き込む。
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private void writeCsvFileLine() throws KmgToolException {
+
+        try {
+
+            this.messageTypesCreationLogic.writeCsvFile();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/19 ログ
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        }
+
+        // TODO KenichiroArai 2025/03/19 ログ
+        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+        final Object[]               logMsgArgs  = {
+            this.messageTypesCreationLogic.getItem(), this.messageTypesCreationLogic.getItemName(),
+        };
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        this.logger.debug(logMsg);
 
     }
 
