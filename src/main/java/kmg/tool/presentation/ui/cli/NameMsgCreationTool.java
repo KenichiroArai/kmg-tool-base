@@ -21,14 +21,12 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
  *
  * @version 1.0.0
  */
-@SuppressWarnings("nls") // TODO KenichiroArai 2021/05/12 外部文字列化
 public class NameMsgCreationTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
-    // TODO KenichiroArai 2021/05/12 外部文字列化
     private static final Path TEMPLATE_PATH
         = Paths.get(NameMsgCreationTool.BASE_PATH.toString(), "template/kmgTlNameMsgCreationTool.txt");
 
@@ -49,6 +47,45 @@ public class NameMsgCreationTool {
 
     /** パラメータ：値 */
     private static final String PARAM_VALUE = "$value";
+
+    /**
+     * エントリポイント<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @param args
+     *             オプション
+     */
+    public static void main(final String[] args) {
+
+        final Class<NameMsgCreationTool> clasz = NameMsgCreationTool.class;
+
+        try {
+
+            final NameMsgCreationTool main = new NameMsgCreationTool();
+
+            if (main.run()) {
+
+                System.out.println(String.format("%s：失敗", clasz.toString()));
+
+            }
+
+        } catch (final Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            System.out.println(String.format("%s：成功", clasz.toString()));
+            System.out.println(String.format("%s：終了", clasz.toString()));
+
+        }
+
+    }
 
     /**
      * 実行する<br>
@@ -121,45 +158,6 @@ public class NameMsgCreationTool {
         }
 
         return result;
-
-    }
-
-    /**
-     * エントリポイント<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
-     *
-     * @param args
-     *             オプション
-     */
-    public static void main(final String[] args) {
-
-        final Class<NameMsgCreationTool> clasz = NameMsgCreationTool.class;
-
-        try {
-
-            final NameMsgCreationTool main = new NameMsgCreationTool();
-
-            if (main.run()) {
-
-                System.out.println(String.format("%s：失敗", clasz.toString()));
-
-            }
-
-        } catch (final Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            System.out.println(String.format("%s：成功", clasz.toString()));
-            System.out.println(String.format("%s：終了", clasz.toString()));
-
-        }
 
     }
 
