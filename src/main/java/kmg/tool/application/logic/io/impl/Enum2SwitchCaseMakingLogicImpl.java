@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.foundation.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.io.Enum2SwitchCaseMakingLogic;
+import kmg.tool.application.types.io.ConvertEnumDefinitionTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -262,9 +263,8 @@ public class Enum2SwitchCaseMakingLogicImpl implements Enum2SwitchCaseMakingLogi
         }
 
         // 列挙型の情報を取得
-        // TODO KenichiroArai 2025/03/18 ハードコード
-        this.item = matcherSrc.group(1); // 項目
-        this.itemName = matcherSrc.group(2); // 項目名
+        this.item = matcherSrc.group(ConvertEnumDefinitionTypes.ENUM_DEFINITION_CONSTANT_NAME.getGroupIndex()); // 項目
+        this.itemName = matcherSrc.group(ConvertEnumDefinitionTypes.ENUM_DEFINITION_DISPLAY_NAME.getGroupIndex()); // 項目名
 
         result = true;
         return result;
