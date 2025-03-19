@@ -1,7 +1,7 @@
 package kmg.tool.infrastructure.exception;
 
 import kmg.foundation.infrastructure.exception.KmgFundException;
-import kmg.tool.infrastructure.common.KmgToolComGenMessageTypes;
+import kmg.tool.infrastructure.common.KmgToolComExcMessageTypes;
 
 /**
  * KMGツール例外<br>
@@ -29,7 +29,7 @@ public class KmgToolException extends KmgFundException {
      * @param messageTypes
      *                     メッセージの種類
      */
-    public KmgToolException(final KmgToolComGenMessageTypes messageTypes) {
+    public KmgToolException(final KmgToolComExcMessageTypes messageTypes) {
 
         this(messageTypes, null, null);
 
@@ -45,7 +45,7 @@ public class KmgToolException extends KmgFundException {
      * @param messageArgs
      *                     メッセージの引数
      */
-    public KmgToolException(final KmgToolComGenMessageTypes messageTypes, final Object[] messageArgs) {
+    public KmgToolException(final KmgToolComExcMessageTypes messageTypes, final Object[] messageArgs) {
 
         this(messageTypes, messageArgs, null);
 
@@ -63,7 +63,7 @@ public class KmgToolException extends KmgFundException {
      * @param cause
      *                     原因
      */
-    public KmgToolException(final KmgToolComGenMessageTypes messageTypes, final Object[] messageArgs,
+    public KmgToolException(final KmgToolComExcMessageTypes messageTypes, final Object[] messageArgs,
         final Throwable cause) {
 
         super(messageTypes, messageArgs, cause);
@@ -80,7 +80,7 @@ public class KmgToolException extends KmgFundException {
      * @param cause
      *                     原因
      */
-    public KmgToolException(final KmgToolComGenMessageTypes messageTypes, final Throwable cause) {
+    public KmgToolException(final KmgToolComExcMessageTypes messageTypes, final Throwable cause) {
 
         this(messageTypes, null, cause);
 
