@@ -1,6 +1,6 @@
 package kmg.tool.infrastructure.exception;
 
-import kmg.core.infrastructure.exception.KmgDomainException;
+import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.tool.infrastructure.common.KmgToolComGenMessageTypes;
 
 /**
@@ -12,7 +12,7 @@ import kmg.tool.infrastructure.common.KmgToolComGenMessageTypes;
  *
  * @version 0.1.0
  */
-public class KmgToolException extends KmgDomainException {
+public class KmgToolException extends KmgFundException {
 
     /**
      * デフォルトシリアルバージョンＵＩＤ
