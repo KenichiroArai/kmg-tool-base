@@ -250,8 +250,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/19 メッセージの変更
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32006;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31007;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs, e);
 
@@ -299,8 +298,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/03/19 メッセージの変更
-                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32007;
+                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31008;
                 final Object[]               messageArgs  = {
                     this.outputPath.toString()
                 };
@@ -317,8 +315,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/19 メッセージの変更
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32008;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31009;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
@@ -406,8 +403,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.reader = null;
 
-            // TODO KenichiroArai 2025/03/19 メッセージの変更
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32000;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32008;
             final Object[]               logMsgArgs  = {
                 this.inputPath.toString(),
             };
@@ -442,8 +438,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.writer = null;
 
-            // TODO KenichiroArai 2025/03/19 メッセージの変更
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32001;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32009;
             final Object[]               logMsgArgs  = {
                 this.outputPath.toString(),
             };
@@ -471,8 +466,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/19 メッセージの変更
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32004;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31005;
             final Object[]               messageArgs  = {
                 this.inputPath.toString()
             };
@@ -497,8 +491,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/19 メッセージの変更
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31006;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
