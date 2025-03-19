@@ -13,7 +13,8 @@ import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * 入力、CSV、テンプレート、出力の処理サービス抽象クラス
+ * 入力、CSV、テンプレート、出力の処理サービス抽象クラス<br>
+ * 「Icto」→「InputCsvTemplateOutput」の略。
  */
 public abstract class AbstractIctoProcessorService implements IctoProcessorService {
 
