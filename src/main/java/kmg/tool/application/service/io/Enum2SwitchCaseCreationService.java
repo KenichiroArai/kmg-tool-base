@@ -1,6 +1,6 @@
 package kmg.tool.application.service.io;
 
-import kmg.tool.domain.service.io.Two2OneService;
+import kmg.tool.domain.service.IctoProcessorService;
 
 /**
  * <h2>列挙型からcase文作成サービスインタフェース</h2>
@@ -14,7 +14,7 @@ import kmg.tool.domain.service.io.Two2OneService;
  *
  * @since 1.0.0
  */
-public interface Enum2SwitchCaseCreationService extends Two2OneService {
+public interface Enum2SwitchCaseCreationService extends IctoProcessorService {
 
     // 処理なし
 

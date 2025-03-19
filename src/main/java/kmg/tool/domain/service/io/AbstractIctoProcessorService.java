@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.utils.KmgPathUtils;
+import kmg.tool.domain.service.IctoProcessorService;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -14,7 +15,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 /**
  * 入力、CSV、テンプレート、出力の処理サービス抽象クラス
  */
-public abstract class AbstractIctoProcessorService implements Two2OneService {
+public abstract class AbstractIctoProcessorService implements IctoProcessorService {
 
     /** 一時CSVファイルのサフィックスと拡張子 */
     private static final String TEMP_CSV_FILE_SUFFIX_EXTENSION = "Temp.csv";

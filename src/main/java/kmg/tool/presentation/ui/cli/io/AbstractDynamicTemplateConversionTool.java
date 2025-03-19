@@ -1,5 +1,7 @@
 package kmg.tool.presentation.ui.cli.io;
 
+import kmg.tool.domain.service.IctoProcessorService;
+
 /**
  * テンプレートの動的変換ツール抽象クラス
  */
@@ -18,5 +20,13 @@ public abstract class AbstractDynamicTemplateConversionTool extends AbstractTwo2
         super(toolName);
 
     }
+
+    /**
+     * 入力、CSV、テンプレート、出力の処理サービスを返す。
+     *
+     * @return 入力、CSV、テンプレート、出力の処理サービス
+     */
+    @Override
+    protected abstract IctoProcessorService getIoService();
 
 }

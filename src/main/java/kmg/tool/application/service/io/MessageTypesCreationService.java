@@ -1,6 +1,6 @@
 package kmg.tool.application.service.io;
 
-import kmg.tool.domain.service.io.Two2OneService;
+import kmg.tool.domain.service.IctoProcessorService;
 
 /**
  * <h2>メッセージの種類作成サービスインタフェース</h2>
@@ -14,7 +14,7 @@ import kmg.tool.domain.service.io.Two2OneService;
  *
  * @since 1.0.0
  */
-public interface MessageTypesCreationService extends Two2OneService {
+public interface MessageTypesCreationService extends IctoProcessorService {
 
     // 処理なし
 
