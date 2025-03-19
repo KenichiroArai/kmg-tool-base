@@ -230,13 +230,6 @@ public class DtcServiceImpl implements DtcService {
 
         } catch (final KmgToolException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12001;
-            final Object[]               logMsgArgs  = {
-                this.getTemplatePath().toString(),
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
             throw e;
 
         } finally {
