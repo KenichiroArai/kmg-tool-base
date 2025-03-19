@@ -1,0 +1,96 @@
+package kmg.tool.domain.logic.io;
+
+import java.io.Closeable;
+import java.nio.file.Path;
+import java.util.List;
+
+import kmg.tool.infrastructure.exception.KmgToolException;
+
+/**
+ * 入力、CSV、テンプレート、出力の1行パターンインタフェース
+ */
+public interface IctoOneLinePatternLogic extends Closeable {
+
+    /**
+     * 書き込み対象に行を追加する。
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean addOneLineOfDataToCsvRows() throws KmgToolException;
+
+    /**
+     * 書き込み対象のCSVデータのリストをクリアする。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean clearCsvRows();
+
+    /**
+     * 処理中のデータをクリアする。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean clearProcessingData();
+
+    /**
+     * 変換後の1行データを返す。
+     *
+     * @return 変換後の1行データ
+     */
+    String getConvertedLine();
+
+    /**
+     * 書き込み対象のCSVデータのリストを返す。
+     *
+     * @return 書き込み対象のCSVデータのリスト
+     */
+    List<List<String>> getCsvRows();
+
+    /**
+     * 読み込んだ１行データを返す。
+     *
+     * @return 読み込んだ１行データ
+     */
+    String getLineOfDataRead();
+
+    /**
+     * 初期化する。
+     *
+     * @return true：成功、false：失敗
+     *
+     * @param inputPath
+     *                   入力ファイルパス
+     * @param outputPath
+     *                   出力ファイルパス
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
+
+    /**
+     * 1行データを読み込む。
+     *
+     * @return true：データあり、false：データなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean readOneLineOfData() throws KmgToolException;
+
+    /**
+     * CSVファイルに書き込む。<br>
+     * <p>
+     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
+     * </p>
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean writeCsvFile() throws KmgToolException;
+}
