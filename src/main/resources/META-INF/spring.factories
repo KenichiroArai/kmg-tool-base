@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+kmg.tool.infrastructure.config.KmgToolPropertiesLoader
