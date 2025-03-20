@@ -1,5 +1,7 @@
 package kmg.tool.infrastructure.exception;
 
+import kmg.foundation.infrastructure.context.KmgMessageSource;
+import kmg.foundation.infrastructure.context.SpringApplicationContextHelper;
 import kmg.foundation.infrastructure.exception.KmgFundException;
 import kmg.tool.infrastructure.common.KmgToolComExcMessageTypes;
 
@@ -20,6 +22,13 @@ public class KmgToolException extends KmgFundException {
      * @since 0.1.0
      */
     private static final long serialVersionUID = 1L;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @since 0.1.0
+     */
+    private KmgMessageSource messageSource;
 
     /**
      * コンストラクタ<br>
@@ -83,6 +92,29 @@ public class KmgToolException extends KmgFundException {
     public KmgToolException(final KmgToolComExcMessageTypes messageTypes, final Throwable cause) {
 
         this(messageTypes, null, cause);
+
+    }
+
+    /**
+     * メッセージを作成し、返す。
+     *
+     * @return メッセージ
+     */
+    @Override
+    protected String createMessage() {
+
+        final String result = this.messageSource.getExcMessage(this.getMessageTypes(), this.getMessageArgs());
+        return result;
+
+    }
+
+    /**
+     * メッセージソースを作成する。
+     */
+    @Override
+    protected void createMessageSource() {
+
+        this.messageSource = SpringApplicationContextHelper.getBean(KmgMessageSource.class);
 
     }
 
