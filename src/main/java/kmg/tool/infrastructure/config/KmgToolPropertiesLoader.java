@@ -66,7 +66,7 @@ public class KmgToolPropertiesLoader implements EnvironmentPostProcessor {
 
         // プロパティを環境に追加
         final PropertySource<?> propertySource = new MapPropertySource("kmg-tool-properties", map);
-        environment.getPropertySources().addFirst(propertySource);
+        environment.getPropertySources().addLast(propertySource);
 
     }
 }
