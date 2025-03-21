@@ -28,6 +28,7 @@ import kmg.tool.application.service.io.AccessorCreationService;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
+// @SpringBootApplication
 public class InterfaceAccessorCreationTool extends AbstractDynamicTemplateConversionTool {
 
     /**

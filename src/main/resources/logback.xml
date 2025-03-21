@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE logback>
 <configuration>
-    <property resource="kmg-tool-application.properties" />
+    <property resource="application.properties" />
     <timestamp key="date" datePattern="yyyy-MM-dd" />
 
     <appender name="APPLIATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
