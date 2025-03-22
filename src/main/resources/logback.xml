@@ -4,6 +4,9 @@
     <property resource="application.properties" />
     <timestamp key="date" datePattern="yyyy-MM-dd" />
 
+    <!-- KMG Foundation設定のインクルード -->
+    <include resource="logback-kmg-foundation-included.xml" optional="true" />
+
     <appender name="APPLIATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${logback.application.outpath}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
