@@ -24,20 +24,6 @@ public interface KmgTlInsertionSqlBasicInformationLogic {
     String LIST_NAME = "一覧";
 
     /**
-     * 初期化する<br>
-     *
-     * @author KenichiroArai
-     * 
-     * @sine 1.0.0
-     * 
-     * @version 1.0.0
-     * 
-     * @param inputWk
-     *                入力ワークブック
-     */
-    void initialize(final Workbook inputWk);
-
-    /**
      * ＫＭＧＤＢの種類を返す<br>
      *
      * @author KenichiroArai
@@ -62,4 +48,18 @@ public interface KmgTlInsertionSqlBasicInformationLogic {
      * @return SQLIdマップ
      */
     Map<String, String> getSqlIdMap();
+
+    /**
+     * 初期化する<br>
+     *
+     * @author KenichiroArai
+     * 
+     * @sine 1.0.0
+     * 
+     * @version 1.0.0
+     * 
+     * @param inputWk
+     *                入力ワークブック
+     */
+    void initialize(final Workbook inputWk);
 }

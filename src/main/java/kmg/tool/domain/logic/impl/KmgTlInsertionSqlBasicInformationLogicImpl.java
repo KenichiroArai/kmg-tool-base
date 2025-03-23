@@ -26,26 +26,6 @@ public class KmgTlInsertionSqlBasicInformationLogicImpl implements KmgTlInsertio
     private Workbook inputWk;
 
     /**
-     * 初期化する<br>
-     *
-     * @author KenichiroArai
-     * 
-     * @sine 1.0.0
-     * 
-     * @version 1.0.0
-     * 
-     * @param inputWk
-     *                入力ワークブック
-     */
-    @SuppressWarnings("hiding")
-    @Override
-    public void initialize(final Workbook inputWk) {
-
-        this.inputWk = inputWk;
-
-    }
-
-    /**
      * ＫＭＧＤＢの種類を返す<br>
      *
      * @author KenichiroArai
@@ -104,6 +84,26 @@ public class KmgTlInsertionSqlBasicInformationLogicImpl implements KmgTlInsertio
         }
 
         return result;
+
+    }
+
+    /**
+     * 初期化する<br>
+     *
+     * @author KenichiroArai
+     * 
+     * @sine 1.0.0
+     * 
+     * @version 1.0.0
+     * 
+     * @param inputWk
+     *                入力ワークブック
+     */
+    @SuppressWarnings("hiding")
+    @Override
+    public void initialize(final Workbook inputWk) {
+
+        this.inputWk = inputWk;
 
     }
 

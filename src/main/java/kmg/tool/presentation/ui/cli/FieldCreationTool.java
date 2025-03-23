@@ -50,6 +50,45 @@ public class FieldCreationTool {
     private static final String PARAM_TYPE = "$type";
 
     /**
+     * エントリポイント<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @param args
+     *             オプション
+     */
+    public static void main(final String[] args) {
+
+        final Class<FieldCreationTool> clasz = FieldCreationTool.class;
+
+        try {
+
+            final FieldCreationTool main = new FieldCreationTool();
+
+            if (main.run()) {
+
+                System.out.println(String.format("%s：失敗", clasz.toString()));
+
+            }
+
+        } catch (final Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            System.out.println(String.format("%s：成功", clasz.toString()));
+            System.out.println(String.format("%s：終了", clasz.toString()));
+
+        }
+
+    }
+
+    /**
      * 実行する<br>
      *
      * @author KenichiroArai
@@ -134,45 +173,6 @@ public class FieldCreationTool {
         }
 
         return result;
-
-    }
-
-    /**
-     * エントリポイント<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
-     *
-     * @param args
-     *             オプション
-     */
-    public static void main(final String[] args) {
-
-        final Class<FieldCreationTool> clasz = FieldCreationTool.class;
-
-        try {
-
-            final FieldCreationTool main = new FieldCreationTool();
-
-            if (main.run()) {
-
-                System.out.println(String.format("%s：失敗", clasz.toString()));
-
-            }
-
-        } catch (final Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            System.out.println(String.format("%s：成功", clasz.toString()));
-            System.out.println(String.format("%s：終了", clasz.toString()));
-
-        }
 
     }
 

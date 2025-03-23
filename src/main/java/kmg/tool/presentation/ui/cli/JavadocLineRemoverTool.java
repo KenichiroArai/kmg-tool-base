@@ -39,83 +39,39 @@ public class JavadocLineRemoverTool {
     private static final String HOME_RUNNER_WORK_PATH_PATTERN = "";
 
     /**
-     * 実行する<br>
+     * メインメソッド
      *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return TRUE：成功、FLASE：失敗
-     *
-     * @throws FileNotFoundException
-     *                               ファイルが存在しない例外
-     * @throws IOException
-     *                               入出力例外
+     * @param args
+     *             引数
      */
-    @SuppressWarnings("static-method")
-    public Boolean run() throws FileNotFoundException, IOException {
+    public static void main(final String[] args) {
 
-        final boolean result = true;
+        final Class<JavadocLineRemoverTool> clasz       = JavadocLineRemoverTool.class;
+        final KmgPfaMeasService             measService = new KmgPfaMeasServiceImpl(clasz.toString());
+        measService.start();
 
-        /* 入力からパスと行番号のマップ（ファイルパスと行番号のリスト、リストは行番号の降順）を取得 */
-        final Map<Path, Set<Integer>> inputMap = JavadocLineRemoverTool.getInputMap();
-        System.out.println(inputMap.toString());
+        final JavadocLineRemoverTool main = new JavadocLineRemoverTool();
 
-        /* Javadoc行を削除する */
+        try {
 
-        final int lineCount = JavadocLineRemoverTool.deleteJavadocLines(inputMap);
+            if (!main.run()) {
 
-        /* 情報の出力 */
+                System.out.println(String.format("%s：失敗", clasz.toString()));
 
-        System.out.println(String.format("lineCount: %d", lineCount));
+            }
+            System.out.println(String.format("%s：成功", clasz.toString()));
 
-        return result;
+        } catch (final Exception e) {
 
-    }
+            System.out.println(String.format("%s：例外発生", clasz.toString()));
 
-    /**
-     * 入力ファイルからパスと行番号のマップを取得する
-     *
-     * @return パスと行番号の降順のセットのマップ
-     *
-     * @throws IOException
-     *                     入出力例外
-     */
-    private static Map<Path, Set<Integer>> getInputMap() throws IOException {
+            e.printStackTrace();
 
-        final Map<Path, Set<Integer>> result;
+        } finally {
 
-        try (final Stream<String> stream = Files.lines(JavadocLineRemoverTool.INPUT_PATH)) {
-
-            // Javaファイルの行を抽出するストリームを作成する
-            final Stream<String> filteredLines = stream.filter(line -> line.contains(".java:"));
-
-            // ストリームから行をパスと行番号のエントリに変換する
-            final Stream<SimpleEntry<Path, Integer>> entries
-                = filteredLines.map(JavadocLineRemoverTool::convertLineToPathLineEntry).filter(entry -> entry != null);
-
-            // エントリからパスと行番号のリストのマップに変換する
-            final Map<Path, Set<Integer>> pathLineMap = entries.collect(
-                Collectors.groupingBy(Map.Entry::getKey, Collectors.mapping(Map.Entry::getValue, Collectors.toSet())));
-
-            // パスごとに行番号のリストを降順にソートする
-            final Map<Path, Set<Integer>> sortedLineMap = new LinkedHashMap<>();
-            pathLineMap.forEach((path, lineNumbers) -> {
-
-                // Setをソート可能なListに変換
-                final List<Integer> sortedLineNumbers = new ArrayList<>(lineNumbers);
-                sortedLineNumbers.sort(Comparator.reverseOrder());
-                sortedLineMap.put(path, new LinkedHashSet<>(sortedLineNumbers));
-
-            });
-
-            result = sortedLineMap;
+            measService.end();
 
         }
-
-        return result;
 
     }
 
@@ -247,39 +203,83 @@ public class JavadocLineRemoverTool {
     }
 
     /**
-     * メインメソッド
+     * 入力ファイルからパスと行番号のマップを取得する
      *
-     * @param args
-     *             引数
+     * @return パスと行番号の降順のセットのマップ
+     *
+     * @throws IOException
+     *                     入出力例外
      */
-    public static void main(final String[] args) {
+    private static Map<Path, Set<Integer>> getInputMap() throws IOException {
 
-        final Class<JavadocLineRemoverTool> clasz       = JavadocLineRemoverTool.class;
-        final KmgPfaMeasService             measService = new KmgPfaMeasServiceImpl(clasz.toString());
-        measService.start();
+        final Map<Path, Set<Integer>> result;
 
-        final JavadocLineRemoverTool main = new JavadocLineRemoverTool();
+        try (final Stream<String> stream = Files.lines(JavadocLineRemoverTool.INPUT_PATH)) {
 
-        try {
+            // Javaファイルの行を抽出するストリームを作成する
+            final Stream<String> filteredLines = stream.filter(line -> line.contains(".java:"));
 
-            if (!main.run()) {
+            // ストリームから行をパスと行番号のエントリに変換する
+            final Stream<SimpleEntry<Path, Integer>> entries
+                = filteredLines.map(JavadocLineRemoverTool::convertLineToPathLineEntry).filter(entry -> entry != null);
 
-                System.out.println(String.format("%s：失敗", clasz.toString()));
+            // エントリからパスと行番号のリストのマップに変換する
+            final Map<Path, Set<Integer>> pathLineMap = entries.collect(
+                Collectors.groupingBy(Map.Entry::getKey, Collectors.mapping(Map.Entry::getValue, Collectors.toSet())));
 
-            }
-            System.out.println(String.format("%s：成功", clasz.toString()));
+            // パスごとに行番号のリストを降順にソートする
+            final Map<Path, Set<Integer>> sortedLineMap = new LinkedHashMap<>();
+            pathLineMap.forEach((path, lineNumbers) -> {
 
-        } catch (final Exception e) {
+                // Setをソート可能なListに変換
+                final List<Integer> sortedLineNumbers = new ArrayList<>(lineNumbers);
+                sortedLineNumbers.sort(Comparator.reverseOrder());
+                sortedLineMap.put(path, new LinkedHashSet<>(sortedLineNumbers));
 
-            System.out.println(String.format("%s：例外発生", clasz.toString()));
+            });
 
-            e.printStackTrace();
-
-        } finally {
-
-            measService.end();
+            result = sortedLineMap;
 
         }
+
+        return result;
+
+    }
+
+    /**
+     * 実行する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return TRUE：成功、FLASE：失敗
+     *
+     * @throws FileNotFoundException
+     *                               ファイルが存在しない例外
+     * @throws IOException
+     *                               入出力例外
+     */
+    @SuppressWarnings("static-method")
+    public Boolean run() throws FileNotFoundException, IOException {
+
+        final boolean result = true;
+
+        /* 入力からパスと行番号のマップ（ファイルパスと行番号のリスト、リストは行番号の降順）を取得 */
+        final Map<Path, Set<Integer>> inputMap = JavadocLineRemoverTool.getInputMap();
+        System.out.println(inputMap.toString());
+
+        /* Javadoc行を削除する */
+
+        final int lineCount = JavadocLineRemoverTool.deleteJavadocLines(inputMap);
+
+        /* 情報の出力 */
+
+        System.out.println(String.format("lineCount: %d", lineCount));
+
+        return result;
 
     }
 

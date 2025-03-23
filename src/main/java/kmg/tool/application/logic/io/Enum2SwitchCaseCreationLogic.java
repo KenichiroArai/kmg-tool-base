@@ -22,16 +22,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface Enum2SwitchCaseCreationLogic extends Closeable {
 
     /**
-     * 項目を書き込み対象に追加する。
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean addItemToCsvRows() throws KmgToolException;
-
-    /**
      * 項目名を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
@@ -40,6 +30,16 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      *                          KMGツール例外
      */
     boolean addItemNameToCsvRows() throws KmgToolException;
+
+    /**
+     * 項目を書き込み対象に追加する。
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean addItemToCsvRows() throws KmgToolException;
 
     /**
      * 書き込み対象に行を追加する。

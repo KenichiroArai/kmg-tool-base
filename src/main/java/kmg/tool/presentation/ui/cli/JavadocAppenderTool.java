@@ -33,74 +33,39 @@ public class JavadocAppenderTool {
     private static final Path INPUT_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj\\kmg-core");
 
     /**
-     * 実行する<br>
+     * メインメソッド
      *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return TRUE：成功、FLASE：失敗
-     *
-     * @throws FileNotFoundException
-     *                               ファイルが存在しない例外
-     * @throws IOException
-     *                               入出力例外
+     * @param args
+     *             引数
      */
-    public Boolean run() throws FileNotFoundException, IOException {
+    public static void main(final String[] args) {
 
-        boolean result = true;
+        final Class<JavadocAppenderTool> clasz       = JavadocAppenderTool.class;
+        final KmgPfaMeasService          measService = new KmgPfaMeasServiceImpl(clasz.toString());
+        measService.start();
 
-        /* タグマップの取得 */
-        final Map<String, String> tagMap = this.getTagMap();
-        System.out.println(tagMap.toString());
+        final JavadocAppenderTool main = new JavadocAppenderTool();
 
-        /* 対象のJavaファイルを取得 */
-        final List<Path> javaFileList;
+        try {
 
-        int fileCount = 0;
+            if (!main.run()) {
 
-        try (final Stream<Path> streamPath = Files.walk(JavadocAppenderTool.INPUT_PATH)) {
-
-            javaFileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
-                .collect(Collectors.toList());
-
-            fileCount += javaFileList.size();
-
-        }
-
-        /* 対象のJavaファイルをすべて読み込む */
-
-        int lineCount = 0;
-
-        for (final Path javaFile : javaFileList) {
-
-            final StringBuilder fileContentBuilder = new StringBuilder();
-            final String        fileContent        = JavadocAppenderTool.getNewJavaFile(javaFile, fileContentBuilder,
-                tagMap, true);
-
-            lineCount += KmgDelimiterTypes.LINE_SEPARATOR.split(fileContent).length;
-
-            /* 修正した内容をファイルに書き込む */
-            try {
-
-                Files.writeString(javaFile, fileContent);
-
-            } catch (final IOException e) {
-
-                System.err.println("Error writing to file: " + javaFile);
-                e.printStackTrace();
-                result = false;
+                System.out.println(String.format("%s：失敗", clasz.toString()));
 
             }
+            System.out.println(String.format("%s：成功", clasz.toString()));
+
+        } catch (final Exception e) {
+
+            System.out.println(String.format("%s：例外発生", clasz.toString()));
+
+            e.printStackTrace();
+
+        } finally {
+
+            measService.end();
 
         }
-
-        System.out.println(String.format("fileCount: %d", fileCount));
-        System.out.println(String.format("lineCount: %d", lineCount));
-
-        return result;
 
     }
 
@@ -330,6 +295,78 @@ public class JavadocAppenderTool {
     }
 
     /**
+     * 実行する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return TRUE：成功、FLASE：失敗
+     *
+     * @throws FileNotFoundException
+     *                               ファイルが存在しない例外
+     * @throws IOException
+     *                               入出力例外
+     */
+    public Boolean run() throws FileNotFoundException, IOException {
+
+        boolean result = true;
+
+        /* タグマップの取得 */
+        final Map<String, String> tagMap = this.getTagMap();
+        System.out.println(tagMap.toString());
+
+        /* 対象のJavaファイルを取得 */
+        final List<Path> javaFileList;
+
+        int fileCount = 0;
+
+        try (final Stream<Path> streamPath = Files.walk(JavadocAppenderTool.INPUT_PATH)) {
+
+            javaFileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
+                .collect(Collectors.toList());
+
+            fileCount += javaFileList.size();
+
+        }
+
+        /* 対象のJavaファイルをすべて読み込む */
+
+        int lineCount = 0;
+
+        for (final Path javaFile : javaFileList) {
+
+            final StringBuilder fileContentBuilder = new StringBuilder();
+            final String        fileContent        = JavadocAppenderTool.getNewJavaFile(javaFile, fileContentBuilder,
+                tagMap, true);
+
+            lineCount += KmgDelimiterTypes.LINE_SEPARATOR.split(fileContent).length;
+
+            /* 修正した内容をファイルに書き込む */
+            try {
+
+                Files.writeString(javaFile, fileContent);
+
+            } catch (final IOException e) {
+
+                System.err.println("Error writing to file: " + javaFile);
+                e.printStackTrace();
+                result = false;
+
+            }
+
+        }
+
+        System.out.println(String.format("fileCount: %d", fileCount));
+        System.out.println(String.format("lineCount: %d", lineCount));
+
+        return result;
+
+    }
+
+    /**
      * タグマップを取得する<br>
      *
      * @return タグマップ
@@ -374,43 +411,6 @@ public class JavadocAppenderTool {
         }
 
         return result;
-
-    }
-
-    /**
-     * メインメソッド
-     *
-     * @param args
-     *             引数
-     */
-    public static void main(final String[] args) {
-
-        final Class<JavadocAppenderTool> clasz       = JavadocAppenderTool.class;
-        final KmgPfaMeasService          measService = new KmgPfaMeasServiceImpl(clasz.toString());
-        measService.start();
-
-        final JavadocAppenderTool main = new JavadocAppenderTool();
-
-        try {
-
-            if (!main.run()) {
-
-                System.out.println(String.format("%s：失敗", clasz.toString()));
-
-            }
-            System.out.println(String.format("%s：成功", clasz.toString()));
-
-        } catch (final Exception e) {
-
-            System.out.println(String.format("%s：例外発生", clasz.toString()));
-
-            e.printStackTrace();
-
-        } finally {
-
-            measService.end();
-
-        }
 
     }
 
