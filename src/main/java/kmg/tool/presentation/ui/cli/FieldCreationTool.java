@@ -31,8 +31,8 @@ public class FieldCreationTool {
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH
         = Paths.get(FieldCreationTool.BASE_PATH.toString(), "template/kmgTlFieldCreationTool.txt"); // TODO
-                                                                                                      // KenichiroArai
-                                                                                                      // 2021/05/28 自動設定
+                                                                                                    // KenichiroArai
+                                                                                                    // 2021/05/28 自動設定
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(FieldCreationTool.BASE_PATH.toString(), "input.txt");
