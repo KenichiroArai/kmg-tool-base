@@ -136,8 +136,9 @@ public class FieldCreationTool {
                 int            dataIdx     = 0;
                 final String   commentData = inputDatas[dataIdx];                            // コメント
                 dataIdx++;
-                final String fieldData = inputDatas[dataIdx++]; // フィールド名
-                final String typeData  = inputDatas[dataIdx++]; // 型
+                final String fieldData = inputDatas[dataIdx]; // フィールド名
+                dataIdx++;
+                final String typeData = inputDatas[dataIdx++]; // 型
 
                 /* 変換処理 */
 

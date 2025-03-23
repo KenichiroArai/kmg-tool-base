@@ -29,9 +29,9 @@ import kmg.tool.domain.logic.KmgTlInsertionSqlDataSheetCreationLogic;
  * ＫＭＧツール挿入ＳＱＬデータシート作成ロジック<br>
  *
  * @author KenichiroArai
- * 
+ *
  * @sine 1.0.0
- * 
+ *
  * @version 1.0.0
  */
 public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInsertionSqlDataSheetCreationLogic {
@@ -75,9 +75,6 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     /** 削除ＳＱＬ */
     private String deleteSql;
 
-    /** カラム数 */
-    private short columnNum;
-
     /** カラム物理名リスト */
     private List<String> columnPhysicsNameList;
 
@@ -91,11 +88,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 出力ファイルのディレクトリを作成する<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @throws IOException
      *                     入出力例外
      */
@@ -110,11 +107,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 文字セットを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return 文字セット
      */
     @Override
@@ -158,18 +155,18 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * カラム数を返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return カラム数
      */
     @Override
     public short getColumnNum() {
 
-        final short result = (short) this.getColumnPhysicsNameList().size();
-        this.columnNum = result;
+        final short result    = (short) this.getColumnPhysicsNameList().size();
+        short       columnNum = result;
         return result;
 
     }
@@ -178,11 +175,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * カラム物理名リストを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return カラム物理名リスト
      */
     @Override
@@ -223,11 +220,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 削除コメントを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return 削除コメント
      */
     @Override
@@ -251,11 +248,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 削除ＳＱＬを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return 削除ＳＱＬ
      */
     @Override
@@ -280,11 +277,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 挿入コメントを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return 挿入コメント
      */
     @Override
@@ -308,14 +305,14 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 挿入ＳＱＬを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @param datasRow
      *                 データ行
-     * 
+     *
      * @return 挿入ＳＱＬ
      */
     @Override
@@ -378,11 +375,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * ＫＭＧＤＢ型リストを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return ＫＭＧＤＢ型リスト
      */
     @Override
@@ -418,11 +415,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 出力ファイルパスを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return 出力ファイルパス
      */
     @Override
@@ -447,11 +444,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * ＳＱＬＩＤを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return ＳＱＬＩＤ
      */
     @Override
@@ -475,11 +472,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * テーブル論理名を返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return テーブル論理名
      */
     @Override
@@ -503,11 +500,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * テーブル物理名を返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return テーブル物理名
      */
     @Override
@@ -532,11 +529,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 初期化する<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @param kmgDbTypes
      *                   ＫＭＧＤＢの種類
      * @param inputSheet
@@ -562,16 +559,16 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * ＰｏｓｔｇｒｅＳＱＬの出力データを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @param dataCell
      *                      データセル
      * @param kmgDbDataType
      *                      ＫＭＧＤＢ型の種類
-     * 
+     *
      * @return 出力データ
      */
     @SuppressWarnings("static-method")
