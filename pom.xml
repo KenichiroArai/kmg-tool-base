@@ -128,12 +128,12 @@
         <repository>
             <id>github-kmg-core</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/KenichiroArai/kmg-core-src</url>
+            <url>https://maven.pkg.github.com/KenichiroArai/kmg-core</url>
         </repository>
         <repository>
             <id>github-kmg-foundation</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/KenichiroArai/kmg-foundation-src</url>
+            <url>https://maven.pkg.github.com/KenichiroArai/kmg-fund</url>
         </repository>
     </repositories>
 
