@@ -1,6 +1,6 @@
 package kmg.tool.infrastructure.common;
 
-import kmg.foundation.infrastructure.common.KmgFundComMessageTypes;
+import kmg.fund.infrastructure.common.KmgFundComMessageTypes;
 
 /**
  * KMGツール共通メッセージの種類のインタフェース

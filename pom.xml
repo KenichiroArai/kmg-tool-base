@@ -31,8 +31,8 @@
             <version>0.2.0</version>
         </dependency>
         <dependency>
-            <groupId>kmg.foundation</groupId>
-            <artifactId>kmg-foundation</artifactId>
+            <groupId>kmg.fund</groupId>
+            <artifactId>kmg-fund</artifactId>
             <version>0.1.0</version>
         </dependency>
 

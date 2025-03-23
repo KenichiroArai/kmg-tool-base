@@ -1,8 +1,8 @@
 package kmg.tool.infrastructure.exception;
 
-import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.foundation.infrastructure.context.SpringApplicationContextHelper;
-import kmg.foundation.infrastructure.exception.KmgFundException;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
+import kmg.fund.infrastructure.exception.KmgFundException;
 import kmg.tool.infrastructure.common.KmgToolComExcMessageTypes;
 
 /**

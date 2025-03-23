@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.foundation.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.io.Enum2SwitchCaseCreationLogic;
 import kmg.tool.application.types.io.ConvertEnumDefinitionTypes;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
