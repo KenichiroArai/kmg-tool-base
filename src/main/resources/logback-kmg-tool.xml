@@ -1,41 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE logback>
 <configuration>
-    <property resource="application.properties" />
-    <timestamp key="date" datePattern="yyyy-MM-dd" />
+    <!-- Spring用の共通設定を読み込み -->
+    <include resource="logback-kmg-spring-base.xml" />
 
-    <!-- KMG Foundation設定のインクルード -->
-    <include resource="logback-kmg-fund-included.xml" optional="true" />
-
-    <appender name="APPLIATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${logback.application.outpath}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logback.application.rolling.pattern}</fileNamePattern>
-            <maxHistory>10</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>${logback.application.pattern}</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <target>System.out</target>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>${logback.application.pattern}</pattern>
-        </encoder>
-    </appender>
-
-    <!-- kmg.toolパッケージ用のロガー設定 -->
+    <!-- プロジェクト固有のロガー設定 -->
     <logger name="kmg.tool" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="APPLIATION_LOG" />
+        <appender-ref ref="SPRING_STDOUT" />
+        <appender-ref ref="SPRING_APPLIATION_LOG" />
     </logger>
 
     <root level="INFO">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="APPLIATION_LOG" />
+        <appender-ref ref="SPRING_STDOUT" />
+        <appender-ref ref="SPRING_APPLIATION_LOG" />
     </root>
-
 </configuration>
