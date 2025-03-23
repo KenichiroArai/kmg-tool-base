@@ -131,7 +131,7 @@
             <url>https://maven.pkg.github.com/KenichiroArai/kmg-core</url>
         </repository>
         <repository>
-            <id>github-kmg-foundation</id>
+            <id>github-kmg-fund</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/KenichiroArai/kmg-fund</url>
         </repository>

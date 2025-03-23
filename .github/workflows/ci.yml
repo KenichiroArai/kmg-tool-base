@@ -37,7 +37,7 @@ jobs:
                         <password>${{ secrets.GITHUB_TOKEN }}</password>
                       </server>
                       <server>
-                        <id>github-kmg-foundation</id>
+                        <id>github-kmg-fund</id>
                         <username>${{ github.actor }}</username>
                         <password>${{ secrets.GITHUB_TOKEN }}</password>
                       </server>
