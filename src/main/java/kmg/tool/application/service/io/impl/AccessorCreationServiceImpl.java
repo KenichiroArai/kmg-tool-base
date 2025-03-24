@@ -83,12 +83,6 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         boolean result = false;
 
-        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31000;
-        final Object[]               startLogMsgArgs  = {};
-        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
-            startLogMsgArgs);
-        this.logger.debug(startLogMsg);
-
         try {
 
             /* アクセサ作成ロジックの初期化 */
@@ -127,35 +121,13 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
             result = true;
 
-        } catch (final KmgToolException e) {
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31007;
-            final Object[]               logMsgArgs  = {
-                this.getOutputPath().toString(),
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
-
         } finally {
 
-            try {
-
-                /* アクセサ作成ロジックのクローズ処理 */
-                this.closeAccessorCreationLogic();
-
-            } finally {
-
-                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31006;
-                final Object[]               endLogMsgArgs  = {};
-                final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
-                    endLogMsgArgs);
-                this.logger.debug(endLogMsg);
-
-            }
+            /* アクセサ作成ロジックのクローズ処理 */
+            this.closeAccessorCreationLogic();
 
         }
+
         return result;
 
     }

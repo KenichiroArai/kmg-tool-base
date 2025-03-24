@@ -91,12 +91,6 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
 
         boolean result = false;
 
-        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32002;
-        final Object[]               startLogMsgArgs  = {};
-        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
-            startLogMsgArgs);
-        this.logger.debug(startLogMsg);
-
         try {
 
             /* 列挙型からcase文作成ロジックの初期化 */
@@ -135,33 +129,10 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
 
             result = true;
 
-        } catch (final KmgToolException e) {
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32003;
-            final Object[]               logMsgArgs  = {
-                this.getOutputPath().toString(),
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
-
         } finally {
 
-            try {
-
-                /* 列挙型からcase文作成ロジックのクローズ処理 */
-                this.closeEnum2SwitchCaseCreationLogic();
-
-            } finally {
-
-                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32004;
-                final Object[]               endLogMsgArgs  = {};
-                final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
-                    endLogMsgArgs);
-                this.logger.debug(endLogMsg);
-
-            }
+            /* 列挙型からcase文作成ロジックのクローズ処理 */
+            this.closeEnum2SwitchCaseCreationLogic();
 
         }
 

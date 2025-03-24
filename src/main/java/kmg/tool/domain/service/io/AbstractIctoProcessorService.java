@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.utils.KmgPathUtils;
+import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.IctoProcessorService;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -20,6 +24,21 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
 
     /** 一時CSVファイルのサフィックスと拡張子 */
     private static final String TEMP_CSV_FILE_SUFFIX_EXTENSION = "Temp.csv";
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private KmgMessageSource messageSource;
 
     /** 入力ファイルパス */
     private Path inputPath;
@@ -36,6 +55,31 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
     /** テンプレートの動的変換サービス */
     @Autowired
     private DtcService dtcService;
+
+    /**
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     */
+    public AbstractIctoProcessorService() {
+
+        this(LoggerFactory.getLogger(AbstractIctoProcessorService.class));
+
+    }
+
+    /**
+     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected AbstractIctoProcessorService(final Logger logger) {
+
+        this.logger = logger;
+
+    }
 
     /**
      * CSVファイルパスを返す<br>
@@ -160,7 +204,37 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
         boolean result = false;
 
         /* CSVファイルに書き込む */
-        result = this.writeCsvFile();
+
+        try {
+
+            final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12004;
+            final Object[]               startLogMsgArgs  = {};
+            final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+                startLogMsgArgs);
+            this.logger.debug(startLogMsg);
+
+            result = this.writeCsvFile();
+
+        } catch (final KmgToolException e) {
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12005;
+            final Object[]               logMsgArgs  = {
+                this.getOutputPath().toString(),
+            };
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
+
+        } finally {
+
+            final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12006;
+            final Object[]               endLogMsgArgs  = {};
+            final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
+                endLogMsgArgs);
+            this.logger.debug(endLogMsg);
+
+        }
 
         /* テンプレートの動的変換サービスで出力ファイルに出力する */
         result = this.dtcService.initialize(this.getCsvPath(), this.templatePath, this.outputPath);
