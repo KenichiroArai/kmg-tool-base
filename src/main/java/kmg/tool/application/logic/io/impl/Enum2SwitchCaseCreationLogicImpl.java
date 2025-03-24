@@ -30,9 +30,6 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
     /** 列挙型定義の正規表現パターン */
     private static final String ENUM_DEFINITION_PATTERN = "(\\w+)\\(\"(\\S+)\",";
 
-    /** 読み込んだ１行データ */
-    private String lineOfDataRead;
-
     /** 変換後の1行データ */
     private String convertedLine;
 
