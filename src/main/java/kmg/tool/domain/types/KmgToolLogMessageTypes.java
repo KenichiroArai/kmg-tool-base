@@ -151,6 +151,28 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
     KMGTOOL_LOG31005("1行データの読み込み中にエラーが発生しました。"),
 
     /**
+     * カラムの追加中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31006("カラムの追加中にエラーが発生しました。"),
+
+    /**
+     * 1行データの読み込み中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31007("1行データの読み込み中にエラーが発生しました。"),
+
+    /**
      * リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]
      *
      * @author KenichiroArai
@@ -171,6 +193,28 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      * @version 0.1.0
      */
     KMGTOOL_LOG31009("ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]"),
+
+    /**
+     * CSVファイルに書き込み中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31010("CSVファイルに書き込み中にエラーが発生しました。"),
+
+    /**
+     * CSVファイルに書き込み完了。名称=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31011("CSVファイルに書き込み完了。名称=[{0}]"),
 
     /**
      * クリア処理中にエラーが発生しました。
@@ -237,50 +281,6 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      * @version 0.1.0
      */
     KMGTOOL_LOG32005("クリア処理中にエラーが発生しました。"),
-
-    /**
-     * カラムの追加中にエラーが発生しました。
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_LOG32006("カラムの追加中にエラーが発生しました。"),
-
-    /**
-     * 1行データの読み込み中にエラーが発生しました。
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_LOG32007("1行データの読み込み中にエラーが発生しました。"),
-
-    /**
-     * CSVファイルに書き込み中にエラーが発生しました。
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_LOG32008("CSVファイルに書き込み中にエラーが発生しました。"),
-
-    /**
-     * CSVファイルに書き込み完了。名称=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_LOG32009("CSVファイルに書き込み完了。名称=[{0}]"),
 
     /**
      * 初期化の失敗

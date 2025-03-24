@@ -321,7 +321,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             } catch (final IOException e) {
 
-                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31008;
+                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN13005;
                 final Object[]               messageArgs  = {
                     this.outputPath.toString()
                 };
@@ -338,7 +338,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31009;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN13006;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
@@ -426,7 +426,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.reader = null;
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32008;
+            // TODO KenichiroArai 2025/03/25 ログ KMGTOOL_LOG13000=リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
             final Object[]               logMsgArgs  = {
                 this.inputPath.toString(),
             };
@@ -461,7 +462,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.writer = null;
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32009;
+            // TODO KenichiroArai 2025/03/25 ログ KMGTOOL_LOG13001=ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
             final Object[]               logMsgArgs  = {
                 this.outputPath.toString(),
             };
@@ -489,7 +491,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31005;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN13007;
             final Object[]               messageArgs  = {
                 this.inputPath.toString()
             };
@@ -514,7 +516,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31006;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN13008;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };

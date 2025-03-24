@@ -130,6 +130,50 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN13004("CSVの列が不足しています。入力ファイルパス: [{0}]"),
 
     /**
+     * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN13005("CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
+     * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN13006("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
+     * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN13007("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
+
+    /**
+     * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN13008("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
      * ファイル処理に失敗しました。
      *
      * @author KenichiroArai
@@ -185,28 +229,6 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN31004("列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。"),
 
     /**
-     * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN31005("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
-
-    /**
-     * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN31006("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
-
-    /**
      * 1行読み込みに失敗しました。
      *
      * @author KenichiroArai
@@ -216,28 +238,6 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      * @version 0.1.0
      */
     KMGTOOL_GEN31007("1行読み込みに失敗しました。"),
-
-    /**
-     * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN31008("CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]"),
-
-    /**
-     * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN31009("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
      * メッセージの種類作成ロジックをクローズ中にエラーが発生しました。
