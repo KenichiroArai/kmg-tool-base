@@ -389,7 +389,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31002;
         final Object[]               logMsgArgs  = {
-            this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
+            this.accessorCreationLogic.getJavadocComment(),
         };
         final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
         this.logger.debug(logMsg);

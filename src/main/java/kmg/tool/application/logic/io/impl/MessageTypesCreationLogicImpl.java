@@ -51,7 +51,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         }
 
-        super.addCsvRow(this.item);
+        super.addCsvRow(this.itemName);
         result = true;
 
         return result;

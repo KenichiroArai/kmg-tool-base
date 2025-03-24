@@ -181,6 +181,94 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
+    KMGTOOL_LOG31010("CSVファイルに書き込む処理を開始します。"),
+
+    /**
+     * CSVファイルの書き込み処理中にエラーが発生しました。出力ファイルパス:[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31011("CSVファイルの書き込み処理中にエラーが発生しました。出力ファイルパス:[{0}]"),
+
+    /**
+     * CSVファイルに書き込む処理を終了します。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31012("CSVファイルに書き込む処理を終了します。"),
+
+    /**
+     * クリア処理中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31013("クリア処理中にエラーが発生しました。"),
+
+    /**
+     * カラムの追加中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31014("カラムの追加中にエラーが発生しました。"),
+
+    /**
+     * 1行データの読み込み中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31015("1行データの読み込み中にエラーが発生しました。"),
+
+    /**
+     * CSVファイルに書き込み中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31016("CSVファイルに書き込み中にエラーが発生しました。"),
+
+    /**
+     * CSVファイルに書き込み完了。項目=[{0}]、項目名=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31017("CSVファイルに書き込み完了。項目=[{0}]、項目名=[{1}]"),
+
+    /**
+     * CSVファイルに書き込む処理を開始します。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
     KMGTOOL_LOG32002("CSVファイルに書き込む処理を開始します。"),
 
     /**
