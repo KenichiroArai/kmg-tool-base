@@ -295,61 +295,6 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN32010("項目名がnullです。"),
 
     /**
-     * 1行読み込みに失敗しました。
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32011("1行読み込みに失敗しました。"),
-
-    /**
-     * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32012("CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]"),
-
-    /**
-     * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32013("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
-
-    /**
-     * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32014("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
-
-    /**
-     * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32015("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
-
-    /**
      * 失敗
      *
      * @author KenichiroArai

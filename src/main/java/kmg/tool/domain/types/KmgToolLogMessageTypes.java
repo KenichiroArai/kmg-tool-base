@@ -261,28 +261,6 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
     KMGTOOL_LOG32009("CSVファイルに書き込み完了。名称=[{0}]"),
 
     /**
-     * リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_LOG32010("リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]"),
-
-    /**
-     * ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_LOG32011("ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]"),
-
-    /**
      * 初期化の失敗
      *
      * @author KenichiroArai
