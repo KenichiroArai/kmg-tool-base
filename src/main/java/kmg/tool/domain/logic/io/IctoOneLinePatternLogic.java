@@ -57,6 +57,17 @@ public interface IctoOneLinePatternLogic extends Closeable {
     String getLineOfDataRead();
 
     /**
+     * 現在の行番号を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 現在の行番号
+     */
+    int getNowLineNumber();
+
+    /**
      * 初期化する。
      *
      * @return true：成功、false：失敗

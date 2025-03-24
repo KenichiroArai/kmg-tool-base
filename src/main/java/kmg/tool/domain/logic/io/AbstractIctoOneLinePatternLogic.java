@@ -56,6 +56,9 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /** 変換後の1行データ */
     private String convertedLine;
 
+    /** 現在の行番号 */
+    private int nowLineNumber;
+
     /** 書き込み対象のCSVデータのリスト */
     private final List<List<String>> csvRows;
 
@@ -133,6 +136,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         this.lineOfDataRead = null;
         this.convertedLine = null;
+        this.nowLineNumber = 0;
 
         result = true;
         return result;
@@ -186,6 +190,23 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     public String getLineOfDataRead() {
 
         final String result = this.lineOfDataRead;
+        return result;
+
+    }
+
+    /**
+     * 現在の行番号を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 現在の行番号
+     */
+    @Override
+    public int getNowLineNumber() {
+
+        final int result = this.nowLineNumber;
         return result;
 
     }
@@ -247,6 +268,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             // 1行読み込み
             this.lineOfDataRead = this.reader.readLine();
+
+            this.nowLineNumber++;
 
         } catch (final IOException e) {
 

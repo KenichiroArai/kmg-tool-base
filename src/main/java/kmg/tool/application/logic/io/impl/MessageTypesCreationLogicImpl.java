@@ -45,8 +45,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         if (this.itemName == null) {
 
-            // TODO KenichiroArai 2025/03/18 メッセージ
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32000;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
 
@@ -74,8 +73,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         if (this.item == null) {
 
-            // TODO KenichiroArai 2025/03/18 メッセージ
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32004;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
 
@@ -101,7 +99,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/03/19 ハードコード
+        // TODO KenichiroArai 2025/03/24 ハードコード
 
         // 項目と項目名に分ける
         final String[] inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(this.getConvertedLine(), 2);
@@ -110,9 +108,10 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         if (inputDatas.length > 2) {
             // 分かれない場合
 
-            // TODO KenichiroArai 2025/03/19 例外処理
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs  = {};
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
+            final Object[]               messageArgs  = {
+                this.getNowLineNumber(), this.getLineOfDataRead(),
+            };
             throw new KmgToolException(messageTypes, messageArgs);
 
         }

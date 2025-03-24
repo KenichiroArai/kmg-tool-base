@@ -31,7 +31,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     NONE("指定無し"),
 
     /**
-     * 一時的なCSVファイルの作成に失敗しました。CSVファイル名のみ=[{0}]、サフィックスと拡張子=[{1}]
+     * KMGTOOL_GEN12000
      *
      * @author KenichiroArai
      *
@@ -39,10 +39,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN12000("一時的なCSVファイルの作成に失敗しました。CSVファイル名のみ=[{0}]、サフィックスと拡張子=[{1}]"),
+    KMGTOOL_GEN12000("KMGTOOL_GEN12000"),
 
     /**
-     * テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0}]
+     * KMGTOOL_GEN12001
      *
      * @author KenichiroArai
      *
@@ -50,10 +50,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN12001("テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0}]"),
+    KMGTOOL_GEN12001("KMGTOOL_GEN12001"),
 
     /**
-     * テンプレートの動的変換ロジックをクローズ中にエラーが発生しました。
+     * KMGTOOL_GEN12002
      *
      * @author KenichiroArai
      *
@@ -61,10 +61,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN12002("テンプレートの動的変換ロジックをクローズ中にエラーが発生しました。"),
+    KMGTOOL_GEN12002("KMGTOOL_GEN12002"),
 
     /**
-     * 入力ファイルを処理し、テンプレートに基づいて出力を生成中にエラーが発生しました。入力ファイルパス=[{0}]、出力ファイルパス=[{1}]、テンプレートファイルパス=[{2}]
+     * KMGTOOL_GEN12003
      *
      * @author KenichiroArai
      *
@@ -72,10 +72,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN12003("入力ファイルを処理し、テンプレートに基づいて出力を生成中にエラーが発生しました。入力ファイルパス=[{0}]、出力ファイルパス=[{1}]、テンプレートファイルパス=[{2}]"),
+    KMGTOOL_GEN12003("KMGTOOL_GEN12003"),
 
     /**
-     * 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}
+     * KMGTOOL_GEN13000
      *
      * @author KenichiroArai
      *
@@ -83,10 +83,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN13000("入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}"),
+    KMGTOOL_GEN13000("KMGTOOL_GEN13000"),
 
     /**
-     * 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]
+     * KMGTOOL_GEN13001
      *
      * @author KenichiroArai
      *
@@ -94,10 +94,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN13001("出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]"),
+    KMGTOOL_GEN13001("KMGTOOL_GEN13001"),
 
     /**
-     * 入力ファイルを開くことができませんでした。入力ファイルパス：[{0}]
+     * KMGTOOL_GEN13002
      *
      * @author KenichiroArai
      *
@@ -105,10 +105,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN13002("入力ファイルを開くことができませんでした。入力ファイルパス：[{0}]"),
+    KMGTOOL_GEN13002("KMGTOOL_GEN13002"),
 
     /**
-     * 出力ファイルを開くことができませんでした。出力ファイルパス：[{0}]
+     * KMGTOOL_GEN13003
      *
      * @author KenichiroArai
      *
@@ -116,10 +116,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN13003("出力ファイルを開くことができませんでした。出力ファイルパス：[{0}]"),
+    KMGTOOL_GEN13003("KMGTOOL_GEN13003"),
 
     /**
-     * CSVの列が不足しています。入力ファイルパス: [{0}]
+     * KMGTOOL_GEN13004
      *
      * @author KenichiroArai
      *
@@ -127,10 +127,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN13004("CSVの列が不足しています。入力ファイルパス: [{0}]"),
+    KMGTOOL_GEN13004("KMGTOOL_GEN13004"),
 
     /**
-     * ファイル処理に失敗しました。
+     * KMGTOOL_GEN31000
      *
      * @author KenichiroArai
      *
@@ -138,10 +138,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31000("ファイル処理に失敗しました。"),
+    KMGTOOL_GEN31000("KMGTOOL_GEN31000"),
 
     /**
-     * ファイル処理に失敗しました。
+     * KMGTOOL_GEN31001
      *
      * @author KenichiroArai
      *
@@ -149,10 +149,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31001("ファイル処理に失敗しました。"),
+    KMGTOOL_GEN31001("KMGTOOL_GEN31001"),
 
     /**
-     * テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]
+     * KMGTOOL_GEN31002
      *
      * @author KenichiroArai
      *
@@ -160,10 +160,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31002("テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]"),
+    KMGTOOL_GEN31002("KMGTOOL_GEN31002"),
 
     /**
-     * アクセサ作成ロジックをクローズ中にエラーが発生しました。
+     * KMGTOOL_GEN31003
      *
      * @author KenichiroArai
      *
@@ -171,10 +171,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31003("アクセサ作成ロジックをクローズ中にエラーが発生しました。"),
+    KMGTOOL_GEN31003("KMGTOOL_GEN31003"),
 
     /**
-     * 列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。
+     * KMGTOOL_GEN31004
      *
      * @author KenichiroArai
      *
@@ -182,10 +182,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31004("列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。"),
+    KMGTOOL_GEN31004("KMGTOOL_GEN31004"),
 
     /**
-     * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
+     * KMGTOOL_GEN31005
      *
      * @author KenichiroArai
      *
@@ -193,10 +193,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31005("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
+    KMGTOOL_GEN31005("KMGTOOL_GEN31005"),
 
     /**
-     * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
+     * KMGTOOL_GEN31006
      *
      * @author KenichiroArai
      *
@@ -204,10 +204,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31006("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN31006("KMGTOOL_GEN31006"),
 
     /**
-     * 1行読み込みに失敗しました。
+     * KMGTOOL_GEN31007
      *
      * @author KenichiroArai
      *
@@ -215,10 +215,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31007("1行読み込みに失敗しました。"),
+    KMGTOOL_GEN31007("KMGTOOL_GEN31007"),
 
     /**
-     * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
+     * KMGTOOL_GEN31008
      *
      * @author KenichiroArai
      *
@@ -226,10 +226,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31008("CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN31008("KMGTOOL_GEN31008"),
 
     /**
-     * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
+     * KMGTOOL_GEN31009
      *
      * @author KenichiroArai
      *
@@ -237,10 +237,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN31009("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN31009("KMGTOOL_GEN31009"),
 
     /**
-     * 項目名がnullです。
+     * KMGTOOL_GEN32000
      *
      * @author KenichiroArai
      *
@@ -248,10 +248,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32001("項目名がnullです。"),
+    KMGTOOL_GEN32000("KMGTOOL_GEN32000"),
 
     /**
-     * Javadocコメントがnullです。
+     * KMGTOOL_GEN32001
      *
      * @author KenichiroArai
      *
@@ -259,10 +259,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32002("Javadocコメントがnullです。"),
+    KMGTOOL_GEN32001("KMGTOOL_GEN32001"),
 
     /**
-     * 型情報がnullです。
+     * KMGTOOL_GEN32002
      *
      * @author KenichiroArai
      *
@@ -270,10 +270,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32003("型情報がnullです。"),
+    KMGTOOL_GEN32002("KMGTOOL_GEN32002"),
 
     /**
-     * 項目名がnullです。
+     * KMGTOOL_GEN32003
      *
      * @author KenichiroArai
      *
@@ -281,10 +281,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32009("項目名がnullです。"),
+    KMGTOOL_GEN32003("KMGTOOL_GEN32003"),
 
     /**
-     * 項目名がnullです。
+     * KMGTOOL_GEN32004
      *
      * @author KenichiroArai
      *
@@ -292,10 +292,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32010("項目名がnullです。"),
+    KMGTOOL_GEN32004("KMGTOOL_GEN32004"),
 
     /**
-     * 失敗
+     * KMGTOOL_GEN32005
      *
      * @author KenichiroArai
      *
@@ -303,10 +303,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN41000("失敗"),
+    KMGTOOL_GEN32005("KMGTOOL_GEN32005"),
 
     /**
-     * 成功
+     * KMGTOOL_GEN32009
      *
      * @author KenichiroArai
      *
@@ -314,10 +314,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN41001("成功"),
+    KMGTOOL_GEN32009("KMGTOOL_GEN32009"),
 
     /**
-     * 例外発生
+     * KMGTOOL_GEN32010
      *
      * @author KenichiroArai
      *
@@ -325,7 +325,40 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN41002("例外発生"),
+    KMGTOOL_GEN32010("KMGTOOL_GEN32010"),
+
+    /**
+     * KMGTOOL_GEN41000
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN41000("KMGTOOL_GEN41000"),
+
+    /**
+     * KMGTOOL_GEN41001
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN41001("KMGTOOL_GEN41001"),
+
+    /**
+     * KMGTOOL_GEN41002
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN41002("KMGTOOL_GEN41002"),
 
     /* 定義：終了 */
 
