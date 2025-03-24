@@ -1,10 +1,10 @@
 package kmg.tool.application.logic.io;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import kmg.tool.domain.logic.io.IctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -19,7 +19,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  *
  * @since 1.0.0
  */
-public interface MessageTypesCreationLogic extends Closeable {
+public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
 
     /**
      * 項目名を書き込み対象に追加する。
@@ -49,6 +49,7 @@ public interface MessageTypesCreationLogic extends Closeable {
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @Override
     boolean addOneLineOfDataToCsvRows() throws KmgToolException;
 
     /**
@@ -56,6 +57,7 @@ public interface MessageTypesCreationLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      */
+    @Override
     boolean clearCsvRows();
 
     /**
@@ -63,6 +65,7 @@ public interface MessageTypesCreationLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      */
+    @Override
     boolean clearProcessingData();
 
     /**
@@ -89,6 +92,7 @@ public interface MessageTypesCreationLogic extends Closeable {
      *
      * @return 変換後の1行データ
      */
+    @Override
     String getConvertedLine();
 
     /**
@@ -96,6 +100,7 @@ public interface MessageTypesCreationLogic extends Closeable {
      *
      * @return 書き込み対象のCSVデータのリスト
      */
+    @Override
     List<List<String>> getCsvRows();
 
     /**
@@ -117,6 +122,7 @@ public interface MessageTypesCreationLogic extends Closeable {
      *
      * @return 読み込んだ１行データ
      */
+    @Override
     String getLineOfDataRead();
 
     /**
@@ -132,6 +138,7 @@ public interface MessageTypesCreationLogic extends Closeable {
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @Override
     boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
 
     /**
@@ -142,6 +149,7 @@ public interface MessageTypesCreationLogic extends Closeable {
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @Override
     boolean readOneLineOfData() throws KmgToolException;
 
     /**
@@ -155,5 +163,6 @@ public interface MessageTypesCreationLogic extends Closeable {
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @Override
     boolean writeCsvFile() throws KmgToolException;
 }
