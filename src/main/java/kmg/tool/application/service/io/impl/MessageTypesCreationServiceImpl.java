@@ -215,8 +215,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/24 ログ メッセージの種類作成ロジックをクローズ中にエラーが発生しました。
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31010;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 

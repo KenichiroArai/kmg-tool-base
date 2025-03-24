@@ -240,6 +240,17 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN31009("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
+     * メッセージの種類作成ロジックをクローズ中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31010("メッセージの種類作成ロジックをクローズ中にエラーが発生しました。"),
+
+    /**
      * 項目名がnullです。
      *
      * @author KenichiroArai
