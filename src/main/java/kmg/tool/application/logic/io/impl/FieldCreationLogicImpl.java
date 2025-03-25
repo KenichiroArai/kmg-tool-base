@@ -46,7 +46,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         if (this.comment == null) {
 
-            // TODO KenichiroArai 2025/03/25 メッセージ
+            // TODO KenichiroArai 2025/03/25 メッセージ コメントがnullです。
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
@@ -75,7 +75,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         if (this.field == null) {
 
-            // TODO KenichiroArai 2025/03/25 メッセージ
+            // TODO KenichiroArai 2025/03/25 メッセージ フィールドがnullです。
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
@@ -104,7 +104,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         if (this.type == null) {
 
-            // TODO KenichiroArai 2025/03/25 メッセージ
+            // TODO KenichiroArai 2025/03/25 メッセージ 型がnullです。
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
