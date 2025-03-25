@@ -2,10 +2,10 @@
 csvPlaceholders:
     - displayName: "コメント"
       replacementPattern: "{comment}"
-    - displayName: "型"
-      replacementPattern: "{type}"
     - displayName: "項目"
       replacementPattern: "{field}"
+    - displayName: "型"
+      replacementPattern: "{type}"
 
 # テンプレートの内容
 templateContent: |
