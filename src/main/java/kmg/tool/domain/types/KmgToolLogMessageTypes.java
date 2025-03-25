@@ -107,7 +107,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
     KMGTOOL_LOG12005("CSVファイルの書き込み処理中にエラーが発生しました。出力ファイルパス:[{0}]"),
 
     /**
-     * CSVファイルの書き込み処理中にエラーが発生しました。出力ファイルパス:[{0}]
+     * CSVファイルに書き込む処理を終了します。
      *
      * @author KenichiroArai
      *
@@ -115,7 +115,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG12006("CSVファイルの書き込み処理中にエラーが発生しました。出力ファイルパス:[{0}]"),
+    KMGTOOL_LOG12006("CSVファイルに書き込む処理を終了します。"),
 
     /**
      * クリア処理中にエラーが発生しました。
