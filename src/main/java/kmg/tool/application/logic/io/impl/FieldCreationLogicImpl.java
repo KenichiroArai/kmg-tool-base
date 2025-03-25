@@ -22,6 +22,21 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic implements FieldCreationLogic {
 
+    /** フィールド定義の最小要素数 */
+    private static final int FIELD_DEFINITION_MIN_LENGTH = 3;
+
+    /** コメントのインデックス */
+    private static final int COMMENT_INDEX = 0;
+
+    /** フィールド名のインデックス */
+    private static final int FIELD_NAME_INDEX = 1;
+
+    /** データ型のインデックス */
+    private static final int DATA_TYPE_INDEX = 2;
+
+    /** 完全修飾名を削除する正規表現パターン */
+    private static final String REMOVE_PACKAGE_NAME_PATTERN = "(\\w+\\.)+";
+
     /** コメント */
     private String comment;
 
@@ -136,23 +151,17 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         }
 
-        // TODO KenichiroArai 2025/03/25 ハードコード
-
         final String[] inputDatas = KmgDelimiterTypes.SERIES_HALF_SPACE.split(line);
 
-        if (inputDatas.length < 3) {
+        if (inputDatas.length < FieldCreationLogicImpl.FIELD_DEFINITION_MIN_LENGTH) {
 
             return result;
 
         }
 
-        int dataIdx = 0;
-        this.comment = inputDatas[dataIdx];
-        dataIdx++;
-        this.field = new KmgString(inputDatas[dataIdx]).toCamelCase();
-        dataIdx++;
-        final String dbDataType = inputDatas[dataIdx];
-        dataIdx++;
+        this.comment = inputDatas[FieldCreationLogicImpl.COMMENT_INDEX];
+        this.field = new KmgString(inputDatas[FieldCreationLogicImpl.FIELD_NAME_INDEX]).toCamelCase();
+        final String dbDataType = inputDatas[FieldCreationLogicImpl.DATA_TYPE_INDEX];
 
         final KmgDbDataTypeTypes dbDataTypeTypes = KmgDbDataTypeTypes.getEnum(dbDataType);
 
@@ -162,7 +171,8 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         } else {
 
-            this.type = dbDataTypeTypes.getType().getTypeName().replaceAll("(\\w+\\.)+", KmgString.EMPTY);
+            this.type = dbDataTypeTypes.getType().getTypeName()
+                .replaceAll(FieldCreationLogicImpl.REMOVE_PACKAGE_NAME_PATTERN, KmgString.EMPTY);
 
         }
 
