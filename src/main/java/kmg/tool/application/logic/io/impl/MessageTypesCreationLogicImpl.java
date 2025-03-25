@@ -2,8 +2,9 @@ package kmg.tool.application.logic.io.impl;
 
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.io.MessageTypesCreationLogic;
+import kmg.tool.application.types.io.MessageTypesDelimiterTypes;
+import kmg.tool.application.types.io.MessageTypesRegexGroupTypes;
 import kmg.tool.domain.logic.io.AbstractIctoOneLinePatternLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -99,13 +100,12 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/03/24 ハードコード
-
-        // 項目と項目名に分ける
-        final String[] inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(this.getConvertedLine(), 2);
+        // 項目と項目名に分ける（例：KMGTOOL_GEN32000=メッセージの種類が指定されていません。）
+        final String[] inputDatas = MessageTypesDelimiterTypes.MESSAGE_TYPE_DELIMITER.getDelimiterType()
+            .split(this.getConvertedLine(), MessageTypesDelimiterTypes.MESSAGE_TYPE_DELIMITER.getSplitCount());
 
         // 項目と項目名に分かれないか
-        if (inputDatas.length > 2) {
+        if (inputDatas.length != MessageTypesDelimiterTypes.MESSAGE_TYPE_DELIMITER.getSplitCount()) {
             // 分かれない場合
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
@@ -117,9 +117,8 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         }
 
         // 項目と項目名に設定
-        // TODO KenichiroArai 2025/03/19 ハードコード
-        this.item = inputDatas[0]; // 項目
-        this.itemName = inputDatas[1]; // 項目名
+        this.item = inputDatas[MessageTypesRegexGroupTypes.MESSAGE_TYPE_ITEM.getGroupIndex()]; // 項目
+        this.itemName = inputDatas[MessageTypesRegexGroupTypes.MESSAGE_TYPE_ITEM_NAME.getGroupIndex()]; // 項目名
 
         result = true;
         return result;
