@@ -1,3 +1,13 @@
+# CSVから直接取得するプレースホルダー定義
+csvPlaceholders:
+    - displayName: "コメント"
+      replacementPattern: "{comment}"
+    - displayName: "型"
+      replacementPattern: "{type}"
+    - displayName: "項目"
+      replacementPattern: "{field}"
 
-/** $comment */
-private $type $field;
+# テンプレートの内容
+templateContent: |
+    /** {comment} */
+    private {type} {field};
