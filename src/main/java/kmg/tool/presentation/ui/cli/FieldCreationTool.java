@@ -22,7 +22,6 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
  *
  * @version 1.0.0
  */
-@SuppressWarnings("nls") // TODO KenichiroArai 2021/05/11 外部文字列化
 public class FieldCreationTool {
 
     /** 基準パス */
@@ -30,9 +29,7 @@ public class FieldCreationTool {
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH
-        = Paths.get(FieldCreationTool.BASE_PATH.toString(), "template/kmgTlFieldCreationTool.txt"); // TODO
-                                                                                                    // KenichiroArai
-                                                                                                    // 2021/05/28 自動設定
+        = Paths.get(FieldCreationTool.BASE_PATH.toString(), "template/FieldCreationTool.txt");
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(FieldCreationTool.BASE_PATH.toString(), "input.txt");
@@ -132,13 +129,15 @@ public class FieldCreationTool {
             while ((line = brInput.readLine()) != null) {
 
                 /* データ取得 */
-                final String[] inputDatas  = KmgDelimiterTypes.SERIES_HALF_SPACE.split(line);
-                int            dataIdx     = 0;
-                final String   commentData = inputDatas[dataIdx];                            // コメント
+                final String[] inputDatas = KmgDelimiterTypes.SERIES_HALF_SPACE.split(line);
+                int            dataIdx    = 0;
+
+                final String commentData = inputDatas[dataIdx]; // コメント
                 dataIdx++;
                 final String fieldData = inputDatas[dataIdx]; // フィールド名
                 dataIdx++;
-                final String typeData = inputDatas[dataIdx++]; // 型
+                final String typeData = inputDatas[dataIdx]; // 型
+                dataIdx++;
 
                 /* 変換処理 */
 
