@@ -2,8 +2,8 @@ package kmg.tool.application.logic.io.impl;
 
 import org.springframework.stereotype.Service;
 
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.io.MessageTypesCreationLogic;
-import kmg.tool.application.types.io.MessageTypesDelimiterTypes;
 import kmg.tool.application.types.io.MessageTypesRegexGroupTypes;
 import kmg.tool.domain.logic.io.AbstractIctoOneLinePatternLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
@@ -24,6 +24,9 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLogic
     implements MessageTypesCreationLogic {
+
+    /** メッセージの種類の分割数 */
+    private static final int MESSAGE_TYPE_SPLIT_COUNT = 2;
 
     /** 項目 */
     private String item;
@@ -101,11 +104,11 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         boolean result = false;
 
         // 項目と項目名に分ける（例：KMGTOOL_GEN32000=メッセージの種類が指定されていません。）
-        final String[] inputDatas = MessageTypesDelimiterTypes.MESSAGE_TYPE_DELIMITER.getDelimiterType()
-            .split(this.getConvertedLine(), MessageTypesDelimiterTypes.MESSAGE_TYPE_DELIMITER.getSplitCount());
+        final String[] inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(this.getConvertedLine(),
+            MessageTypesCreationLogicImpl.MESSAGE_TYPE_SPLIT_COUNT);
 
         // 項目と項目名に分かれないか
-        if (inputDatas.length != MessageTypesDelimiterTypes.MESSAGE_TYPE_DELIMITER.getSplitCount()) {
+        if (inputDatas.length != MessageTypesCreationLogicImpl.MESSAGE_TYPE_SPLIT_COUNT) {
             // 分かれない場合
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
