@@ -11,7 +11,8 @@ import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * フィールド作成ロジック実装クラス
+ * フィールド作成ロジック実装クラス データベースのフィールド定義から、Javaのフィールド定義を生成するためのロジッククラスです。 入力されたフィールド定義（コメント、フィールド名、データ型）を解析し、
+ * Javaのフィールド定義に変換する機能を提供します。
  *
  * @author KenichiroArai
  *
@@ -22,43 +23,44 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic implements FieldCreationLogic {
 
-    /** フィールド定義の最小要素数 */
+    /** フィールド定義の最小要素数（コメント、フィールド名、データ型の3要素） */
     private static final int FIELD_DEFINITION_MIN_LENGTH = 3;
 
-    /** コメントのインデックス */
+    /** コメントのインデックス（フィールド定義の1番目の要素） */
     private static final int COMMENT_INDEX = 0;
 
-    /** フィールド名のインデックス */
+    /** フィールド名のインデックス（フィールド定義の2番目の要素） */
     private static final int FIELD_NAME_INDEX = 1;
 
-    /** データ型のインデックス */
+    /** データ型のインデックス（フィールド定義の3番目の要素） */
     private static final int DATA_TYPE_INDEX = 2;
 
-    /** 完全修飾名を削除する正規表現パターン */
+    /** 完全修飾名を削除する正規表現パターン（例：java.lang.String → String） */
     private static final String REMOVE_PACKAGE_NAME_PATTERN = "(\\w+\\.)+";
 
-    /** コメント */
+    /** フィールドのコメント */
     private String comment;
 
-    /** フィールド */
+    /** フィールド名 */
     private String field;
 
-    /** 型 */
+    /** フィールドの型 */
     private String type;
 
     /**
-     * コメントを書き込み対象に追加する。
+     * コメントを書き込み対象に追加する。 保持しているコメントを書き込み対象のCSVの行に追加します。 コメントが設定されていない場合は例外をスローします。
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          コメントが設定されていない場合
      */
     @Override
     public boolean addCommentToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
+        /* コメントの存在チェック */
         if (this.comment == null) {
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32006;
@@ -67,6 +69,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         }
 
+        /* コメントの追加 */
         super.addCsvRow(this.comment);
         result = true;
 
@@ -75,18 +78,19 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     }
 
     /**
-     * フィールドを書き込み対象に追加する。
+     * フィールドを書き込み対象に追加する。 保持しているフィールド名を書き込み対象のCSVの行に追加します。 フィールド名が設定されていない場合は例外をスローします。
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          フィールド名が設定されていない場合
      */
     @Override
     public boolean addFieldToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
+        /* フィールド名の存在チェック */
         if (this.field == null) {
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32007;
@@ -95,6 +99,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         }
 
+        /* フィールド名の追加 */
         super.addCsvRow(this.field);
         result = true;
 
@@ -103,18 +108,19 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     }
 
     /**
-     * 型を書き込み対象に追加する。
+     * 型を書き込み対象に追加する。 保持している型情報を書き込み対象のCSVの行に追加します。 型情報が設定されていない場合は例外をスローします。
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          型情報が設定されていない場合
      */
     @Override
     public boolean addTypeToCsvRows() throws KmgToolException {
 
         boolean result = false;
 
+        /* 型情報の存在チェック */
         if (this.type == null) {
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32008;
@@ -123,6 +129,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         }
 
+        /* 型情報の追加 */
         super.addCsvRow(this.type);
         result = true;
 
@@ -131,18 +138,19 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     }
 
     /**
-     * フィールド宣言からコメント、フィールド、型に変換する。
+     * フィールド宣言からコメント、フィールド、型に変換する。 入力された行データをコメント、フィールド名、型情報に分解して保持します。 フィールド名はキャメルケースに変換され、型情報はパッケージ名が除去されます。
      *
-     * @return true：変換あり、false：変換なし
+     * @return true：変換成功、false：変換失敗（入力データが不正な場合）
      *
      * @throws KmgToolException
-     *                          KMGツール例外
+     *                          データ変換時にエラーが発生した場合
      */
     @Override
     public boolean convertFields() throws KmgToolException {
 
         boolean result = false;
 
+        /* 入力データの取得 */
         final String line = this.getLineOfDataRead();
 
         if (line == null) {
@@ -151,6 +159,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         }
 
+        /* 入力データの分解 */
         final String[] inputDatas = KmgDelimiterTypes.SERIES_HALF_SPACE.split(line);
 
         if (inputDatas.length < FieldCreationLogicImpl.FIELD_DEFINITION_MIN_LENGTH) {
@@ -159,10 +168,12 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
         }
 
+        /* データの設定 */
         this.comment = inputDatas[FieldCreationLogicImpl.COMMENT_INDEX];
         this.field = new KmgString(inputDatas[FieldCreationLogicImpl.FIELD_NAME_INDEX]).toCamelCase();
         final String dbDataType = inputDatas[FieldCreationLogicImpl.DATA_TYPE_INDEX];
 
+        /* 型情報の変換 */
         final KmgDbDataTypeTypes dbDataTypeTypes = KmgDbDataTypeTypes.getEnum(dbDataType);
 
         if (dbDataTypeTypes == null) {
@@ -182,7 +193,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     }
 
     /**
-     * コメントを返す。
+     * コメントを返す。 保持しているフィールドのコメントを返します。
      *
      * @return コメント。取得できない場合は、null
      */
@@ -195,9 +206,9 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     }
 
     /**
-     * フィールドを返す。
+     * フィールドを返す。 保持しているフィールド名を返します。
      *
-     * @return フィールド。取得できない場合は、null
+     * @return フィールド名。取得できない場合は、null
      */
     @Override
     public String getField() {
@@ -208,9 +219,9 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     }
 
     /**
-     * 型を返す。
+     * 型を返す。 保持しているフィールドの型情報を返します。
      *
-     * @return 型。取得できない場合は、null
+     * @return 型情報。取得できない場合は、null
      */
     @Override
     public String getType() {
