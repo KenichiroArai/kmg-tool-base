@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli;
+package kmg.tool.presentation.ui.cli.io;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,11 +25,10 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 public class FieldCreationTool {
 
     /** 基準パス */
-    private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
+    private static final Path BASE_PATH = Paths.get(String.format("work/io"));
 
     /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH
-        = Paths.get(FieldCreationTool.BASE_PATH.toString(), "template/FieldCreationTool.txt");
+    private static final Path TEMPLATE_PATH = Paths.get("src/main/resources/tool/io/template/FieldCreationTool.yml");
 
     /** 入力ファイルパス */
     private static final Path INPUT_PATH = Paths.get(FieldCreationTool.BASE_PATH.toString(), "input.txt");
