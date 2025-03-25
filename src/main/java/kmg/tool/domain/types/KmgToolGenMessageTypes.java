@@ -229,6 +229,17 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN31004("列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。"),
 
     /**
+     * フィールド作成ロジックをクローズ中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31005("フィールド作成ロジックをクローズ中にエラーが発生しました。"),
+
+    /**
      * 1行読み込みに失敗しました。
      *
      * @author KenichiroArai
@@ -315,6 +326,39 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      * @version 0.1.0
      */
     KMGTOOL_GEN32005("項目と項目名に分かれていません。「項目=項目名」の設定にしてください。行番号=[{0}]、行データ=[{1}]"),
+
+    /**
+     * コメントがnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32006("コメントがnullです。"),
+
+    /**
+     * フィールドがnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32007("フィールドがnullです。"),
+
+    /**
+     * 型がnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32008("型がnullです。"),
 
     /**
      * 項目名がnullです。

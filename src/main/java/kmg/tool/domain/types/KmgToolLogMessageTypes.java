@@ -30,6 +30,28 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
     NONE("指定無し"),
 
     /**
+     * リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG13000("リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]"),
+
+    /**
+     * ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG13001("ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]"),
+
+    /**
      * テンプレートの動的変換処理を開始します。
      *
      * @author KenichiroArai
@@ -94,6 +116,17 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      * @version 0.1.0
      */
     KMGTOOL_LOG12006("CSVファイルの書き込み処理中にエラーが発生しました。出力ファイルパス:[{0}]"),
+
+    /**
+     * クリア処理中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31000("クリア処理中にエラーが発生しました。"),
 
     /**
      * CSVファイルに書き込み中にエラーが発生しました。
@@ -173,7 +206,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
     KMGTOOL_LOG31007("1行データの読み込み中にエラーが発生しました。"),
 
     /**
-     * リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]
+     * カラムの追加中にエラーが発生しました。
      *
      * @author KenichiroArai
      *
@@ -181,10 +214,10 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG31008("リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]"),
+    KMGTOOL_LOG31008("カラムの追加中にエラーが発生しました。"),
 
     /**
-     * ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]
+     * 1行データの読み込み中にエラーが発生しました。
      *
      * @author KenichiroArai
      *
@@ -192,7 +225,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG31009("ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_LOG31009("1行データの読み込み中にエラーが発生しました。"),
 
     /**
      * CSVファイルに書き込み中にエラーが発生しました。
@@ -215,6 +248,17 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      * @version 0.1.0
      */
     KMGTOOL_LOG31011("CSVファイルに書き込み完了。名称=[{0}]"),
+
+    /**
+     * CSVファイルに書き込み中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31012("CSVファイルに書き込み中にエラーが発生しました。"),
 
     /**
      * クリア処理中にエラーが発生しました。
@@ -270,6 +314,17 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      * @version 0.1.0
      */
     KMGTOOL_LOG31017("CSVファイルに書き込み完了。項目=[{0}]、項目名=[{1}]"),
+
+    /**
+     * CSVファイルに書き込み完了。コメント=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31018("CSVファイルに書き込み完了。コメント=[{0}]"),
 
     /**
      * クリア処理中にエラーが発生しました。

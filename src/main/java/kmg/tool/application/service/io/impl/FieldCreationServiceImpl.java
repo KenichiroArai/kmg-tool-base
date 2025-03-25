@@ -141,8 +141,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/25 メッセージ クリア処理中にエラーが発生しました。
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31000;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -167,8 +166,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/25 メッセージ フィールド作成ロジックをクローズ中にエラーが発生しました。
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31005;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
@@ -206,8 +204,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/25 メッセージ カラムの追加中にエラーが発生しました。
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31008;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -239,8 +236,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/25 メッセージ 1行データの読み込み中にエラーが発生しました。
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31009;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -267,8 +263,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/25 メッセージ CSVファイルに書き込み中にエラーが発生しました。
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31012;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -276,8 +271,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         }
 
-        // TODO KenichiroArai 2025/03/25 メッセージ CSVファイルに書き込み完了。コメント=[{0}]
-        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31018;
         final Object[]               logMsgArgs  = {
             this.fieldCreationLogic.getComment(),
         };
