@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.logic.io.dtc.DtcLogic;
+import kmg.tool.domain.logic.two2one.dtc.DtcLogic;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
