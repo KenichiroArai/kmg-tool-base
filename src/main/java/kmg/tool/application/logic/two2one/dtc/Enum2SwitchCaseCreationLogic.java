@@ -1,10 +1,6 @@
 package kmg.tool.application.logic.two2one.dtc;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-
+import kmg.tool.domain.logic.two2one.IctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -19,7 +15,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  *
  * @since 1.0.0
  */
-public interface Enum2SwitchCaseCreationLogic extends Closeable {
+public interface Enum2SwitchCaseCreationLogic extends IctoOneLinePatternLogic {
 
     /**
      * 項目名を書き込み対象に追加する。
@@ -42,39 +38,6 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
     boolean addItemToCsvRows() throws KmgToolException;
 
     /**
-     * 書き込み対象に行を追加する。
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean addOneLineOfDataToCsvRows() throws KmgToolException;
-
-    /**
-     * 書き込み対象のCSVデータのリストをクリアする。
-     *
-     * @return true：成功、false：失敗
-     */
-    boolean clearCsvRows();
-
-    /**
-     * 処理中のデータをクリアする。
-     *
-     * @return true：成功、false：失敗
-     */
-    boolean clearProcessingData();
-
-    /**
-     * リソースをクローズする。
-     *
-     * @throws IOException
-     *                     入出力例外
-     */
-    @Override
-    void close() throws IOException;
-
-    /**
      * 列挙型定義から項目と項目名に変換する。
      *
      * @return true：変換あり、false：変換なし
@@ -83,20 +46,6 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      *                          KMGツール例外
      */
     boolean convertEnumDefinition() throws KmgToolException;
-
-    /**
-     * 変換後の1行データを返す。
-     *
-     * @return 変換後の1行データ
-     */
-    String getConvertedLine();
-
-    /**
-     * 書き込み対象のCSVデータのリストを返す。
-     *
-     * @return 書き込み対象のCSVデータのリスト
-     */
-    List<List<String>> getCsvRows();
 
     /**
      * 項目を返す。
@@ -112,48 +61,4 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      */
     String getItemName();
 
-    /**
-     * 読み込んだ１行データを返す。
-     *
-     * @return 読み込んだ１行データ
-     */
-    String getLineOfDataRead();
-
-    /**
-     * 初期化する。
-     *
-     * @return true：成功、false：失敗
-     *
-     * @param inputPath
-     *                   入力ファイルパス
-     * @param outputPath
-     *                   出力ファイルパス
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
-
-    /**
-     * 1行データを読み込む。
-     *
-     * @return true：データあり、false：データなし
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean readOneLineOfData() throws KmgToolException;
-
-    /**
-     * CSVファイルに書き込む。<br>
-     * <p>
-     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
-     * </p>
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean writeCsvFile() throws KmgToolException;
 }
