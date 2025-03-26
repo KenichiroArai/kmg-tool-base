@@ -1,12 +1,15 @@
-package kmg.tool.presentation.ui.cli;
+package kmg.tool.presentation.ui.cli.two2one.dtc;
 
 import kmg.tool.domain.service.IctoProcessorService;
 import kmg.tool.presentation.ui.cli.two2one.AbstractTwo2OneTool;
 
 /**
  * テンプレートの動的変換ツール抽象クラス
+ * <p>
+ * 「Dtc」→「DynamicTemplateConversion」の略。
+ * </p>
  */
-public abstract class AbstractDynamicTemplateConversionTool extends AbstractTwo2OneTool {
+public abstract class AbstractDtcTool extends AbstractTwo2OneTool {
 
     /**
      * 標準ロガーを使用して初期化するコンストラクタ<br>
@@ -16,7 +19,7 @@ public abstract class AbstractDynamicTemplateConversionTool extends AbstractTwo2
      *
      * @since 0.1.0
      */
-    public AbstractDynamicTemplateConversionTool(final String toolName) {
+    public AbstractDtcTool(final String toolName) {
 
         super(toolName);
 

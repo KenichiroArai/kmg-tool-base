@@ -1,23 +1,22 @@
-package kmg.tool.presentation.ui.cli.two2one;
+package kmg.tool.presentation.ui.cli.two2one.dtc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.application.service.two2one.AccessorCreationService;
-import kmg.tool.presentation.ui.cli.AbstractDynamicTemplateConversionTool;
+import kmg.tool.application.service.two2one.MessageTypesCreationService;
 
 /**
- * <h2>インタフェースのアクセサ作成ツール</h2>
+ * <h2>メッセージの種類作成ツール</h2>
  * <p>
- * Javaクラスのフィールドに対するインタフェース用のアクセサメソッド（getterおよびsetter）を自動生成するためのツールです。
+ * メッセージの種類を定義するYMLファイルを自動生成するためのツールです。
  * </p>
  * <p>
- * このツールは入力ファイルとテンプレートファイルを使用して、アクセサメソッドを含む出力ファイルを生成します。
+ * このツールは入力ファイルとテンプレートファイルを使用して、メッセージ種類の定義を含む出力ファイルを生成します。
  * </p>
  * <p>
- * AbstractTwo2OneToolを継承しており、2つの入力ファイルから1つの出力ファイルを生成する処理を実装しています。
+ * AbstractDynamicTemplateConversionToolを継承しており、動的テンプレート変換処理を実装しています。
  * </p>
  *
  * @author KenichiroArai
@@ -29,8 +28,7 @@ import kmg.tool.presentation.ui.cli.AbstractDynamicTemplateConversionTool;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-// @SpringBootApplication
-public class InterfaceAccessorCreationTool extends AbstractDynamicTemplateConversionTool {
+public class MessageTypesCreationTool extends AbstractDtcTool {
 
     /**
      * <h3>ツール名</h3>
@@ -38,16 +36,16 @@ public class InterfaceAccessorCreationTool extends AbstractDynamicTemplateConver
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "インタフェースのアクセサ作成ツール";
+    private static final String TOOL_NAME = "メッセージの種類作成ツール";
 
     /**
-     * <h3>アクセサ作成サービス</h3>
+     * <h3>メッセージの種類作成サービス</h3>
      * <p>
-     * フィールド定義からアクセサメソッドを生成するためのサービスです。
+     * メッセージ種類の定義を生成するためのサービスです。
      * </p>
      */
     @Autowired
-    private AccessorCreationService accessorCreationService;
+    private MessageTypesCreationService messageTypesCreationService;
 
     /**
      * <h3>エントリポイント</h3>
@@ -78,9 +76,9 @@ public class InterfaceAccessorCreationTool extends AbstractDynamicTemplateConver
     public static void main(final String[] args) {
 
         @SuppressWarnings("resource")
-        final ConfigurableApplicationContext ctx = SpringApplication.run(InterfaceAccessorCreationTool.class, args);
+        final ConfigurableApplicationContext ctx = SpringApplication.run(MessageTypesCreationTool.class, args);
 
-        final InterfaceAccessorCreationTool tool = ctx.getBean(InterfaceAccessorCreationTool.class);
+        final MessageTypesCreationTool tool = ctx.getBean(MessageTypesCreationTool.class);
 
         /* 初期化 */
         tool.initialize();
@@ -95,33 +93,33 @@ public class InterfaceAccessorCreationTool extends AbstractDynamicTemplateConver
     /**
      * <h3>コンストラクタ</h3>
      * <p>
-     * インタフェースのアクセサ作成ツールのインスタンスを生成します。
+     * メッセージの種類作成ツールのインスタンスを生成します。
      * </p>
      * <p>
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
      */
-    public InterfaceAccessorCreationTool() {
+    public MessageTypesCreationTool() {
 
-        super(InterfaceAccessorCreationTool.TOOL_NAME);
+        super(MessageTypesCreationTool.TOOL_NAME);
 
     }
 
     /**
-     * <h3>アクセサ作成サービスを返す</h3>
+     * <h3>メッセージの種類作成サービスを返す</h3>
      * <p>
-     * AbstractTwo2OneToolの抽象メソッドを実装し、DI（依存性注入）された アクセサ作成サービスのインスタンスを返します。
+     * AbstractDynamicTemplateConversionToolの抽象メソッドを実装し、DI（依存性注入）された メッセージの種類作成サービスのインスタンスを返します。
      * </p>
      * <p>
-     * このメソッドは親クラスの処理から呼び出され、実際のアクセサ生成処理を担当する サービスを提供します。
+     * このメソッドは親クラスの処理から呼び出され、実際のメッセージ種類生成処理を担当する サービスを提供します。
      * </p>
      *
-     * @return アクセサ作成サービス このツールが使用するアクセサ作成サービスのインスタンス
+     * @return メッセージの種類作成サービス このツールが使用するメッセージの種類作成サービスのインスタンス
      */
     @Override
-    protected AccessorCreationService getIoService() {
+    protected MessageTypesCreationService getIoService() {
 
-        final AccessorCreationService result = this.accessorCreationService;
+        final MessageTypesCreationService result = this.messageTypesCreationService;
 
         return result;
 

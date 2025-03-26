@@ -1,20 +1,18 @@
-package kmg.tool.application.logic.two2one.impl;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+package kmg.tool.application.logic.two2one.dtc.impl;
 
 import org.springframework.stereotype.Service;
 
-import kmg.tool.application.logic.two2one.Enum2SwitchCaseCreationLogic;
-import kmg.tool.application.types.two2one.ConvertEnumDefinitionTypes;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.tool.application.logic.two2one.dtc.MessageTypesCreationLogic;
+import kmg.tool.application.types.two2one.MessageTypesRegexGroupTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * <h2>列挙型からcase文作成ロジック実装クラス</h2>
+ * <h2>メッセージの種類作成ロジック実装クラス</h2>
  * <p>
- * 列挙型の定義からswitch-case文を自動生成するためのロジック実装クラスです。
+ * メッセージの種類を定義するYMLファイルを自動生成するためのロジック実装クラスです。
  * </p>
  *
  * @author KenichiroArai
@@ -24,14 +22,11 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @since 1.0.0
  */
 @Service
-public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePatternLogic
-    implements Enum2SwitchCaseCreationLogic {
+public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLogic
+    implements MessageTypesCreationLogic {
 
-    /** 列挙型定義の正規表現パターン */
-    private static final String ENUM_DEFINITION_PATTERN = "(\\w+)\\(\"(\\S+)\",";
-
-    /** 変換後の1行データ */
-    private String convertedLine;
+    /** メッセージの種類の分割数 */
+    private static final int MESSAGE_TYPE_SPLIT_COUNT = 2;
 
     /** 項目 */
     private String item;
@@ -54,7 +49,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
         if (this.itemName == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32009;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32000;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
 
@@ -82,7 +77,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
         if (this.item == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32010;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32004;
             final Object[]               messageArgs  = {};
             throw new KmgToolException(messageTypes, messageArgs);
 
@@ -96,7 +91,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
     }
 
     /**
-     * 列挙型定義から項目と項目名に変換する。
+     * メッセージの種類定義から項目と項目名に変換する。
      *
      * @return true：変換あり、false：変換なし
      *
@@ -104,25 +99,29 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
      *                          KMGツール例外
      */
     @Override
-    public boolean convertEnumDefinition() throws KmgToolException {
+    public boolean convertMessageTypesDefinition() throws KmgToolException {
 
         boolean result = false;
 
-        // 列挙型定義を正規表現でグループ化する
-        final Pattern patternSrc = Pattern.compile(Enum2SwitchCaseCreationLogicImpl.ENUM_DEFINITION_PATTERN);
-        final Matcher matcherSrc = patternSrc.matcher(this.convertedLine);
+        // 項目と項目名に分ける（例：KMGTOOL_GEN32000=メッセージの種類が指定されていません。）
+        final String[] inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(this.getConvertedLine(),
+            MessageTypesCreationLogicImpl.MESSAGE_TYPE_SPLIT_COUNT);
 
-        // 列挙型定義ではないか
-        if (!matcherSrc.find()) {
-            // 定義ではない場合
+        // 項目と項目名に分かれないか
+        if (inputDatas.length != MessageTypesCreationLogicImpl.MESSAGE_TYPE_SPLIT_COUNT) {
+            // 分かれない場合
 
-            return result;
+            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
+            final Object[]               messageArgs  = {
+                this.getNowLineNumber(), this.getLineOfDataRead(),
+            };
+            throw new KmgToolException(messageTypes, messageArgs);
 
         }
 
-        // 列挙型の情報を取得
-        this.item = matcherSrc.group(ConvertEnumDefinitionTypes.ENUM_DEFINITION_CONSTANT_NAME.getGroupIndex()); // 項目
-        this.itemName = matcherSrc.group(ConvertEnumDefinitionTypes.ENUM_DEFINITION_DISPLAY_NAME.getGroupIndex()); // 項目名
+        // 項目と項目名に設定
+        this.item = inputDatas[MessageTypesRegexGroupTypes.MESSAGE_TYPE_ITEM.getGroupIndex()]; // 項目
+        this.itemName = inputDatas[MessageTypesRegexGroupTypes.MESSAGE_TYPE_ITEM_NAME.getGroupIndex()]; // 項目名
 
         result = true;
         return result;

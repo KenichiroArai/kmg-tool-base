@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.two2one.AccessorCreationLogic;
+import kmg.tool.application.logic.two2one.dtc.AccessorCreationLogic;
 import kmg.tool.application.service.two2one.AccessorCreationService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;

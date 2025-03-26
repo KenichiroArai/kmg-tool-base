@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli.two2one;
+package kmg.tool.presentation.ui.cli.two2one.dtc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -6,12 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.tool.application.service.two2one.AccessorCreationService;
-import kmg.tool.presentation.ui.cli.AbstractDynamicTemplateConversionTool;
 
 /**
- * <h2>アクセサ作成ツール</h2>
+ * <h2>インタフェースのアクセサ作成ツール</h2>
  * <p>
- * Javaクラスのフィールドに対するアクセサメソッド（getterおよびsetter）を自動生成するためのツールです。
+ * Javaクラスのフィールドに対するインタフェース用のアクセサメソッド（getterおよびsetter）を自動生成するためのツールです。
  * </p>
  * <p>
  * このツールは入力ファイルとテンプレートファイルを使用して、アクセサメソッドを含む出力ファイルを生成します。
@@ -29,7 +28,8 @@ import kmg.tool.presentation.ui.cli.AbstractDynamicTemplateConversionTool;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class AccessorCreationTool extends AbstractDynamicTemplateConversionTool {
+// @SpringBootApplication
+public class InterfaceAccessorCreationTool extends AbstractDtcTool {
 
     /**
      * <h3>ツール名</h3>
@@ -37,7 +37,7 @@ public class AccessorCreationTool extends AbstractDynamicTemplateConversionTool 
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "アクセサ作成ツール";
+    private static final String TOOL_NAME = "インタフェースのアクセサ作成ツール";
 
     /**
      * <h3>アクセサ作成サービス</h3>
@@ -77,9 +77,9 @@ public class AccessorCreationTool extends AbstractDynamicTemplateConversionTool 
     public static void main(final String[] args) {
 
         @SuppressWarnings("resource")
-        final ConfigurableApplicationContext ctx = SpringApplication.run(AccessorCreationTool.class, args);
+        final ConfigurableApplicationContext ctx = SpringApplication.run(InterfaceAccessorCreationTool.class, args);
 
-        final AccessorCreationTool tool = ctx.getBean(AccessorCreationTool.class);
+        final InterfaceAccessorCreationTool tool = ctx.getBean(InterfaceAccessorCreationTool.class);
 
         /* 初期化 */
         tool.initialize();
@@ -94,15 +94,15 @@ public class AccessorCreationTool extends AbstractDynamicTemplateConversionTool 
     /**
      * <h3>コンストラクタ</h3>
      * <p>
-     * アクセサ作成ツールのインスタンスを生成します。
+     * インタフェースのアクセサ作成ツールのインスタンスを生成します。
      * </p>
      * <p>
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
      */
-    public AccessorCreationTool() {
+    public InterfaceAccessorCreationTool() {
 
-        super(AccessorCreationTool.TOOL_NAME);
+        super(InterfaceAccessorCreationTool.TOOL_NAME);
 
     }
 

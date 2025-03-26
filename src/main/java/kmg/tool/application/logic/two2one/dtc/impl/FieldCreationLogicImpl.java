@@ -1,11 +1,11 @@
-package kmg.tool.application.logic.two2one.impl;
+package kmg.tool.application.logic.two2one.dtc.impl;
 
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.logic.two2one.FieldCreationLogic;
+import kmg.tool.application.logic.two2one.dtc.FieldCreationLogic;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;

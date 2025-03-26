@@ -1,16 +1,16 @@
-package kmg.tool.application.logic.two2one;
+package kmg.tool.application.logic.two2one.dtc;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import kmg.tool.domain.logic.two2one.IctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * <h2>列挙型からcase文作成ロジックインタフェース</h2>
+ * <h2>メッセージの種類作成ロジックインタフェース</h2>
  * <p>
- * 列挙型の定義からswitch-case文を自動生成するためのロジックインタフェースです。
+ * メッセージの種類を定義するYMLファイルを自動生成するためのロジックインタフェースです。
  * </p>
  *
  * @author KenichiroArai
@@ -19,7 +19,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  *
  * @since 1.0.0
  */
-public interface Enum2SwitchCaseCreationLogic extends Closeable {
+public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
 
     /**
      * 項目名を書き込み対象に追加する。
@@ -49,6 +49,7 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @Override
     boolean addOneLineOfDataToCsvRows() throws KmgToolException;
 
     /**
@@ -56,6 +57,7 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      */
+    @Override
     boolean clearCsvRows();
 
     /**
@@ -63,6 +65,7 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      */
+    @Override
     boolean clearProcessingData();
 
     /**
@@ -75,20 +78,21 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
     void close() throws IOException;
 
     /**
-     * 列挙型定義から項目と項目名に変換する。
+     * メッセージの種類定義から項目と項目名に変換する。
      *
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean convertEnumDefinition() throws KmgToolException;
+    boolean convertMessageTypesDefinition() throws KmgToolException;
 
     /**
      * 変換後の1行データを返す。
      *
      * @return 変換後の1行データ
      */
+    @Override
     String getConvertedLine();
 
     /**
@@ -96,6 +100,7 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      *
      * @return 書き込み対象のCSVデータのリスト
      */
+    @Override
     List<List<String>> getCsvRows();
 
     /**
@@ -117,6 +122,7 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      *
      * @return 読み込んだ１行データ
      */
+    @Override
     String getLineOfDataRead();
 
     /**
@@ -132,6 +138,7 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @Override
     boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
 
     /**
@@ -142,6 +149,7 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @Override
     boolean readOneLineOfData() throws KmgToolException;
 
     /**
@@ -155,5 +163,6 @@ public interface Enum2SwitchCaseCreationLogic extends Closeable {
      * @throws KmgToolException
      *                          KMGツール例外
      */
+    @Override
     boolean writeCsvFile() throws KmgToolException;
 }

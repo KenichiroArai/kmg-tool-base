@@ -1,20 +1,19 @@
-package kmg.tool.presentation.ui.cli.two2one;
+package kmg.tool.presentation.ui.cli.two2one.dtc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.application.service.two2one.MessageTypesCreationService;
-import kmg.tool.presentation.ui.cli.AbstractDynamicTemplateConversionTool;
+import kmg.tool.application.service.two2one.Enum2SwitchCaseCreationService;
 
 /**
- * <h2>メッセージの種類作成ツール</h2>
+ * <h2>列挙型からcase文作成ツール</h2>
  * <p>
- * メッセージの種類を定義するYMLファイルを自動生成するためのツールです。
+ * 列挙型の定義からswitch-case文を自動生成するためのツールです。
  * </p>
  * <p>
- * このツールは入力ファイルとテンプレートファイルを使用して、メッセージ種類の定義を含む出力ファイルを生成します。
+ * このツールは入力ファイルとテンプレートファイルを使用して、switch-case文を含む出力ファイルを生成します。
  * </p>
  * <p>
  * AbstractDynamicTemplateConversionToolを継承しており、動的テンプレート変換処理を実装しています。
@@ -29,7 +28,7 @@ import kmg.tool.presentation.ui.cli.AbstractDynamicTemplateConversionTool;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class MessageTypesCreationTool extends AbstractDynamicTemplateConversionTool {
+public class Enum2SwitchCaseCreationTool extends AbstractDtcTool {
 
     /**
      * <h3>ツール名</h3>
@@ -37,16 +36,16 @@ public class MessageTypesCreationTool extends AbstractDynamicTemplateConversionT
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "メッセージの種類作成ツール";
+    private static final String TOOL_NAME = "列挙型からcase文作成ツール";
 
     /**
-     * <h3>メッセージの種類作成サービス</h3>
+     * <h3>列挙型からcase文作成サービス</h3>
      * <p>
-     * メッセージ種類の定義を生成するためのサービスです。
+     * 列挙型定義からswitch-case文を生成するためのサービスです。
      * </p>
      */
     @Autowired
-    private MessageTypesCreationService messageTypesCreationService;
+    private Enum2SwitchCaseCreationService enum2SwitchCaseMakingService;
 
     /**
      * <h3>エントリポイント</h3>
@@ -77,9 +76,9 @@ public class MessageTypesCreationTool extends AbstractDynamicTemplateConversionT
     public static void main(final String[] args) {
 
         @SuppressWarnings("resource")
-        final ConfigurableApplicationContext ctx = SpringApplication.run(MessageTypesCreationTool.class, args);
+        final ConfigurableApplicationContext ctx = SpringApplication.run(Enum2SwitchCaseCreationTool.class, args);
 
-        final MessageTypesCreationTool tool = ctx.getBean(MessageTypesCreationTool.class);
+        final Enum2SwitchCaseCreationTool tool = ctx.getBean(Enum2SwitchCaseCreationTool.class);
 
         /* 初期化 */
         tool.initialize();
@@ -94,33 +93,33 @@ public class MessageTypesCreationTool extends AbstractDynamicTemplateConversionT
     /**
      * <h3>コンストラクタ</h3>
      * <p>
-     * メッセージの種類作成ツールのインスタンスを生成します。
+     * 列挙型からcase文作成ツールのインスタンスを生成します。
      * </p>
      * <p>
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
      */
-    public MessageTypesCreationTool() {
+    public Enum2SwitchCaseCreationTool() {
 
-        super(MessageTypesCreationTool.TOOL_NAME);
+        super(Enum2SwitchCaseCreationTool.TOOL_NAME);
 
     }
 
     /**
-     * <h3>メッセージの種類作成サービスを返す</h3>
+     * <h3>列挙型からcase文作成サービスを返す</h3>
      * <p>
-     * AbstractDynamicTemplateConversionToolの抽象メソッドを実装し、DI（依存性注入）された メッセージの種類作成サービスのインスタンスを返します。
+     * AbstractDynamicTemplateConversionToolの抽象メソッドを実装し、DI（依存性注入）された 列挙型からcase文作成サービスのインスタンスを返します。
      * </p>
      * <p>
-     * このメソッドは親クラスの処理から呼び出され、実際のメッセージ種類生成処理を担当する サービスを提供します。
+     * このメソッドは親クラスの処理から呼び出され、実際のcase文生成処理を担当する サービスを提供します。
      * </p>
      *
-     * @return メッセージの種類作成サービス このツールが使用するメッセージの種類作成サービスのインスタンス
+     * @return 列挙型からcase文作成サービス このツールが使用する列挙型からcase文作成サービスのインスタンス
      */
     @Override
-    protected MessageTypesCreationService getIoService() {
+    protected Enum2SwitchCaseCreationService getIoService() {
 
-        final MessageTypesCreationService result = this.messageTypesCreationService;
+        final Enum2SwitchCaseCreationService result = this.enum2SwitchCaseMakingService;
 
         return result;
 

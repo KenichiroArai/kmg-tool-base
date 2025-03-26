@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli.two2one;
+package kmg.tool.presentation.ui.cli.two2one.dtc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.tool.application.service.two2one.FieldCreationService;
-import kmg.tool.presentation.ui.cli.AbstractDynamicTemplateConversionTool;
 
 /**
  * <h2>フィールド作成ツール</h2>
@@ -26,7 +25,7 @@ import kmg.tool.presentation.ui.cli.AbstractDynamicTemplateConversionTool;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class FieldCreationTool extends AbstractDynamicTemplateConversionTool {
+public class FieldCreationTool extends AbstractDtcTool {
 
     /** ツール名 */
     private static final String TOOL_NAME = "フィールド作成ツール";

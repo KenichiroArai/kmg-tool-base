@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.two2one;
+package kmg.tool.application.logic.two2one.dtc;
 
 import kmg.tool.domain.logic.two2one.IctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolException;
