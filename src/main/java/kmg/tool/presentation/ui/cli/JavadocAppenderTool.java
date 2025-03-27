@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.tool.application.service.JavadocAppenderService;
+import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -17,7 +18,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class JavadocAppenderTool extends AbstractTool {
+public class JavadocAppenderTool extends AbstractInputTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
@@ -26,14 +27,26 @@ public class JavadocAppenderTool extends AbstractTool {
     private static final Path TEMPLATE_PATH
         = Paths.get(JavadocAppenderTool.BASE_PATH.toString(), "template/JavadocAppenderTool.txt");
 
-    /** 対象パス */
-    private static final Path TARGET_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj\\kmg-core");
+    /**
+     * <h3>ツール名</h3>
+     * <p>
+     * このツールの表示名を定義します。
+     * </p>
+     */
+    private static final String TOOL_NAME = "Javadoc追加ツール";
 
     /**
      * Javadoc追加サービス
      */
     @Autowired
     private JavadocAppenderService javadocAppenderService;
+
+    /** 入力サービス */
+    @Autowired
+    private InputService inputService;
+
+    /** 対象パス */
+    private Path targetPath;
 
     /**
      * メインメソッド
@@ -56,6 +69,21 @@ public class JavadocAppenderTool extends AbstractTool {
     }
 
     /**
+     * <h3>コンストラクタ</h3>
+     * <p>
+     * Javadoc追加ツールのインスタンスを生成します。
+     * </p>
+     * <p>
+     * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
+     * </p>
+     */
+    public JavadocAppenderTool() {
+
+        super(JavadocAppenderTool.TOOL_NAME);
+
+    }
+
+    /**
      * 実行する
      *
      * @return true：成功、false：失敗
@@ -65,10 +93,55 @@ public class JavadocAppenderTool extends AbstractTool {
 
         boolean result = true;
 
+        /* 入力ファイルから対象パスを設定 */
         try {
 
-            result |= this.javadocAppenderService.initialize(JavadocAppenderTool.TARGET_PATH,
-                JavadocAppenderTool.TEMPLATE_PATH);
+            result |= this.inputService.initialize(AbstractInputTool.getInputPath());
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/07 例外処理
+            e.printStackTrace();
+            result = false;
+            return result;
+
+        }
+
+        try {
+
+            this.inputService.process();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/07 例外処理
+            e.printStackTrace();
+            result = false;
+            return result;
+
+        }
+
+        String content;
+
+        try {
+
+            content = this.inputService.getContent();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/07 例外処理
+            e.printStackTrace();
+            result = false;
+            return result;
+
+        }
+
+        this.targetPath = Paths.get(content);
+
+        /* Javadoc追加処理 */
+
+        try {
+
+            result |= this.javadocAppenderService.initialize(this.targetPath, JavadocAppenderTool.TEMPLATE_PATH);
 
         } catch (final KmgToolException e) {
 
@@ -95,4 +168,16 @@ public class JavadocAppenderTool extends AbstractTool {
 
     }
 
+    /**
+     * 入力サービスを返す。
+     *
+     * @return 入力サービス
+     */
+    @Override
+    protected InputService getInputService() {
+
+        final InputService result = this.inputService;
+        return result;
+
+    }
 }
