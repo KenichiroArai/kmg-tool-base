@@ -93,99 +93,11 @@ public class JavadocAppenderTool extends AbstractInputTool {
 
         boolean result = true;
 
-        result &= setTargetPathFromInputFile();
-        result &= appendJavadoc();
-
-        return result;
-
-    }
-
-    /**
-     * 入力ファイルから対象パスを設定する
-     *
-     * @return true：成功、false：失敗
-     */
-    private boolean setTargetPathFromInputFile() {
-
-        boolean result = true;
-
         /* 入力ファイルから対象パスを設定 */
-        try {
-
-            result &= this.inputService.initialize(AbstractInputTool.getInputPath());
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            e.printStackTrace();
-            return false;
-
-        }
-
-        try {
-
-            this.inputService.process();
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            e.printStackTrace();
-            return false;
-
-        }
-
-        String content;
-
-        try {
-
-            content = this.inputService.getContent();
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            e.printStackTrace();
-            return false;
-
-        }
-
-        this.targetPath = Paths.get(content);
-        return result;
-
-    }
-
-    /**
-     * Javadocを追加する
-     *
-     * @return true：成功、false：失敗
-     */
-    private boolean appendJavadoc() {
-
-        boolean result = true;
+        result &= this.setTargetPathFromInputFile();
 
         /* Javadoc追加処理 */
-        try {
-
-            result &= this.javadocAppenderService.initialize(this.targetPath, JavadocAppenderTool.TEMPLATE_PATH);
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            e.printStackTrace();
-            return false;
-
-        }
-
-        try {
-
-            result &= this.javadocAppenderService.process();
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            e.printStackTrace();
-            return false;
-
-        }
+        result &= this.appendJavadoc();
 
         return result;
 
@@ -200,6 +112,96 @@ public class JavadocAppenderTool extends AbstractInputTool {
     protected InputService getInputService() {
 
         final InputService result = this.inputService;
+        return result;
+
+    }
+
+    /**
+     * Javadocを追加する
+     *
+     * @return true：成功、false：失敗
+     */
+    private boolean appendJavadoc() {
+
+        boolean result = true;
+
+        try {
+
+            result &= this.javadocAppenderService.initialize(this.targetPath, JavadocAppenderTool.TEMPLATE_PATH);
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/07 例外処理
+            e.printStackTrace();
+            result = false;
+            return result;
+
+        }
+
+        try {
+
+            result &= this.javadocAppenderService.process();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/07 例外処理
+            e.printStackTrace();
+            result = false;
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 入力ファイルから対象パスを設定する
+     *
+     * @return true：成功、false：失敗
+     */
+    private boolean setTargetPathFromInputFile() {
+
+        boolean result = true;
+
+        try {
+
+            result &= this.inputService.initialize(AbstractInputTool.getInputPath());
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/07 例外処理
+            result = false;
+            return result;
+
+        }
+
+        try {
+
+            this.inputService.process();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/07 例外処理
+            result = false;
+            return result;
+
+        }
+
+        String content;
+
+        try {
+
+            content = this.inputService.getContent();
+
+        } catch (final KmgToolException e) {
+
+            // TODO KenichiroArai 2025/03/07 例外処理
+            result = false;
+            return result;
+
+        }
+
+        this.targetPath = Paths.get(content);
         return result;
 
     }
