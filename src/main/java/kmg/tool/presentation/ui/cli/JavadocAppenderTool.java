@@ -1,7 +1,6 @@
 package kmg.tool.presentation.ui.cli;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,13 +18,12 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 /**
  * Javadoc追加ツール
  */
-public class JavadocAppenderTool {
+public class JavadocAppenderTool extends AbstractTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
-    // TODO KenichiroArai 2025/02/23 自動設定
     private static final Path TEMPLATE_PATH
         = Paths.get(JavadocAppenderTool.BASE_PATH.toString(), "template/JavadocAppenderTool.txt");
 
@@ -48,7 +46,7 @@ public class JavadocAppenderTool {
 
         try {
 
-            if (!main.run()) {
+            if (!main.execute()) {
 
                 System.out.println(String.format("%s：失敗", clasz.toString()));
 
@@ -295,27 +293,29 @@ public class JavadocAppenderTool {
     }
 
     /**
-     * 実行する<br>
+     * 実行する
      *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return TRUE：成功、FLASE：失敗
-     *
-     * @throws FileNotFoundException
-     *                               ファイルが存在しない例外
-     * @throws IOException
-     *                               入出力例外
+     * @return true：成功、false：失敗
      */
-    public Boolean run() throws FileNotFoundException, IOException {
+    @Override
+    public boolean execute() {
 
-        boolean result = true;
+        boolean result = false;
 
         /* タグマップの取得 */
-        final Map<String, String> tagMap = this.getTagMap();
+        Map<String, String> tagMap;
+
+        try {
+
+            tagMap = this.getTagMap();
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/27 例外処理
+            e.printStackTrace();
+            return result;
+
+        }
         System.out.println(tagMap.toString());
 
         /* 対象のJavaファイルを取得 */
@@ -330,6 +330,12 @@ public class JavadocAppenderTool {
 
             fileCount += javaFileList.size();
 
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/27 例外処理
+            e.printStackTrace();
+            return result;
+
         }
 
         /* 対象のJavaファイルをすべて読み込む */
@@ -339,8 +345,19 @@ public class JavadocAppenderTool {
         for (final Path javaFile : javaFileList) {
 
             final StringBuilder fileContentBuilder = new StringBuilder();
-            final String        fileContent        = JavadocAppenderTool.getNewJavaFile(javaFile, fileContentBuilder,
-                tagMap, true);
+            String              fileContent;
+
+            try {
+
+                fileContent = JavadocAppenderTool.getNewJavaFile(javaFile, fileContentBuilder, tagMap, true);
+
+            } catch (final IOException e) {
+
+                // TODO KenichiroArai 2025/03/27 例外処理
+                e.printStackTrace();
+                return result;
+
+            }
 
             lineCount += KmgDelimiterTypes.LINE_SEPARATOR.split(fileContent).length;
 
