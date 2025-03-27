@@ -35,15 +35,15 @@ public class JavadocAppenderTool extends AbstractInputTool {
      */
     private static final String TOOL_NAME = "Javadoc追加ツール";
 
+    /** 入力サービス */
+    @Autowired
+    private InputService inputService;
+
     /**
      * Javadoc追加サービス
      */
     @Autowired
     private JavadocAppenderService javadocAppenderService;
-
-    /** 入力サービス */
-    @Autowired
-    private InputService inputService;
 
     /** 対象パス */
     private Path targetPath;
