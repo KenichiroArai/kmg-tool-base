@@ -11,13 +11,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import kmg.core.domain.service.KmgPfaMeasService;
-import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 
 /**
  * Javadoc追加ツール
  */
+@SpringBootApplication(scanBasePackages = {
+    "kmg"
+})
 public class JavadocAppenderTool extends AbstractTool {
 
     /** 基準パス */
@@ -38,32 +43,15 @@ public class JavadocAppenderTool extends AbstractTool {
      */
     public static void main(final String[] args) {
 
-        final Class<JavadocAppenderTool> clasz       = JavadocAppenderTool.class;
-        final KmgPfaMeasService          measService = new KmgPfaMeasServiceImpl(clasz.toString());
-        measService.start();
+        @SuppressWarnings("resource")
+        final ConfigurableApplicationContext ctx = SpringApplication.run(JavadocAppenderTool.class, args);
 
-        final JavadocAppenderTool main = new JavadocAppenderTool();
+        final JavadocAppenderTool tool = ctx.getBean(JavadocAppenderTool.class);
 
-        try {
+        /* 実行 */
+        tool.execute();
 
-            if (!main.execute()) {
-
-                System.out.println(String.format("%s：失敗", clasz.toString()));
-
-            }
-            System.out.println(String.format("%s：成功", clasz.toString()));
-
-        } catch (final Exception e) {
-
-            System.out.println(String.format("%s：例外発生", clasz.toString()));
-
-            e.printStackTrace();
-
-        } finally {
-
-            measService.end();
-
-        }
+        ctx.close();
 
     }
 
