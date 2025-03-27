@@ -93,17 +93,32 @@ public class JavadocAppenderTool extends AbstractInputTool {
 
         boolean result = true;
 
+        result &= setTargetPathFromInputFile();
+        result &= appendJavadoc();
+
+        return result;
+
+    }
+
+    /**
+     * 入力ファイルから対象パスを設定する
+     *
+     * @return true：成功、false：失敗
+     */
+    private boolean setTargetPathFromInputFile() {
+
+        boolean result = true;
+
         /* 入力ファイルから対象パスを設定 */
         try {
 
-            result |= this.inputService.initialize(AbstractInputTool.getInputPath());
+            result &= this.inputService.initialize(AbstractInputTool.getInputPath());
 
         } catch (final KmgToolException e) {
 
             // TODO KenichiroArai 2025/03/07 例外処理
             e.printStackTrace();
-            result = false;
-            return result;
+            return false;
 
         }
 
@@ -115,8 +130,7 @@ public class JavadocAppenderTool extends AbstractInputTool {
 
             // TODO KenichiroArai 2025/03/07 例外処理
             e.printStackTrace();
-            result = false;
-            return result;
+            return false;
 
         }
 
@@ -130,37 +144,46 @@ public class JavadocAppenderTool extends AbstractInputTool {
 
             // TODO KenichiroArai 2025/03/07 例外処理
             e.printStackTrace();
-            result = false;
-            return result;
+            return false;
 
         }
 
         this.targetPath = Paths.get(content);
+        return result;
+
+    }
+
+    /**
+     * Javadocを追加する
+     *
+     * @return true：成功、false：失敗
+     */
+    private boolean appendJavadoc() {
+
+        boolean result = true;
 
         /* Javadoc追加処理 */
-
         try {
 
-            result |= this.javadocAppenderService.initialize(this.targetPath, JavadocAppenderTool.TEMPLATE_PATH);
+            result &= this.javadocAppenderService.initialize(this.targetPath, JavadocAppenderTool.TEMPLATE_PATH);
 
         } catch (final KmgToolException e) {
 
             // TODO KenichiroArai 2025/03/07 例外処理
             e.printStackTrace();
-            result = false;
-            return result;
+            return false;
 
         }
 
         try {
 
-            result |= this.javadocAppenderService.process();
+            result &= this.javadocAppenderService.process();
 
         } catch (final KmgToolException e) {
 
             // TODO KenichiroArai 2025/03/07 例外処理
             e.printStackTrace();
-            result = false;
+            return false;
 
         }
 
