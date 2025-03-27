@@ -26,8 +26,8 @@ public class JavadocAppenderTool extends AbstractTool {
     private static final Path TEMPLATE_PATH
         = Paths.get(JavadocAppenderTool.BASE_PATH.toString(), "template/JavadocAppenderTool.txt");
 
-    /** 入力パス */
-    private static final Path INPUT_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj\\kmg-core");
+    /** 対象パス */
+    private static final Path TARGET_PATH = Paths.get("D:\\eclipse_git_wk\\DictOpeProj\\kmg-core");
 
     /**
      * Javadoc追加サービス
@@ -67,7 +67,7 @@ public class JavadocAppenderTool extends AbstractTool {
 
         try {
 
-            result |= this.javadocAppenderService.initialize(JavadocAppenderTool.INPUT_PATH,
+            result |= this.javadocAppenderService.initialize(JavadocAppenderTool.TARGET_PATH,
                 JavadocAppenderTool.TEMPLATE_PATH);
 
         } catch (final KmgToolException e) {

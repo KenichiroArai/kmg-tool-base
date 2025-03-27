@@ -17,14 +17,14 @@ public interface JavadocAppenderService extends IoService {
      *
      * @return true：成功、false：失敗
      *
-     * @param inputPath
-     *                     入力ファイルパス
+     * @param targetPath
+     *                     対象ファイルパス
      * @param templatePath
      *                     テンプレートファイルパス
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean initialize(final Path inputPath, final Path templatePath) throws KmgToolException;
+    boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolException;
 
 }

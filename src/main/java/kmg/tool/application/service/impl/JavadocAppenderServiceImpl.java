@@ -24,8 +24,8 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
-    /** 入力ファイルパス */
-    private Path inputPath;
+    /** 対象ファイルパス */
+    private Path targetPath;
 
     /** テンプレートファイルパス */
     private Path templatePath;
@@ -260,8 +260,8 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
      *
      * @return true：成功、false：失敗
      *
-     * @param inputPath
-     *                     入力ファイルパス
+     * @param targetPath
+     *                     対象ファイルパス
      * @param templatePath
      *                     テンプレートファイルパス
      *
@@ -270,11 +270,11 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath, final Path templatePath) throws KmgToolException {
+    public boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolException {
 
         boolean result = false;
 
-        this.inputPath = inputPath;
+        this.targetPath = targetPath;
         this.templatePath = templatePath;
 
         result = true;
@@ -316,7 +316,7 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         int fileCount = 0;
 
-        try (final Stream<Path> streamPath = Files.walk(this.inputPath)) {
+        try (final Stream<Path> streamPath = Files.walk(this.targetPath)) {
 
             javaFileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
                 .collect(Collectors.toList());
