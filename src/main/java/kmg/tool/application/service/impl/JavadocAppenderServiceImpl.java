@@ -1,7 +1,5 @@
 package kmg.tool.application.service.impl;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.service.JavadocAppenderService;
-import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -210,24 +207,11 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
     @Override
     public boolean process() throws KmgToolException {
 
-        boolean result = false;
+        final boolean result = false;
 
         /* タグマップの取得 */
-        try {
+        this.javadocAppenderLogic.createTagMap();
 
-            this.javadocAppenderLogic.createTagMap();
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/29 メッセージ
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
-            final Object[]               logMsgArgs  = {};
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
-
-        }
         final Map<String, String> tagMap = this.javadocAppenderLogic.getTagMap();
         // TODO KenichiroArai 2025/03/29 ログ
         System.out.println(tagMap.toString());
@@ -242,46 +226,18 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         do {
 
-            String fileContent;
-
-            try {
-
-                fileContent = this.javadocAppenderLogic.setJavadoc(true);
-
-            } catch (final KmgToolException e) {
-
-                // TODO KenichiroArai 2025/03/29 メッセージ
-                final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
-                final Object[]               logMsgArgs  = {};
-                final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-                this.logger.error(logMsg, e);
-
-                throw e;
-
-            }
+            this.javadocAppenderLogic.setJavadoc(true);
 
             /* 修正した内容をファイルに書き込む */
-            final Path javaFile = this.javadocAppenderLogic.getCurrentJavaFilePath();
-
-            try {
-
-                Files.writeString(javaFile, fileContent);
-
-            } catch (final IOException e) {
-
-                System.err.println("Error writing to file: " + javaFile);
-                e.printStackTrace();
-                result = false;
-
-            }
+            this.javadocAppenderLogic.writeCurrentJavaFile();
 
             nextFlg = this.javadocAppenderLogic.nextJavaFile();
 
         } while (nextFlg);
 
         // TODO KenichiroArai 2025/03/29 ログ
-        System.out.println(String.format("fileCount: %d", javaFileList.size()));
-        System.out.println(String.format("lineCount: %d", this.javadocAppenderLogic.getTotalRows()));
+        System.out.println(String.format("読み込みファイル数: %d", javaFileList.size()));
+        System.out.println(String.format("最終合計行数: %d", this.javadocAppenderLogic.getTotalRows()));
 
         return result;
 

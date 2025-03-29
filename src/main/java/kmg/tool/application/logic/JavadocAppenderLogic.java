@@ -120,10 +120,20 @@ public interface JavadocAppenderLogic {
      * @param insertAtTop
      *                    タグを先頭に挿入するかどうか
      *
+     * @return true：成功、false：失敗
+     *
      * @throws KmgToolException
      *                          KMGツール例外
-     *
-     * @return ファイル内容
      */
-    String setJavadoc(final boolean insertAtTop) throws KmgToolException;
+    boolean setJavadoc(final boolean insertAtTop) throws KmgToolException;
+
+    /**
+     * 現在のJavaファイルに書き込む
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean writeCurrentJavaFile() throws KmgToolException;
 }

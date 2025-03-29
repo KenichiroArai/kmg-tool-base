@@ -86,6 +86,11 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private Path currentJavaFilePath;
 
     /**
+     * 現在のJavaファイルの中身
+     */
+    private String currentJavaFileContent;
+
+    /**
      * 現在のJavaファイルインデックス
      *
      * @author KenichiroArai
@@ -405,15 +410,15 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @param insertAtTop
      *                    タグを先頭に挿入するかどうか
      *
+     * @return true：成功、false：失敗
+     *
      * @throws KmgToolException
      *                          KMGツール例外
-     *
-     * @return ファイル内容
      */
     @Override
-    public String setJavadoc(final boolean insertAtTop) throws KmgToolException {
+    public boolean setJavadoc(final boolean insertAtTop) throws KmgToolException {
 
-        final String result;
+        boolean result;
 
         final StringBuilder fileContentBuilder = new StringBuilder();
 
@@ -569,10 +574,42 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
         }
 
-        result = fileContentBuilder.toString();
+        this.currentJavaFileContent = fileContentBuilder.toString();
 
-        this.totalRows += KmgDelimiterTypes.LINE_SEPARATOR.split(result).length;
+        this.totalRows += KmgDelimiterTypes.LINE_SEPARATOR.split(this.currentJavaFileContent).length;
 
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 現在のJavaファイルに書き込む
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean writeCurrentJavaFile() throws KmgToolException {
+
+        boolean result = false;
+
+        try {
+
+            Files.writeString(this.currentJavaFilePath, this.currentJavaFileContent);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/29 メッセージ
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+
+        result = true;
         return result;
 
     }
