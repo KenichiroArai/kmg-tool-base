@@ -32,6 +32,11 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
     /**
+     * 合計行数
+     */
+    private long totalRows;
+
+    /**
      * 対象ファイルパス
      *
      * @author KenichiroArai
@@ -106,6 +111,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
         this.javaFilePathList = new ArrayList<>();
         this.currentJavaFileIndex = 0;
         this.currentJavaFilePath = null;
+        this.totalRows = 0;
 
     }
 
@@ -253,7 +259,142 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * 新しいJavaファイルを返す。<br>
+     * タグマップを取得する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return タグマップ
+     */
+    @Override
+    public Map<String, String> getTagMap() {
+
+        final Map<String, String> result = new HashMap<>(this.tagMap);
+        return result;
+
+    }
+
+    /**
+     * 対象ファイルパス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return 対象ファイルパス
+     */
+    @Override
+    public Path getTargetPath() {
+
+        final Path result = this.targetPath;
+        return result;
+
+    }
+
+    /**
+     * テンプレートファイルパス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return テンプレートファイルパス
+     */
+    @Override
+    public Path getTemplatePath() {
+
+        final Path result = this.templatePath;
+        return result;
+
+    }
+
+    /**
+     * 合計行数を返す。
+     *
+     * @return 合計行数
+     */
+    @Override
+    public long getTotalRows() {
+
+        final long result = this.totalRows;
+        return result;
+
+    }
+
+    /**
+     * 初期化する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @param targetPath
+     *                     対象ファイルパス
+     * @param templatePath
+     *                     テンプレートファイルパス
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @SuppressWarnings("hiding")
+    @Override
+    public boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolException {
+
+        boolean result = false;
+
+        this.targetPath = targetPath;
+        this.templatePath = templatePath;
+
+        this.tagMap.clear();
+        this.javaFilePathList.clear();
+        this.totalRows = 0;
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 次のJavaファイルに進む。
+     *
+     * @return true：ファイルあり、false:ファイルなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean nextJavaFile() throws KmgToolException {
+
+        boolean result = false;
+
+        this.currentJavaFileIndex++;
+
+        if (this.currentJavaFileIndex >= this.javaFilePathList.size()) {
+
+            return result;
+
+        }
+
+        this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 現在のJavaファイルにJavadocを設定する。<br>
      *
      * @author KenichiroArai
      *
@@ -264,13 +405,15 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @param insertAtTop
      *                    タグを先頭に挿入するかどうか
      *
-     * @throws IOException
-     *                     入出力例外
+     * @throws KmgToolException
+     *                          KMGツール例外
      *
      * @return ファイル内容
      */
     @Override
-    public String getNewJavaFile(final boolean insertAtTop) throws IOException {
+    public String setJavadoc(final boolean insertAtTop) throws KmgToolException {
+
+        final String result;
 
         final StringBuilder fileContentBuilder = new StringBuilder();
 
@@ -417,130 +560,19 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
             }
 
-        }
+        } catch (final IOException e) {
 
-        final String result = fileContentBuilder.toString();
-        return result;
-
-    }
-
-    /**
-     * タグマップを取得する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return タグマップ
-     */
-    @Override
-    public Map<String, String> getTagMap() {
-
-        final Map<String, String> result = new HashMap<>(this.tagMap);
-        return result;
-
-    }
-
-    /**
-     * 対象ファイルパス
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return 対象ファイルパス
-     */
-    @Override
-    public Path getTargetPath() {
-
-        final Path result = this.targetPath;
-        return result;
-
-    }
-
-    /**
-     * テンプレートファイルパス
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return テンプレートファイルパス
-     */
-    @Override
-    public Path getTemplatePath() {
-
-        final Path result = this.templatePath;
-        return result;
-
-    }
-
-    /**
-     * 初期化する
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return true：成功、false：失敗
-     *
-     * @param targetPath
-     *                     対象ファイルパス
-     * @param templatePath
-     *                     テンプレートファイルパス
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @SuppressWarnings("hiding")
-    @Override
-    public boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolException {
-
-        boolean result = false;
-
-        this.targetPath = targetPath;
-        this.templatePath = templatePath;
-
-        this.tagMap.clear();
-        this.javaFilePathList.clear();
-
-        result = true;
-        return result;
-
-    }
-
-    /**
-     * 次のJavaファイルに進む。
-     *
-     * @return true：ファイルあり、false:ファイルなし
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean nextJavaFile() throws KmgToolException {
-
-        boolean result = false;
-
-        this.currentJavaFileIndex++;
-
-        if (this.currentJavaFileIndex >= this.javaFilePathList.size()) {
-
-            return result;
+            // TODO KenichiroArai 2025/03/29 メッセージ
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
         }
 
-        this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
+        result = fileContentBuilder.toString();
 
-        result = true;
+        this.totalRows += KmgDelimiterTypes.LINE_SEPARATOR.split(result).length;
+
         return result;
 
     }
@@ -567,25 +599,29 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
         // 既存のタグを処理
         for (final String tag : this.tagMap.keySet()) {
 
-            if (content.contains(tag)) {
+            if (!content.contains(tag)) {
 
-                fileContentBuilder.append(" * ").append(tag).append(" ").append(this.tagMap.get(tag))
-                    .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                processedTags.put(tag, true);
+                continue;
 
             }
+
+            fileContentBuilder.append(" * ").append(tag).append(" ").append(this.tagMap.get(tag))
+                .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+            processedTags.put(tag, true);
 
         }
 
         // 未処理のタグを追加
         for (final Map.Entry<String, String> entry : this.tagMap.entrySet()) {
 
-            if (!processedTags.containsKey(entry.getKey())) {
+            if (processedTags.containsKey(entry.getKey())) {
 
-                fileContentBuilder.append(" * ").append(entry.getKey()).append(" ").append(entry.getValue())
-                    .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                continue;
 
             }
+
+            fileContentBuilder.append(" * ").append(entry.getKey()).append(" ").append(entry.getValue())
+                .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
 
         }
 

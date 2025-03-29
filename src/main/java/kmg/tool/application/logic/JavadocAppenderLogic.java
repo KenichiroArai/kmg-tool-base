@@ -1,6 +1,5 @@
 package kmg.tool.application.logic;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -57,25 +56,6 @@ public interface JavadocAppenderLogic {
     List<Path> getJavaFilePathList();
 
     /**
-     * 新しいJavaファイルを返す。<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @param insertAtTop
-     *                    タグを先頭に挿入するかどうか
-     *
-     * @throws IOException
-     *                     入出力例外
-     *
-     * @return ファイル内容
-     */
-    String getNewJavaFile(final boolean insertAtTop) throws IOException;
-
-    /**
      * タグのマップを取得する<br>
      *
      * @return タグのマップ
@@ -95,6 +75,13 @@ public interface JavadocAppenderLogic {
      * @return テンプレートファイルパス
      */
     Path getTemplatePath();
+
+    /**
+     * 合計行数を返す。
+     *
+     * @return 合計行数
+     */
+    long getTotalRows();
 
     /**
      * 初期化する
@@ -120,4 +107,23 @@ public interface JavadocAppenderLogic {
      *                          KMGツール例外
      */
     boolean nextJavaFile() throws KmgToolException;
+
+    /**
+     * 現在のJavaファイルにJavadocを設定する。<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @param insertAtTop
+     *                    タグを先頭に挿入するかどうか
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     *
+     * @return ファイル内容
+     */
+    String setJavadoc(final boolean insertAtTop) throws KmgToolException;
 }

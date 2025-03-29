@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.service.JavadocAppenderService;
@@ -230,18 +229,16 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         }
         final Map<String, String> tagMap = this.javadocAppenderLogic.getTagMap();
+        // TODO KenichiroArai 2025/03/29 ログ
         System.out.println(tagMap.toString());
 
-        /* 対象のJavaファイルを取得 */
+        /* 対象のJavaファイルを作成する */
         this.javadocAppenderLogic.createJavaFileList();
         final List<Path> javaFileList = this.javadocAppenderLogic.getJavaFilePathList();
-        final int        fileCount    = javaFileList.size();
 
         /* 対象のJavaファイルをすべて読み込む */
 
         boolean nextFlg;
-
-        int lineCount = 0;
 
         do {
 
@@ -249,17 +246,19 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
             try {
 
-                fileContent = this.javadocAppenderLogic.getNewJavaFile(true);
+                fileContent = this.javadocAppenderLogic.setJavadoc(true);
 
-            } catch (final IOException e) {
+            } catch (final KmgToolException e) {
 
                 // TODO KenichiroArai 2025/03/29 メッセージ
-                e.printStackTrace();
-                return result;
+                final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+                final Object[]               logMsgArgs  = {};
+                final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+                this.logger.error(logMsg, e);
+
+                throw e;
 
             }
-
-            lineCount += KmgDelimiterTypes.LINE_SEPARATOR.split(fileContent).length;
 
             /* 修正した内容をファイルに書き込む */
             final Path javaFile = this.javadocAppenderLogic.getCurrentJavaFilePath();
@@ -280,8 +279,9 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         } while (nextFlg);
 
-        System.out.println(String.format("fileCount: %d", fileCount));
-        System.out.println(String.format("lineCount: %d", lineCount));
+        // TODO KenichiroArai 2025/03/29 ログ
+        System.out.println(String.format("fileCount: %d", javaFileList.size()));
+        System.out.println(String.format("lineCount: %d", this.javadocAppenderLogic.getTotalRows()));
 
         return result;
 
