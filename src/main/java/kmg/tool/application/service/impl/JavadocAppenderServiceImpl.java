@@ -10,10 +10,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.service.JavadocAppenderService;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -23,6 +29,25 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 @Service
 public class JavadocAppenderServiceImpl implements JavadocAppenderService {
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private KmgMessageSource messageSource;
+
+    /** Javadoc追加ロジック */
+    @Autowired
+    private JavadocAppenderLogic javadocAppenderLogic;
 
     /** 対象ファイルパス */
     private Path targetPath;
@@ -256,6 +281,31 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
     }
 
     /**
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     */
+    public JavadocAppenderServiceImpl() {
+
+        this(LoggerFactory.getLogger(JavadocAppenderServiceImpl.class));
+
+    }
+
+    /**
+     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected JavadocAppenderServiceImpl(final Logger logger) {
+
+        this.logger = logger;
+
+    }
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗
@@ -276,6 +326,9 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         this.targetPath = targetPath;
         this.templatePath = templatePath;
+
+        /* Javadoc追加ロジックの初期化 */
+        this.javadocAppenderLogic.initialize(targetPath, templatePath);
 
         result = true;
         return result;
@@ -300,13 +353,18 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         try {
 
-            tagMap = this.getTagMap();
+            tagMap = this.javadocAppenderLogic.getTagMap();
 
-        } catch (final IOException e) {
+        } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/03/27 例外処理
-            e.printStackTrace();
-            return result;
+            // TODO KenichiroArai 2025/03/29 メッセージ
+
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31003;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            this.logger.error(logMsg, e);
+
+            throw e;
 
         }
         System.out.println(tagMap.toString());
@@ -371,53 +429,6 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         System.out.println(String.format("fileCount: %d", fileCount));
         System.out.println(String.format("lineCount: %d", lineCount));
-
-        return result;
-
-    }
-
-    /**
-     * タグマップを取得する<br>
-     *
-     * @return タグマップ
-     *
-     * @throws IOException
-     *                     入出力例外
-     */
-    private Map<String, String> getTagMap() throws IOException {
-
-        final Map<String, String> result = new HashMap<>();
-
-        /* テンプレートの読み込み */
-        List<String> lines = null;
-
-        try {
-
-            lines = Files.readAllLines(this.templatePath);
-
-        } catch (final IOException e) {
-
-            throw e;
-
-        }
-
-        /* タグマップの作成 */
-        for (final String line : lines) {
-
-            final String trimmedLine = line.trim();
-
-            if (!trimmedLine.startsWith(KmgDelimiterTypes.HALF_AT_SIGN.get())) {
-
-                continue;
-
-            }
-
-            final String[] parts = KmgDelimiterTypes.SERIES_HALF_SPACE.split(trimmedLine, 2);
-            final String   tag   = parts[0].trim();
-            final String   value = parts[1].trim();
-            result.put(tag, value);
-
-        }
 
         return result;
 
