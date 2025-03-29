@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import kmg.core.domain.service.KmgPfaMeasService;
+import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.tool.application.service.JavadocAppenderService;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -93,11 +95,22 @@ public class JavadocAppenderTool extends AbstractInputTool {
 
         boolean result = true;
 
-        /* 入力ファイルから対象パスを設定 */
-        result &= this.setTargetPathFromInputFile();
+        final KmgPfaMeasService kmgPfaMeasService = new KmgPfaMeasServiceImpl(JavadocAppenderTool.TOOL_NAME);
+        kmgPfaMeasService.start();
 
-        /* Javadoc追加処理 */
-        result &= this.appendJavadoc();
+        try {
+
+            /* 入力ファイルから対象パスを設定 */
+            result &= this.setTargetPathFromInputFile();
+
+            /* Javadoc追加処理 */
+            result &= this.appendJavadoc();
+
+        } finally {
+
+            kmgPfaMeasService.end();
+
+        }
 
         return result;
 
