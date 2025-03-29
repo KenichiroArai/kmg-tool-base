@@ -1,7 +1,6 @@
 package kmg.tool.application.service.impl;
 
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -209,34 +208,35 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         final boolean result = false;
 
-        /* タグマップの取得 */
+        // TODO KenichiroArai 2025/03/29 処理の開始ログ
+
+        /* タグのマップの作成 */
         this.javadocAppenderLogic.createTagMap();
 
-        final Map<String, String> tagMap = this.javadocAppenderLogic.getTagMap();
         // TODO KenichiroArai 2025/03/29 ログ
+        final Map<String, String> tagMap = this.javadocAppenderLogic.getTagMap();
         System.out.println(tagMap.toString());
 
         /* 対象のJavaファイルを作成する */
         this.javadocAppenderLogic.createJavaFileList();
-        final List<Path> javaFileList = this.javadocAppenderLogic.getJavaFilePathList();
-
-        /* 対象のJavaファイルをすべて読み込む */
 
         boolean nextFlg;
 
         do {
 
+            /* 対象のJavaファイルのJavadocを設定する */
             this.javadocAppenderLogic.setJavadoc(true);
 
             /* 修正した内容をファイルに書き込む */
             this.javadocAppenderLogic.writeCurrentJavaFile();
 
+            /* 次の対象のJavaファイルに進む */
             nextFlg = this.javadocAppenderLogic.nextJavaFile();
 
         } while (nextFlg);
 
-        // TODO KenichiroArai 2025/03/29 ログ
-        System.out.println(String.format("読み込みファイル数: %d", javaFileList.size()));
+        // TODO KenichiroArai 2025/03/29 処理の終了ログ
+        System.out.println(String.format("読み込みファイル数: %d", this.javadocAppenderLogic.getJavaFilePathList()));
         System.out.println(String.format("最終合計行数: %d", this.javadocAppenderLogic.getTotalRows()));
 
         return result;
