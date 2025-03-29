@@ -1,5 +1,6 @@
 package kmg.tool.application.logic;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
 
@@ -19,6 +20,30 @@ public interface JavadocAppenderLogic {
      *                          KMGツール例外
      */
     void createTagMap() throws KmgToolException;
+
+    /**
+     * 新しいJavaファイルを返す。<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @param javaFile
+     *                           Javaファイル
+     * @param fileContentBuilder
+     *                           ファイル内容ビルダー
+     * @param insertAtTop
+     *                           タグを先頭に挿入するかどうか
+     *
+     * @throws IOException
+     *                     入出力例外
+     *
+     * @return ファイル内容
+     */
+    String getNewJavaFile(final Path javaFile, final StringBuilder fileContentBuilder, final boolean insertAtTop)
+        throws IOException;
 
     /**
      * タグマップを取得する<br>
@@ -41,5 +66,4 @@ public interface JavadocAppenderLogic {
      *                          KMGツール例外
      */
     boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolException;
-
 }
