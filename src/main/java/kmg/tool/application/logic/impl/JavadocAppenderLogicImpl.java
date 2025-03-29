@@ -220,11 +220,9 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @version 0.1.0
      *
      * @param javaFile
-     *                           Javaファイル
-     * @param fileContentBuilder
-     *                           ファイル内容ビルダー
+     *                    Javaファイル
      * @param insertAtTop
-     *                           タグを先頭に挿入するかどうか
+     *                    タグを先頭に挿入するかどうか
      *
      * @throws IOException
      *                     入出力例外
@@ -232,8 +230,9 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @return ファイル内容
      */
     @Override
-    public String getNewJavaFile(final Path javaFile, final StringBuilder fileContentBuilder, final boolean insertAtTop)
-        throws IOException {
+    public String getNewJavaFile(final Path javaFile, final boolean insertAtTop) throws IOException {
+
+        final StringBuilder fileContentBuilder = new StringBuilder();
 
         try (BufferedReader br = Files.newBufferedReader(javaFile)) {
 

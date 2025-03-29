@@ -55,19 +55,16 @@ public interface JavadocAppenderLogic {
      * @version 0.1.0
      *
      * @param javaFile
-     *                           Javaファイル
-     * @param fileContentBuilder
-     *                           ファイル内容ビルダー
+     *                    Javaファイル
      * @param insertAtTop
-     *                           タグを先頭に挿入するかどうか
+     *                    タグを先頭に挿入するかどうか
      *
      * @throws IOException
      *                     入出力例外
      *
      * @return ファイル内容
      */
-    String getNewJavaFile(final Path javaFile, final StringBuilder fileContentBuilder, final boolean insertAtTop)
-        throws IOException;
+    String getNewJavaFile(final Path javaFile, final boolean insertAtTop) throws IOException;
 
     /**
      * タグマップを取得する<br>

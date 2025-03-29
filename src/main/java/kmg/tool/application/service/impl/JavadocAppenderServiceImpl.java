@@ -243,12 +243,11 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         for (final Path javaFile : javaFileList) {
 
-            final StringBuilder fileContentBuilder = new StringBuilder();
-            String              fileContent;
+            String fileContent;
 
             try {
 
-                fileContent = this.javadocAppenderLogic.getNewJavaFile(javaFile, fileContentBuilder, true);
+                fileContent = this.javadocAppenderLogic.getNewJavaFile(javaFile, true);
 
             } catch (final IOException e) {
 
