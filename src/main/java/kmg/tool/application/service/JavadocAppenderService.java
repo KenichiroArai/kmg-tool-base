@@ -12,6 +12,13 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JavadocAppenderService {
 
     /**
+     * テンプレートファイルパス
+     *
+     * @return テンプレートファイルパス
+     */
+    Path getTemplatePath();
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗
