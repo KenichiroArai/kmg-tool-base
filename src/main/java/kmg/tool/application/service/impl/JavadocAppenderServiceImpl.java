@@ -236,7 +236,7 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
         } while (nextFlg);
 
         // TODO KenichiroArai 2025/03/29 処理の終了ログ
-        System.out.println(String.format("読み込みファイル数: %d", this.javadocAppenderLogic.getJavaFilePathList()));
+        System.out.println(String.format("読み込みファイル数: %d", this.javadocAppenderLogic.getJavaFilePathList().size()));
         System.out.println(String.format("最終合計行数: %d", this.javadocAppenderLogic.getTotalRows()));
 
         return result;
