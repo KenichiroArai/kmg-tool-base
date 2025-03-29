@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -53,7 +54,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private Path templatePath;
 
     /**
-     * タグマップ
+     * タグのマップ
      *
      * @author KenichiroArai
      *
@@ -64,7 +65,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private final Map<String, String> tagMap;
 
     /**
-     * 対象のJavaファイルリスト
+     * 対象のJavaファイルパスのリスト
      *
      * @author KenichiroArai
      *
@@ -72,7 +73,23 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      *
      * @version 0.1.0
      */
-    private final List<Path> javaFileList;
+    private final List<Path> javaFilePathList;
+
+    /**
+     * 現在のJavaファイルパス
+     */
+    private Path currentJavaFilePath;
+
+    /**
+     * 現在のJavaファイルインデックス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    private int currentJavaFileIndex;
 
     /**
      * デフォルトコンストラクタ
@@ -86,7 +103,9 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     public JavadocAppenderLogicImpl() {
 
         this.tagMap = new HashMap<>();
-        this.javaFileList = new ArrayList<>();
+        this.javaFilePathList = new ArrayList<>();
+        this.currentJavaFileIndex = 0;
+        this.currentJavaFilePath = null;
 
     }
 
@@ -109,11 +128,13 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
         boolean result = false;
 
+        List<Path> fileList;
+
         try (final Stream<Path> streamPath = Files.walk(this.targetPath)) {
 
-            final List<Path> fileList = streamPath.filter(Files::isRegularFile)
-                .filter(path -> path.toString().endsWith(".java")).collect(Collectors.toList());
-            this.javaFileList.addAll(fileList);
+            // TODO KenichiroArai 2025/03/29 ハードコード
+            fileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
+                .collect(Collectors.toList());
 
         } catch (final IOException e) {
 
@@ -121,6 +142,14 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+
+        this.javaFilePathList.addAll(fileList);
+
+        if (KmgListUtils.isNotEmpty(this.javaFilePathList)) {
+
+            this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
 
         }
 
@@ -190,7 +219,20 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * 対象のJavaファイルリストを返す<br>
+     * 現在のJavaファイルパスを返す。
+     *
+     * @return 現在のJavaファイルパス
+     */
+    @Override
+    public Path getCurrentJavaFilePath() {
+
+        final Path result = this.currentJavaFilePath;
+        return result;
+
+    }
+
+    /**
+     * 対象のJavaファイルパスのリストを返す<br>
      *
      * @author KenichiroArai
      *
@@ -203,9 +245,9 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @return 対象のJavaファイルリスト
      */
     @Override
-    public List<Path> getJavaFileList() {
+    public List<Path> getJavaFilePathList() {
 
-        final List<Path> result = this.javaFileList;
+        final List<Path> result = this.javaFilePathList;
         return result;
 
     }
@@ -219,8 +261,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      *
      * @version 0.1.0
      *
-     * @param javaFile
-     *                    Javaファイル
      * @param insertAtTop
      *                    タグを先頭に挿入するかどうか
      *
@@ -230,11 +270,11 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @return ファイル内容
      */
     @Override
-    public String getNewJavaFile(final Path javaFile, final boolean insertAtTop) throws IOException {
+    public String getNewJavaFile(final boolean insertAtTop) throws IOException {
 
         final StringBuilder fileContentBuilder = new StringBuilder();
 
-        try (BufferedReader br = Files.newBufferedReader(javaFile)) {
+        try (BufferedReader br = Files.newBufferedReader(this.currentJavaFilePath)) {
 
             /* 行ごとの読み込み */
             boolean             isInJavadoc    = false;
@@ -470,7 +510,35 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
         this.templatePath = templatePath;
 
         this.tagMap.clear();
-        this.javaFileList.clear();
+        this.javaFilePathList.clear();
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 次のJavaファイルに進む。
+     *
+     * @return true：ファイルあり、false:ファイルなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean nextJavaFile() throws KmgToolException {
+
+        boolean result = false;
+
+        this.currentJavaFileIndex++;
+
+        if (this.currentJavaFileIndex >= this.javaFilePathList.size()) {
+
+            return result;
+
+        }
+
+        this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
 
         result = true;
         return result;

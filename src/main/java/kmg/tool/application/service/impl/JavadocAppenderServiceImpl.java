@@ -234,20 +234,22 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         /* 対象のJavaファイルを取得 */
         this.javadocAppenderLogic.createJavaFileList();
-        final List<Path> javaFileList = this.javadocAppenderLogic.getJavaFileList();
+        final List<Path> javaFileList = this.javadocAppenderLogic.getJavaFilePathList();
         final int        fileCount    = javaFileList.size();
 
         /* 対象のJavaファイルをすべて読み込む */
 
+        boolean nextFlg;
+
         int lineCount = 0;
 
-        for (final Path javaFile : javaFileList) {
+        do {
 
             String fileContent;
 
             try {
 
-                fileContent = this.javadocAppenderLogic.getNewJavaFile(javaFile, true);
+                fileContent = this.javadocAppenderLogic.getNewJavaFile(true);
 
             } catch (final IOException e) {
 
@@ -260,6 +262,8 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
             lineCount += KmgDelimiterTypes.LINE_SEPARATOR.split(fileContent).length;
 
             /* 修正した内容をファイルに書き込む */
+            final Path javaFile = this.javadocAppenderLogic.getCurrentJavaFilePath();
+
             try {
 
                 Files.writeString(javaFile, fileContent);
@@ -272,7 +276,9 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
             }
 
-        }
+            nextFlg = this.javadocAppenderLogic.nextJavaFile();
+
+        } while (nextFlg);
 
         System.out.println(String.format("fileCount: %d", fileCount));
         System.out.println(String.format("lineCount: %d", lineCount));

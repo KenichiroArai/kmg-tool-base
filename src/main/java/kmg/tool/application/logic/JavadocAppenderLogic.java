@@ -35,15 +35,26 @@ public interface JavadocAppenderLogic {
     boolean createTagMap() throws KmgToolException;
 
     /**
-     * 対象のJavaファイルリストを返す<br>
+     * 現在のJavaファイルパスを返す。
+     *
+     * @return 現在のJavaファイルパス
+     */
+    Path getCurrentJavaFilePath();
+
+    /**
+     * 対象のJavaファイルパスのリストを返す<br>
      *
      * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
      *
      * @sine 0.1.0
      *
      * @return 対象のJavaファイルリスト
      */
-    List<Path> getJavaFileList();
+    List<Path> getJavaFilePathList();
 
     /**
      * 新しいJavaファイルを返す。<br>
@@ -54,8 +65,6 @@ public interface JavadocAppenderLogic {
      *
      * @version 0.1.0
      *
-     * @param javaFile
-     *                    Javaファイル
      * @param insertAtTop
      *                    タグを先頭に挿入するかどうか
      *
@@ -64,12 +73,12 @@ public interface JavadocAppenderLogic {
      *
      * @return ファイル内容
      */
-    String getNewJavaFile(final Path javaFile, final boolean insertAtTop) throws IOException;
+    String getNewJavaFile(final boolean insertAtTop) throws IOException;
 
     /**
-     * タグマップを取得する<br>
+     * タグのマップを取得する<br>
      *
-     * @return タグマップ
+     * @return タグのマップ
      */
     Map<String, String> getTagMap();
 
@@ -101,4 +110,14 @@ public interface JavadocAppenderLogic {
      *                          KMGツール例外
      */
     boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolException;
+
+    /**
+     * 次のJavaファイルに進む。
+     *
+     * @return true：ファイルあり、false:ファイルなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean nextJavaFile() throws KmgToolException;
 }
