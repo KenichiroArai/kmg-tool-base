@@ -13,14 +13,19 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JavadocAppenderLogic {
 
     /**
-     * タグマップを取得する<br>
-     *
-     * @return タグマップ
+     * タグマップを作成する<br>
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    Map<String, String> getTagMap() throws KmgToolException;
+    void createTagMap() throws KmgToolException;
+
+    /**
+     * タグマップを取得する<br>
+     *
+     * @return タグマップ
+     */
+    Map<String, String> getTagMap();
 
     /**
      * 初期化する

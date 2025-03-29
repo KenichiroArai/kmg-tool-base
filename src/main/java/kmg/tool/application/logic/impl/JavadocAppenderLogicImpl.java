@@ -22,6 +22,9 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
+    /** タグマップ */
+    private final Map<String, String> tagMap;
+
     /** 対象ファイルパス */
     private Path targetPath;
 
@@ -29,17 +32,22 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private Path templatePath;
 
     /**
-     * タグマップを取得する<br>
-     *
-     * @return タグマップ
+     * デフォルトコンストラクタ
+     */
+    public JavadocAppenderLogicImpl() {
+
+        this.tagMap = new HashMap<>();
+
+    }
+
+    /**
+     * タグマップを作成する<br>
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
     @Override
-    public Map<String, String> getTagMap() throws KmgToolException {
-
-        final Map<String, String> result = new HashMap<>();
+    public void createTagMap() throws KmgToolException {
 
         /* テンプレートの読み込み */
         List<String> lines = null;
@@ -73,10 +81,21 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
             final String[] parts = KmgDelimiterTypes.SERIES_HALF_SPACE.split(trimmedLine, 2);
             final String   tag   = parts[0].trim();
             final String   value = parts[1].trim();
-            result.put(tag, value);
+            this.tagMap.put(tag, value);
 
         }
 
+    }
+
+    /**
+     * タグマップを取得する<br>
+     *
+     * @return タグマップ
+     */
+    @Override
+    public Map<String, String> getTagMap() {
+
+        final Map<String, String> result = new HashMap<>(this.tagMap);
         return result;
 
     }
@@ -102,6 +121,8 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
         this.targetPath = targetPath;
         this.templatePath = templatePath;
+
+        this.tagMap.clear();
 
         result = true;
         return result;

@@ -349,17 +349,14 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
         boolean result = false;
 
         /* タグマップの取得 */
-        Map<String, String> tagMap;
-
         try {
 
-            tagMap = this.javadocAppenderLogic.getTagMap();
+            this.javadocAppenderLogic.createTagMap();
 
         } catch (final KmgToolException e) {
 
             // TODO KenichiroArai 2025/03/29 メッセージ
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31003;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -367,6 +364,7 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
             throw e;
 
         }
+        final Map<String, String> tagMap = this.javadocAppenderLogic.getTagMap();
         System.out.println(tagMap.toString());
 
         /* 対象のJavaファイルを取得 */
