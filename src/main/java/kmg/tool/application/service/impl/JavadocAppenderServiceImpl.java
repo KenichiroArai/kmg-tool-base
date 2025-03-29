@@ -5,8 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +22,10 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * Javadoc追加サービス<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class JavadocAppenderServiceImpl implements JavadocAppenderService {
@@ -31,32 +33,68 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
     /**
      * ロガー
      *
+     * @author KenichiroArai
+     *
      * @since 0.1.0
+     *
+     * @version 0.1.0
      */
     private final Logger logger;
 
     /**
      * KMGメッセージリソース
      *
+     * @author KenichiroArai
+     *
      * @since 0.1.0
+     *
+     * @version 0.1.0
      */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** Javadoc追加ロジック */
+    /**
+     * Javadoc追加ロジック
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
     @Autowired
     private JavadocAppenderLogic javadocAppenderLogic;
 
-    /** 対象ファイルパス */
+    /**
+     * 対象ファイルパス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
     private Path targetPath;
 
-    /** テンプレートファイルパス */
+    /**
+     * テンプレートファイルパス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
     private Path templatePath;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
+     * @author KenichiroArai
+     *
      * @since 0.1.0
+     *
+     * @version 0.1.0
      */
     public JavadocAppenderServiceImpl() {
 
@@ -67,7 +105,11 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
+     * @author KenichiroArai
+     *
      * @since 0.1.0
+     *
+     * @version 0.1.0
      *
      * @param logger
      *               ロガー
@@ -80,6 +122,12 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
     /**
      * 対象ファイルパス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
      *
      * @return 対象ファイルパス
      */
@@ -94,6 +142,12 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
     /**
      * テンプレートファイルパス
      *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
      * @return テンプレートファイルパス
      */
     @Override
@@ -107,12 +161,18 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
     /**
      * 初期化する
      *
-     * @return true：成功、false：失敗
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
      *
      * @param targetPath
      *                     対象ファイルパス
      * @param templatePath
      *                     テンプレートファイルパス
+     *
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
@@ -136,6 +196,12 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
     /**
      * 処理する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -167,24 +233,9 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
         System.out.println(tagMap.toString());
 
         /* 対象のJavaファイルを取得 */
-        final List<Path> javaFileList;
-
-        int fileCount = 0;
-
-        try (final Stream<Path> streamPath = Files.walk(this.targetPath)) {
-
-            javaFileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
-                .collect(Collectors.toList());
-
-            fileCount += javaFileList.size();
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/29 メッセージ
-            e.printStackTrace();
-            return result;
-
-        }
+        this.javadocAppenderLogic.createJavaFileList();
+        final List<Path> javaFileList = this.javadocAppenderLogic.getJavaFileList();
+        final int        fileCount    = javaFileList.size();
 
         /* 対象のJavaファイルをすべて読み込む */
 

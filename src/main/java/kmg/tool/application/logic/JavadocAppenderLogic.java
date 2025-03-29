@@ -2,6 +2,7 @@ package kmg.tool.application.logic;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -14,12 +15,35 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JavadocAppenderLogic {
 
     /**
-     * タグマップを作成する<br>
+     * 対象のJavaファイル
+     *
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    void createTagMap() throws KmgToolException;
+    boolean createJavaFileList() throws KmgToolException;
+
+    /**
+     * タグマップを作成する<br>
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean createTagMap() throws KmgToolException;
+
+    /**
+     * 対象のJavaファイルリストを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 対象のJavaファイルリスト
+     */
+    List<Path> getJavaFileList();
 
     /**
      * 新しいJavaファイルを返す。<br>
@@ -69,12 +93,12 @@ public interface JavadocAppenderLogic {
     /**
      * 初期化する
      *
-     * @return true：成功、false：失敗
-     *
      * @param targetPath
      *                     対象ファイルパス
      * @param templatePath
      *                     テンプレートファイルパス
+     *
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外

@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
@@ -19,36 +22,131 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * Javadoc追加ロジック<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
-    /** タグマップ */
-    private final Map<String, String> tagMap;
-
-    /** 対象ファイルパス */
+    /**
+     * 対象ファイルパス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
     private Path targetPath;
 
-    /** テンプレートファイルパス */
+    /**
+     * テンプレートファイルパス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
     private Path templatePath;
 
     /**
+     * タグマップ
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    private final Map<String, String> tagMap;
+
+    /**
+     * 対象のJavaファイルリスト
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    private final List<Path> javaFileList;
+
+    /**
      * デフォルトコンストラクタ
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
      */
     public JavadocAppenderLogicImpl() {
 
         this.tagMap = new HashMap<>();
+        this.javaFileList = new ArrayList<>();
+
+    }
+
+    /**
+     * 対象のJavaファイル
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean createJavaFileList() throws KmgToolException {
+
+        boolean result = false;
+
+        try (final Stream<Path> streamPath = Files.walk(this.targetPath)) {
+
+            final List<Path> fileList = streamPath.filter(Files::isRegularFile)
+                .filter(path -> path.toString().endsWith(".java")).collect(Collectors.toList());
+            this.javaFileList.addAll(fileList);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/29 メッセージ
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+
+        result = true;
+        return result;
 
     }
 
     /**
      * タグマップを作成する<br>
      *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
      * @throws KmgToolException
      *                          KMGツール例外
      */
     @Override
-    public void createTagMap() throws KmgToolException {
+    public boolean createTagMap() throws KmgToolException {
+
+        boolean result = false;
 
         /* テンプレートの読み込み */
         List<String> lines = null;
@@ -85,6 +183,30 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
             this.tagMap.put(tag, value);
 
         }
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 対象のJavaファイルリストを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @sine 0.1.0
+     *
+     * @return 対象のJavaファイルリスト
+     */
+    @Override
+    public List<Path> getJavaFileList() {
+
+        final List<Path> result = this.javaFileList;
+        return result;
 
     }
 
@@ -266,6 +388,12 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     /**
      * タグマップを取得する<br>
      *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
      * @return タグマップ
      */
     @Override
@@ -278,6 +406,12 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
     /**
      * 対象ファイルパス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
      *
      * @return 対象ファイルパス
      */
@@ -292,6 +426,12 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     /**
      * テンプレートファイルパス
      *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
      * @return テンプレートファイルパス
      */
     @Override
@@ -304,6 +444,12 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
     /**
      * 初期化する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -325,6 +471,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
         this.templatePath = templatePath;
 
         this.tagMap.clear();
+        this.javaFileList.clear();
 
         result = true;
         return result;
