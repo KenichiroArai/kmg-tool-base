@@ -12,6 +12,13 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JavadocAppenderService {
 
     /**
+     * 対象ファイルパス
+     *
+     * @return 対象ファイルパス
+     */
+    Path getTargetPath();
+
+    /**
      * テンプレートファイルパス
      *
      * @return テンプレートファイルパス

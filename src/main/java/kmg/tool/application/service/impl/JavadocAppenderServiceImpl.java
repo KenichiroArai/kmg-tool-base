@@ -79,6 +79,19 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
     }
 
     /**
+     * 対象ファイルパス
+     *
+     * @return 対象ファイルパス
+     */
+    @Override
+    public Path getTargetPath() {
+
+        final Path result = this.targetPath;
+        return result;
+
+    }
+
+    /**
      * テンプレートファイルパス
      *
      * @return テンプレートファイルパス

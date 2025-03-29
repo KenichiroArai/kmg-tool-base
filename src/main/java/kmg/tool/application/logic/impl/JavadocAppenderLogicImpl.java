@@ -277,6 +277,32 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
+     * 対象ファイルパス
+     *
+     * @return 対象ファイルパス
+     */
+    @Override
+    public Path getTargetPath() {
+
+        final Path result = this.targetPath;
+        return result;
+
+    }
+
+    /**
+     * テンプレートファイルパス
+     *
+     * @return テンプレートファイルパス
+     */
+    @Override
+    public Path getTemplatePath() {
+
+        final Path result = this.templatePath;
+        return result;
+
+    }
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗

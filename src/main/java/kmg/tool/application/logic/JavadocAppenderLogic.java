@@ -53,6 +53,20 @@ public interface JavadocAppenderLogic {
     Map<String, String> getTagMap();
 
     /**
+     * 対象ファイルパス
+     *
+     * @return 対象ファイルパス
+     */
+    Path getTargetPath();
+
+    /**
+     * テンプレートファイルパス
+     *
+     * @return テンプレートファイルパス
+     */
+    Path getTemplatePath();
+
+    /**
      * 初期化する
      *
      * @return true：成功、false：失敗
