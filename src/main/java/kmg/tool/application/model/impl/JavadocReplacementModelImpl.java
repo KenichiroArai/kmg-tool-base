@@ -160,32 +160,6 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
     }
 
     /**
-     * 置換用の識別子に置き換える<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean replaceIdentifier() throws KmgToolException {
-
-        boolean result = false;
-
-        this.replacedJavadoc = this.sourceCode;
-
-        // TODO KenichiroArai 2025/03/30 実装中
-
-        result = true;
-        return result;
-
-    }
-
-    /**
      * Java区分を特定する<br>
      *
      * @author KenichiroArai

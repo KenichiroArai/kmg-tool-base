@@ -82,20 +82,6 @@ public interface JavadocReplacementModel {
     String getSourceJavadoc();
 
     /**
-     * 置換用の識別子に置き換える<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean replaceIdentifier() throws KmgToolException;
-
-    /**
      * Java区分を特定する<br>
      *
      * @author KenichiroArai
