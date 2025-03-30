@@ -34,6 +34,17 @@ public interface JavadocAppenderLogic {
     boolean createTagMap() throws KmgToolException;
 
     /**
+     * 現在の書き込みするファイルの中身を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 現在の書き込みするファイルの中身
+     */
+    String getCurrentContentsOfFileToWrite();
+
+    /**
      * 現在のJavaファイルパスを返す。
      *
      * @return 現在のJavaファイルパス

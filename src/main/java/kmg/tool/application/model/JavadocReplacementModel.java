@@ -1,0 +1,112 @@
+package kmg.tool.application.model;
+
+import java.util.UUID;
+
+import kmg.tool.domain.types.JavaClassificationTypes;
+import kmg.tool.infrastructure.exception.KmgToolException;
+
+/**
+ * Javadoc置換モデルインタフェース<br>
+ *
+ * @author KenichiroArai
+ */
+public interface JavadocReplacementModel {
+
+    /**
+     * 置換後のJavadocを作成する。<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean createReplacedJavadoc() throws KmgToolException;
+
+    /**
+     * 置換用識別子を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 置換用識別子
+     */
+    UUID getIdentifier();
+
+    /**
+     * Java区分を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return Java区分
+     */
+    JavaClassificationTypes getJavaClassification();
+
+    /**
+     * 置換後のJavadocを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 置換後のJavadoc
+     */
+    String getReplacedJavadoc();
+
+    /**
+     * 元のコードを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 元のコード
+     */
+    String getSourceCode();
+
+    /**
+     * 元のJavadocを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 元のJavadoc
+     */
+    String getSourceJavadoc();
+
+    /**
+     * 置換用の識別子に置き換える<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean replaceIdentifier() throws KmgToolException;
+
+    /**
+     * Java区分を特定する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean specifyJavaClassification() throws KmgToolException;
+
+}

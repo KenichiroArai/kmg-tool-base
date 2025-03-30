@@ -1,6 +1,5 @@
 package kmg.tool.application.logic.impl;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
+import kmg.tool.application.model.JavadocReplacementModel;
+import kmg.tool.application.model.impl.JavadocReplacementModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -100,6 +102,11 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @version 0.1.0
      */
     private int currentJavaFileIndex;
+
+    /**
+     * 現在の書き込みするファイルの中身
+     */
+    private String currentContentsOfFileToWrite;
 
     /**
      * デフォルトコンストラクタ
@@ -225,6 +232,23 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
         }
 
         result = true;
+        return result;
+
+    }
+
+    /**
+     * 現在の書き込みするファイルの中身を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 現在の書き込みするファイルの中身
+     */
+    @Override
+    public String getCurrentContentsOfFileToWrite() {
+
+        final String result = this.currentContentsOfFileToWrite;
         return result;
 
     }
@@ -418,150 +442,60 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     @Override
     public boolean setJavadoc(final boolean insertAtTop) throws KmgToolException {
 
-        boolean result;
+        final boolean result;
 
-        final StringBuilder fileContentBuilder = new StringBuilder();
+        try {
 
-        try (BufferedReader br = Files.newBufferedReader(this.currentJavaFilePath)) {
+            /* Javaファイルを読み込み、現在の中身と書き込み用の中身に設定する */
+            this.currentJavaFileContent = Files.readString(this.currentJavaFilePath);
+            this.currentContentsOfFileToWrite = this.currentJavaFileContent;
 
-            /* 行ごとの読み込み */
-            boolean             isInJavadoc    = false;
-            String              line           = null;
-            final StringBuilder javadocBuilder = new StringBuilder();
-            final StringBuilder contentBuilder = new StringBuilder();
-            boolean             foundFirstTag  = false;
+            /* Javadocを設定する */
 
-            while ((line = br.readLine()) != null) {
+            final List<JavadocReplacementModel> javadocReplacementModelList = new ArrayList<>();
 
-                final String trimmedLine = line.trim();
+            // 「/**」でブロックに分ける
+            final String[] blocks = this.currentContentsOfFileToWrite.split(Pattern.quote("/**"));
 
-                if (trimmedLine.startsWith("/**")) {
+            // ブロックの0番目はJavadocではないので、1番目から進める
+            for (int i = 1; i < blocks.length; i++) {
 
-                    /* Javadocの開始 */
+                // 「*/」でJavadocとCodeのブラックに分ける
+                final String[] javadocCodeBlock = blocks[i].split(Pattern.quote("*/"), 2);
 
-                    isInJavadoc = true;
-                    javadocBuilder.setLength(0);
-                    contentBuilder.setLength(0);
-                    foundFirstTag = false;
+                // 元のJavadoc
+                final String sourceJavadoc = javadocCodeBlock[0];
 
-                    if (!trimmedLine.endsWith("*/")) {
+                // 元のコード
+                final String sourceCode = javadocCodeBlock[1];
 
-                        // Javadocの開始行の末尾に*/がない（複数行）場合
-                        javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                        continue;
+                // 元のコードの分析
 
-                    }
+                // 元のJavadoc
 
-                    // 1行Javadocの場合の処理
-                    fileContentBuilder.append("/**").append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                final JavadocReplacementModel javadocReplacementModel
+                    = new JavadocReplacementModelImpl(sourceJavadoc, sourceCode);
+                javadocReplacementModelList.add(javadocReplacementModel);
 
-                    // コメントを取得して出力
-                    final String comment = trimmedLine.substring(3, trimmedLine.length() - 2).trim();
+                // TODO KenichiroArai 2025/03/29 実装中
 
-                    if (!comment.isEmpty()) {
+                // 元のJavadoc部分を置換用識別子に置換する
+                this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite
+                    .replaceFirst(Pattern.quote(sourceJavadoc), javadocReplacementModel.getIdentifier().toString());
 
-                        fileContentBuilder.append(" * ").append(comment).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                // Java区分を特定する
+                javadocReplacementModel.specifyJavaClassification();
 
-                    }
+                // 置換後のJavadocを作成する
+                javadocReplacementModel.createReplacedJavadoc();
 
-                    // タグを出力
-                    this.processJavadocTags(fileContentBuilder, comment);
+            }
 
-                    fileContentBuilder.append(" */").append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                    isInJavadoc = false;
-                    continue;
+            // 置換用識別子を置換後のJavadocに置換する
+            for (final JavadocReplacementModel javadocReplacementModel : javadocReplacementModelList) {
 
-                }
-
-                if (isInJavadoc && trimmedLine.endsWith("*/")) {
-
-                    /* Javadocの終了 */
-
-                    isInJavadoc = false;
-
-                    /* 既存のJavadocの内容を解析してタグを置き換え */
-                    final String[] javadocLines
-                        = javadocBuilder.toString().split(KmgDelimiterTypes.LINE_SEPARATOR.get());
-
-                    /* 各行を処理 */
-                    for (final String javadocLine : javadocLines) {
-
-                        final String trimmedJavadocLine = javadocLine.trim();
-
-                        // 最初のタグを検出した位置でtagMapのタグを挿入（insertAtTopがtrueの場合）
-                        if (insertAtTop && !foundFirstTag && trimmedJavadocLine.contains("@")) {
-
-                            foundFirstTag = true;
-
-                            /* tagMapのタグを出力 */
-                            for (final Map.Entry<String, String> entry : this.tagMap.entrySet()) {
-
-                                fileContentBuilder.append(" * ").append(entry.getKey()).append(" ")
-                                    .append(entry.getValue()).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-
-                            }
-
-                        }
-
-                        if (!trimmedJavadocLine.contains("@")) {
-
-                            // タグ行でない場合は保持
-                            fileContentBuilder.append(javadocLine).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                            continue;
-
-                        }
-
-                        // タグ行の場合、tagMapに存在するタグかチェック
-                        boolean isTagInMap = false;
-
-                        for (final String tag : this.tagMap.keySet()) {
-
-                            if (trimmedJavadocLine.contains(tag)) {
-
-                                isTagInMap = true;
-                                break;
-
-                            }
-
-                        }
-
-                        // tagMapにないタグ行は保持
-                        if (!isTagInMap) {
-
-                            fileContentBuilder.append(javadocLine).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-
-                        }
-
-                    }
-
-                    // タグが見つからなかった場合や、insertAtTopがfalseの場合は末尾にタグを挿入
-                    if (!foundFirstTag || !insertAtTop) {
-
-                        /* tagMapのタグを出力 */
-                        for (final Map.Entry<String, String> entry : this.tagMap.entrySet()) {
-
-                            fileContentBuilder.append(" * ").append(entry.getKey()).append(" ").append(entry.getValue())
-                                .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-
-                        }
-
-                    }
-
-                    fileContentBuilder.append(" */").append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                    continue;
-
-                }
-
-                /* Javadoc内の行の処理 */
-                if (!isInJavadoc) {
-
-                    fileContentBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
-                    continue;
-
-                }
-
-                // Javadoc内の場合
-                javadocBuilder.append(line).append(KmgDelimiterTypes.LINE_SEPARATOR.get());
+                this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite.replace(
+                    javadocReplacementModel.getIdentifier().toString(), javadocReplacementModel.getReplacedJavadoc());
 
             }
 
@@ -573,8 +507,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
         }
-
-        this.currentJavaFileContent = fileContentBuilder.toString();
 
         this.totalRows += KmgDelimiterTypes.LINE_SEPARATOR.split(this.currentJavaFileContent).length;
 
@@ -598,7 +530,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
         try {
 
-            Files.writeString(this.currentJavaFilePath, this.currentJavaFileContent);
+            Files.writeString(this.currentJavaFilePath, this.currentContentsOfFileToWrite);
 
         } catch (final IOException e) {
 
