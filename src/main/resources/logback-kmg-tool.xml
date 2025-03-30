@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE logback>
+<configuration>
+    <!-- Spring用の共通設定を読み込み -->
+    <include resource="logback-kmg-spring-base.xml" />
+
+    <!-- プロジェクト固有のロガー設定 -->
+    <logger name="kmg.tool" level="DEBUG" additivity="false">
+        <appender-ref ref="SPRING_STDOUT" />
+        <appender-ref ref="SPRING_APPLIATION_LOG" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="SPRING_STDOUT" />
+        <appender-ref ref="SPRING_APPLIATION_LOG" />
+    </root>
+</configuration>

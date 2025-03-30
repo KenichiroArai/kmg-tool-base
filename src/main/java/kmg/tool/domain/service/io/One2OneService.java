@@ -10,32 +10,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface One2OneService extends IoService {
 
     /**
-     * 入力ファイルパスを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
-     *
-     * @return 入力ファイルパス
-     */
-    Path getInputPath();
-
-    /**
-     * 出力ファイルパスを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
-     *
-     * @return 出力ファイルパス
-     */
-    Path getOutputPath();
-
-    /**
      * 初期化する
      *
      * @return true：成功、false：失敗

@@ -10,6 +10,6 @@ public abstract class AbstractTool {
      *
      * @return true：成功、false：失敗
      */
-    public abstract boolean execute();
+    abstract boolean execute();
 
 }

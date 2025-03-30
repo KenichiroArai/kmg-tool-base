@@ -8,27 +8,27 @@ classDiagram
     AbstractTool <|-- AbstractIoTool
     AbstractIoTool <|-- AbstractTwo2OneTool
     AbstractTwo2OneTool <|-- AbstractDynamicTemplateConversionTool
-    AbstractDynamicTemplateConversionTool <|-- Enum2SwitchCaseMakingTool
+    AbstractDynamicTemplateConversionTool <|-- Enum2SwitchCaseCreationTool
 
     %% インターフェース実装関係
     IoService <|.. Two2OneService
     Two2OneService <|.. DtcService
-    Two2OneService <|.. Enum2SwitchCaseMakingService
+    Two2OneService <|.. Enum2SwitchCaseCreationService
 
     %% サービス実装関係
     AbstractIctoProcessorService ..|> Two2OneService
-    Enum2SwitchCaseMakingServiceImpl --|> AbstractIctoProcessorService
-    Enum2SwitchCaseMakingServiceImpl ..|> Enum2SwitchCaseMakingService
+    Enum2SwitchCaseCreationServiceImpl --|> AbstractIctoProcessorService
+    Enum2SwitchCaseCreationServiceImpl ..|> Enum2SwitchCaseCreationService
     DtcServiceImpl ..|> DtcService
 
     %% ロジック関係
-    Enum2SwitchCaseMakingTool --> Enum2SwitchCaseMakingService : uses
-    Enum2SwitchCaseMakingServiceImpl --> Enum2SwitchCaseMakingLogic : uses
-    Enum2SwitchCaseMakingServiceImpl --> DtcService : uses
+    Enum2SwitchCaseCreationTool --> Enum2SwitchCaseCreationService : uses
+    Enum2SwitchCaseCreationServiceImpl --> Enum2SwitchCaseCreationLogic : uses
+    Enum2SwitchCaseCreationServiceImpl --> DtcService : uses
     DtcServiceImpl --> DtcLogic : uses
 
     %% テンプレート関連
-    Enum2SwitchCaseMakingTool ..> Enum2SwitchCaseMakingTool.yml : uses template
+    Enum2SwitchCaseCreationTool ..> Enum2SwitchCaseCreationTool.yml : uses template
 
     class AbstractTool {
         +boolean execute()
@@ -55,12 +55,12 @@ classDiagram
         +AbstractDynamicTemplateConversionTool(String toolName)
     }
 
-    class Enum2SwitchCaseMakingTool {
+    class Enum2SwitchCaseCreationTool {
         -static String TOOL_NAME
-        -Enum2SwitchCaseMakingService enum2SwitchCaseMakingService
+        -Enum2SwitchCaseCreationService enum2SwitchCaseMakingService
         +static void main(String[] args)
-        +Enum2SwitchCaseMakingTool()
-        #Enum2SwitchCaseMakingService getIoService()
+        +Enum2SwitchCaseCreationTool()
+        #Enum2SwitchCaseCreationService getIoService()
     }
 
     class IoService {
@@ -76,7 +76,7 @@ classDiagram
         +boolean initialize(Path inputPath, Path templatePath, Path outputPath)
     }
 
-    class Enum2SwitchCaseMakingService {
+    class Enum2SwitchCaseCreationService {
         <<interface>>
     }
 
@@ -99,11 +99,11 @@ classDiagram
         #abstract boolean writeCsvFile()
     }
 
-    class Enum2SwitchCaseMakingServiceImpl {
+    class Enum2SwitchCaseCreationServiceImpl {
         -Logger logger
         -KmgMessageSource messageSource
-        -Enum2SwitchCaseMakingLogic enum2SwitchCaseMakingLogic
-        +Enum2SwitchCaseMakingServiceImpl()
+        -Enum2SwitchCaseCreationLogic enum2SwitchCaseMakingLogic
+        +Enum2SwitchCaseCreationServiceImpl()
         #boolean writeCsvFile()
     }
 
@@ -112,7 +112,7 @@ classDiagram
         +boolean process()
     }
 
-    class Enum2SwitchCaseMakingLogic {
+    class Enum2SwitchCaseCreationLogic {
         <<interface>>
         +boolean addItemToCsvRows()
         +boolean addOneLineOfDataToCsvRows()
@@ -133,7 +133,7 @@ classDiagram
         +String getContentsOfOneItem()
     }
 
-    class Enum2SwitchCaseMakingTool.yml {
+    class Enum2SwitchCaseCreationTool.yml {
         csvPlaceholders
         derivedPlaceholders
         templateContent
@@ -145,14 +145,14 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant User as ユーザー
-    participant ESCT as Enum2SwitchCaseMakingTool
+    participant ESCT as Enum2SwitchCaseCreationTool
     participant AT2OT as AbstractTwo2OneTool
     participant AIT as AbstractIoTool
-    participant ESCService as Enum2SwitchCaseMakingServiceImpl
+    participant ESCService as Enum2SwitchCaseCreationServiceImpl
     participant AIPS as AbstractIctoProcessorService
-    participant ESCLogic as Enum2SwitchCaseMakingLogicImpl
+    participant ESCLogic as Enum2SwitchCaseCreationLogicImpl
     participant DtcService as DtcService
-    participant Template as Enum2SwitchCaseMakingTool.yml
+    participant Template as Enum2SwitchCaseCreationTool.yml
     participant Input as input.txt
     participant CSV as csv中間ファイル
     participant Output as output.txt
@@ -225,7 +225,7 @@ sequenceDiagram
 
 ## 3. テンプレートファイル構造
 
-Enum2SwitchCaseMakingTool.ymlは以下の構造を持っています：
+Enum2SwitchCaseCreationTool.ymlは以下の構造を持っています：
 
 1. **csvPlaceholders**: CSVから直接取得するプレースホルダー定義
    - displayName: 画面表示用の名称
@@ -243,40 +243,40 @@ Enum2SwitchCaseMakingTool.ymlは以下の構造を持っています：
 ## 4. 処理フロー詳細
 
 1. ユーザーがアプリケーションを起動
-2. SpringBootアプリケーションが起動し、Enum2SwitchCaseMakingToolのインスタンスが生成される
-3. AbstractTwo2OneToolのinitialize()メソッドが呼び出され、Enum2SwitchCaseMakingServiceが初期化される
+2. SpringBootアプリケーションが起動し、Enum2SwitchCaseCreationToolのインスタンスが生成される
+3. AbstractTwo2OneToolのinitialize()メソッドが呼び出され、Enum2SwitchCaseCreationServiceが初期化される
 4. AbstractIoToolのexecute()メソッドが呼び出され、メイン処理が実行される
-5. Enum2SwitchCaseMakingServiceImplのwriteCsvFile()メソッドが実行され、入力ファイルの処理が開始される
+5. Enum2SwitchCaseCreationServiceImplのwriteCsvFile()メソッドが実行され、入力ファイルの処理が開始される
 6. 入力ファイルから1行ずつデータを読み込み、以下の処理を行う：
    - 列挙型定数の抽出と変換
    - 列挙型の値と項目名の抽出
    - CSV形式に変換して中間ファイルに書き込み
 7. 中間ファイル（CSV）の生成が完了したら、DtcService（テンプレートの動的変換サービス）を使用して：
-   - テンプレートファイル（Enum2SwitchCaseMakingTool.yml）を読み込む
+   - テンプレートファイル（Enum2SwitchCaseCreationTool.yml）を読み込む
    - 中間ファイル（CSV）のデータを読み込む
    - テンプレートにデータを適用して出力ファイルを生成する
 8. リソースがクローズされ、処理が完了する
 
 ## 5. 主要コンポーネント
 
-### Enum2SwitchCaseMakingTool
+### Enum2SwitchCaseCreationTool
 
 - SpringBootApplicationとして動作するエントリーポイント
 - AbstractDynamicTemplateConversionToolを継承（さらにAbstractTwo2OneToolを継承）
-- Enum2SwitchCaseMakingServiceを使用してswitch-case文生成を実行
+- Enum2SwitchCaseCreationServiceを使用してswitch-case文生成を実行
 
 ### AbstractTwo2OneTool
 
 - AbstractIoToolを継承
 - テンプレートファイルパスの管理と初期化処理を担当
 
-### Enum2SwitchCaseMakingServiceImpl
+### Enum2SwitchCaseCreationServiceImpl
 
 - AbstractIctoProcessorServiceを継承
-- Enum2SwitchCaseMakingServiceインターフェースを実装
+- Enum2SwitchCaseCreationServiceインターフェースを実装
 - 入力ファイルの読み込みとCSV形式への変換を担当
 
-### Enum2SwitchCaseMakingLogicImpl
+### Enum2SwitchCaseCreationLogicImpl
 
 - switch-case文作成の実際のロジックを担当
 - 列挙型定義からswitch-case文に必要な情報を抽出
@@ -287,7 +287,7 @@ Enum2SwitchCaseMakingTool.ymlは以下の構造を持っています：
 - テンプレートファイルとCSVデータを使用して最終的な出力ファイルを生成
 - プレースホルダの置換処理を担当
 
-### テンプレートファイル（Enum2SwitchCaseMakingTool.yml）
+### テンプレートファイル（Enum2SwitchCaseCreationTool.yml）
 
 - YAMLフォーマットで定義されたテンプレート設定ファイル
 - 以下の主要セクションで構成：

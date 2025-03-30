@@ -29,9 +29,9 @@ import kmg.tool.domain.logic.KmgTlInsertionSqlDataSheetCreationLogic;
  * ＫＭＧツール挿入ＳＱＬデータシート作成ロジック<br>
  *
  * @author KenichiroArai
- * 
+ *
  * @sine 1.0.0
- * 
+ *
  * @version 1.0.0
  */
 public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInsertionSqlDataSheetCreationLogic {
@@ -75,9 +75,6 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     /** 削除ＳＱＬ */
     private String deleteSql;
 
-    /** カラム数 */
-    private short columnNum;
-
     /** カラム物理名リスト */
     private List<String> columnPhysicsNameList;
 
@@ -88,129 +85,14 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     private String insertComment;
 
     /**
-     * 初期化する<br>
-     *
-     * @author KenichiroArai
-     * 
-     * @sine 1.0.0
-     * 
-     * @version 1.0.0
-     * 
-     * @param kmgDbTypes
-     *                   ＫＭＧＤＢの種類
-     * @param inputSheet
-     *                   入力シート
-     * @param sqlIdMap
-     *                   ＳＱＬＩＤマップ
-     * @param outputPath
-     *                   出力パス
-     */
-    @SuppressWarnings("hiding")
-    @Override
-    public void initialize(final KmgDbTypes kmgDbTypes, final Sheet inputSheet, final Map<String, String> sqlIdMap,
-        final Path outputPath) {
-
-        this.kmgDbTypes = kmgDbTypes;
-        this.inputSheet = inputSheet;
-        this.sqlIdMap = sqlIdMap;
-        this.outputPath = outputPath;
-
-    }
-
-    /**
-     * テーブル論理名を返す<br>
-     *
-     * @author KenichiroArai
-     * 
-     * @sine 1.0.0
-     * 
-     * @version 1.0.0
-     * 
-     * @return テーブル論理名
-     */
-    @Override
-    public String getTableLogicName() {
-
-        String result = null;
-
-        if (KmgString.isNotEmpty(this.tableLogicName)) {
-
-            result = this.tableLogicName;
-            return result;
-
-        }
-        result = this.inputSheet.getSheetName();
-        this.tableLogicName = result;
-        return result;
-
-    }
-
-    /**
-     * テーブル物理名を返す<br>
-     *
-     * @author KenichiroArai
-     * 
-     * @sine 1.0.0
-     * 
-     * @version 1.0.0
-     * 
-     * @return テーブル物理名
-     */
-    @Override
-    public String getTablePhysicsName() {
-
-        String result = null;
-
-        if (KmgString.isNotEmpty(this.tablePhysicsName)) {
-
-            result = this.tablePhysicsName;
-            return result;
-
-        }
-        final Cell wkCell = KmgPoiUtils.getCell(this.inputSheet, 0, 0);
-        result = KmgPoiUtils.getStringValue(wkCell);
-        this.tablePhysicsName = result;
-        return result;
-
-    }
-
-    /**
-     * ＳＱＬＩＤを返す<br>
-     *
-     * @author KenichiroArai
-     * 
-     * @sine 1.0.0
-     * 
-     * @version 1.0.0
-     * 
-     * @return ＳＱＬＩＤ
-     */
-    @Override
-    public String getSqlId() {
-
-        String result = null;
-
-        if (KmgString.isNotEmpty(this.sqlId)) {
-
-            result = this.sqlId;
-            return result;
-
-        }
-        result = this.sqlIdMap.get(this.getTablePhysicsName());
-        this.sqlId = result;
-        return result;
-
-    }
-
-    /**
      * 出力ファイルのディレクトリを作成する<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @throws IOException
      *                     入出力例外
      */
@@ -222,100 +104,14 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     }
 
     /**
-     * 出力ファイルパスを返す<br>
-     *
-     * @author KenichiroArai
-     * 
-     * @sine 1.0.0
-     * 
-     * @version 1.0.0
-     * 
-     * @return 出力ファイルパス
-     */
-    @Override
-    public Path getOutputFilePath() {
-
-        Path result = null;
-
-        if (this.outputFilePath != null) {
-
-            result = this.outputFilePath;
-            return result;
-
-        }
-        result = Paths.get(this.outputPath.toAbsolutePath().toString(),
-            String.format("%s_insert_%s.sql", this.getSqlId(), this.getTablePhysicsName()));
-        this.outputFilePath = result;
-        return result;
-
-    }
-
-    /**
-     * 削除コメントを返す<br>
-     *
-     * @author KenichiroArai
-     * 
-     * @sine 1.0.0
-     * 
-     * @version 1.0.0
-     * 
-     * @return 削除コメント
-     */
-    @Override
-    public String getDeleteComment() {
-
-        String result = null;
-
-        if (KmgString.isNotEmpty(this.deleteComment)) {
-
-            result = this.deleteComment;
-            return result;
-
-        }
-        result = String.format("-- %sのレコード削除", this.getTableLogicName());
-        this.deleteComment = result;
-        return result;
-
-    }
-
-    /**
-     * 削除ＳＱＬを返す<br>
-     *
-     * @author KenichiroArai
-     * 
-     * @sine 1.0.0
-     * 
-     * @version 1.0.0
-     * 
-     * @return 削除ＳＱＬ
-     */
-    @Override
-    public String getDeleteSql() {
-
-        String result = null;
-
-        if (KmgString.isNotEmpty(this.deleteSql)) {
-
-            result = this.deleteSql;
-            return result;
-
-        }
-        result = String.format(KmgTlInsertionSqlDataSheetCreationLogicImpl.DELETE_SQL_TEMPLATE,
-            this.getTablePhysicsName());
-        this.deleteSql = result;
-        return result;
-
-    }
-
-    /**
      * 文字セットを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return 文字セット
      */
     @Override
@@ -356,14 +152,34 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     }
 
     /**
+     * カラム数を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return カラム数
+     */
+    @Override
+    public short getColumnNum() {
+
+        final short result    = (short) this.getColumnPhysicsNameList().size();
+        short       columnNum = result;
+        return result;
+
+    }
+
+    /**
      * カラム物理名リストを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return カラム物理名リスト
      */
     @Override
@@ -401,61 +217,58 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     }
 
     /**
-     * カラム数を返す<br>
+     * 削除コメントを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
-     * @return カラム数
+     *
+     * @return 削除コメント
      */
     @Override
-    public short getColumnNum() {
+    public String getDeleteComment() {
 
-        final short result = (short) this.getColumnPhysicsNameList().size();
-        this.columnNum = result;
+        String result = null;
+
+        if (KmgString.isNotEmpty(this.deleteComment)) {
+
+            result = this.deleteComment;
+            return result;
+
+        }
+        result = String.format("-- %sのレコード削除", this.getTableLogicName());
+        this.deleteComment = result;
         return result;
 
     }
 
     /**
-     * ＫＭＧＤＢ型リストを返す<br>
+     * 削除ＳＱＬを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
-     * @return ＫＭＧＤＢ型リスト
+     *
+     * @return 削除ＳＱＬ
      */
     @Override
-    public List<KmgDbDataTypeTypes> getKmgDbDataTypeList() {
+    public String getDeleteSql() {
 
-        List<KmgDbDataTypeTypes> result = null;
+        String result = null;
 
-        if (this.dbDataTypeList != null) {
+        if (KmgString.isNotEmpty(this.deleteSql)) {
 
-            result = this.dbDataTypeList;
+            result = this.deleteSql;
             return result;
 
         }
-        result = new ArrayList<>();
-
-        final Row typeRow = this.inputSheet.getRow(3);
-
-        for (short cellNum = typeRow.getFirstCellNum(); cellNum < this.getColumnNum(); cellNum++) {
-
-            final Cell typeCell = typeRow.getCell(cellNum);
-
-            final KmgDbDataTypeTypes type = KmgDbDataTypeTypes.getEnum(KmgPoiUtils.getStringValue(typeCell));
-            result.add(type);
-
-        }
-
-        this.dbDataTypeList = result;
+        result = String.format(KmgTlInsertionSqlDataSheetCreationLogicImpl.DELETE_SQL_TEMPLATE,
+            this.getTablePhysicsName());
+        this.deleteSql = result;
         return result;
 
     }
@@ -464,11 +277,11 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 挿入コメントを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @return 挿入コメント
      */
     @Override
@@ -492,14 +305,14 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * 挿入ＳＱＬを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @param datasRow
      *                 データ行
-     * 
+     *
      * @return 挿入ＳＱＬ
      */
     @Override
@@ -559,19 +372,203 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     }
 
     /**
+     * ＫＭＧＤＢ型リストを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return ＫＭＧＤＢ型リスト
+     */
+    @Override
+    public List<KmgDbDataTypeTypes> getKmgDbDataTypeList() {
+
+        List<KmgDbDataTypeTypes> result = null;
+
+        if (this.dbDataTypeList != null) {
+
+            result = this.dbDataTypeList;
+            return result;
+
+        }
+        result = new ArrayList<>();
+
+        final Row typeRow = this.inputSheet.getRow(3);
+
+        for (short cellNum = typeRow.getFirstCellNum(); cellNum < this.getColumnNum(); cellNum++) {
+
+            final Cell typeCell = typeRow.getCell(cellNum);
+
+            final KmgDbDataTypeTypes type = KmgDbDataTypeTypes.getEnum(KmgPoiUtils.getStringValue(typeCell));
+            result.add(type);
+
+        }
+
+        this.dbDataTypeList = result;
+        return result;
+
+    }
+
+    /**
+     * 出力ファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return 出力ファイルパス
+     */
+    @Override
+    public Path getOutputFilePath() {
+
+        Path result = null;
+
+        if (this.outputFilePath != null) {
+
+            result = this.outputFilePath;
+            return result;
+
+        }
+        result = Paths.get(this.outputPath.toAbsolutePath().toString(),
+            String.format("%s_insert_%s.sql", this.getSqlId(), this.getTablePhysicsName()));
+        this.outputFilePath = result;
+        return result;
+
+    }
+
+    /**
+     * ＳＱＬＩＤを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return ＳＱＬＩＤ
+     */
+    @Override
+    public String getSqlId() {
+
+        String result = null;
+
+        if (KmgString.isNotEmpty(this.sqlId)) {
+
+            result = this.sqlId;
+            return result;
+
+        }
+        result = this.sqlIdMap.get(this.getTablePhysicsName());
+        this.sqlId = result;
+        return result;
+
+    }
+
+    /**
+     * テーブル論理名を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return テーブル論理名
+     */
+    @Override
+    public String getTableLogicName() {
+
+        String result = null;
+
+        if (KmgString.isNotEmpty(this.tableLogicName)) {
+
+            result = this.tableLogicName;
+            return result;
+
+        }
+        result = this.inputSheet.getSheetName();
+        this.tableLogicName = result;
+        return result;
+
+    }
+
+    /**
+     * テーブル物理名を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return テーブル物理名
+     */
+    @Override
+    public String getTablePhysicsName() {
+
+        String result = null;
+
+        if (KmgString.isNotEmpty(this.tablePhysicsName)) {
+
+            result = this.tablePhysicsName;
+            return result;
+
+        }
+        final Cell wkCell = KmgPoiUtils.getCell(this.inputSheet, 0, 0);
+        result = KmgPoiUtils.getStringValue(wkCell);
+        this.tablePhysicsName = result;
+        return result;
+
+    }
+
+    /**
+     * 初期化する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @param kmgDbTypes
+     *                   ＫＭＧＤＢの種類
+     * @param inputSheet
+     *                   入力シート
+     * @param sqlIdMap
+     *                   ＳＱＬＩＤマップ
+     * @param outputPath
+     *                   出力パス
+     */
+    @SuppressWarnings("hiding")
+    @Override
+    public void initialize(final KmgDbTypes kmgDbTypes, final Sheet inputSheet, final Map<String, String> sqlIdMap,
+        final Path outputPath) {
+
+        this.kmgDbTypes = kmgDbTypes;
+        this.inputSheet = inputSheet;
+        this.sqlIdMap = sqlIdMap;
+        this.outputPath = outputPath;
+
+    }
+
+    /**
      * ＰｏｓｔｇｒｅＳＱＬの出力データを返す<br>
      *
      * @author KenichiroArai
-     * 
+     *
      * @sine 1.0.0
-     * 
+     *
      * @version 1.0.0
-     * 
+     *
      * @param dataCell
      *                      データセル
      * @param kmgDbDataType
      *                      ＫＭＧＤＢ型の種類
-     * 
+     *
      * @return 出力データ
      */
     @SuppressWarnings("static-method")

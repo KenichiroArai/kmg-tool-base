@@ -3,6 +3,7 @@ package kmg.tool.domain.types;
 import java.util.HashMap;
 import java.util.Map;
 
+import kmg.tool.infrastructure.common.KmgToolComExcMessageTypes;
 import kmg.tool.infrastructure.common.KmgToolComGenMessageTypes;
 
 /**
@@ -14,7 +15,7 @@ import kmg.tool.infrastructure.common.KmgToolComGenMessageTypes;
  *
  * @version 0.1.0
  */
-public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
+public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgToolComExcMessageTypes {
 
     /* 定義：開始 */
 
@@ -41,7 +42,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN12000("一時的なCSVファイルの作成に失敗しました。CSVファイル名のみ=[{0}]、サフィックスと拡張子=[{1}]"),
 
     /**
-     * テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0]}
+     * テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0}]
      *
      * @author KenichiroArai
      *
@@ -49,7 +50,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN12001("テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0]}"),
+    KMGTOOL_GEN12001("テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0}]"),
 
     /**
      * テンプレートの動的変換ロジックをクローズ中にエラーが発生しました。
@@ -85,7 +86,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN13000("入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}"),
 
     /**
-     * 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}], テンプレートパス：[{1}], 出力ファイルパス=[{2}]
+     * 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]
      *
      * @author KenichiroArai
      *
@@ -93,7 +94,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN13001("出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}], テンプレートパス：[{1}], 出力ファイルパス=[{2}]"),
+    KMGTOOL_GEN13001("出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]"),
 
     /**
      * 入力ファイルを開くことができませんでした。入力ファイルパス：[{0}]
@@ -118,7 +119,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN13003("出力ファイルを開くことができませんでした。出力ファイルパス：[{0}]"),
 
     /**
-     * CSVの列が不足しています。入力ファイルパス: [{0}], プレースホルダーキー: [{1}], 列: [{2}] 番目
+     * CSVの列が不足しています。入力ファイルパス: [{0}]
      *
      * @author KenichiroArai
      *
@@ -126,7 +127,51 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN13004("CSVの列が不足しています。入力ファイルパス: [{0}], プレースホルダーキー: [{1}], 列: [{2}] 番目"),
+    KMGTOOL_GEN13004("CSVの列が不足しています。入力ファイルパス: [{0}]"),
+
+    /**
+     * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN13005("CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
+     * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN13006("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
+     * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN13007("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
+
+    /**
+     * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN13008("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
      * ファイル処理に失敗しました。
@@ -184,6 +229,50 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN31004("列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。"),
 
     /**
+     * フィールド作成ロジックをクローズ中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31005("フィールド作成ロジックをクローズ中にエラーが発生しました。"),
+
+    /**
+     * 1行読み込みに失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31007("1行読み込みに失敗しました。"),
+
+    /**
+     * メッセージの種類作成ロジックをクローズ中にエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31010("メッセージの種類作成ロジックをクローズ中にエラーが発生しました。"),
+
+    /**
+     * 項目名がnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32000("項目名がnullです。"),
+
+    /**
      * 項目名がnullです。
      *
      * @author KenichiroArai
@@ -217,7 +306,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
     KMGTOOL_GEN32003("型情報がnullです。"),
 
     /**
-     * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
+     * 項目がnullです。
      *
      * @author KenichiroArai
      *
@@ -225,10 +314,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32004("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
+    KMGTOOL_GEN32004("項目がnullです。"),
 
     /**
-     * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
+     * 項目と項目名に分かれていません。「項目=項目名」の設定にしてください。行番号=[{0}]、行データ=[{1}]
      *
      * @author KenichiroArai
      *
@@ -236,10 +325,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32005("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN32005("項目と項目名に分かれていません。「項目=項目名」の設定にしてください。行番号=[{0}]、行データ=[{1}]"),
 
     /**
-     * 1行読み込みに失敗しました。
+     * コメントがnullです。
      *
      * @author KenichiroArai
      *
@@ -247,10 +336,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32006("1行読み込みに失敗しました。"),
+    KMGTOOL_GEN32006("コメントがnullです。"),
 
     /**
-     * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
+     * フィールドがnullです。
      *
      * @author KenichiroArai
      *
@@ -258,10 +347,10 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32007("CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN32007("フィールドがnullです。"),
 
     /**
-     * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
+     * 型がnullです。
      *
      * @author KenichiroArai
      *
@@ -269,7 +358,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN32008("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN32008("型がnullです。"),
 
     /**
      * 項目名がnullです。
@@ -292,61 +381,6 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes {
      * @version 0.1.0
      */
     KMGTOOL_GEN32010("項目名がnullです。"),
-
-    /**
-     * 1行読み込みに失敗しました。
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32011("1行読み込みに失敗しました。"),
-
-    /**
-     * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32012("CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]"),
-
-    /**
-     * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32013("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
-
-    /**
-     * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32014("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
-
-    /**
-     * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    KMGTOOL_GEN32015("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
      * 失敗

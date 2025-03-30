@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kmg.foundation.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.logic.io.dtc.DtcLogic;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.domain.logic.two2one.dtc.DtcLogic;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
@@ -229,13 +229,6 @@ public class DtcServiceImpl implements DtcService {
             result = true;
 
         } catch (final KmgToolException e) {
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12001;
-            final Object[]               logMsgArgs  = {
-                this.getTemplatePath().toString(),
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
 
             throw e;
 

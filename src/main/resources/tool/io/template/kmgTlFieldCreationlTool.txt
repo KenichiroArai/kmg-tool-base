@@ -1,3 +1,0 @@
-
-/** $comment */
-private $type $field;
