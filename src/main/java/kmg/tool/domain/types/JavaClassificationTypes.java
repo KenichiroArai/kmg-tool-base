@@ -145,6 +145,24 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
      * @since 0.1.0
      *
      * @param displayName
+     *                    表示名
+     * @param key
+     *                    キー
+     * @param detail
+     *                    詳細情報
+     */
+    JavaClassificationTypes(final String displayName, final String key, final String detail) {
+
+        this(displayName, key, detail, null);
+
+    }
+
+    /**
+     * コンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param displayName
      *                              表示名
      * @param key
      *                              キー
@@ -164,24 +182,6 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     }
 
     /**
-     * コンストラクタ<br>
-     *
-     * @since 0.1.0
-     *
-     * @param displayName
-     *                    表示名
-     * @param key
-     *                    キー
-     * @param detail
-     *                    詳細情報
-     */
-    JavaClassificationTypes(final String displayName, final String key, final String detail) {
-
-        this(displayName, key, detail, null);
-
-    }
-
-    /**
      * キーを返す。<br>
      *
      * @since 0.1.0
@@ -194,6 +194,20 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     public String get() {
 
         final String result = this.getKey();
+        return result;
+
+    }
+
+    /**
+     * 区分判定パターンを返す。<br>
+     *
+     * @since 0.2.0
+     *
+     * @return 区分判定パターン
+     */
+    public String getClassificationPattern() {
+
+        final String result = this.classificationPattern;
         return result;
 
     }
@@ -259,20 +273,6 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     public String toString() {
 
         final String result = this.getKey();
-        return result;
-
-    }
-
-    /**
-     * 区分判定パターンを返す。<br>
-     *
-     * @since 0.2.0
-     *
-     * @return 区分判定パターン
-     */
-    public String getClassificationPattern() {
-
-        final String result = this.classificationPattern;
         return result;
 
     }
