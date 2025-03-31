@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
-import kmg.tool.application.model.JavadocReplacementModel;
-import kmg.tool.application.model.impl.JavadocReplacementModelImpl;
+import kmg.tool.domain.model.JavadocReplacementModel;
+import kmg.tool.domain.model.impl.JavadocReplacementModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

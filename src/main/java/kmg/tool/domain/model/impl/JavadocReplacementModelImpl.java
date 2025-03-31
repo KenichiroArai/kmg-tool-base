@@ -1,9 +1,9 @@
-package kmg.tool.application.model.impl;
+package kmg.tool.domain.model.impl;
 
 import java.util.UUID;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.model.JavadocReplacementModel;
+import kmg.tool.domain.model.JavadocReplacementModel;
 import kmg.tool.domain.types.JavaClassificationTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

@@ -1,4 +1,4 @@
-package kmg.tool.application.model;
+package kmg.tool.domain.model;
 
 import java.util.UUID;
 
