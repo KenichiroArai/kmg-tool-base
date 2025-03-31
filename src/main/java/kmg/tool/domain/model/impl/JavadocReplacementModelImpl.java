@@ -1,7 +1,9 @@
 package kmg.tool.domain.model.impl;
 
+import java.util.Arrays;
 import java.util.UUID;
 
+import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.domain.model.JavadocReplacementModel;
 import kmg.tool.domain.types.JavaClassificationTypes;
@@ -180,7 +182,10 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
         this.javaClassification = JavaClassificationTypes.NONE;
 
         /* コードを行ごとに確認する */
-        final String[] codeLines = KmgDelimiterTypes.LINE_SEPARATOR.split(this.sourceCode);
+
+        // コードを行ごとに取得する。空行は除外する。
+        final String[] codeLines = Arrays.stream(KmgDelimiterTypes.LINE_SEPARATOR.split(this.sourceCode))
+            .filter(KmgString::isNotEmpty).toArray(String[]::new);
 
         for (final String codeLine : codeLines) {
 
