@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import kmg.core.infrastructure.common.KmgComTypes;
+import kmg.core.infrastructure.type.KmgString;
 
 /**
  * Java区分の種類<br>
@@ -180,6 +181,88 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     public static JavaClassificationTypes getInitValue() {
 
         final JavaClassificationTypes result = NONE;
+        return result;
+
+    }
+
+    /**
+     * コードの行からJava区分を判別する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.2.0
+     *
+     * @param codeLine
+     *                 コードの行
+     *
+     * @return Java区分。該当する区分が見つからない場合はNONEを返す
+     */
+    public static JavaClassificationTypes identify(final String codeLine) {
+
+        JavaClassificationTypes result = NONE;
+
+        // 引数チェック
+        if (KmgString.isEmpty(codeLine)) {
+
+            return result;
+
+        }
+
+        for (final JavaClassificationTypes type : JavaClassificationTypes.values()) {
+
+            // NONEの場合はスキップ
+            if (type == NONE) {
+
+                continue;
+
+            }
+
+            // 区分判定パターンがnullの場合はスキップ
+            if (type.getClassificationPattern() == null) {
+
+                continue;
+
+            }
+
+            // コードラインが区分判定パターンにマッチするか確認
+            if (codeLine.matches(type.getClassificationPattern())) {
+
+                result = type;
+                return result;
+
+            }
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * コードの行がアノテーションかどうかを判別する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.2.0
+     *
+     * @param codeLine
+     *                 コードの行
+     *
+     * @return true：アノテーション、false：アノテーションではない
+     */
+    public static boolean isAnnotation(final String codeLine) {
+
+        boolean result = false;
+
+        // 引数チェック
+        if (KmgString.isEmpty(codeLine)) {
+
+            return result;
+
+        }
+
+        result = (ANNOTATION.getClassificationPattern() != null)
+            && codeLine.matches(ANNOTATION.getClassificationPattern());
         return result;
 
     }

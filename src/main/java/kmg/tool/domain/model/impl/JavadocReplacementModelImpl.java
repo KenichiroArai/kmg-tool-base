@@ -181,60 +181,27 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
         for (final String codeLine : codeLines) {
 
             // アノテーションの行はスキップ
-            if (codeLine.matches(JavaClassificationTypes.ANNOTATION.getClassificationPattern())) {
+            if (JavaClassificationTypes.isAnnotation(codeLine)) {
 
                 continue;
 
             }
 
-            // クラスの判定
-            if (codeLine.matches(JavaClassificationTypes.CLASS.getClassificationPattern())) {
+            // Java区分を判別
+            final JavaClassificationTypes type = JavaClassificationTypes.identify(codeLine);
 
-                this.javaClassification = JavaClassificationTypes.CLASS;
-                break;
+            if (type != JavaClassificationTypes.NONE) {
 
-            }
-
-            // インターフェースの判定
-            if (codeLine.matches(JavaClassificationTypes.INTERFACE.getClassificationPattern())) {
-
-                this.javaClassification = JavaClassificationTypes.INTERFACE;
-                break;
-
-            }
-
-            // 列挙型の判定
-            if (codeLine.matches(JavaClassificationTypes.ENUM.getClassificationPattern())) {
-
-                this.javaClassification = JavaClassificationTypes.ENUM;
-                break;
-
-            }
-
-            // メソッドの判定
-            if (codeLine.matches(JavaClassificationTypes.METHOD.getClassificationPattern())) {
-
-                this.javaClassification = JavaClassificationTypes.METHOD;
-                break;
-
-            }
-
-            // フィールドの判定
-            if (codeLine.matches(JavaClassificationTypes.FIELD.getClassificationPattern())) {
-
-                this.javaClassification = JavaClassificationTypes.FIELD;
-                break;
+                this.javaClassification = type;
+                result = true;
+                return result;
 
             }
 
         }
 
         // 分類が設定されていない場合はNONEを設定
-        if (this.javaClassification == null) {
-
-            this.javaClassification = JavaClassificationTypes.NONE;
-
-        }
+        this.javaClassification = JavaClassificationTypes.NONE;
 
         result = true;
         return result;
