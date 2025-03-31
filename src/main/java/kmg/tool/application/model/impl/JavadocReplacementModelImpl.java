@@ -192,8 +192,10 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
             }
 
             // TODO KenichiroArai 2025/03/30 判別をもっと詳細にする
-            if (codeLine.matches("class")) {
+            if (codeLine.matches("^\\s*class\\s+\\w+.*")) {
 
+                // TODO KenichiroArai 2025/03/30 トレース
+                System.out.println("クラス");
                 this.javaClassification = JavaClassificationTypes.CLASS;
                 break;
 

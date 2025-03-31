@@ -34,7 +34,7 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
      *
      * @since 0.1.0
      */
-    CLASS("クラス", "class", "クラス"),
+    CLASS("クラス", "class", "クラス", "^\\s*class\\s+\\w+.*"),
 
     /* 定義：終了 */
     ;
@@ -77,6 +77,13 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
      * @since 0.1.0
      */
     private final String detail;
+
+    /**
+     * 区分判定パターン
+     *
+     * @since 0.2.0
+     */
+    private final String classificationPattern;
 
     /**
      * デフォルトの種類を返す<br>
@@ -138,6 +145,30 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
      * @since 0.1.0
      *
      * @param displayName
+     *                              表示名
+     * @param key
+     *                              キー
+     * @param detail
+     *                              詳細情報
+     * @param classificationPattern
+     *                              区分判定パターン
+     */
+    JavaClassificationTypes(final String displayName, final String key, final String detail,
+        final String classificationPattern) {
+
+        this.displayName = displayName;
+        this.key = key;
+        this.detail = detail;
+        this.classificationPattern = classificationPattern;
+
+    }
+
+    /**
+     * コンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param displayName
      *                    表示名
      * @param key
      *                    キー
@@ -146,9 +177,7 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
      */
     JavaClassificationTypes(final String displayName, final String key, final String detail) {
 
-        this.displayName = displayName;
-        this.key = key;
-        this.detail = detail;
+        this(displayName, key, detail, null);
 
     }
 
@@ -230,6 +259,20 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     public String toString() {
 
         final String result = this.getKey();
+        return result;
+
+    }
+
+    /**
+     * 区分判定パターンを返す。<br>
+     *
+     * @since 0.2.0
+     *
+     * @return 区分判定パターン
+     */
+    public String getClassificationPattern() {
+
+        final String result = this.classificationPattern;
         return result;
 
     }
