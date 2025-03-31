@@ -56,13 +56,26 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     ENUM("列挙型", "enum", "列挙型", "^\\s*enum\\s+\\w+.*"),
 
     /**
-     * アノテーション
+     * アノテーション定義
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    ANNOTATION("アノテーション", "annotation", "アノテーション", "^\\s*@\\w+.*"),
+    ANNOTATION_DEFINITION("アノテーション定義", "annotation_definition", "アノテーション定義", "^\\s*@interface\\s+\\w+.*"),
+
+    /**
+     * アノテーション使用<br>
+     * <p>
+     * Javadocのタグと区別するため、区分判定パターンで除外している。
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    ANNOTATION_USAGE("アノテーション使用", "annotation_usage", "アノテーション使用",
+        "^\\s*@(?!author|since|version|param|return|throws|see|deprecated)\\w+.*"),
 
     /**
      * フィールド
@@ -186,23 +199,23 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     }
 
     /**
-     * コードの行からJava区分を判別する<br>
+     * 判定対象の文字列からJava区分を判別する<br>
      *
      * @author KenichiroArai
      *
-     * @since 0.2.0
+     * @since 0.1.0
      *
-     * @param codeLine
-     *                 コードの行
+     * @param text
+     *             判定対象の文字列
      *
      * @return Java区分。該当する区分が見つからない場合はNONEを返す
      */
-    public static JavaClassificationTypes identify(final String codeLine) {
+    public static JavaClassificationTypes identify(final String text) {
 
         JavaClassificationTypes result = NONE;
 
         // 引数チェック
-        if (KmgString.isEmpty(codeLine)) {
+        if (KmgString.isEmpty(text)) {
 
             return result;
 
@@ -210,22 +223,25 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
 
         for (final JavaClassificationTypes type : JavaClassificationTypes.values()) {
 
-            // NONEの場合はスキップ
+            // NONEか
             if (type == NONE) {
+                // NONEの場合
 
                 continue;
 
             }
 
-            // 区分判定パターンがnullの場合はスキップ
+            // 区分判定パターンがnullか
             if (type.getClassificationPattern() == null) {
+                // nullの場合
 
                 continue;
 
             }
 
-            // コードラインが区分判定パターンにマッチするか確認
-            if (codeLine.matches(type.getClassificationPattern())) {
+            // 判定対象の文字列が区分判定パターンにマッチするか
+            if (text.matches(type.getClassificationPattern())) {
+                // マッチする場合
 
                 result = type;
                 return result;
@@ -239,30 +255,29 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     }
 
     /**
-     * コードの行がアノテーションかどうかを判別する<br>
+     * コードの行がアノテーション使用かどうかを判別する<br>
      *
      * @author KenichiroArai
      *
-     * @since 0.2.0
+     * @since 0.1.0
      *
-     * @param codeLine
-     *                 コードの行
+     * @param text
+     *             判定対象の文字列
      *
-     * @return true：アノテーション、false：アノテーションではない
+     * @return true：アノテーション使用、false：アノテーション使用ではない
      */
-    public static boolean isAnnotation(final String codeLine) {
+    public static boolean isAnnotationUsage(final String text) {
 
         boolean result = false;
 
         // 引数チェック
-        if (KmgString.isEmpty(codeLine)) {
+        if (KmgString.isEmpty(text)) {
 
             return result;
 
         }
 
-        result = (ANNOTATION.getClassificationPattern() != null)
-            && codeLine.matches(ANNOTATION.getClassificationPattern());
+        result = text.matches(ANNOTATION_USAGE.getClassificationPattern());
         return result;
 
     }

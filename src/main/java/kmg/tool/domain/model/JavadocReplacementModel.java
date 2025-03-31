@@ -88,7 +88,7 @@ public interface JavadocReplacementModel {
      *
      * @sine 0.1.0
      *
-     * @return true：成功、false：失敗
+     * @return true：区分が特定できた、false：区分がNONE
      *
      * @throws KmgToolException
      *                          KMGツール例外

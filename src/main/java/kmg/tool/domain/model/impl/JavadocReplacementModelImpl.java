@@ -166,7 +166,7 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
      *
      * @sine 0.1.0
      *
-     * @return true：成功、false：失敗
+     * @return true：区分が特定できた、false：区分がNONE
      *
      * @throws KmgToolException
      *                          KMGツール例外
@@ -176,34 +176,36 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
 
         boolean result = false;
 
+        /* Java区分の初期化 */
+        this.javaClassification = JavaClassificationTypes.NONE;
+
+        /* コードを行ごとに確認する */
         final String[] codeLines = KmgDelimiterTypes.LINE_SEPARATOR.split(this.sourceCode);
 
         for (final String codeLine : codeLines) {
 
-            // アノテーションの行はスキップ
-            if (JavaClassificationTypes.isAnnotation(codeLine)) {
+            // アノテーションの行か
+            if (JavaClassificationTypes.isAnnotationUsage(codeLine)) {
+                // アノテーションの行の場合
 
                 continue;
 
             }
 
             // Java区分を判別
-            final JavaClassificationTypes type = JavaClassificationTypes.identify(codeLine);
+            this.javaClassification = JavaClassificationTypes.identify(codeLine);
 
-            if (type != JavaClassificationTypes.NONE) {
+            if (this.javaClassification == JavaClassificationTypes.NONE) {
 
-                this.javaClassification = type;
-                result = true;
                 return result;
 
             }
 
+            result = true;
+            return result;
+
         }
 
-        // 分類が設定されていない場合はNONEを設定
-        this.javaClassification = JavaClassificationTypes.NONE;
-
-        result = true;
         return result;
 
     }
