@@ -180,28 +180,59 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
 
         for (final String codeLine : codeLines) {
 
-            // TODO KenichiroArai 2025/03/30 ハードコード
+            // アノテーションの行はスキップ
+            if (codeLine.matches(JavaClassificationTypes.ANNOTATION.getClassificationPattern())) {
 
-            // コード行の先頭が「@」始まりか
-            if (codeLine.matches("^\\s*@.*")) {
-                // 始まりの場合
-
-                // 次の行へ
                 continue;
 
             }
 
-            // TODO KenichiroArai 2025/03/30 判別をもっと詳細にする
-            if (codeLine.matches("^\\s*class\\s+\\w+.*")) {
+            // クラスの判定
+            if (codeLine.matches(JavaClassificationTypes.CLASS.getClassificationPattern())) {
 
-                // TODO KenichiroArai 2025/03/30 トレース
-                System.out.println("クラス");
                 this.javaClassification = JavaClassificationTypes.CLASS;
                 break;
 
             }
 
-            // TODO KenichiroArai 2025/03/30 未実装
+            // インターフェースの判定
+            if (codeLine.matches(JavaClassificationTypes.INTERFACE.getClassificationPattern())) {
+
+                this.javaClassification = JavaClassificationTypes.INTERFACE;
+                break;
+
+            }
+
+            // 列挙型の判定
+            if (codeLine.matches(JavaClassificationTypes.ENUM.getClassificationPattern())) {
+
+                this.javaClassification = JavaClassificationTypes.ENUM;
+                break;
+
+            }
+
+            // メソッドの判定
+            if (codeLine.matches(JavaClassificationTypes.METHOD.getClassificationPattern())) {
+
+                this.javaClassification = JavaClassificationTypes.METHOD;
+                break;
+
+            }
+
+            // フィールドの判定
+            if (codeLine.matches(JavaClassificationTypes.FIELD.getClassificationPattern())) {
+
+                this.javaClassification = JavaClassificationTypes.FIELD;
+                break;
+
+            }
+
+        }
+
+        // 分類が設定されていない場合はNONEを設定
+        if (this.javaClassification == null) {
+
+            this.javaClassification = JavaClassificationTypes.NONE;
 
         }
 
