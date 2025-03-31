@@ -255,34 +255,6 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     }
 
     /**
-     * コードの行がアノテーション使用かどうかを判別する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @param text
-     *             判定対象の文字列
-     *
-     * @return true：アノテーション使用、false：アノテーション使用ではない
-     */
-    public static boolean isAnnotationUsage(final String text) {
-
-        boolean result = false;
-
-        // 引数チェック
-        if (KmgString.isEmpty(text)) {
-
-            return result;
-
-        }
-
-        result = text.matches(ANNOTATION_USAGE.getClassificationPattern());
-        return result;
-
-    }
-
-    /**
      * コンストラクタ<br>
      *
      * @since 0.1.0
@@ -381,6 +353,22 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     public String getKey() {
 
         final String result = this.key;
+        return result;
+
+    }
+
+    /**
+     * アノテーション使用かどうかを判別する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：アノテーション使用、false：アノテーション使用ではない
+     */
+    public boolean isAnnotationUsage() {
+
+        final boolean result = (this == ANNOTATION_USAGE);
         return result;
 
     }

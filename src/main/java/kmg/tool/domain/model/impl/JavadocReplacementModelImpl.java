@@ -189,16 +189,18 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
 
         for (final String codeLine : codeLines) {
 
+            // Java区分を判別
+            this.javaClassification = JavaClassificationTypes.identify(codeLine);
+
+            // TODO KenichiroArai 2025/04/01 JavaClassificationTypesにJavadoc対象の区分かを判定するメソッドを追加する。
+
             // アノテーションの行か
-            if (JavaClassificationTypes.isAnnotationUsage(codeLine)) {
+            if (this.javaClassification.isAnnotationUsage()) {
                 // アノテーションの行の場合
 
                 continue;
 
             }
-
-            // Java区分を判別
-            this.javaClassification = JavaClassificationTypes.identify(codeLine);
 
             if (this.javaClassification == JavaClassificationTypes.NONE) {
 
