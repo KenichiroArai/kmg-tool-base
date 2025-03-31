@@ -185,7 +185,7 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
 
         // コードを行ごとに取得する。空行は除外する。
         final String[] codeLines = Arrays.stream(KmgDelimiterTypes.LINE_SEPARATOR.split(this.sourceCode))
-            .filter(KmgString::isNotEmpty).toArray(String[]::new);
+            .filter(KmgString::isNotBlank).toArray(String[]::new);
 
         for (final String codeLine : codeLines) {
 
