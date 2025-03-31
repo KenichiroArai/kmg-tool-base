@@ -25,7 +25,7 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
      *
      * @since 0.1.0
      */
-    NONE("指定無し", "None", "指定無し"),
+    NONE("指定無し", "None", "指定無し", null),
 
     /**
      * クラス
@@ -35,6 +35,51 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
      * @since 0.1.0
      */
     CLASS("クラス", "class", "クラス", "^\\s*class\\s+\\w+.*"),
+
+    /**
+     * インターフェース
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    INTERFACE("インターフェース", "interface", "インターフェース", "^\\s*interface\\s+\\w+.*"),
+
+    /**
+     * 列挙型
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    ENUM("列挙型", "enum", "列挙型", "^\\s*enum\\s+\\w+.*"),
+
+    /**
+     * アノテーション
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    ANNOTATION("アノテーション", "annotation", "アノテーション", "^\\s*@\\w+.*"),
+
+    /**
+     * フィールド
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    FIELD("フィールド", "field", "フィールド", "^\\s*\\w+\\s+\\w+.*"),
+
+    /**
+     * メソッド
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    METHOD("メソッド", "method", "メソッド", "^\\s*\\w+\\s+\\w+\\(.*\\).*"),
 
     /* 定義：終了 */
     ;
@@ -136,24 +181,6 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
 
         final JavaClassificationTypes result = NONE;
         return result;
-
-    }
-
-    /**
-     * コンストラクタ<br>
-     *
-     * @since 0.1.0
-     *
-     * @param displayName
-     *                    表示名
-     * @param key
-     *                    キー
-     * @param detail
-     *                    詳細情報
-     */
-    JavaClassificationTypes(final String displayName, final String key, final String detail) {
-
-        this(displayName, key, detail, null);
 
     }
 
