@@ -9,15 +9,14 @@ insertPosition:
 # Javadocタグの定義
 # - name: タグ名（@は不要）
 # - text: タグの値
-# - overwrite: 既存のタグを上書きするかどうか
-# - location: タグの配置場所の設定
+# - location: 配置場所の設定
 #   - mode: 配置方法
 #     - compliant: 準拠モード（クラス、インタフェース、列挙型などの直前に自動で配置）
 #     - manual: 手動モード（targetElementsで指定した要素の直前に配置）
 #   - targetElements: 手動モードの場合の対象要素（modeが"manual"の場合のみ有効）
 #     - type: 要素の種類（class, interface, enum, method, field）
 #     - name: 要素名
-# - versionOverwritePolicy: バージョンの上書きポリシー（バージョン管理タグの場合のみ）
+# - overwrite: 上書き
 #   - never: 上書きしない
 #   - always: 常に上書き
 #   - ifLower: 既存のバージョンより小さい場合のみ上書き
@@ -26,14 +25,12 @@ insertPosition:
 # 1. 準拠モードの例（クラスやインタフェースに自動的に配置）
 # - name: "author"
 #   text: "KenichiroArai"
-#   overwrite: false
 #   location:
 #     mode: "compliant"
 #
 # 2. 手動モードの例（特定のクラスとインタフェースにのみ配置）
 # - name: "since"
 #   text: "0.1.0"
-#   overwrite: true
 #   location:
 #     mode: "manual"
 #     targetElements:
@@ -41,34 +38,22 @@ insertPosition:
 #         name: "SampleClass"
 #       - type: "interface"
 #         name: "SampleInterface"
-#   versionOverwritePolicy: "ifLower"
+#   overwrite: "ifLower"
 javadocTags:
     - name: "author"
       text: "KenichiroArai"
-      overwrite: false
       location:
           mode: "compliant"
+      overwrite: "always"
 
     - name: "since"
       text: "0.1.0"
-      overwrite: true
       location:
-          mode: "manual"
-          targetElements:
-              - type: "class"
-                name: "SampleClass"
-              - type: "interface"
-                name: "SampleInterface"
-      versionOverwritePolicy: "ifLower"
+          mode: "compliant"
+      overwrite: "ifLower"
 
     - name: "version"
       text: "0.1.0"
-      overwrite: true
       location:
-          mode: "manual"
-          targetElements:
-              - type: "class"
-                name: "SampleClass"
-              - type: "method"
-                name: "execute"
-      versionOverwritePolicy: "ifLower"
+          mode: "compliant"
+      overwrite: "ifLower"
