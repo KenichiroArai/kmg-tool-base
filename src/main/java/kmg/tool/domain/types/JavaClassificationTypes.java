@@ -13,7 +13,7 @@ import kmg.core.infrastructure.type.KmgString;
  *
  * @since 0.1.0
  *
- * @version 0.2.0
+ * @version 0.1.0
  */
 public enum JavaClassificationTypes implements KmgComTypes<String> {
 
@@ -140,7 +140,7 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     /**
      * 区分判定パターン
      *
-     * @since 0.2.0
+     * @since 0.1.0
      */
     private final String classificationPattern;
 
@@ -239,14 +239,16 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
 
             }
 
-            // 判定対象の文字列が区分判定パターンにマッチするか
-            if (text.matches(type.getClassificationPattern())) {
-                // マッチする場合
+            // 判定対象の文字列が区分判定パターンにマッチしないか
+            if (!text.matches(type.getClassificationPattern())) {
+                // マッチしない場合
 
-                result = type;
-                return result;
+                continue;
 
             }
+
+            result = type;
+            break;
 
         }
 
@@ -298,7 +300,7 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     /**
      * 区分判定パターンを返す。<br>
      *
-     * @since 0.2.0
+     * @since 0.1.0
      *
      * @return 区分判定パターン
      */
@@ -362,7 +364,7 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
      *
      * @author KenichiroArai
      *
-     * @since 0.2.0
+     * @since 0.1.0
      *
      * @return true：Javadoc対象の区分、false：Javadoc対象外の区分
      */
@@ -387,7 +389,7 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
      *
      * @author KenichiroArai
      *
-     * @since 0.2.0
+     * @since 0.1.0
      *
      * @return true：Javadoc対象外の区分、false：Javadoc対象の区分
      */
