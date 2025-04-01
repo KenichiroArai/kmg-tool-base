@@ -17,7 +17,7 @@ insertPosition:
 #     - type: 要素の種類（class, interface, enum, method, field）
 #     - name: 要素名
 # - overwrite: 上書き
-#   - never: 上書きしない
+#   - never: 上書きしない（既存が存在しない場合のみ追加する）
 #   - always: 常に上書き
 #   - ifLower: 既存のバージョンより小さい場合のみ上書き
 #
@@ -38,7 +38,7 @@ insertPosition:
 #         name: "SampleClass"
 #       - type: "interface"
 #         name: "SampleInterface"
-#   overwrite: "ifLower"
+#   overwrite: "always"
 javadocTags:
     - name: "author"
       text: "KenichiroArai"
@@ -50,7 +50,7 @@ javadocTags:
       text: "0.1.0"
       location:
           mode: "compliant"
-      overwrite: "ifLower"
+      overwrite: "never"
 
     - name: "version"
       text: "0.1.0"
