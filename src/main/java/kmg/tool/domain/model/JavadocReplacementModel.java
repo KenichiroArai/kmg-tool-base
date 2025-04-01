@@ -2,7 +2,7 @@ package kmg.tool.domain.model;
 
 import java.util.UUID;
 
-import kmg.tool.domain.types.JavaClassificationTypes;
+import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**

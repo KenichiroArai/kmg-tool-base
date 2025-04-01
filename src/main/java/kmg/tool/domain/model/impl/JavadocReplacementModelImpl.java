@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import kmg.core.infrastructure.type.KmgString;
+import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.domain.model.JavadocReplacementModel;
-import kmg.tool.domain.types.JavaClassificationTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
