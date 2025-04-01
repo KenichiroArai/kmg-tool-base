@@ -192,24 +192,16 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
             // Java区分を判別
             this.javaClassification = JavaClassificationTypes.identify(codeLine);
 
-            // TODO KenichiroArai 2025/04/01 JavaClassificationTypesにJavadoc対象の区分かを判定するメソッドを追加する。
-
-            // アノテーションの行か
-            if (this.javaClassification.isAnnotationUsage()) {
-                // アノテーションの行の場合
+            // Javadoc対象外か
+            if (this.javaClassification.isNotJavadocTarget()) {
+                // 対象外の場合
 
                 continue;
 
             }
 
-            if (this.javaClassification == JavaClassificationTypes.NONE) {
-
-                return result;
-
-            }
-
             result = true;
-            return result;
+            break;
 
         }
 

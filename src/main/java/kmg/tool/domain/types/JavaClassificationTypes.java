@@ -358,17 +358,42 @@ public enum JavaClassificationTypes implements KmgComTypes<String> {
     }
 
     /**
-     * アノテーション使用かどうかを判別する<br>
+     * Javadoc対象の区分かを判定する<br>
      *
      * @author KenichiroArai
      *
-     * @since 0.1.0
+     * @since 0.2.0
      *
-     * @return true：アノテーション使用、false：アノテーション使用ではない
+     * @return true：Javadoc対象の区分、false：Javadoc対象外の区分
      */
-    public boolean isAnnotationUsage() {
+    public boolean isJavadocTarget() {
 
-        final boolean result = (this == ANNOTATION_USAGE);
+        final boolean result = switch (this) {
+
+            // Javadoc対象
+            case CLASS, INTERFACE, ENUM, ANNOTATION_DEFINITION, FIELD, METHOD -> true;
+
+            // Javadoc対象外
+            case NONE, ANNOTATION_USAGE -> false;
+
+        };
+
+        return result;
+
+    }
+
+    /**
+     * Javadoc対象外の区分かを判定する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.2.0
+     *
+     * @return true：Javadoc対象外の区分、false：Javadoc対象の区分
+     */
+    public boolean isNotJavadocTarget() {
+
+        final boolean result = !this.isJavadocTarget();
         return result;
 
     }
