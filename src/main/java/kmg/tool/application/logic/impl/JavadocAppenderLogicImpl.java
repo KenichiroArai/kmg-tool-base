@@ -15,9 +15,13 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgListUtils;
+import kmg.fund.infrastructure.exception.KmgFundException;
+import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.domain.model.JavadocReplacementModel;
+import kmg.tool.domain.model.JavadocTagConfigModel;
 import kmg.tool.domain.model.impl.JavadocReplacementModelImpl;
+import kmg.tool.domain.model.impl.JavadocTagConfigModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -72,6 +76,11 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private final Map<String, String> tagMap;
 
     /**
+     * Javadocタグ設定モデルのリスト
+     */
+    private final List<JavadocTagConfigModel> javadocTagConfigModels;
+
+    /**
      * 対象のJavaファイルパスのリスト
      *
      * @author KenichiroArai
@@ -120,6 +129,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     public JavadocAppenderLogicImpl() {
 
         this.tagMap = new HashMap<>();
+        this.javadocTagConfigModels = new ArrayList<>();
         this.javaFilePathList = new ArrayList<>();
         this.currentJavaFileIndex = 0;
         this.currentJavaFilePath = null;
@@ -191,43 +201,41 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      *                          KMGツール例外
      */
     @Override
+    @SuppressWarnings("unchecked")
     public boolean createTagMap() throws KmgToolException {
 
         boolean result = false;
 
-        /* テンプレートの読み込み */
-        List<String> lines = null;
-
         try {
 
-            lines = Files.readAllLines(this.templatePath);
+            // YAMLファイルを読み込む
+            final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
 
-        } catch (final IOException e) {
+            // javadocTagsセクションを取得
+            final List<Map<String, Object>> javadocTags = (List<Map<String, Object>>) yamlData.get("javadocTags");
+
+            // タグマップとモデルリストをクリア
+            this.tagMap.clear();
+            this.javadocTagConfigModels.clear();
+
+            // 各タグ設定を処理
+            for (final Map<String, Object> tagConfig : javadocTags) {
+
+                // モデルを作成
+                final JavadocTagConfigModel model = new JavadocTagConfigModelImpl(tagConfig);
+                this.javadocTagConfigModels.add(model);
+
+                // 従来のタグマップにも追加（後方互換性のため）
+                this.tagMap.put("@" + model.getName(), model.getText());
+
+            }
+
+        } catch (final KmgFundException e) {
 
             // TODO KenichiroArai 2025/03/29 メッセージ
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
-
-        }
-
-        /* タグマップの作成 */
-        for (final String line : lines) {
-
-            final String trimmedLine = line.trim();
-
-            if (!trimmedLine.startsWith(KmgDelimiterTypes.HALF_AT_SIGN.get())) {
-
-                continue;
-
-            }
-
-            // TODO KenichiroArai 2025/03/29 ハードコード
-            // タグと値を分離
-            final String[] parts = KmgDelimiterTypes.SERIES_HALF_SPACE.split(trimmedLine, 2);
-            final String   tag   = parts[0].trim();
-            final String   value = parts[1].trim();
-            this.tagMap.put(tag, value);
 
         }
 

@@ -22,12 +22,14 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 })
 public class JavadocAppenderTool extends AbstractInputTool {
 
+    // TODO KenichiroArai 2025/04/02 パスの自動設定
+
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH
-        = Paths.get(JavadocAppenderTool.BASE_PATH.toString(), "template/JavadocAppenderTool.txt");
+        = Paths.get(JavadocAppenderTool.BASE_PATH.toString(), "template/JavadocAppenderTool.yml");
 
     /**
      * <h3>ツール名</h3>
