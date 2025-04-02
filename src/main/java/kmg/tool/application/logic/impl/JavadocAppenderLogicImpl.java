@@ -20,12 +20,11 @@ import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.domain.model.JavadocReplacementModel;
 import kmg.tool.domain.model.JavadocTagConfigModel;
+import kmg.tool.domain.model.JavadocTagsModel;
 import kmg.tool.domain.model.impl.JavadocReplacementModelImpl;
-import kmg.tool.domain.model.impl.JavadocTagConfigModelImpl;
+import kmg.tool.domain.model.impl.JavadocTagsModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
-import kmg.tool.domain.model.JavadocTagsModel;
-import kmg.tool.domain.model.impl.JavadocTagsModelImpl;
 
 /**
  * Javadoc追加ロジック<br>
@@ -131,6 +130,44 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
+     * Javadocタグモデルを作成する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean createJavadocTagsModel() throws KmgToolException {
+
+        boolean result = false;
+
+        try {
+
+            /* YAMLファイルを読み込み、モデルを作成 */
+            final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
+            this.javadocTagsModel = new JavadocTagsModelImpl(yamlData);
+
+        } catch (final KmgFundException e) {
+
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+
+        result = true;
+        return result;
+
+    }
+
+    /**
      * 対象のJavaファイル
      *
      * @author KenichiroArai
@@ -180,44 +217,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * Javadocタグモデルを作成する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean createJavadocTagsModel() throws KmgToolException {
-
-        boolean result = false;
-
-        try {
-
-            /* YAMLファイルを読み込み、モデルを作成 */
-            final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
-            this.javadocTagsModel = new JavadocTagsModelImpl(yamlData);
-
-        } catch (final KmgFundException e) {
-
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
-
-        }
-
-        result = true;
-        return result;
-
-    }
-
-    /**
      * 現在の書き込みするファイルの中身を返す<br>
      *
      * @author KenichiroArai
@@ -243,6 +242,25 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     public Path getCurrentJavaFilePath() {
 
         final Path result = this.currentJavaFilePath;
+        return result;
+
+    }
+
+    /**
+     * Javadocタグモデルを取得する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return Javadocタグモデル
+     */
+    @Override
+    public JavadocTagsModel getJavadocTagsModel() {
+
+        final JavadocTagsModel result = this.javadocTagsModel;
         return result;
 
     }
@@ -435,7 +453,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
                 // 元のJavadoc
 
                 final JavadocReplacementModel javadocReplacementModel
-                    = new JavadocReplacementModelImpl(sourceJavadoc, sourceCode);
+                    = new JavadocReplacementModelImpl(sourceJavadoc, sourceCode, this.javadocTagsModel);
                 javadocReplacementModelList.add(javadocReplacementModel);
 
                 // TODO KenichiroArai 2025/03/29 実装中
@@ -558,25 +576,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
                 .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
 
         }
-
-    }
-
-    /**
-     * Javadocタグモデルを取得する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return Javadocタグモデル
-     */
-    @Override
-    public JavadocTagsModel getJavadocTagsModel() {
-
-        final JavadocTagsModel result = this.javadocTagsModel;
-        return result;
 
     }
 }
