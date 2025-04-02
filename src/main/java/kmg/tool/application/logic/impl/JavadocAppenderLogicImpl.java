@@ -24,6 +24,8 @@ import kmg.tool.domain.model.impl.JavadocReplacementModelImpl;
 import kmg.tool.domain.model.impl.JavadocTagConfigModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.domain.model.JavadocTagsModel;
+import kmg.tool.domain.model.impl.JavadocTagsModelImpl;
 
 /**
  * Javadoc追加ロジック<br>
@@ -117,6 +119,9 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     private String currentContentsOfFileToWrite;
 
+    /** Javadocタグモデル */
+    private JavadocTagsModel javadocTagsModel;
+
     /**
      * デフォルトコンストラクタ
      *
@@ -201,31 +206,21 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      *                          KMGツール例外
      */
     @Override
-    @SuppressWarnings("unchecked")
     public boolean createTagMap() throws KmgToolException {
 
         boolean result = false;
 
         try {
 
-            // YAMLファイルを読み込む
+            /* YAMLファイルを読み込み、モデルを作成 */
             final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
+            this.javadocTagsModel = new JavadocTagsModelImpl(yamlData);
 
-            // javadocTagsセクションを取得
-            final List<Map<String, Object>> javadocTags = (List<Map<String, Object>>) yamlData.get("javadocTags");
-
-            // タグマップとモデルリストをクリア
+            /* タグマップをクリアして再構築 */
             this.tagMap.clear();
-            this.javadocTagConfigModels.clear();
 
-            // 各タグ設定を処理
-            for (final Map<String, Object> tagConfig : javadocTags) {
+            for (final JavadocTagConfigModel model : this.javadocTagsModel.getJavadocTagConfigModels()) {
 
-                // モデルを作成
-                final JavadocTagConfigModel model = new JavadocTagConfigModelImpl(tagConfig);
-                this.javadocTagConfigModels.add(model);
-
-                // 従来のタグマップにも追加（後方互換性のため）
                 this.tagMap.put("@" + model.getName(), model.getText());
 
             }
