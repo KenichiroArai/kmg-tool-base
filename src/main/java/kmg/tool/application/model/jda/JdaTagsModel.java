@@ -1,10 +1,13 @@
-package kmg.tool.application.model.javadocappender;
+package kmg.tool.application.model.jda;
 
 import java.util.List;
 
 /**
  * Javadoc追加のタグモデル<br>
  * YAMLファイルのjavadocTagsセクションを表現するモデル
+ * <p>
+ * Jdaは、JavadocAppenderの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -12,7 +15,7 @@ import java.util.List;
  *
  * @version 0.1.0
  */
-public interface JavadocAppenderTagsModel {
+public interface JdaTagsModel {
 
     /**
      * 説明を返す<br>
@@ -26,7 +29,7 @@ public interface JavadocAppenderTagsModel {
      *
      * @return Javadoc追加のタグ設定モデルのリスト
      */
-    List<JavadocAppenderTagConfigModel> getJavadocAppenderTagConfigModels();
+    List<JdaTagConfigModel> getJavadocAppenderTagConfigModels();
 
     /**
      * タグを返す<br>
@@ -53,10 +56,10 @@ public interface JavadocAppenderTagsModel {
     /**
      * Javadoc追加のタグ設定モデルのリストを設定する<br>
      *
-     * @param javadocAppenderTagConfigModels
-     *                                       Javadoc追加のタグ設定モデルのリスト
+     * @param jdaTagConfigModels
+     *                           Javadoc追加のタグ設定モデルのリスト
      */
-    void setJavadocAppenderTagConfigModels(List<JavadocAppenderTagConfigModel> javadocAppenderTagConfigModels);
+    void setJavadocAppenderTagConfigModels(List<JdaTagConfigModel> jdaTagConfigModels);
 
     /**
      * タグを設定する<br>

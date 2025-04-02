@@ -1,15 +1,18 @@
-package kmg.tool.application.model.javadocappender.imp;
+package kmg.tool.application.model.jda.imp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kmg.tool.application.model.javadocappender.JavadocAppenderTagConfigModel;
-import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
+import kmg.tool.application.model.jda.JdaTagConfigModel;
+import kmg.tool.application.model.jda.JdaTagsModel;
 
 /**
  * Javadoc追加のタグモデル<br>
  * YAMLファイルのjavadocTagsセクションを表現するモデル
+ * <p>
+ * Jdaは、JavadocAppenderの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -17,7 +20,7 @@ import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
  *
  * @version 0.1.0
  */
-public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
+public class JdaTagsModelImpl implements JdaTagsModel {
 
     /** タグ */
     private String tag;
@@ -29,14 +32,14 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
     private String description;
 
     /** Javadoc追加のタグ設定モデルのリスト */
-    private List<JavadocAppenderTagConfigModel> javadocAppenderTagConfigModels;
+    private List<JdaTagConfigModel> jdaTagConfigModels;
 
     /**
      * デフォルトコンストラクタ<br>
      */
-    public JavadocAppenderTagsModelImpl() {
+    public JdaTagsModelImpl() {
 
-        this.javadocAppenderTagConfigModels = new ArrayList<>();
+        this.jdaTagConfigModels = new ArrayList<>();
 
     }
 
@@ -47,7 +50,7 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
      *                 YAMLデータ
      */
     @SuppressWarnings("unchecked")
-    public JavadocAppenderTagsModelImpl(final Map<String, Object> yamlData) {
+    public JdaTagsModelImpl(final Map<String, Object> yamlData) {
 
         this();
 
@@ -76,8 +79,8 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
             }
 
             /* モデルの作成と追加 */
-            final JavadocAppenderTagConfigModel model = new JavadocAppenderTagConfigModelImpl(tagConfig);
-            this.javadocAppenderTagConfigModels.add(model);
+            final JdaTagConfigModel model = new JdaTagConfigModelImpl(tagConfig);
+            this.jdaTagConfigModels.add(model);
 
         }
 
@@ -102,9 +105,9 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
      * @return Javadoc追加のタグ設定モデルのリスト
      */
     @Override
-    public List<JavadocAppenderTagConfigModel> getJavadocAppenderTagConfigModels() {
+    public List<JdaTagConfigModel> getJavadocAppenderTagConfigModels() {
 
-        final List<JavadocAppenderTagConfigModel> result = this.javadocAppenderTagConfigModels;
+        final List<JdaTagConfigModel> result = this.jdaTagConfigModels;
         return result;
 
     }
@@ -151,14 +154,13 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
     /**
      * Javadoc追加のタグ設定モデルのリストを設定する<br>
      *
-     * @param javadocAppenderTagConfigModels
-     *                                       Javadoc追加のタグ設定モデルのリスト
+     * @param jdaTagConfigModels
+     *                           Javadoc追加のタグ設定モデルのリスト
      */
     @Override
-    public void setJavadocAppenderTagConfigModels(
-        final List<JavadocAppenderTagConfigModel> javadocAppenderTagConfigModels) {
+    public void setJavadocAppenderTagConfigModels(final List<JdaTagConfigModel> jdaTagConfigModels) {
 
-        this.javadocAppenderTagConfigModels = javadocAppenderTagConfigModels;
+        this.jdaTagConfigModels = jdaTagConfigModels;
 
     }
 

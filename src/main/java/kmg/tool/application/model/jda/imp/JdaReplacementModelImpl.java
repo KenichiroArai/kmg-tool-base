@@ -1,4 +1,4 @@
-package kmg.tool.application.model.javadocappender.imp;
+package kmg.tool.application.model.jda.imp;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -6,16 +6,19 @@ import java.util.UUID;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.model.javadocappender.JavadocAppenderReplacementModel;
-import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
+import kmg.tool.application.model.jda.JdaReplacementModel;
+import kmg.tool.application.model.jda.JdaTagsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * Javadoc追加の置換モデル<br>
+ * <p>
+ * Jdaは、JavadocAppenderの略。
+ * </p>
  *
  * @author KenichiroArai
  */
-public class JavadocAppenderReplacementModelImpl implements JavadocAppenderReplacementModel {
+public class JdaReplacementModelImpl implements JdaReplacementModel {
 
     /** 元のJavadoc */
     private final String sourceJavadoc;
@@ -33,7 +36,7 @@ public class JavadocAppenderReplacementModelImpl implements JavadocAppenderRepla
     private String replacedJavadoc;
 
     /** Javadoc追加のタグモデル */
-    private final JavadocAppenderTagsModel javadocAppenderTagsModel;
+    private final JdaTagsModel jdaTagsModel;
 
     /**
      * コンストラクタ<br>
@@ -43,19 +46,19 @@ public class JavadocAppenderReplacementModelImpl implements JavadocAppenderRepla
      * @sine 0.1.0
      *
      * @param sourceJavadoc
-     *                                 元のJavadoc
+     *                      元のJavadoc
      * @param sourceCode
-     *                                 元のコード
-     * @param javadocAppenderTagsModel
-     *                                 Javadocタグモデル
+     *                      元のコード
+     * @param jdaTagsModel
+     *                      Javadocタグモデル
      */
-    public JavadocAppenderReplacementModelImpl(final String sourceJavadoc, final String sourceCode,
-        final JavadocAppenderTagsModel javadocAppenderTagsModel) {
+    public JdaReplacementModelImpl(final String sourceJavadoc, final String sourceCode,
+        final JdaTagsModel jdaTagsModel) {
 
         this.sourceJavadoc = sourceJavadoc;
         this.sourceCode = sourceCode;
         this.identifier = UUID.randomUUID();
-        this.javadocAppenderTagsModel = javadocAppenderTagsModel;
+        this.jdaTagsModel = jdaTagsModel;
 
     }
 

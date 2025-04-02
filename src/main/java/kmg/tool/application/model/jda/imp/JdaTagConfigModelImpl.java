@@ -1,11 +1,14 @@
-package kmg.tool.application.model.javadocappender.imp;
+package kmg.tool.application.model.jda.imp;
 
 import java.util.Map;
 
-import kmg.tool.application.model.javadocappender.JavadocAppenderTagConfigModel;
+import kmg.tool.application.model.jda.JdaTagConfigModel;
 
 /**
  * Javadoc追加のタグ設定モデル実装<br>
+ * <p>
+ * Jdaは、JavadocAppenderの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -13,7 +16,7 @@ import kmg.tool.application.model.javadocappender.JavadocAppenderTagConfigModel;
  *
  * @version 0.1.0
  */
-public class JavadocAppenderTagConfigModelImpl implements JavadocAppenderTagConfigModel {
+public class JdaTagConfigModelImpl implements JdaTagConfigModel {
 
     /** タグ名 */
     private String name;
@@ -33,7 +36,7 @@ public class JavadocAppenderTagConfigModelImpl implements JavadocAppenderTagConf
     /**
      * デフォルトコンストラクタ<br>
      */
-    public JavadocAppenderTagConfigModelImpl() {
+    public JdaTagConfigModelImpl() {
 
         // 処理なし
     }
@@ -45,7 +48,7 @@ public class JavadocAppenderTagConfigModelImpl implements JavadocAppenderTagConf
      *                  タグ設定
      */
     @SuppressWarnings("unchecked")
-    public JavadocAppenderTagConfigModelImpl(final Map<String, Object> tagConfig) {
+    public JdaTagConfigModelImpl(final Map<String, Object> tagConfig) {
 
         // TODO KenichiroArai 2025/04/02 ハードコード
         this.name = (String) tagConfig.get("name");

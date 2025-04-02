@@ -1,9 +1,12 @@
-package kmg.tool.application.model.javadocappender;
+package kmg.tool.application.model.jda;
 
 import java.util.Map;
 
 /**
  * Javadoc追加のタグ設定モデル<br>
+ * <p>
+ * Jdaは、JavadocAppenderの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -11,7 +14,7 @@ import java.util.Map;
  *
  * @version 0.1.0
  */
-public interface JavadocAppenderTagConfigModel {
+public interface JdaTagConfigModel {
 
     /**
      * タグの挿入位置を返す<br>

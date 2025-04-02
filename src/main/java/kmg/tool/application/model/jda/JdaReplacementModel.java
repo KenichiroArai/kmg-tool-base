@@ -1,4 +1,4 @@
-package kmg.tool.application.model.javadocappender;
+package kmg.tool.application.model.jda;
 
 import java.util.UUID;
 
@@ -7,10 +7,13 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * Javadoc追加の置換モデルインタフェース<br>
+ * <p>
+ * Jdaは、JavadocAppenderの略。
+ * </p>
  *
  * @author KenichiroArai
  */
-public interface JavadocAppenderReplacementModel {
+public interface JdaReplacementModel {
 
     /**
      * 置換後のJavadocを作成する。<br>

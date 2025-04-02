@@ -1,9 +1,9 @@
-package kmg.tool.application.logic.javadocappender;
+package kmg.tool.application.logic;
 
 import java.nio.file.Path;
 import java.util.List;
 
-import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
+import kmg.tool.application.model.jda.JdaTagsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -56,7 +56,7 @@ public interface JavadocAppenderLogic {
      *
      * @return Javadocタグモデル
      */
-    JavadocAppenderTagsModel getJavadocAppenderTagsModel();
+    JdaTagsModel getJavadocAppenderTagsModel();
 
     /**
      * 対象のJavaファイルパスのリストを返す<br>

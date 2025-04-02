@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.javadocappender.impl;
+package kmg.tool.application.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,12 +16,12 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.fund.infrastructure.exception.KmgFundException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.application.logic.javadocappender.JavadocAppenderLogic;
-import kmg.tool.application.model.javadocappender.JavadocAppenderReplacementModel;
-import kmg.tool.application.model.javadocappender.JavadocAppenderTagConfigModel;
-import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
-import kmg.tool.application.model.javadocappender.imp.JavadocAppenderReplacementModelImpl;
-import kmg.tool.application.model.javadocappender.imp.JavadocAppenderTagsModelImpl;
+import kmg.tool.application.logic.JavadocAppenderLogic;
+import kmg.tool.application.model.jda.JdaReplacementModel;
+import kmg.tool.application.model.jda.JdaTagConfigModel;
+import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.application.model.jda.imp.JdaReplacementModelImpl;
+import kmg.tool.application.model.jda.imp.JdaTagsModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -67,7 +67,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     /**
      * Javadoc追加のタグ設定モデルのリスト
      */
-    private final List<JavadocAppenderTagConfigModel> javadocAppenderTagConfigModels;
+    private final List<JdaTagConfigModel> jdaTagConfigModels;
 
     /**
      * 対象のJavaファイルパスのリスト
@@ -107,7 +107,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private String currentContentsOfFileToWrite;
 
     /** Javadocタグモデル */
-    private JavadocAppenderTagsModel javadocAppenderTagsModel;
+    private JdaTagsModel jdaTagsModel;
 
     /**
      * デフォルトコンストラクタ
@@ -120,7 +120,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     public JavadocAppenderLogicImpl() {
 
-        this.javadocAppenderTagConfigModels = new ArrayList<>();
+        this.jdaTagConfigModels = new ArrayList<>();
         this.javaFilePathList = new ArrayList<>();
         this.currentJavaFileIndex = 0;
         this.currentJavaFilePath = null;
@@ -151,7 +151,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
             /* YAMLファイルを読み込み、モデルを作成 */
             final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
-            this.javadocAppenderTagsModel = new JavadocAppenderTagsModelImpl(yamlData);
+            this.jdaTagsModel = new JdaTagsModelImpl(yamlData);
 
         } catch (final KmgFundException e) {
 
@@ -257,9 +257,9 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @return Javadoc追加のタグモデル
      */
     @Override
-    public JavadocAppenderTagsModel getJavadocAppenderTagsModel() {
+    public JdaTagsModel getJavadocAppenderTagsModel() {
 
-        final JavadocAppenderTagsModel result = this.javadocAppenderTagsModel;
+        final JdaTagsModel result = this.jdaTagsModel;
         return result;
 
     }
@@ -430,7 +430,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
             /* Javadocを設定する */
 
-            final List<JavadocAppenderReplacementModel> javadocReplacementModelList = new ArrayList<>();
+            final List<JdaReplacementModel> javadocReplacementModelList = new ArrayList<>();
 
             // 「/**」でブロックに分ける
             final String[] blocks = this.currentContentsOfFileToWrite.split(Pattern.quote("/**"));
@@ -451,29 +451,29 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
                 // 元のJavadoc
 
-                final JavadocAppenderReplacementModel javadocAppenderReplacementModel
-                    = new JavadocAppenderReplacementModelImpl(sourceJavadoc, sourceCode, this.javadocAppenderTagsModel);
-                javadocReplacementModelList.add(javadocAppenderReplacementModel);
+                final JdaReplacementModel jdaReplacementModel
+                    = new JdaReplacementModelImpl(sourceJavadoc, sourceCode, this.jdaTagsModel);
+                javadocReplacementModelList.add(jdaReplacementModel);
 
                 // TODO KenichiroArai 2025/03/29 実装中
 
                 // 元のJavadoc部分を置換用識別子に置換する
                 this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite
-                    .replaceFirst(Pattern.quote(sourceJavadoc), javadocAppenderReplacementModel.getIdentifier().toString());
+                    .replaceFirst(Pattern.quote(sourceJavadoc), jdaReplacementModel.getIdentifier().toString());
 
                 // Java区分を特定する
-                javadocAppenderReplacementModel.specifyJavaClassification();
+                jdaReplacementModel.specifyJavaClassification();
 
                 // 置換後のJavadocを作成する
-                javadocAppenderReplacementModel.createReplacedJavadoc();
+                jdaReplacementModel.createReplacedJavadoc();
 
             }
 
             // 置換用識別子を置換後のJavadocに置換する
-            for (final JavadocAppenderReplacementModel javadocAppenderReplacementModel : javadocReplacementModelList) {
+            for (final JdaReplacementModel jdaReplacementModel : javadocReplacementModelList) {
 
-                this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite.replace(
-                    javadocAppenderReplacementModel.getIdentifier().toString(), javadocAppenderReplacementModel.getReplacedJavadoc());
+                this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite
+                    .replace(jdaReplacementModel.getIdentifier().toString(), jdaReplacementModel.getReplacedJavadoc());
 
             }
 

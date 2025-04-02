@@ -1,4 +1,4 @@
-package kmg.tool.application.service.javadocappender.impl;
+package kmg.tool.application.service.impl;
 
 import java.nio.file.Path;
 
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.javadocappender.JavadocAppenderLogic;
-import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
-import kmg.tool.application.service.javadocappender.JavadocAppenderService;
+import kmg.tool.application.logic.JavadocAppenderLogic;
+import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.application.service.JavadocAppenderService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -214,9 +214,9 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
         this.javadocAppenderLogic.createJavadocTagsModel();
 
         // TODO KenichiroArai 2025/03/29 ログ
-        final JavadocAppenderTagsModel javadocAppenderTagsModel
+        final JdaTagsModel jdaTagsModel
             = this.javadocAppenderLogic.getJavadocAppenderTagsModel();
-        System.out.println(javadocAppenderTagsModel.toString());
+        System.out.println(jdaTagsModel.toString());
 
         /* 対象のJavaファイルを作成する */
         this.javadocAppenderLogic.createJavaFileList();
