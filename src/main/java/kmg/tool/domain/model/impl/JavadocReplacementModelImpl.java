@@ -128,7 +128,7 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
 
                     }
 
-                } else if (currentTag != null && !line.isEmpty()) {
+                } else if ((currentTag != null) && !line.isEmpty()) {
 
                     // 現在のタグの説明文の続き
                     existingTags.get(currentTag).append("\n * ").append(line);
