@@ -1,11 +1,11 @@
-package kmg.tool.application.model.imp;
+package kmg.tool.application.model.javadocappender.imp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kmg.tool.application.model.JavadocAppenderTagConfigModel;
-import kmg.tool.application.model.JavadocAppenderTagsModel;
+import kmg.tool.application.model.javadocappender.JavadocAppenderTagConfigModel;
+import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
 
 /**
  * Javadoc追加のタグモデル<br>

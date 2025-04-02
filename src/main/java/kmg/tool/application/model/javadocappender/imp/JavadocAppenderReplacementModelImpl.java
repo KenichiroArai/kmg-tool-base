@@ -1,4 +1,4 @@
-package kmg.tool.application.model.imp;
+package kmg.tool.application.model.javadocappender.imp;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -6,8 +6,8 @@ import java.util.UUID;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.model.JavadocAppenderTagsModel;
-import kmg.tool.application.model.JavadocAppenderReplacementModel;
+import kmg.tool.application.model.javadocappender.JavadocAppenderReplacementModel;
+import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**

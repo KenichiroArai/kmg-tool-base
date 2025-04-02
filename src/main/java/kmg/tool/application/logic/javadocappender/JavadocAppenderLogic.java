@@ -1,9 +1,9 @@
-package kmg.tool.application.logic;
+package kmg.tool.application.logic.javadocappender;
 
 import java.nio.file.Path;
 import java.util.List;
 
-import kmg.tool.application.model.JavadocAppenderTagsModel;
+import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**

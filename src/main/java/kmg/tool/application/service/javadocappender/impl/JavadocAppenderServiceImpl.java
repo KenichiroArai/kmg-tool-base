@@ -1,4 +1,4 @@
-package kmg.tool.application.service.impl;
+package kmg.tool.application.service.javadocappender.impl;
 
 import java.nio.file.Path;
 
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.JavadocAppenderLogic;
-import kmg.tool.application.model.JavadocAppenderTagsModel;
-import kmg.tool.application.service.JavadocAppenderService;
+import kmg.tool.application.logic.javadocappender.JavadocAppenderLogic;
+import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
+import kmg.tool.application.service.javadocappender.JavadocAppenderService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**

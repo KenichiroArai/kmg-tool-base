@@ -1,4 +1,4 @@
-package kmg.tool.application.service;
+package kmg.tool.application.service.javadocappender;
 
 import java.nio.file.Path;
 

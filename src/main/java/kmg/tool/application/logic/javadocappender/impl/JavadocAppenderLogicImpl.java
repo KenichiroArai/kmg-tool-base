@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.impl;
+package kmg.tool.application.logic.javadocappender.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,12 +16,12 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.fund.infrastructure.exception.KmgFundException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.application.logic.JavadocAppenderLogic;
-import kmg.tool.application.model.JavadocAppenderTagConfigModel;
-import kmg.tool.application.model.JavadocAppenderTagsModel;
-import kmg.tool.application.model.JavadocAppenderReplacementModel;
-import kmg.tool.application.model.imp.JavadocAppenderTagsModelImpl;
-import kmg.tool.application.model.imp.JavadocAppenderReplacementModelImpl;
+import kmg.tool.application.logic.javadocappender.JavadocAppenderLogic;
+import kmg.tool.application.model.javadocappender.JavadocAppenderReplacementModel;
+import kmg.tool.application.model.javadocappender.JavadocAppenderTagConfigModel;
+import kmg.tool.application.model.javadocappender.JavadocAppenderTagsModel;
+import kmg.tool.application.model.javadocappender.imp.JavadocAppenderReplacementModelImpl;
+import kmg.tool.application.model.javadocappender.imp.JavadocAppenderTagsModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

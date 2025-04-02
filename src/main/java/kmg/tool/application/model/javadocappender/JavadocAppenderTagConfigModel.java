@@ -1,4 +1,4 @@
-package kmg.tool.application.model;
+package kmg.tool.application.model.javadocappender;
 
 import java.util.Map;
 
