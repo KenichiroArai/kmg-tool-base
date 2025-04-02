@@ -12,6 +12,7 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.service.JavadocAppenderService;
 import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.domain.model.JavadocTagsModel;
 
 /**
  * Javadoc追加サービス<br>
@@ -210,12 +211,12 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         // TODO KenichiroArai 2025/03/29 処理の開始ログ
 
-        /* タグのマップの作成 */
-        this.javadocAppenderLogic.createTagMap();
+        /* Javadocタグモデルの作成 */
+        this.javadocAppenderLogic.createJavadocTagsModel();
 
         // TODO KenichiroArai 2025/03/29 ログ
-        final Map<String, String> tagMap = this.javadocAppenderLogic.getTagMap();
-        System.out.println(tagMap.toString());
+        final JavadocTagsModel javadocTagsModel = this.javadocAppenderLogic.getJavadocTagsModel();
+        System.out.println(javadocTagsModel.toString());
 
         /* 対象のJavaファイルを作成する */
         this.javadocAppenderLogic.createJavaFileList();

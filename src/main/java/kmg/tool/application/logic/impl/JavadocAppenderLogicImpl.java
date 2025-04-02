@@ -67,17 +67,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private Path templatePath;
 
     /**
-     * タグのマップ
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    private final Map<String, String> tagMap;
-
-    /**
      * Javadocタグ設定モデルのリスト
      */
     private final List<JavadocTagConfigModel> javadocTagConfigModels;
@@ -133,7 +122,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     public JavadocAppenderLogicImpl() {
 
-        this.tagMap = new HashMap<>();
         this.javadocTagConfigModels = new ArrayList<>();
         this.javaFilePathList = new ArrayList<>();
         this.currentJavaFileIndex = 0;
@@ -192,7 +180,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * タグマップを作成する<br>
+     * Javadocタグモデルを作成する<br>
      *
      * @author KenichiroArai
      *
@@ -206,7 +194,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      *                          KMGツール例外
      */
     @Override
-    public boolean createTagMap() throws KmgToolException {
+    public boolean createJavadocTagsModel() throws KmgToolException {
 
         boolean result = false;
 
@@ -216,18 +204,8 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
             final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
             this.javadocTagsModel = new JavadocTagsModelImpl(yamlData);
 
-            /* タグマップをクリアして再構築 */
-            this.tagMap.clear();
-
-            for (final JavadocTagConfigModel model : this.javadocTagsModel.getJavadocTagConfigModels()) {
-
-                this.tagMap.put("@" + model.getName(), model.getText());
-
-            }
-
         } catch (final KmgFundException e) {
 
-            // TODO KenichiroArai 2025/03/29 メッセージ
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
@@ -286,25 +264,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     public List<Path> getJavaFilePathList() {
 
         final List<Path> result = this.javaFilePathList;
-        return result;
-
-    }
-
-    /**
-     * タグマップを取得する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return タグマップ
-     */
-    @Override
-    public Map<String, String> getTagMap() {
-
-        final Map<String, String> result = new HashMap<>(this.tagMap);
         return result;
 
     }
@@ -388,7 +347,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
         this.targetPath = targetPath;
         this.templatePath = templatePath;
 
-        this.tagMap.clear();
         this.javaFilePathList.clear();
         this.totalRows = 0;
 
@@ -569,7 +527,9 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
         final Map<String, Boolean> processedTags = new HashMap<>();
 
         // 既存のタグを処理
-        for (final String tag : this.tagMap.keySet()) {
+        for (final JavadocTagConfigModel tagConfig : this.javadocTagsModel.getJavadocTagConfigModels()) {
+
+            final String tag = "@" + tagConfig.getName();
 
             if (!content.contains(tag)) {
 
@@ -577,25 +537,46 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
             }
 
-            fileContentBuilder.append(" * ").append(tag).append(" ").append(this.tagMap.get(tag))
+            fileContentBuilder.append(" * ").append(tag).append(" ").append(tagConfig.getText())
                 .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
             processedTags.put(tag, true);
 
         }
 
         // 未処理のタグを追加
-        for (final Map.Entry<String, String> entry : this.tagMap.entrySet()) {
+        for (final JavadocTagConfigModel tagConfig : this.javadocTagsModel.getJavadocTagConfigModels()) {
 
-            if (processedTags.containsKey(entry.getKey())) {
+            final String tag = "@" + tagConfig.getName();
+
+            if (processedTags.containsKey(tag)) {
 
                 continue;
 
             }
 
-            fileContentBuilder.append(" * ").append(entry.getKey()).append(" ").append(entry.getValue())
+            fileContentBuilder.append(" * ").append(tag).append(" ").append(tagConfig.getText())
                 .append(KmgDelimiterTypes.LINE_SEPARATOR.get());
 
         }
+
+    }
+
+    /**
+     * Javadocタグモデルを取得する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return Javadocタグモデル
+     */
+    @Override
+    public JavadocTagsModel getJavadocTagsModel() {
+
+        final JavadocTagsModel result = this.javadocTagsModel;
+        return result;
 
     }
 }

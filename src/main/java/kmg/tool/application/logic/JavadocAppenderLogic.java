@@ -2,9 +2,9 @@ package kmg.tool.application.logic;
 
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
 
 import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.domain.model.JavadocTagsModel;
 
 /**
  * Javadoc追加ロジックインタフェース<br>
@@ -24,14 +24,14 @@ public interface JavadocAppenderLogic {
     boolean createJavaFileList() throws KmgToolException;
 
     /**
-     * タグマップを作成する<br>
+     * Javadocタグモデルを作成する<br>
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean createTagMap() throws KmgToolException;
+    boolean createJavadocTagsModel() throws KmgToolException;
 
     /**
      * 現在の書き込みするファイルの中身を返す<br>
@@ -67,11 +67,11 @@ public interface JavadocAppenderLogic {
     List<Path> getJavaFilePathList();
 
     /**
-     * タグのマップを取得する<br>
+     * Javadocタグモデルを取得する<br>
      *
-     * @return タグのマップ
+     * @return Javadocタグモデル
      */
-    Map<String, String> getTagMap();
+    JavadocTagsModel getJavadocTagsModel();
 
     /**
      * 対象ファイルパス
