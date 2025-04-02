@@ -2,7 +2,9 @@ package kmg.tool.domain.model.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import kmg.core.infrastructure.type.KmgString;
@@ -80,13 +82,29 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
         boolean result = false;
 
         /* 既存のJavadocの解析 */
-        final Map<String, String> existingTags = new HashMap<>();
-        final StringBuilder       description  = new StringBuilder();
-        final String[]            lines        = this.sourceJavadoc.split("\\r?\\n");
+        final Map<String, StringBuilder> existingTags = new HashMap<>();
+        final StringBuilder              description  = new StringBuilder();
+        final String[]                   lines        = this.sourceJavadoc.split("\\r?\\n");
+        boolean                          isFirstLine  = true;
+        String                           currentTag   = null;
 
         for (String line : lines) {
 
             line = line.trim();
+
+            if (isFirstLine) {
+
+                description.append(line).append("\n");
+                isFirstLine = false;
+                continue;
+
+            }
+
+            if ("*/".equals(line)) {
+
+                continue;
+
+            }
 
             if (line.startsWith("*")) {
 
@@ -94,16 +112,38 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
 
                 if (line.startsWith("@")) {
 
-                    // タグの処理
-                    final String[] parts    = line.substring(1).split("\\s+", 2);
-                    final String   tagName  = parts[0];
-                    final String   tagValue = parts.length > 1 ? parts[1] : "";
-                    existingTags.put(tagName, tagValue);
+                    // 新しいタグの開始
+                    final String[] parts = line.substring(1).split("\\s+", 2);
+                    currentTag = parts[0];
+                    final String tagValue = parts.length > 1 ? parts[1] : "";
 
-                } else if (!line.isEmpty()) {
+                    // 同じタグが複数回出現する可能性があるため、既存の値があれば保持
+                    if (existingTags.containsKey(currentTag)) {
 
-                    // 説明部分の処理
-                    description.append(line).append("\n");
+                        existingTags.get(currentTag).append("\n * @").append(currentTag).append(" ").append(tagValue);
+
+                    } else {
+
+                        existingTags.put(currentTag, new StringBuilder(tagValue));
+
+                    }
+
+                } else if (currentTag != null && !line.isEmpty()) {
+
+                    // 現在のタグの説明文の続き
+                    existingTags.get(currentTag).append("\n * ").append(line);
+
+                } else {
+
+                    // 説明部分の処理（空行も含む）
+                    description.append(" *");
+
+                    if (!line.isEmpty()) {
+
+                        description.append(" ").append(line);
+
+                    }
+                    description.append("\n");
 
                 }
 
@@ -113,15 +153,17 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
 
         /* 新しいJavadocの生成 */
         final StringBuilder newJavadoc = new StringBuilder();
-        newJavadoc.append(description.toString().trim()).append("\n");
-        newJavadoc.append(" *\n");
+        newJavadoc.append(description);
+
+        /* 既存のタグをすべて保持 */
+        final Set<String> processedTags = new HashSet<>();
 
         /* YAMLで定義されたタグの処理 */
         for (final JavadocTagConfigModel tagConfig : this.javadocTagsModel.getJavadocTagConfigModels()) {
 
-            final String tagName       = tagConfig.getName();
-            final String tagValue      = tagConfig.getText();
-            final String existingValue = existingTags.get(tagName);
+            final String        tagName       = tagConfig.getName();
+            final String        tagValue      = tagConfig.getText();
+            final StringBuilder existingValue = existingTags.get(tagName);
 
             // タグの追加判断
             if ("never".equals(tagConfig.getOverwrite()) && (existingValue != null)) {
@@ -140,13 +182,14 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
 
             }
 
+            processedTags.add(tagName);
+
         }
 
         /* 既存のタグで、YAMLに定義されていないものを保持 */
-        for (final Map.Entry<String, String> entry : existingTags.entrySet()) {
+        for (final Map.Entry<String, StringBuilder> entry : existingTags.entrySet()) {
 
-            if (this.javadocTagsModel.getJavadocTagConfigModels().stream()
-                .noneMatch(config -> config.getName().equals(entry.getKey()))) {
+            if (!processedTags.contains(entry.getKey())) {
 
                 newJavadoc.append(" * @").append(entry.getKey()).append(" ").append(entry.getValue()).append("\n");
 
@@ -154,7 +197,8 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
 
         }
 
-        this.replacedJavadoc = newJavadoc.toString().trim();
+        // 最後の行を追加
+        this.replacedJavadoc = newJavadoc.toString();
         result = true;
         return result;
 
