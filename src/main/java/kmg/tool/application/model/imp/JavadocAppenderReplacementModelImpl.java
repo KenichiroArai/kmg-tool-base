@@ -6,16 +6,16 @@ import java.util.UUID;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.model.JavadocReplacementModel;
 import kmg.tool.application.model.JavadocAppenderTagsModel;
+import kmg.tool.application.model.JavadocAppenderReplacementModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * Javadoc置換モデル<br>
+ * Javadoc追加の置換モデル<br>
  *
  * @author KenichiroArai
  */
-public class JavadocReplacementModelImpl implements JavadocReplacementModel {
+public class JavadocAppenderReplacementModelImpl implements JavadocAppenderReplacementModel {
 
     /** 元のJavadoc */
     private final String sourceJavadoc;
@@ -32,7 +32,7 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
     /** 置換後のJavadoc */
     private String replacedJavadoc;
 
-    /** Javadocタグモデル */
+    /** Javadoc追加のタグモデル */
     private final JavadocAppenderTagsModel javadocAppenderTagsModel;
 
     /**
@@ -43,13 +43,13 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
      * @sine 0.1.0
      *
      * @param sourceJavadoc
-     *                         元のJavadoc
+     *                                 元のJavadoc
      * @param sourceCode
-     *                         元のコード
+     *                                 元のコード
      * @param javadocAppenderTagsModel
-     *                         Javadocタグモデル
+     *                                 Javadocタグモデル
      */
-    public JavadocReplacementModelImpl(final String sourceJavadoc, final String sourceCode,
+    public JavadocAppenderReplacementModelImpl(final String sourceJavadoc, final String sourceCode,
         final JavadocAppenderTagsModel javadocAppenderTagsModel) {
 
         this.sourceJavadoc = sourceJavadoc;

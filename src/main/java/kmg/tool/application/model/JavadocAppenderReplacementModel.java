@@ -6,11 +6,11 @@ import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * Javadoc置換モデルインタフェース<br>
+ * Javadoc追加の置換モデルインタフェース<br>
  *
  * @author KenichiroArai
  */
-public interface JavadocReplacementModel {
+public interface JavadocAppenderReplacementModel {
 
     /**
      * 置換後のJavadocを作成する。<br>

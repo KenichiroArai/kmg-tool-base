@@ -19,9 +19,9 @@ import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.model.JavadocAppenderTagConfigModel;
 import kmg.tool.application.model.JavadocAppenderTagsModel;
-import kmg.tool.application.model.JavadocReplacementModel;
+import kmg.tool.application.model.JavadocAppenderReplacementModel;
 import kmg.tool.application.model.imp.JavadocAppenderTagsModelImpl;
-import kmg.tool.application.model.imp.JavadocReplacementModelImpl;
+import kmg.tool.application.model.imp.JavadocAppenderReplacementModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -430,7 +430,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
             /* Javadocを設定する */
 
-            final List<JavadocReplacementModel> javadocReplacementModelList = new ArrayList<>();
+            final List<JavadocAppenderReplacementModel> javadocReplacementModelList = new ArrayList<>();
 
             // 「/**」でブロックに分ける
             final String[] blocks = this.currentContentsOfFileToWrite.split(Pattern.quote("/**"));
@@ -451,29 +451,29 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
                 // 元のJavadoc
 
-                final JavadocReplacementModel javadocReplacementModel
-                    = new JavadocReplacementModelImpl(sourceJavadoc, sourceCode, this.javadocAppenderTagsModel);
-                javadocReplacementModelList.add(javadocReplacementModel);
+                final JavadocAppenderReplacementModel javadocAppenderReplacementModel
+                    = new JavadocAppenderReplacementModelImpl(sourceJavadoc, sourceCode, this.javadocAppenderTagsModel);
+                javadocReplacementModelList.add(javadocAppenderReplacementModel);
 
                 // TODO KenichiroArai 2025/03/29 実装中
 
                 // 元のJavadoc部分を置換用識別子に置換する
                 this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite
-                    .replaceFirst(Pattern.quote(sourceJavadoc), javadocReplacementModel.getIdentifier().toString());
+                    .replaceFirst(Pattern.quote(sourceJavadoc), javadocAppenderReplacementModel.getIdentifier().toString());
 
                 // Java区分を特定する
-                javadocReplacementModel.specifyJavaClassification();
+                javadocAppenderReplacementModel.specifyJavaClassification();
 
                 // 置換後のJavadocを作成する
-                javadocReplacementModel.createReplacedJavadoc();
+                javadocAppenderReplacementModel.createReplacedJavadoc();
 
             }
 
             // 置換用識別子を置換後のJavadocに置換する
-            for (final JavadocReplacementModel javadocReplacementModel : javadocReplacementModelList) {
+            for (final JavadocAppenderReplacementModel javadocAppenderReplacementModel : javadocReplacementModelList) {
 
                 this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite.replace(
-                    javadocReplacementModel.getIdentifier().toString(), javadocReplacementModel.getReplacedJavadoc());
+                    javadocAppenderReplacementModel.getIdentifier().toString(), javadocAppenderReplacementModel.getReplacedJavadoc());
 
             }
 
