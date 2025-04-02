@@ -3,7 +3,7 @@ package kmg.tool.application.model;
 import java.util.Map;
 
 /**
- * Javadocタグ設定モデル<br>
+ * Javadoc追加のタグ設定モデル<br>
  *
  * @author KenichiroArai
  *
@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @version 0.1.0
  */
-public interface JavadocTagConfigModel {
+public interface JavadocAppenderTagConfigModel {
 
     /**
      * タグの挿入位置を返す<br>

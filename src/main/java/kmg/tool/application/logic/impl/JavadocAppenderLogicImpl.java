@@ -17,11 +17,11 @@ import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.fund.infrastructure.exception.KmgFundException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
+import kmg.tool.application.model.JavadocAppenderTagConfigModel;
 import kmg.tool.application.model.JavadocAppenderTagsModel;
 import kmg.tool.application.model.JavadocReplacementModel;
-import kmg.tool.application.model.JavadocTagConfigModel;
-import kmg.tool.application.model.imp.JavadocReplacementModelImpl;
 import kmg.tool.application.model.imp.JavadocAppenderTagsModelImpl;
+import kmg.tool.application.model.imp.JavadocReplacementModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -65,9 +65,9 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private Path templatePath;
 
     /**
-     * Javadocタグ設定モデルのリスト
+     * Javadoc追加のタグ設定モデルのリスト
      */
-    private final List<JavadocTagConfigModel> javadocTagConfigModels;
+    private final List<JavadocAppenderTagConfigModel> javadocAppenderTagConfigModels;
 
     /**
      * 対象のJavaファイルパスのリスト
@@ -120,7 +120,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     public JavadocAppenderLogicImpl() {
 
-        this.javadocTagConfigModels = new ArrayList<>();
+        this.javadocAppenderTagConfigModels = new ArrayList<>();
         this.javaFilePathList = new ArrayList<>();
         this.currentJavaFileIndex = 0;
         this.currentJavaFilePath = null;

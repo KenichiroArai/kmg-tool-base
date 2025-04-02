@@ -2,10 +2,10 @@ package kmg.tool.application.model.imp;
 
 import java.util.Map;
 
-import kmg.tool.application.model.JavadocTagConfigModel;
+import kmg.tool.application.model.JavadocAppenderTagConfigModel;
 
 /**
- * Javadocタグ設定モデル実装<br>
+ * Javadoc追加のタグ設定モデル実装<br>
  *
  * @author KenichiroArai
  *
@@ -13,7 +13,7 @@ import kmg.tool.application.model.JavadocTagConfigModel;
  *
  * @version 0.1.0
  */
-public class JavadocTagConfigModelImpl implements JavadocTagConfigModel {
+public class JavadocAppenderTagConfigModelImpl implements JavadocAppenderTagConfigModel {
 
     /** タグ名 */
     private String name;
@@ -33,7 +33,7 @@ public class JavadocTagConfigModelImpl implements JavadocTagConfigModel {
     /**
      * デフォルトコンストラクタ<br>
      */
-    public JavadocTagConfigModelImpl() {
+    public JavadocAppenderTagConfigModelImpl() {
 
         // 処理なし
     }
@@ -45,7 +45,7 @@ public class JavadocTagConfigModelImpl implements JavadocTagConfigModel {
      *                  タグ設定
      */
     @SuppressWarnings("unchecked")
-    public JavadocTagConfigModelImpl(final Map<String, Object> tagConfig) {
+    public JavadocAppenderTagConfigModelImpl(final Map<String, Object> tagConfig) {
 
         // TODO KenichiroArai 2025/04/02 ハードコード
         this.name = (String) tagConfig.get("name");

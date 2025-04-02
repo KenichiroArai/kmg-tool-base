@@ -22,11 +22,11 @@ public interface JavadocAppenderTagsModel {
     String getDescription();
 
     /**
-     * Javadocタグ設定モデルのリストを返す<br>
+     * Javadoc追加のタグ設定モデルのリストを返す<br>
      *
-     * @return Javadocタグ設定モデルのリスト
+     * @return Javadoc追加のタグ設定モデルのリスト
      */
-    List<JavadocTagConfigModel> getJavadocTagConfigModels();
+    List<JavadocAppenderTagConfigModel> getJavadocAppenderTagConfigModels();
 
     /**
      * タグを返す<br>
@@ -51,12 +51,12 @@ public interface JavadocAppenderTagsModel {
     void setDescription(String description);
 
     /**
-     * Javadocタグ設定モデルのリストを設定する<br>
+     * Javadoc追加のタグ設定モデルのリストを設定する<br>
      *
-     * @param javadocTagConfigModels
-     *                               Javadocタグ設定モデルのリスト
+     * @param javadocAppenderTagConfigModels
+     *                                       Javadoc追加のタグ設定モデルのリスト
      */
-    void setJavadocTagConfigModels(List<JavadocTagConfigModel> javadocTagConfigModels);
+    void setJavadocAppenderTagConfigModels(List<JavadocAppenderTagConfigModel> javadocAppenderTagConfigModels);
 
     /**
      * タグを設定する<br>

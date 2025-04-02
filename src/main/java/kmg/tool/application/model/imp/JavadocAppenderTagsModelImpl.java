@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import kmg.tool.application.model.JavadocAppenderTagConfigModel;
 import kmg.tool.application.model.JavadocAppenderTagsModel;
-import kmg.tool.application.model.JavadocTagConfigModel;
 
 /**
  * Javadoc追加のタグモデル<br>
@@ -28,15 +28,15 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
     /** 説明 */
     private String description;
 
-    /** Javadocタグ設定モデルのリスト */
-    private List<JavadocTagConfigModel> javadocTagConfigModels;
+    /** Javadoc追加のタグ設定モデルのリスト */
+    private List<JavadocAppenderTagConfigModel> javadocAppenderTagConfigModels;
 
     /**
      * デフォルトコンストラクタ<br>
      */
     public JavadocAppenderTagsModelImpl() {
 
-        this.javadocTagConfigModels = new ArrayList<>();
+        this.javadocAppenderTagConfigModels = new ArrayList<>();
 
     }
 
@@ -76,15 +76,17 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
             }
 
             /* モデルの作成と追加 */
-            final JavadocTagConfigModel model = new JavadocTagConfigModelImpl(tagConfig);
-            this.javadocTagConfigModels.add(model);
+            final JavadocAppenderTagConfigModel model = new JavadocAppenderTagConfigModelImpl(tagConfig);
+            this.javadocAppenderTagConfigModels.add(model);
 
         }
 
     }
 
     /**
-     * {@inheritDoc}
+     * 説明を返す<br>
+     *
+     * @return 説明
      */
     @Override
     public String getDescription() {
@@ -95,18 +97,22 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
     }
 
     /**
-     * {@inheritDoc}
+     * Javadoc追加のタグ設定モデルのリストを返す<br>
+     *
+     * @return Javadoc追加のタグ設定モデルのリスト
      */
     @Override
-    public List<JavadocTagConfigModel> getJavadocTagConfigModels() {
+    public List<JavadocAppenderTagConfigModel> getJavadocAppenderTagConfigModels() {
 
-        final List<JavadocTagConfigModel> result = this.javadocTagConfigModels;
+        final List<JavadocAppenderTagConfigModel> result = this.javadocAppenderTagConfigModels;
         return result;
 
     }
 
     /**
-     * {@inheritDoc}
+     * タグを返す<br>
+     *
+     * @return タグ
      */
     @Override
     public String getTag() {
@@ -117,7 +123,9 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
     }
 
     /**
-     * {@inheritDoc}
+     * 指定値を返す<br>
+     *
+     * @return 指定値
      */
     @Override
     public String getValue() {
@@ -128,7 +136,10 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
     }
 
     /**
-     * {@inheritDoc}
+     * 説明を設定する<br>
+     *
+     * @param description
+     *                    説明
      */
     @Override
     public void setDescription(final String description) {
@@ -138,17 +149,24 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
     }
 
     /**
-     * {@inheritDoc}
+     * Javadoc追加のタグ設定モデルのリストを設定する<br>
+     *
+     * @param javadocAppenderTagConfigModels
+     *                                       Javadoc追加のタグ設定モデルのリスト
      */
     @Override
-    public void setJavadocTagConfigModels(final List<JavadocTagConfigModel> javadocTagConfigModels) {
+    public void setJavadocAppenderTagConfigModels(
+        final List<JavadocAppenderTagConfigModel> javadocAppenderTagConfigModels) {
 
-        this.javadocTagConfigModels = javadocTagConfigModels;
+        this.javadocAppenderTagConfigModels = javadocAppenderTagConfigModels;
 
     }
 
     /**
-     * {@inheritDoc}
+     * タグを設定する<br>
+     *
+     * @param tag
+     *            タグ
      */
     @Override
     public void setTag(final String tag) {
@@ -158,7 +176,10 @@ public class JavadocAppenderTagsModelImpl implements JavadocAppenderTagsModel {
     }
 
     /**
-     * {@inheritDoc}
+     * 指定値を設定する<br>
+     *
+     * @param value
+     *              指定値
      */
     @Override
     public void setValue(final String value) {
