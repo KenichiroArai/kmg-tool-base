@@ -3,8 +3,8 @@ package kmg.tool.application.logic;
 import java.nio.file.Path;
 import java.util.List;
 
+import kmg.tool.application.model.JavadocAppenderTagsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
-import kmg.tool.domain.model.JavadocTagsModel;
 
 /**
  * Javadoc追加ロジックインタフェース<br>
@@ -12,16 +12,6 @@ import kmg.tool.domain.model.JavadocTagsModel;
  * @author KenichiroArai
  */
 public interface JavadocAppenderLogic {
-
-    /**
-     * 対象のJavaファイル
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean createJavaFileList() throws KmgToolException;
 
     /**
      * Javadocタグモデルを作成する<br>
@@ -32,6 +22,16 @@ public interface JavadocAppenderLogic {
      *                          KMGツール例外
      */
     boolean createJavadocTagsModel() throws KmgToolException;
+
+    /**
+     * 対象のJavaファイル
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean createJavaFileList() throws KmgToolException;
 
     /**
      * 現在の書き込みするファイルの中身を返す<br>
@@ -52,6 +52,13 @@ public interface JavadocAppenderLogic {
     Path getCurrentJavaFilePath();
 
     /**
+     * Javadoc追加のタグモデルを取得する<br>
+     *
+     * @return Javadocタグモデル
+     */
+    JavadocAppenderTagsModel getJavadocAppenderTagsModel();
+
+    /**
      * 対象のJavaファイルパスのリストを返す<br>
      *
      * @author KenichiroArai
@@ -65,13 +72,6 @@ public interface JavadocAppenderLogic {
      * @return 対象のJavaファイルリスト
      */
     List<Path> getJavaFilePathList();
-
-    /**
-     * Javadocタグモデルを取得する<br>
-     *
-     * @return Javadocタグモデル
-     */
-    JavadocTagsModel getJavadocTagsModel();
 
     /**
      * 対象ファイルパス

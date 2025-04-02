@@ -17,11 +17,11 @@ import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.fund.infrastructure.exception.KmgFundException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
-import kmg.tool.domain.model.JavadocReplacementModel;
-import kmg.tool.domain.model.JavadocTagConfigModel;
-import kmg.tool.domain.model.JavadocTagsModel;
-import kmg.tool.domain.model.impl.JavadocReplacementModelImpl;
-import kmg.tool.domain.model.impl.JavadocTagsModelImpl;
+import kmg.tool.application.model.JavadocAppenderTagsModel;
+import kmg.tool.application.model.JavadocReplacementModel;
+import kmg.tool.application.model.JavadocTagConfigModel;
+import kmg.tool.application.model.imp.JavadocReplacementModelImpl;
+import kmg.tool.application.model.imp.JavadocAppenderTagsModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -107,7 +107,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private String currentContentsOfFileToWrite;
 
     /** Javadocタグモデル */
-    private JavadocTagsModel javadocTagsModel;
+    private JavadocAppenderTagsModel javadocAppenderTagsModel;
 
     /**
      * デフォルトコンストラクタ
@@ -151,7 +151,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
             /* YAMLファイルを読み込み、モデルを作成 */
             final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
-            this.javadocTagsModel = new JavadocTagsModelImpl(yamlData);
+            this.javadocAppenderTagsModel = new JavadocAppenderTagsModelImpl(yamlData);
 
         } catch (final KmgFundException e) {
 
@@ -246,7 +246,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * Javadocタグモデルを取得する<br>
+     * Javadoc追加のタグモデルを取得する<br>
      *
      * @author KenichiroArai
      *
@@ -254,12 +254,12 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      *
      * @version 0.1.0
      *
-     * @return Javadocタグモデル
+     * @return Javadoc追加のタグモデル
      */
     @Override
-    public JavadocTagsModel getJavadocTagsModel() {
+    public JavadocAppenderTagsModel getJavadocAppenderTagsModel() {
 
-        final JavadocTagsModel result = this.javadocTagsModel;
+        final JavadocAppenderTagsModel result = this.javadocAppenderTagsModel;
         return result;
 
     }
@@ -452,7 +452,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
                 // 元のJavadoc
 
                 final JavadocReplacementModel javadocReplacementModel
-                    = new JavadocReplacementModelImpl(sourceJavadoc, sourceCode, this.javadocTagsModel);
+                    = new JavadocReplacementModelImpl(sourceJavadoc, sourceCode, this.javadocAppenderTagsModel);
                 javadocReplacementModelList.add(javadocReplacementModel);
 
                 // TODO KenichiroArai 2025/03/29 実装中

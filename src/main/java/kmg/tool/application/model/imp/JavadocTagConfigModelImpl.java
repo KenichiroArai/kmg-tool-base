@@ -1,8 +1,8 @@
-package kmg.tool.domain.model.impl;
+package kmg.tool.application.model.imp;
 
 import java.util.Map;
 
-import kmg.tool.domain.model.JavadocTagConfigModel;
+import kmg.tool.application.model.JavadocTagConfigModel;
 
 /**
  * Javadocタグ設定モデル実装<br>

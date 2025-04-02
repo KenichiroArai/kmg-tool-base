@@ -1,4 +1,4 @@
-package kmg.tool.domain.model;
+package kmg.tool.application.model;
 
 import java.util.Map;
 

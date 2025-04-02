@@ -1,4 +1,4 @@
-package kmg.tool.domain.model.impl;
+package kmg.tool.application.model.imp;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -6,8 +6,8 @@ import java.util.UUID;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.domain.model.JavadocReplacementModel;
-import kmg.tool.domain.model.JavadocTagsModel;
+import kmg.tool.application.model.JavadocReplacementModel;
+import kmg.tool.application.model.JavadocAppenderTagsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -33,7 +33,7 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
     private String replacedJavadoc;
 
     /** Javadocタグモデル */
-    private final JavadocTagsModel javadocTagsModel;
+    private final JavadocAppenderTagsModel javadocAppenderTagsModel;
 
     /**
      * コンストラクタ<br>
@@ -46,16 +46,16 @@ public class JavadocReplacementModelImpl implements JavadocReplacementModel {
      *                         元のJavadoc
      * @param sourceCode
      *                         元のコード
-     * @param javadocTagsModel
+     * @param javadocAppenderTagsModel
      *                         Javadocタグモデル
      */
     public JavadocReplacementModelImpl(final String sourceJavadoc, final String sourceCode,
-        final JavadocTagsModel javadocTagsModel) {
+        final JavadocAppenderTagsModel javadocAppenderTagsModel) {
 
         this.sourceJavadoc = sourceJavadoc;
         this.sourceCode = sourceCode;
         this.identifier = UUID.randomUUID();
-        this.javadocTagsModel = javadocTagsModel;
+        this.javadocAppenderTagsModel = javadocAppenderTagsModel;
 
     }
 
