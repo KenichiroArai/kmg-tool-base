@@ -8,6 +8,8 @@ import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.domain.model.JavadocTagsModel;
+import kmg.tool.domain.model.impl.JavadocTagModelImpl;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -79,10 +81,33 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
         boolean result = false;
 
+        // TODO KenichiroArai 2025/04/03 実装中
+
         final String wkJavadoc = this.sourceJavadoc;
 
-        // TODO KenichiroArai 2025/04/02 実装中
-        System.out.println(wkJavadoc);
+        // @タグを抽出する正規表現パターン
+        // グループ1: タグ名
+        // グループ2: 値
+        // グループ3: 説明（オプション）
+        final String                  pattern = "@(\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?";
+        final java.util.regex.Pattern p       = java.util.regex.Pattern.compile(pattern);
+        final java.util.regex.Matcher m       = p.matcher(wkJavadoc);
+
+        if (!m.find()) {
+
+            return result;
+
+        }
+
+        final String tag         = m.group(1);
+        final String value       = m.group(2);
+        final String description = (m.group(3) != null) ? m.group(3).trim() : "";
+
+        final JavadocTagsModel javadocTagMode = new JavadocTagModelImpl(tag, value, description);
+
+        System.out.println("タグ: " + javadocTagMode.getTag());
+        System.out.println("指定値: " + javadocTagMode.getValue());
+        System.out.println("説明: " + javadocTagMode.getDescription());
 
         this.replacedJavadoc = wkJavadoc;
         result = true;

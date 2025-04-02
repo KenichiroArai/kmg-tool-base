@@ -22,15 +22,6 @@ import kmg.tool.application.model.jda.JdaTagsModel;
  */
 public class JdaTagsModelImpl implements JdaTagsModel {
 
-    /** タグ */
-    private String tag;
-
-    /** 指定値 */
-    private String value;
-
-    /** 説明 */
-    private String description;
-
     /** Javadoc追加のタグ設定モデルのリスト */
     private List<JdaTagConfigModel> jdaTagConfigModels;
 
@@ -87,19 +78,6 @@ public class JdaTagsModelImpl implements JdaTagsModel {
     }
 
     /**
-     * 説明を返す<br>
-     *
-     * @return 説明
-     */
-    @Override
-    public String getDescription() {
-
-        final String result = this.description;
-        return result;
-
-    }
-
-    /**
      * Javadoc追加のタグ設定モデルのリストを返す<br>
      *
      * @return Javadoc追加のタグ設定モデルのリスト
@@ -109,45 +87,6 @@ public class JdaTagsModelImpl implements JdaTagsModel {
 
         final List<JdaTagConfigModel> result = this.jdaTagConfigModels;
         return result;
-
-    }
-
-    /**
-     * タグを返す<br>
-     *
-     * @return タグ
-     */
-    @Override
-    public String getTag() {
-
-        final String result = this.tag;
-        return result;
-
-    }
-
-    /**
-     * 指定値を返す<br>
-     *
-     * @return 指定値
-     */
-    @Override
-    public String getValue() {
-
-        final String result = this.value;
-        return result;
-
-    }
-
-    /**
-     * 説明を設定する<br>
-     *
-     * @param description
-     *                    説明
-     */
-    @Override
-    public void setDescription(final String description) {
-
-        this.description = description;
 
     }
 
@@ -164,29 +103,4 @@ public class JdaTagsModelImpl implements JdaTagsModel {
 
     }
 
-    /**
-     * タグを設定する<br>
-     *
-     * @param tag
-     *            タグ
-     */
-    @Override
-    public void setTag(final String tag) {
-
-        this.tag = tag;
-
-    }
-
-    /**
-     * 指定値を設定する<br>
-     *
-     * @param value
-     *              指定値
-     */
-    @Override
-    public void setValue(final String value) {
-
-        this.value = value;
-
-    }
 }

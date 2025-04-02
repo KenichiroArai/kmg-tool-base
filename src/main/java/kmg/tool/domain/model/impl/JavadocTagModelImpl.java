@@ -23,6 +23,24 @@ public class JavadocTagModelImpl implements JavadocTagsModel {
     private String description;
 
     /**
+     * コンストラクタ<br>
+     *
+     * @param tag
+     *                    タグ
+     * @param value
+     *                    指定値
+     * @param description
+     *                    説明
+     */
+    public JavadocTagModelImpl(String tag, String value, String description) {
+
+        this.tag = tag;
+        this.value = value;
+        this.description = description;
+
+    }
+
+    /**
      * 説明を返す<br>
      *
      * @return 説明
