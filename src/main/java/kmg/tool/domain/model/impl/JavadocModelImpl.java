@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kmg.core.infrastructure.type.KmgString;
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -47,15 +48,15 @@ public class JavadocModelImpl implements JavadocModel {
         // グループ2: 値
         // グループ3: 説明（オプション）
         // TODO KenichiroArai 2025/04/03 ハードコード
-        final String  pattern = "@(\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?";
+        final String  pattern = "(@\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?";
         final Pattern p       = java.util.regex.Pattern.compile(pattern);
         final Matcher m       = p.matcher(sourceJavadoc);
 
         while (m.find()) {
 
             // TODO KenichiroArai 2025/04/03 ハードコード
-            final String tag   = m.group(1);
-            final String value = m.group(2);
+            final KmgJavadocTagTypes tag   = KmgJavadocTagTypes.getEnum(m.group(1));
+            final String             value = m.group(2);
 
             // 説明取得
             final String description = Optional.ofNullable(m.group(3))

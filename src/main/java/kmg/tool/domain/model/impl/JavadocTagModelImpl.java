@@ -1,5 +1,6 @@
 package kmg.tool.domain.model.impl;
 
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.domain.model.JavadocTagModel;
 
 /**
@@ -14,7 +15,7 @@ import kmg.tool.domain.model.JavadocTagModel;
 public class JavadocTagModelImpl implements JavadocTagModel {
 
     /** タグ */
-    private final String tag;
+    private final KmgJavadocTagTypes tag;
 
     /** 指定値 */
     private final String value;
@@ -32,7 +33,7 @@ public class JavadocTagModelImpl implements JavadocTagModel {
      * @param description
      *                    説明
      */
-    public JavadocTagModelImpl(String tag, String value, String description) {
+    public JavadocTagModelImpl(final KmgJavadocTagTypes tag, final String value, final String description) {
 
         this.tag = tag;
         this.value = value;
@@ -59,9 +60,9 @@ public class JavadocTagModelImpl implements JavadocTagModel {
      * @return タグ
      */
     @Override
-    public String getTag() {
+    public KmgJavadocTagTypes getTag() {
 
-        final String result = this.tag;
+        final KmgJavadocTagTypes result = this.tag;
         return result;
 
     }

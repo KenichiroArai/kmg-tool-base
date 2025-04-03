@@ -2,6 +2,7 @@ package kmg.tool.application.model.jda.imp;
 
 import java.util.Map;
 
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
 
 /**
@@ -18,8 +19,8 @@ import kmg.tool.application.model.jda.JdaTagConfigModel;
  */
 public class JdaTagConfigModelImpl implements JdaTagConfigModel {
 
-    /** タグ名 */
-    private String name;
+    /** タグ */
+    private KmgJavadocTagTypes tag;
 
     /** タグの値 */
     private String text;
@@ -51,7 +52,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     public JdaTagConfigModelImpl(final Map<String, Object> tagConfig) {
 
         // TODO KenichiroArai 2025/04/02 ハードコード
-        this.name = (String) tagConfig.get("name");
+        this.tag = KmgJavadocTagTypes.getEnum((String) tagConfig.get("name"));
         this.text = (String) tagConfig.get("text");
         this.location = (Map<String, Object>) tagConfig.get("location");
         this.insertPosition = (String) tagConfig.get("insertPosition");
@@ -86,19 +87,6 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     }
 
     /**
-     * タグ名を返す<br>
-     *
-     * @return タグ名
-     */
-    @Override
-    public String getName() {
-
-        final String result = this.name;
-        return result;
-
-    }
-
-    /**
      * 上書き設定を返す<br>
      *
      * @return 上書き設定
@@ -107,6 +95,19 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     public String getOverwrite() {
 
         final String result = this.overwrite;
+        return result;
+
+    }
+
+    /**
+     * タグを返す<br>
+     *
+     * @return タグ
+     */
+    @Override
+    public KmgJavadocTagTypes getTag() {
+
+        final KmgJavadocTagTypes result = this.tag;
         return result;
 
     }

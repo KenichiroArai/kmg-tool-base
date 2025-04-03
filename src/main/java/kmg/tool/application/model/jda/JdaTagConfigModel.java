@@ -2,6 +2,8 @@ package kmg.tool.application.model.jda;
 
 import java.util.Map;
 
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
+
 /**
  * Javadoc追加のタグ設定モデル<br>
  * <p>
@@ -31,18 +33,18 @@ public interface JdaTagConfigModel {
     Map<String, Object> getLocation();
 
     /**
-     * タグ名を返す<br>
-     *
-     * @return タグ名
-     */
-    String getName();
-
-    /**
      * 上書き設定を返す<br>
      *
      * @return 上書き設定
      */
     String getOverwrite();
+
+    /**
+     * タグを返す<br>
+     *
+     * @return タグ
+     */
+    KmgJavadocTagTypes getTag();
 
     /**
      * タグの値を返す<br>

@@ -7,6 +7,7 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.model.jda.JdaReplacementModel;
+import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdaTagsModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
@@ -86,13 +87,13 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
         final String wkJavadoc = this.sourceJavadoc;
 
-        // TODO KenichiroArai 2025/04/03 実装中
-
         this.sourceJavadocModel = new JavadocModelImpl(wkJavadoc);
 
-        // for (final JdaTagConfigModel JdaTagConfigModel : this.jdaTagsModel.getJdaTagConfigModels()) {
-        //
-        // }
+        for (final JdaTagConfigModel jdaTagConfigModel : this.jdaTagsModel.getJdaTagConfigModels()) {
+
+            // TODO KenichiroArai 2025/04/03 実装中
+
+        }
 
         this.replacedJavadoc = wkJavadoc;
         result = true;

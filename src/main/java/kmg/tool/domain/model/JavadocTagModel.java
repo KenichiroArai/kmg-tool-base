@@ -1,5 +1,7 @@
 package kmg.tool.domain.model;
 
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
+
 /**
  * Javadocタグモデル<br>
  *
@@ -23,7 +25,7 @@ public interface JavadocTagModel {
      *
      * @return タグ
      */
-    String getTag();
+    KmgJavadocTagTypes getTag();
 
     /**
      * 指定値を返す<br>
