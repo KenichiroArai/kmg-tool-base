@@ -52,9 +52,23 @@ public class JavadocModelImpl implements JavadocModel {
         while (m.find()) {
 
             // TODO KenichiroArai 2025/04/03 ハードコード
-            final String tag         = m.group(1);
-            final String value       = m.group(2);
-            final String description = m.group(3);
+            final String tag   = m.group(1);
+            final String value = m.group(2);
+
+            // 説明取得
+            String description = m.group(3);
+
+            if (description != null) {
+
+                description = description.trim();
+
+                if (description.startsWith("*")) {
+
+                    description = description.substring(1).trim();
+
+                }
+
+            }
 
             final JavadocTagModel javadocTagMode = new JavadocTagModelImpl(tag, value, description);
             this.javadocTagModelList.add(javadocTagMode);
