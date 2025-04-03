@@ -27,7 +27,7 @@ public interface JavadocTagsModel {
      *
      * @return 元のJavadoc
      */
-    String getJavadoc();
+    String getSourceJavadoc();
 
     /**
      * タグを返す<br>

@@ -19,7 +19,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public class JavadocTagModelImpl implements JavadocTagsModel {
 
     /** 元のJavadoc */
-    private final String javadoc;
+    private final String sourceJavadoc;
 
     /** タグ */
     private final String tag;
@@ -33,15 +33,15 @@ public class JavadocTagModelImpl implements JavadocTagsModel {
     /**
      * コンストラクタ<br>
      *
-     * @param javadoc
-     *                Javadoc
+     * @param sourceJavadoc
+     *                      Javadoc
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    public JavadocTagModelImpl(final String javadoc) throws KmgToolException {
+    public JavadocTagModelImpl(final String sourceJavadoc) throws KmgToolException {
 
-        this.javadoc = javadoc;
+        this.sourceJavadoc = sourceJavadoc;
 
         // @タグを抽出する正規表現パターン
         // グループ1: タグ名
@@ -50,7 +50,7 @@ public class JavadocTagModelImpl implements JavadocTagsModel {
         // TODO KenichiroArai 2025/04/03 ハードコード
         final String  pattern = "@(\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?";
         final Pattern p       = java.util.regex.Pattern.compile(pattern);
-        final Matcher m       = p.matcher(javadoc);
+        final Matcher m       = p.matcher(sourceJavadoc);
 
         if (!m.find()) {
 
@@ -91,9 +91,9 @@ public class JavadocTagModelImpl implements JavadocTagsModel {
      * @return 元のJavadoc
      */
     @Override
-    public String getJavadoc() {
+    public String getSourceJavadoc() {
 
-        final String result = this.javadoc;
+        final String result = this.sourceJavadoc;
         return result;
 
     }
