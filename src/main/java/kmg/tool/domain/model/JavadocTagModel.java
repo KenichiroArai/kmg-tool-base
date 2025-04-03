@@ -9,7 +9,7 @@ package kmg.tool.domain.model;
  *
  * @version 0.1.0
  */
-public interface JavadocTagsModel {
+public interface JavadocTagModel {
 
     /**
      * 説明を返す<br>
@@ -17,17 +17,6 @@ public interface JavadocTagsModel {
      * @return 説明
      */
     String getDescription();
-
-    /**
-     * 元のJavadocを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return 元のJavadoc
-     */
-    String getSourceJavadoc();
 
     /**
      * タグを返す<br>

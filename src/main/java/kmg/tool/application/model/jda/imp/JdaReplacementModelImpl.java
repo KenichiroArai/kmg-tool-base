@@ -8,8 +8,8 @@ import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdaTagsModel;
-import kmg.tool.domain.model.JavadocTagsModel;
-import kmg.tool.domain.model.impl.JavadocTagModelImpl;
+import kmg.tool.domain.model.JavadocModel;
+import kmg.tool.domain.model.impl.JavadocModelImpl;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -36,6 +36,9 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
     /** 置換後のJavadoc */
     private String replacedJavadoc;
+
+    /** 元のJavadocモデル */
+    private JavadocModel sourceJavadocModel;
 
     /** Javadoc追加のタグモデル */
     private final JdaTagsModel jdaTagsModel;
@@ -83,11 +86,13 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
         final String wkJavadoc = this.sourceJavadoc;
 
-        final JavadocTagsModel javadocTagMode = new JavadocTagModelImpl(wkJavadoc);
+        // TODO KenichiroArai 2025/04/03 実装中
 
-        System.out.println("タグ: " + javadocTagMode.getTag());
-        System.out.println("指定値: " + javadocTagMode.getValue());
-        System.out.println("説明: " + javadocTagMode.getDescription());
+        this.sourceJavadocModel = new JavadocModelImpl(wkJavadoc);
+
+        // for (final JdaTagConfigModel JdaTagConfigModel : this.jdaTagsModel.getJdaTagConfigModels()) {
+        //
+        // }
 
         this.replacedJavadoc = wkJavadoc;
         result = true;
@@ -176,6 +181,23 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
     public String getSourceJavadoc() {
 
         final String result = this.sourceJavadoc;
+        return result;
+
+    }
+
+    /**
+     * 元のJavadocモデルを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 元のJavadocモデル
+     */
+    @Override
+    public JavadocModel getSourceJavadocModel() {
+
+        final JavadocModel result = this.sourceJavadocModel;
         return result;
 
     }

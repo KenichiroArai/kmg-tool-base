@@ -3,6 +3,7 @@ package kmg.tool.application.model.jda;
 import java.util.UUID;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
+import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -83,6 +84,17 @@ public interface JdaReplacementModel {
      * @return 元のJavadoc
      */
     String getSourceJavadoc();
+
+    /**
+     * 元のJavadocモデルを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 元のJavadocモデル
+     */
+    JavadocModel getSourceJavadocModel();
 
     /**
      * Java区分を特定する<br>
