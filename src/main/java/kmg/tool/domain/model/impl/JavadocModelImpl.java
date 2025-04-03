@@ -52,6 +52,9 @@ public class JavadocModelImpl implements JavadocModel {
         final Pattern p       = java.util.regex.Pattern.compile(pattern);
         final Matcher m       = p.matcher(sourceJavadoc);
 
+        // TODO KenichiroArai 2025/04/03 デバッグ
+        System.out.println("----- 元のJavadoc -----");
+
         while (m.find()) {
 
             // TODO KenichiroArai 2025/04/03 ハードコード
@@ -65,8 +68,7 @@ public class JavadocModelImpl implements JavadocModel {
             final JavadocTagModel javadocTagMode = new JavadocTagModelImpl(tag, value, description);
             this.javadocTagModelList.add(javadocTagMode);
 
-            // TODO KenichiroArai 2025/04/03 実装中
-
+            // TODO KenichiroArai 2025/04/03 デバッグ
             System.out.println(String.format("タグ: %s\n指定値: %s\n説明: %s", javadocTagMode.getTag(),
                 javadocTagMode.getValue(), javadocTagMode.getDescription()));
 
