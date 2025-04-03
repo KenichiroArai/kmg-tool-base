@@ -22,7 +22,7 @@ public interface JdaTagsModel {
      *
      * @return Javadoc追加のタグ設定モデルのリスト
      */
-    List<JdaTagConfigModel> getJavadocAppenderTagConfigModels();
+    List<JdaTagConfigModel> getJdaTagConfigModels();
 
     /**
      * Javadoc追加のタグ設定モデルのリストを設定する<br>
@@ -30,6 +30,6 @@ public interface JdaTagsModel {
      * @param jdaTagConfigModels
      *                           Javadoc追加のタグ設定モデルのリスト
      */
-    void setJavadocAppenderTagConfigModels(List<JdaTagConfigModel> jdaTagConfigModels);
+    void setJdaTagConfigModels(List<JdaTagConfigModel> jdaTagConfigModels);
 
 }

@@ -83,7 +83,7 @@ public class JdaTagsModelImpl implements JdaTagsModel {
      * @return Javadoc追加のタグ設定モデルのリスト
      */
     @Override
-    public List<JdaTagConfigModel> getJavadocAppenderTagConfigModels() {
+    public List<JdaTagConfigModel> getJdaTagConfigModels() {
 
         final List<JdaTagConfigModel> result = this.jdaTagConfigModels;
         return result;
@@ -97,7 +97,7 @@ public class JdaTagsModelImpl implements JdaTagsModel {
      *                           Javadoc追加のタグ設定モデルのリスト
      */
     @Override
-    public void setJavadocAppenderTagConfigModels(final List<JdaTagConfigModel> jdaTagConfigModels) {
+    public void setJdaTagConfigModels(final List<JdaTagConfigModel> jdaTagConfigModels) {
 
         this.jdaTagConfigModels = jdaTagConfigModels;
 
