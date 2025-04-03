@@ -1,6 +1,7 @@
 # Javadocタグの定義
-# - name: タグ名（@は不要）
-# - text: タグの値
+# - tagName: タグ名（@は不要）
+# - tagValue: タグの値
+# - tagDescription: タグの説明
 # - location: 配置場所の設定
 #   - mode: 配置方法
 #     - compliant: 準拠モード（クラス、インタフェース、列挙型などの直前に自動で配置）
@@ -16,22 +17,22 @@
 #   - always: 常に上書き
 #   - ifLower: 既存のバージョンより小さい場合のみ上書き
 javadocTags:
-    - name: "author"
-      text: "KenichiroArai"
+    - tagName: "author"
+      tagValue: "KenichiroArai"
       location:
           mode: "compliant"
       insertPosition: "beginning"
       overwrite: "always"
 
-    - name: "since"
-      text: "0.1.0"
+    - tagName: "since"
+      tagValue: "0.1.0"
       location:
           mode: "compliant"
       insertPosition: "beginning"
       overwrite: "never"
 
-    - name: "version"
-      text: "0.1.0"
+    - tagName: "version"
+      tagValue: "0.1.0"
       location:
           mode: "compliant"
       insertPosition: "beginning"

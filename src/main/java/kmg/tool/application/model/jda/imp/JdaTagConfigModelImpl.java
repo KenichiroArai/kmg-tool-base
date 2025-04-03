@@ -20,27 +20,25 @@ import kmg.tool.application.model.jda.JdaTagConfigModel;
 public class JdaTagConfigModelImpl implements JdaTagConfigModel {
 
     /** タグ */
-    private KmgJavadocTagTypes tag;
+    private final KmgJavadocTagTypes tag;
 
-    /** タグの値 */
-    private String text;
+    /** タグ名 */
+    private final String tagName;
+
+    /** タグの指定値 */
+    private final String tagValue;
+
+    /** タグの説明 */
+    private final String tagDescription;
 
     /** 配置場所の設定 */
-    private Map<String, Object> location;
+    private final Map<String, Object> location;
 
     /** タグの挿入位置 */
-    private String insertPosition;
+    private final String insertPosition;
 
     /** 上書き設定 */
-    private String overwrite;
-
-    /**
-     * デフォルトコンストラクタ<br>
-     */
-    public JdaTagConfigModelImpl() {
-
-        // 処理なし
-    }
+    private final String overwrite;
 
     /**
      * コンストラクタ<br>
@@ -52,8 +50,10 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     public JdaTagConfigModelImpl(final Map<String, Object> tagConfig) {
 
         // TODO KenichiroArai 2025/04/02 ハードコード
-        this.tag = KmgJavadocTagTypes.getEnum((String) tagConfig.get("name"));
-        this.text = (String) tagConfig.get("text");
+        this.tagName = (String) tagConfig.get("name");
+        this.tag = KmgJavadocTagTypes.getEnum(this.tagName);
+        this.tagValue = (String) tagConfig.get("tagValue");
+        this.tagDescription = (String) tagConfig.get("tagDescription");
         this.location = (Map<String, Object>) tagConfig.get("location");
         this.insertPosition = (String) tagConfig.get("insertPosition");
         this.overwrite = (String) tagConfig.get("overwrite");
@@ -113,14 +113,48 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     }
 
     /**
-     * タグの値を返す<br>
+     * タグの説明を返す<br>
      *
-     * @return タグの値
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return タグの説明
      */
     @Override
-    public String getText() {
+    public String getTagDescription() {
 
-        final String result = this.text;
+        final String result = this.tagDescription;
+        return result;
+
+    }
+
+    /**
+     * タグ名を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return タグ名
+     */
+    @Override
+    public String getTagName() {
+
+        final String result = this.tagName;
+        return result;
+
+    }
+
+    /**
+     * タグの指定値を返す<br>
+     *
+     * @return タグの指定値
+     */
+    @Override
+    public String getTagValue() {
+
+        final String result = this.tagValue;
         return result;
 
     }

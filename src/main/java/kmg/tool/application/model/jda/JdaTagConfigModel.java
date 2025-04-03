@@ -47,9 +47,31 @@ public interface JdaTagConfigModel {
     KmgJavadocTagTypes getTag();
 
     /**
-     * タグの値を返す<br>
+     * タグの説明を返す<br>
      *
-     * @return タグの値
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return タグの説明
      */
-    String getText();
+    String getTagDescription();
+
+    /**
+     * タグ名を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return タグ名
+     */
+    String getTagName();
+
+    /**
+     * タグの指定値を返す<br>
+     *
+     * @return タグの指定値
+     */
+    String getTagValue();
 }
