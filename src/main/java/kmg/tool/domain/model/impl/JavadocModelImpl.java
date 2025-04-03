@@ -58,13 +58,8 @@ public class JavadocModelImpl implements JavadocModel {
             final String value = m.group(2);
 
             // 説明取得
-            String description = Optional.ofNullable(m.group(3)).map(String::trim).orElse(KmgString.EMPTY);
-
-            if (description.startsWith("*")) {
-
-                description = description.substring(1).trim();
-
-            }
+            final String description = Optional.ofNullable(m.group(3))
+                .map(s -> s.trim().replaceFirst("^\\*", KmgString.EMPTY)).orElse(KmgString.EMPTY).trim();
 
             final JavadocTagModel javadocTagMode = new JavadocTagModelImpl(tag, value, description);
             this.javadocTagModelList.add(javadocTagMode);
