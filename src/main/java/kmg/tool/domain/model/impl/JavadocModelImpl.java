@@ -2,9 +2,11 @@ package kmg.tool.domain.model.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import kmg.core.infrastructure.type.KmgString;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -56,17 +58,11 @@ public class JavadocModelImpl implements JavadocModel {
             final String value = m.group(2);
 
             // 説明取得
-            String description = m.group(3);
+            String description = Optional.ofNullable(m.group(3)).map(String::trim).orElse(KmgString.EMPTY);
 
-            if (description != null) {
+            if (description.startsWith("*")) {
 
-                description = description.trim();
-
-                if (description.startsWith("*")) {
-
-                    description = description.substring(1).trim();
-
-                }
+                description = description.substring(1).trim();
 
             }
 
