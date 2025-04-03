@@ -81,29 +81,9 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/04/03 実装中
-
         final String wkJavadoc = this.sourceJavadoc;
 
-        // @タグを抽出する正規表現パターン
-        // グループ1: タグ名
-        // グループ2: 値
-        // グループ3: 説明（オプション）
-        final String                  pattern = "@(\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?";
-        final java.util.regex.Pattern p       = java.util.regex.Pattern.compile(pattern);
-        final java.util.regex.Matcher m       = p.matcher(wkJavadoc);
-
-        if (!m.find()) {
-
-            return result;
-
-        }
-
-        final String tag         = m.group(1);
-        final String value       = m.group(2);
-        final String description = (m.group(3) != null) ? m.group(3).trim() : "";
-
-        final JavadocTagsModel javadocTagMode = new JavadocTagModelImpl(tag, value, description);
+        final JavadocTagsModel javadocTagMode = new JavadocTagModelImpl(wkJavadoc);
 
         System.out.println("タグ: " + javadocTagMode.getTag());
         System.out.println("指定値: " + javadocTagMode.getValue());

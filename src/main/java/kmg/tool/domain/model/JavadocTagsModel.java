@@ -19,6 +19,17 @@ public interface JavadocTagsModel {
     String getDescription();
 
     /**
+     * 元のJavadocを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 元のJavadoc
+     */
+    String getJavadoc();
+
+    /**
      * タグを返す<br>
      *
      * @return タグ

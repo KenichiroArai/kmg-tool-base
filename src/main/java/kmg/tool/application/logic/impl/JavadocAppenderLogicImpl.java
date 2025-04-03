@@ -433,12 +433,14 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
             final List<JdaReplacementModel> javadocReplacementModelList = new ArrayList<>();
 
             // 「/**」でブロックに分ける
+            // TODO KenichiroArai 2025/04/03 ハードコード
             final String[] blocks = this.currentContentsOfFileToWrite.split(Pattern.quote("/**"));
 
             // ブロックの0番目はJavadocではないので、1番目から進める
             for (int i = 1; i < blocks.length; i++) {
 
                 // 「*/」でJavadocとCodeのブラックに分ける
+                // TODO KenichiroArai 2025/04/03 ハードコード
                 final String[] javadocCodeBlock = blocks[i].split(Pattern.quote("*/"), 2);
 
                 // 元のJavadoc
@@ -454,8 +456,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
                 final JdaReplacementModel jdaReplacementModel
                     = new JdaReplacementModelImpl(sourceJavadoc, sourceCode, this.jdaTagsModel);
                 javadocReplacementModelList.add(jdaReplacementModel);
-
-                // TODO KenichiroArai 2025/03/29 実装中
 
                 // 元のJavadoc部分を置換用識別子に置換する
                 this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite
