@@ -51,7 +51,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     public JdaTagConfigModelImpl(final Map<String, Object> tagConfig) {
 
         // TODO KenichiroArai 2025/04/02 ハードコード
-        this.tagName = (String) tagConfig.get("name");
+        this.tagName = (String) tagConfig.get("tagName");
         this.tag = KmgJavadocTagTypes.getEnum(KmgString.concat("@", this.tagName));
         this.tagValue = (String) tagConfig.get("tagValue");
         this.tagDescription = (String) tagConfig.get("tagDescription");

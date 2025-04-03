@@ -20,20 +20,20 @@ javadocTags:
     - tagName: "author"
       tagValue: "KenichiroArai"
       location:
-          mode: "compliant"
+        mode: "compliant"
       insertPosition: "beginning"
       overwrite: "always"
 
     - tagName: "since"
       tagValue: "0.1.0"
       location:
-          mode: "compliant"
+        mode: "compliant"
       insertPosition: "beginning"
       overwrite: "never"
 
     - tagName: "version"
       tagValue: "0.1.0"
       location:
-          mode: "compliant"
+        mode: "compliant"
       insertPosition: "beginning"
       overwrite: "ifLower"
