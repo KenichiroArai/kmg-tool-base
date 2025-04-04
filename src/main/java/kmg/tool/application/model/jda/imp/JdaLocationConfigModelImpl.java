@@ -26,7 +26,7 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
     private final JdaLocationModeTypes mode;
 
     /** 対象要素の種類（手動モード時のみ使用） */
-    private final List<KmgJavadocLocationTypes> targetElements;
+    private List<KmgJavadocLocationTypes> targetElements;
 
     /**
      * コンストラクタ<br>
@@ -43,31 +43,9 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
         /* 対象要素の種類の設定 */
         this.targetElements = (List<KmgJavadocLocationTypes>) locationMap.get("targetElements");
 
-    }
+        if (this.targetElements == null) {
 
-    /**
-     * コンストラクタ<br>
-     *
-     * @param mode
-     *                       配置方法
-     * @param targetElements
-     *                       対象要素の種類
-     *
-     * @deprecated 代わりに {@link #JdaLocationConfigModelImpl(Map)} を使用してください
-     */
-    @Deprecated
-    public JdaLocationConfigModelImpl(final String mode, final List<String> targetElements) {
-
-        this.mode = JdaLocationModeTypes.getEnum(mode);
-        this.targetElements = new ArrayList<>();
-
-        if (targetElements != null) {
-
-            for (final String element : targetElements) {
-
-                this.targetElements.add(KmgJavadocLocationTypes.getEnum(element));
-
-            }
+            this.targetElements = new ArrayList<>();
 
         }
 

@@ -100,7 +100,8 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             System.out.println("タグの指定値: " + jdaTagConfigModel.getTagValue());
             System.out.println("タグの説明: " + jdaTagConfigModel.getTagDescription());
             System.out.println("上書き設定: " + jdaTagConfigModel.getOverwrite());
-            System.out.println("配置場所のモード: " + jdaTagConfigModel.getLocationMode());
+            System.out.println("配置場所のモード: " + jdaTagConfigModel.getLocation().getMode());
+            System.out.println("配置場所の対象の要素: " + jdaTagConfigModel.getLocation().getTargetElements());
             System.out.println("挿入位置: " + jdaTagConfigModel.getInsertPosition());
 
         }

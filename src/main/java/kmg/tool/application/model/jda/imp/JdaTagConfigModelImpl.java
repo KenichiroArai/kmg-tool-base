@@ -96,23 +96,6 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     }
 
     /**
-     * 配置場所のモードを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return 配置場所のモード
-     */
-    @Override
-    public String getLocationMode() {
-
-        final String result = this.location.getMode();
-        return result;
-
-    }
-
-    /**
      * 上書き設定を返す<br>
      *
      * @return 上書き設定

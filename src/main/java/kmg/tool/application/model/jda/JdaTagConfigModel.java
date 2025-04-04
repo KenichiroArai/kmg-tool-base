@@ -28,13 +28,6 @@ public interface JdaTagConfigModel {
     JdaLocationConfigModel getLocation();
 
     /**
-     * 配置場所のモードを返す<br>
-     *
-     * @return 配置場所のモード
-     */
-    String getLocationMode();
-
-    /**
      * 上書き設定を返す<br>
      *
      * @return 上書き設定
