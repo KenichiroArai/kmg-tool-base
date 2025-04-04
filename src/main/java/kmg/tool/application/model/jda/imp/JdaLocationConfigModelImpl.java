@@ -5,7 +5,7 @@ import java.util.List;
 import kmg.tool.application.model.jda.JdaLocationConfigModel;
 
 /**
- * Javadocタグの配置場所設定モデル<br>
+ * Javadoc追加のタグの配置場所設定モデル<br>
  * <p>
  * Jdaは、JavadocAppenderの略。
  * </p>
