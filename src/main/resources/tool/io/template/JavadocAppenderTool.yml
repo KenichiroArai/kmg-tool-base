@@ -1,59 +1,63 @@
-# Javadocタグの定義
-# - tagName: タグ名（@は不要）
+# Javadocタグの定義構造
+# 1. 基本項目
+#    - tagName: タグ名（@は不要）
+#    - tagValue: タグの値
+#    - tagDescription: タグの説明
 #
-# - tagValue: タグの値
+# 2. 配置設定（location）
+#    - mode: 配置方法
+#      - compliant: 準拠モード（クラス、インタフェース、列挙型などの直前に自動配置）
+#      - manual: 手動モード（targetElementsで指定した要素の直前に配置）
+#    - targetElements: 手動モードの場合の対象要素（modeが"manual"の時のみ有効）
+#      指定可能な値：
+#        - class
+#        - interface
+#        - enum
+#        - method
+#        - field
 #
-# - tagDescription: タグの説明
+# 3. 挿入位置（insertPosition）
+#    - beginning: ファイルの先頭に挿入
+#    - end: ファイルの末尾に挿入
+#    - preserve: 既存のJavadocタグが存在する場合は現在の位置を維持
 #
-# - location: 配置場所の設定
-#   - mode: 配置方法
-#     - compliant: 準拠モード（クラス、インタフェース、列挙型などの直前に自動で配置）
-#     - manual: 手動モード（targetElementsで指定した要素の直前に配置）
-#   - targetElements: 手動モードの場合の対象要素の種類（modeが"manual"の場合のみ有効）
-#     指定可能な値:
-#       - class
-#       - interface
-#       - enum
-#       - method
-#       - field
-# - insertPosition: タグの挿入位置
-#   - beginning: ファイルの先頭に挿入
-#   - end: ファイルの末尾に挿入
-#   - preserve: 既存のJavadocタグが存在する場合は現在の位置を維持
-# - overwrite: 上書き
-#   - never: 上書きしない（既存が存在しない場合のみ追加する）
-#   - always: 常に上書き
-#   - ifLower: 既存のバージョンより小さい場合のみ上書き
+# 4. 上書き設定（overwrite）
+#    - never: 上書きしない（既存が存在しない場合のみ追加）
+#    - always: 常に上書き
+#    - ifLower: 既存のバージョンより小さい場合のみ上書き
 #
-# 例:
+# -----------------------------------
+# 設定例と説明
+# -----------------------------------
+#
+# 1. 作成者の設定例
 # - tagName: "author"
-# - tagValue: "KenichiroArai"
-# - tagDescription: "作成者の名前"
-# - location:
-#     mode: "manual"
-#     targetElements:
-#         - class
-#         - interface
-#         - enum
-#         - method
-#         - field
-# - insertPosition: "beginning"
-# - overwrite: "always"
+#   tagValue: "KenichiroArai"
+#   location:
+#       mode: "compliant"    # 自動配置モード
+#   insertPosition: "beginning"
+#   overwrite: "always"      # 常に上書き
 #
+# 2. 導入バージョンの設定例
 # - tagName: "since"
-# - tagValue: "0.1.0"
-# - location:
-#     mode: "compliant"
-# - insertPosition: "beginning"
-# - overwrite: "never"
+#   tagValue: "0.1.0"
+#   location:
+#       mode: "compliant"    # 自動配置モード
+#   insertPosition: "beginning"
+#   overwrite: "never"       # 既存タグを保持
 #
+# 3. バージョン管理の設定例
 # - tagName: "version"
-# - tagValue: "0.1.0"
-# - location:
-#     mode: "compliant"
-# - insertPosition: "beginning"
-# - overwrite: "ifLower"
+#   tagValue: "0.1.0"
+#   location:
+#       mode: "compliant"    # 自動配置モード
+#   insertPosition: "beginning"
+#   overwrite: "ifLower"     # 既存より小さい場合のみ上書き
 #
+# -----------------------------------
+# 実際の設定
+# -----------------------------------
+
 javadocTags:
     - tagName: "author"
       tagValue: "KenichiroArai"
