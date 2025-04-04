@@ -1,6 +1,5 @@
 package kmg.tool.application.model.jda.imp;
 
-import java.util.List;
 import java.util.Map;
 
 import kmg.core.infrastructure.type.KmgString;
@@ -60,10 +59,10 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
         this.tagValue = (String) tagConfig.get("tagValue");
         this.tagDescription = (String) tagConfig.get("tagDescription");
 
-        final Map<String, Object> locationMap    = (Map<String, Object>) tagConfig.get("location");
-        final String              mode           = (String) locationMap.get("mode");
-        final List<String>        targetElements = (List<String>) locationMap.get("targetElements");
-        this.location = new JdaLocationConfigModelImpl(mode, targetElements);
+        final Map<String, Object> locationMap = (Map<String, Object>) tagConfig.get("location");
+
+        // 配置場所の設定の生成
+        this.location = new JdaLocationConfigModelImpl(locationMap);
 
         this.insertPosition = JdaInsertPositionTypes.getEnum((String) tagConfig.get("insertPosition"));
         this.overwrite = JdaOverwriteTypes.getEnum((String) tagConfig.get("overwrite"));

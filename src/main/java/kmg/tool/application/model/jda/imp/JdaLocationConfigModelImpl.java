@@ -2,6 +2,7 @@ package kmg.tool.application.model.jda.imp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
 import kmg.tool.application.model.jda.JdaLocationConfigModel;
@@ -30,11 +31,31 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
     /**
      * コンストラクタ<br>
      *
+     * @param locationMap
+     *                    配置場所の設定マップ
+     */
+    @SuppressWarnings("unchecked")
+    public JdaLocationConfigModelImpl(final Map<String, Object> locationMap) {
+
+        /* 配置方法の設定 */
+        this.mode = JdaLocationModeTypes.getEnum((String) locationMap.get("mode"));
+
+        /* 対象要素の種類の設定 */
+        this.targetElements = (List<KmgJavadocLocationTypes>) locationMap.get("targetElements");
+
+    }
+
+    /**
+     * コンストラクタ<br>
+     *
      * @param mode
      *                       配置方法
      * @param targetElements
      *                       対象要素の種類
+     *
+     * @deprecated 代わりに {@link #JdaLocationConfigModelImpl(Map)} を使用してください
      */
+    @Deprecated
     public JdaLocationConfigModelImpl(final String mode, final List<String> targetElements) {
 
         this.mode = JdaLocationModeTypes.getEnum(mode);
