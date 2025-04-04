@@ -1,7 +1,9 @@
 package kmg.tool.application.model.jda.imp;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
 import kmg.tool.application.model.jda.JdaLocationConfigModel;
 import kmg.tool.application.types.JdaLocationModeTypes;
 
@@ -23,7 +25,7 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
     private final JdaLocationModeTypes mode;
 
     /** 対象要素の種類（手動モード時のみ使用） */
-    private final List<String> targetElements;
+    private final List<KmgJavadocLocationTypes> targetElements;
 
     /**
      * コンストラクタ<br>
@@ -36,7 +38,17 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
     public JdaLocationConfigModelImpl(final String mode, final List<String> targetElements) {
 
         this.mode = JdaLocationModeTypes.getEnum(mode);
-        this.targetElements = targetElements;
+        this.targetElements = new ArrayList<>();
+
+        if (targetElements != null) {
+
+            for (final String element : targetElements) {
+
+                this.targetElements.add(KmgJavadocLocationTypes.getEnum(element));
+
+            }
+
+        }
 
     }
 
@@ -61,7 +73,13 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
     @Override
     public List<String> getTargetElements() {
 
-        final List<String> result = this.targetElements;
+        final List<String> result = new ArrayList<>();
+
+        for (final KmgJavadocLocationTypes element : this.targetElements) {
+
+            result.add(element.getKey());
+
+        }
         return result;
 
     }
