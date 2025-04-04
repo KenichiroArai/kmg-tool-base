@@ -1,3 +1,38 @@
+# このファイルは以下の構成になっています：
+# 1. 実際の設定（すぐに使用できる設定）
+# 2. 設定の詳細な説明
+# 3. 設定例
+
+
+# -----------------------------------
+# 実際の設定
+# -----------------------------------
+javadocTags:
+    - tagName: "author"
+      tagValue: "KenichiroArai"
+      location:
+          mode: "compliant"
+      insertPosition: "beginning"
+      overwrite: "always"
+
+    - tagName: "since"
+      tagValue: "0.1.0"
+      location:
+          mode: "compliant"
+      insertPosition: "beginning"
+      overwrite: "never"
+
+    - tagName: "version"
+      tagValue: "0.1.0"
+      location:
+          mode: "compliant"
+      insertPosition: "beginning"
+      overwrite: "ifLower"
+
+      
+# -----------------------------------
+# 設定の説明
+# -----------------------------------
 # Javadocタグの定義構造
 # 1. 基本項目
 #    - tagName: タグ名（@は不要）
@@ -25,7 +60,8 @@
 #    - never: 上書きしない（既存が存在しない場合のみ追加）
 #    - always: 常に上書き
 #    - ifLower: 既存のバージョンより小さい場合のみ上書き
-#
+
+
 # -----------------------------------
 # 設定例と説明
 # -----------------------------------
@@ -53,29 +89,3 @@
 #       mode: "compliant"    # 自動配置モード
 #   insertPosition: "beginning"
 #   overwrite: "ifLower"     # 既存より小さい場合のみ上書き
-#
-# -----------------------------------
-# 実際の設定
-# -----------------------------------
-
-javadocTags:
-    - tagName: "author"
-      tagValue: "KenichiroArai"
-      location:
-          mode: "compliant"
-      insertPosition: "beginning"
-      overwrite: "always"
-
-    - tagName: "since"
-      tagValue: "0.1.0"
-      location:
-          mode: "compliant"
-      insertPosition: "beginning"
-      overwrite: "never"
-
-    - tagName: "version"
-      tagValue: "0.1.0"
-      location:
-          mode: "compliant"
-      insertPosition: "beginning"
-      overwrite: "ifLower"
