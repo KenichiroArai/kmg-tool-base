@@ -1,14 +1,9 @@
 package kmg.tool.application.model.jda;
 
-import java.util.Map;
-
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 
 /**
- * Javadoc追加のタグ設定モデル<br>
- * <p>
- * Jdaは、JavadocAppenderの略。
- * </p>
+ * Javadoc追加のタグ設定モデルインターフェース<br>
  *
  * @author KenichiroArai
  *
@@ -30,14 +25,10 @@ public interface JdaTagConfigModel {
      *
      * @return 配置場所の設定
      */
-    Map<String, Object> getLocation();
+    JdaLocationConfigModel getLocation();
 
     /**
      * 配置場所のモードを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
      *
      * @return 配置場所のモード
      */
@@ -60,20 +51,12 @@ public interface JdaTagConfigModel {
     /**
      * タグの説明を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
      * @return タグの説明
      */
     String getTagDescription();
 
     /**
      * タグ名を返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
      *
      * @return タグ名
      */

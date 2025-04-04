@@ -1,9 +1,11 @@
 package kmg.tool.application.model.jda.imp;
 
+import java.util.List;
 import java.util.Map;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
+import kmg.tool.application.model.jda.JdaLocationConfigModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
 
 /**
@@ -33,10 +35,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     private final String tagDescription;
 
     /** 配置場所の設定 */
-    private final Map<String, Object> location;
-
-    /** 配置場所のモード */
-    private final String locationMode;
+    private final JdaLocationConfigModel location;
 
     /** タグの挿入位置 */
     private final String insertPosition;
@@ -58,8 +57,12 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
         this.tag = KmgJavadocTagTypes.getEnum(KmgString.concat("@", this.tagName));
         this.tagValue = (String) tagConfig.get("tagValue");
         this.tagDescription = (String) tagConfig.get("tagDescription");
-        this.location = (Map<String, Object>) tagConfig.get("location");
-        this.locationMode = this.location.get("mode").toString();
+
+        final Map<String, Object> locationMap    = (Map<String, Object>) tagConfig.get("location");
+        final String              mode           = (String) locationMap.get("mode");
+        final List<String>        targetElements = (List<String>) locationMap.get("targetElements");
+        this.location = new JdaLocationConfigModelImpl(mode, targetElements);
+
         this.insertPosition = (String) tagConfig.get("insertPosition");
         this.overwrite = (String) tagConfig.get("overwrite");
 
@@ -84,9 +87,9 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
      * @return 配置場所の設定
      */
     @Override
-    public Map<String, Object> getLocation() {
+    public JdaLocationConfigModel getLocation() {
 
-        final Map<String, Object> result = this.location;
+        final JdaLocationConfigModel result = this.location;
         return result;
 
     }
@@ -103,7 +106,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     @Override
     public String getLocationMode() {
 
-        final String result = this.locationMode;
+        final String result = this.location.getMode();
         return result;
 
     }
