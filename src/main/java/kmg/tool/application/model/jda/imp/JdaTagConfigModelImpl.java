@@ -7,6 +7,8 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jda.JdaLocationConfigModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
+import kmg.tool.application.types.JdaInsertPositionTypes;
+import kmg.tool.application.types.JdaOverwriteTypes;
 
 /**
  * Javadoc追加のタグ設定モデル実装<br>
@@ -38,10 +40,10 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     private final JdaLocationConfigModel location;
 
     /** タグの挿入位置 */
-    private final String insertPosition;
+    private final JdaInsertPositionTypes insertPosition;
 
     /** 上書き設定 */
-    private final String overwrite;
+    private final JdaOverwriteTypes overwrite;
 
     /**
      * コンストラクタ<br>
@@ -63,8 +65,8 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
         final List<String>        targetElements = (List<String>) locationMap.get("targetElements");
         this.location = new JdaLocationConfigModelImpl(mode, targetElements);
 
-        this.insertPosition = (String) tagConfig.get("insertPosition");
-        this.overwrite = (String) tagConfig.get("overwrite");
+        this.insertPosition = JdaInsertPositionTypes.getEnum((String) tagConfig.get("insertPosition"));
+        this.overwrite = JdaOverwriteTypes.getEnum((String) tagConfig.get("overwrite"));
 
     }
 
@@ -76,7 +78,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     @Override
     public String getInsertPosition() {
 
-        final String result = this.insertPosition;
+        final String result = this.insertPosition.getKey();
         return result;
 
     }
@@ -119,7 +121,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     @Override
     public String getOverwrite() {
 
-        final String result = this.overwrite;
+        final String result = this.overwrite.getKey();
         return result;
 
     }

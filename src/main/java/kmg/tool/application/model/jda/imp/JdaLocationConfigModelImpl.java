@@ -3,6 +3,7 @@ package kmg.tool.application.model.jda.imp;
 import java.util.List;
 
 import kmg.tool.application.model.jda.JdaLocationConfigModel;
+import kmg.tool.application.types.JdaLocationModeTypes;
 
 /**
  * Javadoc追加のタグの配置場所設定モデル<br>
@@ -19,7 +20,7 @@ import kmg.tool.application.model.jda.JdaLocationConfigModel;
 public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
 
     /** 配置方法 */
-    private final String mode;
+    private final JdaLocationModeTypes mode;
 
     /** 対象要素の種類（手動モード時のみ使用） */
     private final List<String> targetElements;
@@ -34,7 +35,7 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
      */
     public JdaLocationConfigModelImpl(final String mode, final List<String> targetElements) {
 
-        this.mode = mode;
+        this.mode = JdaLocationModeTypes.getEnum(mode);
         this.targetElements = targetElements;
 
     }
@@ -47,7 +48,7 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
     @Override
     public String getMode() {
 
-        final String result = this.mode;
+        final String result = this.mode.getKey();
         return result;
 
     }
