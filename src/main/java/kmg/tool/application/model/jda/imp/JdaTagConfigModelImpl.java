@@ -35,6 +35,9 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     /** 配置場所の設定 */
     private final Map<String, Object> location;
 
+    /** 配置場所のモード */
+    private final String locationMode;
+
     /** タグの挿入位置 */
     private final String insertPosition;
 
@@ -56,6 +59,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
         this.tagValue = (String) tagConfig.get("tagValue");
         this.tagDescription = (String) tagConfig.get("tagDescription");
         this.location = (Map<String, Object>) tagConfig.get("location");
+        this.locationMode = this.location.get("mode").toString();
         this.insertPosition = (String) tagConfig.get("insertPosition");
         this.overwrite = (String) tagConfig.get("overwrite");
 
@@ -83,6 +87,23 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     public Map<String, Object> getLocation() {
 
         final Map<String, Object> result = this.location;
+        return result;
+
+    }
+
+    /**
+     * 配置場所のモードを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 配置場所のモード
+     */
+    @Override
+    public String getLocationMode() {
+
+        final String result = this.locationMode;
         return result;
 
     }
