@@ -7,7 +7,12 @@
 #     - compliant: 準拠モード（クラス、インタフェース、列挙型などの直前に自動で配置）
 #     - manual: 手動モード（targetElementsで指定した要素の直前に配置）
 #   - targetElements: 手動モードの場合の対象要素の種類（modeが"manual"の場合のみ有効）
-#     指定可能な値: class, interface, enum, method, field
+#     指定可能な値:
+#       - class
+#       - interface
+#       - enum
+#       - method
+#       - field
 # - insertPosition: タグの挿入位置
 #   - beginning: ファイルの先頭に挿入
 #   - end: ファイルの末尾に挿入
@@ -20,20 +25,26 @@ javadocTags:
     - tagName: "author"
       tagValue: "KenichiroArai"
       location:
-        mode: "compliant"
+          mode: "manual"
+          targetElements:
+              - class
+              - interface
+              - enum
+              - method
+              - field
       insertPosition: "beginning"
       overwrite: "always"
 
     - tagName: "since"
       tagValue: "0.1.0"
       location:
-        mode: "compliant"
+          mode: "compliant"
       insertPosition: "beginning"
       overwrite: "never"
 
     - tagName: "version"
       tagValue: "0.1.0"
       location:
-        mode: "compliant"
+          mode: "compliant"
       insertPosition: "beginning"
       overwrite: "ifLower"
