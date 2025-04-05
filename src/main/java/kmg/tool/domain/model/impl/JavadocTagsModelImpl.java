@@ -13,6 +13,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.JavadocTagsModel;
+import kmg.tool.domain.types.KmgJavadocGroupIndexTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -64,7 +65,7 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
         while (compiledTagMatcher.find()) {
 
             // Javadocタグの対象文字列
-            final String srcPatternStr = compiledTagMatcher.group(JavadocTagsModel.GROUP_INDEX_WHOLE);
+            final String srcPatternStr = compiledTagMatcher.group(KmgJavadocGroupIndexTypes.WHOLE.get());
             // 改行で分割して2行目の処理を行う
             final String targetStr = Arrays.stream(KmgDelimiterTypes.REGEX_LINE_SEPARATOR.split(srcPatternStr))
                 .map(line -> line.trim().replaceAll(JavadocTagsModel.PATTERN_LINE_START_ASTERISK_ONLY, KmgString.EMPTY))
@@ -72,14 +73,14 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
 
             // タグ
             final KmgJavadocTagTypes tag
-                = KmgJavadocTagTypes.getEnum(compiledTagMatcher.group(JavadocTagsModel.GROUP_INDEX_TAG_NAME));
+                = KmgJavadocTagTypes.getEnum(compiledTagMatcher.group(KmgJavadocGroupIndexTypes.TAG_NAME.get()));
 
             // 指定値
-            final String value = compiledTagMatcher.group(JavadocTagsModel.GROUP_INDEX_VALUE);
+            final String value = compiledTagMatcher.group(KmgJavadocGroupIndexTypes.VALUE.get());
 
             // 説明取得
             final String description
-                = Optional.ofNullable(compiledTagMatcher.group(JavadocTagsModel.GROUP_INDEX_DESCRIPTION))
+                = Optional.ofNullable(compiledTagMatcher.group(KmgJavadocGroupIndexTypes.DESCRIPTION.get()))
                     .map(s -> s.trim().replaceFirst(JavadocTagsModel.PATTERN_LINE_START_ASTERISK, KmgString.EMPTY))
                     .orElse(KmgString.EMPTY).trim();
 
@@ -106,5 +107,4 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
         return result;
 
     }
-
 }

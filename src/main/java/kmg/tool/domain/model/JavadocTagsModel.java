@@ -14,18 +14,6 @@ import java.util.regex.Pattern;
  */
 public interface JavadocTagsModel {
 
-    /** タグ全体のグループインデックス */
-    int GROUP_INDEX_WHOLE = 0;
-
-    /** タグ名のグループインデックス */
-    int GROUP_INDEX_TAG_NAME = 1;
-
-    /** タグ値のグループインデックス */
-    int GROUP_INDEX_VALUE = 2;
-
-    /** タグ説明のグループインデックス */
-    int GROUP_INDEX_DESCRIPTION = 3;
-
     /** 行頭のアスタリスクのみの行を検出する正規表現パターン */
     String PATTERN_LINE_START_ASTERISK_ONLY = "^\\*$";
 
