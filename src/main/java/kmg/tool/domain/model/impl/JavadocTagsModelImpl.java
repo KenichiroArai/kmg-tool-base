@@ -27,7 +27,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public class JavadocTagsModelImpl implements JavadocTagsModel {
 
     /** Javadocタグモデルのリスト */
-    private List<JavadocTagModel> javadocTagModelList;
+    private final List<JavadocTagModel> javadocTagModelList;
 
     /**
      * デフォルトコンストラクタ<br>
@@ -35,18 +35,6 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
     public JavadocTagsModelImpl() {
 
         this.javadocTagModelList = new ArrayList<>();
-
-    }
-
-    /**
-     * コンストラクタ<br>
-     *
-     * @param javadocTagModelList
-     *                            Javadocタグモデルのリスト
-     */
-    public JavadocTagsModelImpl(final List<JavadocTagModel> javadocTagModelList) {
-
-        this.javadocTagModelList = javadocTagModelList;
 
     }
 
@@ -113,19 +101,6 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
 
         final List<JavadocTagModel> result = this.javadocTagModelList;
         return result;
-
-    }
-
-    /**
-     * Javadocタグモデルのリストを設定する<br>
-     *
-     * @param javadocTagModelList
-     *                            Javadocタグモデルのリスト
-     */
-    @Override
-    public void setJavadocTagModelList(final List<JavadocTagModel> javadocTagModelList) {
-
-        this.javadocTagModelList = javadocTagModelList;
 
     }
 

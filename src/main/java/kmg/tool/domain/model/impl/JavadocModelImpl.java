@@ -1,9 +1,7 @@
 package kmg.tool.domain.model.impl;
 
-import java.util.List;
-
 import kmg.tool.domain.model.JavadocModel;
-import kmg.tool.domain.model.JavadocTagModel;
+import kmg.tool.domain.model.JavadocTagsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -20,8 +18,8 @@ public class JavadocModelImpl implements JavadocModel {
     /** 元のJavadoc */
     private final String sourceJavadoc;
 
-    /** Javadocタグモデルのリスト */
-    private final List<JavadocTagModel> javadocTagModelList;
+    /** Javadocタグ一覧情報 */
+    private final JavadocTagsModel javadocTagsModel;
 
     /**
      * コンストラクタ<br>
@@ -35,24 +33,23 @@ public class JavadocModelImpl implements JavadocModel {
     public JavadocModelImpl(final String sourceJavadoc) throws KmgToolException {
 
         this.sourceJavadoc = sourceJavadoc;
-        final JavadocTagsModelImpl javadocTagsModel = new JavadocTagsModelImpl(sourceJavadoc);
-        this.javadocTagModelList = javadocTagsModel.getJavadocTagModelList();
+        this.javadocTagsModel = new JavadocTagsModelImpl(sourceJavadoc);
 
     }
 
     /**
-     * Javadocタグモデルのリストを返す<br>
+     * Javadocタグ一覧情報を返す<br>
      *
      * @author KenichiroArai
      *
      * @sine 0.1.0
      *
-     * @return Javadocタグモデルのリスト
+     * @return Javadocタグ一覧情報
      */
     @Override
-    public List<JavadocTagModel> getJavadocTagModelList() {
+    public JavadocTagsModel getJavadocTagsModel() {
 
-        final List<JavadocTagModel> result = this.javadocTagModelList;
+        final JavadocTagsModel result = this.javadocTagsModel;
         return result;
 
     }

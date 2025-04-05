@@ -1,7 +1,5 @@
 package kmg.tool.domain.model;
 
-import java.util.List;
-
 /**
  * Javadocモデル<br>
  *
@@ -14,15 +12,15 @@ import java.util.List;
 public interface JavadocModel {
 
     /**
-     * Javadocタグモデルのリストを返す<br>
+     * Javadocタグ一覧情報を返す<br>
      *
      * @author KenichiroArai
      *
      * @sine 0.1.0
      *
-     * @return Javadocタグモデルのリスト
+     * @return Javadocタグ一覧情報
      */
-    List<JavadocTagModel> getJavadocTagModelList();
+    JavadocTagsModel getJavadocTagsModel();
 
     /**
      * 元のJavadocを返す<br>

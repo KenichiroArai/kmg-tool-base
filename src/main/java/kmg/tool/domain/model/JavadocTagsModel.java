@@ -59,12 +59,4 @@ public interface JavadocTagsModel {
 
     }
 
-    /**
-     * Javadocタグモデルのリストを設定する<br>
-     *
-     * @param javadocTagModelList
-     *                            Javadocタグモデルのリスト
-     */
-    void setJavadocTagModelList(List<JavadocTagModel> javadocTagModelList);
-
 }
