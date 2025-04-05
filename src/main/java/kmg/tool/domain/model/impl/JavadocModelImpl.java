@@ -1,12 +1,15 @@
 package kmg.tool.domain.model.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import kmg.core.infrastructure.type.KmgString;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
@@ -58,9 +61,14 @@ public class JavadocModelImpl implements JavadocModel {
         while (m.find()) {
 
             // TODO KenichiroArai 2025/04/03 ハードコード
-            final String             targetStr = m.group(0);
-            final KmgJavadocTagTypes tag       = KmgJavadocTagTypes.getEnum(m.group(1));
-            final String             value     = m.group(2);
+            final String targetStr = m.group(0);
+            // 改行で分割して2行目の処理を行う
+            final String processedTargetStr = Arrays.stream(KmgDelimiterTypes.LINE_SEPARATOR.split(targetStr))
+                .filter(line -> line.equals(targetStr) || !line.trim().matches("^\\*$|^$"))
+                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
+
+            final KmgJavadocTagTypes tag   = KmgJavadocTagTypes.getEnum(m.group(1));
+            final String             value = m.group(2);
 
             // 説明取得
             final String description = Optional.ofNullable(m.group(3))
@@ -70,8 +78,8 @@ public class JavadocModelImpl implements JavadocModel {
             this.javadocTagModelList.add(javadocTagMode);
 
             // TODO KenichiroArai 2025/04/03 デバッグ
-            System.out.println(String.format("対象文字列: %s, タグ: %s, 指定値: %s, 説明: %s", targetStr, javadocTagMode.getTag(),
-                javadocTagMode.getValue(), javadocTagMode.getDescription()));
+            System.out.println(String.format("対象文字列: %s, タグ: %s, 指定値: %s, 説明: %s", processedTargetStr,
+                javadocTagMode.getTag(), javadocTagMode.getValue(), javadocTagMode.getDescription()));
 
         }
 
