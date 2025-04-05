@@ -61,25 +61,29 @@ public class JavadocModelImpl implements JavadocModel {
         while (m.find()) {
 
             // TODO KenichiroArai 2025/04/03 ハードコード
-            final String targetStr = m.group(0);
+
+            // Javadocタグの対象文字列
+            final String srcPatternStr = m.group(0); // 元のパターンに一致する文字列
             // 改行で分割して2行目の処理を行う
-            // System.out.println(String.format("元の文字列: %s", targetStr));
-            final String processedTargetStr = Arrays.stream(KmgDelimiterTypes.REGEX_LINE_SEPARATOR.split(targetStr))
+            final String targetStr = Arrays.stream(KmgDelimiterTypes.REGEX_LINE_SEPARATOR.split(srcPatternStr))
                 .map(line -> line.trim().replaceAll("^\\*$", KmgString.EMPTY)).filter(KmgString::isNotBlank)
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
-            final KmgJavadocTagTypes tag   = KmgJavadocTagTypes.getEnum(m.group(1));
-            final String             value = m.group(2);
+            // タグ
+            final KmgJavadocTagTypes tag = KmgJavadocTagTypes.getEnum(m.group(1));
+
+            // 指定値
+            final String value = m.group(2);
 
             // 説明取得
             final String description = Optional.ofNullable(m.group(3))
                 .map(s -> s.trim().replaceFirst("^\\*", KmgString.EMPTY)).orElse(KmgString.EMPTY).trim();
 
-            final JavadocTagModel javadocTagMode = new JavadocTagModelImpl(tag, value, description);
+            final JavadocTagModel javadocTagMode = new JavadocTagModelImpl(targetStr, tag, value, description);
             this.javadocTagModelList.add(javadocTagMode);
 
             // TODO KenichiroArai 2025/04/03 デバッグ
-            System.out.println(String.format("対象文字列: %s, タグ: %s, 指定値: %s, 説明: %s", processedTargetStr,
+            System.out.println(String.format("対象文字列: %s, タグ: %s, 指定値: %s, 説明: %s", javadocTagMode.getTargetStr(),
                 javadocTagMode.getTag(), javadocTagMode.getValue(), javadocTagMode.getDescription()));
 
         }

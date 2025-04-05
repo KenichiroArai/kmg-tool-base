@@ -14,6 +14,9 @@ import kmg.tool.domain.model.JavadocTagModel;
  */
 public class JavadocTagModelImpl implements JavadocTagModel {
 
+    /** 対象文字列 */
+    private final String targetStr;
+
     /** タグ */
     private final KmgJavadocTagTypes tag;
 
@@ -26,6 +29,8 @@ public class JavadocTagModelImpl implements JavadocTagModel {
     /**
      * コンストラクタ<br>
      *
+     * @param targetStr
+     *                    対象文字列
      * @param tag
      *                    タグ
      * @param value
@@ -33,8 +38,10 @@ public class JavadocTagModelImpl implements JavadocTagModel {
      * @param description
      *                    説明
      */
-    public JavadocTagModelImpl(final KmgJavadocTagTypes tag, final String value, final String description) {
+    public JavadocTagModelImpl(final String targetStr, final KmgJavadocTagTypes tag, final String value,
+        final String description) {
 
+        this.targetStr = targetStr;
         this.tag = tag;
         this.value = value;
         this.description = description;
@@ -63,6 +70,23 @@ public class JavadocTagModelImpl implements JavadocTagModel {
     public KmgJavadocTagTypes getTag() {
 
         final KmgJavadocTagTypes result = this.tag;
+        return result;
+
+    }
+
+    /**
+     * 対象文字列を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 対象文字列
+     */
+    @Override
+    public String getTargetStr() {
+
+        final String result = this.targetStr;
         return result;
 
     }
