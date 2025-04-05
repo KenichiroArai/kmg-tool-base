@@ -64,7 +64,7 @@ public class JavadocModelImpl implements JavadocModel {
             final String targetStr = m.group(0);
             // 改行で分割して2行目の処理を行う
             final String processedTargetStr = Arrays.stream(KmgDelimiterTypes.LINE_SEPARATOR.split(targetStr))
-                .filter(line -> line.equals(targetStr) || !line.trim().matches("^\\*$|^$"))
+                .map(line -> line.trim().replace("*", KmgString.EMPTY)).filter(KmgString::isNotEmpty)
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
             final KmgJavadocTagTypes tag   = KmgJavadocTagTypes.getEnum(m.group(1));
