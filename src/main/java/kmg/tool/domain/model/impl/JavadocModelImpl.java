@@ -48,7 +48,7 @@ public class JavadocModelImpl implements JavadocModel {
         // グループ2: 値
         // グループ3: 説明（オプション）
         // TODO KenichiroArai 2025/04/03 ハードコード
-        final String  pattern = "(@\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?";
+        final String  pattern = "\\s+\\*\\s+(@\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?";
         final Pattern p       = java.util.regex.Pattern.compile(pattern);
         final Matcher m       = p.matcher(sourceJavadoc);
 
@@ -58,8 +58,9 @@ public class JavadocModelImpl implements JavadocModel {
         while (m.find()) {
 
             // TODO KenichiroArai 2025/04/03 ハードコード
-            final KmgJavadocTagTypes tag   = KmgJavadocTagTypes.getEnum(m.group(1));
-            final String             value = m.group(2);
+            final String             targetStr = m.group(0);
+            final KmgJavadocTagTypes tag       = KmgJavadocTagTypes.getEnum(m.group(1));
+            final String             value     = m.group(2);
 
             // 説明取得
             final String description = Optional.ofNullable(m.group(3))
@@ -69,7 +70,7 @@ public class JavadocModelImpl implements JavadocModel {
             this.javadocTagModelList.add(javadocTagMode);
 
             // TODO KenichiroArai 2025/04/03 デバッグ
-            System.out.println(String.format("タグ: %s\n指定値: %s\n説明: %s", javadocTagMode.getTag(),
+            System.out.println(String.format("対象文字列: %s, タグ: %s, 指定値: %s, 説明: %s", targetStr, javadocTagMode.getTag(),
                 javadocTagMode.getValue(), javadocTagMode.getDescription()));
 
         }
