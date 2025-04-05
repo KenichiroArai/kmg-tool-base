@@ -13,6 +13,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
+import kmg.tool.domain.model.JavadocTagsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -50,7 +51,7 @@ public class JavadocModelImpl implements JavadocModel {
         // グループ1: タグ名
         // グループ2: 値
         // グループ3: 説明（オプション）
-        final Pattern compiledTagPattern = KmgJavadocTagTypes.getCompiledTagPattern();
+        final Pattern compiledTagPattern = JavadocTagsModel.COMPILED_TAG_PATTERN;
         final Matcher compiledTagMatcher = compiledTagPattern.matcher(sourceJavadoc);
 
         // TODO KenichiroArai 2025/04/03 デバッグ
