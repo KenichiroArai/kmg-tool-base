@@ -30,10 +30,6 @@ public interface JavadocTagModel {
     /**
      * 対象文字列を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
      * @return 対象文字列
      */
     String getTargetStr();
