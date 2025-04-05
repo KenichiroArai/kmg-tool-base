@@ -50,10 +50,8 @@ public class JavadocModelImpl implements JavadocModel {
         // グループ1: タグ名
         // グループ2: 値
         // グループ3: 説明（オプション）
-        // TODO KenichiroArai 2025/04/03 ハードコード
-        final String  pattern = "\\s+\\*\\s+(@\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?";
-        final Pattern p       = java.util.regex.Pattern.compile(pattern);
-        final Matcher m       = p.matcher(sourceJavadoc);
+        final Pattern p = KmgJavadocTagTypes.getCompiledTagPattern();
+        final Matcher m = p.matcher(sourceJavadoc);
 
         // TODO KenichiroArai 2025/04/03 デバッグ
         System.out.println("----- 元のJavadoc -----");
