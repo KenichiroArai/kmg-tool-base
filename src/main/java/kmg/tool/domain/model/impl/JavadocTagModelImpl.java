@@ -4,7 +4,7 @@ import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.domain.model.JavadocTagModel;
 
 /**
- * Javadocタグモデル<br>
+ * Javadocタグ情報<br>
  *
  * @author KenichiroArai
  *
