@@ -26,6 +26,12 @@ public interface JavadocTagsModel {
     /** タグ説明のグループインデックス */
     int GROUP_INDEX_DESCRIPTION = 3;
 
+    /** 行頭のアスタリスクのみの行を検出する正規表現パターン */
+    String PATTERN_LINE_START_ASTERISK_ONLY = "^\\*$";
+
+    /** 行頭のアスタリスクを検出する正規表現パターン */
+    String PATTERN_LINE_START_ASTERISK = "^\\*";
+
     /**
      * Javadocタグを抽出する正規表現パターン
      *

@@ -67,8 +67,8 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
             final String srcPatternStr = compiledTagMatcher.group(JavadocTagsModel.GROUP_INDEX_WHOLE);
             // 改行で分割して2行目の処理を行う
             final String targetStr = Arrays.stream(KmgDelimiterTypes.REGEX_LINE_SEPARATOR.split(srcPatternStr))
-                .map(line -> line.trim().replaceAll("^\\*$", KmgString.EMPTY)).filter(KmgString::isNotBlank)
-                .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
+                .map(line -> line.trim().replaceAll(JavadocTagsModel.PATTERN_LINE_START_ASTERISK_ONLY, KmgString.EMPTY))
+                .filter(KmgString::isNotBlank).collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
             // タグ
             final KmgJavadocTagTypes tag
@@ -80,7 +80,8 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
             // 説明取得
             final String description
                 = Optional.ofNullable(compiledTagMatcher.group(JavadocTagsModel.GROUP_INDEX_DESCRIPTION))
-                    .map(s -> s.trim().replaceFirst("^\\*", KmgString.EMPTY)).orElse(KmgString.EMPTY).trim();
+                    .map(s -> s.trim().replaceFirst(JavadocTagsModel.PATTERN_LINE_START_ASTERISK, KmgString.EMPTY))
+                    .orElse(KmgString.EMPTY).trim();
 
             final JavadocTagModel javadocTagMode = new JavadocTagModelImpl(targetStr, tag, value, description);
             this.javadocTagModelList.add(javadocTagMode);
