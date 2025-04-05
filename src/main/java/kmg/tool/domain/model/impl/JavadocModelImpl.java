@@ -50,31 +50,31 @@ public class JavadocModelImpl implements JavadocModel {
         // グループ1: タグ名
         // グループ2: 値
         // グループ3: 説明（オプション）
-        final Pattern p = KmgJavadocTagTypes.getCompiledTagPattern();
-        final Matcher m = p.matcher(sourceJavadoc);
+        final Pattern compiledTagPattern = KmgJavadocTagTypes.getCompiledTagPattern();
+        final Matcher compiledTagMatcher = compiledTagPattern.matcher(sourceJavadoc);
 
         // TODO KenichiroArai 2025/04/03 デバッグ
         System.out.println("----- 元のJavadoc -----");
 
-        while (m.find()) {
+        while (compiledTagMatcher.find()) {
 
             // TODO KenichiroArai 2025/04/03 ハードコード
 
             // Javadocタグの対象文字列
-            final String srcPatternStr = m.group(0); // 元のパターンに一致する文字列
+            final String srcPatternStr = compiledTagMatcher.group(0); // 元のパターンに一致する文字列
             // 改行で分割して2行目の処理を行う
             final String targetStr = Arrays.stream(KmgDelimiterTypes.REGEX_LINE_SEPARATOR.split(srcPatternStr))
                 .map(line -> line.trim().replaceAll("^\\*$", KmgString.EMPTY)).filter(KmgString::isNotBlank)
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
             // タグ
-            final KmgJavadocTagTypes tag = KmgJavadocTagTypes.getEnum(m.group(1));
+            final KmgJavadocTagTypes tag = KmgJavadocTagTypes.getEnum(compiledTagMatcher.group(1));
 
             // 指定値
-            final String value = m.group(2);
+            final String value = compiledTagMatcher.group(2);
 
             // 説明取得
-            final String description = Optional.ofNullable(m.group(3))
+            final String description = Optional.ofNullable(compiledTagMatcher.group(3))
                 .map(s -> s.trim().replaceFirst("^\\*", KmgString.EMPTY)).orElse(KmgString.EMPTY).trim();
 
             final JavadocTagModel javadocTagMode = new JavadocTagModelImpl(targetStr, tag, value, description);
