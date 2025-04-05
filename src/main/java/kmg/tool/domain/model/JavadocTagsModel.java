@@ -14,6 +14,18 @@ import java.util.regex.Pattern;
  */
 public interface JavadocTagsModel {
 
+    /** タグ全体のグループインデックス */
+    int GROUP_INDEX_WHOLE = 0;
+
+    /** タグ名のグループインデックス */
+    int GROUP_INDEX_TAG_NAME = 1;
+
+    /** タグ値のグループインデックス */
+    int GROUP_INDEX_VALUE = 2;
+
+    /** タグ説明のグループインデックス */
+    int GROUP_INDEX_DESCRIPTION = 3;
+
     /**
      * Javadocタグを抽出する正規表現パターン
      *
@@ -29,34 +41,10 @@ public interface JavadocTagsModel {
     Pattern COMPILED_TAG_PATTERN = Pattern.compile(JavadocTagsModel.TAG_PATTERN);
 
     /**
-     * コンパイル済みのJavadocタグパターンを返す<br>
-     *
-     * @return コンパイル済みのJavadocタグパターン
-     */
-    default Pattern getCompiledTagPattern() {
-
-        final Pattern result = JavadocTagsModel.COMPILED_TAG_PATTERN;
-        return result;
-
-    }
-
-    /**
      * Javadocタグモデルのリストを返す<br>
      *
      * @return Javadocタグモデルのリスト
      */
     List<JavadocTagModel> getJavadocTagModelList();
-
-    /**
-     * Javadocタグを抽出する正規表現パターンを返す<br>
-     *
-     * @return Javadocタグを抽出する正規表現パターン
-     */
-    default String getTagPattern() {
-
-        final String result = JavadocTagsModel.TAG_PATTERN;
-        return result;
-
-    }
 
 }
