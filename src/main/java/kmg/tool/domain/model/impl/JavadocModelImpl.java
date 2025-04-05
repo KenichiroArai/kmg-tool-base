@@ -63,8 +63,9 @@ public class JavadocModelImpl implements JavadocModel {
             // TODO KenichiroArai 2025/04/03 ハードコード
             final String targetStr = m.group(0);
             // 改行で分割して2行目の処理を行う
-            final String processedTargetStr = Arrays.stream(KmgDelimiterTypes.LINE_SEPARATOR.split(targetStr))
-                .map(line -> line.trim().replace("*", KmgString.EMPTY)).filter(KmgString::isNotEmpty)
+            // System.out.println(String.format("元の文字列: %s", targetStr));
+            final String processedTargetStr = Arrays.stream(KmgDelimiterTypes.REGEX_LINE_SEPARATOR.split(targetStr))
+                .map(line -> line.trim().replaceAll("^\\*$", KmgString.EMPTY)).filter(KmgString::isNotBlank)
                 .collect(Collectors.joining(KmgDelimiterTypes.LINE_SEPARATOR.get()));
 
             final KmgJavadocTagTypes tag   = KmgJavadocTagTypes.getEnum(m.group(1));
