@@ -214,8 +214,7 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
         this.javadocAppenderLogic.createJavadocTagsModel();
 
         // TODO KenichiroArai 2025/03/29 ログ
-        final JdaTagsModel jdaTagsModel
-            = this.javadocAppenderLogic.getJavadocAppenderTagsModel();
+        final JdaTagsModel jdaTagsModel = this.javadocAppenderLogic.getJavadocAppenderTagsModel();
         System.out.println(jdaTagsModel.toString());
 
         /* 対象のJavaファイルを作成する */
