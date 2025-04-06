@@ -26,10 +26,10 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public class JdaReplacementModelImpl implements JdaReplacementModel {
 
     /** 元のJavadoc */
-    private final String sourceJavadoc;
+    private final String srcJavadoc;
 
     /** 元のコード */
-    private final String sourceCode;
+    private final String srcCode;
 
     /** 置換用識別子 */
     private final UUID identifier;
@@ -41,7 +41,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
     private String replacedJavadoc;
 
     /** 元のJavadocモデル */
-    private JavadocModel sourceJavadocModel;
+    private JavadocModel srcJavadocModel;
 
     /** Javadoc追加のタグモデル */
     private final JdaTagsModel jdaTagsModel;
@@ -53,18 +53,17 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
      *
      * @sine 0.1.0
      *
-     * @param sourceJavadoc
-     *                      元のJavadoc
-     * @param sourceCode
-     *                      元のコード
+     * @param srcJavadoc
+     *                     元のJavadoc
+     * @param srcCode
+     *                     元のコード
      * @param jdaTagsModel
-     *                      Javadocタグモデル
+     *                     Javadocタグモデル
      */
-    public JdaReplacementModelImpl(final String sourceJavadoc, final String sourceCode,
-        final JdaTagsModel jdaTagsModel) {
+    public JdaReplacementModelImpl(final String srcJavadoc, final String srcCode, final JdaTagsModel jdaTagsModel) {
 
-        this.sourceJavadoc = sourceJavadoc;
-        this.sourceCode = sourceCode;
+        this.srcJavadoc = srcJavadoc;
+        this.srcCode = srcCode;
         this.identifier = UUID.randomUUID();
         this.jdaTagsModel = jdaTagsModel;
 
@@ -88,10 +87,10 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         boolean result = false;
 
         /* 元のJavadocモデルの作成 */
-        this.sourceJavadocModel = new JavadocModelImpl(this.sourceJavadoc);
+        this.srcJavadocModel = new JavadocModelImpl(this.srcJavadoc);
 
         /* タグの追加・更新処理 */
-        final StringBuilder replacedJavadocBuilder = new StringBuilder(this.sourceJavadoc);
+        final StringBuilder replacedJavadocBuilder = new StringBuilder(this.srcJavadoc);
 
         // TODO KenichiroArai 2025/04/06 ハードコード
 
@@ -100,12 +99,12 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             /* 既存のタグ値を取得 */
             String existingTagValue = null;
 
-            for (final JavadocTagModel tagModel : this.sourceJavadocModel.getJavadocTagsModel()
+            for (final JavadocTagModel srcJavadocTagModel : this.srcJavadocModel.getJavadocTagsModel()
                 .getJavadocTagModelList()) {
 
-                if (tagModel.getTag().equals(jdaTagConfigModel.getTag())) {
+                if (srcJavadocTagModel.getTag().equals(jdaTagConfigModel.getTag())) {
 
-                    existingTagValue = tagModel.getValue();
+                    existingTagValue = srcJavadocTagModel.getValue();
                     break;
 
                 }
@@ -247,9 +246,9 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
      * @return 元のコード
      */
     @Override
-    public String getSourceCode() {
+    public String getSrcCode() {
 
-        final String result = this.sourceCode;
+        final String result = this.srcCode;
         return result;
 
     }
@@ -264,9 +263,9 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
      * @return 元のJavadoc
      */
     @Override
-    public String getSourceJavadoc() {
+    public String getSrcJavadoc() {
 
-        final String result = this.sourceJavadoc;
+        final String result = this.srcJavadoc;
         return result;
 
     }
@@ -281,9 +280,9 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
      * @return 元のJavadocモデル
      */
     @Override
-    public JavadocModel getSourceJavadocModel() {
+    public JavadocModel getSrcJavadocModel() {
 
-        final JavadocModel result = this.sourceJavadocModel;
+        final JavadocModel result = this.srcJavadocModel;
         return result;
 
     }
@@ -311,7 +310,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         /* コードを行ごとに確認する */
 
         // コードを行ごとに取得する。空行は除外する。
-        final String[] codeLines = Arrays.stream(KmgDelimiterTypes.LINE_SEPARATOR.split(this.sourceCode))
+        final String[] codeLines = Arrays.stream(KmgDelimiterTypes.LINE_SEPARATOR.split(this.srcCode))
             .filter(KmgString::isNotBlank).toArray(String[]::new);
 
         for (final String codeLine : codeLines) {

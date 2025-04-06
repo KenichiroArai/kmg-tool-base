@@ -72,7 +72,7 @@ public interface JdaReplacementModel {
      *
      * @return 元のコード
      */
-    String getSourceCode();
+    String getSrcCode();
 
     /**
      * 元のJavadocを返す<br>
@@ -83,7 +83,7 @@ public interface JdaReplacementModel {
      *
      * @return 元のJavadoc
      */
-    String getSourceJavadoc();
+    String getSrcJavadoc();
 
     /**
      * 元のJavadocモデルを返す<br>
@@ -94,7 +94,7 @@ public interface JdaReplacementModel {
      *
      * @return 元のJavadocモデル
      */
-    JavadocModel getSourceJavadocModel();
+    JavadocModel getSrcJavadocModel();
 
     /**
      * Java区分を特定する<br>
