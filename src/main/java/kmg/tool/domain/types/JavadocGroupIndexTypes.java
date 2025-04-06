@@ -6,7 +6,7 @@ import java.util.Map;
 import kmg.core.infrastructure.common.KmgComTypes;
 
 /**
- * KMG Javadocグループインデックスの種類<br>
+ * Javadocグループインデックスの種類<br>
  *
  * @author KenichiroArai
  *
@@ -14,7 +14,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  *
  * @version 0.1.0
  */
-public enum KmgJavadocGroupIndexTypes implements KmgComTypes<Integer> {
+public enum JavadocGroupIndexTypes implements KmgComTypes<Integer> {
 
     /* 定義：開始 */
 
@@ -34,14 +34,14 @@ public enum KmgJavadocGroupIndexTypes implements KmgComTypes<Integer> {
     ;
 
     /** 種類のマップ */
-    private static final Map<Integer, KmgJavadocGroupIndexTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<Integer, JavadocGroupIndexTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final KmgJavadocGroupIndexTypes type : KmgJavadocGroupIndexTypes.values()) {
+        for (final JavadocGroupIndexTypes type : JavadocGroupIndexTypes.values()) {
 
-            KmgJavadocGroupIndexTypes.VALUES_MAP.put(type.get(), type);
+            JavadocGroupIndexTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -66,7 +66,7 @@ public enum KmgJavadocGroupIndexTypes implements KmgComTypes<Integer> {
      * @param detail
      *                    詳細情報
      */
-    KmgJavadocGroupIndexTypes(final String displayName, final Integer key, final String detail) {
+    JavadocGroupIndexTypes(final String displayName, final Integer key, final String detail) {
 
         this.displayName = displayName;
         this.key = key;
