@@ -9,6 +9,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.application.types.JdaOverwriteTypes;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
@@ -131,29 +132,34 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             }
 
             /* タグの上書き判定 */
-            final String overwriteMode   = jdaTagConfigModel.getOverwrite();
-            boolean      shouldOverwrite = false;
+            final JdaOverwriteTypes overwriteMode   = jdaTagConfigModel.getOverwrite();
+            boolean                 shouldOverwrite = false;
 
             switch (overwriteMode) {
 
-                case "always":
-                    shouldOverwrite = true;
+                case NONE:
+                    /* 指定無し */
                     break;
 
-                case "never":
+                case NEVER:
+                    /* 上書きしない */
                     shouldOverwrite = false;
                     break;
 
-                case "ifLower":
+                case ALWAYS:
+                    /* 常に上書き */
+                    shouldOverwrite = true;
+                    break;
+
+                case IF_LOWER:
+                    /* 既存のバージョンより小さい場合のみ上書き */
+
                     // バージョン比較ロジックの実装（必要に応じて）
                     if ("version".equals(tagName) || "since".equals(tagName)) {
 
                         shouldOverwrite = this.compareVersions(existingTagValue, tagValue) > 0;
 
                     }
-                    break;
-
-                default:
                     break;
 
             }

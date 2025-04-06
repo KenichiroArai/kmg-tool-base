@@ -1,6 +1,7 @@
 package kmg.tool.application.model.jda;
 
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
+import kmg.tool.application.types.JdaOverwriteTypes;
 
 /**
  * Javadoc追加のタグ設定モデルインターフェース<br>
@@ -32,7 +33,7 @@ public interface JdaTagConfigModel {
      *
      * @return 上書き設定
      */
-    String getOverwrite();
+    JdaOverwriteTypes getOverwrite();
 
     /**
      * タグを返す<br>

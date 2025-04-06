@@ -101,9 +101,9 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
      * @return 上書き設定
      */
     @Override
-    public String getOverwrite() {
+    public JdaOverwriteTypes getOverwrite() {
 
-        final String result = this.overwrite.getKey();
+        final JdaOverwriteTypes result = this.overwrite;
         return result;
 
     }
