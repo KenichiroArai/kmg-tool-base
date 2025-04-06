@@ -435,14 +435,14 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
             // 「/**」でブロックに分ける
             // TODO KenichiroArai 2025/04/03 ハードコード
             final String[] blocks
-                = this.currentContentsOfFileToWrite.split(String.format("^\\s*%s\\s*$", Pattern.quote("/**")));
+                = this.currentContentsOfFileToWrite.split(String.format("%s\\s+", Pattern.quote("/**")));
 
             // ブロックの0番目はJavadocではないので、1番目から進める
             for (int i = 1; i < blocks.length; i++) {
 
                 // 「*/」でJavadocとCodeのブラックに分ける
                 // TODO KenichiroArai 2025/04/03 ハードコード
-                final String[] javadocCodeBlock = blocks[i].split(String.format("%s\\s*$", Pattern.quote("*/")), 2);
+                final String[] javadocCodeBlock = blocks[i].split(String.format("%s\\s+", Pattern.quote("*/")), 2);
 
                 // 元のJavadoc
                 final String sourceJavadoc = javadocCodeBlock[0];
