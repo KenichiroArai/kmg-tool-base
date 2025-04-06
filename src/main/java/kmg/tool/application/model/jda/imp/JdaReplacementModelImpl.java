@@ -116,16 +116,11 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             /* タグが存在しない場合は追加 */
             if (existingJavadocTag == KmgJavadocTagTypes.NONE) {
 
-                // Javadocの最後の "*/"の前に新しいタグを追加
-                final int insertPosition = replacedJavadocBuilder.lastIndexOf("*/");
+                // Javadocの最後に新しいタグを追加
+                final String newTag = String.format(" * @%s %s%n", jdaTagConfigModel.getTag().getKey(),
+                    jdaTagConfigModel.getTagValue());
+                replacedJavadocBuilder.append(newTag);
 
-                if (insertPosition != -1) {
-
-                    final String newTag = String.format(" * @%s %s%n", jdaTagConfigModel.getTag().getKey(),
-                        jdaTagConfigModel.getTagValue());
-                    replacedJavadocBuilder.insert(insertPosition, newTag);
-
-                }
                 continue;
 
             }
