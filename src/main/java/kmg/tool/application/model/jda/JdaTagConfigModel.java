@@ -1,6 +1,7 @@
 package kmg.tool.application.model.jda;
 
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
+import kmg.tool.application.types.JdaInsertPositionTypes;
 import kmg.tool.application.types.JdaOverwriteTypes;
 
 /**
@@ -19,7 +20,7 @@ public interface JdaTagConfigModel {
      *
      * @return タグの挿入位置
      */
-    String getInsertPosition();
+    JdaInsertPositionTypes getInsertPosition();
 
     /**
      * 配置場所の設定を返す<br>

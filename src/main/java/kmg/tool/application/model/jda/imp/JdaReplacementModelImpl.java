@@ -93,7 +93,10 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         /* タグの追加・更新処理 */
         final StringBuilder replacedJavadocBuilder = new StringBuilder(this.srcJavadoc);
 
-        // TODO KenichiroArai 2025/04/06 ハードコード
+        /* 先頭に追加するタグを収集 */
+        final StringBuilder headTagsBuilder = new StringBuilder();
+        /* 末尾に追加するタグを収集 */
+        final StringBuilder tailTagsBuilder = new StringBuilder();
 
         for (final JdaTagConfigModel jdaTagConfigModel : this.jdaTagsModel.getJdaTagConfigModels()) {
 
@@ -116,11 +119,24 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             /* タグが存在しない場合は追加 */
             if (existingJavadocTag == KmgJavadocTagTypes.NONE) {
 
-                // Javadocの最後に新しいタグを追加
+                // 新しいタグを作成
                 final String newTag = String.format(" * @%s %s%n", jdaTagConfigModel.getTag().getKey(),
                     jdaTagConfigModel.getTagValue());
-                replacedJavadocBuilder.append(newTag);
 
+                // 挿入位置に応じてタグを振り分け
+                switch (jdaTagConfigModel.getInsertPosition()) {
+
+                    case BEGINNING:
+                        headTagsBuilder.append(newTag);
+                        break;
+
+                    case NONE:
+                    case END:
+                    case PRESERVE:
+                        tailTagsBuilder.append(newTag);
+                        break;
+
+                }
                 continue;
 
             }
@@ -147,8 +163,6 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
                 case IF_LOWER:
                     /* 既存のバージョンより小さい場合のみ上書き */
-
-                    // バージョン比較ロジックの実装（必要に応じて）
                     final String tagKey = jdaTagConfigModel.getTag().getKey();
                     if ("version".equals(tagKey) || "since".equals(tagKey)) {
 
@@ -172,6 +186,27 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
                 replacedJavadocBuilder.append(javadoc);
 
             }
+
+        }
+
+        /* 先頭のタグを追加 */
+        if (headTagsBuilder.length() > 0) {
+
+            // 最初の「 * 」の位置を探す
+            final int firstStarPos = replacedJavadocBuilder.indexOf(" * ");
+
+            if (firstStarPos != -1) {
+
+                replacedJavadocBuilder.insert(firstStarPos + 3, headTagsBuilder.toString());
+
+            }
+
+        }
+
+        /* 末尾のタグを追加 */
+        if (tailTagsBuilder.length() > 0) {
+
+            replacedJavadocBuilder.append(tailTagsBuilder);
 
         }
 

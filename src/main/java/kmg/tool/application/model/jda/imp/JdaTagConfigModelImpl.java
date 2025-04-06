@@ -75,9 +75,9 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
      * @return タグの挿入位置
      */
     @Override
-    public String getInsertPosition() {
+    public JdaInsertPositionTypes getInsertPosition() {
 
-        final String result = this.insertPosition.getKey();
+        final JdaInsertPositionTypes result = this.insertPosition;
         return result;
 
     }
