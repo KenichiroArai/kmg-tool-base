@@ -10,6 +10,7 @@ import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdaTagsModel;
 import kmg.tool.domain.model.JavadocModel;
+import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -85,19 +86,95 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
         boolean result = false;
 
-        final String wkJavadoc = this.sourceJavadoc;
+        /* 元のJavadocモデルの作成 */
+        this.sourceJavadocModel = new JavadocModelImpl(this.sourceJavadoc);
 
-        this.sourceJavadocModel = new JavadocModelImpl(wkJavadoc);
+        /* タグの追加・更新処理 */
+        final StringBuilder replacedJavadocBuilder = new StringBuilder(this.sourceJavadoc);
 
-        // TODO KenichiroArai 2025/04/03 実装中
+        // TODO KenichiroArai 2025/04/06 ハードコード
 
         for (final JdaTagConfigModel jdaTagConfigModel : this.jdaTagsModel.getJdaTagConfigModels()) {
 
-            // TODO KenichiroArai 2025/04/03 実装中
+            final String tagName  = jdaTagConfigModel.getTagName();
+            final String tagValue = jdaTagConfigModel.getTagValue();
+
+            /* 既存のタグ値を取得 */
+            String existingTagValue = null;
+
+            for (final JavadocTagModel tagModel : this.sourceJavadocModel.getJavadocTagsModel()
+                .getJavadocTagModelList()) {
+
+                if (tagModel.getTag().getKey().equals(tagName)) {
+
+                    existingTagValue = tagModel.getValue();
+                    break;
+
+                }
+
+            }
+
+            /* タグが存在しない場合は追加 */
+            if ((existingTagValue == null) || existingTagValue.isEmpty()) {
+
+                // Javadocの最後の "*/"の前に新しいタグを追加
+                final int insertPosition = replacedJavadocBuilder.lastIndexOf("*/");
+
+                if (insertPosition != -1) {
+
+                    final String newTag = String.format(" * @%s %s%n", tagName, tagValue);
+                    replacedJavadocBuilder.insert(insertPosition, newTag);
+
+                }
+                continue;
+
+            }
+
+            /* タグの上書き判定 */
+            final String overwriteMode   = jdaTagConfigModel.getOverwrite();
+            boolean      shouldOverwrite = false;
+
+            switch (overwriteMode) {
+
+                case "always":
+                    shouldOverwrite = true;
+                    break;
+
+                case "never":
+                    shouldOverwrite = false;
+                    break;
+
+                case "ifLower":
+                    // バージョン比較ロジックの実装（必要に応じて）
+                    if ("version".equals(tagName) || "since".equals(tagName)) {
+
+                        shouldOverwrite = this.compareVersions(existingTagValue, tagValue) > 0;
+
+                    }
+                    break;
+
+                default:
+                    break;
+
+            }
+
+            /* タグの更新 */
+            if (shouldOverwrite) {
+
+                final String oldTag  = String.format("@%s %s", tagName, existingTagValue);
+                final String newTag  = String.format("@%s %s", tagName, tagValue);
+                String       javadoc = replacedJavadocBuilder.toString();
+                javadoc = javadoc.replace(oldTag, newTag);
+                replacedJavadocBuilder.setLength(0);
+                replacedJavadocBuilder.append(javadoc);
+
+            }
 
         }
 
-        this.replacedJavadoc = wkJavadoc;
+        this.replacedJavadoc = replacedJavadocBuilder.toString();
+        // TODO KenichiroArai 2025/04/06 デバッグログ
+        System.out.println(this.replacedJavadoc);
         result = true;
         return result;
 
@@ -250,6 +327,46 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         }
 
         return result;
+
+    }
+
+    /**
+     * バージョン文字列を比較する<br>
+     *
+     * @param version1
+     *                 バージョン1
+     * @param version2
+     *                 バージョン2
+     *
+     * @return version1が大きい場合は1、version2が大きい場合は-1、等しい場合は0
+     */
+    private int compareVersions(final String version1, final String version2) {
+
+        final String[] v1Parts = version1.split("\\.");
+        final String[] v2Parts = version2.split("\\.");
+
+        final int length = Math.max(v1Parts.length, v2Parts.length);
+
+        for (int i = 0; i < length; i++) {
+
+            final int v1 = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
+            final int v2 = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
+
+            if (v1 < v2) {
+
+                return -1;
+
+            }
+
+            if (v1 > v2) {
+
+                return 1;
+
+            }
+
+        }
+
+        return 0;
 
     }
 
