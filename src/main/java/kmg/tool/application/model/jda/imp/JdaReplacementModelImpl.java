@@ -87,6 +87,8 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
         boolean result = false;
 
+        // TODO KenichiroArai 2025/04/07 実装中
+
         /* 元のJavadocモデルの作成 */
         this.srcJavadocModel = new JavadocModelImpl(this.srcJavadoc);
 
