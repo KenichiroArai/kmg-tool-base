@@ -6,6 +6,7 @@ import java.util.UUID;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdaTagsModel;
@@ -97,22 +98,23 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         for (final JdaTagConfigModel jdaTagConfigModel : this.jdaTagsModel.getJdaTagConfigModels()) {
 
             /* 既存のタグ値を取得 */
-            String existingTagValue = null;
+            KmgJavadocTagTypes existingJavadocTag = KmgJavadocTagTypes.NONE;
 
             for (final JavadocTagModel srcJavadocTagModel : this.srcJavadocModel.getJavadocTagsModel()
                 .getJavadocTagModelList()) {
 
-                if (srcJavadocTagModel.getTag().equals(jdaTagConfigModel.getTag())) {
+                if (srcJavadocTagModel.getTag() != jdaTagConfigModel.getTag()) {
 
-                    existingTagValue = srcJavadocTagModel.getValue();
-                    break;
+                    continue;
 
                 }
+                existingJavadocTag = srcJavadocTagModel.getTag();
+                break;
 
             }
 
             /* タグが存在しない場合は追加 */
-            if ((existingTagValue == null) || existingTagValue.isEmpty()) {
+            if (existingJavadocTag == KmgJavadocTagTypes.NONE) {
 
                 // Javadocの最後の "*/"の前に新しいタグを追加
                 final int insertPosition = replacedJavadocBuilder.lastIndexOf("*/");
@@ -155,7 +157,8 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
                     final String tagKey = jdaTagConfigModel.getTag().getKey();
                     if ("version".equals(tagKey) || "since".equals(tagKey)) {
 
-                        shouldOverwrite = this.compareVersions(existingTagValue, jdaTagConfigModel.getTagValue()) > 0;
+                        shouldOverwrite
+                            = this.compareVersions(existingJavadocTag.get(), jdaTagConfigModel.getTagValue()) > 0;
 
                     }
                     break;
@@ -165,7 +168,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             /* タグの更新 */
             if (shouldOverwrite) {
 
-                final String oldTag  = String.format("@%s %s", jdaTagConfigModel.getTag().getKey(), existingTagValue);
+                final String oldTag  = String.format("@%s %s", jdaTagConfigModel.getTag().getKey(), existingJavadocTag);
                 final String newTag  = String.format("@%s %s", jdaTagConfigModel.getTag().getKey(),
                     jdaTagConfigModel.getTagValue());
                 String       javadoc = replacedJavadocBuilder.toString();
