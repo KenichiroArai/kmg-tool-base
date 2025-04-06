@@ -88,8 +88,9 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
             this.javadocTagModelList.add(javadocTagMode);
 
             // TODO KenichiroArai 2025/04/03 デバッグ
-            System.out.println(String.format("対象文字列: %s, タグ: %s, 指定値: %s, 説明: %s", javadocTagMode.getTargetStr(),
-                javadocTagMode.getTag(), javadocTagMode.getValue(), javadocTagMode.getDescription()));
+            System.out
+                .println(String.format("対象文字列: [%s], タグ: [%s], 指定値: [%s], 説明: [%s]", javadocTagMode.getTargetStr(),
+                    javadocTagMode.getTag(), javadocTagMode.getValue(), javadocTagMode.getDescription()));
 
         }
 
