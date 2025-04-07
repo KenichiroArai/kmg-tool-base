@@ -1,6 +1,7 @@
 package kmg.tool.application.model.jda.imp;
 
 import java.util.Map;
+import java.util.Optional;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
@@ -57,7 +58,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
         this.tagName = (String) tagConfig.get("tagName");
         this.tag = KmgJavadocTagTypes.getEnum(KmgString.concat("@", this.tagName));
         this.tagValue = (String) tagConfig.get("tagValue");
-        this.tagDescription = (String) tagConfig.get("tagDescription");
+        this.tagDescription = Optional.ofNullable((String) tagConfig.get("tagDescription")).orElse(KmgString.EMPTY);
 
         final Map<String, Object> locationMap = (Map<String, Object>) tagConfig.get("location");
 
