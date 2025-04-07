@@ -58,7 +58,8 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
         this.tagName = (String) tagConfig.get("tagName");
         this.tag = KmgJavadocTagTypes.getEnum(KmgString.concat("@", this.tagName));
         this.tagValue = (String) tagConfig.get("tagValue");
-        this.tagDescription = Optional.ofNullable((String) tagConfig.get("tagDescription")).orElse(KmgString.EMPTY);
+        this.tagDescription
+            = Optional.ofNullable(tagConfig.get("tagDescription")).map(Object::toString).orElse(KmgString.EMPTY);
 
         final Map<String, Object> locationMap = (Map<String, Object>) tagConfig.get("location");
 
