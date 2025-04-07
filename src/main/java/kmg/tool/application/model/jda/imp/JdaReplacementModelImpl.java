@@ -89,20 +89,24 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
         // TODO KenichiroArai 2025/04/07 実装中
 
-        /* 元のJavadocモデルの作成 */
+        /* 準備 */
+        // 元のJavadocモデルの作成
         this.srcJavadocModel = new JavadocModelImpl(this.srcJavadoc);
 
-        /* タグの追加・更新処理 */
+        // タグの追加・更新処理
         final StringBuilder replacedJavadocBuilder = new StringBuilder(this.srcJavadoc);
 
-        /* 先頭に追加するタグを収集 */
+        // 先頭に追加するタグを収集
         final StringBuilder headTagsBuilder = new StringBuilder();
-        /* 末尾に追加するタグを収集 */
+
+        // 末尾に追加するタグを収集
         final StringBuilder tailTagsBuilder = new StringBuilder();
 
+        /* Javadoc追加のタグ設定を基準に、Javadocを更新 */
         for (final JdaTagConfigModel jdaTagConfigModel : this.jdaTagsModel.getJdaTagConfigModels()) {
 
-            /* 既存のタグ値を取得 */
+            /* 元のJavadocにJavadoc追加のタグ設定のタグがあるか取得 */
+            // NONEならタグが存在しない
             KmgJavadocTagTypes existingJavadocTag = KmgJavadocTagTypes.NONE;
 
             for (final JavadocTagModel srcJavadocTagModel : this.srcJavadocModel.getJavadocTagsModel()
@@ -118,27 +122,35 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
             }
 
-            /* タグが存在しない場合は追加 */
             if (existingJavadocTag == KmgJavadocTagTypes.NONE) {
 
+                // タグが存在しない場合
+
                 // 新しいタグを作成
-                final String newTag = String.format(" * @%s %s%n", jdaTagConfigModel.getTag().getKey(),
-                    jdaTagConfigModel.getTagValue());
+                // TODO KenichiroArai 2025/04/08 ハードコード
+                final String newTag = String.format(" * %s %s %s%n", jdaTagConfigModel.getTag().getKey(),
+                    jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
 
                 // 挿入位置に応じてタグを振り分け
                 switch (jdaTagConfigModel.getInsertPosition()) {
 
                     case BEGINNING:
+                        // ファイルの先頭
                         headTagsBuilder.append(newTag);
                         break;
 
                     case NONE:
+                        // 指定無し
                     case END:
+                        // ァイルの末尾
                     case PRESERVE:
+                        // 現在の位置を維持
                         tailTagsBuilder.append(newTag);
                         break;
 
                 }
+
+                // タグを追加したので次へ進む
                 continue;
 
             }
