@@ -10,7 +10,6 @@ import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdaTagsModel;
-import kmg.tool.application.types.JdaOverwriteTypes;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
@@ -46,6 +45,50 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
     /** Javadoc追加のタグモデル */
     private final JdaTagsModel jdaTagsModel;
+
+    /**
+     * バージョン文字列を比較する<br>
+     *
+     * @param version1
+     *                 バージョン1
+     * @param version2
+     *                 バージョン2
+     *
+     * @return version1が大きい場合は1、version2が大きい場合は-1、等しい場合は0
+     */
+    private static int compareVersions(final String version1, final String version2) {
+
+        int result = 0;
+
+        final String[] v1Parts = version1.split("\\.");
+        final String[] v2Parts = version2.split("\\.");
+
+        final int length = Math.max(v1Parts.length, v2Parts.length);
+
+        for (int i = 0; i < length; i++) {
+
+            final int v1 = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
+            final int v2 = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
+
+            if (v1 < v2) {
+
+                result = -1;
+                return result;
+
+            }
+
+            if (v1 > v2) {
+
+                result = 1;
+                return result;
+
+            }
+
+        }
+
+        return result;
+
+    }
 
     /**
      * コンストラクタ<br>
@@ -135,17 +178,21 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
                 switch (jdaTagConfigModel.getInsertPosition()) {
 
                     case BEGINNING:
-                        // ファイルの先頭
+                        /* ファイルの先頭 */
+
                         headTagsBuilder.append(newTag);
+
                         break;
 
                     case NONE:
-                        // 指定無し
+                        /* 指定無し */
                     case END:
-                        // ァイルの末尾
+                        /* ファイルの末尾 */
                     case PRESERVE:
-                        // 現在の位置を維持
+                        /* 現在の位置を維持 */
+
                         tailTagsBuilder.append(newTag);
+
                         break;
 
                 }
@@ -156,32 +203,36 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             }
 
             /* タグの上書き判定 */
-            final JdaOverwriteTypes overwriteMode   = jdaTagConfigModel.getOverwrite();
-            boolean                 shouldOverwrite = false;
+            boolean shouldOverwrite = false;
 
-            switch (overwriteMode) {
+            switch (jdaTagConfigModel.getOverwrite()) {
 
                 case NONE:
                     /* 指定無し */
+
                     break;
 
                 case NEVER:
                     /* 上書きしない */
+
                     shouldOverwrite = false;
+
                     break;
 
                 case ALWAYS:
                     /* 常に上書き */
+
                     shouldOverwrite = true;
+
                     break;
 
                 case IF_LOWER:
                     /* 既存のバージョンより小さい場合のみ上書き */
-                    final String tagKey = jdaTagConfigModel.getTag().getKey();
-                    if ("version".equals(tagKey) || "since".equals(tagKey)) {
 
-                        shouldOverwrite
-                            = this.compareVersions(existingJavadocTag.get(), jdaTagConfigModel.getTagValue()) > 0;
+                    if (jdaTagConfigModel.getTag().isVersionValue()) {
+
+                        shouldOverwrite = JdaReplacementModelImpl.compareVersions(existingJavadocTag.get(),
+                            jdaTagConfigModel.getTagValue()) > 0;
 
                     }
                     break;
@@ -379,46 +430,6 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         }
 
         return result;
-
-    }
-
-    /**
-     * バージョン文字列を比較する<br>
-     *
-     * @param version1
-     *                 バージョン1
-     * @param version2
-     *                 バージョン2
-     *
-     * @return version1が大きい場合は1、version2が大きい場合は-1、等しい場合は0
-     */
-    private int compareVersions(final String version1, final String version2) {
-
-        final String[] v1Parts = version1.split("\\.");
-        final String[] v2Parts = version2.split("\\.");
-
-        final int length = Math.max(v1Parts.length, v2Parts.length);
-
-        for (int i = 0; i < length; i++) {
-
-            final int v1 = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
-            final int v2 = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
-
-            if (v1 < v2) {
-
-                return -1;
-
-            }
-
-            if (v1 > v2) {
-
-                return 1;
-
-            }
-
-        }
-
-        return 0;
 
     }
 

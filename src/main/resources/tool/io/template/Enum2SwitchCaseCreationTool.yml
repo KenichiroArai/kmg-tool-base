@@ -18,5 +18,5 @@ derivedPlaceholders: []
 # {item}, {itemName}のプレースホルダーが実際の値に置換される
 templateContent: |
     case {item}:
-        // {itemName}
+        /* {itemName} */
         break;
