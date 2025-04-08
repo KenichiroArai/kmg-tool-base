@@ -45,6 +45,9 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     /** 上書き設定 */
     private final JdaOverwriteTypes overwrite;
 
+    /** 誤配置時に削除するかどうか */
+    private final boolean removeIfMisplaced;
+
     /**
      * コンストラクタ<br>
      *
@@ -68,6 +71,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
 
         this.insertPosition = JdaInsertPositionTypes.getEnum((String) tagConfig.get("insertPosition"));
         this.overwrite = JdaOverwriteTypes.getEnum((String) tagConfig.get("overwrite"));
+        this.removeIfMisplaced = Boolean.parseBoolean(String.valueOf(locationMap.get("removeIfMisplaced")));
 
     }
 
@@ -166,6 +170,23 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
     public String getTagValue() {
 
         final String result = this.tagValue;
+        return result;
+
+    }
+
+    /**
+     * 誤配置時に削除するかどうかを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：削除する、false：削除しない
+     */
+    @Override
+    public boolean isRemoveIfMisplaced() {
+
+        final boolean result = this.removeIfMisplaced;
         return result;
 
     }
