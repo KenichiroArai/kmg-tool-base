@@ -158,6 +158,38 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
             }
 
+            // 誤配置時に削除するか
+            if (jdaTagConfigModel.isRemoveIfMisplaced()) {
+
+                // 削除する場合
+
+                switch (jdaTagConfigModel.getLocation().getMode()) {
+
+                    case NONE:
+                        /* 指定無し */
+
+                        break;
+
+                    case COMPLIANT:
+                        /* 準拠モード */
+
+                        break;
+
+                    case MANUAL:
+                        /* 手動モード */
+
+                        break;
+
+                }
+
+                String javadoc = replacedJavadocBuilder.toString();
+                javadoc = javadoc.replace(existingJavadocTagModel.getTargetStr(), KmgString.EMPTY);
+                replacedJavadocBuilder.setLength(0);
+                replacedJavadocBuilder.append(javadoc);
+                continue;
+
+            }
+
             /* タグの上書き判定 */
             switch (jdaTagConfigModel.getOverwrite()) {
 

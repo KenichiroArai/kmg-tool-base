@@ -64,9 +64,9 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
      * @return 配置方法
      */
     @Override
-    public String getMode() {
+    public JdaLocationModeTypes getMode() {
 
-        final String result = this.mode.getKey();
+        final JdaLocationModeTypes result = this.mode;
         return result;
 
     }

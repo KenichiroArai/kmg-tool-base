@@ -2,6 +2,8 @@ package kmg.tool.application.model.jda;
 
 import java.util.List;
 
+import kmg.tool.application.types.JdaLocationModeTypes;
+
 /**
  * Javadocタグの配置場所設定インタフェース<br>
  * <p>
@@ -21,7 +23,7 @@ public interface JdaLocationConfigModel {
      *
      * @return 配置方法
      */
-    String getMode();
+    JdaLocationModeTypes getMode();
 
     /**
      * 対象要素の種類を返す<br>
