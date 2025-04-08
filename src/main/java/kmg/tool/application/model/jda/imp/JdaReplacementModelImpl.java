@@ -159,7 +159,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             }
 
             // 誤配置時に削除するか
-            if (jdaTagConfigModel.isRemoveIfMisplaced()) {
+            if (jdaTagConfigModel.getLocation().isRemoveIfMisplaced()) {
 
                 // 削除する場合
 

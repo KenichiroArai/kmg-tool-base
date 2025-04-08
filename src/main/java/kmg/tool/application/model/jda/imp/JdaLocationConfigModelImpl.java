@@ -25,6 +25,9 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
     /** 配置方法 */
     private final JdaLocationModeTypes mode;
 
+    /** 誤配置時に削除するかどうか */
+    private final boolean removeIfMisplaced;
+
     /** 対象要素の種類（手動モード時のみ使用） */
     private final List<KmgJavadocLocationTypes> targetElements;
 
@@ -39,6 +42,9 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
 
         /* 配置方法の設定 */
         this.mode = JdaLocationModeTypes.getEnum((String) locationMap.get("mode"));
+
+        /** 誤配置時に削除するかどうかの設定 */
+        this.removeIfMisplaced = Boolean.parseBoolean(String.valueOf(locationMap.get("removeIfMisplaced")));
 
         /* 対象要素の種類の設定 */
         final List<String> targetElementsKeys = (List<String>) locationMap.get("targetElements");
@@ -86,6 +92,23 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
             result.add(element.getKey());
 
         }
+        return result;
+
+    }
+
+    /**
+     * 誤配置時に削除するかどうかを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：削除する、false：削除しない
+     */
+    @Override
+    public boolean isRemoveIfMisplaced() {
+
+        final boolean result = this.removeIfMisplaced;
         return result;
 
     }

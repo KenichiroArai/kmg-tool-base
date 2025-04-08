@@ -31,4 +31,11 @@ public interface JdaLocationConfigModel {
      * @return 対象要素の種類
      */
     List<String> getTargetElements();
+
+    /**
+     * 誤配置時に削除するかどうかを返す<br>
+     *
+     * @return true：削除する、false：削除しない
+     */
+    boolean isRemoveIfMisplaced();
 }

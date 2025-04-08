@@ -63,11 +63,4 @@ public interface JdaTagConfigModel {
      * @return タグの指定値
      */
     String getTagValue();
-
-    /**
-     * 誤配置時に削除するかどうかを返す<br>
-     *
-     * @return true：削除する、false：削除しない
-     */
-    boolean isRemoveIfMisplaced();
 }
