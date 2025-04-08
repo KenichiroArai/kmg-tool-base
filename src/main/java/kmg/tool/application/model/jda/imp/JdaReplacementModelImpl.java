@@ -125,6 +125,18 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
                 // タグが存在しない場合
 
+                // タグの配置がJava区分に一致しないか
+                if (!jdaTagConfigModel.isProperlyPlaced(this.javaClassification)) {
+
+                    // 一致しない場合
+
+                    // 次のタグへ
+                    continue;
+
+                }
+
+                // 一致する場合
+
                 // 新しいタグを作成
                 // TODO KenichiroArai 2025/04/08 ハードコード
                 final String newTag = String.format(" * %s %s %s%n", jdaTagConfigModel.getTag().getKey(),
