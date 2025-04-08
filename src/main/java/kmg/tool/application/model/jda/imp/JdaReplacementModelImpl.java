@@ -3,6 +3,8 @@ package kmg.tool.application.model.jda.imp;
 import java.util.Arrays;
 import java.util.UUID;
 
+import org.apache.maven.artifact.versioning.ComparableVersion;
+
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
@@ -45,50 +47,6 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
     /** Javadoc追加のタグモデル */
     private final JdaTagsModel jdaTagsModel;
-
-    /**
-     * バージョン文字列を比較する<br>
-     *
-     * @param version1
-     *                 バージョン1
-     * @param version2
-     *                 バージョン2
-     *
-     * @return version1が大きい場合は1、version2が大きい場合は-1、等しい場合は0
-     */
-    private static int compareVersions(final String version1, final String version2) {
-
-        int result = 0;
-
-        final String[] v1Parts = version1.split("\\.");
-        final String[] v2Parts = version2.split("\\.");
-
-        final int length = Math.max(v1Parts.length, v2Parts.length);
-
-        for (int i = 0; i < length; i++) {
-
-            final int v1 = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
-            final int v2 = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
-
-            if (v1 < v2) {
-
-                result = -1;
-                return result;
-
-            }
-
-            if (v1 > v2) {
-
-                result = 1;
-                return result;
-
-            }
-
-        }
-
-        return result;
-
-    }
 
     /**
      * コンストラクタ<br>
@@ -231,8 +189,9 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
                     if (jdaTagConfigModel.getTag().isVersionValue()) {
 
-                        shouldOverwrite = JdaReplacementModelImpl.compareVersions(existingJavadocTag.get(),
-                            jdaTagConfigModel.getTagValue()) > 0;
+                        final ComparableVersion v1 = new ComparableVersion(existingJavadocTag.get());
+                        final ComparableVersion v2 = new ComparableVersion(jdaTagConfigModel.getTagValue());
+                        shouldOverwrite = v1.compareTo(v2) > 0;
 
                     }
                     break;
