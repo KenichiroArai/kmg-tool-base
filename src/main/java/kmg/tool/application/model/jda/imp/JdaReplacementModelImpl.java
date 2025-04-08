@@ -8,7 +8,6 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdaTagsModel;
@@ -107,8 +106,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         for (final JdaTagConfigModel jdaTagConfigModel : this.jdaTagsModel.getJdaTagConfigModels()) {
 
             /* 元のJavadocにJavadoc追加のタグ設定のタグがあるか取得 */
-            // NONEならタグが存在しない
-            KmgJavadocTagTypes existingJavadocTag = KmgJavadocTagTypes.NONE;
+            JavadocTagModel existingJavadocTagModel = null;
 
             for (final JavadocTagModel srcJavadocTagModel : this.srcJavadocModel.getJavadocTagsModel()
                 .getJavadocTagModelList()) {
@@ -118,12 +116,12 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
                     continue;
 
                 }
-                existingJavadocTag = srcJavadocTagModel.getTag();
+                existingJavadocTagModel = srcJavadocTagModel;
                 break;
 
             }
 
-            if (existingJavadocTag == KmgJavadocTagTypes.NONE) {
+            if (existingJavadocTagModel == null) {
 
                 // タグが存在しない場合
 
@@ -161,26 +159,17 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             }
 
             /* タグの上書き判定 */
-            boolean shouldOverwrite = false;
-
             switch (jdaTagConfigModel.getOverwrite()) {
 
                 case NONE:
                     /* 指定無し */
-
-                    break;
-
                 case NEVER:
                     /* 上書きしない */
 
-                    shouldOverwrite = false;
-
-                    break;
+                    continue;
 
                 case ALWAYS:
                     /* 常に上書き */
-
-                    shouldOverwrite = true;
 
                     break;
 
@@ -189,9 +178,14 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
                     if (jdaTagConfigModel.getTag().isVersionValue()) {
 
-                        final ComparableVersion v1 = new ComparableVersion(existingJavadocTag.get());
+                        final ComparableVersion v1 = new ComparableVersion(existingJavadocTagModel.getTag().get());
                         final ComparableVersion v2 = new ComparableVersion(jdaTagConfigModel.getTagValue());
-                        shouldOverwrite = v1.compareTo(v2) > 0;
+
+                        if (v1.compareTo(v2) <= 0) {
+
+                            continue;
+
+                        }
 
                     }
                     break;
@@ -199,17 +193,12 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             }
 
             /* タグの更新 */
-            if (shouldOverwrite) {
-
-                final String oldTag  = String.format("@%s %s", jdaTagConfigModel.getTag().getKey(), existingJavadocTag);
-                final String newTag  = String.format("@%s %s", jdaTagConfigModel.getTag().getKey(),
-                    jdaTagConfigModel.getTagValue());
-                String       javadoc = replacedJavadocBuilder.toString();
-                javadoc = javadoc.replace(oldTag, newTag);
-                replacedJavadocBuilder.setLength(0);
-                replacedJavadocBuilder.append(javadoc);
-
-            }
+            final String newTag  = String.format("@%s %s %s", jdaTagConfigModel.getTag().getKey(),
+                jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
+            String       javadoc = replacedJavadocBuilder.toString();
+            javadoc = javadoc.replace(existingJavadocTagModel.getTargetStr(), newTag);
+            replacedJavadocBuilder.setLength(0);
+            replacedJavadocBuilder.append(javadoc);
 
         }
 
