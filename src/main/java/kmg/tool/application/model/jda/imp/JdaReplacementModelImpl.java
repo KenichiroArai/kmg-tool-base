@@ -163,30 +163,21 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
                 // 削除する場合
 
-                switch (jdaTagConfigModel.getLocation().getMode()) {
+                // タグの配置がJava区分に一致しないか
+                if (!jdaTagConfigModel.isProperlyPlaced(this.javaClassification)) {
 
-                    case NONE:
-                        /* 指定無し */
+                    // 一致しない場合
 
-                        break;
+                    // 一致しない場合は、誤配置のため、元のJavadocに設定されていても削除する。
 
-                    case COMPLIANT:
-                        /* 準拠モード */
+                    String javadoc = replacedJavadocBuilder.toString();
+                    javadoc = javadoc.replace(existingJavadocTagModel.getTargetStr(), KmgString.EMPTY);
+                    replacedJavadocBuilder.setLength(0);
+                    replacedJavadocBuilder.append(javadoc);
 
-                        break;
-
-                    case MANUAL:
-                        /* 手動モード */
-
-                        break;
+                    continue;
 
                 }
-
-                String javadoc = replacedJavadocBuilder.toString();
-                javadoc = javadoc.replace(existingJavadocTagModel.getTargetStr(), KmgString.EMPTY);
-                replacedJavadocBuilder.setLength(0);
-                replacedJavadocBuilder.append(javadoc);
-                continue;
 
             }
 
@@ -235,7 +226,9 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         }
 
         /* 先頭のタグを追加 */
-        if (headTagsBuilder.length() > 0) {
+        if (headTagsBuilder.length() > 0)
+
+        {
 
             // 最初の「 * 」の位置を探す
             final int firstStarPos = replacedJavadocBuilder.indexOf(" * ");

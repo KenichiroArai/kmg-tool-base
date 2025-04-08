@@ -1,9 +1,12 @@
 package kmg.tool.application.model.jda.imp;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import kmg.core.infrastructure.type.KmgString;
+import kmg.core.infrastructure.types.JavaClassificationTypes;
+import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jda.JdaLocationConfigModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
@@ -169,4 +172,55 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
         return result;
 
     }
+
+    /**
+     * タグの配置がJava区分に一致するか<br>
+     *
+     * @param javaClassification
+     *                           Java区分
+     *
+     * @return true：一致する、false：一致しない
+     */
+    @Override
+    public boolean isProperlyPlaced(final JavaClassificationTypes javaClassification) {
+
+        boolean result = false;
+
+        /* 配置方法による判断 */
+        result = switch (this.location.getMode()) {
+
+            case NONE:
+                /* 指定無し */
+                yield false;
+
+            case COMPLIANT:
+            /* 準拠モード */ {
+
+                // タグの設定可能な場所のリストを取得
+                final List<KmgJavadocLocationTypes> locations = this.tag.getLocations();
+                // Java区分に対応するJavadoc配置場所の種類を取得
+                final KmgJavadocLocationTypes targetLocation
+                    = KmgJavadocLocationTypes.fromJavaClassification(javaClassification);
+                // 全ての場所に配置可能か、または特定の場所に配置可能かをチェック
+                yield locations.contains(KmgJavadocLocationTypes.ALL) || locations.contains(targetLocation);
+
+            }
+
+            case MANUAL:
+            /* 手動モード */ {
+
+                // Java区分に対応するJavadoc配置場所の種類を取得
+                final KmgJavadocLocationTypes manualTargetLocation
+                    = KmgJavadocLocationTypes.fromJavaClassification(javaClassification);
+                // targetElementsに指定された要素と一致するかチェック
+                yield this.location.getTargetElements().contains(manualTargetLocation.getKey());
+
+            }
+
+        };
+
+        return result;
+
+    }
+
 }

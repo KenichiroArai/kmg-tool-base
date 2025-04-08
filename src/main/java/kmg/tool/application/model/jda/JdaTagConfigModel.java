@@ -1,5 +1,6 @@
 package kmg.tool.application.model.jda;
 
+import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.types.JdaInsertPositionTypes;
 import kmg.tool.application.types.JdaOverwriteTypes;
@@ -63,4 +64,14 @@ public interface JdaTagConfigModel {
      * @return タグの指定値
      */
     String getTagValue();
+
+    /**
+     * タグの配置がJava区分に一致するか<br>
+     *
+     * @param javaClassification
+     *                           Java区分
+     *
+     * @return true：一致する、false：一致しない
+     */
+    boolean isProperlyPlaced(JavaClassificationTypes javaClassification);
 }
