@@ -450,12 +450,51 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
                 // 元のコード
                 final String sourceCode = javadocCodeBlock[1];
 
-                // 元のコードの分析
+                // TODO KenichiroArai 2025/04/09 コードを精査する
+                // アノテーションと元のコードを分割
+                final String[]      codeLines      = sourceCode.split("\\R");
+                final StringBuilder codeBuilder    = new StringBuilder();
+                final List<String>  annotationList = new ArrayList<>();
+
+                boolean isCodeSection = false;
+
+                for (final String line : codeLines) {
+
+                    final String trimmedLine = line.trim();
+
+                    if (trimmedLine.isEmpty()) {
+
+                        continue;
+
+                    }
+
+                    if (!isCodeSection) {
+
+                        if (trimmedLine.startsWith("@")) {
+
+                            annotationList.add(trimmedLine);
+
+                        } else {
+
+                            isCodeSection = true;
+                            codeBuilder.append(line).append(System.lineSeparator());
+
+                        }
+
+                    } else {
+
+                        codeBuilder.append(line).append(System.lineSeparator());
+
+                    }
+
+                }
+
+                final String actualSourceCode = codeBuilder.toString().trim();
 
                 // 元のJavadoc
 
                 final JdaReplacementModel jdaReplacementModel
-                    = new JdaReplacementModelImpl(sourceJavadoc, sourceCode, this.jdaTagsModel);
+                    = new JdaReplacementModelImpl(sourceJavadoc, actualSourceCode, this.jdaTagsModel);
                 javadocReplacementModelList.add(jdaReplacementModel);
 
                 // 元のJavadoc部分を置換用識別子に置換する
