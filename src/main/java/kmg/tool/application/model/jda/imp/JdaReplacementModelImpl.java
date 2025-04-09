@@ -238,17 +238,18 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         }
 
         /* 先頭のタグを追加 */
-        if (headTagsBuilder.length() > 0)
+        if (headTagsBuilder.length() > 0) {
 
-        {
+            // 最初の「@」の位置を探す
+            final int firstAtPos = replacedJavadocBuilder.indexOf("@");
 
-            // 最初の「 * 」の位置を探す
-            final int firstStarPos = replacedJavadocBuilder.indexOf(" * ");
+            if (firstAtPos != -1) {
 
-            if (firstStarPos != -1) {
+                replacedJavadocBuilder.insert(firstAtPos, headTagsBuilder.toString());
 
-                replacedJavadocBuilder.insert(firstStarPos + 3, headTagsBuilder.toString());
-
+            } else {
+                // 「@」が見つからなければ末尾に追加
+                replacedJavadocBuilder.append(headTagsBuilder);
             }
 
         }
