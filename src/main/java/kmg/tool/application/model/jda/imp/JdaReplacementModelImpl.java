@@ -248,8 +248,10 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
                 replacedJavadocBuilder.insert(firstAtPos, headTagsBuilder.toString());
 
             } else {
+
                 // 「@」が見つからなければ末尾に追加
                 replacedJavadocBuilder.append(headTagsBuilder);
+
             }
 
         }
