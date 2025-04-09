@@ -14,7 +14,6 @@ import kmg.tool.application.model.jda.JdaTagsModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -210,18 +209,6 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
     public boolean createReplacedJavadoc() throws KmgToolException {
 
         boolean result = false;
-
-        /* 入力値の検証 */
-        // TODO KenichiroArai 2025/04/09 例外処理
-        if (KmgString.isBlank(this.srcJavadoc) || KmgString.isBlank(this.srcCode)) {
-
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               messageArgs  = {
-                "srcJavadoc or srcCode", "is blank"
-            };
-            throw new KmgToolException(messageTypes, messageArgs);
-
-        }
 
         /* 準備 */
         this.srcJavadocModel = new JavadocModelImpl(this.srcJavadoc);
