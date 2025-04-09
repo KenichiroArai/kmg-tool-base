@@ -240,16 +240,16 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         /* 先頭のタグを追加 */
         if (headTagsBuilder.length() > 0) {
 
-            // 最初の「@」の位置を探す
-            final int firstAtPos = replacedJavadocBuilder.indexOf("@");
+            // 最初のタグの位置を探す
+            final int firstAtPos = replacedJavadocBuilder.indexOf("* @");
 
-            if (firstAtPos != -1) {
+            if (firstAtPos > -1) {
 
-                replacedJavadocBuilder.insert(firstAtPos, headTagsBuilder.toString());
+                replacedJavadocBuilder.insert(firstAtPos - 1, headTagsBuilder.toString());
 
             } else {
 
-                // 「@」が見つからなければ末尾に追加
+                // タグが見つからなければ末尾に追加
                 replacedJavadocBuilder.append(headTagsBuilder);
 
             }
