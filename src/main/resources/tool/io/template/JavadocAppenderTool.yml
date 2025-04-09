@@ -3,7 +3,6 @@
 # 2. 設定の詳細な説明
 # 3. 設定例
 
-
 # -----------------------------------
 # 実際の設定
 # -----------------------------------
@@ -12,24 +11,25 @@ javadocTags:
       tagValue: "KenichiroArai"
       location:
           mode: "compliant"
+          removeIfMisplaced: true
       insertPosition: "beginning"
       overwrite: "always"
 
     - tagName: "since"
-      tagValue: "0.1.0"
+      tagValue: "0.2.0"
       location:
           mode: "compliant"
+          removeIfMisplaced: true
       insertPosition: "beginning"
-      overwrite: "never"
+      overwrite: "always"
 
     - tagName: "version"
-      tagValue: "0.1.0"
+      tagValue: "0.2.0"
       location:
           mode: "compliant"
+          removeIfMisplaced: true
       insertPosition: "beginning"
-      overwrite: "ifLower"
-
-      
+      overwrite: "always"
 # -----------------------------------
 # 設定の説明
 # -----------------------------------
@@ -43,6 +43,7 @@ javadocTags:
 #    - mode: 配置方法
 #      - compliant: 準拠モード（クラス、インタフェース、列挙型などの直前に自動配置）
 #      - manual: 手動モード（targetElementsで指定した要素の直前に配置）
+#    - removeIfMisplaced: 指定された場所以外にタグが存在する場合に削除するかどうか（true：削除する。false：削除しない）
 #    - targetElements: 手動モードの場合の対象要素（modeが"manual"の時のみ有効）
 #      指定可能な値：
 #        - class
@@ -61,7 +62,6 @@ javadocTags:
 #    - always: 常に上書き
 #    - ifLower: 既存のバージョンより小さい場合のみ上書き
 
-
 # -----------------------------------
 # 設定例と説明
 # -----------------------------------
@@ -71,6 +71,7 @@ javadocTags:
 #   tagValue: "KenichiroArai"
 #   location:
 #       mode: "compliant"    # 自動配置モード
+#       removeIfMisplaced: true  # 指定外の場所にあるタグは削除
 #   insertPosition: "beginning"
 #   overwrite: "always"      # 常に上書き
 #
@@ -79,6 +80,7 @@ javadocTags:
 #   tagValue: "0.1.0"
 #   location:
 #       mode: "compliant"    # 自動配置モード
+#       removeIfMisplaced: false # 指定外の場所にあるタグは保持
 #   insertPosition: "beginning"
 #   overwrite: "never"       # 既存タグを保持
 #
@@ -87,5 +89,6 @@ javadocTags:
 #   tagValue: "0.1.0"
 #   location:
 #       mode: "compliant"    # 自動配置モード
+#       removeIfMisplaced: true  # 指定外の場所にあるタグは削除
 #   insertPosition: "beginning"
 #   overwrite: "ifLower"     # 既存より小さい場合のみ上書き

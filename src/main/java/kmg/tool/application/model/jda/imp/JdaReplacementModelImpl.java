@@ -213,10 +213,10 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
 
                     if (jdaTagConfigModel.getTag().isVersionValue()) {
 
-                        final ComparableVersion v1 = new ComparableVersion(existingJavadocTagModel.getTag().get());
-                        final ComparableVersion v2 = new ComparableVersion(jdaTagConfigModel.getTagValue());
+                        final ComparableVersion srcVer  = new ComparableVersion(existingJavadocTagModel.getTag().get());
+                        final ComparableVersion destVer = new ComparableVersion(jdaTagConfigModel.getTagValue());
 
-                        if (v1.compareTo(v2) <= 0) {
+                        if (srcVer.compareTo(destVer) <= 0) {
 
                             continue;
 
@@ -228,7 +228,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             }
 
             /* タグの更新 */
-            final String newTag  = String.format("@%s %s %s", jdaTagConfigModel.getTag().getKey(),
+            final String newTag  = String.format(" * @%s %s %s", jdaTagConfigModel.getTag().getKey(),
                 jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
             String       javadoc = replacedJavadocBuilder.toString();
             javadoc = javadoc.replace(existingJavadocTagModel.getTargetStr(), newTag);
