@@ -94,7 +94,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         this.srcJavadocModel = new JavadocModelImpl(this.srcJavadoc);
 
         // タグの追加・更新処理
-        final StringBuilder replacedJavadocBuilder = new StringBuilder(this.srcJavadoc);
+        String editingJavadoc = this.srcJavadoc;
 
         // 先頭に追加するタグを収集
         final StringBuilder headTagsBuilder = new StringBuilder();
@@ -181,12 +181,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
                     // 一致しない場合
 
                     // 一致しない場合は、誤配置のため、元のJavadocに設定されていても削除する。
-
-                    String javadoc = replacedJavadocBuilder.toString();
-                    javadoc = javadoc.replace(existingJavadocTagModel.getTargetStr(), KmgString.EMPTY);
-                    replacedJavadocBuilder.setLength(0);
-                    replacedJavadocBuilder.append(javadoc);
-
+                    editingJavadoc = editingJavadoc.replace(existingJavadocTagModel.getTargetStr(), KmgString.EMPTY);
                     continue;
 
                 }
@@ -228,29 +223,29 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
             }
 
             /* タグの更新 */
-            final String newTag  = String.format(" * @%s %s %s", jdaTagConfigModel.getTag().getKey(),
+            final String newTag = String.format(" * @%s %s %s", jdaTagConfigModel.getTag().getKey(),
                 jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
-            String       javadoc = replacedJavadocBuilder.toString();
-            javadoc = javadoc.replace(existingJavadocTagModel.getTargetStr(), newTag);
-            replacedJavadocBuilder.setLength(0);
-            replacedJavadocBuilder.append(javadoc);
+            editingJavadoc = editingJavadoc.replace(existingJavadocTagModel.getTargetStr(), newTag);
 
         }
+
+        /* 最終的な結果を組み立てる */
+        final StringBuilder finalJavadocBuilder = new StringBuilder(editingJavadoc);
 
         /* 先頭のタグを追加 */
         if (headTagsBuilder.length() > 0) {
 
             // 最初のタグの位置を探す
-            final int firstAtPos = replacedJavadocBuilder.indexOf("* @");
+            final int firstAtPos = finalJavadocBuilder.indexOf("* @");
 
             if (firstAtPos > -1) {
 
-                replacedJavadocBuilder.insert(firstAtPos - 1, headTagsBuilder.toString());
+                finalJavadocBuilder.insert(firstAtPos - 1, headTagsBuilder.toString());
 
             } else {
 
                 // タグが見つからなければ末尾に追加
-                replacedJavadocBuilder.append(headTagsBuilder);
+                finalJavadocBuilder.append(headTagsBuilder);
 
             }
 
@@ -259,11 +254,11 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         /* 末尾のタグを追加 */
         if (tailTagsBuilder.length() > 0) {
 
-            replacedJavadocBuilder.append(tailTagsBuilder);
+            finalJavadocBuilder.append(tailTagsBuilder);
 
         }
 
-        this.replacedJavadoc = replacedJavadocBuilder.toString();
+        this.replacedJavadoc = finalJavadocBuilder.toString();
         // TODO KenichiroArai 2025/04/06 デバッグログ
         System.out.println(this.replacedJavadoc);
         result = true;
