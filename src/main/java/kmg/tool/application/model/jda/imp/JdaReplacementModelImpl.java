@@ -162,7 +162,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         }
 
         // TODO KenichiroArai 2025/04/09 ハードコード
-        final String newTag = String.format(" * @%s %s %s", jdaTagConfigModel.getTag().getKey(),
+        final String newTag = String.format(" * %s %s %s", jdaTagConfigModel.getTag().getKey(),
             jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
 
         result = editingJavadoc.replace(existingJavadocTagModel.getTargetStr(), newTag);
