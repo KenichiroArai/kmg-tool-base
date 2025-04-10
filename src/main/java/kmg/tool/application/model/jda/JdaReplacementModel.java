@@ -42,17 +42,6 @@ public interface JdaReplacementModel {
     UUID getIdentifier();
 
     /**
-     * Java区分を返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return Java区分
-     */
-    JavaClassificationTypes getJavaClassification();
-
-    /**
      * 置換後のJavadocを返す<br>
      *
      * @author KenichiroArai
@@ -64,15 +53,26 @@ public interface JdaReplacementModel {
     String getReplacedJavadoc();
 
     /**
-     * 元のコードを返す<br>
+     * 元のコードブロックを返す<br>
      *
      * @author KenichiroArai
      *
      * @sine 0.1.0
      *
-     * @return 元のコード
+     * @return 元のコードブロック
      */
-    String getSrcCode();
+    String getSrcCodeBloc();
+
+    /**
+     * 元のJava区分を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 元のJava区分
+     */
+    JavaClassificationTypes getSrcJavaClassification();
 
     /**
      * 元のJavadocを返す<br>

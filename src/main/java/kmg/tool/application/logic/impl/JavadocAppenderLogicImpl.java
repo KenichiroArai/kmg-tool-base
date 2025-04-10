@@ -445,14 +445,14 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
                 final String[] javadocCodeBlock = blocks[i].split(String.format("%s\\s+", Pattern.quote("*/")), 2);
 
                 // 元のJavadoc
-                final String sourceJavadoc = javadocCodeBlock[0];
+                final String srcJavadoc = javadocCodeBlock[0];
 
                 // 元のコード
-                final String sourceCode = javadocCodeBlock[1];
+                final String srcCodeBlock = javadocCodeBlock[1];
 
                 // TODO KenichiroArai 2025/04/09 コードを精査する
                 // アノテーションと元のコードを分割
-                final String[]      codeLines      = sourceCode.split("\\R");
+                final String[]      codeLines      = srcCodeBlock.split("\\R");
                 final StringBuilder codeBuilder    = new StringBuilder();
                 final List<String>  annotationList = new ArrayList<>();
 
@@ -489,17 +489,17 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
                 }
 
-                final String actualSourceCode = codeBuilder.toString().trim();
+                final String actualSrcCodeBlock = codeBuilder.toString().trim();
 
                 // 元のJavadoc
 
                 final JdaReplacementModel jdaReplacementModel
-                    = new JdaReplacementModelImpl(sourceJavadoc, actualSourceCode, this.jdaTagsModel);
+                    = new JdaReplacementModelImpl(srcJavadoc, actualSrcCodeBlock, this.jdaTagsModel);
                 javadocReplacementModelList.add(jdaReplacementModel);
 
                 // 元のJavadoc部分を置換用識別子に置換する
                 this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite
-                    .replaceFirst(Pattern.quote(sourceJavadoc), jdaReplacementModel.getIdentifier().toString());
+                    .replaceFirst(Pattern.quote(srcJavadoc), jdaReplacementModel.getIdentifier().toString());
 
                 // Java区分を特定する
                 jdaReplacementModel.specifyJavaClassification();
