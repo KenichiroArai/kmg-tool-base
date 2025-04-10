@@ -3,10 +3,10 @@ package kmg.tool.application.model.jda;
 import java.util.List;
 
 /**
- * Javadoc追加のタグの設定モデル<br>
- * YAMLファイルのjavadocTagsセクションを表現するモデル
+ * Javadocタグ設定の構成モデルインタフェース<br>
+ * YAMLファイルのJdtsConfigurationsセクションを表現するモデル
  * <p>
- * Jdaは、JavadocAppenderの略。
+ * Jdtsは、JavadocTagSetterの略。
  * </p>
  *
  * @author KenichiroArai
@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @version 0.1.0
  */
-public interface JdaTagsModel {
+public interface JdtsConfigurationsModel {
 
     /**
      * Javadoc追加のタグ設定モデルのリストを返す<br>

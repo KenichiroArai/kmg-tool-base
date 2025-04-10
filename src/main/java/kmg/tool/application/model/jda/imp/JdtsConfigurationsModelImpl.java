@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import kmg.tool.application.model.jda.JdaTagConfigModel;
-import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.application.model.jda.JdtsConfigurationsModel;
 
 /**
- * Javadoc追加のタグモデル<br>
- * YAMLファイルのjavadocTagsセクションを表現するモデル
+ * Javadocタグ設定の構成モデル<br>
+ * YAMLファイルのJdtsConfigurationsセクションを表現するモデル
  * <p>
- * Jdaは、JavadocAppenderの略。
+ * Jdtsは、JavadocTagSetterの略。
  * </p>
  *
  * @author KenichiroArai
@@ -20,7 +20,7 @@ import kmg.tool.application.model.jda.JdaTagsModel;
  *
  * @version 0.1.0
  */
-public class JdaTagsModelImpl implements JdaTagsModel {
+public class JdtsConfigurationsModelImpl implements JdtsConfigurationsModel {
 
     /** Javadoc追加のタグ設定モデルのリスト */
     private List<JdaTagConfigModel> jdaTagConfigModels;
@@ -28,7 +28,7 @@ public class JdaTagsModelImpl implements JdaTagsModel {
     /**
      * デフォルトコンストラクタ<br>
      */
-    public JdaTagsModelImpl() {
+    public JdtsConfigurationsModelImpl() {
 
         this.jdaTagConfigModels = new ArrayList<>();
 
@@ -41,7 +41,7 @@ public class JdaTagsModelImpl implements JdaTagsModel {
      *                 YAMLデータ
      */
     @SuppressWarnings("unchecked")
-    public JdaTagsModelImpl(final Map<String, Object> yamlData) {
+    public JdtsConfigurationsModelImpl(final Map<String, Object> yamlData) {
 
         this();
 
@@ -53,7 +53,7 @@ public class JdaTagsModelImpl implements JdaTagsModel {
 
         /* javadocTagsセクションの取得 */
         // TODO KenichiroArai 2025/04/10 ハードコード
-        final List<Map<String, Object>> javadocTags = (List<Map<String, Object>>) yamlData.get("javadocTags");
+        final List<Map<String, Object>> javadocTags = (List<Map<String, Object>>) yamlData.get("JdtsConfigurations");
 
         if ((javadocTags == null) || javadocTags.isEmpty()) {
 

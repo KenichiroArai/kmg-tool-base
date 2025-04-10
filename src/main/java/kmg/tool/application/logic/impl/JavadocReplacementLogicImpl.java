@@ -6,7 +6,7 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.logic.JavadocReplacementLogic;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
-import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.application.model.jda.JdtsConfigurationsModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
@@ -35,8 +35,8 @@ public class JavadocReplacementLogicImpl implements JavadocReplacementLogic {
     /** 置換後のJavadoc */
     private String replacedJavadoc;
 
-    /** Javadoc追加のタグモデル */
-    private JdaTagsModel jdaTagsModel;
+    /** Javadocタグ設定の構成モデル */
+    private JdtsConfigurationsModel jdtsConfigurationsModel;
 
     /**
      * 最終的なJavadocを構築する<br>
@@ -244,19 +244,19 @@ public class JavadocReplacementLogicImpl implements JavadocReplacementLogic {
      * @since 0.1.0
      *
      * @param srcJavadoc
-     *                              元のJavadoc
-     * @param jdaTagsModel
-     *                              Javadoc追加のタグモデル
+     *                                元のJavadoc
+     * @param jdtsConfigurationsModel
+     *                                Javadocタグ設定の構成モデル
      * @param srcJavaClassification
-     *                              元のJava区分
+     *                                元のJava区分
      */
     @SuppressWarnings("hiding")
     @Override
-    public void initialize(final String srcJavadoc, final JdaTagsModel jdaTagsModel,
+    public void initialize(final String srcJavadoc, final JdtsConfigurationsModel jdtsConfigurationsModel,
         final JavaClassificationTypes srcJavaClassification) {
 
         this.srcJavadoc = srcJavadoc;
-        this.jdaTagsModel = jdaTagsModel;
+        this.jdtsConfigurationsModel = jdtsConfigurationsModel;
         this.srcJavaClassification = srcJavaClassification;
 
     }
@@ -318,7 +318,7 @@ public class JavadocReplacementLogicImpl implements JavadocReplacementLogic {
         String editingJavadoc = this.srcJavadoc;
 
         /* Javadoc追加のタグ設定を基準に、Javadocを更新 */
-        for (final JdaTagConfigModel jdaTagConfigModel : this.jdaTagsModel.getJdaTagConfigModels()) {
+        for (final JdaTagConfigModel jdaTagConfigModel : this.jdtsConfigurationsModel.getJdaTagConfigModels()) {
 
             /* 元のJavadocにJavadoc追加のタグ設定のタグがあるか取得 */
             final JavadocTagModel existingJavadocTagModel = this.findExistingJavadocTag(jdaTagConfigModel);

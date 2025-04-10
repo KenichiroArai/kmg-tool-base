@@ -19,9 +19,9 @@ import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
-import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.application.model.jda.JdtsConfigurationsModel;
 import kmg.tool.application.model.jda.imp.JdaReplacementModelImpl;
-import kmg.tool.application.model.jda.imp.JdaTagsModelImpl;
+import kmg.tool.application.model.jda.imp.JdtsConfigurationsModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -106,8 +106,8 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     private String currentContentsOfFileToWrite;
 
-    /** Javadocタグモデル */
-    private JdaTagsModel jdaTagsModel;
+    /** Javadocタグ設定の構成モデル */
+    private JdtsConfigurationsModel jdtsConfigurationsModel;
 
     /**
      * デフォルトコンストラクタ
@@ -151,7 +151,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
             /* YAMLファイルを読み込み、モデルを作成 */
             final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
-            this.jdaTagsModel = new JdaTagsModelImpl(yamlData);
+            this.jdtsConfigurationsModel = new JdtsConfigurationsModelImpl(yamlData);
 
         } catch (final KmgFundException e) {
 
@@ -246,25 +246,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * Javadoc追加のタグモデルを取得する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return Javadoc追加のタグモデル
-     */
-    @Override
-    public JdaTagsModel getJavadocAppenderTagsModel() {
-
-        final JdaTagsModel result = this.jdaTagsModel;
-        return result;
-
-    }
-
-    /**
      * 対象のJavaファイルパスのリストを返す<br>
      *
      * @author KenichiroArai
@@ -281,6 +262,19 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     public List<Path> getJavaFilePathList() {
 
         final List<Path> result = this.javaFilePathList;
+        return result;
+
+    }
+
+    /**
+     * Javadocタグ設定の構成モデルを取得する<br>
+     *
+     * @return Javadocタグ設定の構成モデル
+     */
+    @Override
+    public JdtsConfigurationsModel getJdtsConfigurationsModel() {
+
+        final JdtsConfigurationsModel result = this.jdtsConfigurationsModel;
         return result;
 
     }
@@ -494,7 +488,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
                 // 元のJavadoc
 
                 final JdaReplacementModel jdaReplacementModel
-                    = new JdaReplacementModelImpl(srcJavadoc, actualSrcCodeBlock, this.jdaTagsModel);
+                    = new JdaReplacementModelImpl(srcJavadoc, actualSrcCodeBlock, this.jdtsConfigurationsModel);
                 javadocReplacementModelList.add(jdaReplacementModel);
 
                 // 元のJavadoc部分を置換用識別子に置換する

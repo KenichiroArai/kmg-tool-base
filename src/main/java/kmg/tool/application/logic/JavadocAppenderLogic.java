@@ -3,7 +3,7 @@ package kmg.tool.application.logic;
 import java.nio.file.Path;
 import java.util.List;
 
-import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.application.model.jda.JdtsConfigurationsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -52,13 +52,6 @@ public interface JavadocAppenderLogic {
     Path getCurrentJavaFilePath();
 
     /**
-     * Javadoc追加のタグモデルを取得する<br>
-     *
-     * @return Javadocタグモデル
-     */
-    JdaTagsModel getJavadocAppenderTagsModel();
-
-    /**
      * 対象のJavaファイルパスのリストを返す<br>
      *
      * @author KenichiroArai
@@ -72,6 +65,13 @@ public interface JavadocAppenderLogic {
      * @return 対象のJavaファイルリスト
      */
     List<Path> getJavaFilePathList();
+
+    /**
+     * Javadocタグ設定の構成モデルを取得する<br>
+     *
+     * @return Javadocタグ設定の構成モデル
+     */
+    JdtsConfigurationsModel getJdtsConfigurationsModel();
 
     /**
      * 対象ファイルパス

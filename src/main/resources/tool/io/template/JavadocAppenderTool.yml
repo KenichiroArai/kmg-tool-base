@@ -1,12 +1,12 @@
 # このファイルは以下の構成になっています：
-# 1. 実際の設定（すぐに使用できる設定）
+# 1. 実際のJavadocタグ設定の構成の設定
 # 2. 設定の詳細な説明
 # 3. 設定例
 
 # -----------------------------------
-# 実際の設定
+# 実際のJavadocタグ設定の構成の設定
 # -----------------------------------
-javadocTags:
+JdtsConfigurations:
     - tagName: "author"
       tagValue: "KenichiroArai"
       location:
@@ -30,7 +30,6 @@ javadocTags:
           removeIfMisplaced: true
       insertPosition: "beginning"
       overwrite: "never"
-
 # -----------------------------------
 # 設定の説明
 # -----------------------------------

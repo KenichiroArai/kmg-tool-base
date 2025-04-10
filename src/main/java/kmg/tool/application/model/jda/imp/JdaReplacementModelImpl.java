@@ -9,7 +9,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.JavadocReplacementLogic;
 import kmg.tool.application.logic.impl.JavadocReplacementLogicImpl;
 import kmg.tool.application.model.jda.JdaReplacementModel;
-import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.application.model.jda.JdtsConfigurationsModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -35,8 +35,8 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
     /** 元のJava区分 */
     private JavaClassificationTypes srcJavaClassification;
 
-    /** Javadoc追加のタグの設定モデル */
-    private final JdaTagsModel jdaTagsSettingModel;
+    /** avadocタグ設定の構成モデル */
+    private final JdtsConfigurationsModel jdtsConfigurationsModel;
 
     /** 置換用識別子 */
     private final UUID identifier;
@@ -55,19 +55,19 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
      * @sine 0.1.0
      *
      * @param srcJavadoc
-     *                            元のJavadoc
+     *                                元のJavadoc
      * @param srcCodeBloc
-     *                            元のコードブロック
-     * @param jdaTagsSettingModel
-     *                            Javadoc追加のタグの設定モデル
+     *                                元のコードブロック
+     * @param jdtsConfigurationsModel
+     *                                Javadocタグ設定の構成モデル
      */
     public JdaReplacementModelImpl(final String srcJavadoc, final String srcCodeBloc,
-        final JdaTagsModel jdaTagsSettingModel) {
+        final JdtsConfigurationsModel jdtsConfigurationsModel) {
 
         this.srcJavadoc = srcJavadoc;
         this.srcCodeBloc = srcCodeBloc;
         this.identifier = UUID.randomUUID();
-        this.jdaTagsSettingModel = jdaTagsSettingModel;
+        this.jdtsConfigurationsModel = jdtsConfigurationsModel;
 
         // TODO KenichiroArai 2025/04/10 どのようにするかを考える
         this.javadocReplacementLogic = new JavadocReplacementLogicImpl();
@@ -92,7 +92,8 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         boolean result = false;
 
         /* 準備 */
-        this.javadocReplacementLogic.initialize(this.srcJavadoc, this.jdaTagsSettingModel, this.srcJavaClassification);
+        this.javadocReplacementLogic.initialize(this.srcJavadoc, this.jdtsConfigurationsModel,
+            this.srcJavaClassification);
 
         /* Javadoc置換ロジックを実行 */
         result = this.javadocReplacementLogic.createReplacedJavadoc();

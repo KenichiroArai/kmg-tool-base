@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.JavadocAppenderLogic;
-import kmg.tool.application.model.jda.JdaTagsModel;
+import kmg.tool.application.model.jda.JdtsConfigurationsModel;
 import kmg.tool.application.service.JavadocAppenderService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -214,8 +214,8 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
         this.javadocAppenderLogic.createJavadocTagsModel();
 
         // TODO KenichiroArai 2025/03/29 ログ
-        final JdaTagsModel jdaTagsModel = this.javadocAppenderLogic.getJavadocAppenderTagsModel();
-        System.out.println(jdaTagsModel.toString());
+        final JdtsConfigurationsModel jdtsConfigurationsModel = this.javadocAppenderLogic.getJdtsConfigurationsModel();
+        System.out.println(jdtsConfigurationsModel.toString());
 
         /* 対象のJavaファイルを作成する */
         this.javadocAppenderLogic.createJavaFileList();
