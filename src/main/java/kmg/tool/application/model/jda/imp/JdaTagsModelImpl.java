@@ -52,6 +52,7 @@ public class JdaTagsModelImpl implements JdaTagsModel {
         }
 
         /* javadocTagsセクションの取得 */
+        // TODO KenichiroArai 2025/04/10 ハードコード
         final List<Map<String, Object>> javadocTags = (List<Map<String, Object>>) yamlData.get("javadocTags");
 
         if ((javadocTags == null) || javadocTags.isEmpty()) {

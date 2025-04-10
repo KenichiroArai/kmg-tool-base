@@ -3,7 +3,7 @@ package kmg.tool.application.model.jda;
 import java.util.List;
 
 /**
- * Javadoc追加のタグモデル<br>
+ * Javadoc追加のタグの設定モデル<br>
  * YAMLファイルのjavadocTagsセクションを表現するモデル
  * <p>
  * Jdaは、JavadocAppenderの略。
