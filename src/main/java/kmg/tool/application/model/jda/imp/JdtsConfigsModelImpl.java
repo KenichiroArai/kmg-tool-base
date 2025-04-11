@@ -26,15 +26,6 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
     private List<JdaTagConfigModel> jdaTagConfigModels;
 
     /**
-     * デフォルトコンストラクタ<br>
-     */
-    public JdtsConfigsModelImpl() {
-
-        this.jdaTagConfigModels = new ArrayList<>();
-
-    }
-
-    /**
      * コンストラクタ<br>
      *
      * @param yamlData
@@ -43,7 +34,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
     @SuppressWarnings("unchecked")
     public JdtsConfigsModelImpl(final Map<String, Object> yamlData) {
 
-        this();
+        this.jdaTagConfigModels = new ArrayList<>();
 
         if (yamlData == null) {
 

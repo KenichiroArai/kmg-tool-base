@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,14 +13,10 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgListUtils;
-import kmg.fund.infrastructure.exception.KmgFundException;
-import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.model.jda.JdaReplacementModel;
-import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.application.model.jda.imp.JdaReplacementModelImpl;
-import kmg.tool.application.model.jda.imp.JdtsConfigsModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -52,22 +47,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @version 0.1.0
      */
     private Path targetPath;
-
-    /**
-     * テンプレートファイルパス
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    private Path templatePath;
-
-    /**
-     * Javadoc追加のタグ設定モデルのリスト
-     */
-    private final List<JdaTagConfigModel> jdaTagConfigModels;
 
     /**
      * 対象のJavaファイルパスのリスト
@@ -107,7 +86,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private String currentContentsOfFileToWrite;
 
     /** Javadocタグ設定の構成モデル */
-    private JdtsConfigsModel jdtsConfigurationsModel;
+    private JdtsConfigsModel jdtsConfigsModel;
 
     /**
      * デフォルトコンストラクタ
@@ -120,49 +99,10 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     public JavadocAppenderLogicImpl() {
 
-        this.jdaTagConfigModels = new ArrayList<>();
         this.javaFilePathList = new ArrayList<>();
         this.currentJavaFileIndex = 0;
         this.currentJavaFilePath = null;
         this.totalRows = 0;
-
-    }
-
-    /**
-     * Javadocタグモデルを作成する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean createJavadocTagsModel() throws KmgToolException {
-
-        boolean result = false;
-
-        try {
-
-            /* YAMLファイルを読み込み、モデルを作成 */
-            final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
-            this.jdtsConfigurationsModel = new JdtsConfigsModelImpl(yamlData);
-
-        } catch (final KmgFundException e) {
-
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
-
-        }
-
-        result = true;
-        return result;
 
     }
 
@@ -267,14 +207,18 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * Javadocタグ設定の構成モデルを取得する<br>
+     * Javadocタグ設定の構成モデルを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
      *
      * @return Javadocタグ設定の構成モデル
      */
     @Override
     public JdtsConfigsModel getJdtsConfigsModel() {
 
-        final JdtsConfigsModel result = this.jdtsConfigurationsModel;
+        final JdtsConfigsModel result = this.jdtsConfigsModel;
         return result;
 
     }
@@ -299,25 +243,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * テンプレートファイルパス
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return テンプレートファイルパス
-     */
-    @Override
-    public Path getTemplatePath() {
-
-        final Path result = this.templatePath;
-        return result;
-
-    }
-
-    /**
      * 合計行数を返す。
      *
      * @return 合計行数
@@ -333,30 +258,24 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     /**
      * 初期化する
      *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
+     * @param targetPath
+     *                         対象ファイルパス
+     * @param jdtsConfigsModel
+     *                         Javadocタグ設定の構成モデル
      *
      * @return true：成功、false：失敗
-     *
-     * @param targetPath
-     *                     対象ファイルパス
-     * @param templatePath
-     *                     テンプレートファイルパス
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolException {
+    public boolean initialize(final Path targetPath, final JdtsConfigsModel jdtsConfigsModel) throws KmgToolException {
 
         boolean result = false;
 
         this.targetPath = targetPath;
-        this.templatePath = templatePath;
+        this.jdtsConfigsModel = jdtsConfigsModel;
 
         this.javaFilePathList.clear();
         this.totalRows = 0;
@@ -488,7 +407,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
                 // 元のJavadoc
 
                 final JdaReplacementModel jdaReplacementModel
-                    = new JdaReplacementModelImpl(srcJavadoc, actualSrcCodeBlock, this.jdtsConfigurationsModel);
+                    = new JdaReplacementModelImpl(srcJavadoc, actualSrcCodeBlock, this.jdtsConfigsModel);
                 javadocReplacementModelList.add(jdaReplacementModel);
 
                 // 元のJavadoc部分を置換用識別子に置換する

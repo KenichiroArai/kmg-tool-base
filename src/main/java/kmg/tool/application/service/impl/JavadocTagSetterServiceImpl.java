@@ -1,6 +1,7 @@
 package kmg.tool.application.service.impl;
 
 import java.nio.file.Path;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.exception.KmgFundException;
+import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
+import kmg.tool.application.model.jda.imp.JdtsConfigsModelImpl;
 import kmg.tool.application.service.JavadocTagSetterService;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -47,6 +52,11 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
      */
     @Autowired
     private KmgMessageSource messageSource;
+
+    /**
+     * Javadocタグ設定の構成モデル
+     */
+    private JdtsConfigsModel jdtsConfigsModel;
 
     /**
      * Javadoc追加ロジック
@@ -181,9 +191,6 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
         this.targetPath = targetPath;
         this.templatePath = templatePath;
 
-        /* Javadoc追加ロジックの初期化 */
-        this.javadocAppenderLogic.initialize(targetPath, templatePath);
-
         result = true;
         return result;
 
@@ -210,12 +217,28 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
 
         // TODO KenichiroArai 2025/03/29 処理の開始ログ
 
-        /* Javadocタグモデルの作成 */
-        this.javadocAppenderLogic.createJavadocTagsModel();
+        /* YAMLファイルを読み込み、Javadocタグ設定の構成モデルを作成 */
+        Map<String, Object> yamlData;
+
+        try {
+
+            yamlData = KmgYamlUtils.load(this.templatePath);
+
+        } catch (final KmgFundException e) {
+
+            // TODO KenichiroArai 2025/04/11 例外処理
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+        this.jdtsConfigsModel = new JdtsConfigsModelImpl(yamlData);
 
         // TODO KenichiroArai 2025/03/29 ログ
-        final JdtsConfigsModel jdtsConfigurationsModel = this.javadocAppenderLogic.getJdtsConfigsModel();
-        System.out.println(jdtsConfigurationsModel.toString());
+        System.out.println(this.jdtsConfigsModel.toString());
+
+        /* Javadoc追加ロジックの初期化 */
+        this.javadocAppenderLogic.initialize(this.targetPath, this.jdtsConfigsModel);
 
         /* 対象のJavaファイルを作成する */
         this.javadocAppenderLogic.createJavaFileList();

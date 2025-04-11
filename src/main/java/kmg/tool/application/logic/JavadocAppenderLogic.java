@@ -14,16 +14,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JavadocAppenderLogic {
 
     /**
-     * Javadocタグモデルを作成する<br>
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean createJavadocTagsModel() throws KmgToolException;
-
-    /**
      * 対象のJavaファイル
      *
      * @return true：成功、false：失敗
@@ -67,7 +57,11 @@ public interface JavadocAppenderLogic {
     List<Path> getJavaFilePathList();
 
     /**
-     * Javadocタグ設定の構成モデルを取得する<br>
+     * Javadocタグ設定の構成モデルを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
      *
      * @return Javadocタグ設定の構成モデル
      */
@@ -81,13 +75,6 @@ public interface JavadocAppenderLogic {
     Path getTargetPath();
 
     /**
-     * テンプレートファイルパス
-     *
-     * @return テンプレートファイルパス
-     */
-    Path getTemplatePath();
-
-    /**
      * 合計行数を返す。
      *
      * @return 合計行数
@@ -98,16 +85,16 @@ public interface JavadocAppenderLogic {
      * 初期化する
      *
      * @param targetPath
-     *                     対象ファイルパス
-     * @param templatePath
-     *                     テンプレートファイルパス
+     *                         対象ファイルパス
+     * @param jdtsConfigsModel
+     *                         Javadocタグ設定の構成モデル
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolException;
+    boolean initialize(final Path targetPath, JdtsConfigsModel jdtsConfigsModel) throws KmgToolException;
 
     /**
      * 次のJavaファイルに進む。
