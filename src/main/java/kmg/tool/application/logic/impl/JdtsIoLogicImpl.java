@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
+import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.application.logic.JdtsIoLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
@@ -61,12 +62,17 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *
      * @version 0.1.0
      */
-    private final int currentJavaFileIndex;
+    private int currentJavaFileIndex;
 
     /**
      * 現在のJavaファイルパス
      */
     private Path currentJavaFilePath;
+
+    /**
+     * 現在のJavaファイルの中身
+     */
+    private final String currentJavaFileContent;
 
     /**
      * デフォルトコンストラクタ
@@ -76,6 +82,24 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         this.javaFilePathList = new ArrayList<>();
         this.currentJavaFileIndex = 0;
         this.currentJavaFilePath = null;
+        this.currentJavaFileContent = KmgString.EMPTY;
+
+    }
+
+    /**
+     * 現在のJavaファイルの中身を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 現在のJavaファイルの中身
+     */
+    @Override
+    public String getCurrentJavaFileContent() {
+
+        final String result = this.currentJavaFileContent;
+        return result;
 
     }
 
@@ -199,4 +223,65 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
     }
 
+    /**
+     * 次のJavaファイルに進む。
+     *
+     * @return true：ファイルあり、false:ファイルなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean nextJavaFile() throws KmgToolException {
+
+        boolean result = false;
+
+        this.currentJavaFileIndex++;
+
+        if (this.currentJavaFileIndex >= this.javaFilePathList.size()) {
+
+            return result;
+
+        }
+
+        this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 内容を書き込む
+     *
+     * @param contents
+     *                 内容
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean write(final String contents) throws KmgToolException {
+
+        boolean result = false;
+
+        try {
+
+            Files.writeString(this.currentJavaFilePath, contents);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/29 メッセージ
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+
+        result = true;
+        return result;
+
+    }
 }

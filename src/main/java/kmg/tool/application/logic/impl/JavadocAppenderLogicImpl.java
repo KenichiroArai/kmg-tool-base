@@ -67,6 +67,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     private Path currentJavaFilePath;
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 現在のJavaファイルの中身
      */
@@ -84,6 +85,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     private int currentJavaFileIndex;
 
+    // TODO KenichiroArai 2025/04/11 削除する
     /**
      * 現在の書き込みするファイルの中身
      */
@@ -110,6 +112,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
     }
 
+    // TODO KenichiroArai 2025/04/11 削除する
     /**
      * 現在の書き込みするファイルの中身を返す<br>
      *
@@ -287,6 +290,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
     }
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 次のJavaファイルに進む。
      *
@@ -448,6 +452,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
     }
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 現在のJavaファイルに書き込む
      *

@@ -13,6 +13,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 public interface JavadocAppenderLogic {
 
+    // TODO KenichiroArai 2025/04/11 削除する
     /**
      * 現在の書き込みするファイルの中身を返す<br>
      *
@@ -100,6 +101,7 @@ public interface JavadocAppenderLogic {
      */
     boolean loadJavaFileList() throws KmgToolException;
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 次のJavaファイルに進む。
      *
@@ -129,6 +131,7 @@ public interface JavadocAppenderLogic {
      */
     boolean setJavadoc(final boolean insertAtTop) throws KmgToolException;
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 現在のJavaファイルに書き込む
      *
