@@ -69,10 +69,11 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      */
     private Path currentJavaFilePath;
 
+    // TODO KenichiroARai 2025/04/11 使用するか考える。
     /**
      * 現在のJavaファイルの中身
      */
-    private final String currentJavaFileContent;
+    private String currentJavaFileContent;
 
     /**
      * デフォルトコンストラクタ
@@ -175,6 +176,11 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         this.targetPath = targetPath;
 
+        this.javaFilePathList.clear();
+        this.currentJavaFileIndex = 0;
+        this.currentJavaFilePath = null;
+        this.currentJavaFileContent = KmgString.EMPTY;
+
         result = true;
         return result;
 
@@ -247,6 +253,36 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
 
         result = true;
+        return result;
+
+    }
+
+    /**
+     * 内容を返す。
+     *
+     * @return 内容
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public String read() throws KmgToolException {
+
+        String result;
+
+        try {
+
+            result = Files.readString(this.currentJavaFilePath);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/29 メッセージ
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+
         return result;
 
     }

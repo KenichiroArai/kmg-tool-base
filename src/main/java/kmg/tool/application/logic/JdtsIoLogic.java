@@ -93,6 +93,16 @@ public interface JdtsIoLogic {
     boolean nextJavaFile() throws KmgToolException;
 
     /**
+     * 内容を返す。
+     *
+     * @return 内容
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    String read() throws KmgToolException;
+
+    /**
      * 内容を書き込む
      *
      * @param contents

@@ -255,28 +255,31 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
         System.out.println(this.jdtsConfigsModel.toString());
 
         /* Javadoc追加ロジックの初期化 */
-        this.javadocAppenderLogic.initialize(this.targetPath, this.jdtsConfigsModel);
+        this.jdtsIoLogic.initialize(this.targetPath);
 
         /* 対象のJavaファイルをロードする */
-        this.javadocAppenderLogic.loadJavaFileList();
+        this.jdtsIoLogic.loadJavaFileList();
 
         boolean nextFlg;
 
         do {
 
+            // TODO KenichiroArai 2025/04/11 未実装
+            final String readContents = this.jdtsIoLogic.read();
+
             /* 対象のJavaファイルのJavadocを設定する */
-            this.javadocAppenderLogic.setJavadoc(true);
+            final String writeContents = this.javadocAppenderLogic.replace(readContents, this.jdtsConfigsModel);
 
             /* 修正した内容をファイルに書き込む */
-            this.javadocAppenderLogic.writeCurrentJavaFile();
+            this.jdtsIoLogic.write(writeContents);
 
             /* 次の対象のJavaファイルに進む */
-            nextFlg = this.javadocAppenderLogic.nextJavaFile();
+            nextFlg = this.jdtsIoLogic.nextJavaFile();
 
         } while (nextFlg);
 
         // TODO KenichiroArai 2025/03/29 処理の終了ログ
-        System.out.println(String.format("読み込みファイル数: %d", this.javadocAppenderLogic.getJavaFilePathList().size()));
+        System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getJavaFilePathList().size()));
         System.out.println(String.format("最終合計行数: %d", this.javadocAppenderLogic.getTotalRows()));
 
         return result;

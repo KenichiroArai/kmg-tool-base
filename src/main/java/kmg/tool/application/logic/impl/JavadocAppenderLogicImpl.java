@@ -1,23 +1,16 @@
 package kmg.tool.application.logic.impl;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.application.model.jda.imp.JdaReplacementModelImpl;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -37,63 +30,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     private long totalRows;
 
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 対象ファイルパス
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    private Path targetPath;
-
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 対象のJavaファイルパスのリスト
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    private final List<Path> javaFilePathList;
-
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 現在のJavaファイルパス
-     */
-    private Path currentJavaFilePath;
-
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 現在のJavaファイルの中身
-     */
-    private String currentJavaFileContent;
-
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 現在のJavaファイルインデックス
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    private int currentJavaFileIndex;
-
-    // TODO KenichiroArai 2025/04/11 削除する
-    /**
-     * 現在の書き込みするファイルの中身
-     */
-    private String currentContentsOfFileToWrite;
-
-    /** Javadocタグ設定の構成モデル */
-    private JdtsConfigsModel jdtsConfigsModel;
-
     /**
      * デフォルトコンストラクタ
      *
@@ -105,101 +41,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     public JavadocAppenderLogicImpl() {
 
-        this.javaFilePathList = new ArrayList<>();
-        this.currentJavaFileIndex = 0;
-        this.currentJavaFilePath = null;
         this.totalRows = 0;
-
-    }
-
-    // TODO KenichiroArai 2025/04/11 削除する
-    /**
-     * 現在の書き込みするファイルの中身を返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return 現在の書き込みするファイルの中身
-     */
-    @Override
-    public String getCurrentContentsOfFileToWrite() {
-
-        final String result = this.currentContentsOfFileToWrite;
-        return result;
-
-    }
-
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 現在のJavaファイルパスを返す。
-     *
-     * @return 現在のJavaファイルパス
-     */
-    @Override
-    public Path getCurrentJavaFilePath() {
-
-        final Path result = this.currentJavaFilePath;
-        return result;
-
-    }
-
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 対象のJavaファイルパスのリストを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @sine 0.1.0
-     *
-     * @return 対象のJavaファイルリスト
-     */
-    @Override
-    public List<Path> getJavaFilePathList() {
-
-        final List<Path> result = this.javaFilePathList;
-        return result;
-
-    }
-
-    /**
-     * Javadocタグ設定の構成モデルを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return Javadocタグ設定の構成モデル
-     */
-    @Override
-    public JdtsConfigsModel getJdtsConfigsModel() {
-
-        final JdtsConfigsModel result = this.jdtsConfigsModel;
-        return result;
-
-    }
-
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 対象ファイルパス
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return 対象ファイルパス
-     */
-    @Override
-    public Path getTargetPath() {
-
-        final Path result = this.targetPath;
-        return result;
 
     }
 
@@ -217,10 +59,16 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * 初期化する
+     * 内容を置換した値を返す。<br>
      *
-     * @param targetPath
-     *                         対象ファイルパス
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @param contents
+     *                         内容
      * @param jdtsConfigsModel
      *                         Javadocタグ設定の構成モデル
      *
@@ -229,257 +77,104 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path targetPath, final JdtsConfigsModel jdtsConfigsModel) throws KmgToolException {
+    public String replace(final String contents, final JdtsConfigsModel jdtsConfigsModel) throws KmgToolException {
 
-        boolean result = false;
+        String result;
 
-        this.targetPath = targetPath;
-        this.jdtsConfigsModel = jdtsConfigsModel;
+        String replaceContents = contents;
 
-        this.javaFilePathList.clear();
-        this.totalRows = 0;
+        /* Javadocを設定する */
 
-        result = true;
-        return result;
+        final List<JdaReplacementModel> javadocReplacementModelList = new ArrayList<>();
 
-    }
+        // 「/**」でブロックに分ける
+        // TODO KenichiroArai 2025/04/03 ハードコード
+        final String[] blocks = contents.split(String.format("%s\\s+", Pattern.quote("/**")));
 
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 対象のJavaファイルをロードする。
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean loadJavaFileList() throws KmgToolException {
+        // ブロックの0番目はJavadocではないので、1番目から進める
+        for (int i = 1; i < blocks.length; i++) {
 
-        boolean result = false;
-
-        List<Path> fileList;
-
-        try (final Stream<Path> streamPath = Files.walk(this.targetPath)) {
-
-            // TODO KenichiroArai 2025/03/29 ハードコード
-            fileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
-                .collect(Collectors.toList());
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/29 メッセージ
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
-
-        }
-
-        this.javaFilePathList.addAll(fileList);
-
-        if (KmgListUtils.isNotEmpty(this.javaFilePathList)) {
-
-            this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
-
-        }
-
-        result = true;
-        return result;
-
-    }
-
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 次のJavaファイルに進む。
-     *
-     * @return true：ファイルあり、false:ファイルなし
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean nextJavaFile() throws KmgToolException {
-
-        boolean result = false;
-
-        this.currentJavaFileIndex++;
-
-        if (this.currentJavaFileIndex >= this.javaFilePathList.size()) {
-
-            return result;
-
-        }
-
-        this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
-
-        result = true;
-        return result;
-
-    }
-
-    /**
-     * 現在のJavaファイルにJavadocを設定する。<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @param insertAtTop
-     *                    タグを先頭に挿入するかどうか
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean setJavadoc(final boolean insertAtTop) throws KmgToolException {
-
-        final boolean result;
-
-        try {
-
-            /* Javaファイルを読み込み、現在の中身と書き込み用の中身に設定する */
-            this.currentJavaFileContent = Files.readString(this.currentJavaFilePath);
-            this.currentContentsOfFileToWrite = this.currentJavaFileContent;
-
-            /* Javadocを設定する */
-
-            final List<JdaReplacementModel> javadocReplacementModelList = new ArrayList<>();
-
-            // 「/**」でブロックに分ける
+            // 「*/」でJavadocとCodeのブラックに分ける
             // TODO KenichiroArai 2025/04/03 ハードコード
-            final String[] blocks
-                = this.currentContentsOfFileToWrite.split(String.format("%s\\s+", Pattern.quote("/**")));
+            final String[] javadocCodeBlock = blocks[i].split(String.format("%s\\s+", Pattern.quote("*/")), 2);
 
-            // ブロックの0番目はJavadocではないので、1番目から進める
-            for (int i = 1; i < blocks.length; i++) {
+            // 元のJavadoc
+            final String srcJavadoc = javadocCodeBlock[0];
 
-                // 「*/」でJavadocとCodeのブラックに分ける
-                // TODO KenichiroArai 2025/04/03 ハードコード
-                final String[] javadocCodeBlock = blocks[i].split(String.format("%s\\s+", Pattern.quote("*/")), 2);
+            // 元のコード
+            final String srcCodeBlock = javadocCodeBlock[1];
 
-                // 元のJavadoc
-                final String srcJavadoc = javadocCodeBlock[0];
+            // TODO KenichiroArai 2025/04/09 コードを精査する
+            // アノテーションと元のコードを分割
+            final String[]      codeLines      = srcCodeBlock.split("\\R");
+            final StringBuilder codeBuilder    = new StringBuilder();
+            final List<String>  annotationList = new ArrayList<>();
 
-                // 元のコード
-                final String srcCodeBlock = javadocCodeBlock[1];
+            boolean isCodeSection = false;
 
-                // TODO KenichiroArai 2025/04/09 コードを精査する
-                // アノテーションと元のコードを分割
-                final String[]      codeLines      = srcCodeBlock.split("\\R");
-                final StringBuilder codeBuilder    = new StringBuilder();
-                final List<String>  annotationList = new ArrayList<>();
+            for (final String line : codeLines) {
 
-                boolean isCodeSection = false;
+                final String trimmedLine = line.trim();
 
-                for (final String line : codeLines) {
+                if (trimmedLine.isEmpty()) {
 
-                    final String trimmedLine = line.trim();
+                    continue;
 
-                    if (trimmedLine.isEmpty()) {
+                }
 
-                        continue;
+                if (!isCodeSection) {
 
-                    }
+                    if (trimmedLine.startsWith("@")) {
 
-                    if (!isCodeSection) {
-
-                        if (trimmedLine.startsWith("@")) {
-
-                            annotationList.add(trimmedLine);
-
-                        } else {
-
-                            isCodeSection = true;
-                            codeBuilder.append(line).append(System.lineSeparator());
-
-                        }
+                        annotationList.add(trimmedLine);
 
                     } else {
 
+                        isCodeSection = true;
                         codeBuilder.append(line).append(System.lineSeparator());
 
                     }
 
+                } else {
+
+                    codeBuilder.append(line).append(System.lineSeparator());
+
                 }
 
-                final String actualSrcCodeBlock = codeBuilder.toString().trim();
-
-                // 元のJavadoc
-
-                final JdaReplacementModel jdaReplacementModel
-                    = new JdaReplacementModelImpl(srcJavadoc, actualSrcCodeBlock, this.jdtsConfigsModel);
-                javadocReplacementModelList.add(jdaReplacementModel);
-
-                // 元のJavadoc部分を置換用識別子に置換する
-                this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite
-                    .replaceFirst(Pattern.quote(srcJavadoc), jdaReplacementModel.getIdentifier().toString());
-
-                // Java区分を特定する
-                jdaReplacementModel.specifyJavaClassification();
-
-                // 置換後のJavadocを作成する
-                jdaReplacementModel.createReplacedJavadoc();
-
             }
 
-            // 置換用識別子を置換後のJavadocに置換する
-            for (final JdaReplacementModel jdaReplacementModel : javadocReplacementModelList) {
+            final String actualSrcCodeBlock = codeBuilder.toString().trim();
 
-                this.currentContentsOfFileToWrite = this.currentContentsOfFileToWrite
-                    .replace(jdaReplacementModel.getIdentifier().toString(), jdaReplacementModel.getReplacedJavadoc());
+            // 元のJavadoc
 
-            }
+            final JdaReplacementModel jdaReplacementModel
+                = new JdaReplacementModelImpl(srcJavadoc, actualSrcCodeBlock, jdtsConfigsModel);
+            javadocReplacementModelList.add(jdaReplacementModel);
 
-        } catch (final IOException e) {
+            // 元のJavadoc部分を置換用識別子に置換する
+            replaceContents = replaceContents.replaceFirst(Pattern.quote(srcJavadoc),
+                jdaReplacementModel.getIdentifier().toString());
 
-            // TODO KenichiroArai 2025/03/29 メッセージ
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            // Java区分を特定する
+            jdaReplacementModel.specifyJavaClassification();
+
+            // 置換後のJavadocを作成する
+            jdaReplacementModel.createReplacedJavadoc();
 
         }
 
-        this.totalRows += KmgDelimiterTypes.LINE_SEPARATOR.split(this.currentJavaFileContent).length;
+        // 置換用識別子を置換後のJavadocに置換する
+        for (final JdaReplacementModel jdaReplacementModel : javadocReplacementModelList) {
 
-        result = true;
-        return result;
-
-    }
-
-    // TODO KenichiroArai 2025/04/11 移行済み
-    /**
-     * 現在のJavaファイルに書き込む
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean writeCurrentJavaFile() throws KmgToolException {
-
-        boolean result = false;
-
-        try {
-
-            Files.writeString(this.currentJavaFilePath, this.currentContentsOfFileToWrite);
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/29 メッセージ
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            replaceContents = replaceContents.replace(jdaReplacementModel.getIdentifier().toString(),
+                jdaReplacementModel.getReplacedJavadoc());
 
         }
 
-        result = true;
+        this.totalRows += KmgDelimiterTypes.LINE_SEPARATOR.split(replaceContents).length;
+
+        result = replaceContents;
         return result;
 
     }
