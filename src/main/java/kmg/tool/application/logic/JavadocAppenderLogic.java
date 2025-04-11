@@ -3,7 +3,7 @@ package kmg.tool.application.logic;
 import java.nio.file.Path;
 import java.util.List;
 
-import kmg.tool.application.model.jda.JdtsConfigurationsModel;
+import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -71,7 +71,7 @@ public interface JavadocAppenderLogic {
      *
      * @return Javadocタグ設定の構成モデル
      */
-    JdtsConfigurationsModel getJdtsConfigurationsModel();
+    JdtsConfigsModel getJdtsConfigsModel();
 
     /**
      * 対象ファイルパス

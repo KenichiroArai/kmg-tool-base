@@ -5,11 +5,11 @@ import java.nio.file.Path;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * Javadoc追加サービスインタフェース<br>
+ * Javadocタグ設定サービスインタフェース<br>
  *
  * @author KenichiroArai
  */
-public interface JavadocAppenderService {
+public interface JavadocTagSetterService {
 
     /**
      * 対象ファイルパス

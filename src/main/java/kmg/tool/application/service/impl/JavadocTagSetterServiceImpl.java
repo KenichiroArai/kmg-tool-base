@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.JavadocAppenderLogic;
-import kmg.tool.application.model.jda.JdtsConfigurationsModel;
-import kmg.tool.application.service.JavadocAppenderService;
+import kmg.tool.application.model.jda.JdtsConfigsModel;
+import kmg.tool.application.service.JavadocTagSetterService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * Javadoc追加サービス<br>
+ * Javadocタグ設定サービス<br>
  *
  * @author KenichiroArai
  *
@@ -23,7 +23,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @version 0.1.0
  */
 @Service
-public class JavadocAppenderServiceImpl implements JavadocAppenderService {
+public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
 
     /**
      * ロガー
@@ -91,9 +91,9 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
      *
      * @version 0.1.0
      */
-    public JavadocAppenderServiceImpl() {
+    public JavadocTagSetterServiceImpl() {
 
-        this(LoggerFactory.getLogger(JavadocAppenderServiceImpl.class));
+        this(LoggerFactory.getLogger(JavadocTagSetterServiceImpl.class));
 
     }
 
@@ -109,7 +109,7 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
      * @param logger
      *               ロガー
      */
-    protected JavadocAppenderServiceImpl(final Logger logger) {
+    protected JavadocTagSetterServiceImpl(final Logger logger) {
 
         this.logger = logger;
 
@@ -214,7 +214,7 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
         this.javadocAppenderLogic.createJavadocTagsModel();
 
         // TODO KenichiroArai 2025/03/29 ログ
-        final JdtsConfigurationsModel jdtsConfigurationsModel = this.javadocAppenderLogic.getJdtsConfigurationsModel();
+        final JdtsConfigsModel jdtsConfigurationsModel = this.javadocAppenderLogic.getJdtsConfigsModel();
         System.out.println(jdtsConfigurationsModel.toString());
 
         /* 対象のJavaファイルを作成する */

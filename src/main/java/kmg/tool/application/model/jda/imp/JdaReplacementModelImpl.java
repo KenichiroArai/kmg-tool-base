@@ -9,7 +9,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.JavadocReplacementLogic;
 import kmg.tool.application.logic.impl.JavadocReplacementLogicImpl;
 import kmg.tool.application.model.jda.JdaReplacementModel;
-import kmg.tool.application.model.jda.JdtsConfigurationsModel;
+import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -36,7 +36,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
     private JavaClassificationTypes srcJavaClassification;
 
     /** avadocタグ設定の構成モデル */
-    private final JdtsConfigurationsModel jdtsConfigurationsModel;
+    private final JdtsConfigsModel jdtsConfigurationsModel;
 
     /** 置換用識別子 */
     private final UUID identifier;
@@ -62,7 +62,7 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
      *                                Javadocタグ設定の構成モデル
      */
     public JdaReplacementModelImpl(final String srcJavadoc, final String srcCodeBloc,
-        final JdtsConfigurationsModel jdtsConfigurationsModel) {
+        final JdtsConfigsModel jdtsConfigurationsModel) {
 
         this.srcJavadoc = srcJavadoc;
         this.srcCodeBloc = srcCodeBloc;

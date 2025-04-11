@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @version 0.1.0
  */
-public interface JdtsConfigurationsModel {
+public interface JdtsConfigsModel {
 
     /**
      * Javadoc追加のタグ設定モデルのリストを返す<br>

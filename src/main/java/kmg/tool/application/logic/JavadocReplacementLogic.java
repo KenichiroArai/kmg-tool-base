@@ -1,7 +1,7 @@
 package kmg.tool.application.logic;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.application.model.jda.JdtsConfigurationsModel;
+import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -63,6 +63,6 @@ public interface JavadocReplacementLogic {
      * @param srcJavaClassification
      *                                元のJava区分
      */
-    void initialize(final String srcJavadoc, final JdtsConfigurationsModel jdtsConfigurationsModel,
+    void initialize(final String srcJavadoc, final JdtsConfigsModel jdtsConfigurationsModel,
         final JavaClassificationTypes srcJavaClassification);
 }

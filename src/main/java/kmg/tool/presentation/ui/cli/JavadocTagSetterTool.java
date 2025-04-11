@@ -10,15 +10,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
-import kmg.tool.application.service.JavadocAppenderService;
+import kmg.tool.application.service.JavadocTagSetterService;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * Javadocタグ設定の構成ツール<br>
- * <p>
- * Jdtsは、JavadocTagSetterの略。
- * </p>
+ * Javadocタグ設定ツール<br>
  */
 @SpringBootApplication(scanBasePackages = {
     "kmg"
@@ -40,7 +37,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "Javadoc追加ツール";
+    private static final String TOOL_NAME = "Javadocタグ設定ツール";
 
     /** 入力サービス */
     @Autowired
@@ -50,7 +47,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
      * Javadoc追加サービス
      */
     @Autowired
-    private JavadocAppenderService javadocAppenderService;
+    private JavadocTagSetterService javadocTagSetterService;
 
     /** 対象パス */
     private Path targetPath;
@@ -145,7 +142,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
 
         try {
 
-            result &= this.javadocAppenderService.initialize(this.targetPath, JavadocTagSetterTool.TEMPLATE_PATH);
+            result &= this.javadocTagSetterService.initialize(this.targetPath, JavadocTagSetterTool.TEMPLATE_PATH);
 
         } catch (final KmgToolException e) {
 
@@ -158,7 +155,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
 
         try {
 
-            result &= this.javadocAppenderService.process();
+            result &= this.javadocTagSetterService.process();
 
         } catch (final KmgToolException e) {
 

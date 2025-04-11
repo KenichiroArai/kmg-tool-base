@@ -6,7 +6,7 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.logic.JavadocReplacementLogic;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
-import kmg.tool.application.model.jda.JdtsConfigurationsModel;
+import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
@@ -36,7 +36,7 @@ public class JavadocReplacementLogicImpl implements JavadocReplacementLogic {
     private String replacedJavadoc;
 
     /** Javadocタグ設定の構成モデル */
-    private JdtsConfigurationsModel jdtsConfigurationsModel;
+    private JdtsConfigsModel jdtsConfigurationsModel;
 
     /**
      * 最終的なJavadocを構築する<br>
@@ -252,7 +252,7 @@ public class JavadocReplacementLogicImpl implements JavadocReplacementLogic {
      */
     @SuppressWarnings("hiding")
     @Override
-    public void initialize(final String srcJavadoc, final JdtsConfigurationsModel jdtsConfigurationsModel,
+    public void initialize(final String srcJavadoc, final JdtsConfigsModel jdtsConfigurationsModel,
         final JavaClassificationTypes srcJavaClassification) {
 
         this.srcJavadoc = srcJavadoc;

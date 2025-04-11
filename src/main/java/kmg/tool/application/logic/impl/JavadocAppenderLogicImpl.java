@@ -19,9 +19,9 @@ import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.model.jda.JdaReplacementModel;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
-import kmg.tool.application.model.jda.JdtsConfigurationsModel;
+import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.application.model.jda.imp.JdaReplacementModelImpl;
-import kmg.tool.application.model.jda.imp.JdtsConfigurationsModelImpl;
+import kmg.tool.application.model.jda.imp.JdtsConfigsModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -107,7 +107,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     private String currentContentsOfFileToWrite;
 
     /** Javadocタグ設定の構成モデル */
-    private JdtsConfigurationsModel jdtsConfigurationsModel;
+    private JdtsConfigsModel jdtsConfigurationsModel;
 
     /**
      * デフォルトコンストラクタ
@@ -151,7 +151,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
             /* YAMLファイルを読み込み、モデルを作成 */
             final Map<String, Object> yamlData = KmgYamlUtils.load(this.templatePath);
-            this.jdtsConfigurationsModel = new JdtsConfigurationsModelImpl(yamlData);
+            this.jdtsConfigurationsModel = new JdtsConfigsModelImpl(yamlData);
 
         } catch (final KmgFundException e) {
 
@@ -272,9 +272,9 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      * @return Javadocタグ設定の構成モデル
      */
     @Override
-    public JdtsConfigurationsModel getJdtsConfigurationsModel() {
+    public JdtsConfigsModel getJdtsConfigsModel() {
 
-        final JdtsConfigurationsModel result = this.jdtsConfigurationsModel;
+        final JdtsConfigsModel result = this.jdtsConfigurationsModel;
         return result;
 
     }

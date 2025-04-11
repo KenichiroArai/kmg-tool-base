@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import kmg.tool.application.model.jda.JdaTagConfigModel;
-import kmg.tool.application.model.jda.JdtsConfigurationsModel;
+import kmg.tool.application.model.jda.JdtsConfigsModel;
 
 /**
  * Javadocタグ設定の構成モデル<br>
@@ -20,7 +20,7 @@ import kmg.tool.application.model.jda.JdtsConfigurationsModel;
  *
  * @version 0.1.0
  */
-public class JdtsConfigurationsModelImpl implements JdtsConfigurationsModel {
+public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
     /** Javadoc追加のタグ設定モデルのリスト */
     private List<JdaTagConfigModel> jdaTagConfigModels;
@@ -28,7 +28,7 @@ public class JdtsConfigurationsModelImpl implements JdtsConfigurationsModel {
     /**
      * デフォルトコンストラクタ<br>
      */
-    public JdtsConfigurationsModelImpl() {
+    public JdtsConfigsModelImpl() {
 
         this.jdaTagConfigModels = new ArrayList<>();
 
@@ -41,7 +41,7 @@ public class JdtsConfigurationsModelImpl implements JdtsConfigurationsModel {
      *                 YAMLデータ
      */
     @SuppressWarnings("unchecked")
-    public JdtsConfigurationsModelImpl(final Map<String, Object> yamlData) {
+    public JdtsConfigsModelImpl(final Map<String, Object> yamlData) {
 
         this();
 
