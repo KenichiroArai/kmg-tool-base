@@ -3,14 +3,17 @@ package kmg.tool.application.model.jda.imp;
 import java.util.Arrays;
 import java.util.UUID;
 
+import org.apache.maven.artifact.versioning.ComparableVersion;
+
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.logic.JavadocReplacementLogic;
-import kmg.tool.application.logic.impl.JavadocReplacementLogicImpl;
 import kmg.tool.application.model.jda.JdaReplacementModel;
+import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.domain.model.JavadocModel;
+import kmg.tool.domain.model.JavadocTagModel;
+import kmg.tool.domain.model.impl.JavadocModelImpl;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -44,8 +47,127 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
     /** 置換後のJavadoc */
     private String replacedJavadoc;
 
-    /** Javadoc置換ロジック */
-    private final JavadocReplacementLogic javadocReplacementLogic;
+    /**
+     * 最終的なJavadocを構築する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param editingJavadoc
+     *                        編集中のJavadoc
+     * @param headTagsBuilder
+     *                        先頭タグビルダー
+     * @param tailTagsBuilder
+     *                        末尾タグビルダー
+     *
+     * @return 構築されたJavadoc
+     */
+    private static String buildFinalJavadoc(final String editingJavadoc, final StringBuilder headTagsBuilder,
+        final StringBuilder tailTagsBuilder) {
+
+        String result;
+
+        final StringBuilder finalJavadocBuilder = new StringBuilder(editingJavadoc);
+
+        /* 先頭のタグを追加 */
+        if (headTagsBuilder.length() > 0) {
+
+            // TODO KenichiroArai 2025/04/09 ハードコード
+            final int firstAtPos = finalJavadocBuilder.indexOf("* @");
+
+            if (firstAtPos > -1) {
+
+                finalJavadocBuilder.insert(firstAtPos - 1, headTagsBuilder.toString());
+
+            } else {
+
+                finalJavadocBuilder.append(headTagsBuilder);
+
+            }
+
+        }
+
+        /* 末尾のタグを追加 */
+        if (tailTagsBuilder.length() > 0) {
+
+            finalJavadocBuilder.append(tailTagsBuilder);
+
+        }
+
+        result = finalJavadocBuilder.toString();
+        return result;
+
+    }
+
+    /**
+     * 既存のタグを更新する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param editingJavadoc
+     *                                編集中のJavadoc
+     * @param jdaTagConfigModel
+     *                                Javadocタグ設定モデル
+     * @param existingJavadocTagModel
+     *                                既存のJavadocタグモデル
+     *
+     * @return 更新後のJavadoc
+     */
+    private static String updateExistingTag(final String editingJavadoc, final JdaTagConfigModel jdaTagConfigModel,
+        final JavadocTagModel existingJavadocTagModel) {
+
+        String result = null;
+
+        switch (jdaTagConfigModel.getOverwrite()) {
+
+            case NONE:
+                /* 指定無し */
+            case NEVER:
+                /* 上書きしない */
+
+                result = editingJavadoc;
+                return result;
+
+            case ALWAYS:
+                /* 常に上書き */
+
+                break;
+
+            case IF_LOWER:
+                /* 既存のバージョンより小さい場合のみ上書き */
+
+                if (!jdaTagConfigModel.getTag().isVersionValue()) {
+
+                    break;
+
+                }
+
+                final ComparableVersion srcVer = new ComparableVersion(existingJavadocTagModel.getTag().get());
+                final ComparableVersion destVer = new ComparableVersion(jdaTagConfigModel.getTagValue());
+
+                if (srcVer.compareTo(destVer) <= 0) {
+
+                    result = editingJavadoc;
+                    return result;
+
+                }
+
+                break;
+
+        }
+
+        // TODO KenichiroArai 2025/04/09 ハードコード
+        final String newTag = String.format(" * %s %s %s", jdaTagConfigModel.getTag().getKey(),
+            jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
+
+        result = editingJavadoc.replace(existingJavadocTagModel.getTargetStr(), newTag);
+
+        return result;
+
+    }
 
     /**
      * コンストラクタ<br>
@@ -69,17 +191,14 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         this.identifier = UUID.randomUUID();
         this.jdtsConfigurationsModel = jdtsConfigurationsModel;
 
-        // TODO KenichiroArai 2025/04/10 どのようにするかを考える
-        this.javadocReplacementLogic = new JavadocReplacementLogicImpl();
-
     }
 
     /**
-     * 置換後のJavadocを作成する。<br>
+     * 置換後のJavadocを作成する<br>
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -92,14 +211,18 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         boolean result = false;
 
         /* 準備 */
-        this.javadocReplacementLogic.initialize(this.srcJavadoc, this.jdtsConfigurationsModel,
-            this.srcJavaClassification);
+        this.srcJavadocModel = new JavadocModelImpl(this.srcJavadoc);
+        final StringBuilder headTagsBuilder = new StringBuilder();
+        final StringBuilder tailTagsBuilder = new StringBuilder();
 
-        /* Javadoc置換ロジックを実行 */
-        result = this.javadocReplacementLogic.createReplacedJavadoc();
+        /* Javadoc追加のタグ設定を基準に、Javadocを更新 */
+        final String processedJavadoc = this.processJavadocTags(headTagsBuilder, tailTagsBuilder);
 
-        this.replacedJavadoc = this.javadocReplacementLogic.getReplacedJavadoc();
+        /* 最終的な結果を組み立てる */
+        this.replacedJavadoc
+            = JdaReplacementModelImpl.buildFinalJavadoc(processedJavadoc, headTagsBuilder, tailTagsBuilder);
 
+        result = true;
         return result;
 
     }
@@ -251,6 +374,159 @@ public class JdaReplacementModelImpl implements JdaReplacementModel {
         }
 
         return result;
+
+    }
+
+    /**
+     * 既存のJavadocタグを検索する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param jdaTagConfigModel
+     *                          Javadocタグ設定モデル
+     *
+     * @return 既存のJavadocタグモデル。存在しない場合はnull
+     */
+    private JavadocTagModel findExistingJavadocTag(final JdaTagConfigModel jdaTagConfigModel) {
+
+        JavadocTagModel result = null;
+
+        for (final JavadocTagModel srcJavadocTagModel : this.srcJavadocModel.getJavadocTagsModel()
+            .getJavadocTagModelList()) {
+
+            if (srcJavadocTagModel.getTag() != jdaTagConfigModel.getTag()) {
+
+                continue;
+
+            }
+
+            result = srcJavadocTagModel;
+            return result;
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * Javadocタグを処理する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param headTagsBuilder
+     *                        先頭タグビルダー
+     * @param tailTagsBuilder
+     *                        末尾タグビルダー
+     *
+     * @return 処理後のJavadoc
+     */
+    private String processJavadocTags(final StringBuilder headTagsBuilder, final StringBuilder tailTagsBuilder) {
+
+        /* 戻り値 */
+        String result = null;
+
+        // 編集中のJavadoc
+        String editingJavadoc = this.srcJavadoc;
+
+        /* Javadoc追加のタグ設定を基準に、Javadocを更新 */
+        for (final JdaTagConfigModel jdaTagConfigModel : this.jdtsConfigurationsModel.getJdaTagConfigModels()) {
+
+            /* 元のJavadocにJavadoc追加のタグ設定のタグがあるか取得 */
+            final JavadocTagModel existingJavadocTagModel = this.findExistingJavadocTag(jdaTagConfigModel);
+
+            if (existingJavadocTagModel == null) {
+
+                // タグが存在しない場合
+                this.processNewTag(jdaTagConfigModel, headTagsBuilder, tailTagsBuilder);
+                continue;
+
+            }
+
+            /* 誤配置時の削除処理 */
+            final boolean isRemoveTag = jdaTagConfigModel.getLocation().isRemoveIfMisplaced()
+                && !jdaTagConfigModel.isProperlyPlaced(this.srcJavaClassification);
+
+            if (isRemoveTag) {
+
+                // 誤配置のタグを削除する
+
+                editingJavadoc = editingJavadoc.replace(existingJavadocTagModel.getTargetStr(), KmgString.EMPTY);
+
+                continue;
+
+            }
+
+            /* タグの更新処理 */
+            editingJavadoc
+                = JdaReplacementModelImpl.updateExistingTag(editingJavadoc, jdaTagConfigModel, existingJavadocTagModel);
+
+        }
+
+        result = editingJavadoc;
+        return result;
+
+    }
+
+    /**
+     * 新しいタグを処理する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param jdaTagConfigModel
+     *                          Javadocタグ設定モデル
+     * @param headTagsBuilder
+     *                          先頭タグビルダー
+     * @param tailTagsBuilder
+     *                          末尾タグビルダー
+     */
+    private void processNewTag(final JdaTagConfigModel jdaTagConfigModel, final StringBuilder headTagsBuilder,
+        final StringBuilder tailTagsBuilder) {
+
+        // タグの配置がJava区分に一致しないか
+        if (!jdaTagConfigModel.isProperlyPlaced(this.srcJavaClassification)) {
+
+            // 一致しない場合
+
+            // タグを追加しない
+
+            return;
+
+        }
+
+        // 新しいタグを作成
+        // TODO KenichiroArai 2025/04/09 ハードコード
+        final String newTag = String.format(" * %s %s %s%n", jdaTagConfigModel.getTag().getKey(),
+            jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
+
+        // 挿入位置に応じてタグを振り分け
+        switch (jdaTagConfigModel.getInsertPosition()) {
+
+            case BEGINNING:
+                /* ファイルの先頭 */
+
+                headTagsBuilder.append(newTag);
+
+                break;
+
+            case NONE:
+                /* 指定無し */
+            case END:
+                /* ファイルの末尾 */
+            case PRESERVE:
+                /* 現在の位置を維持 */
+
+                tailTagsBuilder.append(newTag);
+
+                break;
+
+        }
 
     }
 
