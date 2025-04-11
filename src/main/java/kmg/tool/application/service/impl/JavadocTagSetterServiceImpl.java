@@ -12,6 +12,8 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.exception.KmgFundException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JavadocAppenderLogic;
+import kmg.tool.application.logic.JdtsIoLogic;
+import kmg.tool.application.logic.JdtsReplLogic;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.application.model.jda.imp.JdtsConfigsModelImpl;
 import kmg.tool.application.service.JavadocTagSetterService;
@@ -57,6 +59,18 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
      * Javadocタグ設定の構成モデル
      */
     private JdtsConfigsModel jdtsConfigsModel;
+
+    /**
+     * Javadocタグ設定の入出力ロジック
+     */
+    @Autowired
+    private JdtsIoLogic jdtsIoLogic;
+
+    /**
+     * Javadocタグ設定の入出力ロジック
+     */
+    @Autowired
+    private JdtsReplLogic jdtsReplLogic;
 
     /**
      * Javadoc追加ロジック
