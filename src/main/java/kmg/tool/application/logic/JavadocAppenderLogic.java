@@ -14,16 +14,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JavadocAppenderLogic {
 
     /**
-     * 対象のJavaファイル
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean createJavaFileList() throws KmgToolException;
-
-    /**
      * 現在の書き込みするファイルの中身を返す<br>
      *
      * @author KenichiroArai
@@ -34,6 +24,7 @@ public interface JavadocAppenderLogic {
      */
     String getCurrentContentsOfFileToWrite();
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 現在のJavaファイルパスを返す。
      *
@@ -41,6 +32,7 @@ public interface JavadocAppenderLogic {
      */
     Path getCurrentJavaFilePath();
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 対象のJavaファイルパスのリストを返す<br>
      *
@@ -67,6 +59,7 @@ public interface JavadocAppenderLogic {
      */
     JdtsConfigsModel getJdtsConfigsModel();
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 対象ファイルパス
      *
@@ -95,6 +88,17 @@ public interface JavadocAppenderLogic {
      *                          KMGツール例外
      */
     boolean initialize(final Path targetPath, JdtsConfigsModel jdtsConfigsModel) throws KmgToolException;
+
+    // TODO KenichiroArai 2025/04/11 移行済み
+    /**
+     * 対象のJavaファイルをロードする。
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean loadJavaFileList() throws KmgToolException;
 
     /**
      * 次のJavaファイルに進む。

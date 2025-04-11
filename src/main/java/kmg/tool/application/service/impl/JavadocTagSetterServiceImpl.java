@@ -205,6 +205,9 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
         this.targetPath = targetPath;
         this.templatePath = templatePath;
 
+        /* Javadocタグ設定の入出力ロジックの初期化 */
+        this.jdtsIoLogic.initialize(targetPath);
+
         result = true;
         return result;
 
@@ -254,8 +257,8 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
         /* Javadoc追加ロジックの初期化 */
         this.javadocAppenderLogic.initialize(this.targetPath, this.jdtsConfigsModel);
 
-        /* 対象のJavaファイルを作成する */
-        this.javadocAppenderLogic.createJavaFileList();
+        /* 対象のJavaファイルをロードする */
+        this.javadocAppenderLogic.loadJavaFileList();
 
         boolean nextFlg;
 

@@ -37,6 +37,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     private long totalRows;
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 対象ファイルパス
      *
@@ -48,6 +49,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     private Path targetPath;
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 対象のJavaファイルパスのリスト
      *
@@ -59,6 +61,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     private final List<Path> javaFilePathList;
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 現在のJavaファイルパス
      */
@@ -69,6 +72,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
      */
     private String currentJavaFileContent;
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 現在のJavaファイルインデックス
      *
@@ -107,55 +111,6 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
     }
 
     /**
-     * 対象のJavaファイル
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean createJavaFileList() throws KmgToolException {
-
-        boolean result = false;
-
-        List<Path> fileList;
-
-        try (final Stream<Path> streamPath = Files.walk(this.targetPath)) {
-
-            // TODO KenichiroArai 2025/03/29 ハードコード
-            fileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
-                .collect(Collectors.toList());
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/03/29 メッセージ
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
-
-        }
-
-        this.javaFilePathList.addAll(fileList);
-
-        if (KmgListUtils.isNotEmpty(this.javaFilePathList)) {
-
-            this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
-
-        }
-
-        result = true;
-        return result;
-
-    }
-
-    /**
      * 現在の書き込みするファイルの中身を返す<br>
      *
      * @author KenichiroArai
@@ -172,6 +127,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
     }
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 現在のJavaファイルパスを返す。
      *
@@ -185,6 +141,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
     }
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 対象のJavaファイルパスのリストを返す<br>
      *
@@ -223,6 +180,7 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
     }
 
+    // TODO KenichiroArai 2025/04/11 移行済み
     /**
      * 対象ファイルパス
      *
@@ -279,6 +237,50 @@ public class JavadocAppenderLogicImpl implements JavadocAppenderLogic {
 
         this.javaFilePathList.clear();
         this.totalRows = 0;
+
+        result = true;
+        return result;
+
+    }
+
+    // TODO KenichiroArai 2025/04/11 移行済み
+    /**
+     * 対象のJavaファイルをロードする。
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean loadJavaFileList() throws KmgToolException {
+
+        boolean result = false;
+
+        List<Path> fileList;
+
+        try (final Stream<Path> streamPath = Files.walk(this.targetPath)) {
+
+            // TODO KenichiroArai 2025/03/29 ハードコード
+            fileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
+                .collect(Collectors.toList());
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/03/29 メッセージ
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+
+        this.javaFilePathList.addAll(fileList);
+
+        if (KmgListUtils.isNotEmpty(this.javaFilePathList)) {
+
+            this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
+
+        }
 
         result = true;
         return result;
