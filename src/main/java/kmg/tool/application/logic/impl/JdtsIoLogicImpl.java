@@ -70,10 +70,9 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     private Path currentJavaFilePath;
 
     // TODO KenichiroARai 2025/04/11 使用するか考える。
-    /**
-     * 現在のJavaファイルの中身
-     */
-    private String currentJavaFileContent;
+
+    /** 現在の読込んだ内容 */
+    private String currentReadContent;
 
     /**
      * デフォルトコンストラクタ
@@ -83,24 +82,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         this.javaFilePathList = new ArrayList<>();
         this.currentJavaFileIndex = 0;
         this.currentJavaFilePath = null;
-        this.currentJavaFileContent = KmgString.EMPTY;
-
-    }
-
-    /**
-     * 現在のJavaファイルの中身を返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return 現在のJavaファイルの中身
-     */
-    @Override
-    public String getCurrentJavaFileContent() {
-
-        final String result = this.currentJavaFileContent;
-        return result;
+        this.currentReadContent = KmgString.EMPTY;
 
     }
 
@@ -113,6 +95,23 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     public Path getCurrentJavaFilePath() {
 
         final Path result = this.currentJavaFilePath;
+        return result;
+
+    }
+
+    /**
+     * 現在の読込んだ内容を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 現在の読込んだ内容
+     */
+    @Override
+    public String getCurrentReadContent() {
+
+        final String result = this.currentReadContent;
         return result;
 
     }
@@ -179,7 +178,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         this.javaFilePathList.clear();
         this.currentJavaFileIndex = 0;
         this.currentJavaFilePath = null;
-        this.currentJavaFileContent = KmgString.EMPTY;
+        this.currentReadContent = KmgString.EMPTY;
 
         result = true;
         return result;
@@ -187,7 +186,10 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     }
 
     /**
-     * 対象のJavaファイルをロードする。
+     * ロードする。
+     * <p>
+     * 対象ファイルパスから対象となるJavaファイルをリストにロードする。
+     * </p>
      *
      * @return true：成功、false：失敗
      *
@@ -195,7 +197,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *                          KMGツール例外
      */
     @Override
-    public boolean loadJavaFileList() throws KmgToolException {
+    public boolean load() throws KmgToolException {
 
         boolean result = false;
 
@@ -258,21 +260,24 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     }
 
     /**
-     * 内容を返す。
+     * 内容を読込む。
+     * <p>
+     * 現在のファイルを読み込む。
+     * </p>
      *
-     * @return 内容
+     * @return true：データあり、false：データなし
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
     @Override
-    public String read() throws KmgToolException {
+    public boolean read() throws KmgToolException {
 
-        String result;
+        boolean result = false;
 
         try {
 
-            result = Files.readString(this.currentJavaFilePath);
+            this.currentReadContent = Files.readString(this.currentJavaFilePath);
 
         } catch (final IOException e) {
 
@@ -283,6 +288,13 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         }
 
+        if (KmgString.isBlank(this.currentReadContent)) {
+
+            return result;
+
+        }
+
+        result = true;
         return result;
 
     }

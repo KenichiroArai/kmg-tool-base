@@ -221,38 +221,21 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
 
         // TODO KenichiroArai 2025/03/29 処理の開始ログ
 
-        /* YAMLファイルを読み込み、Javadocタグ設定の構成モデルを作成 */
-        Map<String, Object> yamlData;
+        /* Javadocタグ設定の構成モデルを作成 */
+        this.createJdtsConfigsModel();
 
-        try {
-
-            yamlData = KmgYamlUtils.load(this.templatePath);
-
-        } catch (final KmgFundException e) {
-
-            // TODO KenichiroArai 2025/04/11 例外処理
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
-
-        }
-        this.jdtsConfigsModel = new JdtsConfigsModelImpl(yamlData);
-
-        // TODO KenichiroArai 2025/03/29 ログ
-        System.out.println(this.jdtsConfigsModel.toString());
-
-        /* Javadoc追加ロジックの初期化 */
-        this.jdtsIoLogic.initialize(this.targetPath);
-
-        /* 対象のJavaファイルをロードする */
-        this.jdtsIoLogic.loadJavaFileList();
+        /* 対象ファイルから対象Javaファイルのリストをロードする */
+        this.jdtsIoLogic.load();
 
         boolean nextFlg;
 
         do {
 
-            // TODO KenichiroArai 2025/04/11 未実装
-            final String readContents = this.jdtsIoLogic.read();
+            /* 現在のファイルを読み込む */
+            this.jdtsIoLogic.read();
+
+            /* 内容を取得する */
+            final String readContents = this.jdtsIoLogic.getCurrentReadContent();
 
             /* 対象のJavaファイルのJavadocを設定する */
             final String writeContents = this.jdtsReplLogic.replace(readContents, this.jdtsConfigsModel);
@@ -269,6 +252,49 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
         System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getJavaFilePathList().size()));
         System.out.println(String.format("最終合計行数: %d", this.jdtsReplLogic.getTotalRows()));
 
+        return result;
+
+    }
+
+    /**
+     * Javadocタグ設定の構成モデルを作成する。
+     * <p>
+     * YAMLファイルを読み込み、Javadocタグ設定の構成モデルを作成する。
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private boolean createJdtsConfigsModel() throws KmgToolException {
+
+        final boolean result;
+
+        Map<String, Object> yamlData;
+
+        try {
+
+            yamlData = KmgYamlUtils.load(this.templatePath);
+
+        } catch (final KmgFundException e) {
+
+            // TODO KenichiroArai 2025/04/11 例外処理
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+
+        this.jdtsConfigsModel = new JdtsConfigsModelImpl(yamlData);
+
+        result = true;
         return result;
 
     }

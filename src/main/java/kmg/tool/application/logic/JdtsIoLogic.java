@@ -20,22 +20,22 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JdtsIoLogic {
 
     /**
-     * 現在のJavaファイルの中身を返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return 現在のJavaファイルの中身
-     */
-    String getCurrentJavaFileContent();
-
-    /**
      * 現在のJavaファイルパスを返す。
      *
      * @return 現在のJavaファイルパス
      */
     Path getCurrentJavaFilePath();
+
+    /**
+     * 現在の読込んだ内容を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 現在の読込んだ内容
+     */
+    String getCurrentReadContent();
 
     /**
      * 対象のJavaファイルパスのリストを返す<br>
@@ -73,14 +73,17 @@ public interface JdtsIoLogic {
     boolean initialize(final Path targetPath) throws KmgToolException;
 
     /**
-     * 対象のJavaファイルをロードする。
+     * ロードする。
+     * <p>
+     * 対象ファイルパスから対象となるJavaファイルをリストにロードする。
+     * </p>
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean loadJavaFileList() throws KmgToolException;
+    boolean load() throws KmgToolException;
 
     /**
      * 次のJavaファイルに進む。
@@ -93,14 +96,17 @@ public interface JdtsIoLogic {
     boolean nextJavaFile() throws KmgToolException;
 
     /**
-     * 内容を返す。
+     * 内容を読込む。
+     * <p>
+     * 現在のファイルを読み込む。
+     * </p>
      *
-     * @return 内容
+     * @return true：データあり、false：データなし
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    String read() throws KmgToolException;
+    boolean read() throws KmgToolException;
 
     /**
      * 内容を書き込む
