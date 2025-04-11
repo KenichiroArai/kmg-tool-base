@@ -6,7 +6,7 @@
 # -----------------------------------
 # 実際のJavadocタグ設定の構成の設定
 # -----------------------------------
-JdtsConfigurations:
+JdtsConfigs:
     - tagName: "author"
       tagValue: "KenichiroArai"
       location:

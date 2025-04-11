@@ -9,7 +9,7 @@ import kmg.tool.application.model.jda.JdtsConfigsModel;
 
 /**
  * Javadocタグ設定の構成モデル<br>
- * YAMLファイルのJdtsConfigurationsセクションを表現するモデル
+ * YAMLデータのJdtsConfigurationsセクションを表現するモデル
  * <p>
  * Jdtsは、JavadocTagSetterの略。
  * </p>
@@ -44,7 +44,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         /* javadocTagsセクションの取得 */
         // TODO KenichiroArai 2025/04/10 ハードコード
-        final List<Map<String, Object>> javadocTags = (List<Map<String, Object>>) yamlData.get("JdtsConfigurations");
+        final List<Map<String, Object>> javadocTags = (List<Map<String, Object>>) yamlData.get("JdtsConfigs");
 
         if ((javadocTags == null) || javadocTags.isEmpty()) {
 
