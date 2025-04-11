@@ -9,12 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.JavadocAppenderLogic;
-import kmg.tool.application.service.JavadocAppenderService;
+import kmg.fund.infrastructure.exception.KmgFundException;
+import kmg.fund.infrastructure.utils.KmgYamlUtils;
+import kmg.tool.application.logic.JdtsIoLogic;
+import kmg.tool.application.logic.JdtsReplLogic;
+import kmg.tool.application.model.jda.JdtsConfigsModel;
+import kmg.tool.application.model.jda.imp.JdtsConfigsModelImpl;
+import kmg.tool.application.service.JavadocTagSetterService;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * Javadoc追加サービス<br>
+ * Javadocタグ設定サービス<br>
  *
  * @author KenichiroArai
  *
@@ -23,7 +29,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @version 0.1.0
  */
 @Service
-public class JavadocAppenderServiceImpl implements JavadocAppenderService {
+public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
 
     /**
      * ロガー
@@ -49,16 +55,21 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
     private KmgMessageSource messageSource;
 
     /**
-     * Javadoc追加ロジック
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
+     * Javadocタグ設定の構成モデル
+     */
+    private JdtsConfigsModel jdtsConfigsModel;
+
+    /**
+     * Javadocタグ設定の入出力ロジック
      */
     @Autowired
-    private JavadocAppenderLogic javadocAppenderLogic;
+    private JdtsIoLogic jdtsIoLogic;
+
+    /**
+     * Javadocタグ設定の入出力ロジック
+     */
+    @Autowired
+    private JdtsReplLogic jdtsReplLogic;
 
     /**
      * 対象ファイルパス
@@ -91,9 +102,9 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
      *
      * @version 0.1.0
      */
-    public JavadocAppenderServiceImpl() {
+    public JavadocTagSetterServiceImpl() {
 
-        this(LoggerFactory.getLogger(JavadocAppenderServiceImpl.class));
+        this(LoggerFactory.getLogger(JavadocTagSetterServiceImpl.class));
 
     }
 
@@ -109,7 +120,7 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
      * @param logger
      *               ロガー
      */
-    protected JavadocAppenderServiceImpl(final Logger logger) {
+    protected JavadocTagSetterServiceImpl(final Logger logger) {
 
         this.logger = logger;
 
@@ -181,8 +192,8 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
         this.targetPath = targetPath;
         this.templatePath = templatePath;
 
-        /* Javadoc追加ロジックの初期化 */
-        this.javadocAppenderLogic.initialize(targetPath, templatePath);
+        /* Javadocタグ設定の入出力ロジックの初期化 */
+        this.jdtsIoLogic.initialize(targetPath);
 
         result = true;
         return result;
@@ -210,34 +221,53 @@ public class JavadocAppenderServiceImpl implements JavadocAppenderService {
 
         // TODO KenichiroArai 2025/03/29 処理の開始ログ
 
-        /* タグのマップの作成 */
-        this.javadocAppenderLogic.createTagMap();
+        /* YAMLファイルを読み込み、Javadocタグ設定の構成モデルを作成 */
+        Map<String, Object> yamlData;
+
+        try {
+
+            yamlData = KmgYamlUtils.load(this.templatePath);
+
+        } catch (final KmgFundException e) {
+
+            // TODO KenichiroArai 2025/04/11 例外処理
+            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+
+        }
+        this.jdtsConfigsModel = new JdtsConfigsModelImpl(yamlData);
 
         // TODO KenichiroArai 2025/03/29 ログ
-        final Map<String, String> tagMap = this.javadocAppenderLogic.getTagMap();
-        System.out.println(tagMap.toString());
+        System.out.println(this.jdtsConfigsModel.toString());
 
-        /* 対象のJavaファイルを作成する */
-        this.javadocAppenderLogic.createJavaFileList();
+        /* Javadoc追加ロジックの初期化 */
+        this.jdtsIoLogic.initialize(this.targetPath);
+
+        /* 対象のJavaファイルをロードする */
+        this.jdtsIoLogic.loadJavaFileList();
 
         boolean nextFlg;
 
         do {
 
+            // TODO KenichiroArai 2025/04/11 未実装
+            final String readContents = this.jdtsIoLogic.read();
+
             /* 対象のJavaファイルのJavadocを設定する */
-            this.javadocAppenderLogic.setJavadoc(true);
+            final String writeContents = this.jdtsReplLogic.replace(readContents, this.jdtsConfigsModel);
 
             /* 修正した内容をファイルに書き込む */
-            this.javadocAppenderLogic.writeCurrentJavaFile();
+            this.jdtsIoLogic.write(writeContents);
 
             /* 次の対象のJavaファイルに進む */
-            nextFlg = this.javadocAppenderLogic.nextJavaFile();
+            nextFlg = this.jdtsIoLogic.nextJavaFile();
 
         } while (nextFlg);
 
         // TODO KenichiroArai 2025/03/29 処理の終了ログ
-        System.out.println(String.format("読み込みファイル数: %d", this.javadocAppenderLogic.getJavaFilePathList().size()));
-        System.out.println(String.format("最終合計行数: %d", this.javadocAppenderLogic.getTotalRows()));
+        System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getJavaFilePathList().size()));
+        System.out.println(String.format("最終合計行数: %d", this.jdtsReplLogic.getTotalRows()));
 
         return result;
 

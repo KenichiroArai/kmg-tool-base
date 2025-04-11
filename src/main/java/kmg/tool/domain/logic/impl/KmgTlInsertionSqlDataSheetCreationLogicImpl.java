@@ -166,7 +166,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     public short getColumnNum() {
 
         final short result    = (short) this.getColumnPhysicsNameList().size();
-        short       columnNum = result;
+        final short columnNum = result;
         return result;
 
     }

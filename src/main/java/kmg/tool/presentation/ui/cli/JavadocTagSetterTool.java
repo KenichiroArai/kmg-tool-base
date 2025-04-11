@@ -10,24 +10,26 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
-import kmg.tool.application.service.JavadocAppenderService;
+import kmg.tool.application.service.JavadocTagSetterService;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * Javadoc追加ツール
+ * Javadocタグ設定ツール<br>
  */
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class JavadocAppenderTool extends AbstractInputTool {
+public class JavadocTagSetterTool extends AbstractInputTool {
+
+    // TODO KenichiroArai 2025/04/02 パスの自動設定
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
     /** テンプレートファイルパス */
     private static final Path TEMPLATE_PATH
-        = Paths.get(JavadocAppenderTool.BASE_PATH.toString(), "template/JavadocAppenderTool.txt");
+        = Paths.get(JavadocTagSetterTool.BASE_PATH.toString(), "template/JavadocTagSetterTool.yml");
 
     /**
      * <h3>ツール名</h3>
@@ -35,7 +37,7 @@ public class JavadocAppenderTool extends AbstractInputTool {
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "Javadoc追加ツール";
+    private static final String TOOL_NAME = "Javadocタグ設定ツール";
 
     /** 入力サービス */
     @Autowired
@@ -45,7 +47,7 @@ public class JavadocAppenderTool extends AbstractInputTool {
      * Javadoc追加サービス
      */
     @Autowired
-    private JavadocAppenderService javadocAppenderService;
+    private JavadocTagSetterService javadocTagSetterService;
 
     /** 対象パス */
     private Path targetPath;
@@ -59,9 +61,9 @@ public class JavadocAppenderTool extends AbstractInputTool {
     public static void main(final String[] args) {
 
         @SuppressWarnings("resource")
-        final ConfigurableApplicationContext ctx = SpringApplication.run(JavadocAppenderTool.class, args);
+        final ConfigurableApplicationContext ctx = SpringApplication.run(JavadocTagSetterTool.class, args);
 
-        final JavadocAppenderTool tool = ctx.getBean(JavadocAppenderTool.class);
+        final JavadocTagSetterTool tool = ctx.getBean(JavadocTagSetterTool.class);
 
         /* 実行 */
         tool.execute();
@@ -79,9 +81,9 @@ public class JavadocAppenderTool extends AbstractInputTool {
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
      */
-    public JavadocAppenderTool() {
+    public JavadocTagSetterTool() {
 
-        super(JavadocAppenderTool.TOOL_NAME);
+        super(JavadocTagSetterTool.TOOL_NAME);
 
     }
 
@@ -95,7 +97,7 @@ public class JavadocAppenderTool extends AbstractInputTool {
 
         boolean result = true;
 
-        final KmgPfaMeasService kmgPfaMeasService = new KmgPfaMeasServiceImpl(JavadocAppenderTool.TOOL_NAME);
+        final KmgPfaMeasService kmgPfaMeasService = new KmgPfaMeasServiceImpl(JavadocTagSetterTool.TOOL_NAME);
         kmgPfaMeasService.start();
 
         try {
@@ -140,7 +142,7 @@ public class JavadocAppenderTool extends AbstractInputTool {
 
         try {
 
-            result &= this.javadocAppenderService.initialize(this.targetPath, JavadocAppenderTool.TEMPLATE_PATH);
+            result &= this.javadocTagSetterService.initialize(this.targetPath, JavadocTagSetterTool.TEMPLATE_PATH);
 
         } catch (final KmgToolException e) {
 
@@ -153,7 +155,7 @@ public class JavadocAppenderTool extends AbstractInputTool {
 
         try {
 
-            result &= this.javadocAppenderService.process();
+            result &= this.javadocTagSetterService.process();
 
         } catch (final KmgToolException e) {
 
