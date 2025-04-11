@@ -1,7 +1,7 @@
 package kmg.tool.application.logic;
 
 /**
- * Javadocタグ設定の入出力ロジックのインタフェース<br>
+ * Javadocタグ設定の入出力ロジックインタフェース<br>
  * <p>
  * Jdtsは、JavadocTagSetterの略。
  * </p>
