@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.exception.KmgFundException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.application.logic.JavadocAppenderLogic;
 import kmg.tool.application.logic.JdtsIoLogic;
 import kmg.tool.application.logic.JdtsReplLogic;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
@@ -71,18 +70,6 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
      */
     @Autowired
     private JdtsReplLogic jdtsReplLogic;
-
-    /**
-     * Javadoc追加ロジック
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    @Autowired
-    private JavadocAppenderLogic javadocAppenderLogic;
 
     /**
      * 対象ファイルパス
@@ -268,7 +255,7 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
             final String readContents = this.jdtsIoLogic.read();
 
             /* 対象のJavaファイルのJavadocを設定する */
-            final String writeContents = this.javadocAppenderLogic.replace(readContents, this.jdtsConfigsModel);
+            final String writeContents = this.jdtsReplLogic.replace(readContents, this.jdtsConfigsModel);
 
             /* 修正した内容をファイルに書き込む */
             this.jdtsIoLogic.write(writeContents);
@@ -280,7 +267,7 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
 
         // TODO KenichiroArai 2025/03/29 処理の終了ログ
         System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getJavaFilePathList().size()));
-        System.out.println(String.format("最終合計行数: %d", this.javadocAppenderLogic.getTotalRows()));
+        System.out.println(String.format("最終合計行数: %d", this.jdtsReplLogic.getTotalRows()));
 
         return result;
 
