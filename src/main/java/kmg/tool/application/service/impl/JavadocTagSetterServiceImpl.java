@@ -253,7 +253,7 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
         } while (hasNext);
 
         // TODO KenichiroArai 2025/03/29 処理の終了ログ
-        System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getJavaFilePathList().size()));
+        System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getFilePathList().size()));
         System.out.println(String.format("最終合計行数: %d", this.jdtsReplLogic.getTotalRows()));
 
         result = true;

@@ -27,7 +27,7 @@ public interface JdtsIoLogic {
     Path getCurrentFilePath();
 
     /**
-     * 対象のJavaファイルパスのリストを返す<br>
+     * ファイルパスのリストを返す<br>
      *
      * @author KenichiroArai
      *
@@ -37,9 +37,9 @@ public interface JdtsIoLogic {
      *
      * @sine 0.1.0
      *
-     * @return 対象のJavaファイルリスト
+     * @return ファイルのパス
      */
-    List<Path> getJavaFilePathList();
+    List<Path> getFilePathList();
 
     /**
      * 読込んだ内容を返す<br>

@@ -37,21 +37,17 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * @author KenichiroArai
      *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      */
     private Path targetPath;
 
     /**
-     * 対象のJavaファイルパスのリスト
+     * ファイルパスのリスト
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      */
-    private final List<Path> javaFilePathList;
+    private final List<Path> filePathList;
 
     /**
      * 現在のファイルインデックス
@@ -59,8 +55,6 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * @author KenichiroArai
      *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      */
     private int currentFileIndex;
 
@@ -80,7 +74,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      */
     public JdtsIoLogicImpl() {
 
-        this.javaFilePathList = new ArrayList<>();
+        this.filePathList = new ArrayList<>();
         this.currentFileIndex = 0;
         this.currentFilePath = null;
         this.readContent = KmgString.EMPTY;
@@ -101,22 +95,18 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     }
 
     /**
-     * 対象のJavaファイルパスのリストを返す<br>
+     * ファイルパスのリストを返す<br>
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      *
-     * @version 0.1.0
-     *
-     * @sine 0.1.0
-     *
-     * @return 対象のJavaファイルリスト
+     * @return ファイルのパス
      */
     @Override
-    public List<Path> getJavaFilePathList() {
+    public List<Path> getFilePathList() {
 
-        final List<Path> result = this.javaFilePathList;
+        final List<Path> result = this.filePathList;
         return result;
 
     }
@@ -176,7 +166,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         this.targetPath = targetPath;
 
-        this.javaFilePathList.clear();
+        this.filePathList.clear();
         this.currentFileIndex = 0;
         this.currentFilePath = null;
         this.readContent = KmgString.EMPTY;
@@ -219,11 +209,11 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         }
 
-        this.javaFilePathList.addAll(fileList);
+        this.filePathList.addAll(fileList);
 
-        if (KmgListUtils.isNotEmpty(this.javaFilePathList)) {
+        if (KmgListUtils.isNotEmpty(this.filePathList)) {
 
-            this.currentFilePath = this.javaFilePathList.get(this.currentFileIndex);
+            this.currentFilePath = this.filePathList.get(this.currentFileIndex);
 
         }
 
@@ -286,13 +276,13 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         this.currentFileIndex++;
 
-        if (this.currentFileIndex >= this.javaFilePathList.size()) {
+        if (this.currentFileIndex >= this.filePathList.size()) {
 
             return result;
 
         }
 
-        this.currentFilePath = this.javaFilePathList.get(this.currentFileIndex);
+        this.currentFilePath = this.filePathList.get(this.currentFileIndex);
 
         result = true;
         return result;
