@@ -12,10 +12,12 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.exception.KmgFundException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JdtsIoLogic;
-import kmg.tool.application.logic.JdtsReplLogic;
+import kmg.tool.application.model.jda.JdtsCodeModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
+import kmg.tool.application.model.jda.imp.JdtsCodeModelImpl;
 import kmg.tool.application.model.jda.imp.JdtsConfigsModelImpl;
 import kmg.tool.application.service.JavadocTagSetterService;
+import kmg.tool.application.service.JdtsReplService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -66,10 +68,10 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
     private JdtsIoLogic jdtsIoLogic;
 
     /**
-     * Javadocタグ設定の入出力ロジック
+     * Javadocタグ設定の入出力サービス
      */
     @Autowired
-    private JdtsReplLogic jdtsReplLogic;
+    private JdtsReplService jdtsReplService;
 
     /**
      * 対象ファイルパス
@@ -238,8 +240,17 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
             /* 内容を取得する */
             final String readContent = this.jdtsIoLogic.getReadContent();
 
+            /* Javadocタグ設定のコードモデルを作成する */
+            final JdtsCodeModel jdtsCodeModel = new JdtsCodeModelImpl(readContent);
+
+            /* コードモデルを解析する。 */
+            jdtsCodeModel.parse();
+
+            /* Javadocタグ設定の入出力サービスを初期化する */
+            this.jdtsReplService.initialize(this.jdtsConfigsModel, jdtsCodeModel);
+
             /* Javadocを置換する */
-            final String replaceContent = this.jdtsReplLogic.replace(readContent, this.jdtsConfigsModel);
+            final String replaceContent = this.jdtsReplService.replace();
 
             /* 書き込む内容を設定する */
             this.jdtsIoLogic.setWriteContent(replaceContent);
@@ -254,7 +265,7 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
 
         // TODO KenichiroArai 2025/03/29 処理の終了ログ
         System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getFilePathList().size()));
-        System.out.println(String.format("最終合計行数: %d", this.jdtsReplLogic.getTotalRows()));
+        System.out.println(String.format("最終合計行数: %d", this.jdtsReplService.getTotalRows()));
 
         result = true;
         return result;

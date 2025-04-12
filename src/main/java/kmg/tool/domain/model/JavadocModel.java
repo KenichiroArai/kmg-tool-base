@@ -31,6 +31,6 @@ public interface JavadocModel {
      *
      * @return 元のJavadoc
      */
-    String getSourceJavadoc();
+    String getSrcJavadoc();
 
 }

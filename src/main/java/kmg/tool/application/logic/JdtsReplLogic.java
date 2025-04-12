@@ -1,5 +1,6 @@
 package kmg.tool.application.logic;
 
+import kmg.tool.application.model.jda.JdtsBlockModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -19,31 +20,43 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JdtsReplLogic {
 
     /**
-     * 合計行数を返す。
-     *
-     * @return 合計行数
-     */
-    long getTotalRows();
-
-    /**
-     * 内容を置換した値を返す。<br>
+     * 置換後のJavadocブロックを作成する<br>
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      *
-     * @version 0.1.0
+     * @return 置換後のJavadocブロック
      *
-     * @param contents
-     *                         内容
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    String createReplacedJavadoc() throws KmgToolException;
+
+    /**
+     * Javadocタグ設定の構成モデルを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return Javadocタグ設定の構成モデル
+     */
+    JdtsConfigsModel getJdtsConfigsModel();
+
+    /**
+     * 初期化する
+     *
      * @param jdtsConfigsModel
      *                         Javadocタグ設定の構成モデル
+     * @param jdtsBlockModel
+     *                         Javadocタグ設定のブロックモデル
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    String replace(final String contents, JdtsConfigsModel jdtsConfigsModel) throws KmgToolException;
+    boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsBlockModel jdtsBlockModel) throws KmgToolException;
 
 }

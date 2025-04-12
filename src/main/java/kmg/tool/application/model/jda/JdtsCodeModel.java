@@ -2,6 +2,8 @@ package kmg.tool.application.model.jda;
 
 import java.util.List;
 
+import kmg.tool.infrastructure.exception.KmgToolException;
+
 /**
  * Javadocタグ設定のコードモデルインタフェース<br>
  * <p>
@@ -16,8 +18,6 @@ import java.util.List;
  */
 public interface JdtsCodeModel {
 
-    // TODO KenichiroArai 2025/04/12 実装中
-
     /**
      * Javadocタグ設定のブロックモデルリストを返す<br>
      *
@@ -28,5 +28,24 @@ public interface JdtsCodeModel {
      * @return Javadocタグ設定のブロックモデルリスト
      */
     List<JdtsBlockModel> getJdtsBlockModels();
+
+    /**
+     * オリジナルコードを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return オリジナルコード
+     */
+    String getOrgCode();
+
+    /**
+     * 解析する
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    void parse() throws KmgToolException;
 
 }

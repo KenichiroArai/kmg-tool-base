@@ -16,7 +16,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public class JavadocModelImpl implements JavadocModel {
 
     /** 元のJavadoc */
-    private final String sourceJavadoc;
+    private final String srcJavadoc;
 
     /** Javadocタグ一覧情報 */
     private final JavadocTagsModel javadocTagsModel;
@@ -24,16 +24,16 @@ public class JavadocModelImpl implements JavadocModel {
     /**
      * コンストラクタ<br>
      *
-     * @param sourceJavadoc
-     *                      Javadoc
+     * @param javadoc
+     *                Javadoc
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    public JavadocModelImpl(final String sourceJavadoc) throws KmgToolException {
+    public JavadocModelImpl(final String javadoc) throws KmgToolException {
 
-        this.sourceJavadoc = sourceJavadoc;
-        this.javadocTagsModel = new JavadocTagsModelImpl(sourceJavadoc);
+        this.srcJavadoc = javadoc;
+        this.javadocTagsModel = new JavadocTagsModelImpl(javadoc);
 
     }
 
@@ -64,9 +64,9 @@ public class JavadocModelImpl implements JavadocModel {
      * @return 元のJavadoc
      */
     @Override
-    public String getSourceJavadoc() {
+    public String getSrcJavadoc() {
 
-        final String result = this.sourceJavadoc;
+        final String result = this.srcJavadoc;
         return result;
 
     }
