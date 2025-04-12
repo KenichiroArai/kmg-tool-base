@@ -54,7 +54,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     private final List<Path> javaFilePathList;
 
     /**
-     * 現在のJavaファイルインデックス
+     * 現在のファイルインデックス
      *
      * @author KenichiroArai
      *
@@ -62,17 +62,18 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *
      * @version 0.1.0
      */
-    private int currentJavaFileIndex;
+    private int currentFileIndex;
 
     /**
-     * 現在のJavaファイルパス
+     * 現在のファイルパス
      */
-    private Path currentJavaFilePath;
+    private Path currentFilePath;
 
-    // TODO KenichiroARai 2025/04/11 使用するか考える。
+    /** 読込んだ内容 */
+    private String readContent;
 
-    /** 現在の読込んだ内容 */
-    private String currentReadContent;
+    /** 書き込む内容 */
+    private String writeContent;
 
     /**
      * デフォルトコンストラクタ
@@ -80,38 +81,21 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     public JdtsIoLogicImpl() {
 
         this.javaFilePathList = new ArrayList<>();
-        this.currentJavaFileIndex = 0;
-        this.currentJavaFilePath = null;
-        this.currentReadContent = KmgString.EMPTY;
+        this.currentFileIndex = 0;
+        this.currentFilePath = null;
+        this.readContent = KmgString.EMPTY;
 
     }
 
     /**
-     * 現在のJavaファイルパスを返す。
+     * 現在のファイルパスを返す。
      *
-     * @return 現在のJavaファイルパス
+     * @return 現在のファイルパス
      */
     @Override
-    public Path getCurrentJavaFilePath() {
+    public Path getCurrentFilePath() {
 
-        final Path result = this.currentJavaFilePath;
-        return result;
-
-    }
-
-    /**
-     * 現在の読込んだ内容を返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return 現在の読込んだ内容
-     */
-    @Override
-    public String getCurrentReadContent() {
-
-        final String result = this.currentReadContent;
+        final Path result = this.currentFilePath;
         return result;
 
     }
@@ -133,6 +117,23 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     public List<Path> getJavaFilePathList() {
 
         final List<Path> result = this.javaFilePathList;
+        return result;
+
+    }
+
+    /**
+     * 読込んだ内容を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 読込んだ内容
+     */
+    @Override
+    public String getReadContent() {
+
+        final String result = this.readContent;
         return result;
 
     }
@@ -176,9 +177,9 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         this.targetPath = targetPath;
 
         this.javaFilePathList.clear();
-        this.currentJavaFileIndex = 0;
-        this.currentJavaFilePath = null;
-        this.currentReadContent = KmgString.EMPTY;
+        this.currentFileIndex = 0;
+        this.currentFilePath = null;
+        this.readContent = KmgString.EMPTY;
 
         result = true;
         return result;
@@ -222,7 +223,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         if (KmgListUtils.isNotEmpty(this.javaFilePathList)) {
 
-            this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
+            this.currentFilePath = this.javaFilePathList.get(this.currentFileIndex);
 
         }
 
@@ -232,37 +233,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     }
 
     /**
-     * 次のJavaファイルに進む。
-     *
-     * @return true：ファイルあり、false:ファイルなし
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    @Override
-    public boolean nextJavaFile() throws KmgToolException {
-
-        boolean result = false;
-
-        this.currentJavaFileIndex++;
-
-        if (this.currentJavaFileIndex >= this.javaFilePathList.size()) {
-
-            return result;
-
-        }
-
-        this.currentJavaFilePath = this.javaFilePathList.get(this.currentJavaFileIndex);
-
-        result = true;
-        return result;
-
-    }
-
-    /**
-     * 内容を読込む。
-     * <p>
-     * 現在のファイルを読み込む。
+     * 内容を読み込む。
      * </p>
      *
      * @return true：データあり、false：データなし
@@ -271,15 +242,16 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *                          KMGツール例外
      */
     @Override
-    public boolean read() throws KmgToolException {
+    public boolean loadContent() throws KmgToolException {
 
         boolean result = false;
 
         try {
 
-            this.currentReadContent = Files.readString(this.currentJavaFilePath);
+            this.readContent = Files.readString(this.currentFilePath);
 
-        } catch (final IOException e) {
+        } catch (
+            final IOException e) {
 
             // TODO KenichiroArai 2025/03/29 メッセージ
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
@@ -288,7 +260,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         }
 
-        if (KmgString.isBlank(this.currentReadContent)) {
+        if (KmgString.isBlank(this.readContent)) {
 
             return result;
 
@@ -300,10 +272,48 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     }
 
     /**
-     * 内容を書き込む
+     * 次のファイルに進む。
      *
-     * @param contents
-     *                 内容
+     * @return true：ファイルあり、false:ファイルなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @Override
+    public boolean nextFile() throws KmgToolException {
+
+        boolean result = false;
+
+        this.currentFileIndex++;
+
+        if (this.currentFileIndex >= this.javaFilePathList.size()) {
+
+            return result;
+
+        }
+
+        this.currentFilePath = this.javaFilePathList.get(this.currentFileIndex);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 書き込む内容を設定する。
+     *
+     * @param content
+     *                内容
+     */
+    @Override
+    public void setWriteContent(final String content) {
+
+        this.writeContent = content;
+
+    }
+
+    /**
+     * 内容を書き込む
      *
      * @return true：成功、false：失敗
      *
@@ -311,13 +321,13 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *                          KMGツール例外
      */
     @Override
-    public boolean write(final String contents) throws KmgToolException {
+    public boolean writeContent() throws KmgToolException {
 
         boolean result = false;
 
         try {
 
-            Files.writeString(this.currentJavaFilePath, contents);
+            Files.writeString(this.currentFilePath, this.writeContent);
 
         } catch (final IOException e) {
 

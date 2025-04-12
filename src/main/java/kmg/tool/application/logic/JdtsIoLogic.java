@@ -20,22 +20,11 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JdtsIoLogic {
 
     /**
-     * 現在のJavaファイルパスを返す。
+     * 現在のファイルパスを返す。
      *
-     * @return 現在のJavaファイルパス
+     * @return 現在のファイルパス
      */
-    Path getCurrentJavaFilePath();
-
-    /**
-     * 現在の読込んだ内容を返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return 現在の読込んだ内容
-     */
-    String getCurrentReadContent();
+    Path getCurrentFilePath();
 
     /**
      * 対象のJavaファイルパスのリストを返す<br>
@@ -51,6 +40,17 @@ public interface JdtsIoLogic {
      * @return 対象のJavaファイルリスト
      */
     List<Path> getJavaFilePathList();
+
+    /**
+     * 読込んだ内容を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 読込んだ内容
+     */
+    String getReadContent();
 
     /**
      * 対象ファイルパス
@@ -86,19 +86,7 @@ public interface JdtsIoLogic {
     boolean load() throws KmgToolException;
 
     /**
-     * 次のJavaファイルに進む。
-     *
-     * @return true：ファイルあり、false:ファイルなし
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    boolean nextJavaFile() throws KmgToolException;
-
-    /**
-     * 内容を読込む。
-     * <p>
-     * 現在のファイルを読み込む。
+     * 内容を読み込む。
      * </p>
      *
      * @return true：データあり、false：データなし
@@ -106,19 +94,34 @@ public interface JdtsIoLogic {
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean read() throws KmgToolException;
+    boolean loadContent() throws KmgToolException;
+
+    /**
+     * 次のファイルに進む。
+     *
+     * @return true：ファイルあり、false:ファイルなし
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    boolean nextFile() throws KmgToolException;
+
+    /**
+     * 書き込む内容を設定する。
+     *
+     * @param content
+     *                内容
+     */
+    void setWriteContent(String content);
 
     /**
      * 内容を書き込む
-     *
-     * @param contents
-     *                 内容
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean write(String contents) throws KmgToolException;
+    boolean writeContent() throws KmgToolException;
 
 }

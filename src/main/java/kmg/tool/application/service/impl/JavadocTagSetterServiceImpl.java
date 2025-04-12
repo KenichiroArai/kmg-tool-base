@@ -217,41 +217,46 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
     @Override
     public boolean process() throws KmgToolException {
 
-        final boolean result = false;
+        boolean result = false;
 
         // TODO KenichiroArai 2025/03/29 処理の開始ログ
 
         /* Javadocタグ設定の構成モデルを作成 */
         this.createJdtsConfigsModel();
 
-        /* 対象ファイルから対象Javaファイルのリストをロードする */
+        /* Javaファイルのリストをロードする */
         this.jdtsIoLogic.load();
 
-        boolean nextFlg;
+        /* 次のJavaファイルがあるまでJavadocを置換する */
+        boolean hasNext;
 
         do {
 
-            /* 現在のファイルを読み込む */
-            this.jdtsIoLogic.read();
+            /* 内容を読み込む */
+            this.jdtsIoLogic.loadContent();
 
             /* 内容を取得する */
-            final String readContents = this.jdtsIoLogic.getCurrentReadContent();
+            final String readContent = this.jdtsIoLogic.getReadContent();
 
-            /* 対象のJavaファイルのJavadocを設定する */
-            final String writeContents = this.jdtsReplLogic.replace(readContents, this.jdtsConfigsModel);
+            /* Javadocを置換する */
+            final String replaceContent = this.jdtsReplLogic.replace(readContent, this.jdtsConfigsModel);
 
-            /* 修正した内容をファイルに書き込む */
-            this.jdtsIoLogic.write(writeContents);
+            /* 書き込む内容を設定する */
+            this.jdtsIoLogic.setWriteContent(replaceContent);
 
-            /* 次の対象のJavaファイルに進む */
-            nextFlg = this.jdtsIoLogic.nextJavaFile();
+            /* 内容をファイルに書き込む */
+            this.jdtsIoLogic.writeContent();
 
-        } while (nextFlg);
+            /* 次のファイルに進む */
+            hasNext = this.jdtsIoLogic.nextFile();
+
+        } while (hasNext);
 
         // TODO KenichiroArai 2025/03/29 処理の終了ログ
         System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getJavaFilePathList().size()));
         System.out.println(String.format("最終合計行数: %d", this.jdtsReplLogic.getTotalRows()));
 
+        result = true;
         return result;
 
     }
