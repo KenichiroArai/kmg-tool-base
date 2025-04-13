@@ -3,7 +3,7 @@ package kmg.tool.domain.model;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import kmg.tool.application.model.jda.JdaTagConfigModel;
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 
 /**
  * Javadocタグ一覧情報インターフェース<br>
@@ -37,6 +37,20 @@ public interface JavadocTagsModel {
     Pattern COMPILED_TAG_PATTERN = Pattern.compile(JavadocTagsModel.TAG_PATTERN);
 
     /**
+     * 指定されたタグに対応する既存のJavadocタグを検索する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param tag
+     *            Javadocタグの種類
+     *
+     * @return 既存のJavadocタグモデル。存在しない場合はnull
+     */
+    JavadocTagModel findByTag(KmgJavadocTagTypes tag);
+
+    /**
      * Javadocタグモデルのリストを返す<br>
      *
      * @author KenichiroArai
@@ -46,18 +60,4 @@ public interface JavadocTagsModel {
      * @return Javadocタグモデルのリスト
      */
     List<JavadocTagModel> getJavadocTagModelList();
-
-    /**
-     * 指定されたJavadocタグ設定に対応する既存のJavadocタグを検索する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @param jdaTagConfigModel
-     *                          Javadocタグ設定モデル
-     *
-     * @return 既存のJavadocタグモデル。存在しない場合はnull
-     */
-    JavadocTagModel findByJdaTagConfig(JdaTagConfigModel jdaTagConfigModel);
 }

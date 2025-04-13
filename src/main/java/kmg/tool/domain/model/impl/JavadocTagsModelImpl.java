@@ -98,25 +98,25 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
     }
 
     /**
-     * 指定されたJavadocタグ設定に対応する既存のJavadocタグを検索する<br>
+     * 指定されたタグに対応する既存のJavadocタグを検索する<br>
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      *
-     * @param jdaTagConfigModel
-     *                          Javadocタグ設定モデル
+     * @param tag
+     *            Javadocタグの種類
      *
      * @return 既存のJavadocタグモデル。存在しない場合はnull
      */
     @Override
-    public JavadocTagModel findByJdaTagConfig(final JdaTagConfigModel jdaTagConfigModel) {
+    public JavadocTagModel findByTag(final KmgJavadocTagTypes tag) {
 
         /* 戻り値 */
         JavadocTagModel result = null;
 
         /* 引数チェック */
-        if (jdaTagConfigModel == null) {
+        if (tag == null) {
 
             return result;
 
@@ -125,7 +125,7 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
         /* タグの検索 */
         for (final JavadocTagModel javadocTagModel : this.javadocTagModelList) {
 
-            if (javadocTagModel.getTag() != jdaTagConfigModel.getTag()) {
+            if (javadocTagModel.getTag() != tag) {
 
                 continue;
 

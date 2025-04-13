@@ -187,7 +187,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
             /* 元のJavadocにJavadoc追加のタグ設定のタグがあるか取得 */
             final JavadocTagModel existingJavadocTagModel
-                = this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel().findByJdaTagConfig(jdaTagConfigModel);
+                = this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel().findByTag(jdaTagConfigModel.getTag());
 
             if (existingJavadocTagModel == null) {
 
