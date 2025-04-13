@@ -12,10 +12,12 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.exception.KmgFundException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.JdtsIoLogic;
-import kmg.tool.application.logic.JdtsReplLogic;
+import kmg.tool.application.model.jda.JdtsCodeModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
+import kmg.tool.application.model.jda.imp.JdtsCodeModelImpl;
 import kmg.tool.application.model.jda.imp.JdtsConfigsModelImpl;
 import kmg.tool.application.service.JavadocTagSetterService;
+import kmg.tool.application.service.JdtsReplService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -66,10 +68,10 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
     private JdtsIoLogic jdtsIoLogic;
 
     /**
-     * Javadocタグ設定の入出力ロジック
+     * Javadocタグ設定の入出力サービス
      */
     @Autowired
-    private JdtsReplLogic jdtsReplLogic;
+    private JdtsReplService jdtsReplService;
 
     /**
      * 対象ファイルパス
@@ -217,11 +219,83 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
     @Override
     public boolean process() throws KmgToolException {
 
-        final boolean result = false;
+        boolean result = false;
 
         // TODO KenichiroArai 2025/03/29 処理の開始ログ
 
-        /* YAMLファイルを読み込み、Javadocタグ設定の構成モデルを作成 */
+        /* Javadocタグ設定の構成モデルを作成 */
+        this.createJdtsConfigsModel();
+
+        /* Javaファイルのリストをロードする */
+        this.jdtsIoLogic.load();
+
+        /* 次のJavaファイルがあるまでJavadocを置換する */
+        boolean hasNext;
+
+        do {
+
+            /* 内容を読み込む */
+            this.jdtsIoLogic.loadContent();
+
+            /* 内容を取得する */
+            final String readContent = this.jdtsIoLogic.getReadContent();
+
+            /* Javadocタグ設定のコードモデルを作成する */
+            final JdtsCodeModel jdtsCodeModel = new JdtsCodeModelImpl(readContent);
+
+            /* コードモデルを解析する。 */
+            jdtsCodeModel.parse();
+
+            /* Javadocタグ設定の入出力サービスを初期化する */
+            this.jdtsReplService.initialize(this.jdtsConfigsModel, jdtsCodeModel);
+
+            /* Javadocを置換する */
+            this.jdtsReplService.replace();
+
+            /* 置換後の内容を取得する */
+            final String replaceContent = this.jdtsReplService.getReplaceCode();
+
+            /* 書き込む内容を設定する */
+            this.jdtsIoLogic.setWriteContent(replaceContent);
+
+            /* 内容をファイルに書き込む */
+            this.jdtsIoLogic.writeContent();
+
+            /* 次のファイルに進む */
+            hasNext = this.jdtsIoLogic.nextFile();
+
+        } while (hasNext);
+
+        // TODO KenichiroArai 2025/03/29 処理の終了ログ
+        System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getFilePathList().size()));
+        System.out.println(String.format("最終合計行数: %d", this.jdtsReplService.getTotalRows()));
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * Javadocタグ設定の構成モデルを作成する。
+     * <p>
+     * YAMLファイルを読み込み、Javadocタグ設定の構成モデルを作成する。
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private boolean createJdtsConfigsModel() throws KmgToolException {
+
+        final boolean result;
+
         Map<String, Object> yamlData;
 
         try {
@@ -236,39 +310,10 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
         }
+
         this.jdtsConfigsModel = new JdtsConfigsModelImpl(yamlData);
 
-        // TODO KenichiroArai 2025/03/29 ログ
-        System.out.println(this.jdtsConfigsModel.toString());
-
-        /* Javadoc追加ロジックの初期化 */
-        this.jdtsIoLogic.initialize(this.targetPath);
-
-        /* 対象のJavaファイルをロードする */
-        this.jdtsIoLogic.loadJavaFileList();
-
-        boolean nextFlg;
-
-        do {
-
-            // TODO KenichiroArai 2025/04/11 未実装
-            final String readContents = this.jdtsIoLogic.read();
-
-            /* 対象のJavaファイルのJavadocを設定する */
-            final String writeContents = this.jdtsReplLogic.replace(readContents, this.jdtsConfigsModel);
-
-            /* 修正した内容をファイルに書き込む */
-            this.jdtsIoLogic.write(writeContents);
-
-            /* 次の対象のJavaファイルに進む */
-            nextFlg = this.jdtsIoLogic.nextJavaFile();
-
-        } while (nextFlg);
-
-        // TODO KenichiroArai 2025/03/29 処理の終了ログ
-        System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getJavaFilePathList().size()));
-        System.out.println(String.format("最終合計行数: %d", this.jdtsReplLogic.getTotalRows()));
-
+        result = true;
         return result;
 
     }

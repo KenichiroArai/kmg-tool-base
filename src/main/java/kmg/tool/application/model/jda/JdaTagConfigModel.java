@@ -16,6 +16,7 @@ import kmg.tool.application.types.JdaOverwriteTypes;
  */
 public interface JdaTagConfigModel {
 
+    // TODO KenichiroArai 2025/04/13 クラス名とJavadocを変更する
     /**
      * タグの挿入位置を返す<br>
      *
