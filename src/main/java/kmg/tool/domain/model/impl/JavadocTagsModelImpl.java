@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.JavadocTagsModel;
 import kmg.tool.domain.types.JavadocGroupIndexTypes;
@@ -112,7 +111,6 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
     @Override
     public JavadocTagModel findByTag(final KmgJavadocTagTypes tag) {
 
-        /* 戻り値 */
         JavadocTagModel result = null;
 
         /* 引数チェック */
@@ -123,18 +121,7 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
         }
 
         /* タグの検索 */
-        for (final JavadocTagModel javadocTagModel : this.javadocTagModelList) {
-
-            if (javadocTagModel.getTag() != tag) {
-
-                continue;
-
-            }
-
-            result = javadocTagModel;
-            return result;
-
-        }
+        result = this.javadocTagModelList.stream().filter(model -> model.getTag() == tag).findFirst().orElse(null);
 
         return result;
 
