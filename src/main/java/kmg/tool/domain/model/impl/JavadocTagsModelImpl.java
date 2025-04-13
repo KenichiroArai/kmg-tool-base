@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
+import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.JavadocTagsModel;
 import kmg.tool.domain.types.JavadocGroupIndexTypes;
@@ -97,6 +98,49 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
     }
 
     /**
+     * 指定されたJavadocタグ設定に対応する既存のJavadocタグを検索する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param jdaTagConfigModel
+     *                          Javadocタグ設定モデル
+     *
+     * @return 既存のJavadocタグモデル。存在しない場合はnull
+     */
+    @Override
+    public JavadocTagModel findByJdaTagConfig(final JdaTagConfigModel jdaTagConfigModel) {
+
+        /* 戻り値 */
+        JavadocTagModel result = null;
+
+        /* 引数チェック */
+        if (jdaTagConfigModel == null) {
+
+            return result;
+
+        }
+
+        /* タグの検索 */
+        for (final JavadocTagModel javadocTagModel : this.javadocTagModelList) {
+
+            if (javadocTagModel.getTag() != jdaTagConfigModel.getTag()) {
+
+                continue;
+
+            }
+
+            result = javadocTagModel;
+            return result;
+
+        }
+
+        return result;
+
+    }
+
+    /**
      * Javadocタグモデルのリストを返す<br>
      *
      * @return Javadocタグモデルのリスト
@@ -108,4 +152,5 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
         return result;
 
     }
+
 }

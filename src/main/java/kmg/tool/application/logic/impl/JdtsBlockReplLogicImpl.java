@@ -186,7 +186,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         for (final JdaTagConfigModel jdaTagConfigModel : this.jdtsConfigsModel.getJdaTagConfigModels()) {
 
             /* 元のJavadocにJavadoc追加のタグ設定のタグがあるか取得 */
-            final JavadocTagModel existingJavadocTagModel = this.findExistingJavadocTag(jdaTagConfigModel);
+            final JavadocTagModel existingJavadocTagModel
+                = this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel().findByJdaTagConfig(jdaTagConfigModel);
 
             if (existingJavadocTagModel == null) {
 
@@ -217,40 +218,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         }
 
         result = true;
-        return result;
-
-    }
-
-    /**
-     * 既存のJavadocタグを検索する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @param jdaTagConfigModel
-     *                          Javadoc追加のタグ設定モデル
-     *
-     * @return 既存のJavadocタグモデル。存在しない場合はnull
-     */
-    private JavadocTagModel findExistingJavadocTag(final JdaTagConfigModel jdaTagConfigModel) {
-
-        JavadocTagModel result = null;
-
-        for (final JavadocTagModel srcJavadocTagModel : this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel()
-            .getJavadocTagModelList()) {
-
-            if (srcJavadocTagModel.getTag() != jdaTagConfigModel.getTag()) {
-
-                continue;
-
-            }
-
-            result = srcJavadocTagModel;
-            return result;
-
-        }
-
         return result;
 
     }
