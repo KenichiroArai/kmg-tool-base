@@ -36,125 +36,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     /** 置換後のJavadocブロック */
     private String replacedJavadocBlock;
 
-    /**
-     * 最終的なJavadocを構築する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @param editingJavadoc
-     *                        編集中のJavadoc
-     * @param headTagsBuilder
-     *                        先頭タグビルダー
-     * @param tailTagsBuilder
-     *                        末尾タグビルダー
-     *
-     * @return 構築されたJavadoc
-     */
-    private static String buildFinalJavadoc(final String editingJavadoc, final StringBuilder headTagsBuilder,
-        final StringBuilder tailTagsBuilder) {
+    /** 先頭タグ */
+    private final StringBuilder headTags;
 
-        String result;
-
-        final StringBuilder finalJavadocBuilder = new StringBuilder(editingJavadoc);
-
-        /* 先頭のタグを追加 */
-        if (headTagsBuilder.length() > 0) {
-
-            // TODO KenichiroArai 2025/04/09 ハードコード
-            final int firstAtPos = finalJavadocBuilder.indexOf("* @");
-
-            if (firstAtPos > -1) {
-
-                finalJavadocBuilder.insert(firstAtPos - 1, headTagsBuilder.toString());
-
-            } else {
-
-                finalJavadocBuilder.append(headTagsBuilder);
-
-            }
-
-        }
-
-        /* 末尾のタグを追加 */
-        if (tailTagsBuilder.length() > 0) {
-
-            finalJavadocBuilder.append(tailTagsBuilder);
-
-        }
-
-        result = finalJavadocBuilder.toString();
-        return result;
-
-    }
+    /** 末尾タグ */
+    private final StringBuilder tailTags;
 
     /**
-     * 既存のタグを更新する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @param editingJavadoc
-     *                                編集中のJavadoc
-     * @param jdaTagConfigModel
-     *                                Javadocタグ設定モデル
-     * @param existingJavadocTagModel
-     *                                既存のJavadocタグモデル
-     *
-     * @return 更新後のJavadoc
+     * デフォルトコンストラクタ
      */
-    private static String updateExistingTag(final String editingJavadoc, final JdaTagConfigModel jdaTagConfigModel,
-        final JavadocTagModel existingJavadocTagModel) {
+    public JdtsBlockReplLogicImpl() {
 
-        String result = null;
-
-        switch (jdaTagConfigModel.getOverwrite()) {
-
-            case NONE:
-                /* 指定無し */
-            case NEVER:
-                /* 上書きしない */
-
-                result = editingJavadoc;
-                return result;
-
-            case ALWAYS:
-                /* 常に上書き */
-
-                break;
-
-            case IF_LOWER:
-                /* 既存のバージョンより小さい場合のみ上書き */
-
-                if (!jdaTagConfigModel.getTag().isVersionValue()) {
-
-                    break;
-
-                }
-
-                final ComparableVersion srcVer = new ComparableVersion(existingJavadocTagModel.getTag().get());
-                final ComparableVersion destVer = new ComparableVersion(jdaTagConfigModel.getTagValue());
-
-                if (srcVer.compareTo(destVer) <= 0) {
-
-                    result = editingJavadoc;
-                    return result;
-
-                }
-
-                break;
-
-        }
-
-        // TODO KenichiroArai 2025/04/09 ハードコード
-        final String newTag = String.format(" * %s %s %s", jdaTagConfigModel.getTag().getKey(),
-            jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
-
-        result = editingJavadoc.replace(existingJavadocTagModel.getTargetStr(), newTag);
-
-        return result;
+        this.headTags = new StringBuilder();
+        this.tailTags = new StringBuilder();
 
     }
 
@@ -176,16 +70,11 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result;
 
-        /* 準備 */
-        final StringBuilder headTagsBuilder = new StringBuilder();
-        final StringBuilder tailTagsBuilder = new StringBuilder();
-
         /* Javadoc追加のタグ設定を基準に、Javadocを更新 */
-        final String processedJavadoc = this.processJavadocTags(headTagsBuilder, tailTagsBuilder);
+        this.processJavadocTags();
 
         /* 最終的な結果を組み立てる */
-        this.replacedJavadocBlock
-            = JdtsBlockReplLogicImpl.buildFinalJavadoc(processedJavadoc, headTagsBuilder, tailTagsBuilder);
+        this.buildFinalJavadoc();
 
         result = true;
         return result;
@@ -249,6 +138,56 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         this.jdtsConfigsModel = jdtsConfigsModel;
         this.jdtsBlockModel = jdtsBlockModel;
 
+        this.headTags.setLength(0);
+        this.tailTags.setLength(0);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 最終的なJavadocを構築する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：成功、false：失敗
+     */
+    private boolean buildFinalJavadoc() {
+
+        boolean result;
+
+        final StringBuilder finalJavadocBuilder = new StringBuilder(this.replacedJavadocBlock);
+
+        /* 先頭のタグを追加 */
+        if (this.headTags.length() > 0) {
+
+            // TODO KenichiroArai 2025/04/09 ハードコード
+            final int firstAtPos = finalJavadocBuilder.indexOf("* @");
+
+            if (firstAtPos > -1) {
+
+                finalJavadocBuilder.insert(firstAtPos - 1, this.headTags.toString());
+
+            } else {
+
+                finalJavadocBuilder.append(this.headTags);
+
+            }
+
+        }
+
+        /* 末尾のタグを追加 */
+        if (this.tailTags.length() > 0) {
+
+            finalJavadocBuilder.append(this.tailTags);
+
+        }
+
+        this.replacedJavadocBlock = finalJavadocBuilder.toString();
+
         result = true;
         return result;
 
@@ -295,19 +234,14 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      *
      * @since 0.1.0
      *
-     * @param headTagsBuilder
-     *                        先頭タグビルダー
-     * @param tailTagsBuilder
-     *                        末尾タグビルダー
-     *
-     * @return 処理後のJavadoc
+     * @return true：成功、false：失敗
      */
-    private String processJavadocTags(final StringBuilder headTagsBuilder, final StringBuilder tailTagsBuilder) {
+    private boolean processJavadocTags() {
 
-        String result = null;
+        boolean result = false;
 
         // 編集中のJavadoc
-        String editingJavadoc = this.jdtsBlockModel.getJavadocModel().getSrcJavadoc();
+        this.replacedJavadocBlock = this.jdtsBlockModel.getJavadocModel().getSrcJavadoc();
 
         /* Javadoc追加のタグ設定を基準に、Javadocを更新 */
         for (final JdaTagConfigModel jdaTagConfigModel : this.jdtsConfigsModel.getJdaTagConfigModels()) {
@@ -318,7 +252,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
             if (existingJavadocTagModel == null) {
 
                 // タグが存在しない場合
-                this.processNewTag(jdaTagConfigModel, headTagsBuilder, tailTagsBuilder);
+                this.processNewTag(jdaTagConfigModel);
                 continue;
 
             }
@@ -331,19 +265,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
                 // 誤配置のタグを削除する
 
-                editingJavadoc = editingJavadoc.replace(existingJavadocTagModel.getTargetStr(), KmgString.EMPTY);
+                this.replacedJavadocBlock
+                    = this.replacedJavadocBlock.replace(existingJavadocTagModel.getTargetStr(), KmgString.EMPTY);
 
                 continue;
 
             }
 
             /* タグの更新処理 */
-            editingJavadoc
-                = JdtsBlockReplLogicImpl.updateExistingTag(editingJavadoc, jdaTagConfigModel, existingJavadocTagModel);
+            this.updateExistingTag(jdaTagConfigModel, existingJavadocTagModel);
 
         }
 
-        result = editingJavadoc;
+        result = true;
         return result;
 
     }
@@ -357,14 +291,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      *                          Javadoc追加のタグ設定モデル
      *
      * @since 0.1.0
-     *
-     * @param headTagsBuilder
-     *                        先頭タグビルダー
-     * @param tailTagsBuilder
-     *                        末尾タグビルダー
      */
-    private void processNewTag(final JdaTagConfigModel jdaTagConfigModel, final StringBuilder headTagsBuilder,
-        final StringBuilder tailTagsBuilder) {
+    private void processNewTag(final JdaTagConfigModel jdaTagConfigModel) {
 
         // タグの配置がJava区分に一致しないか
         if (!jdaTagConfigModel.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification())) {
@@ -388,7 +316,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
             case BEGINNING:
                 /* ファイルの先頭 */
 
-                headTagsBuilder.append(newTag);
+                this.headTags.append(newTag);
 
                 break;
 
@@ -399,11 +327,69 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
             case PRESERVE:
                 /* 現在の位置を維持 */
 
-                tailTagsBuilder.append(newTag);
+                this.tailTags.append(newTag);
 
                 break;
 
         }
+
+    }
+
+    /**
+     * 既存のタグを更新する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param jdaTagConfigModel
+     *                                Javadocタグ設定モデル
+     * @param existingJavadocTagModel
+     *                                既存のJavadocタグモデル
+     */
+    private void updateExistingTag(final JdaTagConfigModel jdaTagConfigModel,
+        final JavadocTagModel existingJavadocTagModel) {
+
+        switch (jdaTagConfigModel.getOverwrite()) {
+
+            case NONE:
+                /* 指定無し */
+            case NEVER:
+                /* 上書きしない */
+
+                return;
+
+            case ALWAYS:
+                /* 常に上書き */
+                break;
+
+            case IF_LOWER:
+                /* 既存のバージョンより小さい場合のみ上書き */
+
+                if (!jdaTagConfigModel.getTag().isVersionValue()) {
+
+                    break;
+
+                }
+
+                final ComparableVersion srcVer = new ComparableVersion(existingJavadocTagModel.getTag().get());
+                final ComparableVersion destVer = new ComparableVersion(jdaTagConfigModel.getTagValue());
+
+                if (srcVer.compareTo(destVer) <= 0) {
+
+                    return;
+
+                }
+
+                break;
+
+        }
+
+        // TODO KenichiroArai 2025/04/09 ハードコード
+        final String newTag = String.format(" * %s %s %s", jdaTagConfigModel.getTag().getKey(),
+            jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
+
+        this.replacedJavadocBlock = this.replacedJavadocBlock.replace(existingJavadocTagModel.getTargetStr(), newTag);
 
     }
 }
