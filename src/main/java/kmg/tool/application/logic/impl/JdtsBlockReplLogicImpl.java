@@ -52,29 +52,48 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
     }
 
-    // TODO KenichiroArai 2025/04/13 メソッド名を見直す
     /**
-     * 置換後のJavadocブロックを作成する<br>
+     * 最終的なJavadocを構築する<br>
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      *
      * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
      */
     @Override
-    public boolean createReplacedJavadoc() throws KmgToolException {
+    public boolean buildFinalJavadoc() {
 
         boolean result;
 
-        /* Javadoc追加のタグ設定を基準に、Javadocを更新 */
-        this.processJavadocTags();
+        final StringBuilder finalJavadocBuilder = new StringBuilder(this.replacedJavadocBlock);
 
-        /* 最終的な結果を組み立てる */
-        this.buildFinalJavadoc();
+        /* 先頭のタグを追加 */
+        if (this.headTags.length() > 0) {
+
+            // TODO KenichiroArai 2025/04/09 ハードコード
+            final int firstAtPos = finalJavadocBuilder.indexOf("* @");
+
+            if (firstAtPos > -1) {
+
+                finalJavadocBuilder.insert(firstAtPos - 1, this.headTags.toString());
+
+            } else {
+
+                finalJavadocBuilder.append(this.headTags);
+
+            }
+
+        }
+
+        /* 末尾のタグを追加 */
+        if (this.tailTags.length() > 0) {
+
+            finalJavadocBuilder.append(this.tailTags);
+
+        }
+
+        this.replacedJavadocBlock = finalJavadocBuilder.toString();
 
         result = true;
         return result;
@@ -147,87 +166,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * 最終的なJavadocを構築する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：成功、false：失敗
-     */
-    private boolean buildFinalJavadoc() {
-
-        boolean result;
-
-        final StringBuilder finalJavadocBuilder = new StringBuilder(this.replacedJavadocBlock);
-
-        /* 先頭のタグを追加 */
-        if (this.headTags.length() > 0) {
-
-            // TODO KenichiroArai 2025/04/09 ハードコード
-            final int firstAtPos = finalJavadocBuilder.indexOf("* @");
-
-            if (firstAtPos > -1) {
-
-                finalJavadocBuilder.insert(firstAtPos - 1, this.headTags.toString());
-
-            } else {
-
-                finalJavadocBuilder.append(this.headTags);
-
-            }
-
-        }
-
-        /* 末尾のタグを追加 */
-        if (this.tailTags.length() > 0) {
-
-            finalJavadocBuilder.append(this.tailTags);
-
-        }
-
-        this.replacedJavadocBlock = finalJavadocBuilder.toString();
-
-        result = true;
-        return result;
-
-    }
-
-    /**
-     * 既存のJavadocタグを検索する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @param jdaTagConfigModel
-     *                          Javadoc追加のタグ設定モデル
-     *
-     * @return 既存のJavadocタグモデル。存在しない場合はnull
-     */
-    private JavadocTagModel findExistingJavadocTag(final JdaTagConfigModel jdaTagConfigModel) {
-
-        JavadocTagModel result = null;
-
-        for (final JavadocTagModel srcJavadocTagModel : this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel()
-            .getJavadocTagModelList()) {
-
-            if (srcJavadocTagModel.getTag() != jdaTagConfigModel.getTag()) {
-
-                continue;
-
-            }
-
-            result = srcJavadocTagModel;
-            return result;
-
-        }
-
-        return result;
-
-    }
-
-    /**
      * Javadocタグを処理する<br>
      *
      * @author KenichiroArai
@@ -236,7 +174,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      *
      * @return true：成功、false：失敗
      */
-    private boolean processJavadocTags() {
+    @Override
+    public boolean processJavadocTags() {
 
         boolean result = false;
 
@@ -278,6 +217,40 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         }
 
         result = true;
+        return result;
+
+    }
+
+    /**
+     * 既存のJavadocタグを検索する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param jdaTagConfigModel
+     *                          Javadoc追加のタグ設定モデル
+     *
+     * @return 既存のJavadocタグモデル。存在しない場合はnull
+     */
+    private JavadocTagModel findExistingJavadocTag(final JdaTagConfigModel jdaTagConfigModel) {
+
+        JavadocTagModel result = null;
+
+        for (final JavadocTagModel srcJavadocTagModel : this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel()
+            .getJavadocTagModelList()) {
+
+            if (srcJavadocTagModel.getTag() != jdaTagConfigModel.getTag()) {
+
+                continue;
+
+            }
+
+            result = srcJavadocTagModel;
+            return result;
+
+        }
+
         return result;
 
     }

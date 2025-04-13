@@ -170,8 +170,11 @@ public class JdtsReplServiceImpl implements JdtsReplService {
             /* Javadocタグ設定のブロック置換ロジックの初期化 */
             this.jdtsBlockReplLogic.initialize(this.jdtsConfigsModel, jdtsBlockModel);
 
-            /* Javadocブロックが設定に基づいて置換する */
-            this.jdtsBlockReplLogic.createReplacedJavadoc();
+            /* Javadocブロックが設定に基づいてJavadocを更新する */
+            this.jdtsBlockReplLogic.processJavadocTags();
+
+            /* Javadocの最終的な結果を組み立てる */
+            this.jdtsBlockReplLogic.buildFinalJavadoc();
 
             /* 置換後のJavadocブロックを取得する */
             final String replaceJavadocBlock = this.jdtsBlockReplLogic.getReplacedJavadocBlock();

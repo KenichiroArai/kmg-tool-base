@@ -20,18 +20,15 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JdtsBlockReplLogic {
 
     /**
-     * 置換後のJavadocブロックを作成する<br>
+     * 最終的なJavadocを構築する<br>
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      *
      * @return true：成功、false：失敗
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
      */
-    boolean createReplacedJavadoc() throws KmgToolException;
+    boolean buildFinalJavadoc();
 
     /**
      * Javadocタグ設定の構成モデルを返す<br>
@@ -70,4 +67,14 @@ public interface JdtsBlockReplLogic {
      */
     boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsBlockModel jdtsBlockModel) throws KmgToolException;
 
+    /**
+     * Javadocタグを処理する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean processJavadocTags();
 }
