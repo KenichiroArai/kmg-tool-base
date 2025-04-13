@@ -26,12 +26,12 @@ public interface JdtsBlockReplLogic {
      *
      * @since 0.1.0
      *
-     * @return 置換後のJavadocブロック
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    String createReplacedJavadoc() throws KmgToolException;
+    boolean createReplacedJavadoc() throws KmgToolException;
 
     /**
      * Javadocタグ設定の構成モデルを返す<br>
@@ -43,6 +43,17 @@ public interface JdtsBlockReplLogic {
      * @return Javadocタグ設定の構成モデル
      */
     JdtsConfigsModel getJdtsConfigsModel();
+
+    /**
+     * 置換後のJavadocブロックを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 置換後のJavadocブロック
+     */
+    String getReplacedJavadocBlock();
 
     /**
      * 初期化する

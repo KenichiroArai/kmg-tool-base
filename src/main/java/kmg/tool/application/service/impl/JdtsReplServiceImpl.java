@@ -167,10 +167,16 @@ public class JdtsReplServiceImpl implements JdtsReplService {
         /* 識別子を置換後のJavadocブロックに置換する */
         for (final JdtsBlockModel jdtsBlockModel : this.jdtsCodeModel.getJdtsBlockModels()) {
 
+            /* Javadocタグ設定のブロック置換ロジックの初期化 */
             this.jdtsBlockReplLogic.initialize(this.jdtsConfigsModel, jdtsBlockModel);
 
-            final String replaceJavadocBlock = this.jdtsBlockReplLogic.createReplacedJavadoc();
+            /* Javadocブロックが設定に基づいて置換する */
+            this.jdtsBlockReplLogic.createReplacedJavadoc();
 
+            /* 置換後のJavadocブロックを取得する */
+            final String replaceJavadocBlock = this.jdtsBlockReplLogic.getReplacedJavadocBlock();
+
+            /* 置換後のJavadocブロックにコード全体に反映する */
             this.replaceCode = this.replaceCode.replace(jdtsBlockModel.getId().toString(), replaceJavadocBlock);
 
         }

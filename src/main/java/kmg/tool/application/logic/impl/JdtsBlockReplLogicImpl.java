@@ -33,6 +33,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     /** Javadocタグ設定のブロックモデル */
     private JdtsBlockModel jdtsBlockModel;
 
+    /** 置換後のJavadocブロック */
+    private String replacedJavadocBlock;
+
     /**
      * 最終的なJavadocを構築する<br>
      *
@@ -163,15 +166,15 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      *
      * @since 0.1.0
      *
-     * @return 置換後のJavadocブロック
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
     @Override
-    public String createReplacedJavadoc() throws KmgToolException {
+    public boolean createReplacedJavadoc() throws KmgToolException {
 
-        String result;
+        boolean result;
 
         /* 準備 */
         final StringBuilder headTagsBuilder = new StringBuilder();
@@ -181,8 +184,10 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         final String processedJavadoc = this.processJavadocTags(headTagsBuilder, tailTagsBuilder);
 
         /* 最終的な結果を組み立てる */
-        result = JdtsBlockReplLogicImpl.buildFinalJavadoc(processedJavadoc, headTagsBuilder, tailTagsBuilder);
+        this.replacedJavadocBlock
+            = JdtsBlockReplLogicImpl.buildFinalJavadoc(processedJavadoc, headTagsBuilder, tailTagsBuilder);
 
+        result = true;
         return result;
 
     }
@@ -200,6 +205,23 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     public JdtsConfigsModel getJdtsConfigsModel() {
 
         final JdtsConfigsModel result = this.jdtsConfigsModel;
+        return result;
+
+    }
+
+    /**
+     * 置換後のJavadocブロックを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 置換後のJavadocブロック
+     */
+    @Override
+    public String getReplacedJavadocBlock() {
+
+        final String result = this.replacedJavadocBlock;
         return result;
 
     }
