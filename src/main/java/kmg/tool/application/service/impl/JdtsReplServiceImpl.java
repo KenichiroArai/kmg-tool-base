@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.logic.JdtsReplLogic;
+import kmg.tool.application.logic.JdtsBlockReplLogic;
 import kmg.tool.application.model.jda.JdtsBlockModel;
 import kmg.tool.application.model.jda.JdtsCodeModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
@@ -30,9 +30,9 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class JdtsReplServiceImpl implements JdtsReplService {
 
-    /** Javadocタグ設定の入出力ロジック */
+    /** Javadocタグ設定のブロック置換ロジック */
     @Autowired
-    private JdtsReplLogic jdtsReplLogic;
+    private JdtsBlockReplLogic jdtsBlockReplLogic;
 
     /** Javadocタグ設定の構成モデル */
     private JdtsConfigsModel jdtsConfigsModel;
@@ -69,6 +69,23 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     public JdtsConfigsModel getJdtsConfigsModel() {
 
         final JdtsConfigsModel result = this.jdtsConfigsModel;
+        return result;
+
+    }
+
+    /**
+     * 置換後のコードを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 置換後のコード
+     */
+    @Override
+    public String getReplaceCode() {
+
+        final String result = this.replaceCode;
         return result;
 
     }
@@ -133,13 +150,15 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *                          KMGツール例外
      */
     @Override
-    public String replace() throws KmgToolException {
+    public boolean replace() throws KmgToolException {
 
-        String result = null;
+        boolean result = false;
 
         /* オリジナルコードのJavadocブロック部分を識別子に置換する */
+        // 同じJavadocがある場合に異なる置換をしないため、事前に一意となる識別子に置き換える
         for (final JdtsBlockModel jdtsBlockModel : this.jdtsCodeModel.getJdtsBlockModels()) {
 
+            // 複数該当する場合もあるため、最初の部分のみを置換する
             this.replaceCode = this.replaceCode.replaceFirst(
                 Pattern.quote(jdtsBlockModel.getJavadocModel().getSrcJavadoc()), jdtsBlockModel.getId().toString());
 
@@ -148,16 +167,17 @@ public class JdtsReplServiceImpl implements JdtsReplService {
         /* 識別子を置換後のJavadocブロックに置換する */
         for (final JdtsBlockModel jdtsBlockModel : this.jdtsCodeModel.getJdtsBlockModels()) {
 
-            this.jdtsReplLogic.initialize(this.jdtsConfigsModel, jdtsBlockModel);
-            final String replaceJavadocBlock = this.jdtsReplLogic.createReplacedJavadoc();
+            this.jdtsBlockReplLogic.initialize(this.jdtsConfigsModel, jdtsBlockModel);
+
+            final String replaceJavadocBlock = this.jdtsBlockReplLogic.createReplacedJavadoc();
+
             this.replaceCode = this.replaceCode.replace(jdtsBlockModel.getId().toString(), replaceJavadocBlock);
 
         }
 
         this.totalRows += KmgDelimiterTypes.LINE_SEPARATOR.split(this.replaceCode).length;
 
-        result = this.replaceCode;
-
+        result = true;
         return result;
 
     }

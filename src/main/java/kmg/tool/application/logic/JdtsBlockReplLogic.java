@@ -5,7 +5,7 @@ import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * Javadocタグ設定の入出力ロジックインタフェース<br>
+ * Javadocタグ設定のブロック置換ロジックインタフェース<br>
  * <p>
  * Jdtsは、JavadocTagSetterの略。<br>
  * Replは、Replacementの略。
@@ -17,7 +17,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  *
  * @version 0.1.0
  */
-public interface JdtsReplLogic {
+public interface JdtsBlockReplLogic {
 
     /**
      * 置換後のJavadocブロックを作成する<br>

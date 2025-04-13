@@ -250,7 +250,10 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
             this.jdtsReplService.initialize(this.jdtsConfigsModel, jdtsCodeModel);
 
             /* Javadocを置換する */
-            final String replaceContent = this.jdtsReplService.replace();
+            this.jdtsReplService.replace();
+
+            /* 置換後の内容を取得する */
+            final String replaceContent = this.jdtsReplService.getReplaceCode();
 
             /* 書き込む内容を設定する */
             this.jdtsIoLogic.setWriteContent(replaceContent);

@@ -4,7 +4,7 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.tool.application.logic.JdtsReplLogic;
+import kmg.tool.application.logic.JdtsBlockReplLogic;
 import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdtsBlockModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
@@ -12,7 +12,7 @@ import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
- * Javadocタグ設定の入出力ロジック<br>
+ * Javadocタグ設定のブロック置換ロジック<br>
  * <p>
  * Jdtsは、JavadocTagSetterの略。<br>
  * Replは、Replacementの略。
@@ -25,7 +25,7 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  * @version 0.1.0
  */
 @Service
-public class JdtsReplLogicImpl implements JdtsReplLogic {
+public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
     /** Javadocタグ設定の構成モデル */
     private JdtsConfigsModel jdtsConfigsModel;
@@ -181,7 +181,7 @@ public class JdtsReplLogicImpl implements JdtsReplLogic {
         final String processedJavadoc = this.processJavadocTags(headTagsBuilder, tailTagsBuilder);
 
         /* 最終的な結果を組み立てる */
-        result = JdtsReplLogicImpl.buildFinalJavadoc(processedJavadoc, headTagsBuilder, tailTagsBuilder);
+        result = JdtsBlockReplLogicImpl.buildFinalJavadoc(processedJavadoc, headTagsBuilder, tailTagsBuilder);
 
         return result;
 
@@ -317,7 +317,7 @@ public class JdtsReplLogicImpl implements JdtsReplLogic {
 
             /* タグの更新処理 */
             editingJavadoc
-                = JdtsReplLogicImpl.updateExistingTag(editingJavadoc, jdaTagConfigModel, existingJavadocTagModel);
+                = JdtsBlockReplLogicImpl.updateExistingTag(editingJavadoc, jdaTagConfigModel, existingJavadocTagModel);
 
         }
 

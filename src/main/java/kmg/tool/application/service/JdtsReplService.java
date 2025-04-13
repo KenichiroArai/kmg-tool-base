@@ -31,6 +31,17 @@ public interface JdtsReplService {
     JdtsConfigsModel getJdtsConfigsModel();
 
     /**
+     * 置換後のコードを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 置換後のコード
+     */
+    String getReplaceCode();
+
+    /**
      * 合計行数を返す。
      *
      * @return 合計行数
@@ -66,5 +77,5 @@ public interface JdtsReplService {
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    String replace() throws KmgToolException;
+    boolean replace() throws KmgToolException;
 }
