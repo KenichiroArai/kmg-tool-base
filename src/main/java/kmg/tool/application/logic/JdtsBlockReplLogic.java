@@ -1,5 +1,6 @@
 package kmg.tool.application.logic;
 
+import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdtsBlockModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -42,6 +43,17 @@ public interface JdtsBlockReplLogic {
     JdtsConfigsModel getJdtsConfigsModel();
 
     /**
+     * 次のJavadocタグを取得する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return 次のJavadocタグ設定モデル、存在しない場合はnull
+     */
+    JdaTagConfigModel getNextTag();
+
+    /**
      * 置換後のJavadocブロックを返す<br>
      *
      * @author KenichiroArai
@@ -51,6 +63,17 @@ public interface JdtsBlockReplLogic {
      * @return 置換後のJavadocブロック
      */
     String getReplacedJavadocBlock();
+
+    /**
+     * 現在のタグが存在するか確認する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：存在する場合、false：存在しない場合
+     */
+    boolean hasExistingTag();
 
     /**
      * 初期化する
@@ -68,7 +91,21 @@ public interface JdtsBlockReplLogic {
     boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsBlockModel jdtsBlockModel) throws KmgToolException;
 
     /**
-     * Javadocタグを処理する<br>
+     * 新しいタグを処理する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param tag
+     *            Javadoc追加のタグ設定モデル
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean processNewTag(JdaTagConfigModel tag);
+
+    /**
+     * 現在のタグを削除する<br>
      *
      * @author KenichiroArai
      *
@@ -76,5 +113,16 @@ public interface JdtsBlockReplLogic {
      *
      * @return true：成功、false：失敗
      */
-    boolean processJavadocTags();
+    boolean removeCurrentTag();
+
+    /**
+     * 現在のタグを更新する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean updateCurrentTag();
 }

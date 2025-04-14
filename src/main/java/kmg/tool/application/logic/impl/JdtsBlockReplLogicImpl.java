@@ -1,5 +1,7 @@
 package kmg.tool.application.logic.impl;
 
+import java.util.Iterator;
+
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,15 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
     /** 末尾タグ */
     private final StringBuilder tailTags;
+
+    /** タグイテレータ */
+    private Iterator<JdaTagConfigModel> tagIterator;
+
+    /** 現在のタグ */
+    private JdaTagConfigModel currentTag;
+
+    /** 現在の既存タグ */
+    private JavadocTagModel currentExistingTag;
 
     /**
      * デフォルトコンストラクタ
@@ -118,6 +129,35 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
+     * 次のJavadocタグを取得する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return 次のJavadocタグ設定モデル、存在しない場合はnull
+     */
+    @Override
+    public JdaTagConfigModel getNextTag() {
+
+        JdaTagConfigModel result = null;
+
+        if (!this.tagIterator.hasNext()) {
+
+            return result;
+
+        }
+
+        this.currentTag = this.tagIterator.next();
+        this.currentExistingTag
+            = this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel().findByTag(this.currentTag.getTag());
+        result = this.currentTag;
+
+        return result;
+
+    }
+
+    /**
      * 置換後のJavadocブロックを返す<br>
      *
      * @author KenichiroArai
@@ -130,6 +170,23 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     public String getReplacedJavadocBlock() {
 
         final String result = this.replacedJavadocBlock;
+        return result;
+
+    }
+
+    /**
+     * 現在のタグが存在するか確認する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：存在する場合、false：存在しない場合
+     */
+    @Override
+    public boolean hasExistingTag() {
+
+        boolean result = this.currentExistingTag != null;
         return result;
 
     }
@@ -160,62 +217,12 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         this.headTags.setLength(0);
         this.tailTags.setLength(0);
 
-        result = true;
-        return result;
-
-    }
-
-    /**
-     * Javadocタグを処理する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：成功、false：失敗
-     */
-    @Override
-    public boolean processJavadocTags() {
-
-        boolean result = false;
+        this.tagIterator = this.jdtsConfigsModel.getJdaTagConfigModels().iterator();
+        this.currentTag = null;
+        this.currentExistingTag = null;
 
         // 編集中のJavadoc
         this.replacedJavadocBlock = this.jdtsBlockModel.getJavadocModel().getSrcJavadoc();
-
-        /* Javadoc追加のタグ設定を基準に、Javadocを更新 */
-        for (final JdaTagConfigModel jdaTagConfigModel : this.jdtsConfigsModel.getJdaTagConfigModels()) {
-
-            /* 元のJavadocにJavadoc追加のタグ設定のタグがあるか取得 */
-            final JavadocTagModel existingJavadocTagModel
-                = this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel().findByTag(jdaTagConfigModel.getTag());
-
-            if (existingJavadocTagModel == null) {
-
-                // タグが存在しない場合
-                this.processNewTag(jdaTagConfigModel);
-                continue;
-
-            }
-
-            /* 誤配置時の削除処理 */
-            final boolean isRemoveTag = jdaTagConfigModel.getLocation().isRemoveIfMisplaced()
-                && !jdaTagConfigModel.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification());
-
-            if (isRemoveTag) {
-
-                // 誤配置のタグを削除する
-
-                this.replacedJavadocBlock
-                    = this.replacedJavadocBlock.replace(existingJavadocTagModel.getTargetStr(), KmgString.EMPTY);
-
-                continue;
-
-            }
-
-            /* タグの更新処理 */
-            this.updateExistingTag(jdaTagConfigModel, existingJavadocTagModel);
-
-        }
 
         result = true;
         return result;
@@ -227,37 +234,38 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      *
      * @author KenichiroArai
      *
-     * @param jdaTagConfigModel
-     *                          Javadoc追加のタグ設定モデル
-     *
      * @since 0.1.0
+     *
+     * @param tag
+     *            Javadoc追加のタグ設定モデル
+     *
+     * @return true：成功、false：失敗
      */
-    private void processNewTag(final JdaTagConfigModel jdaTagConfigModel) {
+    @Override
+    public boolean processNewTag(final JdaTagConfigModel tag) {
+
+        boolean result = false;
 
         // タグの配置がJava区分に一致しないか
-        if (!jdaTagConfigModel.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification())) {
+        if (!tag.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification())) {
 
             // 一致しない場合
-
             // タグを追加しない
-
-            return;
+            return result;
 
         }
 
         // 新しいタグを作成
         // TODO KenichiroArai 2025/04/09 ハードコード
-        final String newTag = String.format(" * %s %s %s%n", jdaTagConfigModel.getTag().getKey(),
-            jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
+        final String newTag
+            = String.format(" * %s %s %s%n", tag.getTag().getKey(), tag.getTagValue(), tag.getTagDescription());
 
         // 挿入位置に応じてタグを振り分け
-        switch (jdaTagConfigModel.getInsertPosition()) {
+        switch (tag.getInsertPosition()) {
 
             case BEGINNING:
                 /* ファイルの先頭 */
-
                 this.headTags.append(newTag);
-
                 break;
 
             case NONE:
@@ -266,12 +274,68 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 /* ファイルの末尾 */
             case PRESERVE:
                 /* 現在の位置を維持 */
-
                 this.tailTags.append(newTag);
-
                 break;
 
         }
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 現在のタグを削除する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    public boolean removeCurrentTag() {
+
+        boolean result = false;
+
+        if (this.currentExistingTag == null) {
+
+            return result;
+
+        }
+
+        this.replacedJavadocBlock
+            = this.replacedJavadocBlock.replace(this.currentExistingTag.getTargetStr(), KmgString.EMPTY);
+        result = true;
+
+        return result;
+
+    }
+
+    /**
+     * 現在のタグを更新する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    public boolean updateCurrentTag() {
+
+        boolean result = false;
+
+        if ((this.currentTag == null) || (this.currentExistingTag == null)) {
+
+            return result;
+
+        }
+
+        this.updateExistingTag(this.currentTag, this.currentExistingTag);
+        result = true;
+
+        return result;
 
     }
 
@@ -296,7 +360,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 /* 指定無し */
             case NEVER:
                 /* 上書きしない */
-
                 return;
 
             case ALWAYS:
@@ -305,7 +368,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
             case IF_LOWER:
                 /* 既存のバージョンより小さい場合のみ上書き */
-
                 if (!jdaTagConfigModel.getTag().isVersionValue()) {
 
                     break;

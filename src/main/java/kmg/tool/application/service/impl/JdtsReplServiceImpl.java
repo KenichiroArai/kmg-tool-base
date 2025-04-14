@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.JdtsBlockReplLogic;
+import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdtsBlockModel;
 import kmg.tool.application.model.jda.JdtsCodeModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
@@ -170,8 +171,44 @@ public class JdtsReplServiceImpl implements JdtsReplService {
             /* Javadocタグ設定のブロック置換ロジックの初期化 */
             this.jdtsBlockReplLogic.initialize(this.jdtsConfigsModel, jdtsBlockModel);
 
-            /* Javadocブロックが設定に基づいてJavadocを更新する */
-            this.jdtsBlockReplLogic.processJavadocTags();
+            /* タグを順番に処理 */
+            JdaTagConfigModel tag;
+
+            while ((tag = this.jdtsBlockReplLogic.getNextTag()) != null) {
+
+                if (!this.jdtsBlockReplLogic.hasExistingTag()) {
+
+                    // タグが存在しない場合の処理
+                    this.jdtsBlockReplLogic.processNewTag(tag);
+                    continue;
+
+                }
+
+                // 誤配置時の削除処理
+                if (tag.getLocation().isRemoveIfMisplaced()
+                    && !tag.isProperlyPlaced(jdtsBlockModel.getJavaClassification())) {
+
+                    result = this.jdtsBlockReplLogic.removeCurrentTag();
+
+                    if (!result) {
+
+                        return result;
+
+                    }
+                    continue;
+
+                }
+
+                // タグの更新処理
+                result = this.jdtsBlockReplLogic.updateCurrentTag();
+
+                if (!result) {
+
+                    return result;
+
+                }
+
+            }
 
             /* Javadocの最終的な結果を組み立てる */
             this.jdtsBlockReplLogic.buildFinalJavadoc();
