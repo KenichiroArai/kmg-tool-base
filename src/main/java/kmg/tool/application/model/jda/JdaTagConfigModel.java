@@ -6,7 +6,10 @@ import kmg.tool.application.types.JdaInsertPositionTypes;
 import kmg.tool.application.types.JdaOverwriteTypes;
 
 /**
- * Javadoc追加のタグ設定モデルインターフェース<br>
+ * Javadoc追加のタグ設定の構成モデルインターフェース<br>
+ * <p>
+ * Jdtsは、JavadocTagSetterの略。<br>
+ * </p>
  *
  * @author KenichiroArai
  *

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.JdtsBlockReplLogic;
-import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdtsBlockModel;
 import kmg.tool.application.model.jda.JdtsCodeModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
@@ -171,44 +170,57 @@ public class JdtsReplServiceImpl implements JdtsReplService {
             /* Javadocタグ設定のブロック置換ロジックの初期化 */
             this.jdtsBlockReplLogic.initialize(this.jdtsConfigsModel, jdtsBlockModel);
 
-            /* タグを順番に処理 */
-            JdaTagConfigModel tag;
-
-            while ((tag = this.jdtsBlockReplLogic.getNextTag()) != null) {
+            /* タグを順番に処理を行う */
+            // タグが存在するまで続ける
+            do {
 
                 if (!this.jdtsBlockReplLogic.hasExistingTag()) {
-
                     // タグが存在しない場合の処理
-                    this.jdtsBlockReplLogic.processNewTag(tag);
-                    continue;
 
-                }
+                    if (this.jdtsBlockReplLogic.processNewTag()) {
 
-                // 誤配置時の削除処理
-                if (tag.getLocation().isRemoveIfMisplaced()
-                    && !tag.isProperlyPlaced(jdtsBlockModel.getJavaClassification())) {
-
-                    result = this.jdtsBlockReplLogic.removeCurrentTag();
-
-                    if (!result) {
-
-                        return result;
+                        // TODO KenichiroArai 2025/04/03 デバッグ
+                        System.out.println(String.format("【タグ存在しない場合】Javadocタグ：[%s], Java区分：[%s], オリジナルコード：[%s]",
+                            this.jdtsBlockReplLogic.getCurrentJdaTagConfigModel().getTag().getDisplayName(),
+                            jdtsBlockModel.getJavaClassification().getDeclaringClass(), jdtsBlockModel.getOrgBlock()));
 
                     }
+
                     continue;
 
                 }
 
-                // タグの更新処理
+                // TODO KenichiroArai 2025/04/03 デバッグ
+                System.out.println(String.format("【タグ存在する場合】対象文字列: [%s], タグ: [%s], 指定値: [%s], 説明: [%s]",
+                    this.jdtsBlockReplLogic.getCurrentExistingTag().getTargetStr(),
+                    this.jdtsBlockReplLogic.getCurrentExistingTag().getTag().getDisplayName(),
+                    this.jdtsBlockReplLogic.getCurrentExistingTag().getValue(),
+                    this.jdtsBlockReplLogic.getCurrentExistingTag().getDescription()));
+
+                /* 誤配置時の削除処理を行う */
+
+                // タグを削除したか
+                if (this.jdtsBlockReplLogic.removeCurrentTagOnError()) {
+                    // 削除した場合
+
+                    // タグを削除したため、後続の処理は行わず、次のタグを処理する
+                    continue;
+
+                }
+
+                /* タグを更新処理する */
                 result = this.jdtsBlockReplLogic.updateCurrentTag();
 
                 if (!result) {
+
+                    // TODO KenichiroArai 2025/04/03 デバッグ
+                    System.err.println("エラー発生");
 
                     return result;
 
                 }
 
-            }
+            } while (this.jdtsBlockReplLogic.nextTag());
 
             /* Javadocの最終的な結果を組み立てる */
             this.jdtsBlockReplLogic.buildFinalJavadoc();
