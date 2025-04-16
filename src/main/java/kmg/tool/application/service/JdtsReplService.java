@@ -64,7 +64,7 @@ public interface JdtsReplService {
     boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsCodeModel jdtsCodeModel) throws KmgToolException;
 
     /**
-     * 内容を置換した値を返す。<br>
+     * Javadocを置換する。<br>
      *
      * @author KenichiroArai
      *

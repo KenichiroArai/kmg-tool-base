@@ -136,7 +136,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     }
 
     /**
-     * 内容を置換した値を返す。<br>
+     * Javadocを置換する。<br>
      *
      * @author KenichiroArai
      *

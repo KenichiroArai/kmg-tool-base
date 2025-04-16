@@ -223,10 +223,12 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
 
         // TODO KenichiroArai 2025/03/29 処理の開始ログ
 
-        /* Javadocタグ設定の構成モデルを作成 */
+        /* 準備 */
+
+        // 構成モデルを作成する
         this.createJdtsConfigsModel();
 
-        /* Javaファイルのリストをロードする */
+        // Javaファイルのリストをロードする
         this.jdtsIoLogic.load();
 
         /* 次のJavaファイルがあるまでJavadocを置換する */
@@ -234,31 +236,38 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
 
         do {
 
-            /* 内容を読み込む */
+            /* 内容を取得する */
+
+            // 内容を読み込む
             this.jdtsIoLogic.loadContent();
 
-            /* 内容を取得する */
+            // 内容を取得する
             final String readContent = this.jdtsIoLogic.getReadContent();
 
-            /* Javadocタグ設定のコードモデルを作成する */
+            /* コードモデルを作成する */
+            // 内容から作成する
             final JdtsCodeModel jdtsCodeModel = new JdtsCodeModelImpl(readContent);
 
-            /* コードモデルを解析する。 */
+            // コードモデルを解析する
             jdtsCodeModel.parse();
 
-            /* Javadocタグ設定の入出力サービスを初期化する */
+            /* Javadocを置換する */
+
+            // Javadocタグ設定の入出力サービスを初期化する
             this.jdtsReplService.initialize(this.jdtsConfigsModel, jdtsCodeModel);
 
-            /* Javadocを置換する */
+            // Javadocを置換する
             this.jdtsReplService.replace();
 
-            /* 置換後の内容を取得する */
+            // 置換後の内容を取得する
             final String replaceContent = this.jdtsReplService.getReplaceCode();
 
-            /* 書き込む内容を設定する */
+            /* 内容を書き込む */
+
+            // 書き込む内容を設定する
             this.jdtsIoLogic.setWriteContent(replaceContent);
 
-            /* 内容をファイルに書き込む */
+            // 内容をファイルに書き込む
             this.jdtsIoLogic.writeContent();
 
             /* 次のファイルに進む */
