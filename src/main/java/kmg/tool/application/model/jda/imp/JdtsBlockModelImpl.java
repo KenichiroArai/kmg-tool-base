@@ -246,6 +246,8 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
             // Java区分を判別
             this.javaClassification = JavaClassificationTypes.identify(codeLine);
 
+            // TODO KenichiroArai 2025/04/17 Java区分のキーワードを取得する。クラスならクラス名、フィールドならフィールド名のように。
+
             // Javadoc対象外か
             if (this.javaClassification.isNotJavadocTarget()) {
                 // 対象外の場合

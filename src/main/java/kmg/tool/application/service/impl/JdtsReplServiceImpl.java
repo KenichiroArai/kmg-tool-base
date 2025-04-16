@@ -154,8 +154,10 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         boolean result = false;
 
-        /* オリジナルコードのJavadocブロック部分を識別子に置換する */
-        // 同じJavadocがある場合に異なる置換をしないため、事前に一意となる識別子に置き換える
+        /* 事前処理 */
+
+        // オリジナルコードのJavadocブロック部分を識別子に置換する
+        // 同じJavadocがある場合に異なる置換をさせないため、事前に一意となる識別子に置き換える
         for (final JdtsBlockModel jdtsBlockModel : this.jdtsCodeModel.getJdtsBlockModels()) {
 
             // 複数該当する場合もあるため、最初の部分のみを置換する
@@ -164,25 +166,34 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         }
 
-        /* 識別子を置換後のJavadocブロックに置換する */
+        /* Javadocを置換する */
+
+        // ブロックごとにJavadocを置換する
         for (final JdtsBlockModel jdtsBlockModel : this.jdtsCodeModel.getJdtsBlockModels()) {
 
-            /* Javadocタグ設定のブロック置換ロジックの初期化 */
+            /* ブロックごとの置換の処理の準備 */
+
+            // ブロック置換ロジックの初期化
             this.jdtsBlockReplLogic.initialize(this.jdtsConfigsModel, jdtsBlockModel);
 
             /* タグを順番に処理を行う */
             // タグが存在するまで続ける
             do {
 
-                if (!this.jdtsBlockReplLogic.hasExistingTag()) {
-                    // タグが存在しない場合の処理
+                /* 現在のタグが存在しない場合の処理 */
 
+                // 現在のタグが存在しないか
+                if (!this.jdtsBlockReplLogic.hasExistingTag()) {
+                    // 存在しない場合
+
+                    // 新しいタグを追加したか
                     if (this.jdtsBlockReplLogic.processNewTag()) {
+                        // 追加した場合
 
                         // TODO KenichiroArai 2025/04/03 デバッグ
                         System.out.println(String.format("【タグ存在しない場合】Javadocタグ：[%s], Java区分：[%s], オリジナルコード：[%s]",
                             this.jdtsBlockReplLogic.getCurrentJdaTagConfigModel().getTag().getDisplayName(),
-                            jdtsBlockModel.getJavaClassification().getDeclaringClass(), jdtsBlockModel.getOrgBlock()));
+                            jdtsBlockModel.getJavaClassification().getDisplayName(), jdtsBlockModel.getOrgBlock()));
 
                     }
 
@@ -220,15 +231,18 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                 }
 
+                /* 次のタグを処理するか */
             } while (this.jdtsBlockReplLogic.nextTag());
 
             /* Javadocの最終的な結果を組み立てる */
             this.jdtsBlockReplLogic.buildFinalJavadoc();
 
-            /* 置換後のJavadocブロックを取得する */
+            /* コード全体に反映する */
+
+            // 置換後のJavadocブロックを取得する
             final String replaceJavadocBlock = this.jdtsBlockReplLogic.getReplacedJavadocBlock();
 
-            /* 置換後のJavadocブロックにコード全体に反映する */
+            // 置換後のJavadocブロックにコード全体に反映する
             this.replaceCode = this.replaceCode.replace(jdtsBlockModel.getId().toString(), replaceJavadocBlock);
 
         }

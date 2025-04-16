@@ -232,8 +232,6 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
         this.jdtsIoLogic.load();
 
         /* 次のJavaファイルがあるまでJavadocを置換する */
-        boolean hasNext;
-
         do {
 
             /* 内容を取得する */
@@ -271,9 +269,7 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
             this.jdtsIoLogic.writeContent();
 
             /* 次のファイルに進む */
-            hasNext = this.jdtsIoLogic.nextFile();
-
-        } while (hasNext);
+        } while (this.jdtsIoLogic.nextFile());
 
         // TODO KenichiroArai 2025/03/29 処理の終了ログ
         System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getFilePathList().size()));
