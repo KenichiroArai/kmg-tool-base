@@ -6,10 +6,13 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * Javadocタグ設定サービスインタフェース<br>
+ * <p>
+ * Jdtsは、JavadocTagSetterの略。<br>
+ * </p>
  *
  * @author KenichiroArai
  */
-public interface JavadocTagSetterService {
+public interface JdtsService {
 
     /**
      * 対象ファイルパス

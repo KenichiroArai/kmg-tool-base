@@ -16,22 +16,21 @@ import kmg.tool.application.model.jdts.JdtsCodeModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.imp.JdtsCodeModelImpl;
 import kmg.tool.application.model.jdts.imp.JdtsConfigsModelImpl;
-import kmg.tool.application.service.JavadocTagSetterService;
 import kmg.tool.application.service.JdtsReplService;
+import kmg.tool.application.service.JdtsService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * Javadocタグ設定サービス<br>
+ * <p>
+ * Jdtsは、JavadocTagSetterの略。<br>
+ * </p>
  *
  * @author KenichiroArai
- *
- * @since 0.1.0
- *
- * @version 0.1.0
  */
 @Service
-public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
+public class JdtsServiceImpl implements JdtsService {
 
     /**
      * ロガー
@@ -104,9 +103,9 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
      *
      * @version 0.1.0
      */
-    public JavadocTagSetterServiceImpl() {
+    public JdtsServiceImpl() {
 
-        this(LoggerFactory.getLogger(JavadocTagSetterServiceImpl.class));
+        this(LoggerFactory.getLogger(JdtsServiceImpl.class));
 
     }
 
@@ -122,7 +121,7 @@ public class JavadocTagSetterServiceImpl implements JavadocTagSetterService {
      * @param logger
      *               ロガー
      */
-    protected JavadocTagSetterServiceImpl(final Logger logger) {
+    protected JdtsServiceImpl(final Logger logger) {
 
         this.logger = logger;
 

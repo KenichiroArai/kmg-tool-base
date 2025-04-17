@@ -10,7 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
-import kmg.tool.application.service.JavadocTagSetterService;
+import kmg.tool.application.service.JdtsService;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -47,7 +47,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
      * Javadoc追加サービス
      */
     @Autowired
-    private JavadocTagSetterService javadocTagSetterService;
+    private JdtsService jdtsService;
 
     /** 対象パス */
     private Path targetPath;
@@ -142,7 +142,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
 
         try {
 
-            result &= this.javadocTagSetterService.initialize(this.targetPath, JavadocTagSetterTool.TEMPLATE_PATH);
+            result &= this.jdtsService.initialize(this.targetPath, JavadocTagSetterTool.TEMPLATE_PATH);
 
         } catch (final KmgToolException e) {
 
@@ -155,7 +155,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
 
         try {
 
-            result &= this.javadocTagSetterService.process();
+            result &= this.jdtsService.process();
 
         } catch (final KmgToolException e) {
 
