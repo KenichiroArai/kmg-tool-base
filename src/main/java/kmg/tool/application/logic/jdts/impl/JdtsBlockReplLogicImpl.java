@@ -29,11 +29,11 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
-    /** Javadocタグ設定の構成モデル */
-    private JdtsConfigsModel jdtsConfigsModel;
+    /** 構成モデル */
+    private JdtsConfigsModel configsModel;
 
-    /** Javadocタグ設定のブロックモデル */
-    private JdtsBlockModel jdtsBlockModel;
+    /** 元のブロックモデル */
+    private JdtsBlockModel srcBlockModel;
 
     /** 置換後のJavadocブロック */
     private String replacedJavadocBlock;
@@ -44,11 +44,11 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     /** 末尾タグ */
     private final StringBuilder tailTags;
 
-    /** タグイテレータ */
-    private Iterator<JdtsTagConfigModel> tagIterator;
+    /** タグ構成のイテレータ */
+    private Iterator<JdtsTagConfigModel> tagConfigIterator;
 
-    /** 現在の構成モデル */
-    private JdtsTagConfigModel currentConfigModel;
+    /** 現在のタグ構成モデル */
+    private JdtsTagConfigModel currentTagConfigModel;
 
     /** 現在の既存タグ */
     private JavadocTagModel currentExistingTag;
@@ -112,18 +112,18 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * 現在の構成モデルを返す<br>
+     * 構成モデルを返す<br>
      *
      * @author KenichiroArai
      *
      * @sine 0.1.0
      *
-     * @return 現在の構成モデル
+     * @return 構成モデル
      */
     @Override
-    public JdtsTagConfigModel getCurrentConfigModel() {
+    public JdtsConfigsModel getConfigsModel() {
 
-        final JdtsTagConfigModel result = this.currentConfigModel;
+        final JdtsConfigsModel result = this.configsModel;
         return result;
 
     }
@@ -146,18 +146,18 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * Javadocタグ設定の構成モデルを返す<br>
+     * 現在のタグ構成モデルを返す<br>
      *
      * @author KenichiroArai
      *
      * @sine 0.1.0
      *
-     * @return Javadocタグ設定の構成モデル
+     * @return 現在のタグ構成モデル
      */
     @Override
-    public JdtsConfigsModel getJdtsConfigsModel() {
+    public JdtsTagConfigModel getCurrentTagConfigModel() {
 
-        final JdtsConfigsModel result = this.jdtsConfigsModel;
+        final JdtsTagConfigModel result = this.currentTagConfigModel;
         return result;
 
     }
@@ -199,10 +199,10 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     /**
      * 初期化する
      *
-     * @param jdtsConfigsModel
-     *                         Javadocタグ設定の構成モデル
-     * @param jdtsBlockModel
-     *                         Javadocタグ設定のブロックモデル
+     * @param configsModel
+     *                      構成モデル
+     * @param srcBlockModel
+     *                      元のブロックモデル
      *
      * @return true：成功、false：失敗
      *
@@ -211,22 +211,22 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final JdtsConfigsModel jdtsConfigsModel, final JdtsBlockModel jdtsBlockModel)
+    public boolean initialize(final JdtsConfigsModel configsModel, final JdtsBlockModel srcBlockModel)
         throws KmgToolException {
 
         boolean result = false;
 
-        this.jdtsConfigsModel = jdtsConfigsModel;
-        this.jdtsBlockModel = jdtsBlockModel;
+        this.configsModel = configsModel;
+        this.srcBlockModel = srcBlockModel;
 
         this.headTags.setLength(0);
         this.tailTags.setLength(0);
 
-        this.tagIterator = this.jdtsConfigsModel.getJdaTagConfigModels().iterator();
+        this.tagConfigIterator = this.configsModel.getJdaTagConfigModels().iterator();
         this.nextTag();
 
         // 編集中のJavadoc
-        this.replacedJavadocBlock = this.jdtsBlockModel.getJavadocModel().getSrcJavadoc();
+        this.replacedJavadocBlock = this.srcBlockModel.getJavadocModel().getSrcJavadoc();
 
         result = true;
         return result;
@@ -247,17 +247,17 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        if (!this.tagIterator.hasNext()) {
+        if (!this.tagConfigIterator.hasNext()) {
 
-            this.currentConfigModel = null;
+            this.currentTagConfigModel = null;
             this.currentExistingTag = null;
             return result;
 
         }
 
-        this.currentConfigModel = this.tagIterator.next();
+        this.currentTagConfigModel = this.tagConfigIterator.next();
         this.currentExistingTag
-            = this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel().findByTag(this.currentConfigModel.getTag());
+            = this.srcBlockModel.getJavadocModel().getJavadocTagsModel().findByTag(this.currentTagConfigModel.getTag());
 
         result = true;
         return result;
@@ -279,7 +279,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         boolean result = false;
 
         // タグの配置がJava区分に一致しないか
-        if (!this.currentConfigModel.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification())) {
+        if (!this.currentTagConfigModel.isProperlyPlaced(this.srcBlockModel.getJavaClassification())) {
 
             // 一致しない場合
             // タグを追加しない
@@ -289,11 +289,11 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         // 新しいタグを作成
         // TODO KenichiroArai 2025/04/09 ハードコード
-        final String newTag = String.format(" * %s %s %s%n", this.currentConfigModel.getTag().getKey(),
-            this.currentConfigModel.getTagValue(), this.currentConfigModel.getTagDescription());
+        final String newTag = String.format(" * %s %s %s%n", this.currentTagConfigModel.getTag().getKey(),
+            this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
 
         // 挿入位置に応じてタグを振り分け
-        switch (this.currentConfigModel.getInsertPosition()) {
+        switch (this.currentTagConfigModel.getInsertPosition()) {
 
             case BEGINNING:
                 /* ファイルの先頭 */
@@ -364,7 +364,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* 削除するか判断する */
 
         // 「誤配置時に削除する」が指定されていないか
-        if (!this.currentConfigModel.getLocation().isRemoveIfMisplaced()) {
+        if (!this.currentTagConfigModel.getLocation().isRemoveIfMisplaced()) {
             // 指定されていない場合
 
             return result;
@@ -372,7 +372,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         }
 
         // 「タグの配置がJava区分」に一致しているか
-        if (this.currentConfigModel.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification())) {
+        if (this.currentTagConfigModel.isProperlyPlaced(this.srcBlockModel.getJavaClassification())) {
             // 一致している場合
 
             return result;
@@ -399,13 +399,13 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        if ((this.currentConfigModel == null) || (this.currentExistingTag == null)) {
+        if ((this.currentTagConfigModel == null) || (this.currentExistingTag == null)) {
 
             return result;
 
         }
 
-        this.updateExistingTag(this.currentConfigModel, this.currentExistingTag);
+        this.updateExistingTag(this.currentTagConfigModel, this.currentExistingTag);
         result = true;
 
         return result;

@@ -33,15 +33,15 @@ public interface JdtsBlockReplLogic {
     boolean buildFinalJavadoc();
 
     /**
-     * 現在の構成モデルを返す<br>
+     * 構成モデルを返す<br>
      *
      * @author KenichiroArai
      *
      * @sine 0.1.0
      *
-     * @return 現在の構成モデル
+     * @return 構成モデル
      */
-    JdtsTagConfigModel getCurrentConfigModel();
+    JdtsConfigsModel getConfigsModel();
 
     /**
      * 現在の既存タグを返す<br>
@@ -55,15 +55,15 @@ public interface JdtsBlockReplLogic {
     JavadocTagModel getCurrentExistingTag();
 
     /**
-     * Javadocタグ設定の構成モデルを返す<br>
+     * 現在のタグ構成モデルを返す<br>
      *
      * @author KenichiroArai
      *
      * @sine 0.1.0
      *
-     * @return Javadocタグ設定の構成モデル
+     * @return 現在のタグ構成モデル
      */
-    JdtsConfigsModel getJdtsConfigsModel();
+    JdtsTagConfigModel getCurrentTagConfigModel();
 
     /**
      * 置換後のJavadocブロックを返す<br>
@@ -90,17 +90,17 @@ public interface JdtsBlockReplLogic {
     /**
      * 初期化する
      *
-     * @param jdtsConfigsModel
-     *                         Javadocタグ設定の構成モデル
-     * @param jdtsBlockModel
-     *                         Javadocタグ設定のブロックモデル
+     * @param configsModel
+     *                      構成モデル
+     * @param srcBlockModel
+     *                      元のブロックモデル
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsBlockModel jdtsBlockModel) throws KmgToolException;
+    boolean initialize(final JdtsConfigsModel configsModel, final JdtsBlockModel srcBlockModel) throws KmgToolException;
 
     /**
      * 次のJavadocタグに進む<br>
