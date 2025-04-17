@@ -50,8 +50,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     /** 現在のタグ構成モデル */
     private JdtsTagConfigModel currentTagConfigModel;
 
-    /** 現在の既存タグ */
-    private JavadocTagModel currentExistingTag;
+    /** 現在の元のJavadocタグ */
+    private JavadocTagModel currentSrcJavadocTag;
 
     /**
      * デフォルトコンストラクタ
@@ -129,18 +129,18 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * 現在の既存タグを返す<br>
+     * 現在の元のJavadocタグを返す<br>
      *
      * @author KenichiroArai
      *
      * @sine 0.1.0
      *
-     * @return 現在の既存タグ
+     * @return 現在の元のJavadocタグ
      */
     @Override
-    public JavadocTagModel getCurrentExistingTag() {
+    public JavadocTagModel getCurrentSrcJavadocTag() {
 
-        final JavadocTagModel result = this.currentExistingTag;
+        final JavadocTagModel result = this.currentSrcJavadocTag;
         return result;
 
     }
@@ -191,7 +191,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     @Override
     public boolean hasExistingTag() {
 
-        final boolean result = this.currentExistingTag != null;
+        final boolean result = this.currentSrcJavadocTag != null;
         return result;
 
     }
@@ -250,13 +250,13 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         if (!this.tagConfigIterator.hasNext()) {
 
             this.currentTagConfigModel = null;
-            this.currentExistingTag = null;
+            this.currentSrcJavadocTag = null;
             return result;
 
         }
 
         this.currentTagConfigModel = this.tagConfigIterator.next();
-        this.currentExistingTag
+        this.currentSrcJavadocTag
             = this.srcBlockModel.getJavadocModel().getJavadocTagsModel().findByTag(this.currentTagConfigModel.getTag());
 
         result = true;
@@ -330,14 +330,14 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        if (this.currentExistingTag == null) {
+        if (this.currentSrcJavadocTag == null) {
 
             return result;
 
         }
 
         this.replacedJavadocBlock
-            = this.replacedJavadocBlock.replace(this.currentExistingTag.getTargetStr(), KmgString.EMPTY);
+            = this.replacedJavadocBlock.replace(this.currentSrcJavadocTag.getTargetStr(), KmgString.EMPTY);
         result = true;
 
         return result;
@@ -399,13 +399,13 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        if ((this.currentTagConfigModel == null) || (this.currentExistingTag == null)) {
+        if ((this.currentTagConfigModel == null) || (this.currentSrcJavadocTag == null)) {
 
             return result;
 
         }
 
-        this.updateExistingTag(this.currentTagConfigModel, this.currentExistingTag);
+        this.updateExistingTag(this.currentTagConfigModel, this.currentSrcJavadocTag);
         result = true;
 
         return result;

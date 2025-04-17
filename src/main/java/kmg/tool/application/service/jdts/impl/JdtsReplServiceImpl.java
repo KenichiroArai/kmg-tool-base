@@ -203,10 +203,10 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                 // TODO KenichiroArai 2025/04/03 デバッグ
                 System.out.println(String.format("【タグ存在する場合】対象文字列: [%s], タグ: [%s], 指定値: [%s], 説明: [%s]",
-                    this.jdtsBlockReplLogic.getCurrentExistingTag().getTargetStr(),
-                    this.jdtsBlockReplLogic.getCurrentExistingTag().getTag().getDisplayName(),
-                    this.jdtsBlockReplLogic.getCurrentExistingTag().getValue(),
-                    this.jdtsBlockReplLogic.getCurrentExistingTag().getDescription()));
+                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
+                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
+                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
+                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription()));
 
                 /* 誤配置時の削除処理を行う */
 

@@ -44,15 +44,15 @@ public interface JdtsBlockReplLogic {
     JdtsConfigsModel getConfigsModel();
 
     /**
-     * 現在の既存タグを返す<br>
+     * 現在の元のJavadocタグを返す<br>
      *
      * @author KenichiroArai
      *
      * @sine 0.1.0
      *
-     * @return 現在の既存タグ
+     * @return 現在の元のJavadocタグ
      */
-    JavadocTagModel getCurrentExistingTag();
+    JavadocTagModel getCurrentSrcJavadocTag();
 
     /**
      * 現在のタグ構成モデルを返す<br>
