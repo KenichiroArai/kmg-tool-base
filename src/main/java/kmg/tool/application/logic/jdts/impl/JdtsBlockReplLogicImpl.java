@@ -180,7 +180,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * 現在のタグが存在するか確認する<br>
+     * 元のブロックモデルに構成モデルのタグが存在するか<br>
      *
      * @author KenichiroArai
      *

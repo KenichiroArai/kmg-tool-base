@@ -169,20 +169,21 @@ public class JdtsReplServiceImpl implements JdtsReplService {
         /* Javadocを置換する */
 
         // ブロックごとにJavadocを置換する
-        for (final JdtsBlockModel jdtsBlockModel : this.jdtsCodeModel.getJdtsBlockModels()) {
+        // 対象ブロックモデルを取得する
+        for (final JdtsBlockModel targetBlockModel : this.jdtsCodeModel.getJdtsBlockModels()) {
 
             /* ブロックごとの置換の処理の準備 */
 
             // ブロック置換ロジックの初期化
-            this.jdtsBlockReplLogic.initialize(this.jdtsConfigsModel, jdtsBlockModel);
+            this.jdtsBlockReplLogic.initialize(this.jdtsConfigsModel, targetBlockModel);
 
-            /* タグを順番に処理を行う */
-            // タグが存在するまで続ける
+            /* タグ構成の順番に処理を行う */
+            // タグ構成が存在するまで続ける
             do {
 
-                /* 現在のタグが存在しない場合の処理 */
+                /* 対象のブロックにタグ構成のタグが存在しない場合の処理 */
 
-                // 現在のタグが存在しないか
+                // 対象のブロックに構成タグのタグが存在しないか
                 if (!this.jdtsBlockReplLogic.hasExistingTag()) {
                     // 存在しない場合
 
@@ -193,7 +194,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                         // TODO KenichiroArai 2025/04/03 デバッグ
                         System.out.println(String.format("【タグ存在しない場合】Javadocタグ：[%s], Java区分：[%s], オリジナルコード：[%s]",
                             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
-                            jdtsBlockModel.getJavaClassification().getDisplayName(), jdtsBlockModel.getOrgBlock()));
+                            targetBlockModel.getJavaClassification().getDisplayName(), targetBlockModel.getOrgBlock()));
 
                     }
 
@@ -243,7 +244,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
             final String replaceJavadocBlock = this.jdtsBlockReplLogic.getReplacedJavadocBlock();
 
             // 置換後のJavadocブロックにコード全体に反映する
-            this.replaceCode = this.replaceCode.replace(jdtsBlockModel.getId().toString(), replaceJavadocBlock);
+            this.replaceCode = this.replaceCode.replace(targetBlockModel.getId().toString(), replaceJavadocBlock);
 
         }
 
