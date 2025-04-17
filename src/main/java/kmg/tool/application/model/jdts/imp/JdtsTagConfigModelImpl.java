@@ -1,4 +1,4 @@
-package kmg.tool.application.model.jda.imp;
+package kmg.tool.application.model.jdts.imp;
 
 import java.util.List;
 import java.util.Map;
@@ -8,8 +8,8 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.application.model.jda.JdaLocationConfigModel;
-import kmg.tool.application.model.jda.JdtsTagConfigModel;
+import kmg.tool.application.model.jdts.JdaLocationConfigModel;
+import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 import kmg.tool.application.types.JdaInsertPositionTypes;
 import kmg.tool.application.types.JdaOverwriteTypes;
 

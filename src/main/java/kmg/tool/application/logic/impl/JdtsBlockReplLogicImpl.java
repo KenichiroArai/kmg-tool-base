@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.tool.application.logic.JdtsBlockReplLogic;
-import kmg.tool.application.model.jda.JdtsTagConfigModel;
-import kmg.tool.application.model.jda.JdtsBlockModel;
-import kmg.tool.application.model.jda.JdtsConfigsModel;
+import kmg.tool.application.model.jdts.JdtsBlockModel;
+import kmg.tool.application.model.jdts.JdtsConfigsModel;
+import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

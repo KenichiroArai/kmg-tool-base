@@ -1,4 +1,4 @@
-package kmg.tool.application.model.jda.imp;
+package kmg.tool.application.model.jdts.imp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.model.jda.JdtsBlockModel;
+import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
 import kmg.tool.infrastructure.exception.KmgToolException;

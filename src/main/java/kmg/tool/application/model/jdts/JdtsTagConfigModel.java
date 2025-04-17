@@ -1,4 +1,4 @@
-package kmg.tool.application.model.jda;
+package kmg.tool.application.model.jdts;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;

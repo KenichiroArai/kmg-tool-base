@@ -1,11 +1,11 @@
-package kmg.tool.application.model.jda.imp;
+package kmg.tool.application.model.jdts.imp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kmg.tool.application.model.jda.JdtsConfigsModel;
-import kmg.tool.application.model.jda.JdtsTagConfigModel;
+import kmg.tool.application.model.jdts.JdtsConfigsModel;
+import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 
 /**
  * Javadocタグ設定の構成モデル<br>

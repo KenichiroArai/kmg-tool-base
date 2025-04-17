@@ -1,7 +1,7 @@
 package kmg.tool.application.service;
 
-import kmg.tool.application.model.jda.JdtsCodeModel;
-import kmg.tool.application.model.jda.JdtsConfigsModel;
+import kmg.tool.application.model.jdts.JdtsCodeModel;
+import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**

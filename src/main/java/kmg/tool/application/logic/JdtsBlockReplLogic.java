@@ -1,8 +1,8 @@
 package kmg.tool.application.logic;
 
-import kmg.tool.application.model.jda.JdtsTagConfigModel;
-import kmg.tool.application.model.jda.JdtsBlockModel;
-import kmg.tool.application.model.jda.JdtsConfigsModel;
+import kmg.tool.application.model.jdts.JdtsBlockModel;
+import kmg.tool.application.model.jdts.JdtsConfigsModel;
+import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

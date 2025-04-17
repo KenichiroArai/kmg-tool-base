@@ -1,11 +1,11 @@
-package kmg.tool.application.model.jda.imp;
+package kmg.tool.application.model.jdts.imp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
-import kmg.tool.application.model.jda.JdaLocationConfigModel;
+import kmg.tool.application.model.jdts.JdaLocationConfigModel;
 import kmg.tool.application.types.JdaLocationModeTypes;
 
 /**

@@ -1,11 +1,11 @@
-package kmg.tool.application.model.jda.imp;
+package kmg.tool.application.model.jdts.imp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import kmg.tool.application.model.jda.JdtsBlockModel;
-import kmg.tool.application.model.jda.JdtsCodeModel;
+import kmg.tool.application.model.jdts.JdtsBlockModel;
+import kmg.tool.application.model.jdts.JdtsCodeModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
