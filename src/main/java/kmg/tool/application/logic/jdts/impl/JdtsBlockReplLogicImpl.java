@@ -265,38 +265,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * 新しいタグを処理する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：新しいタグを追加する、false：タグを追加しない
+     * タグを指定された位置に配置する<br>
      */
     @Override
-    public boolean processNewTag() {
-
-        boolean result = false;
-
-        // タグの配置がJava区分に一致しないか
-        if (!this.currentTagConfigModel.isProperlyPlaced(this.srcBlockModel.getJavaClassification())) {
-
-            // 一致しない場合
-            // タグを追加しない
-            return result;
-
-        }
+    public void placeTagByPosition() {
 
         // 新しいタグを作成
-        // TODO KenichiroArai 2025/04/09 ハードコード
-        final String newTag = String.format(" * %s %s %s%n", this.currentTagConfigModel.getTag().getKey(),
-            this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
+        final String newTag = this.createNewTagContent();
 
-        // 挿入位置に応じてタグを振り分け
         switch (this.currentTagConfigModel.getInsertPosition()) {
 
             case BEGINNING:
                 /* ファイルの先頭 */
+
                 this.headTags.append(newTag);
                 break;
 
@@ -306,13 +287,10 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 /* ファイルの末尾 */
             case PRESERVE:
                 /* 現在の位置を維持 */
+
                 this.tailTags.append(newTag);
-                break;
 
         }
-
-        result = true;
-        return result;
 
     }
 
@@ -386,6 +364,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
+     * 新しいタグを追加すべきか判断する<br>
+     *
+     * @return true：追加する、false：追加しない
+     */
+    @Override
+    public boolean shouldAddNewTag() {
+
+        final boolean result = this.currentTagConfigModel.isProperlyPlaced(this.srcBlockModel.getJavaClassification());
+        return result;
+
+    }
+
+    /**
      * 現在のタグを更新する<br>
      *
      * @author KenichiroArai
@@ -408,6 +399,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         this.updateExistingTag(this.currentTagConfigModel, this.currentSrcJavadocTag);
         result = true;
 
+        return result;
+
+    }
+
+    /**
+     * 新しいタグの内容を作成する<br>
+     *
+     * @return 新しいタグの内容
+     */
+    private String createNewTagContent() {
+
+        final String result = String.format(" * %s %s %s%n", this.currentTagConfigModel.getTag().getKey(),
+            this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
         return result;
 
     }

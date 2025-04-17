@@ -187,9 +187,12 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                 if (!this.jdtsBlockReplLogic.hasExistingTag()) {
                     // 存在しない場合
 
-                    // 新しいタグを追加したか
-                    if (this.jdtsBlockReplLogic.processNewTag()) {
-                        // 追加した場合
+                    // 新しいタグを追加するか
+                    if (this.jdtsBlockReplLogic.shouldAddNewTag()) {
+                        // 追加する場合
+
+                        // 新しいタグを作成し配置する
+                        this.jdtsBlockReplLogic.placeTagByPosition();
 
                         // TODO KenichiroArai 2025/04/03 デバッグ
                         System.out.println(String.format("【タグ存在しない場合】Javadocタグ：[%s], Java区分：[%s], オリジナルコード：[%s]",

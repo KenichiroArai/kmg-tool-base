@@ -114,15 +114,9 @@ public interface JdtsBlockReplLogic {
     boolean nextTag();
 
     /**
-     * 新しいタグを処理する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：新しいタグを追加する、false：タグを追加しない
+     * タグを指定された位置に配置する<br>
      */
-    boolean processNewTag();
+    void placeTagByPosition();
 
     /**
      * 現在のタグを削除する<br>
@@ -148,6 +142,13 @@ public interface JdtsBlockReplLogic {
      * @return true：タグを削除した場合、false：タグを削除しなかった場合
      */
     boolean removeCurrentTagOnError();
+
+    /**
+     * 新しいタグを追加すべきか判断する<br>
+     *
+     * @return true：追加する、false：追加しない
+     */
+    boolean shouldAddNewTag();
 
     /**
      * 現在のタグを更新する<br>
