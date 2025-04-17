@@ -1,6 +1,6 @@
 package kmg.tool.application.logic;
 
-import kmg.tool.application.model.jda.JdaTagConfigModel;
+import kmg.tool.application.model.jda.JdtsTagConfigModel;
 import kmg.tool.application.model.jda.JdtsBlockModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.domain.model.JavadocTagModel;
@@ -33,6 +33,17 @@ public interface JdtsBlockReplLogic {
     boolean buildFinalJavadoc();
 
     /**
+     * 現在の構成モデルを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 現在の構成モデル
+     */
+    JdtsTagConfigModel getCurrentConfigModel();
+
+    /**
      * 現在の既存タグを返す<br>
      *
      * @author KenichiroArai
@@ -42,17 +53,6 @@ public interface JdtsBlockReplLogic {
      * @return 現在の既存タグ
      */
     JavadocTagModel getCurrentExistingTag();
-
-    /**
-     * 現在の構成モデルを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return 現在の構成モデル
-     */
-    JdaTagConfigModel getCurrentJdaTagConfigModel();
 
     /**
      * Javadocタグ設定の構成モデルを返す<br>

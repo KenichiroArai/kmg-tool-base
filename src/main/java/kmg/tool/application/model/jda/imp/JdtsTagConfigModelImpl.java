@@ -9,12 +9,12 @@ import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jda.JdaLocationConfigModel;
-import kmg.tool.application.model.jda.JdaTagConfigModel;
+import kmg.tool.application.model.jda.JdtsTagConfigModel;
 import kmg.tool.application.types.JdaInsertPositionTypes;
 import kmg.tool.application.types.JdaOverwriteTypes;
 
 /**
- * Javadoc追加のタグ設定の構成モデル<br>
+ * Javadocタグ設定のタグ構成モデル<br>
  * <p>
  * Jdtsは、JavadocTagSetterの略。<br>
  * </p>
@@ -25,7 +25,7 @@ import kmg.tool.application.types.JdaOverwriteTypes;
  *
  * @version 0.1.0
  */
-public class JdaTagConfigModelImpl implements JdaTagConfigModel {
+public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
     /** タグ */
     private final KmgJavadocTagTypes tag;
@@ -55,7 +55,7 @@ public class JdaTagConfigModelImpl implements JdaTagConfigModel {
      *                  タグ設定
      */
     @SuppressWarnings("unchecked")
-    public JdaTagConfigModelImpl(final Map<String, Object> tagConfig) {
+    public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) {
 
         // TODO KenichiroArai 2025/04/02 ハードコード
         this.tagName = (String) tagConfig.get("tagName");

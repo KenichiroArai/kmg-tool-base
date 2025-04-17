@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kmg.tool.application.model.jda.JdaTagConfigModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
+import kmg.tool.application.model.jda.JdtsTagConfigModel;
 
 /**
  * Javadocタグ設定の構成モデル<br>
@@ -23,7 +23,7 @@ import kmg.tool.application.model.jda.JdtsConfigsModel;
 public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
     /** Javadoc追加のタグ設定モデルのリスト */
-    private List<JdaTagConfigModel> jdaTagConfigModels;
+    private List<JdtsTagConfigModel> jdtsTagConfigModels;
 
     /**
      * コンストラクタ<br>
@@ -34,7 +34,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
     @SuppressWarnings("unchecked")
     public JdtsConfigsModelImpl(final Map<String, Object> yamlData) {
 
-        this.jdaTagConfigModels = new ArrayList<>();
+        this.jdtsTagConfigModels = new ArrayList<>();
 
         if (yamlData == null) {
 
@@ -62,36 +62,23 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
             }
 
             /* モデルの作成と追加 */
-            final JdaTagConfigModel model = new JdaTagConfigModelImpl(tagConfig);
-            this.jdaTagConfigModels.add(model);
+            final JdtsTagConfigModel model = new JdtsTagConfigModelImpl(tagConfig);
+            this.jdtsTagConfigModels.add(model);
 
         }
 
     }
 
     /**
-     * Javadoc追加のタグ設定モデルのリストを返す<br>
+     * Javadocタグ設定のタグ構成モデルのリストを返す<br>
      *
-     * @return Javadoc追加のタグ設定モデルのリスト
+     * @return Javadocタグ設定のタグ構成モデルのリスト
      */
     @Override
-    public List<JdaTagConfigModel> getJdaTagConfigModels() {
+    public List<JdtsTagConfigModel> getJdaTagConfigModels() {
 
-        final List<JdaTagConfigModel> result = this.jdaTagConfigModels;
+        final List<JdtsTagConfigModel> result = this.jdtsTagConfigModels;
         return result;
-
-    }
-
-    /**
-     * Javadoc追加のタグ設定モデルのリストを設定する<br>
-     *
-     * @param jdaTagConfigModels
-     *                           Javadoc追加のタグ設定モデルのリスト
-     */
-    @Override
-    public void setJdaTagConfigModels(final List<JdaTagConfigModel> jdaTagConfigModels) {
-
-        this.jdaTagConfigModels = jdaTagConfigModels;
 
     }
 

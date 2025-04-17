@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.tool.application.logic.JdtsBlockReplLogic;
-import kmg.tool.application.model.jda.JdaTagConfigModel;
+import kmg.tool.application.model.jda.JdtsTagConfigModel;
 import kmg.tool.application.model.jda.JdtsBlockModel;
 import kmg.tool.application.model.jda.JdtsConfigsModel;
 import kmg.tool.domain.model.JavadocTagModel;
@@ -45,10 +45,10 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     private final StringBuilder tailTags;
 
     /** タグイテレータ */
-    private Iterator<JdaTagConfigModel> tagIterator;
+    private Iterator<JdtsTagConfigModel> tagIterator;
 
     /** 現在の構成モデル */
-    private JdaTagConfigModel currentJdaTagConfigModel;
+    private JdtsTagConfigModel currentConfigModel;
 
     /** 現在の既存タグ */
     private JavadocTagModel currentExistingTag;
@@ -112,6 +112,23 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
+     * 現在の構成モデルを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 現在の構成モデル
+     */
+    @Override
+    public JdtsTagConfigModel getCurrentConfigModel() {
+
+        final JdtsTagConfigModel result = this.currentConfigModel;
+        return result;
+
+    }
+
+    /**
      * 現在の既存タグを返す<br>
      *
      * @author KenichiroArai
@@ -124,23 +141,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     public JavadocTagModel getCurrentExistingTag() {
 
         final JavadocTagModel result = this.currentExistingTag;
-        return result;
-
-    }
-
-    /**
-     * 現在の構成モデルを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return 現在の構成モデル
-     */
-    @Override
-    public JdaTagConfigModel getCurrentJdaTagConfigModel() {
-
-        final JdaTagConfigModel result = this.currentJdaTagConfigModel;
         return result;
 
     }
@@ -249,15 +249,15 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         if (!this.tagIterator.hasNext()) {
 
-            this.currentJdaTagConfigModel = null;
+            this.currentConfigModel = null;
             this.currentExistingTag = null;
             return result;
 
         }
 
-        this.currentJdaTagConfigModel = this.tagIterator.next();
-        this.currentExistingTag = this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel()
-            .findByTag(this.currentJdaTagConfigModel.getTag());
+        this.currentConfigModel = this.tagIterator.next();
+        this.currentExistingTag
+            = this.jdtsBlockModel.getJavadocModel().getJavadocTagsModel().findByTag(this.currentConfigModel.getTag());
 
         result = true;
         return result;
@@ -279,7 +279,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         boolean result = false;
 
         // タグの配置がJava区分に一致しないか
-        if (!this.currentJdaTagConfigModel.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification())) {
+        if (!this.currentConfigModel.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification())) {
 
             // 一致しない場合
             // タグを追加しない
@@ -289,11 +289,11 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         // 新しいタグを作成
         // TODO KenichiroArai 2025/04/09 ハードコード
-        final String newTag = String.format(" * %s %s %s%n", this.currentJdaTagConfigModel.getTag().getKey(),
-            this.currentJdaTagConfigModel.getTagValue(), this.currentJdaTagConfigModel.getTagDescription());
+        final String newTag = String.format(" * %s %s %s%n", this.currentConfigModel.getTag().getKey(),
+            this.currentConfigModel.getTagValue(), this.currentConfigModel.getTagDescription());
 
         // 挿入位置に応じてタグを振り分け
-        switch (this.currentJdaTagConfigModel.getInsertPosition()) {
+        switch (this.currentConfigModel.getInsertPosition()) {
 
             case BEGINNING:
                 /* ファイルの先頭 */
@@ -364,7 +364,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* 削除するか判断する */
 
         // 「誤配置時に削除する」が指定されていないか
-        if (!this.currentJdaTagConfigModel.getLocation().isRemoveIfMisplaced()) {
+        if (!this.currentConfigModel.getLocation().isRemoveIfMisplaced()) {
             // 指定されていない場合
 
             return result;
@@ -372,7 +372,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         }
 
         // 「タグの配置がJava区分」に一致しているか
-        if (this.currentJdaTagConfigModel.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification())) {
+        if (this.currentConfigModel.isProperlyPlaced(this.jdtsBlockModel.getJavaClassification())) {
             // 一致している場合
 
             return result;
@@ -399,13 +399,13 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        if ((this.currentJdaTagConfigModel == null) || (this.currentExistingTag == null)) {
+        if ((this.currentConfigModel == null) || (this.currentExistingTag == null)) {
 
             return result;
 
         }
 
-        this.updateExistingTag(this.currentJdaTagConfigModel, this.currentExistingTag);
+        this.updateExistingTag(this.currentConfigModel, this.currentExistingTag);
         result = true;
 
         return result;
@@ -419,15 +419,15 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      *
      * @since 0.1.0
      *
-     * @param jdaTagConfigModel
+     * @param jdtsTagConfigModel
      *                                Javadocタグ設定モデル
      * @param existingJavadocTagModel
      *                                既存のJavadocタグモデル
      */
-    private void updateExistingTag(final JdaTagConfigModel jdaTagConfigModel,
+    private void updateExistingTag(final JdtsTagConfigModel jdtsTagConfigModel,
         final JavadocTagModel existingJavadocTagModel) {
 
-        switch (jdaTagConfigModel.getOverwrite()) {
+        switch (jdtsTagConfigModel.getOverwrite()) {
 
             case NONE:
                 /* 指定無し */
@@ -441,14 +441,14 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
             case IF_LOWER:
                 /* 既存のバージョンより小さい場合のみ上書き */
-                if (!jdaTagConfigModel.getTag().isVersionValue()) {
+                if (!jdtsTagConfigModel.getTag().isVersionValue()) {
 
                     break;
 
                 }
 
                 final ComparableVersion srcVer = new ComparableVersion(existingJavadocTagModel.getTag().get());
-                final ComparableVersion destVer = new ComparableVersion(jdaTagConfigModel.getTagValue());
+                final ComparableVersion destVer = new ComparableVersion(jdtsTagConfigModel.getTagValue());
 
                 if (srcVer.compareTo(destVer) <= 0) {
 
@@ -461,8 +461,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         }
 
         // TODO KenichiroArai 2025/04/09 ハードコード
-        final String newTag = String.format(" * %s %s %s", jdaTagConfigModel.getTag().getKey(),
-            jdaTagConfigModel.getTagValue(), jdaTagConfigModel.getTagDescription());
+        final String newTag = String.format(" * %s %s %s", jdtsTagConfigModel.getTag().getKey(),
+            jdtsTagConfigModel.getTagValue(), jdtsTagConfigModel.getTagDescription());
 
         this.replacedJavadocBlock = this.replacedJavadocBlock.replace(existingJavadocTagModel.getTargetStr(), newTag);
 

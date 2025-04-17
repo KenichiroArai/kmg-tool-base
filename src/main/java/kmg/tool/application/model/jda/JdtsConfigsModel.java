@@ -18,18 +18,10 @@ import java.util.List;
 public interface JdtsConfigsModel {
 
     /**
-     * Javadoc追加のタグ設定モデルのリストを返す<br>
+     * Javadocタグ設定のタグ構成モデルのリストを返す<br>
      *
      * @return Javadoc追加のタグ設定モデルのリスト
      */
-    List<JdaTagConfigModel> getJdaTagConfigModels();
-
-    /**
-     * Javadoc追加のタグ設定モデルのリストを設定する<br>
-     *
-     * @param jdaTagConfigModels
-     *                           Javadoc追加のタグ設定モデルのリスト
-     */
-    void setJdaTagConfigModels(List<JdaTagConfigModel> jdaTagConfigModels);
+    List<JdtsTagConfigModel> getJdaTagConfigModels();
 
 }

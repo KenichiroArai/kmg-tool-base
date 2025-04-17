@@ -6,7 +6,7 @@ import kmg.tool.application.types.JdaInsertPositionTypes;
 import kmg.tool.application.types.JdaOverwriteTypes;
 
 /**
- * Javadoc追加のタグ設定の構成モデルインターフェース<br>
+ * Javadocタグ設定のタグ構成モデルインターフェース<br>
  * <p>
  * Jdtsは、JavadocTagSetterの略。<br>
  * </p>
@@ -17,9 +17,8 @@ import kmg.tool.application.types.JdaOverwriteTypes;
  *
  * @version 0.1.0
  */
-public interface JdaTagConfigModel {
+public interface JdtsTagConfigModel {
 
-    // TODO KenichiroArai 2025/04/13 クラス名とJavadocを変更する
     /**
      * タグの挿入位置を返す<br>
      *
