@@ -22,6 +22,24 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JdtsBlockReplLogic {
 
     /**
+     * 新しいタグを作成して指定位置に追加する<br>
+     * <p>
+     * タグ構成モデルの情報（タグ、タグ値、タグ説明）を使用して新しいタグを作成し、 挿入位置の設定に基づいて以下のいずれかの位置に追加します：
+     * <ul>
+     * <li>先頭（BEGINNING）：先頭タグに追加</li>
+     * <li>指定無し（NONE）：末尾タグに追加</li>
+     * <li>末尾（END）：末尾タグに追加</li>
+     * <li>現在の位置を維持（PRESERVE）：末尾タグに追加</li>
+     * </ul>
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    void addNewTagByPosition();
+
+    /**
      * 最終的なJavadocを構築する<br>
      *
      * @author KenichiroArai
@@ -112,11 +130,6 @@ public interface JdtsBlockReplLogic {
      * @return true：次のタグがある場合、false：次のタグがない場合
      */
     boolean nextTag();
-
-    /**
-     * タグを指定された位置に配置する<br>
-     */
-    void placeTagByPosition();
 
     /**
      * 現在のタグを削除する<br>

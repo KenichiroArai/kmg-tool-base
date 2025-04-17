@@ -192,7 +192,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                         // 追加する場合
 
                         // 新しいタグを作成し配置する
-                        this.jdtsBlockReplLogic.placeTagByPosition();
+                        this.jdtsBlockReplLogic.addNewTagByPosition();
 
                         // TODO KenichiroArai 2025/04/03 デバッグ
                         System.out.println(String.format("【タグ存在しない場合】Javadocタグ：[%s], Java区分：[%s], オリジナルコード：[%s]",

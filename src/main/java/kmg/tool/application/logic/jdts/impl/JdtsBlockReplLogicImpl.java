@@ -64,6 +64,49 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
+     * 新しいタグを作成して指定位置に追加する<br>
+     * <p>
+     * タグ構成モデルの情報（タグ、タグ値、タグ説明）を使用して新しいタグを作成し、 挿入位置の設定に基づいて以下のいずれかの位置に追加します：
+     * <ul>
+     * <li>先頭（BEGINNING）：先頭タグに追加</li>
+     * <li>指定無し（NONE）：末尾タグに追加</li>
+     * <li>末尾（END）：末尾タグに追加</li>
+     * <li>現在の位置を維持（PRESERVE）：末尾タグに追加</li>
+     * </ul>
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    @Override
+    public void addNewTagByPosition() {
+
+        // 新しいタグを作成
+        final String newTag = this.createNewTagContent();
+
+        switch (this.currentTagConfigModel.getInsertPosition()) {
+
+            case BEGINNING:
+                /* ファイルの先頭 */
+
+                this.headTags.append(newTag);
+                break;
+
+            case NONE:
+                /* 指定無し */
+            case END:
+                /* ファイルの末尾 */
+            case PRESERVE:
+                /* 現在の位置を維持 */
+
+                this.tailTags.append(newTag);
+
+        }
+
+    }
+
+    /**
      * 最終的なJavadocを構築する<br>
      *
      * @author KenichiroArai
@@ -261,36 +304,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         result = true;
         return result;
-
-    }
-
-    /**
-     * タグを指定された位置に配置する<br>
-     */
-    @Override
-    public void placeTagByPosition() {
-
-        // 新しいタグを作成
-        final String newTag = this.createNewTagContent();
-
-        switch (this.currentTagConfigModel.getInsertPosition()) {
-
-            case BEGINNING:
-                /* ファイルの先頭 */
-
-                this.headTags.append(newTag);
-                break;
-
-            case NONE:
-                /* 指定無し */
-            case END:
-                /* ファイルの末尾 */
-            case PRESERVE:
-                /* 現在の位置を維持 */
-
-                this.tailTags.append(newTag);
-
-        }
 
     }
 
