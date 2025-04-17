@@ -31,7 +31,7 @@ public interface JdtsTagConfigModel {
      *
      * @return 配置場所の設定
      */
-    JdaLocationConfigModel getLocation();
+    JdtsLocationConfigModel getLocation();
 
     /**
      * 上書き設定を返す<br>

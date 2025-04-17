@@ -8,7 +8,7 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.application.model.jdts.JdaLocationConfigModel;
+import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 import kmg.tool.application.types.JdaInsertPositionTypes;
 import kmg.tool.application.types.JdaOverwriteTypes;
@@ -40,7 +40,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     private final String tagDescription;
 
     /** 配置場所の設定 */
-    private final JdaLocationConfigModel location;
+    private final JdtsLocationConfigModel location;
 
     /** タグの挿入位置 */
     private final JdaInsertPositionTypes insertPosition;
@@ -67,7 +67,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
         final Map<String, Object> locationMap = (Map<String, Object>) tagConfig.get("location");
 
         // 配置場所の設定の生成
-        this.location = new JdaLocationConfigModelImpl(locationMap);
+        this.location = new JdtsLocationConfigModelImpl(locationMap);
 
         this.insertPosition = JdaInsertPositionTypes.getEnum((String) tagConfig.get("insertPosition"));
         this.overwrite = JdaOverwriteTypes.getEnum((String) tagConfig.get("overwrite"));
@@ -93,9 +93,9 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      * @return 配置場所の設定
      */
     @Override
-    public JdaLocationConfigModel getLocation() {
+    public JdtsLocationConfigModel getLocation() {
 
-        final JdaLocationConfigModel result = this.location;
+        final JdtsLocationConfigModel result = this.location;
         return result;
 
     }

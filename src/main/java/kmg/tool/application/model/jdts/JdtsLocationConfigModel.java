@@ -5,9 +5,9 @@ import java.util.List;
 import kmg.tool.application.types.JdaLocationModeTypes;
 
 /**
- * Javadocタグの配置場所設定インタフェース<br>
+ * Javadocタグ設定の配置場所設定インタフェース<br>
  * <p>
- * Jdaは、JavadocAppenderの略。
+ * Jdtsは、JavadocTagSetterの略。<br>
  * </p>
  *
  * @author KenichiroArai
@@ -16,7 +16,7 @@ import kmg.tool.application.types.JdaLocationModeTypes;
  *
  * @version 0.1.0
  */
-public interface JdaLocationConfigModel {
+public interface JdtsLocationConfigModel {
 
     /**
      * 配置方法を返す<br>

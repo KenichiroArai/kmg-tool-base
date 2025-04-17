@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
-import kmg.tool.application.model.jdts.JdaLocationConfigModel;
+import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.types.JdaLocationModeTypes;
 
 /**
- * Javadoc追加のタグの配置場所設定モデル<br>
+ * Javadocタグ設定の配置場所設定<br>
  * <p>
- * Jdaは、JavadocAppenderの略。
+ * Jdtsは、JavadocTagSetterの略。<br>
  * </p>
  *
  * @author KenichiroArai
@@ -20,7 +20,7 @@ import kmg.tool.application.types.JdaLocationModeTypes;
  *
  * @version 0.1.0
  */
-public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
+public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
     /** 配置方法 */
     private final JdaLocationModeTypes mode;
@@ -38,7 +38,7 @@ public class JdaLocationConfigModelImpl implements JdaLocationConfigModel {
      *                    配置場所の設定マップ
      */
     @SuppressWarnings("unchecked")
-    public JdaLocationConfigModelImpl(final Map<String, Object> locationMap) {
+    public JdtsLocationConfigModelImpl(final Map<String, Object> locationMap) {
 
         /* 配置方法の設定 */
         this.mode = JdaLocationModeTypes.getEnum((String) locationMap.get("mode"));
