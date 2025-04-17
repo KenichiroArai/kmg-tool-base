@@ -1,4 +1,4 @@
-package kmg.tool.application.service;
+package kmg.tool.application.service.jdts;
 
 import kmg.tool.application.model.jdts.JdtsCodeModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;

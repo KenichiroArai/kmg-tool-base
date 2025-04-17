@@ -10,7 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
-import kmg.tool.application.service.JdtsService;
+import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 

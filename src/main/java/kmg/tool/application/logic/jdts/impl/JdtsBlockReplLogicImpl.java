@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.impl;
+package kmg.tool.application.logic.jdts.impl;
 
 import java.util.Iterator;
 
@@ -6,7 +6,7 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.tool.application.logic.JdtsBlockReplLogic;
+import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;

@@ -1,4 +1,4 @@
-package kmg.tool.application.service.impl;
+package kmg.tool.application.service.jdts.impl;
 
 import java.util.regex.Pattern;
 
@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.logic.JdtsBlockReplLogic;
+import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsCodeModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
-import kmg.tool.application.service.JdtsReplService;
+import kmg.tool.application.service.jdts.JdtsReplService;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**

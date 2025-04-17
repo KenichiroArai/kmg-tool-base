@@ -1,4 +1,4 @@
-package kmg.tool.application.logic;
+package kmg.tool.application.logic.jdts;
 
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;

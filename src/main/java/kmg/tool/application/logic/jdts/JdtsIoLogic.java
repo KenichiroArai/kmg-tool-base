@@ -1,4 +1,4 @@
-package kmg.tool.application.logic;
+package kmg.tool.application.logic.jdts;
 
 import java.nio.file.Path;
 import java.util.List;

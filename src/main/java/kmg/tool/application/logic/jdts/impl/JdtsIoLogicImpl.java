@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.impl;
+package kmg.tool.application.logic.jdts.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
-import kmg.tool.application.logic.JdtsIoLogic;
+import kmg.tool.application.logic.jdts.JdtsIoLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
