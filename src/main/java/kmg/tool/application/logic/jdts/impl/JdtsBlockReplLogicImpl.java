@@ -355,54 +355,16 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        switch (this.currentTagConfigModel.getOverwrite()) {
+        // タグを上書きしないか
+        if (!this.shouldOverwriteTag()) {
+            // 上書きしない場合
 
-            case NONE:
-                /* 指定無し */
-            case NEVER:
-                /* 上書きしない */
-                return result;
-
-            case ALWAYS:
-                /* 常に上書き */
-                break;
-
-            case IF_LOWER:
-                /* 既存のバージョンより小さい場合のみ上書き */
-
-                if (!this.currentTagConfigModel.getTag().isVersionValue()) {
-
-                    break;
-
-                }
-
-                final ComparableVersion srcVer = new ComparableVersion(this.currentSrcJavadocTag.getTag().get());
-                final ComparableVersion destVer = new ComparableVersion(this.currentTagConfigModel.getTagValue());
-
-                if (srcVer.compareTo(destVer) <= 0) {
-
-                    return result;
-
-                }
-
-                break;
+            return result;
 
         }
 
-        final int startIdx = this.replacedJavadocBlock.indexOf(this.currentSrcJavadocTag.getTargetStr());
-
-        if (startIdx != -1) {
-
-            final int endIdx = startIdx + this.currentSrcJavadocTag.getTargetStr().length();
-
-            // TODO KenichiroArai 2025/04/09 ハードコード
-            final String replacementTag = this.createReplacementTagContent();
-
-            this.replacedJavadocBlock.replace(startIdx, endIdx, replacementTag);
-
-            result = true;
-
-        }
+        // 既存のタグを置換する
+        result = this.replaceExistingTag();
 
         return result;
 
@@ -430,6 +392,100 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         final String result = String.format(" * %s %s %s", this.currentTagConfigModel.getTag().getKey(),
             this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
+        return result;
+
+    }
+
+    /**
+     * 既存のタグを置換する<br>
+     *
+     * @return true：置換成功、false：置換失敗
+     */
+    private boolean replaceExistingTag() {
+
+        boolean result = false;
+
+        final int startIdx = this.replacedJavadocBlock.indexOf(this.currentSrcJavadocTag.getTargetStr());
+
+        if (startIdx == -1) {
+
+            return result;
+
+        }
+
+        final int endIdx = startIdx + this.currentSrcJavadocTag.getTargetStr().length();
+
+        final String replacementTag = this.createReplacementTagContent();
+
+        this.replacedJavadocBlock.replace(startIdx, endIdx, replacementTag);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * バージョン比較に基づいて上書きすべきか判断する<br>
+     *
+     * @return true：上書きする、false：上書きしない
+     */
+    private boolean shouldOverwriteBasedOnVersion() {
+
+        boolean result = false;
+
+        // バージョンのタグではないか
+        if (!this.currentTagConfigModel.getTag().isVersionValue()) {
+            // タグでない場合
+
+            result = true;
+            return result;
+
+        }
+
+        /* バージョン比較 */
+
+        final ComparableVersion srcVer  = new ComparableVersion(this.currentSrcJavadocTag.getTag().get());
+        final ComparableVersion destVer = new ComparableVersion(this.currentTagConfigModel.getTagValue());
+
+        // 既存のバージョンより小さいければ上書きする
+        result = srcVer.compareTo(destVer) > 0;
+
+        return result;
+
+    }
+
+    /**
+     * タグを上書きすべきか判断する<br>
+     *
+     * @return true：上書きする、false：上書きしない
+     */
+    private boolean shouldOverwriteTag() {
+
+        boolean result = false;
+
+        /* 上書き設定 */
+        switch (this.currentTagConfigModel.getOverwrite()) {
+
+            case NONE:
+                /* 指定無し */
+            case NEVER:
+                /* 上書きしない */
+                return result;
+
+            case ALWAYS:
+                /* 常に上書き */
+                result = true;
+                break;
+
+            case IF_LOWER:
+                /* 既存のバージョンより小さい場合のみ上書き */
+
+                result = this.shouldOverwriteBasedOnVersion();
+
+                break;
+
+        }
+
         return result;
 
     }
