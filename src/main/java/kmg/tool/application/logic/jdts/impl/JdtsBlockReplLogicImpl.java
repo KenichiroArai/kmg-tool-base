@@ -37,8 +37,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     /** 置換後のJavadocブロック */
     private StringBuilder replacedJavadocBlock;
 
-    /** 先頭タグの位置インデックス */
-    private int headTagPosIndex;
+    /** 先頭タグの位置オフセット */
+    private int headTagPosOffset;
 
     /** タグ構成のイテレータ */
     private Iterator<JdtsTagConfigModel> tagConfigIterator;
@@ -76,9 +76,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
             case BEGINNING:
                 /* ファイルの先頭 */
 
-                if (this.headTagPosIndex > -1) {
+                if (this.headTagPosOffset > -1) {
 
-                    this.replacedJavadocBlock.insert(this.headTagPosIndex, newTag);
+                    this.replacedJavadocBlock.insert(this.headTagPosOffset, newTag);
 
                 } else {
 
@@ -99,10 +99,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         }
 
-        this.headTagPosIndex += newTag.length();
-
-        // TODO KenichiroArai 2025/04/18 デバッグ用
-        System.out.println(String.format("headTagPosIndex=[%d]", this.headTagPosIndex));
+        this.headTagPosOffset += newTag.length();
 
     }
 
@@ -221,9 +218,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         this.replacedJavadocBlock = new StringBuilder(this.srcBlockModel.getJavadocModel().getSrcJavadoc());
 
         // TODO KenichiroArai 2025/04/09 ハードコード
-        this.headTagPosIndex = this.replacedJavadocBlock.indexOf("* @");
-        System.out.println(String.format("replacedJavadocBlock=[%s], headTagPosIndex=[%d]",
-            this.replacedJavadocBlock.toString(), this.headTagPosIndex));
+        this.headTagPosOffset = this.replacedJavadocBlock.indexOf("* @");
 
         result = true;
         return result;
