@@ -78,7 +78,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
                 if (this.headTagPosIndex > -1) {
 
-                    this.replacedJavadocBlock.insert(this.headTagPosIndex - 1, newTag);
+                    this.replacedJavadocBlock.insert(this.headTagPosIndex, newTag);
 
                 } else {
 
@@ -222,7 +222,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         // TODO KenichiroArai 2025/04/09 ハードコード
         this.headTagPosIndex = this.replacedJavadocBlock.indexOf("* @");
-        System.out.println(String.format("headTagPosIndex=[%d]", this.headTagPosIndex));
+        System.out.println(String.format("replacedJavadocBlock=[%s], headTagPosIndex=[%d]",
+            this.replacedJavadocBlock.toString(), this.headTagPosIndex));
 
         result = true;
         return result;
