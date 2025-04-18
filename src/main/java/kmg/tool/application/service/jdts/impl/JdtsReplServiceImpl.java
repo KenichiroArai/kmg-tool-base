@@ -227,7 +227,17 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                 // TODO KenichiroArai 2025/04/18 指定値に置換する処理を追加
 
                 /* タグを更新処理する */
-                this.jdtsBlockReplLogic.updateCurrentTag();
+
+                // タグを上書きしないか
+                if (!this.jdtsBlockReplLogic.shouldOverwriteTag()) {
+                    // 上書きしない場合
+
+                    continue;
+
+                }
+
+                // 既存のタグを置換する
+                this.jdtsBlockReplLogic.replaceExistingTag();
 
                 /* 次のタグを処理するか */
             } while (this.jdtsBlockReplLogic.nextTag());

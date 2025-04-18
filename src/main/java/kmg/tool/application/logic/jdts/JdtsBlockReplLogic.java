@@ -146,6 +146,25 @@ public interface JdtsBlockReplLogic {
     boolean removeCurrentTagOnError();
 
     /**
+     * 既存のタグを置換する<br>
+     * <p>
+     * 現在のJavadocタグの内容を新しいタグの内容で置換します。 置換は以下の手順で行われます：
+     * <ol>
+     * <li>既存のタグの開始位置を特定</li>
+     * <li>既存のタグの終了位置を計算</li>
+     * <li>新しいタグの内容で置換</li>
+     * </ol>
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：置換成功、false：置換失敗
+     */
+    boolean replaceExistingTag();
+
+    /**
      * 新しいタグを追加すべきか判断する<br>
      *
      * @return true：追加する、false：追加しない
@@ -153,13 +172,9 @@ public interface JdtsBlockReplLogic {
     boolean shouldAddNewTag();
 
     /**
-     * 現在のタグを更新する<br>
+     * タグを上書きすべきか判断する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：更新した場合、false：更新していない場合
+     * @return true：上書きする、false：上書きしない
      */
-    boolean updateCurrentTag();
+    boolean shouldOverwriteTag();
 }

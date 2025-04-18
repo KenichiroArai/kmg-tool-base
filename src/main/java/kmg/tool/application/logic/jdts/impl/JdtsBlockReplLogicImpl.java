@@ -329,6 +329,53 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
+     * 既存のタグを置換する<br>
+     * <p>
+     * 現在のJavadocタグの内容を新しいタグの内容で置換します。 置換は以下の手順で行われます：
+     * <ol>
+     * <li>既存のタグの開始位置を特定</li>
+     * <li>既存のタグの終了位置を計算</li>
+     * <li>新しいタグの内容で置換</li>
+     * </ol>
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：置換成功、false：置換失敗
+     */
+    @Override
+    public boolean replaceExistingTag() {
+
+        boolean result = false;
+
+        /* 既存のタグの開始位置を検索する */
+        final int startIdx = this.replacedJavadocBlock.indexOf(this.currentSrcJavadocTag.getTargetStr());
+
+        // 既存のタグが見つからないか
+        if (startIdx == -1) {
+            // 見つからない場合
+
+            return result;
+
+        }
+
+        /* 既存のタグの終了位置を計算する */
+        final int endIdx = startIdx + this.currentSrcJavadocTag.getTargetStr().length();
+
+        /* 新しいタグの内容を作成する */
+        final String replacementTag = this.createReplacementTagContent();
+
+        /* 置換する */
+        this.replacedJavadocBlock.replace(startIdx, endIdx, replacementTag);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
      * 新しいタグを追加すべきか判断する<br>
      *
      * @return true：追加する、false：追加しない
@@ -342,29 +389,37 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * 現在のタグを更新する<br>
+     * タグを上書きすべきか判断する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：更新した場合、false：更新していない場合
+     * @return true：上書きする、false：上書きしない
      */
     @Override
-    public boolean updateCurrentTag() {
+    public boolean shouldOverwriteTag() {
 
         boolean result = false;
 
-        // タグを上書きしないか
-        if (!this.shouldOverwriteTag()) {
-            // 上書きしない場合
+        /* 上書き設定 */
+        switch (this.currentTagConfigModel.getOverwrite()) {
 
-            return result;
+            case NONE:
+                /* 指定無し */
+            case NEVER:
+                /* 上書きしない */
+                return result;
+
+            case ALWAYS:
+                /* 常に上書き */
+                result = true;
+                break;
+
+            case IF_LOWER:
+                /* 既存のバージョンより小さい場合のみ上書き */
+
+                result = this.shouldOverwriteBasedOnVersion();
+
+                break;
 
         }
-
-        // 既存のタグを置換する
-        result = this.replaceExistingTag();
 
         return result;
 
@@ -397,34 +452,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * 既存のタグを置換する<br>
-     *
-     * @return true：置換成功、false：置換失敗
-     */
-    private boolean replaceExistingTag() {
-
-        boolean result = false;
-
-        final int startIdx = this.replacedJavadocBlock.indexOf(this.currentSrcJavadocTag.getTargetStr());
-
-        if (startIdx == -1) {
-
-            return result;
-
-        }
-
-        final int endIdx = startIdx + this.currentSrcJavadocTag.getTargetStr().length();
-
-        final String replacementTag = this.createReplacementTagContent();
-
-        this.replacedJavadocBlock.replace(startIdx, endIdx, replacementTag);
-
-        result = true;
-        return result;
-
-    }
-
-    /**
      * バージョン比較に基づいて上書きすべきか判断する<br>
      *
      * @return true：上書きする、false：上書きしない
@@ -449,42 +476,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         // 既存のバージョンより小さいければ上書きする
         result = srcVer.compareTo(destVer) > 0;
-
-        return result;
-
-    }
-
-    /**
-     * タグを上書きすべきか判断する<br>
-     *
-     * @return true：上書きする、false：上書きしない
-     */
-    private boolean shouldOverwriteTag() {
-
-        boolean result = false;
-
-        /* 上書き設定 */
-        switch (this.currentTagConfigModel.getOverwrite()) {
-
-            case NONE:
-                /* 指定無し */
-            case NEVER:
-                /* 上書きしない */
-                return result;
-
-            case ALWAYS:
-                /* 常に上書き */
-                result = true;
-                break;
-
-            case IF_LOWER:
-                /* 既存のバージョンより小さい場合のみ上書き */
-
-                result = this.shouldOverwriteBasedOnVersion();
-
-                break;
-
-        }
 
         return result;
 
