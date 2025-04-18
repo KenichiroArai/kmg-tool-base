@@ -346,7 +346,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      *
      * @since 0.1.0
      *
-     * @return true：成功、false：失敗
+     * @return true：更新した場合、false：更新していない場合
      */
     @Override
     public boolean updateCurrentTag() {
@@ -359,9 +359,54 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         }
 
-        this.updateExistingTag(this.currentTagConfigModel, this.currentSrcJavadocTag);
+        switch (this.currentTagConfigModel.getOverwrite()) {
 
-        result = true;
+            case NONE:
+                /* 指定無し */
+            case NEVER:
+                /* 上書きしない */
+                return result;
+
+            case ALWAYS:
+                /* 常に上書き */
+                break;
+
+            case IF_LOWER:
+                /* 既存のバージョンより小さい場合のみ上書き */
+                if (!this.currentTagConfigModel.getTag().isVersionValue()) {
+
+                    break;
+
+                }
+
+                final ComparableVersion srcVer = new ComparableVersion(this.currentSrcJavadocTag.getTag().get());
+                final ComparableVersion destVer = new ComparableVersion(this.currentTagConfigModel.getTagValue());
+
+                if (srcVer.compareTo(destVer) <= 0) {
+
+                    return result;
+
+                }
+
+                break;
+
+        }
+
+        final int startIdx = this.replacedJavadocBlock.indexOf(this.currentSrcJavadocTag.getTargetStr());
+
+        if (startIdx != -1) {
+
+            // TODO KenichiroArai 2025/04/09 ハードコード
+            final String newTag = String.format(" * %s %s %s", this.currentTagConfigModel.getTag().getKey(),
+                this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
+
+            final int endIdx = startIdx + this.currentSrcJavadocTag.getTargetStr().length();
+            this.replacedJavadocBlock.replace(startIdx, endIdx, newTag);
+
+            result = true;
+
+        }
+
         return result;
 
     }
@@ -376,69 +421,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         final String result = String.format(" * %s %s %s%n", this.currentTagConfigModel.getTag().getKey(),
             this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
         return result;
-
-    }
-
-    /**
-     * 既存のタグを更新する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @param jdtsTagConfigModel
-     *                                Javadocタグ設定モデル
-     * @param existingJavadocTagModel
-     *                                既存のJavadocタグモデル
-     */
-    private void updateExistingTag(final JdtsTagConfigModel jdtsTagConfigModel,
-        final JavadocTagModel existingJavadocTagModel) {
-
-        switch (jdtsTagConfigModel.getOverwrite()) {
-
-            case NONE:
-                /* 指定無し */
-            case NEVER:
-                /* 上書きしない */
-                return;
-
-            case ALWAYS:
-                /* 常に上書き */
-                break;
-
-            case IF_LOWER:
-                /* 既存のバージョンより小さい場合のみ上書き */
-                if (!jdtsTagConfigModel.getTag().isVersionValue()) {
-
-                    break;
-
-                }
-
-                final ComparableVersion srcVer = new ComparableVersion(existingJavadocTagModel.getTag().get());
-                final ComparableVersion destVer = new ComparableVersion(jdtsTagConfigModel.getTagValue());
-
-                if (srcVer.compareTo(destVer) <= 0) {
-
-                    return;
-
-                }
-
-                break;
-
-        }
-
-        // TODO KenichiroArai 2025/04/09 ハードコード
-        final String newTag = String.format(" * %s %s %s", jdtsTagConfigModel.getTag().getKey(),
-            jdtsTagConfigModel.getTagValue(), jdtsTagConfigModel.getTagDescription());
-
-        final int startIdx = this.replacedJavadocBlock.indexOf(existingJavadocTagModel.getTargetStr());
-
-        if (startIdx != -1) {
-
-            final int endIdx = startIdx + existingJavadocTagModel.getTargetStr().length();
-            this.replacedJavadocBlock.replace(startIdx, endIdx, newTag);
-
-        }
 
     }
 

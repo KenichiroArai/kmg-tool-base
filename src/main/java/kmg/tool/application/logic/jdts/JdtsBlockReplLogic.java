@@ -159,7 +159,7 @@ public interface JdtsBlockReplLogic {
      *
      * @since 0.1.0
      *
-     * @return true：成功、false：失敗
+     * @return true：更新した場合、false：更新していない場合
      */
     boolean updateCurrentTag();
 }
