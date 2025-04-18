@@ -97,6 +97,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
                 this.replacedJavadocBlock.append(newTag);
 
+                break;
+
         }
 
         this.headTagPosOffset += newTag.length();
@@ -353,12 +355,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        if ((this.currentTagConfigModel == null) || (this.currentSrcJavadocTag == null)) {
-
-            return result;
-
-        }
-
         switch (this.currentTagConfigModel.getOverwrite()) {
 
             case NONE:
@@ -373,6 +369,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
             case IF_LOWER:
                 /* 既存のバージョンより小さい場合のみ上書き */
+
                 if (!this.currentTagConfigModel.getTag().isVersionValue()) {
 
                     break;
@@ -396,12 +393,12 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         if (startIdx != -1) {
 
-            // TODO KenichiroArai 2025/04/09 ハードコード
-            final String newTag = String.format(" * %s %s %s", this.currentTagConfigModel.getTag().getKey(),
-                this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
-
             final int endIdx = startIdx + this.currentSrcJavadocTag.getTargetStr().length();
-            this.replacedJavadocBlock.replace(startIdx, endIdx, newTag);
+
+            // TODO KenichiroArai 2025/04/09 ハードコード
+            final String replacementTag = this.createReplacementTagContent();
+
+            this.replacedJavadocBlock.replace(startIdx, endIdx, replacementTag);
 
             result = true;
 
@@ -419,6 +416,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     private String createNewTagContent() {
 
         final String result = String.format(" * %s %s %s%n", this.currentTagConfigModel.getTag().getKey(),
+            this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
+        return result;
+
+    }
+
+    /**
+     * 置換用タグの内容を作成する<br>
+     *
+     * @return 置換用タグの内容
+     */
+    private String createReplacementTagContent() {
+
+        final String result = String.format(" * %s %s %s", this.currentTagConfigModel.getTag().getKey(),
             this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
         return result;
 
