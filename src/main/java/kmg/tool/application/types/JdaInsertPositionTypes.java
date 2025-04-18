@@ -24,11 +24,11 @@ public enum JdaInsertPositionTypes implements KmgComTypes<String> {
     /** 指定無し */
     NONE("指定無し", "None", "指定無し"),
 
-    /** ファイルの先頭 */
-    BEGINNING("ファイルの先頭", "beginning", "ファイルの先頭に挿入"),
+    /** Javadocタグの先頭 */
+    BEGINNING("Javadocタグの先頭", "beginning", "Javadocタグの先頭に挿入"),
 
-    /** ファイルの末尾 */
-    END("ファイルの末尾", "end", "ファイルの末尾に挿入"),
+    /** Javadocタグの末尾 */
+    END("Javadocタグの末尾", "end", "Javadocタグの末尾に挿入"),
 
     /** 現在の位置を維持 */
     PRESERVE("現在の位置を維持", "preserve", "既存のJavadocタグが存在する場合は現在の位置を維持"),

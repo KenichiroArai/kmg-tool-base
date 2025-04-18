@@ -74,7 +74,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         switch (this.currentTagConfigModel.getInsertPosition()) {
 
             case BEGINNING:
-                /* ファイルの先頭 */
+                /* Javadocタグの先頭 */
 
                 if (this.headTagPosOffset > -1) {
 
@@ -91,7 +91,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
             case NONE:
                 /* 指定無し */
             case END:
-                /* ファイルの末尾 */
+                /* Javadocタグの末尾 */
             case PRESERVE:
                 /* 現在の位置を維持 */
 

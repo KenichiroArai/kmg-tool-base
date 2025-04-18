@@ -53,8 +53,8 @@ JdtsConfigs:
 #        - field
 #
 # 3. 挿入位置（insertPosition）
-#    - beginning: ファイルの先頭に挿入
-#    - end: ファイルの末尾に挿入
+#    - beginning: Javadocタグの先頭に挿入
+#    - end: Javadocタグの末尾に挿入
 #    - preserve: 既存のJavadocタグが存在する場合は現在の位置を維持
 #
 # 4. 上書き設定（overwrite）
