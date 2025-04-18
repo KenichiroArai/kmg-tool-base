@@ -5,7 +5,6 @@ import java.util.Iterator;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.type.KmgString;
 import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
@@ -36,7 +35,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     private JdtsBlockModel srcBlockModel;
 
     /** 置換後のJavadocブロック */
-    private String replacedJavadocBlock;
+    private StringBuilder replacedJavadocBlock;
 
     /** 先頭タグ */
     private final StringBuilder headTags;
@@ -120,21 +119,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result;
 
-        final StringBuilder finalJavadocBuilder = new StringBuilder(this.replacedJavadocBlock);
-
         /* 先頭のタグを追加 */
         if (this.headTags.length() > 0) {
 
             // TODO KenichiroArai 2025/04/09 ハードコード
-            final int firstAtPos = finalJavadocBuilder.indexOf("* @");
+            final int firstAtPos = this.replacedJavadocBlock.indexOf("* @");
 
             if (firstAtPos > -1) {
 
-                finalJavadocBuilder.insert(firstAtPos - 1, this.headTags.toString());
+                this.replacedJavadocBlock.insert(firstAtPos - 1, this.headTags.toString());
 
             } else {
 
-                finalJavadocBuilder.append(this.headTags);
+                this.replacedJavadocBlock.append(this.headTags);
 
             }
 
@@ -143,11 +140,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* 末尾のタグを追加 */
         if (this.tailTags.length() > 0) {
 
-            finalJavadocBuilder.append(this.tailTags);
+            this.replacedJavadocBlock.append(this.tailTags);
 
         }
-
-        this.replacedJavadocBlock = finalJavadocBuilder.toString();
 
         result = true;
         return result;
@@ -217,7 +212,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     @Override
     public String getReplacedJavadocBlock() {
 
-        final String result = this.replacedJavadocBlock;
+        final String result = this.replacedJavadocBlock.toString();
         return result;
 
     }
@@ -268,8 +263,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         this.tagConfigIterator = this.configsModel.getJdaTagConfigModels().iterator();
         this.nextTag();
 
-        // 編集中のJavadoc
-        this.replacedJavadocBlock = this.srcBlockModel.getJavadocModel().getSrcJavadoc();
+        // 元のJavadocを置換するため、初期値として設定する
+        this.replacedJavadocBlock = new StringBuilder(this.srcBlockModel.getJavadocModel().getSrcJavadoc());
 
         result = true;
         return result;
@@ -327,10 +322,11 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         }
 
-        this.replacedJavadocBlock
-            = this.replacedJavadocBlock.replace(this.currentSrcJavadocTag.getTargetStr(), KmgString.EMPTY);
-        result = true;
+        final int startIndex = this.replacedJavadocBlock.indexOf(this.currentSrcJavadocTag.getTargetStr());
+        final int endIndex   = startIndex + this.currentSrcJavadocTag.getTargetStr().length();
+        this.replacedJavadocBlock.delete(startIndex, endIndex);
 
+        result = true;
         return result;
 
     }
@@ -410,8 +406,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         }
 
         this.updateExistingTag(this.currentTagConfigModel, this.currentSrcJavadocTag);
-        result = true;
 
+        result = true;
         return result;
 
     }
@@ -481,7 +477,14 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         final String newTag = String.format(" * %s %s %s", jdtsTagConfigModel.getTag().getKey(),
             jdtsTagConfigModel.getTagValue(), jdtsTagConfigModel.getTagDescription());
 
-        this.replacedJavadocBlock = this.replacedJavadocBlock.replace(existingJavadocTagModel.getTargetStr(), newTag);
+        final int startIdx = this.replacedJavadocBlock.indexOf(existingJavadocTagModel.getTargetStr());
+
+        if (startIdx != -1) {
+
+            final int endIdx = startIdx + existingJavadocTagModel.getTargetStr().length();
+            this.replacedJavadocBlock.replace(startIdx, endIdx, newTag);
+
+        }
 
     }
 }
