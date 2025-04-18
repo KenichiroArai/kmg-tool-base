@@ -37,11 +37,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     /** 置換後のJavadocブロック */
     private StringBuilder replacedJavadocBlock;
 
-    /** 先頭タグ */
-    private final StringBuilder headTags;
-
-    /** 末尾タグ */
-    private final StringBuilder tailTags;
+    /** 先頭タグの位置インデックス */
+    private int headTagPosIndex;
 
     /** タグ構成のイテレータ */
     private Iterator<JdtsTagConfigModel> tagConfigIterator;
@@ -51,16 +48,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
     /** 現在の元のJavadocタグ */
     private JavadocTagModel currentSrcJavadocTag;
-
-    /**
-     * デフォルトコンストラクタ
-     */
-    public JdtsBlockReplLogicImpl() {
-
-        this.headTags = new StringBuilder();
-        this.tailTags = new StringBuilder();
-
-    }
 
     /**
      * 新しいタグを作成して指定位置に追加する<br>
@@ -89,7 +76,16 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
             case BEGINNING:
                 /* ファイルの先頭 */
 
-                this.headTags.append(newTag);
+                if (this.headTagPosIndex > -1) {
+
+                    this.replacedJavadocBlock.insert(this.headTagPosIndex - 1, newTag);
+
+                } else {
+
+                    this.replacedJavadocBlock.append(newTag);
+
+                }
+
                 break;
 
             case NONE:
@@ -99,53 +95,14 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
             case PRESERVE:
                 /* 現在の位置を維持 */
 
-                this.tailTags.append(newTag);
+                this.replacedJavadocBlock.append(newTag);
 
         }
 
-    }
+        this.headTagPosIndex += newTag.length();
 
-    /**
-     * 最終的なJavadocを構築する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：成功、false：失敗
-     */
-    @Override
-    public boolean buildFinalJavadoc() {
-
-        boolean result;
-
-        /* 先頭のタグを追加 */
-        if (this.headTags.length() > 0) {
-
-            // TODO KenichiroArai 2025/04/09 ハードコード
-            final int firstAtPos = this.replacedJavadocBlock.indexOf("* @");
-
-            if (firstAtPos > -1) {
-
-                this.replacedJavadocBlock.insert(firstAtPos - 1, this.headTags.toString());
-
-            } else {
-
-                this.replacedJavadocBlock.append(this.headTags);
-
-            }
-
-        }
-
-        /* 末尾のタグを追加 */
-        if (this.tailTags.length() > 0) {
-
-            this.replacedJavadocBlock.append(this.tailTags);
-
-        }
-
-        result = true;
-        return result;
+        // TODO KenichiroArai 2025/04/18 デバッグ用
+        System.out.println(String.format("headTagPosIndex=[%d]", this.headTagPosIndex));
 
     }
 
@@ -257,14 +214,15 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         this.configsModel = configsModel;
         this.srcBlockModel = srcBlockModel;
 
-        this.headTags.setLength(0);
-        this.tailTags.setLength(0);
-
         this.tagConfigIterator = this.configsModel.getJdaTagConfigModels().iterator();
         this.nextTag();
 
         // 元のJavadocを置換するため、初期値として設定する
         this.replacedJavadocBlock = new StringBuilder(this.srcBlockModel.getJavadocModel().getSrcJavadoc());
+
+        // TODO KenichiroArai 2025/04/09 ハードコード
+        this.headTagPosIndex = this.replacedJavadocBlock.indexOf("* @");
+        System.out.println(String.format("headTagPosIndex=[%d]", this.headTagPosIndex));
 
         result = true;
         return result;
@@ -487,4 +445,5 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         }
 
     }
+
 }

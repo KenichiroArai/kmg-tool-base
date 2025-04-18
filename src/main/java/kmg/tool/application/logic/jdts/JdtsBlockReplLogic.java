@@ -40,17 +40,6 @@ public interface JdtsBlockReplLogic {
     void addNewTagByPosition();
 
     /**
-     * 最終的なJavadocを構築する<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：成功、false：失敗
-     */
-    boolean buildFinalJavadoc();
-
-    /**
      * 構成モデルを返す<br>
      *
      * @author KenichiroArai

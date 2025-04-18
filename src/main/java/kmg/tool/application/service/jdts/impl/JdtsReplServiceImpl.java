@@ -241,9 +241,6 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                 /* 次のタグを処理するか */
             } while (this.jdtsBlockReplLogic.nextTag());
 
-            /* Javadocの最終的な結果を組み立てる */
-            this.jdtsBlockReplLogic.buildFinalJavadoc();
-
             /* コード全体に反映する */
 
             // 置換後のJavadocブロックを取得する
