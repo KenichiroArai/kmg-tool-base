@@ -223,14 +223,18 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                 }
 
-                /* タグの位置が指定されている場合は、指定値に置換する */
-                // TODO KenichiroArai 2025/04/18 指定値に置換する処理を追加
-
                 /* タグを更新処理する */
 
                 // タグを上書きしないか
                 if (!this.jdtsBlockReplLogic.shouldOverwriteTag()) {
                     // 上書きしない場合
+
+                    continue;
+
+                }
+
+                /* タグの位置が指定されている場合は、指定値に置換する */
+                if (this.jdtsBlockReplLogic.repositionTagIfNeeded()) {
 
                     continue;
 

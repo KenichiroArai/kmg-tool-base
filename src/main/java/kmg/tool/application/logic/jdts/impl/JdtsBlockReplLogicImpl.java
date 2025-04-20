@@ -9,6 +9,7 @@ import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
+import kmg.tool.application.types.JdaInsertPositionTypes;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
@@ -324,6 +325,47 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         /* 現在のタグを削除する */
         result = this.removeCurrentTag();
+        return result;
+
+    }
+
+    /**
+     * タグを指定位置に再配置する<br>
+     * <p>
+     * タグの位置が指定されている場合（BEGINNING、END）、タグを削除して指定位置に再配置します。
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：再配置成功、false：再配置不要または失敗
+     */
+    @Override
+    public boolean repositionTagIfNeeded() {
+
+        boolean result = false;
+
+        final JdaInsertPositionTypes position = this.currentTagConfigModel.getInsertPosition();
+
+        // 位置指定がNONEまたはPRESERVEの場合は再配置不要
+        if (position == JdaInsertPositionTypes.NONE || position == JdaInsertPositionTypes.PRESERVE) {
+
+            return result;
+
+        }
+
+        // 現在のタグを削除
+        if (!this.removeCurrentTag()) {
+
+            return result;
+
+        }
+
+        // 指定位置に新しいタグを追加
+        this.addNewTagByPosition();
+
+        result = true;
         return result;
 
     }

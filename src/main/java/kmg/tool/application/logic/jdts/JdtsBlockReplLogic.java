@@ -177,4 +177,18 @@ public interface JdtsBlockReplLogic {
      * @return true：上書きする、false：上書きしない
      */
     boolean shouldOverwriteTag();
+
+    /**
+     * タグを指定位置に再配置する<br>
+     * <p>
+     * タグの位置が指定されている場合（BEGINNING、END）、タグを削除して指定位置に再配置します。
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：再配置成功、false：再配置不要または失敗
+     */
+    boolean repositionTagIfNeeded();
 }
