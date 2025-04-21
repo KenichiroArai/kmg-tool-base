@@ -45,6 +45,15 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
+    /** Javadocタグの開始文字列 */
+    private static final String JAVADOC_TAG_START = "* @";
+
+    /** 新規タグのフォーマット（改行あり） */
+    private static final String NEW_TAG_FORMAT = " * %s %s %s%n";
+
+    /** 置換用タグのフォーマット（改行なし） */
+    private static final String REPLACEMENT_TAG_FORMAT = " * %s %s %s";
+
     /** 構成モデル */
     private JdtsConfigsModel configsModel;
 
@@ -263,8 +272,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         this.replacedJavadocBlock = new StringBuilder(this.srcBlockModel.getJavadocModel().getSrcJavadoc());
 
         /* 先頭タグの位置を特定 */
-        // TODO KenichiroArai 2025/04/09 ハードコード
-        this.headTagPosOffset = this.replacedJavadocBlock.indexOf("* @");
+        this.headTagPosOffset = this.replacedJavadocBlock.indexOf(JdtsBlockReplLogicImpl.JAVADOC_TAG_START);
 
         result = true;
         return result;
@@ -549,10 +557,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     private String createNewTagContent() {
 
         /* タグ内容の生成 */
-        // TODO 2025/04/21 KenichiroArai ハードコード
-        // タグ、タグ値、タグ説明を指定のフォーマットで結合
-        final String result = String.format(" * %s %s %s%n", this.currentTagConfigModel.getTag().getKey(),
-            this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
+        final String result
+            = String.format(JdtsBlockReplLogicImpl.NEW_TAG_FORMAT, this.currentTagConfigModel.getTag().getKey(),
+                this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
         return result;
 
     }
@@ -568,10 +575,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     private String createReplacementTagContent() {
 
         /* 置換用タグ内容の生成 */
-        // TODO 2025/04/21 KenichiroArai ハードコード
-        // タグ、タグ値、タグ説明を指定のフォーマットで結合（改行なし）
-        final String result = String.format(" * %s %s %s", this.currentTagConfigModel.getTag().getKey(),
-            this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
+        final String result
+            = String.format(JdtsBlockReplLogicImpl.REPLACEMENT_TAG_FORMAT, this.currentTagConfigModel.getTag().getKey(),
+                this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
         return result;
 
     }
