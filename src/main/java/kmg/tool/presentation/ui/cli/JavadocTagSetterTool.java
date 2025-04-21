@@ -10,6 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
+import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolException;
@@ -27,9 +28,8 @@ public class JavadocTagSetterTool extends AbstractInputTool {
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
-    /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH
-        = Paths.get(JavadocTagSetterTool.BASE_PATH.toString(), "template/JavadocTagSetterTool.yml");
+    /** 定義ファイルのパスのフォーマット */
+    private static final String DEFINITION_FILE_PATH_FORMAT = "template/%s.yml";
 
     /**
      * <h3>ツール名</h3>
@@ -51,6 +51,9 @@ public class JavadocTagSetterTool extends AbstractInputTool {
 
     /** 対象パス */
     private Path targetPath;
+
+    /** 定義ファイルのパス */
+    private final Path definitionPath;
 
     /**
      * メインメソッド
@@ -78,12 +81,13 @@ public class JavadocTagSetterTool extends AbstractInputTool {
      * Javadoc追加ツールのインスタンスを生成します。
      * </p>
      * <p>
-     * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
+     * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトの定義ファイルのパスも設定されます。
      * </p>
      */
     public JavadocTagSetterTool() {
 
         super(JavadocTagSetterTool.TOOL_NAME);
+        this.definitionPath = this.getDefaultDefinitionPath();
 
     }
 
@@ -142,7 +146,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
 
         try {
 
-            result &= this.jdtsService.initialize(this.targetPath, JavadocTagSetterTool.TEMPLATE_PATH);
+            result &= this.jdtsService.initialize(this.targetPath, this.definitionPath);
 
         } catch (final KmgToolException e) {
 
@@ -164,6 +168,23 @@ public class JavadocTagSetterTool extends AbstractInputTool {
             result = false;
 
         }
+
+        return result;
+
+    }
+
+    /**
+     * デフォルト定義ファイルのパスを返す。
+     *
+     * @return デフォルト定義パス
+     */
+    private Path getDefaultDefinitionPath() {
+
+        Path         result;
+        final String className        = KmgPathUtils.getSimpleClassName(this.getClass());
+        final String templateFileName = String.format(JavadocTagSetterTool.DEFINITION_FILE_PATH_FORMAT, className);
+
+        result = Paths.get(JavadocTagSetterTool.BASE_PATH.toString(), templateFileName);
 
         return result;
 

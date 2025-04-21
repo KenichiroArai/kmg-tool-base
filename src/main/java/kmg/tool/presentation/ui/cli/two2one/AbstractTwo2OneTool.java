@@ -19,7 +19,7 @@ import kmg.tool.presentation.ui.cli.AbstractIoTool;
  */
 public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
-    /** テンプレートファイルのパスフォーマット */
+    /** テンプレートファイルのパスのフォーマット */
     private static final String TEMPLATE_FILE_PATH_FORMAT = "template/%s.yml";
 
     /** メッセージソース */
