@@ -23,8 +23,6 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 })
 public class JavadocTagSetterTool extends AbstractInputTool {
 
-    // TODO KenichiroArai 2025/04/02 パスの自動設定
-
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
