@@ -88,24 +88,27 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     @Override
     public void addNewTagByPosition() {
 
-        // 新しいタグを作成
+        /* 新しいタグの生成 */
         final String newTag = this.createNewTagContent();
 
+        /* タグの挿入位置に基づく処理 */
         switch (this.currentTagConfigModel.getInsertPosition()) {
 
             case BEGINNING:
                 /* Javadocタグの先頭 */
 
+                // 先頭タグの位置が特定されているか確認
                 if (this.headTagPosOffset > -1) {
 
+                    // 特定されている場合は指定位置に挿入
                     this.replacedJavadocBlock.insert(this.headTagPosOffset, newTag);
 
                 } else {
 
+                    // 特定されていない場合は末尾に追加
                     this.replacedJavadocBlock.append(newTag);
 
                 }
-
                 break;
 
             case NONE:
@@ -113,14 +116,13 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
             case END:
                 /* Javadocタグの末尾 */
             case PRESERVE:
-                /* 現在の位置を維持 */
-
+                /* 現在の位置を維持（末尾に追加） */
                 this.replacedJavadocBlock.append(newTag);
-
                 break;
 
         }
 
+        /* 先頭タグの位置オフセットを更新 */
         this.headTagPosOffset += newTag.length();
 
     }
@@ -248,15 +250,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
+        /* 初期パラメータの設定 */
         this.configsModel = configsModel;
         this.srcBlockModel = srcBlockModel;
 
+        /* タグ設定のイテレータを初期化 */
         this.tagConfigIterator = this.configsModel.getJdaTagConfigModels().iterator();
         this.nextTag();
 
-        // 元のJavadocを置換するため、初期値として設定する
+        /* Javadocブロックの初期化 */
+        // 元のJavadocを置換用バッファにコピー
         this.replacedJavadocBlock = new StringBuilder(this.srcBlockModel.getJavadocModel().getSrcJavadoc());
 
+        /* 先頭タグの位置を特定 */
         // TODO KenichiroArai 2025/04/09 ハードコード
         this.headTagPosOffset = this.replacedJavadocBlock.indexOf("* @");
 
@@ -282,15 +288,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
+        /* 次のタグが存在するか確認 */
         if (!this.tagConfigIterator.hasNext()) {
 
+            // 次のタグが存在しない場合、現在のタグをクリア
             this.currentTagConfigModel = null;
             this.currentSrcJavadocTag = null;
             return result;
 
         }
 
+        /* 次のタグを設定 */
         this.currentTagConfigModel = this.tagConfigIterator.next();
+        // 対応する元のJavadocタグを検索して設定
         this.currentSrcJavadocTag
             = this.srcBlockModel.getJavadocModel().getJavadocTagsModel().findByTag(this.currentTagConfigModel.getTag());
 
@@ -316,14 +326,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
+        /* 現在のタグの存在確認 */
         if (this.currentSrcJavadocTag == null) {
 
+            // タグが存在しない場合は処理を終了
             return result;
 
         }
 
+        /* タグの削除処理 */
+        // タグの開始位置と終了位置を特定
         final int startIndex = this.replacedJavadocBlock.indexOf(this.currentSrcJavadocTag.getTargetStr());
         final int endIndex   = startIndex + this.currentSrcJavadocTag.getTargetStr().length();
+        // 指定範囲のタグを削除
         this.replacedJavadocBlock.delete(startIndex, endIndex);
 
         result = true;
@@ -376,47 +391,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * タグを指定位置に再配置する<br>
-     * <p>
-     * タグの位置が指定されている場合（BEGINNING、END）、 タグを削除して指定位置に再配置します。 位置指定がない場合（NONE、PRESERVE）は何も行いません。
-     * </p>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：再配置成功、false：再配置不要または失敗
-     */
-    @Override
-    public boolean repositionTagIfNeeded() {
-
-        boolean result = false;
-
-        final JdaInsertPositionTypes position = this.currentTagConfigModel.getInsertPosition();
-
-        // 位置指定がNONEまたはPRESERVEの場合は再配置不要
-        if (position == JdaInsertPositionTypes.NONE || position == JdaInsertPositionTypes.PRESERVE) {
-
-            return result;
-
-        }
-
-        // 現在のタグを削除
-        if (!this.removeCurrentTag()) {
-
-            return result;
-
-        }
-
-        // 指定位置に新しいタグを追加
-        this.addNewTagByPosition();
-
-        result = true;
-        return result;
-
-    }
-
-    /**
      * 既存のタグを置換する<br>
      * <p>
      * 現在のJavadocタグの内容を新しいタグの内容で置換します。 置換は以下の手順で行われます：
@@ -441,25 +415,63 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        /* 既存のタグの開始位置を検索する */
+        /* 既存タグの位置特定 */
         final int startIdx = this.replacedJavadocBlock.indexOf(this.currentSrcJavadocTag.getTargetStr());
 
-        // 既存のタグが見つからないか
+        // 既存のタグが見つからない場合は処理を終了
         if (startIdx == -1) {
-            // 見つからない場合
 
             return result;
 
         }
 
-        /* 既存のタグの終了位置を計算する */
+        /* 置換範囲の計算 */
         final int endIdx = startIdx + this.currentSrcJavadocTag.getTargetStr().length();
 
-        /* 新しいタグの内容を作成する */
+        /* 新しいタグ内容の生成と置換 */
         final String replacementTag = this.createReplacementTagContent();
-
-        /* 置換する */
         this.replacedJavadocBlock.replace(startIdx, endIdx, replacementTag);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * タグを指定位置に再配置する<br>
+     * <p>
+     * タグの位置が指定されている場合（BEGINNING、END）、 タグを削除して指定位置に再配置します。 位置指定がない場合（NONE、PRESERVE）は何も行いません。
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：再配置成功、false：再配置不要または失敗
+     */
+    @Override
+    public boolean repositionTagIfNeeded() {
+
+        boolean result = false;
+
+        final JdaInsertPositionTypes position = this.currentTagConfigModel.getInsertPosition();
+
+        // 位置指定がNONEまたはPRESERVEの場合は再配置不要
+        if ((position == JdaInsertPositionTypes.NONE) || (position == JdaInsertPositionTypes.PRESERVE)) {
+
+            return result;
+
+        }
+
+        // 現在のタグを削除
+        if (!this.removeCurrentTag()) {
+
+            return result;
+
+        }
+
+        // 指定位置に新しいタグを追加
+        this.addNewTagByPosition();
 
         result = true;
         return result;
@@ -536,6 +548,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      */
     private String createNewTagContent() {
 
+        /* タグ内容の生成 */
+        // TODO 2025/04/21 KenichiroArai ハードコード
+        // タグ、タグ値、タグ説明を指定のフォーマットで結合
         final String result = String.format(" * %s %s %s%n", this.currentTagConfigModel.getTag().getKey(),
             this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
         return result;
@@ -552,6 +567,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      */
     private String createReplacementTagContent() {
 
+        /* 置換用タグ内容の生成 */
+        // TODO 2025/04/21 KenichiroArai ハードコード
+        // タグ、タグ値、タグ説明を指定のフォーマットで結合（改行なし）
         final String result = String.format(" * %s %s %s", this.currentTagConfigModel.getTag().getKey(),
             this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
         return result;
@@ -570,21 +588,22 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        // バージョンのタグではないか
+        /* バージョンタグの確認 */
+        // バージョンタグでない場合は上書きを許可
         if (!this.currentTagConfigModel.getTag().isVersionValue()) {
-            // タグでない場合
 
             result = true;
             return result;
 
         }
 
-        /* バージョン比較 */
-
+        /* バージョン比較処理 */
+        // 既存バージョンと新規バージョンをComparableVersionに変換
         final ComparableVersion srcVer  = new ComparableVersion(this.currentSrcJavadocTag.getTag().get());
         final ComparableVersion destVer = new ComparableVersion(this.currentTagConfigModel.getTagValue());
 
-        // 既存のバージョンより小さいければ上書きする
+        // 既存のバージョンと新規バージョンを比較
+        // 既存のバージョンが新規バージョンより大きい場合に上書きを許可
         result = srcVer.compareTo(destVer) > 0;
 
         return result;
