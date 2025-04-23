@@ -87,30 +87,22 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      */
     public boolean initialize() {
 
-        final boolean result = false;
-
-        boolean initializeResult;
+        boolean result;
 
         try {
 
-            initializeResult = this.getIoService().initialize(AbstractIoTool.getInputPath(), this.getTemplatePath(),
+            result = this.getIoService().initialize(AbstractIoTool.getInputPath(), this.getTemplatePath(),
                 AbstractIoTool.getOutputPath());
 
         } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 ログメッセージ
-            e.printStackTrace();
-            return result;
-
-        }
-
-        if (!initializeResult) {
 
             // ログの出力
             final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41001;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
-            this.logger.error(msg);
+            this.logger.error(msg, e);
+
+            result = false;
 
         }
 

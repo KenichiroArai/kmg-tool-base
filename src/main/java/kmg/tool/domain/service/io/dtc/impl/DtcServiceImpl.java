@@ -204,7 +204,7 @@ public class DtcServiceImpl implements DtcService {
             do {
 
                 /* 1行データを読み込む */
-                final boolean isRead = this.readOneLineData();
+                final boolean isRead = this.dtcLogic.readOneLineOfData();
 
                 if (!isRead) {
 
@@ -277,36 +277,4 @@ public class DtcServiceImpl implements DtcService {
 
     }
 
-    /**
-     * 1行データを読み込む。
-     *
-     * @return true：読み込み成功、false：読み込み終了
-     *
-     * @throws KmgToolException
-     *                          KMGツール例外
-     */
-    private boolean readOneLineData() throws KmgToolException {
-
-        boolean result = false;
-
-        try {
-
-            result = this.dtcLogic.readOneLineOfData();
-
-        } catch (final KmgToolException e) {
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12003;
-            final Object[]               logMsgArgs  = {
-                this.inputPath.toString(),
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
-
-        }
-
-        return result;
-
-    }
 }

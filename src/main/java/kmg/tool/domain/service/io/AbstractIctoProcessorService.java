@@ -215,17 +215,6 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
 
             result = this.writeCsvFile();
 
-        } catch (final KmgToolException e) {
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12005;
-            final Object[]               logMsgArgs  = {
-                this.getOutputPath().toString(),
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
-
         } finally {
 
             final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12006;
