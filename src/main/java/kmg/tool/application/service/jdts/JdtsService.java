@@ -15,18 +15,24 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 public interface JdtsService {
 
     /**
+     * 定義ファイルのパスを返す。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return 定義ファイルのパス
+     */
+    Path getDefinitionPath();
+
+    /**
      * 対象ファイルパス
      *
      * @return 対象ファイルパス
      */
     Path getTargetPath();
-
-    /**
-     * テンプレートファイルパス
-     *
-     * @return テンプレートファイルパス
-     */
-    Path getTemplatePath();
 
     /**
      * 初期化する

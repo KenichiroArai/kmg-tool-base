@@ -83,16 +83,8 @@ public class JdtsServiceImpl implements JdtsService {
      */
     private Path targetPath;
 
-    /**
-     * テンプレートファイルパス
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     */
-    private Path templatePath;
+    /** 定義ファイルのパス */
+    private Path definitionPath;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
@@ -128,7 +120,26 @@ public class JdtsServiceImpl implements JdtsService {
     }
 
     /**
-     * 対象ファイルパス
+     * 定義ファイルのパスを返す。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return 定義ファイルのパス
+     */
+    @Override
+    public Path getDefinitionPath() {
+
+        final Path result = this.definitionPath;
+        return result;
+
+    }
+
+    /**
+     * 対象ファイルパスを返す。
      *
      * @author KenichiroArai
      *
@@ -147,25 +158,6 @@ public class JdtsServiceImpl implements JdtsService {
     }
 
     /**
-     * テンプレートファイルパス
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
-     * @return テンプレートファイルパス
-     */
-    @Override
-    public Path getTemplatePath() {
-
-        final Path result = this.templatePath;
-        return result;
-
-    }
-
-    /**
      * 初期化する
      *
      * @author KenichiroArai
@@ -175,9 +167,9 @@ public class JdtsServiceImpl implements JdtsService {
      * @version 0.1.0
      *
      * @param targetPath
-     *                     対象ファイルパス
-     * @param templatePath
-     *                     テンプレートファイルパス
+     *                       対象ファイルパス
+     * @param definitionPath
+     *                       定義ファイルのパス
      *
      * @return true：成功、false：失敗
      *
@@ -186,12 +178,12 @@ public class JdtsServiceImpl implements JdtsService {
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolException {
+    public boolean initialize(final Path targetPath, final Path definitionPath) throws KmgToolException {
 
         boolean result = false;
 
         this.targetPath = targetPath;
-        this.templatePath = templatePath;
+        this.definitionPath = definitionPath;
 
         /* Javadocタグ設定の入出力ロジックの初期化 */
         this.jdtsIoLogic.initialize(targetPath);
@@ -304,11 +296,11 @@ public class JdtsServiceImpl implements JdtsService {
 
         try {
 
-            yamlData = KmgYamlUtils.load(this.templatePath);
+            yamlData = KmgYamlUtils.load(this.definitionPath);
 
         } catch (final KmgFundException e) {
 
-            // TODO KenichiroArai 2025/04/11 例外処理
+            // TODO KenichiroArai 2025/04/24 例外処理
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);

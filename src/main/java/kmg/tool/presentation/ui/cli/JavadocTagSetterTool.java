@@ -138,10 +138,18 @@ public class JavadocTagSetterTool extends AbstractInputTool {
 
         } catch (final KmgToolException e) {
 
-            // TODO KenichiroArai 2025/04/23 例外処理
+            // ログの出力
+            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41003;
+            final Object[]               messageArgs = {};
+            final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
+            this.logger.error(msg, e);
+
+            result = false;
+
+        } catch (final Exception e) {
 
             // ログの出力
-            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.NONE;
+            final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41004;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);
@@ -154,6 +162,24 @@ public class JavadocTagSetterTool extends AbstractInputTool {
 
         }
 
+        return result;
+
+    }
+
+    /**
+     * 定義ファイルのパスを返す。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return 定義ファイルのパス
+     */
+    public Path getDefinitionPath() {
+
+        final Path result = this.definitionPath;
         return result;
 
     }

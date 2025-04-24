@@ -348,6 +348,28 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      */
     KMGTOOL_LOG41002("初期化で例外が発生しました。"),
 
+    /**
+     * 実行中にKMGツール例外が発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG41003("実行中にKMGツール例外が発生しました。"),
+
+    /**
+     * 実行中に想定外の例外が発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG41004("実行中に想定外の例外が発生しました。"),
+
     /* 定義：終了 */
     ;
 
