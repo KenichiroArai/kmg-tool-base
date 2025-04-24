@@ -10,6 +10,7 @@ import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
  * 入力処理ツール抽象クラス
@@ -66,6 +67,9 @@ public abstract class AbstractInputTool extends AbstractTool {
      * @since 0.1.0
      */
     private final String toolName;
+
+    /** 対象パス */
+    private Path targetPath;
 
     /**
      * 基準パスを返す。
@@ -166,22 +170,24 @@ public abstract class AbstractInputTool extends AbstractTool {
     @Override
     public boolean execute() {
 
-        boolean result = false;
+        boolean result = true;
 
         final KmgPfaMeasService measService = new KmgPfaMeasServiceImpl(this.toolName);
 
+        /* 開始 */
+        measService.start();
+
         try {
 
-            /* 開始 */
-            measService.start();
-
             /* 処理 */
-            final boolean processResult = this.getInputService().process();
 
-            if (!processResult) {
+            // 入力ファイルから対象パスを設定
+            result &= this.setTargetPathFromInputFile();
+
+            if (!result) {
 
                 /* メッセージの出力 */
-                // TODO KenichiroArai 2025/03/28 メッセージ
+                // TODO KenichiroArai 2025/04/24 メッセージ
                 final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
                 final Object[]               messageArgs = {};
                 final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
@@ -191,25 +197,28 @@ public abstract class AbstractInputTool extends AbstractTool {
 
             }
 
+            /* ツールのメイン処理を実行する */
+            result &= this.executeMain();
+
             /* 成功 */
             // メッセージの出力
-            // TODO KenichiroArai 2025/03/28 メッセージ
+            // TODO KenichiroArai 2025/04/24 メッセージ
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
 
-            result = true;
-
-        } catch (final Exception e) {
+        } catch (final KmgToolException e) {
 
             /* 失敗 */
             // メッセージの出力
-            // TODO KenichiroArai 2025/03/28 メッセージ
+            // TODO KenichiroArai 2025/04/24 メッセージ
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);
+
+            result = false;
 
         } finally {
 
@@ -224,10 +233,65 @@ public abstract class AbstractInputTool extends AbstractTool {
     }
 
     /**
+     * 対象パスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 対象パス
+     */
+    public Path getTargetPath() {
+
+        final Path result = this.targetPath;
+        return result;
+
+    }
+
+    /**
+     * ツールのメイン処理を実行する
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    @SuppressWarnings("static-method")
+    protected boolean executeMain() throws KmgToolException {
+
+        final boolean result = true;
+        return result;
+
+    }
+
+    /**
      * 入力サービスを返す。
      *
      * @return 入力サービス
      */
     protected abstract InputService getInputService();
+
+    /**
+     * 入力ファイルから対象パスを設定する
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolException
+     *                          KMGツール例外
+     */
+    private boolean setTargetPathFromInputFile() throws KmgToolException {
+
+        boolean result = true;
+
+        result &= this.getInputService().initialize(AbstractInputTool.getInputPath());
+
+        result &= this.getInputService().process();
+
+        final String content = this.getInputService().getContent();
+        this.targetPath = Paths.get(content);
+
+        return result;
+
+    }
 
 }

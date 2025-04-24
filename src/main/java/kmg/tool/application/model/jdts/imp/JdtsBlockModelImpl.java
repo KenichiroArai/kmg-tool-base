@@ -28,6 +28,15 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 public class JdtsBlockModelImpl implements JdtsBlockModel {
 
+    /** Javadocブロック終了文字列 */
+    private static final String JAVADOC_END = "*/";
+
+    /** アノテーション開始文字 */
+    private static final String ANNOTATION_START = "@";
+
+    /** 改行文字の正規表現 */
+    private static final String LINE_SEPARATOR_REGEX = "\\R";
+
     /** 識別子 */
     private final UUID id;
 
@@ -164,16 +173,14 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         boolean result = false;
 
         // 「*/」でJavadocとCodeのブラックに分ける
-        // TODO KenichiroArai 2025/04/03 ハードコード
-        final String[] javadocCodeBlock = this.orgBlock.split(String.format("%s\\s+", Pattern.quote("*/")), 2);
+        final String[] javadocCodeBlock
+            = this.orgBlock.split(String.format("%s\\s+", Pattern.quote(JdtsBlockModelImpl.JAVADOC_END)), 2);
 
         // Javadocモデルに変換する
         this.javadocModel = new JavadocModelImpl(javadocCodeBlock[0]);
 
-        // TODO KenichiroArai 2025/04/09 コードを精査する
-
         // アノテーションと元のコードを分割
-        final String[] codeLines = javadocCodeBlock[1].split("\\R");
+        final String[] codeLines = javadocCodeBlock[1].split(JdtsBlockModelImpl.LINE_SEPARATOR_REGEX);
 
         final StringBuilder wkCodeBlock = new StringBuilder();
 
@@ -192,7 +199,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
             if (!isCodeSection) {
 
-                if (trimmedLine.startsWith("@")) {
+                if (trimmedLine.startsWith(JdtsBlockModelImpl.ANNOTATION_START)) {
 
                     this.annotations.add(trimmedLine);
 

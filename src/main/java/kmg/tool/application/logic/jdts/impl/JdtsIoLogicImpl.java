@@ -31,6 +31,9 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class JdtsIoLogicImpl implements JdtsIoLogic {
 
+    /** 対象ファイルの拡張子 */
+    private static final String TARGET_FILE_EXTENSION = ".java";
+
     /**
      * 対象ファイルパス
      *
@@ -196,8 +199,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         try (final Stream<Path> streamPath = Files.walk(this.targetPath)) {
 
-            // TODO KenichiroArai 2025/03/29 ハードコード
-            fileList = streamPath.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java"))
+            fileList = streamPath.filter(Files::isRegularFile)
+                .filter(path -> path.toString().endsWith(JdtsIoLogicImpl.TARGET_FILE_EXTENSION))
                 .collect(Collectors.toList());
 
         } catch (final IOException e) {

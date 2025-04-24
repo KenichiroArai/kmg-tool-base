@@ -19,6 +19,7 @@ import kmg.tool.application.model.jdts.imp.JdtsConfigsModelImpl;
 import kmg.tool.application.service.jdts.JdtsReplService;
 import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -212,7 +213,12 @@ public class JdtsServiceImpl implements JdtsService {
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/03/29 処理の開始ログ
+        // TODO KenichiroArai 2025/04/24 処理の開始ログ Javadocタグ設定処理を開始します。
+        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.NONE;
+        final Object[]               startLogMsgArgs  = {};
+        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+            startLogMsgArgs);
+        this.logger.debug(startLogMsg);
 
         /* 準備 */
 
@@ -262,9 +268,13 @@ public class JdtsServiceImpl implements JdtsService {
             /* 次のファイルに進む */
         } while (this.jdtsIoLogic.nextFile());
 
-        // TODO KenichiroArai 2025/03/29 処理の終了ログ
-        System.out.println(String.format("読み込みファイル数: %d", this.jdtsIoLogic.getFilePathList().size()));
-        System.out.println(String.format("最終合計行数: %d", this.jdtsReplService.getTotalRows()));
+        // TODO KenichiroArai 2025/04/24 処理の終了ログ Javadocタグ設定処理を終了します。\n読み込みファイル数:[{0}]\n最終合計行数:[{1}]
+        final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.NONE;
+        final Object[]               endLogMsgArgs  = {
+            this.jdtsIoLogic.getFilePathList().size(), this.jdtsReplService.getTotalRows(),
+        };
+        final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
+        this.logger.debug(endLogMsg);
 
         result = true;
         return result;

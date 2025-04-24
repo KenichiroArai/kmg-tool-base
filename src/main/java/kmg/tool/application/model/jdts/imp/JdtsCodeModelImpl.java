@@ -22,6 +22,12 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 public class JdtsCodeModelImpl implements JdtsCodeModel {
 
+    /** Javadocコメント開始文字列 */
+    private static final String JAVADOC_START = "/**";
+
+    /** Javadocブロック分割用の正規表現フォーマット */
+    private static final String JAVADOC_BLOCK_SPLIT_FORMAT = "%s\\s+";
+
     /** オリジナルコード */
     private final String orgCode;
 
@@ -79,7 +85,6 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
 
     }
 
-    // TODO KenichiroArai 2025/04/13 メソッド名を見直す
     /**
      * 解析する
      *
@@ -91,8 +96,8 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
     public void parse() throws KmgToolException {
 
         // 「/**」でブロックに分ける
-        // TODO KenichiroArai 2025/04/03 ハードコード
-        final String[] blocks = this.orgCode.split(String.format("%s\\s+", Pattern.quote("/**")));
+        final String[] blocks = this.orgCode.split(String.format(JdtsCodeModelImpl.JAVADOC_BLOCK_SPLIT_FORMAT,
+            Pattern.quote(JdtsCodeModelImpl.JAVADOC_START)));
 
         // ブロックの0番目はJavadocではないので、1番目から進める
         for (int i = 1; i < blocks.length; i++) {
