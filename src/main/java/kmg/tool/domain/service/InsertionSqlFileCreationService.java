@@ -3,7 +3,7 @@ package kmg.tool.domain.service;
 import java.nio.file.Path;
 
 /**
- * 挿入ＳＱＬファイル作成サービスインタフェース<br>
+ * 挿入SQLファイル作成サービスインタフェース<br>
  *
  * @author KenichiroArai
  *
@@ -32,7 +32,7 @@ public interface InsertionSqlFileCreationService {
     void initialize(final Path inputPath, final Path outputPath, short threadNum);
 
     /**
-     * 挿入ＳＱＬを出力する<br>
+     * 挿入SQLを出力する<br>
      */
     void outputInsertionSql();
 }

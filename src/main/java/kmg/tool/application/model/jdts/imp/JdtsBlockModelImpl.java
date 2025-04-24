@@ -158,7 +158,6 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
     }
 
-    // TODO KenichiroArai 2025/04/13 メソッド名を見直す
     /**
      * 解析する
      *

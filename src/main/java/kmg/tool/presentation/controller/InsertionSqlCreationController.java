@@ -20,7 +20,7 @@ import kmg.tool.domain.service.InsertionSqlCreationService;
 import kmg.tool.domain.service.impl.InsertionSqlCreationServiceImpl;
 
 /**
- * 挿入ＳＱＬ作成画面画面コントローラ<br>
+ * 挿入SQL作成画面画面コントローラ<br>
  *
  * @author KenichiroArai
  *
@@ -112,7 +112,7 @@ public class InsertionSqlCreationController implements Initializable {
      */
     protected void mainProc(final Path inputPath, final Path outputPath) {
 
-        /* 挿入ＳＱＬ作成サービス */
+        /* 挿入SQL作成サービス */
         final InsertionSqlCreationService insertSqlCreationService = new InsertionSqlCreationServiceImpl();
         final short                       threadNum                = Short.parseShort(this.txtThreadNum.getText());
         insertSqlCreationService.initialize(inputPath, outputPath, threadNum);

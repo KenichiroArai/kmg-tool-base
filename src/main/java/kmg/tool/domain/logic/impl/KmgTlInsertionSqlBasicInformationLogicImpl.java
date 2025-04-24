@@ -12,7 +12,7 @@ import kmg.core.infrastructure.utils.KmgPoiUtils;
 import kmg.tool.domain.logic.KmgTlInsertionSqlBasicInformationLogic;
 
 /**
- * ＫＭＧツール挿入ＳＱＬ基本情報ロジック<br>
+ * ＫＭＧツール挿入SQL基本情報ロジック<br>
  *
  * @author KenichiroArai
  *

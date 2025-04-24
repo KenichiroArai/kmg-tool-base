@@ -28,8 +28,6 @@ import kmg.tool.application.service.two2one.AccessorCreationService;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-// TODO KenichiroArai 2025/04/23 @SpringBootApplicationは必要か？
-// @SpringBootApplication
 public class InterfaceAccessorCreationTool extends AbstractDtcTool {
 
     /**
