@@ -609,7 +609,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
             case DATE:
                 // 日付型
                 final String dateStrTmp = KmgPoiUtils.getStringValue(dataCell);
-                // TODO KenichiroArai 2025/04/25 【優先度：低】：列挙型
+                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：列挙型
                 if (KmgString.equals("-infinity", dateStrTmp)) {
 
                     outputData = dateStrTmp;
@@ -630,7 +630,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
             case TIME:
                 // 日時型
                 final String dateTimeStrTmp = KmgPoiUtils.getStringValue(dataCell);
-                // TODO KenichiroArai 2025/04/25 【優先度：低】：ハードコード
+                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ハードコード
                 if (KmgString.equals("-infinity", dateTimeStrTmp)) {
 
                     outputData = dateTimeStrTmp;

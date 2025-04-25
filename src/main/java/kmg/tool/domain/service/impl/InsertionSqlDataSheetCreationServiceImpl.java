@@ -92,7 +92,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 【優先度：低】：例外処理
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：例外処理
             e.printStackTrace();
             return;
 
@@ -138,7 +138,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 【優先度：低】：例外処理
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：例外処理
             e.printStackTrace();
             return;
 
