@@ -57,7 +57,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     @SuppressWarnings("unchecked")
     public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) {
 
-        // TODO KenichiroArai 2025/04/02 ハードコード
+        // TODO KenichiroArai 2025/04/25 【優先度：低】：ハードコード
         this.tagName = (String) tagConfig.get("tagName");
         this.tag = KmgJavadocTagTypes.getEnum(KmgString.concat("@", this.tagName));
         this.tagValue = (String) tagConfig.get("tagValue");

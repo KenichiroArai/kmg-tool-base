@@ -213,7 +213,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/04/24 処理の開始ログ Javadocタグ設定処理を開始します。
+        // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。Javadocタグ設定処理を開始します。
         final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.NONE;
         final Object[]               startLogMsgArgs  = {};
         final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
@@ -268,7 +268,7 @@ public class JdtsServiceImpl implements JdtsService {
             /* 次のファイルに進む */
         } while (this.jdtsIoLogic.nextFile());
 
-        // TODO KenichiroArai 2025/04/24 処理の終了ログ Javadocタグ設定処理を終了します。\n読み込みファイル数:[{0}]\n最終合計行数:[{1}]
+        // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。Javadocタグ設定処理を終了します。\n読み込みファイル数:[{0}]\n最終合計行数:[{1}]
         final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.NONE;
         final Object[]               endLogMsgArgs  = {
             this.jdtsIoLogic.getFilePathList().size(), this.jdtsReplService.getTotalRows(),
@@ -310,9 +310,11 @@ public class JdtsServiceImpl implements JdtsService {
 
         } catch (final KmgFundException e) {
 
-            // TODO KenichiroArai 2025/04/24 例外処理
+            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
-            final Object[]               genMsgArgs  = {};
+            final Object[]               genMsgArgs  = {
+                this.definitionPath.toString(),
+            };
             throw new KmgToolException(genMsgTypes, genMsgArgs, e);
 
         }

@@ -187,7 +187,7 @@ public abstract class AbstractInputTool extends AbstractTool {
             if (!result) {
 
                 /* メッセージの出力 */
-                // TODO KenichiroArai 2025/04/24 メッセージ。入力ファイルから対象パスを設定に失敗しました。
+                // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。入力ファイルから対象パスを設定に失敗しました。
                 final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
                 final Object[]               messageArgs = {};
                 final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
@@ -202,7 +202,7 @@ public abstract class AbstractInputTool extends AbstractTool {
 
             /* 成功 */
             // メッセージの出力
-            // TODO KenichiroArai 2025/04/24 メッセージ。実行が成功しました。
+            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。実行が成功しました。
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
@@ -212,7 +212,7 @@ public abstract class AbstractInputTool extends AbstractTool {
 
             /* 例外 */
             // メッセージの出力
-            // TODO KenichiroArai 2025/04/24 メッセージ。実行中に例外が発生しました。
+            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。実行中に例外が発生しました。
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);

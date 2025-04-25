@@ -118,9 +118,7 @@ public class PlainContentInputServiceImpl implements InputService {
         // 入力パスの検証
         if (inputPath == null) {
 
-            // TODO KenichiroArai 2025/04/24 メッセージ。入力ファイルパスがnullです。
-
-            // ログの出力
+            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。入力ファイルパスがnullです。
             final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {};
 
@@ -130,9 +128,7 @@ public class PlainContentInputServiceImpl implements InputService {
 
         if (!Files.exists(inputPath)) {
 
-            // TODO KenichiroArai 2025/04/24 メッセージ。入力パスファイルが存在しません。入力ファイルパス=[{0}]
-
-            // ログの出力
+            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。入力パスファイルが存在しません。入力ファイルパス=[{0}]
             final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.NONE;
             final Object[]               messageArgs = {
                 inputPath.toString()
@@ -170,7 +166,7 @@ public class PlainContentInputServiceImpl implements InputService {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/24 メッセージ。入力ファイルの読み込みに失敗しました。入力ファイルパス=[{0}]
+            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。入力ファイルの読み込みに失敗しました。入力ファイルパス=[{0}]
 
             // ログの出力
             final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.NONE;

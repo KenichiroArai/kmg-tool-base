@@ -205,7 +205,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 メッセージ。Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]
+            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               genMsgArgs  = {
                 this.targetPath.toString()
@@ -248,7 +248,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         } catch (
             final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 メッセージ。Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]
+            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               genMsgArgs  = {
                 this.currentFilePath.toString()
@@ -328,7 +328,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 メッセージ。Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]
+            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。
+            // Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.NONE;
             final Object[]               genMsgArgs  = {
                 this.currentFilePath.toString(), this.writeContent

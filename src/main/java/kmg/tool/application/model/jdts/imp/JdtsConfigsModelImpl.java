@@ -43,7 +43,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
         }
 
         /* javadocTagsセクションの取得 */
-        // TODO KenichiroArai 2025/04/10 ハードコード
+        // TODO KenichiroArai 2025/04/25 【優先度：低】：ハードコード
         final List<Map<String, Object>> javadocTags = (List<Map<String, Object>>) yamlData.get("JdtsConfigs");
 
         if ((javadocTags == null) || javadocTags.isEmpty()) {

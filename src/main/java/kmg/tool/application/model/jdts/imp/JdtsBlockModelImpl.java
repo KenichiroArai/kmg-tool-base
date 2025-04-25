@@ -183,7 +183,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         final StringBuilder wkCodeBlock = new StringBuilder();
 
-        // TODO KenichiroArai 2025/04/12 不要では？
+        // TODO KenichiroArai 2025/04/25 【優先度：中】：不要では？
         boolean isCodeSection = false;
 
         for (final String line : codeLines) {
@@ -252,7 +252,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
             // Java区分を判別
             this.javaClassification = JavaClassificationTypes.identify(codeLine);
 
-            // TODO KenichiroArai 2025/04/17 Java区分のキーワードを取得する。クラスならクラス名、フィールドならフィールド名のように。
+            // TODO KenichiroArai 2025/04/25 【優先度：低】：Java区分のキーワードを取得する。クラスならクラス名、フィールドならフィールド名のように。
 
             // Javadoc対象外か
             if (this.javaClassification.isNotJavadocTarget()) {
