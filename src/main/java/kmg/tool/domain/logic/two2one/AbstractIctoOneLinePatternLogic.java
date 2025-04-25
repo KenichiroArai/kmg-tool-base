@@ -426,8 +426,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.reader = null;
 
-            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。KMGTOOL_LOG13000=リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG13000;
             final Object[]               logMsgArgs  = {
                 this.inputPath.toString(),
             };
@@ -462,8 +461,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.writer = null;
 
-            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。KMGTOOL_LOG13001=ライターリソースのクローズ処理中にエラーが発生しました。出力ファイルパス=[{0}]
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.NONE;
+            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG13001;
             final Object[]               logMsgArgs  = {
                 this.outputPath.toString(),
             };

@@ -305,6 +305,28 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
     KMGTOOL_LOG31018("CSVファイルに書き込み完了。コメント=[{0}]"),
 
     /**
+     * Javadocタグ設定処理を開始します。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31019("Javadocタグ設定処理を開始します。"),
+
+    /**
+     * Javadocタグ設定処理を終了します。\n読み込みファイル数:[{0}]\n最終合計行数:[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_LOG31020("Javadocタグ設定処理を終了します。\n読み込みファイル数:[{0}]\n最終合計行数:[{1}]"),
+
+    /**
      * クリア処理中にエラーが発生しました。
      *
      * @author KenichiroArai

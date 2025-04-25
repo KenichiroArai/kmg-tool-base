@@ -187,8 +187,7 @@ public abstract class AbstractInputTool extends AbstractTool {
             if (!result) {
 
                 /* メッセージの出力 */
-                // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。入力ファイルから対象パスを設定に失敗しました。
-                final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
+                final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41003;
                 final Object[]               messageArgs = {};
                 final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
                 measService.warn(msg);
@@ -201,9 +200,7 @@ public abstract class AbstractInputTool extends AbstractTool {
             result &= this.executeMain();
 
             /* 成功 */
-            // メッセージの出力
-            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。実行が成功しました。
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41004;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
@@ -211,9 +208,7 @@ public abstract class AbstractInputTool extends AbstractTool {
         } catch (final KmgToolException e) {
 
             /* 例外 */
-            // メッセージの出力
-            // TODO KenichiroArai 2025/04/25 【優先度：高】：メッセージ。実行中に例外が発生しました。
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41005;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);
