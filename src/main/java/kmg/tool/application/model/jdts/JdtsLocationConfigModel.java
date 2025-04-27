@@ -2,6 +2,7 @@ package kmg.tool.application.model.jdts;
 
 import java.util.List;
 
+import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.types.JdaLocationModeTypes;
 
 /**
@@ -30,7 +31,7 @@ public interface JdtsLocationConfigModel {
      *
      * @return 対象要素の種類
      */
-    List<String> getTargetElements();
+    List<JavaClassificationTypes> getTargetElements();
 
     /**
      * 誤配置時に削除するかどうかを返す<br>

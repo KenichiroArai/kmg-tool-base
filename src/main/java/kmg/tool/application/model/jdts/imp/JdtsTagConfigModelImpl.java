@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
@@ -197,23 +196,17 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
             /* 準拠モード */ {
 
                 // タグの設定可能な場所のリストを取得
-                final List<KmgJavadocLocationTypes> locations = this.tag.getLocations();
-                // Java区分に対応するJavadoc配置場所の種類を取得
-                final KmgJavadocLocationTypes targetLocation
-                    = KmgJavadocLocationTypes.fromJavaClassification(javaClassification);
+                final List<JavaClassificationTypes> locations = this.tag.getLocations();
                 // 全ての場所に配置可能か、または特定の場所に配置可能かをチェック
-                yield locations.contains(KmgJavadocLocationTypes.ALL) || locations.contains(targetLocation);
+                yield locations.contains(JavaClassificationTypes.NONE) || locations.contains(javaClassification);
 
             }
 
             case MANUAL:
             /* 手動モード */ {
 
-                // Java区分に対応するJavadoc配置場所の種類を取得
-                final KmgJavadocLocationTypes manualTargetLocation
-                    = KmgJavadocLocationTypes.fromJavaClassification(javaClassification);
-                // targetElementsに指定された要素と一致するかチェック
-                yield this.location.getTargetElements().contains(manualTargetLocation.getKey());
+                // 対象要素に指定された要素と一致するかチェック
+                yield this.location.getTargetElements().contains(javaClassification);
 
             }
 

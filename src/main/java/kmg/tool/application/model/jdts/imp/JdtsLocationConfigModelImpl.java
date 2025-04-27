@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kmg.core.infrastructure.types.KmgJavadocLocationTypes;
+import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.types.JdaLocationModeTypes;
 
@@ -29,7 +29,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
     private final boolean removeIfMisplaced;
 
     /** 対象要素の種類（手動モード時のみ使用） */
-    private final List<KmgJavadocLocationTypes> targetElements;
+    private final List<JavaClassificationTypes> targetElements;
 
     /**
      * コンストラクタ<br>
@@ -54,7 +54,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
             for (final String key : targetElementsKeys) {
 
-                final KmgJavadocLocationTypes type = KmgJavadocLocationTypes.getEnum(key);
+                final JavaClassificationTypes type = JavaClassificationTypes.getEnum(key);
 
                 this.targetElements.add(type);
 
@@ -83,15 +83,9 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
      * @return 対象要素の種類
      */
     @Override
-    public List<String> getTargetElements() {
+    public List<JavaClassificationTypes> getTargetElements() {
 
-        final List<String> result = new ArrayList<>();
-
-        for (final KmgJavadocLocationTypes element : this.targetElements) {
-
-            result.add(element.getKey());
-
-        }
+        final List<JavaClassificationTypes> result = this.targetElements;
         return result;
 
     }
