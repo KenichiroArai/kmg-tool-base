@@ -281,7 +281,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
             }
 
             // 要素名を取得
-            this.elementName = JavaClassificationTypes.getElementName(codeLine);
+            this.elementName = this.classification.getElementName(codeLine);
 
             result = true;
             break;
