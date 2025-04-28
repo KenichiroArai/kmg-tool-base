@@ -33,6 +33,28 @@ public interface JdtsBlockModel {
     List<String> getAnnotations();
 
     /**
+     * 区分を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 区分
+     */
+    JavaClassificationTypes getClassification();
+
+    /**
+     * 要素名を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 要素名
+     */
+    String getElementName();
+
+    /**
      * 識別子を返す<br>
      *
      * @author KenichiroArai
@@ -42,17 +64,6 @@ public interface JdtsBlockModel {
      * @return 識別子
      */
     UUID getId();
-
-    /**
-     * Java区分を返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return Java区分
-     */
-    JavaClassificationTypes getJavaClassification();
 
     /**
      * Javadocモデルを返す<br>

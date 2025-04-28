@@ -197,7 +197,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                         // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
                         System.out.println(String.format("【タグ存在しない場合】Javadocタグ：[%s], Java区分：[%s], オリジナルコード：[%s]",
                             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
-                            targetBlockModel.getJavaClassification().getDisplayName(), targetBlockModel.getOrgBlock()));
+                            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getOrgBlock()));
 
                     }
 

@@ -52,8 +52,11 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
     /** コードブロック */
     private String codeBlock;
 
-    /** Java区分 */
-    private JavaClassificationTypes javaClassification;
+    /** 区分 */
+    private JavaClassificationTypes classification;
+
+    /** 要素名 */
+    private String elementName;
 
     /**
      * コンストラクタ
@@ -69,7 +72,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         this.annotations = new ArrayList<>();
 
-        this.javaClassification = JavaClassificationTypes.NONE;
+        this.classification = JavaClassificationTypes.NONE;
 
     }
 
@@ -91,6 +94,40 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
     }
 
     /**
+     * 区分を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 区分
+     */
+    @Override
+    public JavaClassificationTypes getClassification() {
+
+        final JavaClassificationTypes result = this.classification;
+        return result;
+
+    }
+
+    /**
+     * 要素名を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 要素名
+     */
+    @Override
+    public String getElementName() {
+
+        final String result = this.elementName;
+        return result;
+
+    }
+
+    /**
      * 識別子を返す<br>
      *
      * @author KenichiroArai
@@ -103,23 +140,6 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
     public UUID getId() {
 
         final UUID result = this.id;
-        return result;
-
-    }
-
-    /**
-     * Java区分を返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 0.1.0
-     *
-     * @return Java区分
-     */
-    @Override
-    public JavaClassificationTypes getJavaClassification() {
-
-        final JavaClassificationTypes result = this.javaClassification;
         return result;
 
     }
@@ -219,8 +239,8 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         this.codeBlock = wkCodeBlock.toString();
 
-        /* Java区分を特定する */
-        this.specifyJavaClassification();
+        /* 区分を特定する */
+        this.specifyClassification();
 
         result = true;
         return result;
@@ -228,7 +248,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
     }
 
     /**
-     * Java区分を特定する<br>
+     * 区分を特定する<br>
      *
      * @author KenichiroArai
      *
@@ -239,7 +259,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      * @throws KmgToolException
      *                          KMGツール例外
      */
-    private boolean specifyJavaClassification() throws KmgToolException {
+    private boolean specifyClassification() throws KmgToolException {
 
         boolean result = false;
 
@@ -250,17 +270,18 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         for (final String codeLine : codeLines) {
 
             // Java区分を判別
-            this.javaClassification = JavaClassificationTypes.identify(codeLine);
-
-            // TODO KenichiroArai 2025/04/25 【優先度：低】：Java区分のキーワードを取得する。クラスならクラス名、フィールドならフィールド名のように。
+            this.classification = JavaClassificationTypes.identify(codeLine);
 
             // Javadoc対象外か
-            if (this.javaClassification.isNotJavadocTarget()) {
+            if (this.classification.isNotJavadocTarget()) {
                 // 対象外の場合
 
                 continue;
 
             }
+
+            // 要素名を取得
+            this.elementName = JavaClassificationTypes.getElementName(codeLine);
 
             result = true;
             break;

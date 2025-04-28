@@ -384,8 +384,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         }
 
-        // 「タグの配置がJava区分」に一致しているか
-        if (this.currentTagConfigModel.isProperlyPlaced(this.srcBlockModel.getJavaClassification())) {
+        // 「タグの配置が区分」に一致しているか
+        if (this.currentTagConfigModel.isProperlyPlaced(this.srcBlockModel.getClassification())) {
             // 一致している場合
 
             return result;
@@ -497,7 +497,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     @Override
     public boolean shouldAddNewTag() {
 
-        final boolean result = this.currentTagConfigModel.isProperlyPlaced(this.srcBlockModel.getJavaClassification());
+        final boolean result = this.currentTagConfigModel.isProperlyPlaced(this.srcBlockModel.getClassification());
         return result;
 
     }
