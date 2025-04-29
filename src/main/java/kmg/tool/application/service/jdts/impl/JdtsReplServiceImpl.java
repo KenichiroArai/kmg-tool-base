@@ -196,9 +196,9 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                         this.totalReplaceCount++;
 
                         // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
-                        System.out.println(String.format("タグ存在しないため、タグを追加しました。追加したタグ：[%s], 追加先の区分：[%s], 追加先の要素名：[%s]",
-                            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
-                            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName()));
+                        System.out.println(String.format("タグ存在しないため、タグを追加しました。追加先の区分：[%s], 追加先の要素名：[%s], 追加したタグ：[%s] ",
+                            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
+                            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName()));
 
                     }
 
@@ -215,11 +215,13 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                     this.totalReplaceCount++;
 
                     // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
-                    System.out.println(String.format("タグを削除します。元のコード:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s]",
-                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
-                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
-                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
-                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription()));
+                    System.out.println(
+                        String.format("タグを削除します。区分：[%s], 要素名：[%s], 元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s]",
+                            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
+                            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
+                            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
+                            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
+                            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription()));
 
                     // タグを削除したため、後続の処理は行わず、次のタグを処理する
                     continue;
@@ -243,14 +245,16 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                     // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
                     System.out.println(String.format(
-                        "タグの位置を変更します。元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s], 変更後のタグの内容:[%s], 変更後のタグ:[%s], 変更後の指定値:[%s], 変更後の説明:[%s]",
+                        "タグの位置を変更します。区分：[%s], 要素名：[%s], 元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s], 変更後のタグの内容:[%s], 変更後のタグ:[%s], 変更後の指定値:[%s], 変更後の説明:[%s]",
+                        targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
                         this.jdtsBlockReplLogic.getTagContentToApply(),
                         this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
-                        targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName()));
+                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
+                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription()));
 
                     continue;
 
@@ -263,14 +267,16 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                     // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
                     System.out.println(String.format(
-                        "タグを置換します。元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s], 置換後のタグの内容:[%s], 置換後のタグ:[%s], 置換後の指定値:[%s], 置換後の説明:[%s]",
+                        "タグを置換します。区分：[%s], 要素名：[%s], 元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s], 置換後のタグの内容:[%s], 置換後のタグ:[%s], 置換後の指定値:[%s], 置換後の説明:[%s]",
+                        targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
                         this.jdtsBlockReplLogic.getTagContentToApply(),
                         this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
-                        targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName()));
+                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
+                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription()));
 
                 }
 
