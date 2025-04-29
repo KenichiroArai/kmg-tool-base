@@ -42,11 +42,11 @@ public interface JdtsReplService {
     String getReplaceCode();
 
     /**
-     * 合計行数を返す。
+     * 合計置換数を返す。
      *
-     * @return 合計行数
+     * @return 合計置換数
      */
-    long getTotalRows();
+    long getTotalReplaceCount();
 
     /**
      * 初期化する

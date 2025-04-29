@@ -228,6 +228,10 @@ public class JdtsServiceImpl implements JdtsService {
         this.jdtsIoLogic.load();
 
         /* 次のJavaファイルがあるまでJavadocを置換する */
+
+        // 合計置換数
+        long totalReplaceCount = 0;
+
         do {
 
             /* 内容を取得する */
@@ -253,6 +257,9 @@ public class JdtsServiceImpl implements JdtsService {
             // Javadocを置換する
             this.jdtsReplService.replace();
 
+            // 置換数を加算する
+            totalReplaceCount += this.jdtsReplService.getTotalReplaceCount();
+
             // 置換後の内容を取得する
             final String replaceContent = this.jdtsReplService.getReplaceCode();
 
@@ -267,9 +274,10 @@ public class JdtsServiceImpl implements JdtsService {
             /* 次のファイルに進む */
         } while (this.jdtsIoLogic.nextFile());
 
+        // TODO KenichiroArai 2025/04/29 メッセージを修正する
         final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31020;
         final Object[]               endLogMsgArgs  = {
-            this.jdtsIoLogic.getFilePathList().size(), this.jdtsReplService.getTotalRows(),
+            this.jdtsIoLogic.getFilePathList().size(), totalReplaceCount,
         };
         final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
         this.logger.debug(endLogMsg);

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsCodeModel;
@@ -43,8 +42,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /** 置換後のコード */
     private String replaceCode;
 
-    /** 合計行数 */
-    private long totalRows;
+    /** 合計置換数 */
+    private long totalReplaceCount;
 
     /**
      * デフォルトコンストラクタ
@@ -52,7 +51,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     public JdtsReplServiceImpl() {
 
         this.replaceCode = KmgString.EMPTY;
-        this.totalRows = 0;
+        this.totalReplaceCount = 0;
 
     }
 
@@ -91,14 +90,14 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     }
 
     /**
-     * 合計行数を返す。
+     * 合計置換数を返す。
      *
-     * @return 合計行数
+     * @return 合計置換数
      */
     @Override
-    public long getTotalRows() {
+    public long getTotalReplaceCount() {
 
-        final long result = this.totalRows;
+        final long result = this.totalReplaceCount;
         return result;
 
     }
@@ -128,7 +127,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         this.replaceCode = this.jdtsCodeModel.getOrgCode();
 
-        this.totalRows = 0;
+        this.totalReplaceCount = 0;
 
         result = true;
         return result;
@@ -194,10 +193,12 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                         // 新しいタグを作成し配置する
                         this.jdtsBlockReplLogic.addNewTagByPosition();
 
+                        this.totalReplaceCount++;
+
                         // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
-                        System.out.println(String.format("【タグ存在しない場合】Javadocタグ：[%s], Java区分：[%s], オリジナルコード：[%s]",
+                        System.out.println(String.format("タグ存在しないため、タグを追加しました。追加したタグ：[%s], 追加先の区分：[%s], 追加先の要素名：[%s]",
                             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
-                            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getOrgBlock()));
+                            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName()));
 
                     }
 
@@ -205,18 +206,20 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                 }
 
-                // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
-                System.out.println(String.format("【タグ存在する場合】対象文字列: [%s], タグ: [%s], 指定値: [%s], 説明: [%s]",
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription()));
-
                 /* 誤配置時の削除処理を行う */
 
                 // タグを削除したか
                 if (this.jdtsBlockReplLogic.removeCurrentTagOnError()) {
                     // 削除した場合
+
+                    this.totalReplaceCount++;
+
+                    // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
+                    System.out.println(String.format("タグを削除します。元のコード:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s]",
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription()));
 
                     // タグを削除したため、後続の処理は行わず、次のタグを処理する
                     continue;
@@ -236,12 +239,40 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                 /* タグの位置が指定されている場合は、指定値に置換する */
                 if (this.jdtsBlockReplLogic.repositionTagIfNeeded()) {
 
+                    this.totalReplaceCount++;
+
+                    // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
+                    System.out.println(String.format(
+                        "タグの位置を変更します。元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s], 変更後のタグの内容:[%s], 変更後のタグ:[%s], 変更後の指定値:[%s], 変更後の説明:[%s]",
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
+                        this.jdtsBlockReplLogic.getTagContentToApply(),
+                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
+                        targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName()));
+
                     continue;
 
                 }
 
-                // 既存のタグを置換する
-                this.jdtsBlockReplLogic.replaceExistingTag();
+                /* 既存のタグを置換する */
+                if (this.jdtsBlockReplLogic.replaceExistingTag()) {
+
+                    this.totalReplaceCount++;
+
+                    // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
+                    System.out.println(String.format(
+                        "タグを置換します。元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s], 置換後のタグの内容:[%s], 置換後のタグ:[%s], 置換後の指定値:[%s], 置換後の説明:[%s]",
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
+                        this.jdtsBlockReplLogic.getTagContentToApply(),
+                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
+                        targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName()));
+
+                }
 
                 /* 次のタグを処理するか */
             } while (this.jdtsBlockReplLogic.nextTag());
@@ -255,8 +286,6 @@ public class JdtsReplServiceImpl implements JdtsReplService {
             this.replaceCode = this.replaceCode.replace(targetBlockModel.getId().toString(), replaceJavadocBlock);
 
         }
-
-        this.totalRows += KmgDelimiterTypes.LINE_SEPARATOR.split(this.replaceCode).length;
 
         result = true;
         return result;

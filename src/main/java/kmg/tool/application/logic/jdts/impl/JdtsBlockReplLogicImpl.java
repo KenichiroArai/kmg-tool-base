@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.springframework.stereotype.Service;
 
+import kmg.core.infrastructure.type.KmgString;
 import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
@@ -48,20 +49,14 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     /** Javadocタグの開始文字列 */
     private static final String JAVADOC_TAG_START = "* @";
 
-    /** 新規タグのフォーマット（改行あり） */
-    private static final String NEW_TAG_FORMAT = " * %s %s %s%n";
-
-    /** 置換用タグのフォーマット（改行なし） */
-    private static final String REPLACEMENT_TAG_FORMAT = " * %s %s %s";
+    /** タグのフォーマット */
+    private static final String TAG_FORMAT = " * %s %s %s";
 
     /** 構成モデル */
     private JdtsConfigsModel configsModel;
 
     /** 元のブロックモデル */
     private JdtsBlockModel srcBlockModel;
-
-    /** 置換後のJavadocブロック */
-    private StringBuilder replacedJavadocBlock;
 
     /** 先頭タグの位置オフセット */
     private int headTagPosOffset;
@@ -74,6 +69,12 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
     /** 現在の元のJavadocタグ */
     private JavadocTagModel currentSrcJavadocTag;
+
+    /** 設定するタグの内容 */
+    private String tagContentToApply;
+
+    /** 置換後のJavadocブロック */
+    private StringBuilder replacedJavadocBlock;
 
     /**
      * 新しいタグを作成して指定位置に追加する<br>
@@ -98,7 +99,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     public void addNewTagByPosition() {
 
         /* 新しいタグの生成 */
-        final String newTag = this.createNewTagContent();
+        this.tagContentToApply = this.createTagContent();
 
         /* タグの挿入位置に基づく処理 */
         switch (this.currentTagConfigModel.getInsertPosition()) {
@@ -110,12 +111,13 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 if (this.headTagPosOffset > -1) {
 
                     // 特定されている場合は指定位置に挿入
-                    this.replacedJavadocBlock.insert(this.headTagPosOffset, newTag);
+                    this.replacedJavadocBlock.insert(this.headTagPosOffset,
+                        KmgString.concat(this.tagContentToApply, KmgString.LINE_SEPARATOR));
 
                 } else {
 
                     // 特定されていない場合は末尾に追加
-                    this.replacedJavadocBlock.append(newTag);
+                    this.replacedJavadocBlock.append(this.tagContentToApply);
 
                 }
                 break;
@@ -126,13 +128,13 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 /* Javadocタグの末尾 */
             case PRESERVE:
                 /* 現在の位置を維持（末尾に追加） */
-                this.replacedJavadocBlock.append(newTag);
+                this.replacedJavadocBlock.append(this.tagContentToApply);
                 break;
 
         }
 
         /* 先頭タグの位置オフセットを更新 */
-        this.headTagPosOffset += newTag.length();
+        this.headTagPosOffset += this.tagContentToApply.length();
 
     }
 
@@ -212,6 +214,23 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     public String getReplacedJavadocBlock() {
 
         final String result = this.replacedJavadocBlock.toString();
+        return result;
+
+    }
+
+    /**
+     * 設定するタグの内容を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 設定するタグの内容
+     */
+    @Override
+    public String getTagContentToApply() {
+
+        final String result = this.tagContentToApply;
         return result;
 
     }
@@ -437,8 +456,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         final int endIdx = startIdx + this.currentSrcJavadocTag.getTargetStr().length();
 
         /* 新しいタグ内容の生成と置換 */
-        final String replacementTag = this.createReplacementTagContent();
-        this.replacedJavadocBlock.replace(startIdx, endIdx, replacementTag);
+        this.tagContentToApply = this.createTagContent();
+        this.replacedJavadocBlock.replace(startIdx, endIdx, this.tagContentToApply);
 
         result = true;
         return result;
@@ -547,36 +566,19 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     }
 
     /**
-     * 新しいタグの内容を作成する<br>
+     * タグの内容を作成する<br>
      * <p>
-     * 現在のタグ構成モデルの情報を使用して、 新しいタグの完全な内容を生成します。 生成される内容には、タグ、タグ値、タグの説明が含まれます。
+     * 現在のタグ構成モデルの情報を使用して、 タグの内容を生成します。<br>
+     * 生成される内容には、タグ、タグ値、タグの説明が含まれます。
      * </p>
      *
-     * @return 新しいタグの内容 - フォーマットされたタグの文字列
+     * @return タグの内容 - フォーマットされたタグの文字列
      */
-    private String createNewTagContent() {
+    private String createTagContent() {
 
         /* タグ内容の生成 */
         final String result
-            = String.format(JdtsBlockReplLogicImpl.NEW_TAG_FORMAT, this.currentTagConfigModel.getTag().getKey(),
-                this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
-        return result;
-
-    }
-
-    /**
-     * 置換用タグの内容を作成する<br>
-     * <p>
-     * 現在のタグ構成モデルの情報を使用して、 置換用の新しいタグ内容を生成します。 生成される内容は既存のタグを置換するために使用されます。
-     * </p>
-     *
-     * @return 置換用タグの内容 - フォーマットされたタグの文字列
-     */
-    private String createReplacementTagContent() {
-
-        /* 置換用タグ内容の生成 */
-        final String result
-            = String.format(JdtsBlockReplLogicImpl.REPLACEMENT_TAG_FORMAT, this.currentTagConfigModel.getTag().getKey(),
+            = String.format(JdtsBlockReplLogicImpl.TAG_FORMAT, this.currentTagConfigModel.getTag().getKey(),
                 this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
         return result;
 

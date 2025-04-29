@@ -115,6 +115,17 @@ public interface JdtsBlockReplLogic {
     String getReplacedJavadocBlock();
 
     /**
+     * 設定するタグの内容を返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 0.1.0
+     *
+     * @return 設定するタグの内容
+     */
+    String getTagContentToApply();
+
+    /**
      * 元のブロックモデルに構成モデルのタグが存在するか<br>
      * <p>
      * 現在のタグ構成モデルで指定されているタグが、 元のJavadocブロック内に存在するかどうかを確認します。
@@ -214,6 +225,20 @@ public interface JdtsBlockReplLogic {
     boolean replaceExistingTag();
 
     /**
+     * タグを指定位置に再配置する<br>
+     * <p>
+     * タグの位置が指定されている場合（BEGINNING、END）、 タグを削除して指定位置に再配置します。 位置指定がない場合（NONE、PRESERVE）は何も行いません。
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：再配置成功、false：再配置不要または失敗
+     */
+    boolean repositionTagIfNeeded();
+
+    /**
      * 新しいタグを追加すべきか判断する<br>
      * <p>
      * 現在のタグ構成モデルと元のブロックモデルの状態に基づいて、 新しいタグを追加すべきかどうかを判断します。 この判断は、タグの配置ルールやJavaの区分に基づいて行われます。
@@ -236,18 +261,4 @@ public interface JdtsBlockReplLogic {
      * @return true：上書きする、false：上書きしない
      */
     boolean shouldOverwriteTag();
-
-    /**
-     * タグを指定位置に再配置する<br>
-     * <p>
-     * タグの位置が指定されている場合（BEGINNING、END）、 タグを削除して指定位置に再配置します。 位置指定がない場合（NONE、PRESERVE）は何も行いません。
-     * </p>
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     *
-     * @return true：再配置成功、false：再配置不要または失敗
-     */
-    boolean repositionTagIfNeeded();
 }
