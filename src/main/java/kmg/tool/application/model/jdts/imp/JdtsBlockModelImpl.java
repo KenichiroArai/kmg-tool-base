@@ -191,49 +191,63 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         boolean result = false;
 
-        // 「*/」でJavadocとCodeのブラックに分ける
+        /* オリジナルブロックをJavadocとコードブロックに分ける */
+        // 「*/」でJavadocとCodeのブロックに分ける
+
+        // TODO KenichiroArai 2025/04/29 ハードコード
         final String[] javadocCodeBlock
             = this.orgBlock.split(String.format("%s\\s+", Pattern.quote(JdtsBlockModelImpl.JAVADOC_END)), 2);
 
-        // Javadocモデルに変換する
+        /* Javadoc部分をJavadocモデルに変換する */
         this.javadocModel = new JavadocModelImpl(javadocCodeBlock[0]);
 
-        // アノテーションと元のコードを分割
+        /* コード行の配列にする */
         final String[] codeLines = javadocCodeBlock[1].split(JdtsBlockModelImpl.LINE_SEPARATOR_REGEX);
 
-        final StringBuilder wkCodeBlock = new StringBuilder();
+        /* アノテーションを設定する */
 
-        // TODO KenichiroArai 2025/04/25 【優先度：中】：不要では？
-        boolean isCodeSection = false;
+        // コードセクションの開始
+        int codeSectionStartIdx = 0;
 
-        for (final String line : codeLines) {
+        for (int i = 0; i < codeLines.length; i++) {
 
-            final String trimmedLine = line.trim();
+            final String line = codeLines[i];
 
-            if (trimmedLine.isEmpty()) {
+            if (KmgString.isBlank(line)) {
 
                 continue;
 
             }
 
-            if (!isCodeSection) {
+            final String trimmedLine = line.trim();
 
-                if (trimmedLine.startsWith(JdtsBlockModelImpl.ANNOTATION_START)) {
+            if (!trimmedLine.startsWith(JdtsBlockModelImpl.ANNOTATION_START)) {
 
-                    this.annotations.add(trimmedLine);
+                codeSectionStartIdx = i;
 
-                } else {
-
-                    isCodeSection = true;
-                    wkCodeBlock.append(line).append(System.lineSeparator());
-
-                }
-
-            } else {
-
-                wkCodeBlock.append(line).append(System.lineSeparator());
+                break;
 
             }
+
+            this.annotations.add(trimmedLine);
+
+        }
+
+        /* コードブロックを設定する */
+        final StringBuilder wkCodeBlock = new StringBuilder();
+
+        for (int i = codeSectionStartIdx; i < codeLines.length; i++) {
+
+            final String line = codeLines[i];
+
+            if (KmgString.isBlank(line)) {
+
+                continue;
+
+            }
+
+            final String trimmedLine = line.trim();
+            wkCodeBlock.append(trimmedLine).append(System.lineSeparator());
 
         }
 
