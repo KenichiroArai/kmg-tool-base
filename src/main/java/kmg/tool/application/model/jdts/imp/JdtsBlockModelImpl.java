@@ -37,6 +37,10 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
     /** 改行文字の正規表現 */
     private static final String LINE_SEPARATOR_REGEX = "\\R";
 
+    /** Javadocブロック分割用の正規表現 */
+    private static final String JAVADOC_BLOCK_SPLIT_REGEX
+        = String.format("%s\\s+", Pattern.quote(JdtsBlockModelImpl.JAVADOC_END));
+
     /** 識別子 */
     private final UUID id;
 
@@ -192,11 +196,9 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         boolean result = false;
 
         /* オリジナルブロックをJavadocとコードブロックに分ける */
-        // 「*/」でJavadocとCodeのブロックに分ける
 
-        // TODO KenichiroArai 2025/04/29 ハードコード
-        final String[] javadocCodeBlock
-            = this.orgBlock.split(String.format("%s\\s+", Pattern.quote(JdtsBlockModelImpl.JAVADOC_END)), 2);
+        // 「*/」でJavadocとCodeのブロックに分ける
+        final String[] javadocCodeBlock = this.orgBlock.split(JdtsBlockModelImpl.JAVADOC_BLOCK_SPLIT_REGEX, 2);
 
         /* Javadoc部分をJavadocモデルに変換する */
         this.javadocModel = new JavadocModelImpl(javadocCodeBlock[0]);
