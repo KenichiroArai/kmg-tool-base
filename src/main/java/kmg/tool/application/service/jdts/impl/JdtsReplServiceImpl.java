@@ -2,15 +2,19 @@ package kmg.tool.application.service.jdts.impl;
 
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
+import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsCodeModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.service.jdts.JdtsReplService;
+import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolException;
 
 /**
@@ -28,6 +32,25 @@ import kmg.tool.infrastructure.exception.KmgToolException;
  */
 @Service
 public class JdtsReplServiceImpl implements JdtsReplService {
+
+    /**
+     * ロガー
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private KmgMessageSource messageSource;
 
     /** Javadocタグ設定のブロック置換ロジック */
     @Autowired
@@ -50,6 +73,25 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      */
     public JdtsReplServiceImpl() {
 
+        this(LoggerFactory.getLogger(JdtsServiceImpl.class));
+
+    }
+
+    /**
+     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected JdtsReplServiceImpl(final Logger logger) {
+
+        this.logger = logger;
         this.replaceCode = KmgString.EMPTY;
         this.totalReplaceCount = 0;
 
@@ -195,10 +237,14 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                         this.totalReplaceCount++;
 
-                        // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
-                        System.out.println(String.format("タグ存在しないため、タグを追加しました。追加先の区分：[%s], 追加先の要素名：[%s], 追加したタグ：[%s] ",
+                        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31021;
+                        final Object[]               logMsgArgs  = {
                             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
-                            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName()));
+                            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
+                        };
+                        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes,
+                            logMsgArgs);
+                        this.logger.debug(logMsg);
 
                     }
 
@@ -214,14 +260,17 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                     this.totalReplaceCount++;
 
-                    // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
-                    System.out.println(
-                        String.format("タグを削除します。区分：[%s], 要素名：[%s], 元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s]",
-                            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
-                            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
-                            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
-                            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
-                            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription()));
+                    final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31022;
+                    final Object[]               logMsgArgs  = {
+                        targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
+                        this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
+                    };
+                    final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes,
+                        logMsgArgs);
+                    this.logger.debug(logMsg);
 
                     // タグを削除したため、後続の処理は行わず、次のタグを処理する
                     continue;
@@ -243,9 +292,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                     this.totalReplaceCount++;
 
-                    // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
-                    System.out.println(String.format(
-                        "タグの位置を変更します。区分：[%s], 要素名：[%s], 元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s], 変更後のタグの内容:[%s], 変更後のタグ:[%s], 変更後の指定値:[%s], 変更後の説明:[%s]",
+                    final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31023;
+                    final Object[]               logMsgArgs  = {
                         targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
@@ -254,7 +302,11 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                         this.jdtsBlockReplLogic.getTagContentToApply(),
                         this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
                         this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
-                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription()));
+                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription(),
+                    };
+                    final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes,
+                        logMsgArgs);
+                    this.logger.debug(logMsg);
 
                     continue;
 
@@ -265,9 +317,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                     this.totalReplaceCount++;
 
-                    // TODO KenichiroArai 2025/04/25 【優先度：低】：デバッグ
-                    System.out.println(String.format(
-                        "タグを置換します。区分：[%s], 要素名：[%s], 元の対象行:[%s], 元のタグ:[%s], 元の指定値:[%s], 元の説明:[%s], 置換後のタグの内容:[%s], 置換後のタグ:[%s], 置換後の指定値:[%s], 置換後の説明:[%s]",
+                    final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31024;
+                    final Object[]               logMsgArgs  = {
                         targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
@@ -276,7 +327,11 @@ public class JdtsReplServiceImpl implements JdtsReplService {
                         this.jdtsBlockReplLogic.getTagContentToApply(),
                         this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
                         this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
-                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription()));
+                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription(),
+                    };
+                    final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes,
+                        logMsgArgs);
+                    this.logger.debug(logMsg);
 
                 }
 
