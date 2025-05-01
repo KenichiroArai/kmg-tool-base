@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 
@@ -31,7 +34,6 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
      * @param yamlData
      *                 YAMLデータ
      */
-    @SuppressWarnings("unchecked")
     public JdtsConfigsModelImpl(final Map<String, Object> yamlData) {
 
         this.jdtsTagConfigModels = new ArrayList<>();
@@ -42,9 +44,9 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         }
 
-        /* javadocTagsセクションの取得 */
-        // TODO KenichiroArai 2025/04/25 【優先度：低】：ハードコード
-        final List<Map<String, Object>> javadocTags = (List<Map<String, Object>>) yamlData.get("JdtsConfigs");
+        /* YAMLデータからJdtsConfigsセクションを取得 */
+        final ObjectMapper              mapper      = new ObjectMapper(new YAMLFactory());
+        final List<Map<String, Object>> javadocTags = mapper.convertValue(yamlData.get("JdtsConfigs"), List.class);
 
         if ((javadocTags == null) || javadocTags.isEmpty()) {
 
