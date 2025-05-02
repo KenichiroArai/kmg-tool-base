@@ -7,6 +7,8 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
+import kmg.core.infrastructure.utils.KmgListUtils;
+import kmg.core.infrastructure.utils.KmgMapUtils;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 
@@ -38,17 +40,19 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         this.jdtsTagConfigModels = new ArrayList<>();
 
-        if (yamlData == null) {
+        if (KmgMapUtils.isEmpty(yamlData)) {
 
+            // TODO KenichiroArai 2025/05/02 例外処理
             return;
 
         }
 
         /* YAMLデータからJdtsConfigsセクションを取得 */
-        final ObjectMapper              mapper      = new ObjectMapper(new YAMLFactory());
+        final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        // TODO KenichiroArai 2025/05/02 ハードコード
         final List<Map<String, Object>> javadocTags = mapper.convertValue(yamlData.get("JdtsConfigs"), List.class);
 
-        if ((javadocTags == null) || javadocTags.isEmpty()) {
+        if (KmgListUtils.isEmpty(javadocTags)) {
 
             // TODO KenichiroArai 2025/05/02 例外処理
             return;

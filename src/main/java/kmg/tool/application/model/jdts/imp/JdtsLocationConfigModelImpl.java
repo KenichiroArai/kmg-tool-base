@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.types.JdaLocationModeTypes;
@@ -37,8 +40,11 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
      * @param locationMap
      *                    配置場所の設定マップ
      */
-    @SuppressWarnings("unchecked")
     public JdtsLocationConfigModelImpl(final Map<String, Object> locationMap) {
+
+        // TODO KenichiroArai 2025/05/02 ハードコード
+
+        final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         /* 配置方法の設定 */
         this.mode = JdaLocationModeTypes.getEnum((String) locationMap.get("mode"));
@@ -47,10 +53,17 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
         this.removeIfMisplaced = Boolean.parseBoolean(String.valueOf(locationMap.get("removeIfMisplaced")));
 
         /* 対象要素の種類の設定 */
-        final List<String> targetElementsKeys = (List<String>) locationMap.get("targetElements");
+        final List<String> targetElementsKeys = mapper.convertValue(locationMap.get("targetElements"), List.class);
         this.targetElements = new ArrayList<>();
 
         if (targetElementsKeys != null) {
+
+            if (this.mode != JdaLocationModeTypes.MANUAL) {
+
+                // TODO KenichiroArai 2025/05/02 例外処理
+                return;
+
+            }
 
             for (final String key : targetElementsKeys) {
 
@@ -60,6 +73,9 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
             }
 
+        } else if (this.mode == JdaLocationModeTypes.MANUAL) {
+
+            // TODO KenichiroArai 2025/05/02 例外処理
         }
 
     }
