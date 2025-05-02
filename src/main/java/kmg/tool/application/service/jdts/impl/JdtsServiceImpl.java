@@ -308,6 +308,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         final boolean result;
 
+        /* YAMLファイルを読み込む */
         Map<String, Object> yamlData;
 
         try {
@@ -324,6 +325,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         }
 
+        /* Javadocタグ設定の構成モデルを作成する */
         this.jdtsConfigsModel = new JdtsConfigsModelImpl(yamlData);
 
         result = true;
