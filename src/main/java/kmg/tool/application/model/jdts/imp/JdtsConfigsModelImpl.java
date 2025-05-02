@@ -50,18 +50,13 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         if ((javadocTags == null) || javadocTags.isEmpty()) {
 
+            // TODO KenichiroArai 2025/05/02 例外処理
             return;
 
         }
 
         /* 各タグ設定の処理 */
         for (final Map<String, Object> tagConfig : javadocTags) {
-
-            if (tagConfig == null) {
-
-                continue;
-
-            }
 
             /* モデルの作成と追加 */
             final JdtsTagConfigModel model = new JdtsTagConfigModelImpl(tagConfig);

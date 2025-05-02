@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
@@ -53,8 +56,9 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      * @param tagConfig
      *                  タグ設定
      */
-    @SuppressWarnings("unchecked")
     public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) {
+
+        final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         // TODO KenichiroArai 2025/04/25 【優先度：低】：ハードコード
         this.tagName = (String) tagConfig.get("tagName");
@@ -63,7 +67,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
         this.tagDescription
             = Optional.ofNullable(tagConfig.get("tagDescription")).map(Object::toString).orElse(KmgString.EMPTY);
 
-        final Map<String, Object> locationMap = (Map<String, Object>) tagConfig.get("location");
+        final Map<String, Object> locationMap = mapper.convertValue(tagConfig.get("location"), Map.class);
 
         // 配置場所の設定の生成
         this.location = new JdtsLocationConfigModelImpl(locationMap);
