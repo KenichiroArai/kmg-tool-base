@@ -13,7 +13,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.fund.infrastructure.exception.KmgFundException;
+import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.domain.logic.two2one.dtc.DtcLogic;
 import kmg.tool.domain.model.two2one.dtc.DtcDerivedPlaceholderModel;
@@ -369,7 +369,7 @@ public class DtcLogicImpl implements DtcLogic {
 
             yamlData = KmgYamlUtils.load(this.getTemplatePath());
 
-        } catch (final KmgFundException e) {
+        } catch (final KmgFundMsgException e) {
 
             final KmgToolGenMessageTypes genMsgType = KmgToolGenMessageTypes.KMGTOOL_GEN12001;
             final Object[]               genMsgArgs = {

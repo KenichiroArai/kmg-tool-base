@@ -2,7 +2,7 @@ package kmg.tool.infrastructure.exception;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.fund.infrastructure.exception.KmgFundException;
+import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.tool.infrastructure.common.KmgToolComExcMessageTypes;
 
 /**
@@ -14,7 +14,7 @@ import kmg.tool.infrastructure.common.KmgToolComExcMessageTypes;
  *
  * @version 0.1.0
  */
-public class KmgToolException extends KmgFundException {
+public class KmgToolException extends KmgFundMsgException {
 
     /**
      * デフォルトシリアルバージョンＵＩＤ

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.fund.infrastructure.exception.KmgFundException;
+import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.application.logic.jdts.JdtsIoLogic;
 import kmg.tool.application.model.jdts.JdtsCodeModel;
@@ -315,7 +315,7 @@ public class JdtsServiceImpl implements JdtsService {
 
             yamlData = KmgYamlUtils.load(this.definitionPath);
 
-        } catch (final KmgFundException e) {
+        } catch (final KmgFundMsgException e) {
 
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31006;
             final Object[]               genMsgArgs  = {
