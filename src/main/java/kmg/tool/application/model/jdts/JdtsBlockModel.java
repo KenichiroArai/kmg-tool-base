@@ -93,7 +93,7 @@ public interface JdtsBlockModel {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean parse() throws KmgToolMsgException;
 

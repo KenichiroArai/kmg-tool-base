@@ -188,7 +188,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean parse() throws KmgToolMsgException {
@@ -273,7 +273,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      * @return true：区分が特定できた、false：区分がNONE
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private boolean specifyClassification() throws KmgToolMsgException {
 

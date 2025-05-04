@@ -51,7 +51,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean addItemToCsvRows() throws KmgToolMsgException {
@@ -79,7 +79,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean addJavadocCommentToCsvRows() throws KmgToolMsgException {
@@ -107,7 +107,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean addTypeToCsvRows() throws KmgToolMsgException {
@@ -154,7 +154,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean convertFields() throws KmgToolMsgException {

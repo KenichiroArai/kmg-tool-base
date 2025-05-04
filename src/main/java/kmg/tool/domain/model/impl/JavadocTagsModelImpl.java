@@ -46,7 +46,7 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
      *                      Javadoc
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     public JavadocTagsModelImpl(final String sourceJavadoc) throws KmgToolMsgException {
 

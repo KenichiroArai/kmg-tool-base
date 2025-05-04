@@ -53,7 +53,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          コメントが設定されていない場合
+     *                             コメントが設定されていない場合
      */
     @Override
     public boolean addCommentToCsvRows() throws KmgToolMsgException {
@@ -83,7 +83,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          フィールド名が設定されていない場合
+     *                             フィールド名が設定されていない場合
      */
     @Override
     public boolean addFieldToCsvRows() throws KmgToolMsgException {
@@ -113,7 +113,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          型情報が設定されていない場合
+     *                             型情報が設定されていない場合
      */
     @Override
     public boolean addTypeToCsvRows() throws KmgToolMsgException {
@@ -143,7 +143,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * @return true：変換成功、false：変換失敗（入力データが不正な場合）
      *
      * @throws KmgToolMsgException
-     *                          データ変換時にエラーが発生した場合
+     *                             データ変換時にエラーが発生した場合
      */
     @Override
     public boolean convertFields() throws KmgToolMsgException {

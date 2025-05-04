@@ -15,7 +15,7 @@ public interface InputService {
      * @return 入力内容
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     String getContent() throws KmgToolMsgException;
 
@@ -41,7 +41,7 @@ public interface InputService {
      *                  入力ファイルパス
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean initialize(final Path inputPath) throws KmgToolMsgException;
 
@@ -51,7 +51,7 @@ public interface InputService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean process() throws KmgToolMsgException;
 

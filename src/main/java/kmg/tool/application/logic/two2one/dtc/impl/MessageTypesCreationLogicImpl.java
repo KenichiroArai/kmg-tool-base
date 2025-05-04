@@ -40,7 +40,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean addItemNameToCsvRows() throws KmgToolMsgException {
@@ -68,7 +68,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean addItemToCsvRows() throws KmgToolMsgException {
@@ -96,7 +96,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean convertMessageTypesDefinition() throws KmgToolMsgException {

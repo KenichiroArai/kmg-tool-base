@@ -45,7 +45,7 @@ public interface JdtsService {
      *                     テンプレートファイルパス
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolMsgException;
 
@@ -55,7 +55,7 @@ public interface JdtsService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean process() throws KmgToolMsgException;
 

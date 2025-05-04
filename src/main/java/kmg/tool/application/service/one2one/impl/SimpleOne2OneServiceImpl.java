@@ -73,7 +73,7 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
      *                   出力ファイルパス
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -94,7 +94,7 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolMsgException {

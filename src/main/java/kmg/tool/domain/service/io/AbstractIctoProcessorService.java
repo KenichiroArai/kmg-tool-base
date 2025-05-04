@@ -169,7 +169,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      *                     出力ファイルパス
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -196,7 +196,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolMsgException {
@@ -239,7 +239,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      * @return CSVファイルパス
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     protected Path createTempCsvFile() throws KmgToolMsgException {
 
@@ -273,7 +273,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     protected abstract boolean writeCsvFile() throws KmgToolMsgException;
 

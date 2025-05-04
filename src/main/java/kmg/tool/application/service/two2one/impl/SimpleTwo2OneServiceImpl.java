@@ -118,7 +118,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolMsgException {

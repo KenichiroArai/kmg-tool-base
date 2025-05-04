@@ -175,7 +175,7 @@ public class JdtsServiceImpl implements JdtsService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -206,7 +206,7 @@ public class JdtsServiceImpl implements JdtsService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolMsgException {
@@ -302,7 +302,7 @@ public class JdtsServiceImpl implements JdtsService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private boolean createJdtsConfigsModel() throws KmgToolMsgException {
 

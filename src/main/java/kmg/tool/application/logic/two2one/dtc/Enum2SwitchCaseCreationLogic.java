@@ -23,7 +23,7 @@ public interface Enum2SwitchCaseCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean addItemNameToCsvRows() throws KmgToolMsgException;
 
@@ -33,7 +33,7 @@ public interface Enum2SwitchCaseCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean addItemToCsvRows() throws KmgToolMsgException;
 
@@ -43,7 +43,7 @@ public interface Enum2SwitchCaseCreationLogic extends IctoOneLinePatternLogic {
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean convertEnumDefinition() throws KmgToolMsgException;
 

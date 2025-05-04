@@ -28,7 +28,7 @@ public class JavadocModelImpl implements JavadocModel {
      *                Javadoc
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     public JavadocModelImpl(final String javadoc) throws KmgToolMsgException {
 

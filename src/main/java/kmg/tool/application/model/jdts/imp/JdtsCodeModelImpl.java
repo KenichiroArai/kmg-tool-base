@@ -89,7 +89,7 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
      * 解析する
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
 
     @Override

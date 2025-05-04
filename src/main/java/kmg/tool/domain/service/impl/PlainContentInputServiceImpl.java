@@ -75,7 +75,7 @@ public class PlainContentInputServiceImpl implements InputService {
      * @return 入力内容
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public String getContent() throws KmgToolMsgException {
@@ -107,7 +107,7 @@ public class PlainContentInputServiceImpl implements InputService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -150,7 +150,7 @@ public class PlainContentInputServiceImpl implements InputService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolMsgException {

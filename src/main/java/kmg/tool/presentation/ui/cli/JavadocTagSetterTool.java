@@ -120,7 +120,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     protected boolean executeMain() throws KmgToolMsgException {

@@ -68,7 +68,7 @@ public interface JdtsIoLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean initialize(final Path targetPath) throws KmgToolMsgException;
 
@@ -81,7 +81,7 @@ public interface JdtsIoLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean load() throws KmgToolMsgException;
 
@@ -92,7 +92,7 @@ public interface JdtsIoLogic {
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean loadContent() throws KmgToolMsgException;
 
@@ -102,7 +102,7 @@ public interface JdtsIoLogic {
      * @return true：ファイルあり、false:ファイルなし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean nextFile() throws KmgToolMsgException;
 
@@ -120,7 +120,7 @@ public interface JdtsIoLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean writeContent() throws KmgToolMsgException;
 

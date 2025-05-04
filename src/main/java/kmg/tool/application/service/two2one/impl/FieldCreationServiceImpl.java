@@ -124,7 +124,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
      * データをクリアして次の行の準備をする
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private void clearAndPrepareNextLine() throws KmgToolMsgException {
 
@@ -156,7 +156,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
      * フィールド作成ロジックをクローズする
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private void closeFieldCreationLogic() throws KmgToolMsgException {
 
@@ -180,7 +180,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
      * @return true：処理成功、false：処理スキップ
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private boolean processColumns() throws KmgToolMsgException {
 
@@ -224,7 +224,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
      * @return true：読み込み成功、false：読み込み終了
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private boolean readOneLineData() throws KmgToolMsgException {
 
@@ -253,7 +253,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
      * CSVファイルに行を書き込む
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private void writeCsvFileLine() throws KmgToolMsgException {
 

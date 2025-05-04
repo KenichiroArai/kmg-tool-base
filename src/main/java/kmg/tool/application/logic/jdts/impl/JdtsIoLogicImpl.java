@@ -159,7 +159,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -188,7 +188,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean load() throws KmgToolMsgException {
@@ -233,7 +233,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean loadContent() throws KmgToolMsgException {
@@ -272,7 +272,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * @return true：ファイルあり、false:ファイルなし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean nextFile() throws KmgToolMsgException {
@@ -313,7 +313,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean writeContent() throws KmgToolMsgException {

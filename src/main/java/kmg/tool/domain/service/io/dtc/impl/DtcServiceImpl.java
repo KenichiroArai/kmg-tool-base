@@ -155,7 +155,7 @@ public class DtcServiceImpl implements DtcService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -178,7 +178,7 @@ public class DtcServiceImpl implements DtcService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolMsgException {
@@ -259,7 +259,7 @@ public class DtcServiceImpl implements DtcService {
      * テンプレートの動的変換ロジックをクローズする。
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private void closeDtcLogic() throws KmgToolMsgException {
 

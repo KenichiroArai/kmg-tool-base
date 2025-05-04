@@ -17,7 +17,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean addOneLineOfDataToCsvRows() throws KmgToolMsgException;
 
@@ -78,7 +78,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      *                   出力ファイルパス
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean initialize(Path inputPath, Path outputPath) throws KmgToolMsgException;
 
@@ -88,7 +88,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean readOneLineOfData() throws KmgToolMsgException;
 
@@ -101,7 +101,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean writeCsvFile() throws KmgToolMsgException;
 }

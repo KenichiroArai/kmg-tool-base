@@ -92,7 +92,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean addOneLineOfDataToCsvRows() throws KmgToolMsgException {
@@ -222,7 +222,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -257,7 +257,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean readOneLineOfData() throws KmgToolMsgException {
@@ -303,7 +303,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     public boolean writeCsvFile() throws KmgToolMsgException {
@@ -478,7 +478,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * 入力ファイルを開く
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("resource")
     private void openInputFile() throws KmgToolMsgException {
@@ -503,7 +503,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * 出力ファイルを開く
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("resource")
     private void openOutputFile() throws KmgToolMsgException {

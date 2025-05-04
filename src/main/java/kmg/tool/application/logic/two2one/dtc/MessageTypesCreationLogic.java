@@ -27,7 +27,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean addItemNameToCsvRows() throws KmgToolMsgException;
 
@@ -37,7 +37,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean addItemToCsvRows() throws KmgToolMsgException;
 
@@ -47,7 +47,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     boolean addOneLineOfDataToCsvRows() throws KmgToolMsgException;
@@ -83,7 +83,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean convertMessageTypesDefinition() throws KmgToolMsgException;
 
@@ -136,7 +136,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      *                   出力ファイルパス
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     boolean initialize(Path inputPath, Path outputPath) throws KmgToolMsgException;
@@ -147,7 +147,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     boolean readOneLineOfData() throws KmgToolMsgException;
@@ -161,7 +161,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     boolean writeCsvFile() throws KmgToolMsgException;

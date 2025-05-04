@@ -44,7 +44,7 @@ public interface JdtsCodeModel {
      * 解析する
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     void parse() throws KmgToolMsgException;
 

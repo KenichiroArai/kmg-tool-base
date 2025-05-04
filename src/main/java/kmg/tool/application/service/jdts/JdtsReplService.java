@@ -59,7 +59,7 @@ public interface JdtsReplService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsCodeModel jdtsCodeModel) throws KmgToolMsgException;
 
@@ -75,7 +75,7 @@ public interface JdtsReplService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     boolean replace() throws KmgToolMsgException;
 }

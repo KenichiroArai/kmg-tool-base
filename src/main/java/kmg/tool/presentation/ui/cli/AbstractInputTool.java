@@ -249,7 +249,7 @@ public abstract class AbstractInputTool extends AbstractTool {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("static-method")
     protected boolean executeMain() throws KmgToolMsgException {
@@ -272,7 +272,7 @@ public abstract class AbstractInputTool extends AbstractTool {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private boolean setTargetPathFromInputFile() throws KmgToolMsgException {
 

@@ -84,7 +84,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     @Override
     protected boolean writeCsvFile() throws KmgToolMsgException {
@@ -144,7 +144,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      * データをクリアして次の行の準備をする。
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private void clearAndPrepareNextLine() throws KmgToolMsgException {
 
@@ -176,7 +176,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      * メッセージの種類作成ロジックをクローズする。
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private void closeMessageTypesCreationLogic() throws KmgToolMsgException {
 
@@ -200,7 +200,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      * @return true：処理成功、false：処理スキップ
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private boolean processColumns() throws KmgToolMsgException {
 
@@ -246,7 +246,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      * @return true：読み込み成功、false：読み込み終了
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private boolean readOneLineData() throws KmgToolMsgException {
 
@@ -275,7 +275,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      * CSVファイルに行を書き込む。
      *
      * @throws KmgToolMsgException
-     *                          KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      */
     private void writeCsvFileLine() throws KmgToolMsgException {
 
