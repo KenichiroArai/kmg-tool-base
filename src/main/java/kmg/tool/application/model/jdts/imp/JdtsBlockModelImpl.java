@@ -12,7 +12,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定のブロックモデルインタフェース<br>
@@ -187,11 +187,11 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean parse() throws KmgToolException {
+    public boolean parse() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -272,10 +272,10 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @return true：区分が特定できた、false：区分がNONE
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    private boolean specifyClassification() throws KmgToolException {
+    private boolean specifyClassification() throws KmgToolMsgException {
 
         boolean result = false;
 

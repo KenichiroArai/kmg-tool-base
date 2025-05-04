@@ -13,7 +13,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.domain.service.InputService;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定ツール<br>
@@ -119,11 +119,11 @@ public class JavadocTagSetterTool extends AbstractInputTool {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    protected boolean executeMain() throws KmgToolException {
+    protected boolean executeMain() throws KmgToolMsgException {
 
         boolean result = true;
 

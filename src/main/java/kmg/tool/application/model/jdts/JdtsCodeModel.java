@@ -2,7 +2,7 @@ package kmg.tool.application.model.jdts;
 
 import java.util.List;
 
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定のコードモデルインタフェース<br>
@@ -43,9 +43,9 @@ public interface JdtsCodeModel {
     /**
      * 解析する
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    void parse() throws KmgToolException;
+    void parse() throws KmgToolMsgException;
 
 }

@@ -2,7 +2,7 @@ package kmg.tool.domain.service;
 
 import java.nio.file.Path;
 
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 入力サービスインタフェース
@@ -14,10 +14,10 @@ public interface InputService {
      *
      * @return 入力内容
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    String getContent() throws KmgToolException;
+    String getContent() throws KmgToolMsgException;
 
     /**
      * 入力ファイルパスを返す<br>
@@ -40,19 +40,19 @@ public interface InputService {
      * @param inputPath
      *                  入力ファイルパス
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean initialize(final Path inputPath) throws KmgToolException;
+    boolean initialize(final Path inputPath) throws KmgToolMsgException;
 
     /**
      * 処理する
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean process() throws KmgToolException;
+    boolean process() throws KmgToolMsgException;
 
 }

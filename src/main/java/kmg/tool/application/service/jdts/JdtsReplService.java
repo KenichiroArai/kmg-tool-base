@@ -2,7 +2,7 @@ package kmg.tool.application.service.jdts;
 
 import kmg.tool.application.model.jdts.JdtsCodeModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定の入出力サービスインタフェース<br>
@@ -58,10 +58,10 @@ public interface JdtsReplService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsCodeModel jdtsCodeModel) throws KmgToolException;
+    boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsCodeModel jdtsCodeModel) throws KmgToolMsgException;
 
     /**
      * Javadocを置換する。<br>
@@ -74,8 +74,8 @@ public interface JdtsReplService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean replace() throws KmgToolException;
+    boolean replace() throws KmgToolMsgException;
 }

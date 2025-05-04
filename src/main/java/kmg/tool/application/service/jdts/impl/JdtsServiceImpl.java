@@ -20,7 +20,7 @@ import kmg.tool.application.service.jdts.JdtsReplService;
 import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定サービス<br>
@@ -174,12 +174,12 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path targetPath, final Path definitionPath) throws KmgToolException {
+    public boolean initialize(final Path targetPath, final Path definitionPath) throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -205,11 +205,11 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolException {
+    public boolean process() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -301,10 +301,10 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    private boolean createJdtsConfigsModel() throws KmgToolException {
+    private boolean createJdtsConfigsModel() throws KmgToolMsgException {
 
         final boolean result;
 
@@ -321,7 +321,7 @@ public class JdtsServiceImpl implements JdtsService {
             final Object[]               genMsgArgs  = {
                 this.definitionPath.toString(),
             };
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 

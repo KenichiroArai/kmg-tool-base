@@ -7,7 +7,7 @@ import kmg.tool.application.logic.two2one.dtc.MessageTypesCreationLogic;
 import kmg.tool.application.types.two2one.MessageTypesRegexGroupTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * <h2>メッセージの種類作成ロジック実装クラス</h2>
@@ -39,11 +39,11 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemNameToCsvRows() throws KmgToolException {
+    public boolean addItemNameToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -51,7 +51,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32000;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -67,11 +67,11 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemToCsvRows() throws KmgToolException {
+    public boolean addItemToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -79,7 +79,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32004;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -95,11 +95,11 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean convertMessageTypesDefinition() throws KmgToolException {
+    public boolean convertMessageTypesDefinition() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -115,7 +115,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
             final Object[]               messageArgs  = {
                 this.getNowLineNumber(), this.getLineOfDataRead(),
             };
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 

@@ -15,7 +15,7 @@ import kmg.tool.application.model.jdts.JdtsCodeModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.service.jdts.JdtsReplService;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定の入出力サービス<br>
@@ -154,13 +154,13 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final JdtsConfigsModel jdtsConfigsModel, final JdtsCodeModel jdtsCodeModel)
-        throws KmgToolException {
+        throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -187,11 +187,11 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean replace() throws KmgToolException {
+    public boolean replace() throws KmgToolMsgException {
 
         boolean result = false;
 

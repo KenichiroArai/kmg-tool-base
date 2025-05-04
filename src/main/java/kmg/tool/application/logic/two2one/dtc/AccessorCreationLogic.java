@@ -1,7 +1,7 @@
 package kmg.tool.application.logic.two2one.dtc;
 
 import kmg.tool.domain.logic.two2one.IctoOneLinePatternLogic;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * アクセサ作成ロジックインタフェース<br>
@@ -15,40 +15,40 @@ public interface AccessorCreationLogic extends IctoOneLinePatternLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean addItemToCsvRows() throws KmgToolException;
+    boolean addItemToCsvRows() throws KmgToolMsgException;
 
     /**
      * Javadocコメントを書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean addJavadocCommentToCsvRows() throws KmgToolException;
+    boolean addJavadocCommentToCsvRows() throws KmgToolMsgException;
 
     /**
      * 型情報を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean addTypeToCsvRows() throws KmgToolException;
+    boolean addTypeToCsvRows() throws KmgToolMsgException;
 
     /**
      * フィールド宣言から型、項目名、先頭大文字項目に変換する。
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean convertFields() throws KmgToolException;
+    boolean convertFields() throws KmgToolMsgException;
 
     /**
      * Javadocの変換を行う。

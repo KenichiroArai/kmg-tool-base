@@ -11,7 +11,7 @@ import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.io.Two2OneService;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.presentation.ui.cli.AbstractIoTool;
 
 /**
@@ -94,7 +94,7 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
             result = this.getIoService().initialize(AbstractIoTool.getInputPath(), this.getTemplatePath(),
                 AbstractIoTool.getOutputPath());
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             // ログの出力
             final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41001;

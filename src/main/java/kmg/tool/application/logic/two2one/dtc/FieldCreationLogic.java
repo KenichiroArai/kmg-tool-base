@@ -1,7 +1,7 @@
 package kmg.tool.application.logic.two2one.dtc;
 
 import kmg.tool.domain.logic.two2one.IctoOneLinePatternLogic;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * フィールド作成ロジックインターフェース
@@ -19,40 +19,40 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean addCommentToCsvRows() throws KmgToolException;
+    boolean addCommentToCsvRows() throws KmgToolMsgException;
 
     /**
      * フィールドを書き込み対象に追加する
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean addFieldToCsvRows() throws KmgToolException;
+    boolean addFieldToCsvRows() throws KmgToolMsgException;
 
     /**
      * 型を書き込み対象に追加する
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean addTypeToCsvRows() throws KmgToolException;
+    boolean addTypeToCsvRows() throws KmgToolMsgException;
 
     /**
      * フィールドデータを変換する
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean convertFields() throws KmgToolException;
+    boolean convertFields() throws KmgToolMsgException;
 
     /**
      * コメントを返す

@@ -16,7 +16,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 入力、CSV、テンプレート、出力の1行パターンの抽象クラス
@@ -91,11 +91,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean addOneLineOfDataToCsvRows() throws KmgToolException {
+    public boolean addOneLineOfDataToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -221,12 +221,12 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolException {
+    public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -256,11 +256,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *
      * @return true：データあり、false：データなし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean readOneLineOfData() throws KmgToolException {
+    public boolean readOneLineOfData() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -275,7 +275,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31007;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs, e);
+            throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
 
@@ -302,11 +302,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean writeCsvFile() throws KmgToolException {
+    public boolean writeCsvFile() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -325,7 +325,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
                 final Object[]               messageArgs  = {
                     this.outputPath.toString()
                 };
-                throw new KmgToolException(messageTypes, messageArgs, e);
+                throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
             }
 
@@ -342,7 +342,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
-            throw new KmgToolException(messageTypes, messageArgs, e);
+            throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
 
@@ -477,11 +477,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 入力ファイルを開く
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @SuppressWarnings("resource")
-    private void openInputFile() throws KmgToolException {
+    private void openInputFile() throws KmgToolMsgException {
 
         try {
 
@@ -493,7 +493,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
             final Object[]               messageArgs  = {
                 this.inputPath.toString()
             };
-            throw new KmgToolException(messageTypes, messageArgs, e);
+            throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
 
@@ -502,11 +502,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 出力ファイルを開く
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @SuppressWarnings("resource")
-    private void openOutputFile() throws KmgToolException {
+    private void openOutputFile() throws KmgToolMsgException {
 
         try {
 
@@ -518,7 +518,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
-            throw new KmgToolException(messageTypes, messageArgs, e);
+            throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
 

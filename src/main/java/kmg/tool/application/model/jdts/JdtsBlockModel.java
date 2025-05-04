@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.domain.model.JavadocModel;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定のブロックモデルインタフェース<br>
@@ -92,9 +92,9 @@ public interface JdtsBlockModel {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean parse() throws KmgToolException;
+    boolean parse() throws KmgToolMsgException;
 
 }

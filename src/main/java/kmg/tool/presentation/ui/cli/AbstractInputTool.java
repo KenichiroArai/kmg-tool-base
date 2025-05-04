@@ -10,7 +10,7 @@ import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 入力処理ツール抽象クラス
@@ -205,7 +205,7 @@ public abstract class AbstractInputTool extends AbstractTool {
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             /* 例外 */
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41005;
@@ -248,11 +248,11 @@ public abstract class AbstractInputTool extends AbstractTool {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @SuppressWarnings("static-method")
-    protected boolean executeMain() throws KmgToolException {
+    protected boolean executeMain() throws KmgToolMsgException {
 
         final boolean result = true;
         return result;
@@ -271,10 +271,10 @@ public abstract class AbstractInputTool extends AbstractTool {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    private boolean setTargetPathFromInputFile() throws KmgToolException {
+    private boolean setTargetPathFromInputFile() throws KmgToolMsgException {
 
         boolean result = true;
 

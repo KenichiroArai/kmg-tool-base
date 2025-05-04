@@ -14,7 +14,7 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.application.logic.jdts.JdtsIoLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定の入出力ロジック<br>
@@ -158,12 +158,12 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path targetPath) throws KmgToolException {
+    public boolean initialize(final Path targetPath) throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -187,11 +187,11 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean load() throws KmgToolException {
+    public boolean load() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -209,7 +209,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
             final Object[]               genMsgArgs  = {
                 this.targetPath.toString()
             };
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -232,11 +232,11 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *
      * @return true：データあり、false：データなし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean loadContent() throws KmgToolException {
+    public boolean loadContent() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -251,7 +251,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
             final Object[]               genMsgArgs  = {
                 this.currentFilePath.toString()
             };
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -271,11 +271,11 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *
      * @return true：ファイルあり、false:ファイルなし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean nextFile() throws KmgToolException {
+    public boolean nextFile() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -312,11 +312,11 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean writeContent() throws KmgToolException {
+    public boolean writeContent() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -330,7 +330,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
             final Object[]               genMsgArgs  = {
                 this.currentFilePath.toString(), this.writeContent
             };
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 

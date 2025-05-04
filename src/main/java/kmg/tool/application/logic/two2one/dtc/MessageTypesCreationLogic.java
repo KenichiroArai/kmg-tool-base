@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import kmg.tool.domain.logic.two2one.IctoOneLinePatternLogic;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * <h2>メッセージの種類作成ロジックインタフェース</h2>
@@ -26,31 +26,31 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean addItemNameToCsvRows() throws KmgToolException;
+    boolean addItemNameToCsvRows() throws KmgToolMsgException;
 
     /**
      * 項目を書き込み対象に追加する。
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean addItemToCsvRows() throws KmgToolException;
+    boolean addItemToCsvRows() throws KmgToolMsgException;
 
     /**
      * 書き込み対象に行を追加する。
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    boolean addOneLineOfDataToCsvRows() throws KmgToolException;
+    boolean addOneLineOfDataToCsvRows() throws KmgToolMsgException;
 
     /**
      * 書き込み対象のCSVデータのリストをクリアする。
@@ -82,10 +82,10 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean convertMessageTypesDefinition() throws KmgToolException;
+    boolean convertMessageTypesDefinition() throws KmgToolMsgException;
 
     /**
      * 変換後の1行データを返す。
@@ -135,22 +135,22 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @param outputPath
      *                   出力ファイルパス
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
+    boolean initialize(Path inputPath, Path outputPath) throws KmgToolMsgException;
 
     /**
      * 1行データを読み込む。
      *
      * @return true：データあり、false：データなし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    boolean readOneLineOfData() throws KmgToolException;
+    boolean readOneLineOfData() throws KmgToolMsgException;
 
     /**
      * CSVファイルに書き込む。<br>
@@ -160,9 +160,9 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    boolean writeCsvFile() throws KmgToolException;
+    boolean writeCsvFile() throws KmgToolMsgException;
 }

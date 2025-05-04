@@ -3,7 +3,7 @@ package kmg.tool.application.logic.jdts;
 import java.nio.file.Path;
 import java.util.List;
 
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定の入出力ロジックインタフェース<br>
@@ -67,10 +67,10 @@ public interface JdtsIoLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean initialize(final Path targetPath) throws KmgToolException;
+    boolean initialize(final Path targetPath) throws KmgToolMsgException;
 
     /**
      * ロードする。
@@ -80,10 +80,10 @@ public interface JdtsIoLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean load() throws KmgToolException;
+    boolean load() throws KmgToolMsgException;
 
     /**
      * 内容を読み込む。
@@ -91,20 +91,20 @@ public interface JdtsIoLogic {
      *
      * @return true：データあり、false：データなし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean loadContent() throws KmgToolException;
+    boolean loadContent() throws KmgToolMsgException;
 
     /**
      * 次のファイルに進む。
      *
      * @return true：ファイルあり、false:ファイルなし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean nextFile() throws KmgToolException;
+    boolean nextFile() throws KmgToolMsgException;
 
     /**
      * 書き込む内容を設定する。
@@ -119,9 +119,9 @@ public interface JdtsIoLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean writeContent() throws KmgToolException;
+    boolean writeContent() throws KmgToolMsgException;
 
 }

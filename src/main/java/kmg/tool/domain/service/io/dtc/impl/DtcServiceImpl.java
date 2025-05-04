@@ -13,7 +13,7 @@ import kmg.tool.domain.logic.two2one.dtc.DtcLogic;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * テンプレートの動的変換サービス<br>
@@ -154,13 +154,13 @@ public class DtcServiceImpl implements DtcService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
-        throws KmgToolException {
+        throws KmgToolMsgException {
 
         final boolean result = true;
 
@@ -177,11 +177,11 @@ public class DtcServiceImpl implements DtcService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolException {
+    public boolean process() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -228,7 +228,7 @@ public class DtcServiceImpl implements DtcService {
 
             result = true;
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             throw e;
 
@@ -258,10 +258,10 @@ public class DtcServiceImpl implements DtcService {
     /**
      * テンプレートの動的変換ロジックをクローズする。
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    private void closeDtcLogic() throws KmgToolException {
+    private void closeDtcLogic() throws KmgToolMsgException {
 
         try {
 
@@ -271,7 +271,7 @@ public class DtcServiceImpl implements DtcService {
 
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN12002;
             final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 

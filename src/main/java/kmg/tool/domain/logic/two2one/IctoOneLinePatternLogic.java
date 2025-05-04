@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.nio.file.Path;
 import java.util.List;
 
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 入力、CSV、テンプレート、出力の1行パターンインタフェース
@@ -16,10 +16,10 @@ public interface IctoOneLinePatternLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean addOneLineOfDataToCsvRows() throws KmgToolException;
+    boolean addOneLineOfDataToCsvRows() throws KmgToolMsgException;
 
     /**
      * 書き込み対象のCSVデータのリストをクリアする。
@@ -77,20 +77,20 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @param outputPath
      *                   出力ファイルパス
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean initialize(Path inputPath, Path outputPath) throws KmgToolException;
+    boolean initialize(Path inputPath, Path outputPath) throws KmgToolMsgException;
 
     /**
      * 1行データを読み込む。
      *
      * @return true：データあり、false：データなし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean readOneLineOfData() throws KmgToolException;
+    boolean readOneLineOfData() throws KmgToolMsgException;
 
     /**
      * CSVファイルに書き込む。<br>
@@ -100,8 +100,8 @@ public interface IctoOneLinePatternLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    boolean writeCsvFile() throws KmgToolException;
+    boolean writeCsvFile() throws KmgToolMsgException;
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * プレーンコンテンツ入力サービス<br>
@@ -74,11 +74,11 @@ public class PlainContentInputServiceImpl implements InputService {
      *
      * @return 入力内容
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public String getContent() throws KmgToolException {
+    public String getContent() throws KmgToolMsgException {
 
         final String result = this.content;
         return result;
@@ -106,12 +106,12 @@ public class PlainContentInputServiceImpl implements InputService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath) throws KmgToolException {
+    public boolean initialize(final Path inputPath) throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -121,7 +121,7 @@ public class PlainContentInputServiceImpl implements InputService {
             final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.KMGTOOL_GEN12004;
             final Object[]               messageArgs = {};
 
-            throw new KmgToolException(genType, messageArgs);
+            throw new KmgToolMsgException(genType, messageArgs);
 
         }
 
@@ -132,7 +132,7 @@ public class PlainContentInputServiceImpl implements InputService {
                 inputPath.toString()
             };
 
-            throw new KmgToolException(genType, messageArgs);
+            throw new KmgToolMsgException(genType, messageArgs);
 
         }
 
@@ -149,11 +149,11 @@ public class PlainContentInputServiceImpl implements InputService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolException {
+    public boolean process() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -169,7 +169,7 @@ public class PlainContentInputServiceImpl implements InputService {
                 this.inputPath.toString()
             };
 
-            throw new KmgToolException(genType, messageArgs);
+            throw new KmgToolMsgException(genType, messageArgs);
 
         }
 

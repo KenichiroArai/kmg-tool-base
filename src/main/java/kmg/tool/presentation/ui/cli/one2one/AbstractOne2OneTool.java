@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.io.One2OneService;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.presentation.ui.cli.AbstractIoTool;
 
 /**
@@ -73,7 +73,7 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
             initializeResult
                 = this.getIoService().initialize(AbstractIoTool.getInputPath(), AbstractIoTool.getOutputPath());
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             // ログの出力
             final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41002;

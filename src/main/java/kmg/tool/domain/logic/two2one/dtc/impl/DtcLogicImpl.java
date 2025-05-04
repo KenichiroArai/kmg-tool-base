@@ -23,7 +23,7 @@ import kmg.tool.domain.model.two2one.dtc.impl.DtcTransformModelImpl;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
 import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * テンプレートの動的変換ロジック実装<br>
@@ -98,11 +98,11 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - バッファ操作中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - バッファ操作中にエラーが発生した場合
      */
     @Override
-    public boolean addOutputBufferContent() throws KmgToolException {
+    public boolean addOutputBufferContent() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -123,11 +123,11 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @since 1.0.0
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - 変換処理中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - 変換処理中にエラーが発生した場合
      */
     @Override
-    public void applyTemplateToInputFile() throws KmgToolException {
+    public void applyTemplateToInputFile() throws KmgToolMsgException {
 
         /* 1件分の内容をコンテンツの内容で初期化 */
         this.contentsOfOneItem = this.templateContent;
@@ -149,11 +149,11 @@ public class DtcLogicImpl implements DtcLogic {
      * 出力バッファの内容を空にします。新しい出力処理を開始する前に使用します。
      * </p>
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - バッファクリア中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - バッファクリア中にエラーが発生した場合
      */
     @Override
-    public void clearOutputBufferContent() throws KmgToolException {
+    public void clearOutputBufferContent() throws KmgToolMsgException {
 
         this.outputBufferContent.setLength(0);
 
@@ -167,11 +167,11 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - データクリア中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - データクリア中にエラーが発生した場合
      */
     @Override
-    public boolean clearReadingData() throws KmgToolException {
+    public boolean clearReadingData() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -312,13 +312,13 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - 初期化処理中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - 初期化処理中にエラーが発生した場合
      */
     @Override
     @SuppressWarnings("hiding")
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
-        throws KmgToolException {
+        throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -354,11 +354,11 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
+     * @throws KmgToolMsgException
      *                          テンプレートの読み込みに失敗した場合 - ファイルが存在しない、フォーマットが不正など
      */
     @Override
-    public boolean loadTemplate() throws KmgToolException {
+    public boolean loadTemplate() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -375,7 +375,7 @@ public class DtcLogicImpl implements DtcLogic {
             final Object[]               genMsgArgs = {
                 this.templatePath.toString()
             };
-            throw new KmgToolException(genMsgType, genMsgArgs, e);
+            throw new KmgToolMsgException(genMsgType, genMsgArgs, e);
 
         }
 
@@ -403,11 +403,11 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @return true：データあり、false：データなし（ファイル終端に達した場合）
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - 読み込み処理中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - 読み込み処理中にエラーが発生した場合
      */
     @Override
-    public boolean readOneLineOfData() throws KmgToolException {
+    public boolean readOneLineOfData() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -431,7 +431,7 @@ public class DtcLogicImpl implements DtcLogic {
             final Object[]               messageArgs  = {
                 this.inputPath.toString(),
             };
-            throw new KmgToolException(messageTypes, messageArgs, e);
+            throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
 
@@ -448,11 +448,11 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - 書き込み処理中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - 書き込み処理中にエラーが発生した場合
      */
     @Override
-    public boolean writeOutputBuffer() throws KmgToolException {
+    public boolean writeOutputBuffer() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -467,7 +467,7 @@ public class DtcLogicImpl implements DtcLogic {
             final Object[]               messageArgs = {
                 this.inputPath.toString(), this.templatePath.toString(), this.outputPath.toString(),
             };
-            throw new KmgToolException(msgType, messageArgs, e);
+            throw new KmgToolMsgException(msgType, messageArgs, e);
 
         }
 
@@ -535,10 +535,10 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @return true：成功、false：失敗（プレースホルダー定義がない場合）
      *
-     * @throws KmgToolException
+     * @throws KmgToolMsgException
      *                          テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など
      */
-    private boolean loadCsvPlaceholderDefinitions(final Map<String, Object> yamlData) throws KmgToolException {
+    private boolean loadCsvPlaceholderDefinitions(final Map<String, Object> yamlData) throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -580,10 +580,10 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @return true：成功、false：失敗（派生プレースホルダー定義がない場合）
      *
-     * @throws KmgToolException
+     * @throws KmgToolMsgException
      *                          テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など
      */
-    private boolean loadDerivedPlaceholderDefinitions(final Map<String, Object> yamlData) throws KmgToolException {
+    private boolean loadDerivedPlaceholderDefinitions(final Map<String, Object> yamlData) throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -632,10 +632,10 @@ public class DtcLogicImpl implements DtcLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
+     * @throws KmgToolMsgException
      *                          テンプレートコンテンツの読み込みに失敗した場合 - YAMLデータの形式が不正など
      */
-    private boolean loadTemplateContent(final Map<String, Object> yamlData) throws KmgToolException {
+    private boolean loadTemplateContent(final Map<String, Object> yamlData) throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -652,11 +652,11 @@ public class DtcLogicImpl implements DtcLogic {
      * 指定された入力ファイルパスからBufferedReaderを作成し、内部変数に格納します。 入力ファイルが存在しない場合や読み込めない場合は例外をスローします。
      * </p>
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - ファイルオープン中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - ファイルオープン中にエラーが発生した場合
      */
     @SuppressWarnings("resource")
-    private void openInputFile() throws KmgToolException {
+    private void openInputFile() throws KmgToolMsgException {
 
         try {
 
@@ -668,7 +668,7 @@ public class DtcLogicImpl implements DtcLogic {
             final Object[]               messageArgs  = {
                 this.inputPath.toString()
             };
-            throw new KmgToolException(messageTypes, messageArgs, e);
+            throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
 
@@ -680,11 +680,11 @@ public class DtcLogicImpl implements DtcLogic {
      * 指定された出力ファイルパスからBufferedWriterを作成し、内部変数に格納します。 出力ファイルが作成できない場合や書き込めない場合は例外をスローします。
      * </p>
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - ファイルオープン中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - ファイルオープン中にエラーが発生した場合
      */
     @SuppressWarnings("resource")
-    private void openOutputFile() throws KmgToolException {
+    private void openOutputFile() throws KmgToolMsgException {
 
         try {
 
@@ -696,7 +696,7 @@ public class DtcLogicImpl implements DtcLogic {
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
-            throw new KmgToolException(messageTypes, messageArgs, e);
+            throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
 
@@ -711,10 +711,10 @@ public class DtcLogicImpl implements DtcLogic {
      * @param csvValues
      *                  CSV値を保存するマップ - キーはプレースホルダー名、値はCSVから読み取った値
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - CSV行の列数が不足している場合など
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - CSV行の列数が不足している場合など
      */
-    private void processCsvPlaceholders(final Map<String, String> csvValues) throws KmgToolException {
+    private void processCsvPlaceholders(final Map<String, String> csvValues) throws KmgToolMsgException {
 
         /* 置換前の準備 */
 
@@ -744,7 +744,7 @@ public class DtcLogicImpl implements DtcLogic {
                 final Object[]               messageArgs  = {
                     this.inputPath.toString(), key, i + 1,
                 };
-                throw new KmgToolException(messageTypes, messageArgs, e);
+                throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
             }
 
@@ -767,10 +767,10 @@ public class DtcLogicImpl implements DtcLogic {
      * @param csvValues
      *                  CSV値を保存するマップ - キーはプレースホルダー名、値はCSVから読み取った値
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - 変換処理中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - 変換処理中にエラーが発生した場合
      */
-    private void processDerivedPlaceholders(final Map<String, String> csvValues) throws KmgToolException {
+    private void processDerivedPlaceholders(final Map<String, String> csvValues) throws KmgToolMsgException {
 
         for (final DtcDerivedPlaceholderModel derivedPlaceholder : this.derivedPlaceholders) {
 

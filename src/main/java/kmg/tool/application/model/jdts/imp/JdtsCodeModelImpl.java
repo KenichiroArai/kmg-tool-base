@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsCodeModel;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定のコードモデル<br>
@@ -88,12 +88,12 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
     /**
      * 解析する
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
 
     @Override
-    public void parse() throws KmgToolException {
+    public void parse() throws KmgToolMsgException {
 
         // 「/**」でブロックに分ける
         final String[] blocks = this.orgCode.split(String.format(JdtsCodeModelImpl.JAVADOC_BLOCK_SPLIT_FORMAT,

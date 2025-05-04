@@ -6,7 +6,7 @@ import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.tool.infrastructure.common.KmgToolComExcMessageTypes;
 
 /**
- * KMGツール例外<br>
+ * KMGツールメッセージ例外<br>
  *
  * @author KenichiroArai
  *
@@ -14,7 +14,7 @@ import kmg.tool.infrastructure.common.KmgToolComExcMessageTypes;
  *
  * @version 0.1.0
  */
-public class KmgToolException extends KmgFundMsgException {
+public class KmgToolMsgException extends KmgFundMsgException {
 
     /**
      * デフォルトシリアルバージョンＵＩＤ
@@ -38,7 +38,7 @@ public class KmgToolException extends KmgFundMsgException {
      * @param messageTypes
      *                     メッセージの種類
      */
-    public KmgToolException(final KmgToolComExcMessageTypes messageTypes) {
+    public KmgToolMsgException(final KmgToolComExcMessageTypes messageTypes) {
 
         this(messageTypes, null, null);
 
@@ -54,7 +54,7 @@ public class KmgToolException extends KmgFundMsgException {
      * @param messageArgs
      *                     メッセージの引数
      */
-    public KmgToolException(final KmgToolComExcMessageTypes messageTypes, final Object[] messageArgs) {
+    public KmgToolMsgException(final KmgToolComExcMessageTypes messageTypes, final Object[] messageArgs) {
 
         this(messageTypes, messageArgs, null);
 
@@ -72,7 +72,7 @@ public class KmgToolException extends KmgFundMsgException {
      * @param cause
      *                     原因
      */
-    public KmgToolException(final KmgToolComExcMessageTypes messageTypes, final Object[] messageArgs,
+    public KmgToolMsgException(final KmgToolComExcMessageTypes messageTypes, final Object[] messageArgs,
         final Throwable cause) {
 
         super(messageTypes, messageArgs, cause);
@@ -89,7 +89,7 @@ public class KmgToolException extends KmgFundMsgException {
      * @param cause
      *                     原因
      */
-    public KmgToolException(final KmgToolComExcMessageTypes messageTypes, final Throwable cause) {
+    public KmgToolMsgException(final KmgToolComExcMessageTypes messageTypes, final Throwable cause) {
 
         this(messageTypes, null, cause);
 

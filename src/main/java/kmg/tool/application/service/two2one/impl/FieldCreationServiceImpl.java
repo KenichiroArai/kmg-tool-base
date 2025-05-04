@@ -13,7 +13,7 @@ import kmg.tool.application.service.two2one.FieldCreationService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * フィールド作成サービス実装クラス
@@ -67,7 +67,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
      * {@inheritDoc}
      */
     @Override
-    protected boolean writeCsvFile() throws KmgToolException {
+    protected boolean writeCsvFile() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -123,10 +123,10 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
     /**
      * データをクリアして次の行の準備をする
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    private void clearAndPrepareNextLine() throws KmgToolException {
+    private void clearAndPrepareNextLine() throws KmgToolMsgException {
 
         try {
 
@@ -139,7 +139,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
             /* 書き込み対象に行を追加する */
             this.fieldCreationLogic.addOneLineOfDataToCsvRows();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31000;
             final Object[]               logMsgArgs  = {};
@@ -155,10 +155,10 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
     /**
      * フィールド作成ロジックをクローズする
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    private void closeFieldCreationLogic() throws KmgToolException {
+    private void closeFieldCreationLogic() throws KmgToolMsgException {
 
         try {
 
@@ -168,7 +168,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31005;
             final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -179,10 +179,10 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
      *
      * @return true：処理成功、false：処理スキップ
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    private boolean processColumns() throws KmgToolException {
+    private boolean processColumns() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -202,7 +202,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
             this.fieldCreationLogic.addFieldToCsvRows();
             this.fieldCreationLogic.addTypeToCsvRows();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31008;
             final Object[]               logMsgArgs  = {};
@@ -223,10 +223,10 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
      *
      * @return true：読み込み成功、false：読み込み終了
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    private boolean readOneLineData() throws KmgToolException {
+    private boolean readOneLineData() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -234,7 +234,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
             result = this.fieldCreationLogic.readOneLineOfData();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31009;
             final Object[]               logMsgArgs  = {};
@@ -252,16 +252,16 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
     /**
      * CSVファイルに行を書き込む
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外
      */
-    private void writeCsvFileLine() throws KmgToolException {
+    private void writeCsvFileLine() throws KmgToolMsgException {
 
         try {
 
             this.fieldCreationLogic.writeCsvFile();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31012;
             final Object[]               logMsgArgs  = {};

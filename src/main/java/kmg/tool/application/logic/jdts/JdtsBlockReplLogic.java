@@ -4,7 +4,7 @@ import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 import kmg.tool.domain.model.JavadocTagModel;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定のブロック置換ロジックインタフェース<br>
@@ -152,10 +152,10 @@ public interface JdtsBlockReplLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外 - 初期化中にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                          KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
-    boolean initialize(final JdtsConfigsModel configsModel, final JdtsBlockModel srcBlockModel) throws KmgToolException;
+    boolean initialize(final JdtsConfigsModel configsModel, final JdtsBlockModel srcBlockModel) throws KmgToolMsgException;
 
     /**
      * 次のJavadocタグに進む<br>
