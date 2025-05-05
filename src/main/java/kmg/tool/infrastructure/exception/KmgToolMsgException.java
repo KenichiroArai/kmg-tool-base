@@ -96,7 +96,7 @@ public class KmgToolMsgException extends KmgFundMsgException {
     }
 
     /**
-     * メッセージを作成し、返す。
+     * メッセージを作成して返す。
      *
      * @return メッセージ
      */
