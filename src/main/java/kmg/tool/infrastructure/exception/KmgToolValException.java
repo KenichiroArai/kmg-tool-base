@@ -1,6 +1,6 @@
 package kmg.tool.infrastructure.exception;
 
-import kmg.core.infrastructure.model.validation.KmgValsModel;
+import kmg.core.infrastructure.model.val.KmgValsModel;
 import kmg.fund.infrastructure.exception.KmgFundValException;
 
 /**
