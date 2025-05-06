@@ -6,9 +6,9 @@ import java.util.Map;
 import kmg.core.infrastructure.common.KmgComTypes;
 
 /**
- * Javadoc追加の挿入位置の種類<br>
+ * Javadocタグ設定の挿入位置の種類<br>
  * <p>
- * Jdaは、JavadocAppenderの略。
+ * Jdtsは、JavadocTagSetterの略。
  * </p>
  *
  * @author KenichiroArai
