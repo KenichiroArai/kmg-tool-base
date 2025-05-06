@@ -10,7 +10,7 @@ import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
-import kmg.tool.application.types.JdaInsertPositionTypes;
+import kmg.tool.application.types.JdtsInsertPositionTypes;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
@@ -481,10 +481,10 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
         boolean result = false;
 
-        final JdaInsertPositionTypes position = this.currentTagConfigModel.getInsertPosition();
+        final JdtsInsertPositionTypes position = this.currentTagConfigModel.getInsertPosition();
 
         // 位置指定がNONEまたはPRESERVEの場合は再配置不要
-        if ((position == JdaInsertPositionTypes.NONE) || (position == JdaInsertPositionTypes.PRESERVE)) {
+        if ((position == JdtsInsertPositionTypes.NONE) || (position == JdtsInsertPositionTypes.PRESERVE)) {
 
             return result;
 

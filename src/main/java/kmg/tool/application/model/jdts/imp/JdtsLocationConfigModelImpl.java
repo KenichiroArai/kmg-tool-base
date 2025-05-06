@@ -9,7 +9,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
-import kmg.tool.application.types.JdaLocationModeTypes;
+import kmg.tool.application.types.JdtsLocationModeTypes;
 
 /**
  * Javadocタグ設定の配置場所設定<br>
@@ -26,7 +26,7 @@ import kmg.tool.application.types.JdaLocationModeTypes;
 public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
     /** 配置方法 */
-    private final JdaLocationModeTypes mode;
+    private final JdtsLocationModeTypes mode;
 
     /** 誤配置時に削除するかどうか */
     private final boolean removeIfMisplaced;
@@ -47,7 +47,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
         final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         /* 配置方法の設定 */
-        this.mode = JdaLocationModeTypes.getEnum((String) locationMap.get("mode"));
+        this.mode = JdtsLocationModeTypes.getEnum((String) locationMap.get("mode"));
 
         /** 誤配置時に削除するかどうかの設定 */
         this.removeIfMisplaced = Boolean.parseBoolean(String.valueOf(locationMap.get("removeIfMisplaced")));
@@ -58,7 +58,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
         if (targetElementsKeys != null) {
 
-            if (this.mode != JdaLocationModeTypes.MANUAL) {
+            if (this.mode != JdtsLocationModeTypes.MANUAL) {
 
                 // TODO KenichiroArai 2025/05/02 例外処理
                 return;
@@ -73,7 +73,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
             }
 
-        } else if (this.mode == JdaLocationModeTypes.MANUAL) {
+        } else if (this.mode == JdtsLocationModeTypes.MANUAL) {
 
             // TODO KenichiroArai 2025/05/02 例外処理
         }
@@ -86,9 +86,9 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
      * @return 配置方法
      */
     @Override
-    public JdaLocationModeTypes getMode() {
+    public JdtsLocationModeTypes getMode() {
 
-        final JdaLocationModeTypes result = this.mode;
+        final JdtsLocationModeTypes result = this.mode;
         return result;
 
     }

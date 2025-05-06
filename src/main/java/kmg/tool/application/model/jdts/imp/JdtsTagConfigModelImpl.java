@@ -12,8 +12,8 @@ import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
-import kmg.tool.application.types.JdaInsertPositionTypes;
-import kmg.tool.application.types.JdaOverwriteTypes;
+import kmg.tool.application.types.JdtsInsertPositionTypes;
+import kmg.tool.application.types.JdtsOverwriteTypes;
 
 /**
  * Javadocタグ設定のタグ構成モデル<br>
@@ -45,10 +45,10 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     private final JdtsLocationConfigModel location;
 
     /** タグの挿入位置 */
-    private final JdaInsertPositionTypes insertPosition;
+    private final JdtsInsertPositionTypes insertPosition;
 
     /** 上書き設定 */
-    private final JdaOverwriteTypes overwrite;
+    private final JdtsOverwriteTypes overwrite;
 
     /**
      * コンストラクタ<br>
@@ -72,8 +72,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
         // 配置場所の設定の生成
         this.location = new JdtsLocationConfigModelImpl(locationMap);
 
-        this.insertPosition = JdaInsertPositionTypes.getEnum((String) tagConfig.get("insertPosition"));
-        this.overwrite = JdaOverwriteTypes.getEnum((String) tagConfig.get("overwrite"));
+        this.insertPosition = JdtsInsertPositionTypes.getEnum((String) tagConfig.get("insertPosition"));
+        this.overwrite = JdtsOverwriteTypes.getEnum((String) tagConfig.get("overwrite"));
 
     }
 
@@ -83,9 +83,9 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      * @return タグの挿入位置
      */
     @Override
-    public JdaInsertPositionTypes getInsertPosition() {
+    public JdtsInsertPositionTypes getInsertPosition() {
 
-        final JdaInsertPositionTypes result = this.insertPosition;
+        final JdtsInsertPositionTypes result = this.insertPosition;
         return result;
 
     }
@@ -109,9 +109,9 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      * @return 上書き設定
      */
     @Override
-    public JdaOverwriteTypes getOverwrite() {
+    public JdtsOverwriteTypes getOverwrite() {
 
-        final JdaOverwriteTypes result = this.overwrite;
+        final JdtsOverwriteTypes result = this.overwrite;
         return result;
 
     }

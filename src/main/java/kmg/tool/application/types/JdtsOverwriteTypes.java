@@ -6,7 +6,7 @@ import java.util.Map;
 import kmg.core.infrastructure.common.KmgComTypes;
 
 /**
- * Javadocタグ設定の挿入位置の種類<br>
+ * Javadocタグ設定の上書きの種類<br>
  * <p>
  * Jdtsは、JavadocTagSetterの略。
  * </p>
@@ -17,34 +17,34 @@ import kmg.core.infrastructure.common.KmgComTypes;
  *
  * @version 0.1.0
  */
-public enum JdaInsertPositionTypes implements KmgComTypes<String> {
+public enum JdtsOverwriteTypes implements KmgComTypes<String> {
 
     /* 定義：開始 */
 
     /** 指定無し */
     NONE("指定無し", "None", "指定無し"),
 
-    /** Javadocタグの先頭 */
-    BEGINNING("Javadocタグの先頭", "beginning", "Javadocタグの先頭に挿入"),
+    /** 上書きしない */
+    NEVER("上書きしない", "never", "上書きしない（既存が存在しない場合のみ追加する）"),
 
-    /** Javadocタグの末尾 */
-    END("Javadocタグの末尾", "end", "Javadocタグの末尾に挿入"),
+    /** 常に上書き */
+    ALWAYS("常に上書き", "always", "常に上書き"),
 
-    /** 現在の位置を維持 */
-    PRESERVE("現在の位置を維持", "preserve", "既存のJavadocタグが存在する場合は現在の位置を維持"),
+    /** 既存のバージョンより小さい場合のみ上書き */
+    IF_LOWER("既存のバージョンより小さい場合のみ上書き", "ifLower", "既存のバージョンより小さい場合のみ上書き"),
 
     /* 定義：終了 */
     ;
 
     /** 種類のマップ */
-    private static final Map<String, JdaInsertPositionTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, JdtsOverwriteTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final JdaInsertPositionTypes type : JdaInsertPositionTypes.values()) {
+        for (final JdtsOverwriteTypes type : JdtsOverwriteTypes.values()) {
 
-            JdaInsertPositionTypes.VALUES_MAP.put(type.get(), type);
+            JdtsOverwriteTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -64,9 +64,9 @@ public enum JdaInsertPositionTypes implements KmgComTypes<String> {
      *
      * @return デフォルト値
      */
-    public static JdaInsertPositionTypes getDefault() {
+    public static JdtsOverwriteTypes getDefault() {
 
-        final JdaInsertPositionTypes result = NONE;
+        final JdtsOverwriteTypes result = NONE;
         return result;
 
     }
@@ -82,9 +82,9 @@ public enum JdaInsertPositionTypes implements KmgComTypes<String> {
      *
      * @return 種類。指定無し（NONE）：キーが存在しない場合。
      */
-    public static JdaInsertPositionTypes getEnum(final String key) {
+    public static JdtsOverwriteTypes getEnum(final String key) {
 
-        JdaInsertPositionTypes result = JdaInsertPositionTypes.VALUES_MAP.get(key);
+        JdtsOverwriteTypes result = JdtsOverwriteTypes.VALUES_MAP.get(key);
 
         if (result == null) {
 
@@ -100,9 +100,9 @@ public enum JdaInsertPositionTypes implements KmgComTypes<String> {
      *
      * @return 初期値
      */
-    public static JdaInsertPositionTypes getInitValue() {
+    public static JdtsOverwriteTypes getInitValue() {
 
-        final JdaInsertPositionTypes result = NONE;
+        final JdtsOverwriteTypes result = NONE;
         return result;
 
     }
@@ -117,7 +117,7 @@ public enum JdaInsertPositionTypes implements KmgComTypes<String> {
      * @param detail
      *                    詳細情報
      */
-    JdaInsertPositionTypes(final String displayName, final String key, final String detail) {
+    JdtsOverwriteTypes(final String displayName, final String key, final String detail) {
 
         this.displayName = displayName;
         this.key = key;

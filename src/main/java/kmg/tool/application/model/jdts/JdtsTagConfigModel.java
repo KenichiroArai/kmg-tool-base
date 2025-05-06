@@ -2,8 +2,8 @@ package kmg.tool.application.model.jdts;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.application.types.JdaInsertPositionTypes;
-import kmg.tool.application.types.JdaOverwriteTypes;
+import kmg.tool.application.types.JdtsInsertPositionTypes;
+import kmg.tool.application.types.JdtsOverwriteTypes;
 
 /**
  * Javadocタグ設定のタグ構成モデルインターフェース<br>
@@ -24,7 +24,7 @@ public interface JdtsTagConfigModel {
      *
      * @return タグの挿入位置
      */
-    JdaInsertPositionTypes getInsertPosition();
+    JdtsInsertPositionTypes getInsertPosition();
 
     /**
      * 配置場所の設定を返す<br>
@@ -38,7 +38,7 @@ public interface JdtsTagConfigModel {
      *
      * @return 上書き設定
      */
-    JdaOverwriteTypes getOverwrite();
+    JdtsOverwriteTypes getOverwrite();
 
     /**
      * タグを返す<br>

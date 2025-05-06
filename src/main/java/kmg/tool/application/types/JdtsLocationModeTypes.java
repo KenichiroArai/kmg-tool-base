@@ -17,7 +17,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  *
  * @version 0.1.0
  */
-public enum JdaLocationModeTypes implements KmgComTypes<String> {
+public enum JdtsLocationModeTypes implements KmgComTypes<String> {
 
     /* 定義：開始 */
 
@@ -34,14 +34,14 @@ public enum JdaLocationModeTypes implements KmgComTypes<String> {
     ;
 
     /** 種類のマップ */
-    private static final Map<String, JdaLocationModeTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, JdtsLocationModeTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final JdaLocationModeTypes type : JdaLocationModeTypes.values()) {
+        for (final JdtsLocationModeTypes type : JdtsLocationModeTypes.values()) {
 
-            JdaLocationModeTypes.VALUES_MAP.put(type.get(), type);
+            JdtsLocationModeTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -61,9 +61,9 @@ public enum JdaLocationModeTypes implements KmgComTypes<String> {
      *
      * @return デフォルト値
      */
-    public static JdaLocationModeTypes getDefault() {
+    public static JdtsLocationModeTypes getDefault() {
 
-        final JdaLocationModeTypes result = NONE;
+        final JdtsLocationModeTypes result = NONE;
         return result;
 
     }
@@ -79,9 +79,9 @@ public enum JdaLocationModeTypes implements KmgComTypes<String> {
      *
      * @return 種類。指定無し（NONE）：キーが存在しない場合。
      */
-    public static JdaLocationModeTypes getEnum(final String key) {
+    public static JdtsLocationModeTypes getEnum(final String key) {
 
-        JdaLocationModeTypes result = JdaLocationModeTypes.VALUES_MAP.get(key);
+        JdtsLocationModeTypes result = JdtsLocationModeTypes.VALUES_MAP.get(key);
 
         if (result == null) {
 
@@ -97,9 +97,9 @@ public enum JdaLocationModeTypes implements KmgComTypes<String> {
      *
      * @return 初期値
      */
-    public static JdaLocationModeTypes getInitValue() {
+    public static JdtsLocationModeTypes getInitValue() {
 
-        final JdaLocationModeTypes result = NONE;
+        final JdtsLocationModeTypes result = NONE;
         return result;
 
     }
@@ -114,7 +114,7 @@ public enum JdaLocationModeTypes implements KmgComTypes<String> {
      * @param detail
      *                    詳細情報
      */
-    JdaLocationModeTypes(final String displayName, final String key, final String detail) {
+    JdtsLocationModeTypes(final String displayName, final String key, final String detail) {
 
         this.displayName = displayName;
         this.key = key;

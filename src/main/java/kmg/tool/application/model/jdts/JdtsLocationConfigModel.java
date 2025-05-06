@@ -3,7 +3,7 @@ package kmg.tool.application.model.jdts;
 import java.util.List;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.application.types.JdaLocationModeTypes;
+import kmg.tool.application.types.JdtsLocationModeTypes;
 
 /**
  * Javadocタグ設定の配置場所設定インタフェース<br>
@@ -24,7 +24,7 @@ public interface JdtsLocationConfigModel {
      *
      * @return 配置方法
      */
-    JdaLocationModeTypes getMode();
+    JdtsLocationModeTypes getMode();
 
     /**
      * 対象要素の種類を返す<br>
