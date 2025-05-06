@@ -10,7 +10,7 @@ import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
-import kmg.tool.application.types.JdtsInsertPositionTypes;
+import kmg.tool.application.types.jdts.JdtsInsertPositionTypes;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 

@@ -1,4 +1,4 @@
-package kmg.tool.application.types;
+package kmg.tool.application.types.jdts;
 
 import java.util.HashMap;
 import java.util.Map;

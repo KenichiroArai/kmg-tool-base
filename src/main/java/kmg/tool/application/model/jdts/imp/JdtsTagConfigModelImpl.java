@@ -12,8 +12,8 @@ import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
-import kmg.tool.application.types.JdtsInsertPositionTypes;
-import kmg.tool.application.types.JdtsOverwriteTypes;
+import kmg.tool.application.types.jdts.JdtsInsertPositionTypes;
+import kmg.tool.application.types.jdts.JdtsOverwriteTypes;
 
 /**
  * Javadocタグ設定のタグ構成モデル<br>

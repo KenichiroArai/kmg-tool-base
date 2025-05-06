@@ -9,7 +9,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
-import kmg.tool.application.types.JdtsLocationModeTypes;
+import kmg.tool.application.types.jdts.JdtsLocationModeTypes;
 
 /**
  * Javadocタグ設定の配置場所設定<br>
