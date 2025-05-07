@@ -48,7 +48,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
         /* 配置方法の設定 */
         this.mode = JdtsLocationModeTypes.getEnum((String) locationMap.get(JdtsConfigKeyTypes.MODE.get()));
 
-        /** 誤配置時に削除するかどうかの設定 */
+        /* 誤配置時に削除するかどうかの設定 */
         this.removeIfMisplaced
             = Boolean.parseBoolean(String.valueOf(locationMap.get(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get())));
 
