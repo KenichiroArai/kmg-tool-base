@@ -12,6 +12,7 @@ import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
+import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 import kmg.tool.application.types.jdts.JdtsInsertPositionTypes;
 import kmg.tool.application.types.jdts.JdtsOverwriteTypes;
 
@@ -60,20 +61,21 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
-        // TODO KenichiroArai 2025/04/25 【優先度：低】：ハードコード
-        this.tagName = (String) tagConfig.get("tagName");
-        this.tag = KmgJavadocTagTypes.getEnum(KmgString.concat("@", this.tagName));
-        this.tagValue = (String) tagConfig.get("tagValue");
-        this.tagDescription
-            = Optional.ofNullable(tagConfig.get("tagDescription")).map(Object::toString).orElse(KmgString.EMPTY);
+        this.tagName = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_NAME.get());
+        this.tag = KmgJavadocTagTypes.getEnum(this.tagName);
+        this.tagValue = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_VALUE.get());
+        this.tagDescription = Optional.ofNullable(tagConfig.get(JdtsConfigKeyTypes.TAG_DESCRIPTION.get()))
+            .map(Object::toString).orElse(KmgString.EMPTY);
 
-        final Map<String, Object> locationMap = mapper.convertValue(tagConfig.get("location"), Map.class);
+        final Map<String, Object> locationMap
+            = mapper.convertValue(tagConfig.get(JdtsConfigKeyTypes.LOCATION.get()), Map.class);
 
         // 配置場所の設定の生成
         this.location = new JdtsLocationConfigModelImpl(locationMap);
 
-        this.insertPosition = JdtsInsertPositionTypes.getEnum((String) tagConfig.get("insertPosition"));
-        this.overwrite = JdtsOverwriteTypes.getEnum((String) tagConfig.get("overwrite"));
+        this.insertPosition
+            = JdtsInsertPositionTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.INSERT_POSITION.get()));
+        this.overwrite = JdtsOverwriteTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.OVERWRITE.get()));
 
     }
 
