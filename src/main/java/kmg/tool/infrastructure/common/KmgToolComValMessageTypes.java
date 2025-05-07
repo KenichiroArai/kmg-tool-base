@@ -1,6 +1,6 @@
 package kmg.tool.infrastructure.common;
 
-import kmg.core.infrastructure.common.msg.KmgComValMessageTypes;
+import kmg.core.infrastructure.common.msg.KmgComValMsgTypes;
 
 /**
  * KMG共通バリデーションメッセージの種類のインタフェース
@@ -11,7 +11,7 @@ import kmg.core.infrastructure.common.msg.KmgComValMessageTypes;
  *
  * @version 0.1.0
  */
-public interface KmgToolComValMessageTypes extends KmgToolComMessageTypes, KmgComValMessageTypes {
+public interface KmgToolComValMessageTypes extends KmgToolComMessageTypes, KmgComValMsgTypes {
 
     // 処理なし
 
