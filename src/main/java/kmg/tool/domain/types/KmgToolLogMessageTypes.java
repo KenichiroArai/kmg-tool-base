@@ -316,7 +316,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
     KMGTOOL_LOG31019("Javadocタグ設定処理を開始します。"),
 
     /**
-     * Javadocタグ設定処理を終了します。\n読み込みファイル数:[{0}]\n最終合計行数:[{1}]
+     * Javadocタグ設定処理を終了します。\n読み込みファイル数:[{0}]\n合計置換数:[{1}]
      *
      * @author KenichiroArai
      *
@@ -324,7 +324,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMessageTypes {
      *
      * @version 0.1.0
      */
-    KMGTOOL_LOG31020("Javadocタグ設定処理を終了します。\n読み込みファイル数:[{0}]\n最終合計行数:[{1}]"),
+    KMGTOOL_LOG31020("Javadocタグ設定処理を終了します。\n読み込みファイル数:[{0}]\n合計置換数:[{1}]"),
 
     /**
      * タグ存在しないため、タグを追加しました。追加先の区分：[{0}]、 追加先の要素名：[{1}]、 追加したタグ：[{2}]

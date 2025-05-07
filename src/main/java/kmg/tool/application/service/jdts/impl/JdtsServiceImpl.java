@@ -274,7 +274,6 @@ public class JdtsServiceImpl implements JdtsService {
             /* 次のファイルに進む */
         } while (this.jdtsIoLogic.nextFile());
 
-        // TODO KenichiroArai 2025/04/29 メッセージを修正する
         final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31020;
         final Object[]               endLogMsgArgs  = {
             this.jdtsIoLogic.getFilePathList().size(), totalReplaceCount,
