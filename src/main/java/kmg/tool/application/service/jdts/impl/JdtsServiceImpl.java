@@ -21,6 +21,7 @@ import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.exception.KmgToolValException;
 
 /**
  * Javadocタグ設定サービス<br>
@@ -207,9 +208,11 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
      */
     @Override
-    public boolean process() throws KmgToolMsgException {
+    public boolean process() throws KmgToolMsgException, KmgToolValException {
 
         boolean result = false;
 
@@ -302,8 +305,10 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
      */
-    private boolean createJdtsConfigsModel() throws KmgToolMsgException {
+    private boolean createJdtsConfigsModel() throws KmgToolMsgException, KmgToolValException {
 
         final boolean result;
 

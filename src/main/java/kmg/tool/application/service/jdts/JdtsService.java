@@ -3,6 +3,7 @@ package kmg.tool.application.service.jdts;
 import java.nio.file.Path;
 
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.exception.KmgToolValException;
 
 /**
  * Javadocタグ設定サービスインタフェース<br>
@@ -56,7 +57,9 @@ public interface JdtsService {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
      */
-    boolean process() throws KmgToolMsgException;
+    boolean process() throws KmgToolMsgException, KmgToolValException;
 
 }

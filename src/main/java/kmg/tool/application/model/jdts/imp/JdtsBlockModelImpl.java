@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import kmg.core.infrastructure.exception.KmgMsgException;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
+import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
@@ -297,7 +299,19 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
             }
 
             // 要素名を取得
-            this.elementName = this.classification.getElementName(codeLine);
+            try {
+
+                this.elementName = this.classification.getElementName(codeLine);
+
+            } catch (final KmgMsgException e) {
+
+                // TODO KenichiroArai 2025/05/08 例外処理
+                final KmgToolGenMessageTypes msgTypes = KmgToolGenMessageTypes.NONE;
+                final Object[]               msgArgs  = {};
+
+                throw new KmgToolMsgException(msgTypes, msgArgs, e);
+
+            }
 
             result = true;
             break;

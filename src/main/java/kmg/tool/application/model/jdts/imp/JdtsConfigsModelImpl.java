@@ -7,11 +7,17 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
+import kmg.core.infrastructure.model.val.KmgValDataModel;
+import kmg.core.infrastructure.model.val.KmgValsModel;
+import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
+import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgMapUtils;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
+import kmg.tool.domain.types.KmgToolValMessageTypes;
+import kmg.tool.infrastructure.exception.KmgToolValException;
 
 /**
  * Javadocタグ設定の構成モデル<br>
@@ -29,22 +35,32 @@ import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
     /** Javadoc追加のタグ設定モデルのリスト */
-    private List<JdtsTagConfigModel> jdtsTagConfigModels;
+    private final List<JdtsTagConfigModel> jdtsTagConfigModels;
 
     /**
      * コンストラクタ<br>
      *
      * @param yamlData
      *                 YAMLデータ
+     *
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
      */
-    public JdtsConfigsModelImpl(final Map<String, Object> yamlData) {
+    public JdtsConfigsModelImpl(final Map<String, Object> yamlData) throws KmgToolValException {
 
         this.jdtsTagConfigModels = new ArrayList<>();
 
+        final KmgValsModel valsModel = new KmgValsModelImpl();
+
         if (KmgMapUtils.isEmpty(yamlData)) {
 
-            // TODO KenichiroArai 2025/05/02 例外処理
-            return;
+            // TODO KenichiroArai 2025/05/08 例外処理
+            final KmgToolValMessageTypes valMsgTypes  = KmgToolValMessageTypes.NONE;
+            final Object[]               valMsgArgs   = {};
+            final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
+
+            throw new KmgToolValException(valsModel);
 
         }
 
@@ -55,8 +71,13 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         if (KmgListUtils.isEmpty(javadocTags)) {
 
-            // TODO KenichiroArai 2025/05/02 例外処理
-            return;
+            // TODO KenichiroArai 2025/05/08 例外処理
+            final KmgToolValMessageTypes valMsgTypes  = KmgToolValMessageTypes.NONE;
+            final Object[]               valMsgArgs   = {};
+            final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
+
+            throw new KmgToolValException(valsModel);
 
         }
 

@@ -11,6 +11,7 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.exception.KmgToolValException;
 
 /**
  * 入力処理ツール抽象クラス
@@ -215,6 +216,17 @@ public abstract class AbstractInputTool extends AbstractTool {
 
             result = false;
 
+        } catch (final KmgToolValException e) {
+
+            /* 例外 */
+            // TODO KenichiroArai 2025/05/08 エラーメッセージを出力する
+            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
+            final Object[]               messageArgs = {};
+            final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+            measService.error(msg, e);
+
+            result = false;
+
         } finally {
 
             /* 終了 */
@@ -250,9 +262,11 @@ public abstract class AbstractInputTool extends AbstractTool {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
      */
     @SuppressWarnings("static-method")
-    protected boolean executeMain() throws KmgToolMsgException {
+    protected boolean executeMain() throws KmgToolMsgException, KmgToolValException {
 
         final boolean result = true;
         return result;

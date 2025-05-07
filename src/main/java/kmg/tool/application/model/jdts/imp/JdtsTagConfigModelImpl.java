@@ -15,6 +15,7 @@ import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 import kmg.tool.application.types.jdts.JdtsInsertPositionTypes;
 import kmg.tool.application.types.jdts.JdtsOverwriteTypes;
+import kmg.tool.infrastructure.exception.KmgToolValException;
 
 /**
  * Javadocタグ設定のタグ構成モデル<br>
@@ -56,8 +57,11 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      *
      * @param tagConfig
      *                  タグ設定
+     *
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
      */
-    public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) {
+    public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) throws KmgToolValException {
 
         final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 

@@ -14,6 +14,7 @@ import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.exception.KmgToolValException;
 
 /**
  * Javadocタグ設定ツール<br>
@@ -121,9 +122,11 @@ public class JavadocTagSetterTool extends AbstractInputTool {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
      */
     @Override
-    protected boolean executeMain() throws KmgToolMsgException {
+    protected boolean executeMain() throws KmgToolMsgException, KmgToolValException {
 
         boolean result = true;
 

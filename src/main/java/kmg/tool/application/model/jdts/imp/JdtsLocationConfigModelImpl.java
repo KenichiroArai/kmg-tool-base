@@ -7,10 +7,16 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
+import kmg.core.infrastructure.model.val.KmgValDataModel;
+import kmg.core.infrastructure.model.val.KmgValsModel;
+import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
+import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 import kmg.tool.application.types.jdts.JdtsLocationModeTypes;
+import kmg.tool.domain.types.KmgToolValMessageTypes;
+import kmg.tool.infrastructure.exception.KmgToolValException;
 
 /**
  * Javadocタグ設定の配置場所設定<br>
@@ -40,8 +46,13 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
      *
      * @param locationMap
      *                    配置場所の設定マップ
+     *
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
      */
-    public JdtsLocationConfigModelImpl(final Map<String, Object> locationMap) {
+    public JdtsLocationConfigModelImpl(final Map<String, Object> locationMap) throws KmgToolValException {
+
+        final KmgValsModel valsModel = new KmgValsModelImpl();
 
         final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
@@ -61,8 +72,13 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
             if (this.mode != JdtsLocationModeTypes.MANUAL) {
 
-                // TODO KenichiroArai 2025/05/02 例外処理
-                return;
+                // TODO KenichiroArai 2025/05/08 例外処理
+                final KmgToolValMessageTypes valMsgTypes  = KmgToolValMessageTypes.NONE;
+                final Object[]               valMsgArgs   = {};
+                final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+                valsModel.addData(valDataModel);
+
+                throw new KmgToolValException(valsModel);
 
             }
 
@@ -76,7 +92,14 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
         } else if (this.mode == JdtsLocationModeTypes.MANUAL) {
 
-            // TODO KenichiroArai 2025/05/02 例外処理
+            // TODO KenichiroArai 2025/05/08 例外処理
+            final KmgToolValMessageTypes valMsgTypes  = KmgToolValMessageTypes.NONE;
+            final Object[]               valMsgArgs   = {};
+            final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
+
+            throw new KmgToolValException(valsModel);
+
         }
 
     }
