@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
+import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 import kmg.tool.application.types.jdts.JdtsLocationModeTypes;
 
 /**
@@ -42,18 +43,18 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
      */
     public JdtsLocationConfigModelImpl(final Map<String, Object> locationMap) {
 
-        // TODO KenichiroArai 2025/05/02 ハードコード
-
         final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         /* 配置方法の設定 */
-        this.mode = JdtsLocationModeTypes.getEnum((String) locationMap.get("mode"));
+        this.mode = JdtsLocationModeTypes.getEnum((String) locationMap.get(JdtsConfigKeyTypes.MODE.get()));
 
         /** 誤配置時に削除するかどうかの設定 */
-        this.removeIfMisplaced = Boolean.parseBoolean(String.valueOf(locationMap.get("removeIfMisplaced")));
+        this.removeIfMisplaced
+            = Boolean.parseBoolean(String.valueOf(locationMap.get(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get())));
 
         /* 対象要素の種類の設定 */
-        final List<String> targetElementsKeys = mapper.convertValue(locationMap.get("targetElements"), List.class);
+        final List<String> targetElementsKeys
+            = mapper.convertValue(locationMap.get(JdtsConfigKeyTypes.TARGET_ELEMENTS.get()), List.class);
         this.targetElements = new ArrayList<>();
 
         if (targetElementsKeys != null) {

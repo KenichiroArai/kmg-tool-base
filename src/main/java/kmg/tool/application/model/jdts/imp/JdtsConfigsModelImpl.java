@@ -11,6 +11,7 @@ import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgMapUtils;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
+import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 
 /**
  * Javadocタグ設定の構成モデル<br>
@@ -48,9 +49,9 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
         }
 
         /* YAMLデータからJdtsConfigsセクションを取得 */
-        final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        // TODO KenichiroArai 2025/05/02 ハードコード
-        final List<Map<String, Object>> javadocTags = mapper.convertValue(yamlData.get("JdtsConfigs"), List.class);
+        final ObjectMapper              mapper      = new ObjectMapper(new YAMLFactory());
+        final List<Map<String, Object>> javadocTags = mapper
+            .convertValue(yamlData.get(JdtsConfigKeyTypes.JDTS_CONFIGS.get()), List.class);
 
         if (KmgListUtils.isEmpty(javadocTags)) {
 

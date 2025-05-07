@@ -14,7 +14,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  *
  * @version 0.1.0
  */
-public enum JdtsTypes implements KmgComTypes<String> {
+public enum JdtsConfigKeyTypes implements KmgComTypes<String> {
 
     /* 定義：開始 */
 
@@ -27,6 +27,96 @@ public enum JdtsTypes implements KmgComTypes<String> {
      */
     NONE("指定無し", "None", "指定無し"),
 
+    /**
+     * Javadocタグ設定の構成
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    JDTS_CONFIGS("Javadocタグ設定の構成", "JdtsConfigs", "Javadocタグ設定の構成"),
+
+    /**
+     * タグ名
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    TAG_NAME("タグ名", "tagName", "タグ名"),
+
+    /**
+     * タグ値
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    TAG_VALUE("タグ値", "tagValue", "タグ値"),
+
+    /**
+     * タグの説明
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    TAG_DESCRIPTION("タグの説明", "tagDescription", "タグの説明"),
+
+    /**
+     * 配置設定
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    LOCATION("配置設定", "location", "配置設定"),
+
+    /**
+     * 配置方法
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    MODE("配置方法", "mode", "配置方法"),
+
+    /**
+     * 誤配置時に削除するかどうか
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    REMOVE_IF_MISPLACED("誤配置時に削除するかどうか", "removeIfMisplaced", "指定された場所以外にタグが存在する場合に削除するかどうか"),
+
+    /**
+     * 対象要素
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    TARGET_ELEMENTS("対象要素", "targetElements", "手動モードの場合の対象要素"),
+
+    /**
+     * 挿入位置
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    INSERT_POSITION("挿入位置", "insertPosition", "挿入位置"),
+
+    /**
+     * 上書き設定
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    OVERWRITE("上書き設定", "overwrite", "上書き設定"),
+
     /* 定義：終了 */
     ;
 
@@ -35,14 +125,14 @@ public enum JdtsTypes implements KmgComTypes<String> {
      *
      * @since 0.1.0
      */
-    private static final Map<String, JdtsTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, JdtsConfigKeyTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final JdtsTypes type : JdtsTypes.values()) {
+        for (final JdtsConfigKeyTypes type : JdtsConfigKeyTypes.values()) {
 
-            JdtsTypes.VALUES_MAP.put(type.get(), type);
+            JdtsConfigKeyTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -76,9 +166,9 @@ public enum JdtsTypes implements KmgComTypes<String> {
      *
      * @return デフォルト値
      */
-    public static JdtsTypes getDefault() {
+    public static JdtsConfigKeyTypes getDefault() {
 
-        final JdtsTypes result = NONE;
+        final JdtsConfigKeyTypes result = NONE;
         return result;
 
     }
@@ -96,9 +186,9 @@ public enum JdtsTypes implements KmgComTypes<String> {
      *
      * @return 種類。指定無し（NONE）：キーが存在しない場合。
      */
-    public static JdtsTypes getEnum(final String key) {
+    public static JdtsConfigKeyTypes getEnum(final String key) {
 
-        JdtsTypes result = JdtsTypes.VALUES_MAP.get(key);
+        JdtsConfigKeyTypes result = JdtsConfigKeyTypes.VALUES_MAP.get(key);
 
         if (result == null) {
 
@@ -116,9 +206,9 @@ public enum JdtsTypes implements KmgComTypes<String> {
      *
      * @return 初期値
      */
-    public static JdtsTypes getInitValue() {
+    public static JdtsConfigKeyTypes getInitValue() {
 
-        final JdtsTypes result = NONE;
+        final JdtsConfigKeyTypes result = NONE;
         return result;
 
     }
@@ -135,7 +225,7 @@ public enum JdtsTypes implements KmgComTypes<String> {
      * @param detail
      *                    詳細情報
      */
-    JdtsTypes(final String displayName, final String key, final String detail) {
+    JdtsConfigKeyTypes(final String displayName, final String key, final String detail) {
 
         this.displayName = displayName;
         this.key = key;
