@@ -4,6 +4,11 @@ import kmg.core.infrastructure.common.msg.KmgComValMsgTypes;
 
 /**
  * KMG共通バリデーションメッセージの種類のインタフェース
+ * <p>
+ * Comは、Commonの略。<br>
+ * Valは、Validationの略。<br>
+ * Msgは、Messageの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -11,7 +16,7 @@ import kmg.core.infrastructure.common.msg.KmgComValMsgTypes;
  *
  * @version 0.1.0
  */
-public interface KmgToolComValMessageTypes extends KmgToolComMessageTypes, KmgComValMsgTypes {
+public interface KmgToolComValMsgTypes extends KmgToolComMsgTypes, KmgComValMsgTypes {
 
     // 処理なし
 

@@ -3,7 +3,7 @@ package kmg.tool.infrastructure.model.val.impl;
 import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.infrastructure.common.KmgToolComValMessageTypes;
+import kmg.tool.infrastructure.common.KmgToolComValMsgTypes;
 
 /**
  * KMGツールバリデーションデータモデル<br>
@@ -38,7 +38,7 @@ public class KmgToolValDataModelImpl extends KmgValDataModelImpl {
      * @param messageArgs
      *                     メッセージの引数
      */
-    public KmgToolValDataModelImpl(final KmgToolComValMessageTypes messageTypes, final Object[] messageArgs) {
+    public KmgToolValDataModelImpl(final KmgToolComValMsgTypes messageTypes, final Object[] messageArgs) {
 
         super(messageTypes, messageArgs);
 

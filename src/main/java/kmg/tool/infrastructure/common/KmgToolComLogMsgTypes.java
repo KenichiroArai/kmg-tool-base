@@ -4,6 +4,10 @@ import kmg.core.infrastructure.common.msg.KmgComLogMsgTypes;
 
 /**
  * KMGツール共通ログメッセージの種類のインタフェース
+ * <p>
+ * Comは、Commonの略。<br>
+ * Msgは、Messageの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -11,7 +15,7 @@ import kmg.core.infrastructure.common.msg.KmgComLogMsgTypes;
  *
  * @version 0.1.0
  */
-public interface KmgToolComLogMessageTypes extends KmgToolComMessageTypes, KmgComLogMsgTypes {
+public interface KmgToolComLogMsgTypes extends KmgToolComMsgTypes, KmgComLogMsgTypes {
 
     // 処理なし
 
