@@ -9,7 +9,7 @@ import kmg.tool.application.logic.two2one.dtc.Enum2SwitchCaseCreationLogic;
 import kmg.tool.application.types.two2one.ConvertEnumDefinitionTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * <h2>列挙型からcase文作成ロジック実装クラス</h2>
@@ -41,11 +41,11 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemNameToCsvRows() throws KmgToolException {
+    public boolean addItemNameToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -53,7 +53,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32009;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -69,11 +69,11 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemToCsvRows() throws KmgToolException {
+    public boolean addItemToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -81,7 +81,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32010;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -97,11 +97,11 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean convertEnumDefinition() throws KmgToolException {
+    public boolean convertEnumDefinition() throws KmgToolMsgException {
 
         boolean result = false;
 

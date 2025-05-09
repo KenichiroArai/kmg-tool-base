@@ -8,7 +8,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.two2one.dtc.FieldCreationLogic;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * フィールド作成ロジック実装クラス データベースのフィールド定義から、Javaのフィールド定義を生成するためのロジッククラスです。 入力されたフィールド定義（コメント、フィールド名、データ型）を解析し、
@@ -52,11 +52,11 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          コメントが設定されていない場合
+     * @throws KmgToolMsgException
+     *                             コメントが設定されていない場合
      */
     @Override
-    public boolean addCommentToCsvRows() throws KmgToolException {
+    public boolean addCommentToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -65,7 +65,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32006;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -82,11 +82,11 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          フィールド名が設定されていない場合
+     * @throws KmgToolMsgException
+     *                             フィールド名が設定されていない場合
      */
     @Override
-    public boolean addFieldToCsvRows() throws KmgToolException {
+    public boolean addFieldToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -95,7 +95,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32007;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -112,11 +112,11 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          型情報が設定されていない場合
+     * @throws KmgToolMsgException
+     *                             型情報が設定されていない場合
      */
     @Override
-    public boolean addTypeToCsvRows() throws KmgToolException {
+    public boolean addTypeToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -125,7 +125,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32008;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -142,11 +142,11 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      *
      * @return true：変換成功、false：変換失敗（入力データが不正な場合）
      *
-     * @throws KmgToolException
-     *                          データ変換時にエラーが発生した場合
+     * @throws KmgToolMsgException
+     *                             データ変換時にエラーが発生した場合
      */
     @Override
-    public boolean convertFields() throws KmgToolException {
+    public boolean convertFields() throws KmgToolMsgException {
 
         boolean result = false;
 

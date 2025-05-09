@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.tool.application.service.one2one.SimpleOne2OneService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツールサービス<br>
@@ -72,12 +72,12 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
      * @param outputPath
      *                   出力ファイルパス
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolException {
+    public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
 
         final boolean result = true;
 
@@ -93,11 +93,11 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolException {
+    public boolean process() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -119,7 +119,7 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
             // 例外をスローする
             final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31000;
             final Object[]               messageArgs = {};
-            throw new KmgToolException(msgType, messageArgs, e);
+            throw new KmgToolMsgException(msgType, messageArgs, e);
 
         }
 

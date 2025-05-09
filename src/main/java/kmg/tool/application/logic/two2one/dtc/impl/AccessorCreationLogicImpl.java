@@ -11,7 +11,7 @@ import kmg.tool.application.logic.two2one.dtc.AccessorCreationLogic;
 import kmg.tool.application.types.two2one.AccessorRegexGroupTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * アクセサ作成ロジック<br>
@@ -50,11 +50,11 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemToCsvRows() throws KmgToolException {
+    public boolean addItemToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -62,7 +62,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32001;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -78,11 +78,11 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addJavadocCommentToCsvRows() throws KmgToolException {
+    public boolean addJavadocCommentToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -90,7 +90,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32002;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -106,11 +106,11 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addTypeToCsvRows() throws KmgToolException {
+    public boolean addTypeToCsvRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -118,7 +118,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
             final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32003;
             final Object[]               messageArgs  = {};
-            throw new KmgToolException(messageTypes, messageArgs);
+            throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
 
@@ -153,11 +153,11 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean convertFields() throws KmgToolException {
+    public boolean convertFields() throws KmgToolMsgException {
 
         boolean result = false;
 

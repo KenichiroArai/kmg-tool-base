@@ -28,7 +28,6 @@ import kmg.tool.application.service.two2one.AccessorCreationService;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-// @SpringBootApplication
 public class InterfaceAccessorCreationTool extends AbstractDtcTool {
 
     /**

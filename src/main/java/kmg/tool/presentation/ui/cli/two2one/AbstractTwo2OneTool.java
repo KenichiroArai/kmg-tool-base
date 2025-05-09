@@ -11,7 +11,7 @@ import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.io.Two2OneService;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.presentation.ui.cli.AbstractIoTool;
 
 /**
@@ -19,7 +19,7 @@ import kmg.tool.presentation.ui.cli.AbstractIoTool;
  */
 public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
-    /** テンプレートファイルのパスフォーマット */
+    /** テンプレートファイルのパスのフォーマット */
     private static final String TEMPLATE_FILE_PATH_FORMAT = "template/%s.yml";
 
     /** メッセージソース */
@@ -87,30 +87,22 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      */
     public boolean initialize() {
 
-        final boolean result = false;
-
-        boolean initializeResult;
+        boolean result;
 
         try {
 
-            initializeResult = this.getIoService().initialize(AbstractIoTool.getInputPath(), this.getTemplatePath(),
+            result = this.getIoService().initialize(AbstractIoTool.getInputPath(), this.getTemplatePath(),
                 AbstractIoTool.getOutputPath());
 
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 ログメッセージ
-            e.printStackTrace();
-            return result;
-
-        }
-
-        if (!initializeResult) {
+        } catch (final KmgToolMsgException e) {
 
             // ログの出力
             final KmgToolLogMessageTypes logType     = KmgToolLogMessageTypes.KMGTOOL_LOG41001;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
-            this.logger.error(msg);
+            this.logger.error(msg, e);
+
+            result = false;
 
         }
 

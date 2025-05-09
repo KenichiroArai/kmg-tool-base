@@ -16,7 +16,7 @@ import kmg.tool.domain.logic.impl.KmgTlInsertionSqlDataSheetCreationLogicImpl;
 import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
 
 /**
- * 挿入ＳＱＬデータシート作成サービス<br>
+ * 挿入SQLデータシート作成サービス<br>
  *
  * @author KenichiroArai
  *
@@ -32,7 +32,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
     /** 入力シート */
     private Sheet inputSheet;
 
-    /** ＳＱＬＩＤマップ */
+    /** SQLＩＤマップ */
     private Map<String, String> sqlIdMap;
 
     /** 出力パス */
@@ -52,7 +52,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap
-     *                   ＳＱＬＩＤマップ
+     *                   SQLＩＤマップ
      * @param outputPath
      *                   出力パス
      */
@@ -69,7 +69,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
     }
 
     /**
-     * 挿入ＳＱＬを出力する<br>
+     * 挿入SQLを出力する<br>
      *
      * @author KenichiroArai
      *
@@ -92,6 +92,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
         } catch (final IOException e) {
 
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：例外処理
             e.printStackTrace();
             return;
 
@@ -105,7 +106,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
         try (BufferedWriter bw = Files.newBufferedWriter(outputFilePath, charset)) {
 
-            /* 削除ＳＱＬの出力 */
+            /* 削除SQLの出力 */
             final String deleteComment = kmgTlInsertionSqlDataSheetCreationLogic.getDeleteComment();
             bw.write(deleteComment);
             bw.newLine();
@@ -114,7 +115,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
             bw.newLine();
             bw.newLine();
 
-            /* 挿入ＳＱＬの出力 */
+            /* 挿入SQLの出力 */
             final String insertComment = kmgTlInsertionSqlDataSheetCreationLogic.getInsertComment();
             bw.write(insertComment);
             bw.newLine();
@@ -137,6 +138,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
         } catch (final IOException e) {
 
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：例外処理
             e.printStackTrace();
             return;
 
@@ -145,7 +147,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
     }
 
     /**
-     * 挿入ＳＱＬ出力を実行する<br>
+     * 挿入SQL出力を実行する<br>
      *
      * @author KenichiroArai
      *

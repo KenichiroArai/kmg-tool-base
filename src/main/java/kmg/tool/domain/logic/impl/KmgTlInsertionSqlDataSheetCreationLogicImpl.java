@@ -26,7 +26,7 @@ import kmg.core.infrastructure.utils.KmgPoiUtils;
 import kmg.tool.domain.logic.KmgTlInsertionSqlDataSheetCreationLogic;
 
 /**
- * ＫＭＧツール挿入ＳＱＬデータシート作成ロジック<br>
+ * ＫＭＧツール挿入SQLデータシート作成ロジック<br>
  *
  * @author KenichiroArai
  *
@@ -36,10 +36,10 @@ import kmg.tool.domain.logic.KmgTlInsertionSqlDataSheetCreationLogic;
  */
 public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInsertionSqlDataSheetCreationLogic {
 
-    /** 削除ＳＱＬテンプレート */
+    /** 削除SQLテンプレート */
     private static final String DELETE_SQL_TEMPLATE = "DELETE FROM %s;";
 
-    /** 挿入ＳＱＬテンプレート */
+    /** 挿入SQLテンプレート */
     private static final String INSERT_SQL_TEMPLATE = "INSERT INTO %s (%s) VALUES (%s);";
 
     /** ＫＭＧＤＢの種類 */
@@ -48,7 +48,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     /** 入力シート */
     private Sheet inputSheet;
 
-    /** ＳＱＬＩＤマップ */
+    /** SQLＩＤマップ */
     private Map<String, String> sqlIdMap;
 
     /** 出力パス */
@@ -60,7 +60,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     /** テーブル物理名 */
     private String tablePhysicsName;
 
-    /** ＳＱＬＩＤ */
+    /** SQLＩＤ */
     private String sqlId;
 
     /** 出力ファイルパス */
@@ -72,7 +72,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     /** 削除コメント */
     private String deleteComment;
 
-    /** 削除ＳＱＬ */
+    /** 削除SQL */
     private String deleteSql;
 
     /** カラム物理名リスト */
@@ -245,7 +245,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     }
 
     /**
-     * 削除ＳＱＬを返す<br>
+     * 削除SQLを返す<br>
      *
      * @author KenichiroArai
      *
@@ -253,7 +253,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      *
      * @version 1.0.0
      *
-     * @return 削除ＳＱＬ
+     * @return 削除SQL
      */
     @Override
     public String getDeleteSql() {
@@ -302,7 +302,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     }
 
     /**
-     * 挿入ＳＱＬを返す<br>
+     * 挿入SQLを返す<br>
      *
      * @author KenichiroArai
      *
@@ -313,7 +313,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * @param datasRow
      *                 データ行
      *
-     * @return 挿入ＳＱＬ
+     * @return 挿入SQL
      */
     @Override
     public String getInsertSql(final Row datasRow) {
@@ -441,7 +441,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     }
 
     /**
-     * ＳＱＬＩＤを返す<br>
+     * SQLＩＤを返す<br>
      *
      * @author KenichiroArai
      *
@@ -449,7 +449,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      *
      * @version 1.0.0
      *
-     * @return ＳＱＬＩＤ
+     * @return SQLＩＤ
      */
     @Override
     public String getSqlId() {
@@ -539,7 +539,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap
-     *                   ＳＱＬＩＤマップ
+     *                   SQLＩＤマップ
      * @param outputPath
      *                   出力パス
      */
@@ -556,7 +556,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     }
 
     /**
-     * ＰｏｓｔｇｒｅＳＱＬの出力データを返す<br>
+     * ＰｏｓｔｇｒｅSQLの出力データを返す<br>
      *
      * @author KenichiroArai
      *
@@ -609,7 +609,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
             case DATE:
                 // 日付型
                 final String dateStrTmp = KmgPoiUtils.getStringValue(dataCell);
-                // TODO KenichiroArai 2021/07/15 列挙型
+                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：列挙型
                 if (KmgString.equals("-infinity", dateStrTmp)) {
 
                     outputData = dateStrTmp;
@@ -630,7 +630,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
             case TIME:
                 // 日時型
                 final String dateTimeStrTmp = KmgPoiUtils.getStringValue(dataCell);
-                // TODO KenichiroArai 2021/07/15 列挙型
+                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ハードコード
                 if (KmgString.equals("-infinity", dateTimeStrTmp)) {
 
                     outputData = dateTimeStrTmp;

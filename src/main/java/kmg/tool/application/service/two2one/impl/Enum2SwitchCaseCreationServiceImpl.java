@@ -13,7 +13,7 @@ import kmg.tool.application.service.two2one.Enum2SwitchCaseCreationService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * <h2>列挙型からcase文作成サービス実装クラス</h2>
@@ -83,11 +83,11 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    protected boolean writeCsvFile() throws KmgToolException {
+    protected boolean writeCsvFile() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -143,10 +143,10 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
     /**
      * データをクリアして次の行の準備をする。
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private void clearAndPrepareNextLine() throws KmgToolException {
+    private void clearAndPrepareNextLine() throws KmgToolMsgException {
 
         try {
 
@@ -159,7 +159,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
             /* 書き込み対象に行を追加する */
             this.enum2SwitchCaseMakingLogic.addOneLineOfDataToCsvRows();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG32005;
             final Object[]               logMsgArgs  = {};
@@ -175,10 +175,10 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
     /**
      * 列挙型からcase文作成ロジックをクローズする。
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private void closeEnum2SwitchCaseCreationLogic() throws KmgToolException {
+    private void closeEnum2SwitchCaseCreationLogic() throws KmgToolMsgException {
 
         try {
 
@@ -188,7 +188,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
 
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31004;
             final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -199,10 +199,10 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
      *
      * @return true：処理成功、false：処理スキップ
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private boolean processColumns() throws KmgToolException {
+    private boolean processColumns() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -223,7 +223,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
             // 項目名を書き込み対象に追加する
             this.enum2SwitchCaseMakingLogic.addItemNameToCsvRows();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31006;
             final Object[]               logMsgArgs  = {};
@@ -244,10 +244,10 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
      *
      * @return true：読み込み成功、false：読み込み終了
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private boolean readOneLineData() throws KmgToolException {
+    private boolean readOneLineData() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -255,7 +255,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
 
             result = this.enum2SwitchCaseMakingLogic.readOneLineOfData();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31007;
             final Object[]               logMsgArgs  = {};
@@ -273,16 +273,16 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
     /**
      * CSVファイルに行を書き込む。
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private void writeCsvFileLine() throws KmgToolException {
+    private void writeCsvFileLine() throws KmgToolMsgException {
 
         try {
 
             this.enum2SwitchCaseMakingLogic.writeCsvFile();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31010;
             final Object[]               logMsgArgs  = {};

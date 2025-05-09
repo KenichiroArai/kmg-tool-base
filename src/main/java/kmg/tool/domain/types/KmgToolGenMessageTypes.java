@@ -3,8 +3,8 @@ package kmg.tool.domain.types;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.tool.infrastructure.common.KmgToolComExcMessageTypes;
-import kmg.tool.infrastructure.common.KmgToolComGenMessageTypes;
+import kmg.tool.infrastructure.common.msg.KmgToolComExcMsgTypes;
+import kmg.tool.infrastructure.common.msg.KmgToolComGenMsgTypes;
 
 /**
  * KMGツール一般メッセージの種類<br>
@@ -15,7 +15,7 @@ import kmg.tool.infrastructure.common.KmgToolComGenMessageTypes;
  *
  * @version 0.1.0
  */
-public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgToolComExcMessageTypes {
+public enum KmgToolGenMessageTypes implements KmgToolComGenMsgTypes, KmgToolComExcMsgTypes {
 
     /* 定義：開始 */
 
@@ -75,6 +75,39 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN12003("入力ファイルを処理し、テンプレートに基づいて出力を生成中にエラーが発生しました。入力ファイルパス=[{0}]、出力ファイルパス=[{1}]、テンプレートファイルパス=[{2}]"),
 
     /**
+     * 入力ファイルパスがnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN12004("入力ファイルパスがnullです。"),
+
+    /**
+     * 入力パスファイルが存在しません。入力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN12005("入力パスファイルが存在しません。入力ファイルパス=[{0}]"),
+
+    /**
+     * 入力ファイルの読み込みに失敗しました。入力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN12006("入力ファイルの読み込みに失敗しました。入力ファイルパス=[{0}]"),
+
+    /**
      * 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}
      *
      * @author KenichiroArai
@@ -86,7 +119,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN13000("入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}"),
 
     /**
-     * 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]
+     * 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]、 テンプレートパス：[{1}]、 出力ファイルパス=[{2}]
      *
      * @author KenichiroArai
      *
@@ -94,7 +127,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN13001("出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]"),
+    KMGTOOL_GEN13001("出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]、 テンプレートパス：[{1}]、 出力ファイルパス=[{2}]"),
 
     /**
      * 入力ファイルを開くことができませんでした。入力ファイルパス：[{0}]
@@ -119,7 +152,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN13003("出力ファイルを開くことができませんでした。出力ファイルパス：[{0}]"),
 
     /**
-     * CSVの列が不足しています。入力ファイルパス: [{0}]
+     * CSVの列が不足しています。入力ファイルパス: [{0}]、 プレースホルダーキー: [{1}]、 列: [{2}] 番目
      *
      * @author KenichiroArai
      *
@@ -127,7 +160,7 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      *
      * @version 0.1.0
      */
-    KMGTOOL_GEN13004("CSVの列が不足しています。入力ファイルパス: [{0}]"),
+    KMGTOOL_GEN13004("CSVの列が不足しています。入力ファイルパス: [{0}]、 プレースホルダーキー: [{1}]、 列: [{2}] 番目"),
 
     /**
      * CSVデータの書き込みに失敗しました。出力ファイルパス=[{0}]
@@ -240,6 +273,17 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN31005("フィールド作成ロジックをクローズ中にエラーが発生しました。"),
 
     /**
+     * 定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31006("定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]"),
+
+    /**
      * 1行読み込みに失敗しました。
      *
      * @author KenichiroArai
@@ -260,6 +304,54 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      * @version 0.1.0
      */
     KMGTOOL_GEN31010("メッセージの種類作成ロジックをクローズ中にエラーが発生しました。"),
+
+    /**
+     * タグ存在しないため、タグを追加しました。追加先の区分：[{0}]、 追加先の要素名：[{1}]、 追加したタグ：[{2}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31011("タグ存在しないため、タグを追加しました。追加先の区分：[{0}]、 追加先の要素名：[{1}]、 追加したタグ：[{2}]"),
+
+    /**
+     * タグを削除します。区分：[{0}]、 要素名：[{1}]、 元の対象行:[{2}]、 元のタグ:[{3}]、 元の指定値:[{4}]、 元の説明:[{5}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31012("タグを削除します。区分：[{0}]、 要素名：[{1}]、 元の対象行:[{2}]、 元のタグ:[{3}]、 元の指定値:[{4}]、 元の説明:[{5}]"),
+
+    /**
+     * タグの位置を変更します。区分：[{0}]、 要素名：[{1}]、 元の対象行:[{2}]、 元のタグ:[{3}]、 元の指定値:[{4}]、 元の説明:[{5}]、 変更後のタグの内容:[{6}]、 変更後のタグ:[{7}]、
+     * 変更後の指定値:[{8}]、 変更後の説明:[{9}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31013(
+        "タグの位置を変更します。区分：[{0}]、 要素名：[{1}]、 元の対象行:[{2}]、 元のタグ:[{3}]、 元の指定値:[{4}]、 元の説明:[{5}]、 変更後のタグの内容:[{6}]、 変更後のタグ:[{7}]、 変更後の指定値:[{8}]、 変更後の説明:[{9}]"),
+
+    /**
+     * タグを置換します。区分：[{0}]、 要素名：[{1}]、 元の対象行:[{2}]、 元のタグ:[{3}]、 元の指定値:[{4}]、 元の説明:[{5}]、 置換後のタグの内容:[{6}]、 置換後のタグ:[{7}]、
+     * 置換後の指定値:[{8}]、 置換後の説明:[{9}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN31014(
+        "タグを置換します。区分：[{0}]、 要素名：[{1}]、 元の対象行:[{2}]、 元のタグ:[{3}]、 元の指定値:[{4}]、 元の説明:[{5}]、 置換後のタグの内容:[{6}]、 置換後のタグ:[{7}]、 置換後の指定値:[{8}]、 置換後の説明:[{9}]"),
 
     /**
      * 項目名がnullです。
@@ -383,6 +475,39 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
     KMGTOOL_GEN32010("項目名がnullです。"),
 
     /**
+     * Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32011("Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]"),
+
+    /**
+     * Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32012("Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]"),
+
+    /**
+     * Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN32013("Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]"),
+
+    /**
      * 失敗
      *
      * @author KenichiroArai
@@ -414,6 +539,39 @@ public enum KmgToolGenMessageTypes implements KmgToolComGenMessageTypes, KmgTool
      * @version 0.1.0
      */
     KMGTOOL_GEN41002("例外発生"),
+
+    /**
+     * 入力ファイルから対象パスを設定に失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN41003("入力ファイルから対象パスを設定に失敗しました。"),
+
+    /**
+     * 実行が成功しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN41004("実行が成功しました。"),
+
+    /**
+     * 実行中に例外が発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     */
+    KMGTOOL_GEN41005("実行中に例外が発生しました。"),
 
     /* 定義：終了 */
 

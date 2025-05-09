@@ -3,16 +3,18 @@ package kmg.tool.presentation.ui.cli;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.core.domain.service.KmgPfaMeasService;
-import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
-import kmg.tool.application.service.JavadocTagSetterService;
+import kmg.core.infrastructure.utils.KmgPathUtils;
+import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.domain.service.InputService;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.exception.KmgToolValException;
 
 /**
  * Javadocタグ設定ツール<br>
@@ -22,14 +24,11 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 })
 public class JavadocTagSetterTool extends AbstractInputTool {
 
-    // TODO KenichiroArai 2025/04/02 パスの自動設定
-
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
 
-    /** テンプレートファイルパス */
-    private static final Path TEMPLATE_PATH
-        = Paths.get(JavadocTagSetterTool.BASE_PATH.toString(), "template/JavadocTagSetterTool.yml");
+    /** 定義ファイルのパスのフォーマット */
+    private static final String DEFINITION_FILE_PATH_FORMAT = "template/%s.yml";
 
     /**
      * <h3>ツール名</h3>
@@ -47,10 +46,10 @@ public class JavadocTagSetterTool extends AbstractInputTool {
      * Javadoc追加サービス
      */
     @Autowired
-    private JavadocTagSetterService javadocTagSetterService;
+    private JdtsService jdtsService;
 
-    /** 対象パス */
-    private Path targetPath;
+    /** 定義ファイルのパス */
+    private final Path definitionPath;
 
     /**
      * メインメソッド
@@ -73,46 +72,67 @@ public class JavadocTagSetterTool extends AbstractInputTool {
     }
 
     /**
-     * <h3>コンストラクタ</h3>
-     * <p>
-     * Javadoc追加ツールのインスタンスを生成します。
-     * </p>
-     * <p>
-     * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
-     * </p>
+     * デフォルトコンストラクタ
      */
     public JavadocTagSetterTool() {
 
-        super(JavadocTagSetterTool.TOOL_NAME);
+        this(LoggerFactory.getLogger(JavadocTagSetterTool.class), JavadocTagSetterTool.TOOL_NAME);
 
     }
 
     /**
-     * 実行する
+     * カスタムロガーを使用して初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *                 ロガー
+     * @param toolName
+     *                 ツール名
+     */
+    protected JavadocTagSetterTool(final Logger logger, final String toolName) {
+
+        super(toolName);
+        this.definitionPath = this.getDefaultDefinitionPath();
+
+    }
+
+    /**
+     * 定義ファイルのパスを返す。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @version 0.1.0
+     *
+     * @return 定義ファイルのパス
+     */
+    public Path getDefinitionPath() {
+
+        final Path result = this.definitionPath;
+        return result;
+
+    }
+
+    /**
+     * ツールのメイン処理を実行する
      *
      * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
      */
     @Override
-    public boolean execute() {
+    protected boolean executeMain() throws KmgToolMsgException, KmgToolValException {
 
         boolean result = true;
 
-        final KmgPfaMeasService kmgPfaMeasService = new KmgPfaMeasServiceImpl(JavadocTagSetterTool.TOOL_NAME);
-        kmgPfaMeasService.start();
-
-        try {
-
-            /* 入力ファイルから対象パスを設定 */
-            result &= this.setTargetPathFromInputFile();
-
-            /* Javadoc追加処理 */
-            result &= this.appendJavadoc();
-
-        } finally {
-
-            kmgPfaMeasService.end();
-
-        }
+        /* Javadoc追加処理 */
+        result &= this.jdtsService.initialize(this.getTargetPath(), this.definitionPath);
+        result &= this.jdtsService.process();
 
         return result;
 
@@ -132,92 +152,20 @@ public class JavadocTagSetterTool extends AbstractInputTool {
     }
 
     /**
-     * Javadocを追加する
+     * デフォルト定義ファイルのパスを返す。
      *
-     * @return true：成功、false：失敗
+     * @return デフォルト定義パス
      */
-    private boolean appendJavadoc() {
+    private Path getDefaultDefinitionPath() {
 
-        boolean result = true;
+        Path         result;
+        final String className        = KmgPathUtils.getSimpleClassName(this.getClass());
+        final String templateFileName = String.format(JavadocTagSetterTool.DEFINITION_FILE_PATH_FORMAT, className);
 
-        try {
-
-            result &= this.javadocTagSetterService.initialize(this.targetPath, JavadocTagSetterTool.TEMPLATE_PATH);
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            e.printStackTrace();
-            result = false;
-            return result;
-
-        }
-
-        try {
-
-            result &= this.javadocTagSetterService.process();
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            e.printStackTrace();
-            result = false;
-
-        }
+        result = Paths.get(JavadocTagSetterTool.BASE_PATH.toString(), templateFileName);
 
         return result;
 
     }
 
-    /**
-     * 入力ファイルから対象パスを設定する
-     *
-     * @return true：成功、false：失敗
-     */
-    private boolean setTargetPathFromInputFile() {
-
-        boolean result = true;
-
-        try {
-
-            result &= this.inputService.initialize(AbstractInputTool.getInputPath());
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            result = false;
-            return result;
-
-        }
-
-        try {
-
-            this.inputService.process();
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            result = false;
-            return result;
-
-        }
-
-        String content;
-
-        try {
-
-            content = this.inputService.getContent();
-
-        } catch (final KmgToolException e) {
-
-            // TODO KenichiroArai 2025/03/07 例外処理
-            result = false;
-            return result;
-
-        }
-
-        this.targetPath = Paths.get(content);
-        return result;
-
-    }
 }

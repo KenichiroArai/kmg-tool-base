@@ -14,7 +14,7 @@ import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.JavadocTagsModel;
 import kmg.tool.domain.types.JavadocGroupIndexTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ一覧情報<br>
@@ -45,10 +45,10 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
      * @param sourceJavadoc
      *                      Javadoc
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    public JavadocTagsModelImpl(final String sourceJavadoc) throws KmgToolException {
+    public JavadocTagsModelImpl(final String sourceJavadoc) throws KmgToolMsgException {
 
         this.javadocTagModelList = new ArrayList<>();
 
@@ -58,9 +58,6 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
         // グループ3: 説明（オプション）
         final Pattern compiledTagPattern = JavadocTagsModel.COMPILED_TAG_PATTERN;
         final Matcher compiledTagMatcher = compiledTagPattern.matcher(sourceJavadoc);
-
-        // TODO KenichiroArai 2025/04/03 デバッグ
-        System.out.println("----- 元のJavadoc -----");
 
         while (compiledTagMatcher.find()) {
 
@@ -87,12 +84,38 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
             final JavadocTagModel javadocTagMode = new JavadocTagModelImpl(targetStr, tag, value, description);
             this.javadocTagModelList.add(javadocTagMode);
 
-            // TODO KenichiroArai 2025/04/03 デバッグ
-            System.out
-                .println(String.format("対象文字列: [%s], タグ: [%s], 指定値: [%s], 説明: [%s]", javadocTagMode.getTargetStr(),
-                    javadocTagMode.getTag(), javadocTagMode.getValue(), javadocTagMode.getDescription()));
+        }
+
+    }
+
+    /**
+     * 指定されたタグに対応する既存のJavadocタグを検索する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param tag
+     *            Javadocタグの種類
+     *
+     * @return 既存のJavadocタグモデル。存在しない場合はnull
+     */
+    @Override
+    public JavadocTagModel findByTag(final KmgJavadocTagTypes tag) {
+
+        JavadocTagModel result = null;
+
+        /* 引数チェック */
+        if (tag == null) {
+
+            return result;
 
         }
+
+        /* タグの検索 */
+        result = this.javadocTagModelList.stream().filter(model -> model.getTag() == tag).findFirst().orElse(null);
+
+        return result;
 
     }
 
@@ -108,4 +131,5 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
         return result;
 
     }
+
 }

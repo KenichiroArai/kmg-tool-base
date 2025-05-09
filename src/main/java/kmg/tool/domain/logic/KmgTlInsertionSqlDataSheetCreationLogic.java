@@ -13,7 +13,7 @@ import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
- * ＫＭＧツール挿入ＳＱＬデータシート作成ロジックインタフェース<br>
+ * ＫＭＧツール挿入SQLデータシート作成ロジックインタフェース<br>
  *
  * @author KenichiroArai
  *
@@ -90,7 +90,7 @@ public interface KmgTlInsertionSqlDataSheetCreationLogic {
     String getDeleteComment();
 
     /**
-     * 削除ＳＱＬを返す<br>
+     * 削除SQLを返す<br>
      *
      * @author KenichiroArai
      *
@@ -98,7 +98,7 @@ public interface KmgTlInsertionSqlDataSheetCreationLogic {
      *
      * @version 1.0.0
      *
-     * @return 削除ＳＱＬ
+     * @return 削除SQL
      */
     String getDeleteSql();
 
@@ -116,7 +116,7 @@ public interface KmgTlInsertionSqlDataSheetCreationLogic {
     String getInsertComment();
 
     /**
-     * 挿入ＳＱＬを返す<br>
+     * 挿入SQLを返す<br>
      *
      * @author KenichiroArai
      *
@@ -127,7 +127,7 @@ public interface KmgTlInsertionSqlDataSheetCreationLogic {
      * @param datasRow
      *                 データ行
      *
-     * @return 挿入ＳＱＬ
+     * @return 挿入SQL
      */
     String getInsertSql(final Row datasRow);
 
@@ -158,7 +158,7 @@ public interface KmgTlInsertionSqlDataSheetCreationLogic {
     Path getOutputFilePath();
 
     /**
-     * ＳＱＬＩＤを返す<br>
+     * SQLＩＤを返す<br>
      *
      * @author KenichiroArai
      *
@@ -166,7 +166,7 @@ public interface KmgTlInsertionSqlDataSheetCreationLogic {
      *
      * @version 1.0.0
      *
-     * @return ＳＱＬＩＤ
+     * @return SQLＩＤ
      */
     String getSqlId();
 
@@ -210,7 +210,7 @@ public interface KmgTlInsertionSqlDataSheetCreationLogic {
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap
-     *                   ＳＱＬＩＤマップ
+     *                   SQLＩＤマップ
      * @param outputPath
      *                   出力パス
      */

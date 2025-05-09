@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * テンプレートの動的変換ロジックインタフェース<br>
@@ -21,10 +21,10 @@ public interface DtcLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    boolean addOutputBufferContent() throws KmgToolException;
+    boolean addOutputBufferContent() throws KmgToolMsgException;
 
     /**
      * 入力ファイルからテンプレートに基づいて変換する。
@@ -33,28 +33,28 @@ public interface DtcLogic extends Closeable {
      *
      * @sine 1.0.0
      *
-     * @throws KmgToolException
-     *                          入出力処理に失敗した場合
+     * @throws KmgToolMsgException
+     *                             入出力処理に失敗した場合
      */
-    void applyTemplateToInputFile() throws KmgToolException;
+    void applyTemplateToInputFile() throws KmgToolMsgException;
 
     /**
      * 出力バッファコンテンツをクリアする
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    void clearOutputBufferContent() throws KmgToolException;
+    void clearOutputBufferContent() throws KmgToolMsgException;
 
     /**
      * 読み込み中のデータをクリアする。
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    boolean clearReadingData() throws KmgToolException;
+    boolean clearReadingData() throws KmgToolMsgException;
 
     /**
      * リソースをクローズする。
@@ -125,12 +125,12 @@ public interface DtcLogic extends Closeable {
      * @param outputPath
      *                     出力ファイルパス
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      *
      * @return true：成功、false：失敗
      */
-    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) throws KmgToolException;
+    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) throws KmgToolMsgException;
 
     /**
      * テンプレートファイルを読み込む<br>
@@ -141,28 +141,28 @@ public interface DtcLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          テンプレートの読み込みに失敗した場合
+     * @throws KmgToolMsgException
+     *                             テンプレートの読み込みに失敗した場合
      */
-    boolean loadTemplate() throws KmgToolException;
+    boolean loadTemplate() throws KmgToolMsgException;
 
     /**
      * 1行データを読み込む。
      *
      * @return true：データあり、false：データなし
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    boolean readOneLineOfData() throws KmgToolException;
+    boolean readOneLineOfData() throws KmgToolMsgException;
 
     /**
      * 出力バッファを書き込む
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    boolean writeOutputBuffer() throws KmgToolException;
+    boolean writeOutputBuffer() throws KmgToolMsgException;
 }

@@ -20,7 +20,7 @@ import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
 import kmg.tool.domain.service.InsertionSqlFileCreationService;
 
 /**
- * 挿入ＳＱＬファイル作成サービス<br>
+ * 挿入SQLファイル作成サービス<br>
  *
  * @author KenichiroArai
  *
@@ -66,7 +66,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
     }
 
     /**
-     * 挿入ＳＱＬを出力する<br>
+     * 挿入SQLを出力する<br>
      *
      * @author KenichiroArai
      *
@@ -88,7 +88,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
             /* ＫＭＧＤＢの種類を取得 */
             final KmgDbTypes kmgDbTypes = insertionSqlFileCreationLogic.getKmgDbTypes();
 
-            /* ＳＱＬＩＤマップ */
+            /* SQLＩＤマップ */
             final Map<String, String> sqlIdMap = insertionSqlFileCreationLogic.getSqlIdMap();
 
             ExecutorService service = null;
@@ -140,6 +140,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
 
         } catch (final EncryptedDocumentException | IOException e) {
 
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理
             e.printStackTrace();
             return;
 

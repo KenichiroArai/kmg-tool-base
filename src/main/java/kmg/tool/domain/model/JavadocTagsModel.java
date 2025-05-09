@@ -3,8 +3,10 @@ package kmg.tool.domain.model;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
+
 /**
- * Javadocタグ一覧情報<br>
+ * Javadocタグ一覧情報インターフェース<br>
  *
  * @author KenichiroArai
  *
@@ -35,10 +37,27 @@ public interface JavadocTagsModel {
     Pattern COMPILED_TAG_PATTERN = Pattern.compile(JavadocTagsModel.TAG_PATTERN);
 
     /**
+     * 指定されたタグに対応する既存のJavadocタグを検索する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param tag
+     *            Javadocタグの種類
+     *
+     * @return 既存のJavadocタグモデル。存在しない場合はnull
+     */
+    JavadocTagModel findByTag(KmgJavadocTagTypes tag);
+
+    /**
      * Javadocタグモデルのリストを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
      *
      * @return Javadocタグモデルのリスト
      */
     List<JavadocTagModel> getJavadocTagModelList();
-
 }

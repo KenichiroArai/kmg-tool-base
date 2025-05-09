@@ -14,7 +14,7 @@ import kmg.tool.domain.service.IctoProcessorService;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 入力、CSV、テンプレート、出力の処理サービス抽象クラス<br>
@@ -168,13 +168,13 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      * @param outputPath
      *                     出力ファイルパス
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
-        throws KmgToolException {
+        throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -195,11 +195,11 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolException {
+    public boolean process() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -214,17 +214,6 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
             this.logger.debug(startLogMsg);
 
             result = this.writeCsvFile();
-
-        } catch (final KmgToolException e) {
-
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12005;
-            final Object[]               logMsgArgs  = {
-                this.getOutputPath().toString(),
-            };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
 
         } finally {
 
@@ -249,10 +238,10 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      *
      * @return CSVファイルパス
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    protected Path createTempCsvFile() throws KmgToolException {
+    protected Path createTempCsvFile() throws KmgToolMsgException {
 
         Path result = null;
 
@@ -270,7 +259,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
             final Object[]               getMsgArgs = {
                 csvFileNameOnly, suffixExtension,
             };
-            throw new KmgToolException(genMsgType, getMsgArgs, e);
+            throw new KmgToolMsgException(genMsgType, getMsgArgs, e);
 
         }
 
@@ -283,9 +272,9 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    protected abstract boolean writeCsvFile() throws KmgToolException;
+    protected abstract boolean writeCsvFile() throws KmgToolMsgException;
 
 }

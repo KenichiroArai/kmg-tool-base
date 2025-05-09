@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * プレーンコンテンツ入力サービス<br>
@@ -25,6 +29,17 @@ import kmg.tool.infrastructure.exception.KmgToolException;
 @Service
 public class PlainContentInputServiceImpl implements InputService {
 
+    /** メッセージソース */
+    @Autowired
+    private KmgMessageSource messageSource;
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
     /** 入力ファイルパス */
     private Path inputPath;
 
@@ -32,15 +47,38 @@ public class PlainContentInputServiceImpl implements InputService {
     private String content;
 
     /**
+     * デフォルトコンストラクタ
+     */
+    public PlainContentInputServiceImpl() {
+
+        this(LoggerFactory.getLogger(PlainContentInputServiceImpl.class));
+
+    }
+
+    /**
+     * カスタムロガーを使用して初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected PlainContentInputServiceImpl(final Logger logger) {
+
+        this.logger = logger;
+
+    }
+
+    /**
      * 入力内容を返す<br>
      *
      * @return 入力内容
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public String getContent() throws KmgToolException {
+    public String getContent() throws KmgToolMsgException {
 
         final String result = this.content;
         return result;
@@ -68,27 +106,33 @@ public class PlainContentInputServiceImpl implements InputService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath) throws KmgToolException {
+    public boolean initialize(final Path inputPath) throws KmgToolMsgException {
 
         boolean result = false;
 
         // 入力パスの検証
         if (inputPath == null) {
 
-            // TODO KenichiroArai 2025/03/28 メッセージ
-            throw new KmgToolException(KmgToolGenMessageTypes.NONE);
+            final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.KMGTOOL_GEN12004;
+            final Object[]               messageArgs = {};
+
+            throw new KmgToolMsgException(genType, messageArgs);
 
         }
 
         if (!Files.exists(inputPath)) {
 
-            // TODO KenichiroArai 2025/03/28 メッセージ
-            throw new KmgToolException(KmgToolGenMessageTypes.NONE);
+            final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.KMGTOOL_GEN12005;
+            final Object[]               messageArgs = {
+                inputPath.toString()
+            };
+
+            throw new KmgToolMsgException(genType, messageArgs);
 
         }
 
@@ -105,11 +149,11 @@ public class PlainContentInputServiceImpl implements InputService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolException {
+    public boolean process() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -120,8 +164,12 @@ public class PlainContentInputServiceImpl implements InputService {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/03/28 メッセージ
-            throw new KmgToolException(KmgToolGenMessageTypes.NONE, e);
+            final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.KMGTOOL_GEN12006;
+            final Object[]               messageArgs = {
+                this.inputPath.toString()
+            };
+
+            throw new KmgToolMsgException(genType, messageArgs);
 
         }
 

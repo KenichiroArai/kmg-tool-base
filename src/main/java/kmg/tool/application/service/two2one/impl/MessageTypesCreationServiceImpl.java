@@ -13,7 +13,7 @@ import kmg.tool.application.service.two2one.MessageTypesCreationService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
 import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.KmgToolLogMessageTypes;
-import kmg.tool.infrastructure.exception.KmgToolException;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * <h2>メッセージの種類作成サービス実装クラス</h2>
@@ -83,11 +83,11 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    protected boolean writeCsvFile() throws KmgToolException {
+    protected boolean writeCsvFile() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -143,10 +143,10 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
     /**
      * データをクリアして次の行の準備をする。
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private void clearAndPrepareNextLine() throws KmgToolException {
+    private void clearAndPrepareNextLine() throws KmgToolMsgException {
 
         try {
 
@@ -159,7 +159,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
             /* 書き込み対象に行を追加する */
             this.messageTypesCreationLogic.addOneLineOfDataToCsvRows();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31013;
             final Object[]               logMsgArgs  = {};
@@ -175,10 +175,10 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
     /**
      * メッセージの種類作成ロジックをクローズする。
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private void closeMessageTypesCreationLogic() throws KmgToolException {
+    private void closeMessageTypesCreationLogic() throws KmgToolMsgException {
 
         try {
 
@@ -188,7 +188,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
             final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31010;
             final Object[]               genMsgArgs  = {};
-            throw new KmgToolException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -199,10 +199,10 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      *
      * @return true：処理成功、false：処理スキップ
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private boolean processColumns() throws KmgToolException {
+    private boolean processColumns() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -224,7 +224,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
             // 項目名を書き込み対象に追加する
             this.messageTypesCreationLogic.addItemNameToCsvRows();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31014;
             final Object[]               logMsgArgs  = {};
@@ -245,10 +245,10 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      *
      * @return true：読み込み成功、false：読み込み終了
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private boolean readOneLineData() throws KmgToolException {
+    private boolean readOneLineData() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -256,7 +256,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
             result = this.messageTypesCreationLogic.readOneLineOfData();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31015;
             final Object[]               logMsgArgs  = {};
@@ -274,16 +274,16 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
     /**
      * CSVファイルに行を書き込む。
      *
-     * @throws KmgToolException
-     *                          KMGツール例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    private void writeCsvFileLine() throws KmgToolException {
+    private void writeCsvFileLine() throws KmgToolMsgException {
 
         try {
 
             this.messageTypesCreationLogic.writeCsvFile();
 
-        } catch (final KmgToolException e) {
+        } catch (final KmgToolMsgException e) {
 
             final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31016;
             final Object[]               logMsgArgs  = {};

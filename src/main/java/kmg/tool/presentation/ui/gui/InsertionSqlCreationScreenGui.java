@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * 挿入ＳＱＬ作成画面ＧＵＩ<br>
+ * 挿入SQL作成画面ＧＵＩ<br>
  *
  * @author KenichiroArai
  *
@@ -53,7 +53,7 @@ public class InsertionSqlCreationScreenGui extends Application {
     @Override
     public void start(final Stage stage) {
 
-        stage.setTitle("挿入ＳＱＬ作成画面");
+        stage.setTitle("挿入SQL作成画面");
 
         try {
 

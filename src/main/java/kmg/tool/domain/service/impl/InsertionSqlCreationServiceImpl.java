@@ -6,7 +6,7 @@ import kmg.tool.domain.service.InsertionSqlCreationService;
 import kmg.tool.domain.service.InsertionSqlFileCreationService;
 
 /**
- * 挿入ＳＱＬ作成サービス<br>
+ * 挿入SQL作成サービス<br>
  *
  * @author KenichiroArai
  *
@@ -52,7 +52,7 @@ public class InsertionSqlCreationServiceImpl implements InsertionSqlCreationServ
     }
 
     /**
-     * 挿入ＳＱＬを出力する<br>
+     * 挿入SQLを出力する<br>
      *
      * @author KenichiroArai
      *
