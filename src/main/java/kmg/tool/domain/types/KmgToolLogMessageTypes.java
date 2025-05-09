@@ -3,7 +3,7 @@ package kmg.tool.domain.types;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.tool.infrastructure.common.KmgToolComLogMsgTypes;
+import kmg.tool.infrastructure.common.msg.KmgToolComLogMsgTypes;
 
 /**
  * KMGツールログメッセージの種類<br>

@@ -3,7 +3,7 @@ package kmg.tool.infrastructure.exception;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
-import kmg.tool.infrastructure.common.KmgToolComExcMsgTypes;
+import kmg.tool.infrastructure.common.msg.KmgToolComExcMsgTypes;
 
 /**
  * KMGツールメッセージ例外<br>

@@ -3,8 +3,8 @@ package kmg.tool.domain.types;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.tool.infrastructure.common.KmgToolComExcMsgTypes;
-import kmg.tool.infrastructure.common.KmgToolComGenMsgTypes;
+import kmg.tool.infrastructure.common.msg.KmgToolComExcMsgTypes;
+import kmg.tool.infrastructure.common.msg.KmgToolComGenMsgTypes;
 
 /**
  * KMGツール一般メッセージの種類<br>

@@ -1,4 +1,4 @@
-package kmg.tool.infrastructure.common;
+package kmg.tool.infrastructure.common.msg;
 
 import kmg.core.infrastructure.common.msg.KmgComLogMsgTypes;
 
