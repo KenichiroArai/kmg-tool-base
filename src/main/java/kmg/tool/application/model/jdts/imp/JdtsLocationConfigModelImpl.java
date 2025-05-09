@@ -74,8 +74,8 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
                 // TODO KenichiroArai 2025/05/08 例外処理
                 final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-                final Object[]               valMsgArgs   = {};
-                final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+                final Object[]           valMsgArgs   = {};
+                final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
                 valsModel.addData(valDataModel);
 
                 throw new KmgToolValException(valsModel);
@@ -94,9 +94,16 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
             // TODO KenichiroArai 2025/05/08 例外処理
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]               valMsgArgs   = {};
-            final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);
+
+            throw new KmgToolValException(valsModel);
+
+        }
+
+        /* バリデーションをマージする */
+        if (valsModel.isNotEmpty()) {
 
             throw new KmgToolValException(valsModel);
 
