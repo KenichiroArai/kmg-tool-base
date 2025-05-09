@@ -70,14 +70,17 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         final KmgValsModel valsModel = new KmgValsModelImpl();
 
-        // 基本項目の設定
-        valsModel.merge(this.setupBasicItems(tagConfig));
+        /* 基本項目の設定 */
+        final KmgValsModel basicItemsModel = this.setupBasicItems(tagConfig);
+        valsModel.merge(basicItemsModel);
 
-        // 配置場所の設定
-        valsModel.merge(this.setupLocation(tagConfig));
+        /* 配置場所の設定 */
+        final KmgValsModel locationModel = this.setupLocation(tagConfig);
+        valsModel.merge(locationModel);
 
-        // 挿入位置と上書き設定
-        valsModel.merge(this.setupInsertPositionAndOverwrite(tagConfig));
+        /* 挿入位置と上書き設定 */
+        final KmgValsModel insertPositionModel = this.setupInsertPositionAndOverwrite(tagConfig);
+        valsModel.merge(insertPositionModel);
 
         if (valsModel.isNotEmpty()) {
 
@@ -240,8 +243,9 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      */
     private KmgValsModel setupBasicItems(final Map<String, Object> tagConfig) {
 
-        final KmgValsModel valsModel = new KmgValsModelImpl();
+        final KmgValsModel result = new KmgValsModelImpl();
 
+        /* タグ名とタグ */
         // タグ名
         this.tagName = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_NAME.get());
 
@@ -251,24 +255,24 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
             final Object[]           valMsgArgs   = {};
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
-            valsModel.addData(valDataModel);
+            result.addData(valDataModel);
 
         }
 
         // タグ
         this.tag = KmgJavadocTagTypes.getEnum(this.tagName);
 
-        if (this.tag == null) {
+        if (this.tag == KmgJavadocTagTypes.NONE) {
 
             // TODO KenichiroArai 2025/05/09 メッセージ未設定
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
             final Object[]           valMsgArgs   = {};
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
-            valsModel.addData(valDataModel);
+            result.addData(valDataModel);
 
         }
 
-        // タグの値
+        /* タグの値 */
         this.tagValue = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_VALUE.get());
 
         if (KmgString.isEmpty(this.tagValue)) {
@@ -277,15 +281,15 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
             final Object[]           valMsgArgs   = {};
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
-            valsModel.addData(valDataModel);
+            result.addData(valDataModel);
 
         }
 
-        // タグの説明
+        /* タグの説明 */
         this.tagDescription = Optional.ofNullable(tagConfig.get(JdtsConfigKeyTypes.TAG_DESCRIPTION.get()))
             .map(Object::toString).orElse(KmgString.EMPTY);
 
-        return valsModel;
+        return result;
 
     }
 
