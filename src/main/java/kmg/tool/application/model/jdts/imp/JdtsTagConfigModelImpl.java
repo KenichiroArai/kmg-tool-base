@@ -7,7 +7,9 @@ import java.util.Optional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
+import kmg.core.infrastructure.model.val.KmgValDataModel;
 import kmg.core.infrastructure.model.val.KmgValsModel;
+import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
 import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
@@ -18,6 +20,7 @@ import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 import kmg.tool.application.types.jdts.JdtsInsertPositionTypes;
 import kmg.tool.application.types.jdts.JdtsOverwriteTypes;
 import kmg.tool.infrastructure.exception.KmgToolValException;
+import kmg.tool.infrastructure.type.msg.KmgToolValMsgTypes;
 
 /**
  * Javadocタグ設定のタグ構成モデル<br>
@@ -65,7 +68,22 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      */
     public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) throws KmgToolValException {
 
-        this.setupTagConfig(tagConfig);
+        final KmgValsModel valsModel = new KmgValsModelImpl();
+
+        // 基本項目の設定
+        valsModel.merge(this.setupBasicItems(tagConfig));
+
+        // 配置場所の設定
+        valsModel.merge(this.setupLocation(tagConfig));
+
+        // 挿入位置と上書き設定
+        valsModel.merge(this.setupInsertPositionAndOverwrite(tagConfig));
+
+        if (valsModel.isNotEmpty()) {
+
+            throw new KmgToolValException(valsModel);
+
+        }
 
     }
 
@@ -213,55 +231,156 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     }
 
     /**
-     * タグ設定の初期化とバリデーション<br>
+     * 基本項目の設定<br>
      *
      * @param tagConfig
      *                  タグ設定
      *
-     * @throws KmgToolValException
-     *                             KMGツールバリデーション例外
+     * @return バリデーションモデル
      */
-    private void setupTagConfig(final Map<String, Object> tagConfig) throws KmgToolValException {
+    private KmgValsModel setupBasicItems(final Map<String, Object> tagConfig) {
 
         final KmgValsModel valsModel = new KmgValsModelImpl();
-
-        /* 基本項目の設定 */
 
         // タグ名
         this.tagName = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_NAME.get());
 
+        if (KmgString.isEmpty(this.tagName)) {
+
+            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
+
+        }
+
         // タグ
         this.tag = KmgJavadocTagTypes.getEnum(this.tagName);
 
+        if (this.tag == null) {
+
+            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
+
+        }
+
         // タグの値
         this.tagValue = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_VALUE.get());
+
+        if (KmgString.isEmpty(this.tagValue)) {
+
+            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
+
+        }
 
         // タグの説明
         this.tagDescription = Optional.ofNullable(tagConfig.get(JdtsConfigKeyTypes.TAG_DESCRIPTION.get()))
             .map(Object::toString).orElse(KmgString.EMPTY);
 
-        /* 配置場所の設定 */
+        return valsModel;
 
-        final ObjectMapper        mapper      = new ObjectMapper(new YAMLFactory());
-        final Map<String, Object> locationMap = mapper.convertValue(tagConfig.get(JdtsConfigKeyTypes.LOCATION.get()),
-            Map.class);
+    }
 
-        // 配置場所の設定の生成
-        this.location = new JdtsLocationConfigModelImpl(locationMap);
+    /**
+     * 挿入位置と上書き設定<br>
+     *
+     * @param tagConfig
+     *                  タグ設定
+     *
+     * @return バリデーションモデル
+     */
+    private KmgValsModel setupInsertPositionAndOverwrite(final Map<String, Object> tagConfig) {
 
-        /* 挿入位置の設定 */
-        this.insertPosition
-            = JdtsInsertPositionTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.INSERT_POSITION.get()));
+        final KmgValsModel valsModel = new KmgValsModelImpl();
 
-        /* 上書き設定 */
-        this.overwrite = JdtsOverwriteTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.OVERWRITE.get()));
+        // 挿入位置の設定
+        final String insertPositionStr = (String) tagConfig.get(JdtsConfigKeyTypes.INSERT_POSITION.get());
 
-        /* バリデーションをマージする */
-        if (valsModel.isNotEmpty()) {
+        if (KmgString.isEmpty(insertPositionStr)) {
 
-            throw new KmgToolValException(valsModel);
+            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
 
         }
+        this.insertPosition = JdtsInsertPositionTypes.getEnum(insertPositionStr);
+
+        if (this.insertPosition == null) {
+
+            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
+
+        }
+
+        // 上書き設定
+        final String overwriteStr = (String) tagConfig.get(JdtsConfigKeyTypes.OVERWRITE.get());
+
+        if (KmgString.isEmpty(overwriteStr)) {
+
+            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
+
+        }
+        this.overwrite = JdtsOverwriteTypes.getEnum(overwriteStr);
+
+        if (this.overwrite == null) {
+
+            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            valsModel.addData(valDataModel);
+
+        }
+
+        return valsModel;
+
+    }
+
+    /**
+     * 配置場所の設定<br>
+     *
+     * @param tagConfig
+     *                  タグ設定
+     *
+     * @return バリデーションモデル
+     */
+    private KmgValsModel setupLocation(final Map<String, Object> tagConfig) {
+
+        final KmgValsModel valsModel = new KmgValsModelImpl();
+
+        try {
+
+            final ObjectMapper        mapper      = new ObjectMapper(new YAMLFactory());
+            final Map<String, Object> locationMap = mapper
+                .convertValue(tagConfig.get(JdtsConfigKeyTypes.LOCATION.get()), Map.class);
+
+            // 配置場所の設定の生成
+            this.location = new JdtsLocationConfigModelImpl(locationMap);
+
+        } catch (final KmgToolValException e) {
+
+            valsModel.merge(e.getValidationsModel());
+
+        }
+
+        return valsModel;
 
     }
 
