@@ -56,8 +56,8 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
             // TODO KenichiroArai 2025/05/08 例外処理
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]               valMsgArgs   = {};
-            final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);
 
             throw new KmgToolValException(valsModel);
@@ -73,8 +73,8 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
             // TODO KenichiroArai 2025/05/08 例外処理
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]               valMsgArgs   = {};
-            final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);
 
             throw new KmgToolValException(valsModel);
@@ -84,9 +84,29 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
         /* 各タグ設定の処理 */
         for (final Map<String, Object> tagConfig : javadocTags) {
 
-            /* モデルの作成と追加 */
-            final JdtsTagConfigModel model = new JdtsTagConfigModelImpl(tagConfig);
+            /* モデルの作成 */
+            final JdtsTagConfigModel model;
+
+            try {
+
+                model = new JdtsTagConfigModelImpl(tagConfig);
+
+            } catch (final KmgToolValException e) {
+
+                valsModel.merge(e.getValidationsModel());
+                continue;
+
+            }
+
+            /* モデルの追加 */
             this.jdtsTagConfigModels.add(model);
+
+        }
+
+        /* バリデーションをマージする */
+        if (valsModel.isNotEmpty()) {
+
+            throw new KmgToolValException(valsModel);
 
         }
 
