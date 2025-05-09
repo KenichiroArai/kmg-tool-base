@@ -12,9 +12,9 @@ import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.IctoProcessorService;
 import kmg.tool.domain.service.io.dtc.DtcService;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
 
 /**
  * 入力、CSV、テンプレート、出力の処理サービス抽象クラス<br>

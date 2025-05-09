@@ -7,8 +7,8 @@ import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.two2one.dtc.FieldCreationLogic;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
 
 /**
  * フィールド作成ロジック実装クラス データベースのフィールド定義から、Javaのフィールド定義を生成するためのロジッククラスです。 入力されたフィールド定義（コメント、フィールド名、データ型）を解析し、

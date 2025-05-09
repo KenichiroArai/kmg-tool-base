@@ -18,10 +18,10 @@ import kmg.tool.application.model.jdts.imp.JdtsCodeModelImpl;
 import kmg.tool.application.model.jdts.imp.JdtsConfigsModelImpl;
 import kmg.tool.application.service.jdts.JdtsReplService;
 import kmg.tool.application.service.jdts.JdtsService;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.exception.KmgToolValException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
 
 /**
  * Javadocタグ設定サービス<br>

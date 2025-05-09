@@ -11,9 +11,9 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.two2one.dtc.FieldCreationLogic;
 import kmg.tool.application.service.two2one.FieldCreationService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
 
 /**
  * フィールド作成サービス実装クラス

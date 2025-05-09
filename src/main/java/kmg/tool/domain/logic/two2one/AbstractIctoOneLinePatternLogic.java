@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
 
 /**
  * 入力、CSV、テンプレート、出力の1行パターンの抽象クラス

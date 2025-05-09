@@ -11,9 +11,9 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.two2one.dtc.AccessorCreationLogic;
 import kmg.tool.application.service.two2one.AccessorCreationService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
 
 /**
  * アクセサ作成サービス<br>

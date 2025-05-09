@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
 
 /**
  * プレーンコンテンツ入力サービス<br>

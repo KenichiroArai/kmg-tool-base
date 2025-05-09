@@ -9,9 +9,9 @@ import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.exception.KmgToolValException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
 
 /**
  * 入力処理ツール抽象クラス

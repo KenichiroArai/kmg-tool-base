@@ -14,8 +14,8 @@ import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsCodeModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.service.jdts.JdtsReplService;
-import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
 
 /**
  * Javadocタグ設定の入出力サービス<br>

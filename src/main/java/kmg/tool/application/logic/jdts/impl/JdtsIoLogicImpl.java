@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.application.logic.jdts.JdtsIoLogic;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
 
 /**
  * Javadocタグ設定の入出力ロジック<br>

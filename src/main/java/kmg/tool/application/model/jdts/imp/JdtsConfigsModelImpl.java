@@ -16,8 +16,8 @@ import kmg.core.infrastructure.utils.KmgMapUtils;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
-import kmg.tool.domain.types.KmgToolValMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolValException;
+import kmg.tool.infrastructure.type.msg.KmgToolValMessageTypes;
 
 /**
  * Javadocタグ設定の構成モデル<br>

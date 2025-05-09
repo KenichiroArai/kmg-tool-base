@@ -9,8 +9,8 @@ import java.nio.file.Path;
 import org.springframework.stereotype.Service;
 
 import kmg.tool.application.service.one2one.SimpleOne2OneService;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツールサービス<br>

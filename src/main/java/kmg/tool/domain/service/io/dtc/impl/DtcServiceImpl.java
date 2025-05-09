@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.logic.two2one.dtc.DtcLogic;
 import kmg.tool.domain.service.io.dtc.DtcService;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
-import kmg.tool.domain.types.KmgToolLogMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
 
 /**
  * テンプレートの動的変換サービス<br>

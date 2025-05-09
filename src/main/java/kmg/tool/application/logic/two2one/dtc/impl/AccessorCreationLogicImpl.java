@@ -10,8 +10,8 @@ import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
 import kmg.tool.application.logic.two2one.dtc.AccessorCreationLogic;
 import kmg.tool.application.types.two2one.AccessorRegexGroupTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
 
 /**
  * アクセサ作成ロジック<br>

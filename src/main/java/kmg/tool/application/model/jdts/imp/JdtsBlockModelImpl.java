@@ -13,8 +13,8 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
 
 /**
  * Javadocタグ設定のブロックモデルインタフェース<br>

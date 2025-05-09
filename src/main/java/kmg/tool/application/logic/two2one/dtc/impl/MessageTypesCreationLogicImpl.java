@@ -6,8 +6,8 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.two2one.dtc.MessageTypesCreationLogic;
 import kmg.tool.application.types.two2one.MessageTypesRegexGroupTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
 
 /**
  * <h2>メッセージの種類作成ロジック実装クラス</h2>

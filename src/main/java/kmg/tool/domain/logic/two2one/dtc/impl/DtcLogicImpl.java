@@ -20,10 +20,10 @@ import kmg.tool.domain.model.two2one.dtc.DtcDerivedPlaceholderModel;
 import kmg.tool.domain.model.two2one.dtc.DtcTransformModel;
 import kmg.tool.domain.model.two2one.dtc.impl.DtcDerivedPlaceholderModelImpl;
 import kmg.tool.domain.model.two2one.dtc.impl.DtcTransformModelImpl;
-import kmg.tool.domain.types.KmgToolGenMessageTypes;
 import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
 import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
 
 /**
  * テンプレートの動的変換ロジック実装<br>

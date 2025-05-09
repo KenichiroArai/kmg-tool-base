@@ -15,8 +15,8 @@ import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 import kmg.tool.application.types.jdts.JdtsLocationModeTypes;
-import kmg.tool.domain.types.KmgToolValMessageTypes;
 import kmg.tool.infrastructure.exception.KmgToolValException;
+import kmg.tool.infrastructure.type.msg.KmgToolValMessageTypes;
 
 /**
  * Javadocタグ設定の配置場所設定<br>
