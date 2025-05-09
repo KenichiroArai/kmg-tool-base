@@ -7,6 +7,9 @@ import kmg.tool.infrastructure.common.msg.KmgToolComLogMsgTypes;
 
 /**
  * KMGツールログメッセージの種類<br>
+ * <p>
+ * Msgは、Messageの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -14,7 +17,7 @@ import kmg.tool.infrastructure.common.msg.KmgToolComLogMsgTypes;
  *
  * @version 0.1.0
  */
-public enum KmgToolLogMessageTypes implements KmgToolComLogMsgTypes {
+public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
 
     /* 定義：開始 */
 
@@ -356,14 +359,14 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMsgTypes {
      *
      * @since 0.1.0
      */
-    private static final Map<String, KmgToolLogMessageTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, KmgToolLogMsgTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final KmgToolLogMessageTypes type : KmgToolLogMessageTypes.values()) {
+        for (final KmgToolLogMsgTypes type : KmgToolLogMsgTypes.values()) {
 
-            KmgToolLogMessageTypes.VALUES_MAP.put(type.get(), type);
+            KmgToolLogMsgTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -404,9 +407,9 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMsgTypes {
      *
      * @return デフォルト値
      */
-    public static KmgToolLogMessageTypes getDefault() {
+    public static KmgToolLogMsgTypes getDefault() {
 
-        final KmgToolLogMessageTypes result = NONE;
+        final KmgToolLogMsgTypes result = NONE;
         return result;
 
     }
@@ -424,9 +427,9 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMsgTypes {
      *
      * @return 種類。指定無し（NONE）：キーが存在しない場合。
      */
-    public static KmgToolLogMessageTypes getEnum(final String key) {
+    public static KmgToolLogMsgTypes getEnum(final String key) {
 
-        KmgToolLogMessageTypes result = KmgToolLogMessageTypes.VALUES_MAP.get(key);
+        KmgToolLogMsgTypes result = KmgToolLogMsgTypes.VALUES_MAP.get(key);
 
         if (result == null) {
 
@@ -444,9 +447,9 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMsgTypes {
      *
      * @return 初期値
      */
-    public static KmgToolLogMessageTypes getInitValue() {
+    public static KmgToolLogMsgTypes getInitValue() {
 
-        final KmgToolLogMessageTypes result = NONE;
+        final KmgToolLogMsgTypes result = NONE;
         return result;
 
     }
@@ -459,7 +462,7 @@ public enum KmgToolLogMessageTypes implements KmgToolComLogMsgTypes {
      * @param displayName
      *                    表示名
      */
-    KmgToolLogMessageTypes(final String displayName) {
+    KmgToolLogMsgTypes(final String displayName) {
 
         this.displayName = displayName;
         this.key = super.name();

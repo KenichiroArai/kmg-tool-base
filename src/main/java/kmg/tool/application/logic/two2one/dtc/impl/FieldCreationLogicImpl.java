@@ -8,7 +8,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.two2one.dtc.FieldCreationLogic;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * フィールド作成ロジック実装クラス データベースのフィールド定義から、Javaのフィールド定義を生成するためのロジッククラスです。 入力されたフィールド定義（コメント、フィールド名、データ型）を解析し、
@@ -63,7 +63,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         /* コメントの存在チェック */
         if (this.comment == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32006;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32006;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -93,7 +93,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         /* フィールド名の存在チェック */
         if (this.field == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32007;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32007;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -123,7 +123,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         /* 型情報の存在チェック */
         if (this.type == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32008;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32008;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 

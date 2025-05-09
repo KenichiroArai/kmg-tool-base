@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 入力、CSV、テンプレート、出力の1行パターンの抽象クラス
@@ -273,7 +273,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31007;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN31007;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
@@ -321,7 +321,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             } catch (final IOException e) {
 
-                final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN13005;
+                final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13005;
                 final Object[]               messageArgs  = {
                     this.outputPath.toString()
                 };
@@ -338,7 +338,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN13006;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13006;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
@@ -426,7 +426,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.reader = null;
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG13000;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13000;
             final Object[]               logMsgArgs  = {
                 this.inputPath.toString(),
             };
@@ -461,7 +461,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.writer = null;
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG13001;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13001;
             final Object[]               logMsgArgs  = {
                 this.outputPath.toString(),
             };
@@ -489,7 +489,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN13007;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13007;
             final Object[]               messageArgs  = {
                 this.inputPath.toString()
             };
@@ -514,7 +514,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN13008;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13008;
             final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };

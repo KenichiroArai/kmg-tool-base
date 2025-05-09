@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.service.two2one.SimpleTwo2OneService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス<br>
@@ -136,7 +136,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
         } catch (final IOException e) {
 
             // 例外をスローする
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31002;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN31002;
             final Object[]               messageArgs = {
                 this.templatePath.toString()
             };
@@ -164,7 +164,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
         } catch (final IOException e) {
 
             // 例外をスローする
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31001;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN31001;
             final Object[]               messageArgs = {};
             throw new KmgToolMsgException(msgType, messageArgs, e);
 

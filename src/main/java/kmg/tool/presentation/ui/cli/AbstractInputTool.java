@@ -11,7 +11,7 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.exception.KmgToolValException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * 入力処理ツール抽象クラス
@@ -188,7 +188,7 @@ public abstract class AbstractInputTool extends AbstractTool {
             if (!result) {
 
                 /* メッセージの出力 */
-                final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41003;
+                final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41003;
                 final Object[]               messageArgs = {};
                 final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
                 measService.warn(msg);
@@ -201,7 +201,7 @@ public abstract class AbstractInputTool extends AbstractTool {
             result &= this.executeMain();
 
             /* 成功 */
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41004;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41004;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
@@ -209,7 +209,7 @@ public abstract class AbstractInputTool extends AbstractTool {
         } catch (final KmgToolMsgException e) {
 
             /* 例外 */
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN41005;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41005;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);
@@ -220,7 +220,7 @@ public abstract class AbstractInputTool extends AbstractTool {
 
             /* 例外 */
             // TODO KenichiroArai 2025/05/08 エラーメッセージを出力する
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.NONE;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
             final Object[]               messageArgs = {};
             final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);

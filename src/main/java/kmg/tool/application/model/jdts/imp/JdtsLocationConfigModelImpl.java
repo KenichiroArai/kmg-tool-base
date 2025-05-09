@@ -16,7 +16,7 @@ import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
 import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 import kmg.tool.application.types.jdts.JdtsLocationModeTypes;
 import kmg.tool.infrastructure.exception.KmgToolValException;
-import kmg.tool.infrastructure.type.msg.KmgToolValMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolValMsgTypes;
 
 /**
  * Javadocタグ設定の配置場所設定<br>
@@ -73,7 +73,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
             if (this.mode != JdtsLocationModeTypes.MANUAL) {
 
                 // TODO KenichiroArai 2025/05/08 例外処理
-                final KmgToolValMessageTypes valMsgTypes  = KmgToolValMessageTypes.NONE;
+                final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
                 final Object[]               valMsgArgs   = {};
                 final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
                 valsModel.addData(valDataModel);
@@ -93,7 +93,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
         } else if (this.mode == JdtsLocationModeTypes.MANUAL) {
 
             // TODO KenichiroArai 2025/05/08 例外処理
-            final KmgToolValMessageTypes valMsgTypes  = KmgToolValMessageTypes.NONE;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
             final Object[]               valMsgArgs   = {};
             final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);

@@ -12,8 +12,8 @@ import kmg.tool.application.logic.two2one.dtc.MessageTypesCreationLogic;
 import kmg.tool.application.service.two2one.MessageTypesCreationService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * <h2>メッセージの種類作成サービス実装クラス</h2>
@@ -161,7 +161,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31013;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31013;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -186,7 +186,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31010;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN31010;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
@@ -226,7 +226,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31014;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31014;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -258,7 +258,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31015;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31015;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -285,7 +285,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31016;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31016;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -294,7 +294,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         }
 
-        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31017;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31017;
         final Object[]               logMsgArgs  = {
             this.messageTypesCreationLogic.getItem(), this.messageTypesCreationLogic.getItemName(),
         };

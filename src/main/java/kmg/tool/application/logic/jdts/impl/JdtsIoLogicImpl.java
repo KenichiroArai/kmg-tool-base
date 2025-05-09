@@ -14,7 +14,7 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.application.logic.jdts.JdtsIoLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * Javadocタグ設定の入出力ロジック<br>
@@ -205,7 +205,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32013;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
             final Object[]               genMsgArgs  = {
                 this.targetPath.toString()
             };
@@ -247,7 +247,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         } catch (
             final IOException e) {
 
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32012;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32012;
             final Object[]               genMsgArgs  = {
                 this.currentFilePath.toString()
             };
@@ -326,7 +326,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32011;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32011;
             final Object[]               genMsgArgs  = {
                 this.currentFilePath.toString(), this.writeContent
             };

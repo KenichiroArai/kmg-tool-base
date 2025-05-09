@@ -15,7 +15,7 @@ import kmg.tool.application.model.jdts.JdtsCodeModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.service.jdts.JdtsReplService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * Javadocタグ設定の入出力サービス<br>
@@ -237,7 +237,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                         this.totalReplaceCount++;
 
-                        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31021;
+                        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31021;
                         final Object[]               logMsgArgs  = {
                             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
                             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
@@ -260,7 +260,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                     this.totalReplaceCount++;
 
-                    final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31022;
+                    final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31022;
                     final Object[]               logMsgArgs  = {
                         targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
@@ -292,7 +292,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                     this.totalReplaceCount++;
 
-                    final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31023;
+                    final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31023;
                     final Object[]               logMsgArgs  = {
                         targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
@@ -317,7 +317,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                     this.totalReplaceCount++;
 
-                    final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31024;
+                    final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31024;
                     final Object[]               logMsgArgs  = {
                         targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
                         this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),

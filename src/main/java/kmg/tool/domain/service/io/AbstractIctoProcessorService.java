@@ -13,8 +13,8 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.IctoProcessorService;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 入力、CSV、テンプレート、出力の処理サービス抽象クラス<br>
@@ -207,7 +207,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
 
         try {
 
-            final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12004;
+            final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12004;
             final Object[]               startLogMsgArgs  = {};
             final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
                 startLogMsgArgs);
@@ -217,7 +217,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
 
         } finally {
 
-            final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12006;
+            final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12006;
             final Object[]               endLogMsgArgs  = {};
             final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
                 endLogMsgArgs);
@@ -255,7 +255,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes genMsgType = KmgToolGenMessageTypes.KMGTOOL_GEN12000;
+            final KmgToolGenMsgTypes genMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
             final Object[]               getMsgArgs = {
                 csvFileNameOnly, suffixExtension,
             };

@@ -7,7 +7,7 @@ import kmg.tool.application.logic.two2one.dtc.MessageTypesCreationLogic;
 import kmg.tool.application.types.two2one.MessageTypesRegexGroupTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * <h2>メッセージの種類作成ロジック実装クラス</h2>
@@ -49,7 +49,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         if (this.itemName == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32000;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32000;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -77,7 +77,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         if (this.item == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32004;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32004;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -111,7 +111,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         if (inputDatas.length != MessageTypesCreationLogicImpl.MESSAGE_TYPE_SPLIT_COUNT) {
             // 分かれない場合
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32005;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32005;
             final Object[]               messageArgs  = {
                 this.getNowLineNumber(), this.getLineOfDataRead(),
             };

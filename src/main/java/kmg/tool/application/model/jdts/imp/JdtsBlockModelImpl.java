@@ -14,7 +14,7 @@ import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * Javadocタグ設定のブロックモデルインタフェース<br>
@@ -306,7 +306,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
             } catch (final KmgMsgException e) {
 
                 // TODO KenichiroArai 2025/05/08 例外処理
-                final KmgToolGenMessageTypes msgTypes = KmgToolGenMessageTypes.NONE;
+                final KmgToolGenMsgTypes msgTypes = KmgToolGenMsgTypes.NONE;
                 final Object[]               msgArgs  = {};
 
                 throw new KmgToolMsgException(msgTypes, msgArgs, e);

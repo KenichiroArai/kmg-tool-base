@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.tool.application.service.one2one.SimpleOne2OneService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツールサービス<br>
@@ -117,7 +117,7 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
         } catch (final IOException e) {
 
             // 例外をスローする
-            final KmgToolGenMessageTypes msgType     = KmgToolGenMessageTypes.KMGTOOL_GEN31000;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN31000;
             final Object[]               messageArgs = {};
             throw new KmgToolMsgException(msgType, messageArgs, e);
 

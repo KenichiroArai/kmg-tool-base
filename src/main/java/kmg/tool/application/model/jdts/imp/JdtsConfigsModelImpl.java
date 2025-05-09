@@ -17,7 +17,7 @@ import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.application.model.jdts.JdtsTagConfigModel;
 import kmg.tool.application.types.jdts.JdtsConfigKeyTypes;
 import kmg.tool.infrastructure.exception.KmgToolValException;
-import kmg.tool.infrastructure.type.msg.KmgToolValMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolValMsgTypes;
 
 /**
  * Javadocタグ設定の構成モデル<br>
@@ -55,7 +55,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
         if (KmgMapUtils.isEmpty(yamlData)) {
 
             // TODO KenichiroArai 2025/05/08 例外処理
-            final KmgToolValMessageTypes valMsgTypes  = KmgToolValMessageTypes.NONE;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
             final Object[]               valMsgArgs   = {};
             final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);
@@ -72,7 +72,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
         if (KmgListUtils.isEmpty(javadocTags)) {
 
             // TODO KenichiroArai 2025/05/08 例外処理
-            final KmgToolValMessageTypes valMsgTypes  = KmgToolValMessageTypes.NONE;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
             final Object[]               valMsgArgs   = {};
             final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);

@@ -20,8 +20,8 @@ import kmg.tool.application.service.jdts.JdtsReplService;
 import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.exception.KmgToolValException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * Javadocタグ設定サービス<br>
@@ -216,7 +216,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         boolean result = false;
 
-        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31019;
+        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31019;
         final Object[]               startLogMsgArgs  = {};
         final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
             startLogMsgArgs);
@@ -277,7 +277,7 @@ public class JdtsServiceImpl implements JdtsService {
             /* 次のファイルに進む */
         } while (this.jdtsIoLogic.nextFile());
 
-        final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31020;
+        final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31020;
         final Object[]               endLogMsgArgs  = {
             this.jdtsIoLogic.getFilePathList().size(), totalReplaceCount,
         };
@@ -321,7 +321,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         } catch (final KmgFundMsgException e) {
 
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31006;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN31006;
             final Object[]               genMsgArgs  = {
                 this.definitionPath.toString(),
             };

@@ -12,8 +12,8 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.logic.two2one.dtc.DtcLogic;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * テンプレートの動的変換サービス<br>
@@ -185,7 +185,7 @@ public class DtcServiceImpl implements DtcService {
 
         boolean result = false;
 
-        final KmgToolLogMessageTypes startLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12000;
+        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12000;
         final Object[]               startLogMsgArgs  = {};
         final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
             startLogMsgArgs);
@@ -241,7 +241,7 @@ public class DtcServiceImpl implements DtcService {
 
             } finally {
 
-                final KmgToolLogMessageTypes endLogMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG12002;
+                final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12002;
                 final Object[]               endLogMsgArgs  = {};
                 final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
                     endLogMsgArgs);
@@ -269,7 +269,7 @@ public class DtcServiceImpl implements DtcService {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN12002;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12002;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 

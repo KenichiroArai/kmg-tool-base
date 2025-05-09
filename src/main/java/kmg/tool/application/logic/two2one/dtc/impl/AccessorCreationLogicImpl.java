@@ -11,7 +11,7 @@ import kmg.tool.application.logic.two2one.dtc.AccessorCreationLogic;
 import kmg.tool.application.types.two2one.AccessorRegexGroupTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * アクセサ作成ロジック<br>
@@ -60,7 +60,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         if (this.item == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32001;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32001;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -88,7 +88,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         if (this.javadocComment == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32002;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32002;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -116,7 +116,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         if (this.tyep == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32003;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32003;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 

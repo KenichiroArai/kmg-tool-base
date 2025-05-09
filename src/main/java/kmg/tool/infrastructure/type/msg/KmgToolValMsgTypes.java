@@ -8,6 +8,10 @@ import kmg.tool.infrastructure.common.msg.KmgToolComValMsgTypes;
 
 /**
  * KMGツールバリデーションメッセージの種類<br>
+ * <p>
+ * Valは、Validationの略。<br>
+ * Msgは、Messageの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -15,7 +19,7 @@ import kmg.tool.infrastructure.common.msg.KmgToolComValMsgTypes;
  *
  * @version 0.1.0
  */
-public enum KmgToolValMessageTypes implements KmgToolComValMsgTypes, KmgToolComExcMsgTypes {
+public enum KmgToolValMsgTypes implements KmgToolComValMsgTypes, KmgToolComExcMsgTypes {
 
     /* 定義：開始 */
 
@@ -39,14 +43,14 @@ public enum KmgToolValMessageTypes implements KmgToolComValMsgTypes, KmgToolComE
      *
      * @since 0.1.0
      */
-    private static final Map<String, KmgToolValMessageTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, KmgToolValMsgTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final KmgToolValMessageTypes type : KmgToolValMessageTypes.values()) {
+        for (final KmgToolValMsgTypes type : KmgToolValMsgTypes.values()) {
 
-            KmgToolValMessageTypes.VALUES_MAP.put(type.get(), type);
+            KmgToolValMsgTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -87,9 +91,9 @@ public enum KmgToolValMessageTypes implements KmgToolComValMsgTypes, KmgToolComE
      *
      * @return デフォルト値
      */
-    public static KmgToolValMessageTypes getDefault() {
+    public static KmgToolValMsgTypes getDefault() {
 
-        final KmgToolValMessageTypes result = NONE;
+        final KmgToolValMsgTypes result = NONE;
         return result;
 
     }
@@ -107,9 +111,9 @@ public enum KmgToolValMessageTypes implements KmgToolComValMsgTypes, KmgToolComE
      *
      * @return 種類。指定無し（NONE）：キーが存在しない場合。
      */
-    public static KmgToolValMessageTypes getEnum(final String key) {
+    public static KmgToolValMsgTypes getEnum(final String key) {
 
-        KmgToolValMessageTypes result = KmgToolValMessageTypes.VALUES_MAP.get(key);
+        KmgToolValMsgTypes result = KmgToolValMsgTypes.VALUES_MAP.get(key);
 
         if (result == null) {
 
@@ -127,9 +131,9 @@ public enum KmgToolValMessageTypes implements KmgToolComValMsgTypes, KmgToolComE
      *
      * @return 初期値
      */
-    public static KmgToolValMessageTypes getInitValue() {
+    public static KmgToolValMsgTypes getInitValue() {
 
-        final KmgToolValMessageTypes result = NONE;
+        final KmgToolValMsgTypes result = NONE;
         return result;
 
     }
@@ -142,7 +146,7 @@ public enum KmgToolValMessageTypes implements KmgToolComValMsgTypes, KmgToolComE
      * @param displayName
      *                    表示名
      */
-    KmgToolValMessageTypes(final String displayName) {
+    KmgToolValMsgTypes(final String displayName) {
 
         this.displayName = displayName;
         this.key = super.name();

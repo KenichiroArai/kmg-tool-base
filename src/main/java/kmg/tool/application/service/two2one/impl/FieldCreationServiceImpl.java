@@ -12,8 +12,8 @@ import kmg.tool.application.logic.two2one.dtc.FieldCreationLogic;
 import kmg.tool.application.service.two2one.FieldCreationService;
 import kmg.tool.domain.service.io.AbstractIctoProcessorService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * フィールド作成サービス実装クラス
@@ -141,7 +141,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31000;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31000;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -166,7 +166,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes genMsgTypes = KmgToolGenMessageTypes.KMGTOOL_GEN31005;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN31005;
             final Object[]               genMsgArgs  = {};
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
@@ -204,7 +204,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31008;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31008;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -236,7 +236,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31009;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31009;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -263,7 +263,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31012;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31012;
             final Object[]               logMsgArgs  = {};
             final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -271,7 +271,7 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         }
 
-        final KmgToolLogMessageTypes logMsgTypes = KmgToolLogMessageTypes.KMGTOOL_LOG31018;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31018;
         final Object[]               logMsgArgs  = {
             this.fieldCreationLogic.getComment(),
         };

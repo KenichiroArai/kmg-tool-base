@@ -9,7 +9,7 @@ import kmg.tool.application.logic.two2one.dtc.Enum2SwitchCaseCreationLogic;
 import kmg.tool.application.types.two2one.ConvertEnumDefinitionTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * <h2>列挙型からcase文作成ロジック実装クラス</h2>
@@ -51,7 +51,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
         if (this.itemName == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32009;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32009;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -79,7 +79,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
         if (this.item == null) {
 
-            final KmgToolGenMessageTypes messageTypes = KmgToolGenMessageTypes.KMGTOOL_GEN32010;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32010;
             final Object[]               messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 

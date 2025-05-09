@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMessageTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * プレーンコンテンツ入力サービス<br>
@@ -118,7 +118,7 @@ public class PlainContentInputServiceImpl implements InputService {
         // 入力パスの検証
         if (inputPath == null) {
 
-            final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.KMGTOOL_GEN12004;
+            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN12004;
             final Object[]               messageArgs = {};
 
             throw new KmgToolMsgException(genType, messageArgs);
@@ -127,7 +127,7 @@ public class PlainContentInputServiceImpl implements InputService {
 
         if (!Files.exists(inputPath)) {
 
-            final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.KMGTOOL_GEN12005;
+            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN12005;
             final Object[]               messageArgs = {
                 inputPath.toString()
             };
@@ -164,7 +164,7 @@ public class PlainContentInputServiceImpl implements InputService {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMessageTypes genType     = KmgToolGenMessageTypes.KMGTOOL_GEN12006;
+            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN12006;
             final Object[]               messageArgs = {
                 this.inputPath.toString()
             };
