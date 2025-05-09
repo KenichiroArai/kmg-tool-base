@@ -34,25 +34,25 @@ import kmg.tool.infrastructure.exception.KmgToolValException;
 public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
     /** タグ */
-    private final KmgJavadocTagTypes tag;
+    private KmgJavadocTagTypes tag;
 
     /** タグ名 */
-    private final String tagName;
+    private String tagName;
 
     /** タグの指定値 */
-    private final String tagValue;
+    private String tagValue;
 
     /** タグの説明 */
-    private final String tagDescription;
+    private String tagDescription;
 
     /** 配置場所の設定 */
-    private final JdtsLocationConfigModel location;
+    private JdtsLocationConfigModel location;
 
     /** タグの挿入位置 */
-    private final JdtsInsertPositionTypes insertPosition;
+    private JdtsInsertPositionTypes insertPosition;
 
     /** 上書き設定 */
-    private final JdtsOverwriteTypes overwrite;
+    private JdtsOverwriteTypes overwrite;
 
     /**
      * コンストラクタ<br>
@@ -65,45 +65,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      */
     public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) throws KmgToolValException {
 
-        final KmgValsModel valsModel = new KmgValsModelImpl();
-
-        /* 基本項目の設定 */
-
-        // タグ名
-        this.tagName = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_NAME.get());
-
-        // タグ
-        this.tag = KmgJavadocTagTypes.getEnum(this.tagName);
-
-        // タグの値
-        this.tagValue = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_VALUE.get());
-
-        // タグの説明
-        this.tagDescription = Optional.ofNullable(tagConfig.get(JdtsConfigKeyTypes.TAG_DESCRIPTION.get()))
-            .map(Object::toString).orElse(KmgString.EMPTY);
-
-        /* 配置場所の設定 */
-
-        final ObjectMapper        mapper      = new ObjectMapper(new YAMLFactory());
-        final Map<String, Object> locationMap = mapper.convertValue(tagConfig.get(JdtsConfigKeyTypes.LOCATION.get()),
-            Map.class);
-
-        // 配置場所の設定の生成
-        this.location = new JdtsLocationConfigModelImpl(locationMap);
-
-        /* 挿入位置の設定 */
-        this.insertPosition
-            = JdtsInsertPositionTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.INSERT_POSITION.get()));
-
-        /* 上書き設定 */
-        this.overwrite = JdtsOverwriteTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.OVERWRITE.get()));
-
-        /* バリデーションをマージする */
-        if (valsModel.isNotEmpty()) {
-
-            throw new KmgToolValException(valsModel);
-
-        }
+        this.setupTagConfig(tagConfig);
 
     }
 
@@ -247,6 +209,59 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
         };
 
         return result;
+
+    }
+
+    /**
+     * タグ設定の初期化とバリデーション<br>
+     *
+     * @param tagConfig
+     *                  タグ設定
+     *
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
+     */
+    private void setupTagConfig(final Map<String, Object> tagConfig) throws KmgToolValException {
+
+        final KmgValsModel valsModel = new KmgValsModelImpl();
+
+        /* 基本項目の設定 */
+
+        // タグ名
+        this.tagName = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_NAME.get());
+
+        // タグ
+        this.tag = KmgJavadocTagTypes.getEnum(this.tagName);
+
+        // タグの値
+        this.tagValue = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_VALUE.get());
+
+        // タグの説明
+        this.tagDescription = Optional.ofNullable(tagConfig.get(JdtsConfigKeyTypes.TAG_DESCRIPTION.get()))
+            .map(Object::toString).orElse(KmgString.EMPTY);
+
+        /* 配置場所の設定 */
+
+        final ObjectMapper        mapper      = new ObjectMapper(new YAMLFactory());
+        final Map<String, Object> locationMap = mapper.convertValue(tagConfig.get(JdtsConfigKeyTypes.LOCATION.get()),
+            Map.class);
+
+        // 配置場所の設定の生成
+        this.location = new JdtsLocationConfigModelImpl(locationMap);
+
+        /* 挿入位置の設定 */
+        this.insertPosition
+            = JdtsInsertPositionTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.INSERT_POSITION.get()));
+
+        /* 上書き設定 */
+        this.overwrite = JdtsOverwriteTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.OVERWRITE.get()));
+
+        /* バリデーションをマージする */
+        if (valsModel.isNotEmpty()) {
+
+            throw new KmgToolValException(valsModel);
+
+        }
 
     }
 
