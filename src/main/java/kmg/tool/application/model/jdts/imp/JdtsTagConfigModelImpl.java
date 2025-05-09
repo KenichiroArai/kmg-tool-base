@@ -78,9 +78,13 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
         final KmgValsModel locationModel = this.setupLocation(tagConfig);
         valsModel.merge(locationModel);
 
-        /* 挿入位置と上書き設定 */
-        final KmgValsModel insertPositionModel = this.setupInsertPositionAndOverwrite(tagConfig);
+        /* 挿入位置の設定 */
+        final KmgValsModel insertPositionModel = this.setupInsertPosition(tagConfig);
         valsModel.merge(insertPositionModel);
+
+        /* 上書きの設定 */
+        final KmgValsModel overwriteModel = this.setupOverwrite(tagConfig);
+        valsModel.merge(overwriteModel);
 
         if (valsModel.isNotEmpty()) {
 
@@ -294,66 +298,31 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     }
 
     /**
-     * 挿入位置と上書き設定<br>
+     * 挿入位置の設定<br>
      *
      * @param tagConfig
      *                  タグ設定
      *
      * @return バリデーションモデル
      */
-    private KmgValsModel setupInsertPositionAndOverwrite(final Map<String, Object> tagConfig) {
+    private KmgValsModel setupInsertPosition(final Map<String, Object> tagConfig) {
 
-        final KmgValsModel valsModel = new KmgValsModelImpl();
+        final KmgValsModel result = new KmgValsModelImpl();
 
-        // 挿入位置の設定
-        final String insertPositionStr = (String) tagConfig.get(JdtsConfigKeyTypes.INSERT_POSITION.get());
+        this.insertPosition
+            = JdtsInsertPositionTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.INSERT_POSITION.get()));
 
-        if (KmgString.isEmpty(insertPositionStr)) {
-
-            // TODO KenichiroArai 2025/05/09 メッセージ未設定
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]           valMsgArgs   = {};
-            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
-            valsModel.addData(valDataModel);
-
-        }
-        this.insertPosition = JdtsInsertPositionTypes.getEnum(insertPositionStr);
-
-        if (this.insertPosition == null) {
+        if (this.insertPosition == JdtsInsertPositionTypes.NONE) {
 
             // TODO KenichiroArai 2025/05/09 メッセージ未設定
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
             final Object[]           valMsgArgs   = {};
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
-            valsModel.addData(valDataModel);
+            result.addData(valDataModel);
 
         }
 
-        // 上書き設定
-        final String overwriteStr = (String) tagConfig.get(JdtsConfigKeyTypes.OVERWRITE.get());
-
-        if (KmgString.isEmpty(overwriteStr)) {
-
-            // TODO KenichiroArai 2025/05/09 メッセージ未設定
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]           valMsgArgs   = {};
-            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
-            valsModel.addData(valDataModel);
-
-        }
-        this.overwrite = JdtsOverwriteTypes.getEnum(overwriteStr);
-
-        if (this.overwrite == null) {
-
-            // TODO KenichiroArai 2025/05/09 メッセージ未設定
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]           valMsgArgs   = {};
-            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
-            valsModel.addData(valDataModel);
-
-        }
-
-        return valsModel;
+        return result;
 
     }
 
@@ -367,7 +336,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      */
     private KmgValsModel setupLocation(final Map<String, Object> tagConfig) {
 
-        final KmgValsModel valsModel = new KmgValsModelImpl();
+        final KmgValsModel result = new KmgValsModelImpl();
 
         try {
 
@@ -380,11 +349,39 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         } catch (final KmgToolValException e) {
 
-            valsModel.merge(e.getValidationsModel());
+            result.merge(e.getValidationsModel());
 
         }
 
-        return valsModel;
+        return result;
+
+    }
+
+    /**
+     * 上書き設定<br>
+     *
+     * @param tagConfig
+     *                  タグ設定
+     *
+     * @return バリデーションモデル
+     */
+    private KmgValsModel setupOverwrite(final Map<String, Object> tagConfig) {
+
+        final KmgValsModel result = new KmgValsModelImpl();
+
+        this.overwrite = JdtsOverwriteTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.OVERWRITE.get()));
+
+        if (this.overwrite == JdtsOverwriteTypes.NONE) {
+
+            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+            final Object[]           valMsgArgs   = {};
+            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            result.addData(valDataModel);
+
+        }
+
+        return result;
 
     }
 
