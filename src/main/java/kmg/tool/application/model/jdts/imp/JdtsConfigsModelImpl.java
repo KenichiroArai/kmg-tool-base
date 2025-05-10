@@ -54,7 +54,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         if (KmgMapUtils.isEmpty(yamlData)) {
 
-            // TODO KenichiroArai 2025/05/08 例外処理
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。YAMLデータが空です。
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
             final Object[]           valMsgArgs   = {};
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
@@ -71,9 +71,11 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         if (KmgListUtils.isEmpty(javadocTags)) {
 
-            // TODO KenichiroArai 2025/05/08 例外処理
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]           valMsgArgs   = {};
+            final Object[]           valMsgArgs   = {
+                JdtsConfigKeyTypes.JDTS_CONFIGS.getDisplayName(), JdtsConfigKeyTypes.JDTS_CONFIGS.get(),
+            };
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);
 

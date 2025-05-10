@@ -189,8 +189,8 @@ public abstract class AbstractInputTool extends AbstractTool {
 
                 /* メッセージの出力 */
                 final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41003;
-                final Object[]               messageArgs = {};
-                final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+                final Object[]           messageArgs = {};
+                final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
                 measService.warn(msg);
 
                 return result;
@@ -202,16 +202,16 @@ public abstract class AbstractInputTool extends AbstractTool {
 
             /* 成功 */
             final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41004;
-            final Object[]               messageArgs = {};
-            final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+            final Object[]           messageArgs = {};
+            final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
 
         } catch (final KmgToolMsgException e) {
 
             /* 例外 */
             final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41005;
-            final Object[]               messageArgs = {};
-            final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+            final Object[]           messageArgs = {};
+            final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);
 
             result = false;
@@ -219,11 +219,14 @@ public abstract class AbstractInputTool extends AbstractTool {
         } catch (final KmgToolValException e) {
 
             /* 例外 */
-            // TODO KenichiroArai 2025/05/08 エラーメッセージを出力する
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。バリデーションエラーが発生しました。
             final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
-            final Object[]               messageArgs = {};
-            final String                 msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+            final Object[]           messageArgs = {};
+            final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);
+
+            // バリデーションエラーを全てログに出力する
+            e.getValidationsModel().getDatas().forEach(data -> measService.error(data.getMessage()));
 
             result = false;
 

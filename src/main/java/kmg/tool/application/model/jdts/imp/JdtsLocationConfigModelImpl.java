@@ -72,7 +72,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
             if (this.mode != JdtsLocationModeTypes.MANUAL) {
 
-                // TODO KenichiroArai 2025/05/08 例外処理
+                // TODO KenichiroArai 2025/05/08 メッセージ未設定
                 final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
                 final Object[]           valMsgArgs   = {};
                 final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
@@ -92,7 +92,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
         } else if (this.mode == JdtsLocationModeTypes.MANUAL) {
 
-            // TODO KenichiroArai 2025/05/08 例外処理
+            // TODO KenichiroArai 2025/05/08 メッセージ未設定
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
             final Object[]           valMsgArgs   = {};
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);

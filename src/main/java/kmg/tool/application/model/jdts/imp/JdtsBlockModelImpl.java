@@ -305,9 +305,11 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
             } catch (final KmgMsgException e) {
 
-                // TODO KenichiroArai 2025/05/08 例外処理
+                // TODO KenichiroArai 2025/05/11 メッセージ未設定。Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]
                 final KmgToolGenMsgTypes msgTypes = KmgToolGenMsgTypes.NONE;
-                final Object[]               msgArgs  = {};
+                final Object[]           msgArgs  = {
+                    codeLine, this.classification.getDisplayName(),
+                };
 
                 throw new KmgToolMsgException(msgTypes, msgArgs, e);
 
