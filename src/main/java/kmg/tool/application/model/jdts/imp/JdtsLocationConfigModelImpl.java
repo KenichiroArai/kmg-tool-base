@@ -72,8 +72,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
             if (this.mode != JdtsLocationModeTypes.MANUAL) {
 
-                // TODO KenichiroArai 2025/05/11 メッセージ未設定。[{0}]は、[{1}]の場合のみ指定可能です。
-                final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+                final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33002;
                 final Object[]           valMsgArgs   = {
                     JdtsConfigKeyTypes.TARGET_ELEMENTS.getDisplayName(), JdtsLocationModeTypes.MANUAL.getDisplayName(),
                 };
@@ -88,8 +87,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
                 if (type == JavaClassificationTypes.NONE) {
 
-                    // TODO KenichiroArai 2025/05/11 メッセージ未設定。[{0}]が指定可能な値ではありません。[{0}]=[{1}]
-                    final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+                    final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33003;
                     final Object[]           valMsgArgs   = {
                         JdtsConfigKeyTypes.TARGET_ELEMENTS.getDisplayName(),
                     };
@@ -104,8 +102,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
         } else if (this.mode == JdtsLocationModeTypes.MANUAL) {
 
-            // TODO KenichiroArai 2025/05/11 メッセージ未設定。[{0}]は対象要素を指定してください。
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33004;
             final Object[]           valMsgArgs   = {
                 JdtsLocationModeTypes.MANUAL.getDisplayName(), JdtsConfigKeyTypes.TARGET_ELEMENTS.getDisplayName(),
             };

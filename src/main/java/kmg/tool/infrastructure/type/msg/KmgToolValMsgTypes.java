@@ -29,10 +29,98 @@ public enum KmgToolValMsgTypes implements KmgToolComValMsgTypes, KmgToolComExcMs
      * @author KenichiroArai
      *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      */
     NONE("指定無し"),
+
+    /**
+     * YAMLデータが空です。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33000("YAMLデータが空です。"),
+
+    /**
+     * {0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33001("{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]"),
+
+    /**
+     * [{0}]は、[{1}]の場合のみ指定可能です。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33002("[{0}]は、[{1}]の場合のみ指定可能です。"),
+
+    /**
+     * [{0}]が指定可能な値ではありません。[{0}]=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33003("[{0}]が指定可能な値ではありません。[{0}]=[{1}]"),
+
+    /**
+     * [{0}]は対象要素を指定してください。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33004("[{0}]は対象要素を指定してください。"),
+
+    /**
+     * [{0}]が指定されていません。[{0}]のキーワード=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33005("[{0}]が指定されていません。[{0}]のキーワード=[{1}]"),
+
+    /**
+     * [{0}]が存在しません。指定された[{0}]=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33006("[{0}]が存在しません。指定された[{0}]=[{1}]"),
+
+    /**
+     * [{0}]が指定されいません。[{0}]のキーワード=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33007("[{0}]が指定されいません。[{0}]のキーワード=[{1}]"),
+
+    /**
+     * [{0}]が正しく設定されていません。[{0}]=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33008("[{0}]が正しく設定されていません。[{0}]=[{1}]"),
+
+    /**
+     * [{0}]が正しく設定されていません。[{0}]=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL33009("[{0}]が正しく設定されていません。[{0}]=[{1}]"),
 
     /* 定義：終了 */
 
