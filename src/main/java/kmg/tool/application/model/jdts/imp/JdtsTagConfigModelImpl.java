@@ -255,9 +255,11 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (KmgString.isEmpty(this.tagName)) {
 
-            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。[{0}]が指定されていません。[{0}]のキーワード=[{1}]
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]           valMsgArgs   = {};
+            final Object[]           valMsgArgs   = {
+                JdtsConfigKeyTypes.TAG_NAME.getDisplayName(), JdtsConfigKeyTypes.TAG_NAME.getKey(),
+            };
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             result.addData(valDataModel);
 
@@ -268,9 +270,11 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (this.tag == KmgJavadocTagTypes.NONE) {
 
-            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。[{0}]が存在しません。指定された[{0}]=[{1}]
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]           valMsgArgs   = {};
+            final Object[]           valMsgArgs   = {
+                JdtsConfigKeyTypes.TAG_NAME.getDisplayName(), this.tag,
+            };
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             result.addData(valDataModel);
 
@@ -281,9 +285,11 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (KmgString.isEmpty(this.tagValue)) {
 
-            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。[{0}]が指定されいません。[{0}]のキーワード=[{1}]
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]           valMsgArgs   = {};
+            final Object[]           valMsgArgs   = {
+                JdtsConfigKeyTypes.TAG_VALUE.getDisplayName(), JdtsConfigKeyTypes.TAG_VALUE.getKey(),
+            };
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             result.addData(valDataModel);
 
@@ -314,9 +320,11 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (this.insertPosition == JdtsInsertPositionTypes.NONE) {
 
-            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。[{0}]が正しく設定されていません。[{0}]=[{1}]
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]           valMsgArgs   = {};
+            final Object[]           valMsgArgs   = {
+                JdtsConfigKeyTypes.INSERT_POSITION.getDisplayName(), this.insertPosition,
+            };
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             result.addData(valDataModel);
 
@@ -373,9 +381,11 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (this.overwrite == JdtsOverwriteTypes.NONE) {
 
-            // TODO KenichiroArai 2025/05/09 メッセージ未設定
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。[{0}]が正しく設定されていません。[{0}]=[{1}]
             final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.NONE;
-            final Object[]           valMsgArgs   = {};
+            final Object[]           valMsgArgs   = {
+                JdtsConfigKeyTypes.OVERWRITE.getDisplayName(), this.overwrite,
+            };
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             result.addData(valDataModel);
 
