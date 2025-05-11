@@ -222,6 +222,95 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     }
 
     /**
+     * 新しいタグ追加時のログを出力する
+     *
+     * @param targetBlockModel
+     *                         対象のブロックモデル
+     */
+    private void logAddNewTag(final JdtsBlockModel targetBlockModel) {
+
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31021;
+        final Object[]           logMsgArgs  = {
+            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
+            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
+        };
+        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        this.logger.debug(logMsg);
+
+    }
+
+    /**
+     * タグ削除時のログを出力する
+     *
+     * @param targetBlockModel
+     *                         対象のブロックモデル
+     */
+    private void logRemoveTag(final JdtsBlockModel targetBlockModel) {
+
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31022;
+        final Object[]           logMsgArgs  = {
+            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
+        };
+        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        this.logger.debug(logMsg);
+
+    }
+
+    /**
+     * タグ置換時のログを出力する
+     *
+     * @param targetBlockModel
+     *                         対象のブロックモデル
+     */
+    private void logReplaceTag(final JdtsBlockModel targetBlockModel) {
+
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31024;
+        final Object[]           logMsgArgs  = {
+            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
+            this.jdtsBlockReplLogic.getTagContentToApply(),
+            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
+            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
+            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription(),
+        };
+        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        this.logger.debug(logMsg);
+
+    }
+
+    /**
+     * タグ位置変更時のログを出力する
+     *
+     * @param targetBlockModel
+     *                         対象のブロックモデル
+     */
+    private void logRepositionTag(final JdtsBlockModel targetBlockModel) {
+
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31023;
+        final Object[]           logMsgArgs  = {
+            targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
+            this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
+            this.jdtsBlockReplLogic.getTagContentToApply(),
+            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
+            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
+            this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription(),
+        };
+        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        this.logger.debug(logMsg);
+
+    }
+
+    /**
      * ブロックごとのJavadoc置換処理を行う
      *
      * @param targetBlockModel
@@ -231,6 +320,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *                             KMGツールメッセージ例外
      */
     private void processBlock(final JdtsBlockModel targetBlockModel) throws KmgToolMsgException {
+
         /* ブロックごとの置換の処理の準備 */
 
         // ブロック置換ロジックの初期化
@@ -255,13 +345,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                     this.totalReplaceCount++;
 
-                    final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31021;
-                    final Object[]           logMsgArgs  = {
-                        targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
-                        this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
-                    };
-                    final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-                    this.logger.debug(logMsg);
+                    this.logAddNewTag(targetBlockModel);
 
                 }
 
@@ -277,16 +361,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                 this.totalReplaceCount++;
 
-                final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31022;
-                final Object[]           logMsgArgs  = {
-                    targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
-                };
-                final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-                this.logger.debug(logMsg);
+                this.logRemoveTag(targetBlockModel);
 
                 // タグを削除したため、後続の処理は行わず、次のタグを処理する
                 continue;
@@ -308,20 +383,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                 this.totalReplaceCount++;
 
-                final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31023;
-                final Object[]           logMsgArgs  = {
-                    targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
-                    this.jdtsBlockReplLogic.getTagContentToApply(),
-                    this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
-                    this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
-                    this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription(),
-                };
-                final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-                this.logger.debug(logMsg);
+                this.logRepositionTag(targetBlockModel);
 
                 continue;
 
@@ -332,20 +394,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                 this.totalReplaceCount++;
 
-                final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31024;
-                final Object[]           logMsgArgs  = {
-                    targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
-                    this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
-                    this.jdtsBlockReplLogic.getTagContentToApply(),
-                    this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
-                    this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
-                    this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription(),
-                };
-                final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-                this.logger.debug(logMsg);
+                this.logReplaceTag(targetBlockModel);
 
             }
 
