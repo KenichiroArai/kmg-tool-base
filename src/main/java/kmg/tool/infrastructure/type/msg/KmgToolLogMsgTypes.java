@@ -27,8 +27,6 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
      * @author KenichiroArai
      *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      */
     NONE("指定無し"),
 
@@ -314,6 +312,24 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
      */
     KMGTOOL_LOG31024(
         "タグを置換します。区分：[{0}]、 要素名：[{1}]、 元の対象行:[{2}]、 元のタグ:[{3}]、 元の指定値:[{4}]、 元の説明:[{5}]、 置換後のタグの内容:[{6}]、 置換後のタグ:[{7}]、 置換後の指定値:[{8}]、 置換後の説明:[{9}]"),
+
+    /**
+     * 対象のファイルの処理を開始します。対象のファイルのパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_LOG31025("対象のファイルの処理を開始します。対象のファイルのパス=[{0}]"),
+
+    /**
+     * 対象のファイルの処理を終了します。対象のファイルのパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_LOG31026("対象のファイルの処理を終了します。対象のファイルのパス=[{0}]"),
 
     /**
      * クリア処理中にエラーが発生しました。

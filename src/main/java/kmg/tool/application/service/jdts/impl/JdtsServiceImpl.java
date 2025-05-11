@@ -237,8 +237,7 @@ public class JdtsServiceImpl implements JdtsService {
         do {
 
             /* 現在の対象ファイルの処理の開始ログ */
-            // TODO KenichiroArai 2025/05/11 メッセージ未設定。対象のファイルの処理を開始します。対象のファイルのパス=[{0}]
-            final KmgToolLogMsgTypes fileStartLogMsgTypes = KmgToolLogMsgTypes.NONE;
+            final KmgToolLogMsgTypes fileStartLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31025;
             final Object[]           fileStartLogMsgArgs  = {
                 this.jdtsIoLogic.getCurrentFilePath(),
             };
@@ -284,8 +283,7 @@ public class JdtsServiceImpl implements JdtsService {
             this.jdtsIoLogic.writeContent();
 
             /* 現在の対象ファイルの処理の終了ログ */
-            // TODO KenichiroArai 2025/05/11 メッセージ未設定。対象のファイルの処理を終了します。対象のファイルのパス=[{0}]
-            final KmgToolLogMsgTypes fileEndLogMsgTypes  = KmgToolLogMsgTypes.NONE;
+            final KmgToolLogMsgTypes fileEndLogMsgTypes  = KmgToolLogMsgTypes.KMGTOOL_LOG31026;
             final Object[]           fileStartEndMsgArgs = {
                 this.jdtsIoLogic.getCurrentFilePath(),
             };
