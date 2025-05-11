@@ -112,6 +112,15 @@ public enum KmgToolGenMsgTypes implements KmgToolComGenMsgTypes, KmgToolComExcMs
     KMGTOOL_GEN12006("入力ファイルの読み込みに失敗しました。入力ファイルパス=[{0}]"),
 
     /**
+     * バリデーションエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN12007("バリデーションエラーが発生しました。"),
+
+    /**
      * 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}
      *
      * @author KenichiroArai
@@ -510,6 +519,15 @@ public enum KmgToolGenMsgTypes implements KmgToolComGenMsgTypes, KmgToolComExcMs
      * @version 0.1.0
      */
     KMGTOOL_GEN32013("Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]"),
+
+    /**
+     * Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN33000("Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]"),
 
     /**
      * 失敗

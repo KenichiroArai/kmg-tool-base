@@ -219,8 +219,7 @@ public abstract class AbstractInputTool extends AbstractTool {
         } catch (final KmgToolValException e) {
 
             /* 例外 */
-            // TODO KenichiroArai 2025/05/11 メッセージ未設定。バリデーションエラーが発生しました。
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN12007;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);
