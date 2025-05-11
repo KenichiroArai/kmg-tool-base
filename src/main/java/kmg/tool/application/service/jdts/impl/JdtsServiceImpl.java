@@ -217,9 +217,8 @@ public class JdtsServiceImpl implements JdtsService {
         boolean result = false;
 
         final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31019;
-        final Object[]               startLogMsgArgs  = {};
-        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
-            startLogMsgArgs);
+        final Object[]           startLogMsgArgs  = {};
+        final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
         this.logger.debug(startLogMsg);
 
         /* 準備 */
@@ -236,6 +235,16 @@ public class JdtsServiceImpl implements JdtsService {
         long totalReplaceCount = 0;
 
         do {
+
+            /* 現在の対象ファイルの処理の開始ログ */
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。対象のファイルの処理を開始します。対象のファイルのパス=[{0}]
+            final KmgToolLogMsgTypes fileStartLogMsgTypes = KmgToolLogMsgTypes.NONE;
+            final Object[]           fileStartLogMsgArgs  = {
+                this.jdtsIoLogic.getCurrentFilePath(),
+            };
+            final String             fileStartLogMsg      = this.messageSource.getLogMessage(fileStartLogMsgTypes,
+                fileStartLogMsgArgs);
+            this.logger.debug(fileStartLogMsg);
 
             /* 内容を取得する */
 
@@ -274,14 +283,24 @@ public class JdtsServiceImpl implements JdtsService {
             // 内容をファイルに書き込む
             this.jdtsIoLogic.writeContent();
 
+            /* 現在の対象ファイルの処理の終了ログ */
+            // TODO KenichiroArai 2025/05/11 メッセージ未設定。対象のファイルの処理を終了します。対象のファイルのパス=[{0}]
+            final KmgToolLogMsgTypes fileEndLogMsgTypes  = KmgToolLogMsgTypes.NONE;
+            final Object[]           fileStartEndMsgArgs = {
+                this.jdtsIoLogic.getCurrentFilePath(),
+            };
+            final String             fileEndLogMsg       = this.messageSource.getLogMessage(fileEndLogMsgTypes,
+                fileStartEndMsgArgs);
+            this.logger.debug(fileEndLogMsg);
+
             /* 次のファイルに進む */
         } while (this.jdtsIoLogic.nextFile());
 
         final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31020;
-        final Object[]               endLogMsgArgs  = {
+        final Object[]           endLogMsgArgs  = {
             this.jdtsIoLogic.getFilePathList().size(), totalReplaceCount,
         };
-        final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
+        final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
         this.logger.debug(endLogMsg);
 
         result = true;
@@ -322,7 +341,7 @@ public class JdtsServiceImpl implements JdtsService {
         } catch (final KmgFundMsgException e) {
 
             final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN31006;
-            final Object[]               genMsgArgs  = {
+            final Object[]           genMsgArgs  = {
                 this.definitionPath.toString(),
             };
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
