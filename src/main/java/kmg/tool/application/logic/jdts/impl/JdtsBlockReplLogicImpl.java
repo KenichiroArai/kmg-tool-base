@@ -50,7 +50,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     private static final String JAVADOC_TAG_START = "* @";
 
     /** タグのフォーマット */
-    private static final String TAG_FORMAT = " * %s %s %s";
+    private static final String TAG_FORMAT = "* %s %s %s";
 
     /** 構成モデル */
     private JdtsConfigsModel configsModel;
@@ -117,7 +117,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 } else {
 
                     // 特定されていない場合は末尾に追加
-                    this.replacedJavadocBlock.append(this.tagContentToApply);
+                    this.replacedJavadocBlock
+                        .append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
 
                 }
                 break;
@@ -128,7 +129,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 /* Javadocタグの末尾 */
             case PRESERVE:
                 /* 現在の位置を維持（末尾に追加） */
-                this.replacedJavadocBlock.append(this.tagContentToApply);
+                this.replacedJavadocBlock.append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
                 break;
 
         }
