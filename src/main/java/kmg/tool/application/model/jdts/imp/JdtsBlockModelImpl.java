@@ -1,7 +1,6 @@
 package kmg.tool.application.model.jdts.imp;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -9,7 +8,6 @@ import java.util.regex.Pattern;
 import kmg.core.infrastructure.exception.KmgMsgException;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
@@ -281,43 +279,34 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         boolean result = false;
 
-        // コードを行ごとに取得する。空行は除外する。
-        final String[] codeLines = Arrays.stream(KmgDelimiterTypes.LINE_SEPARATOR.split(this.codeBlock))
-            .filter(KmgString::isNotBlank).toArray(String[]::new);
+        // Java区分を判別
+        this.classification = JavaClassificationTypes.identify(this.codeBlock);
 
-        for (final String codeLine : codeLines) {
+        // Javadoc対象外か
+        if (this.classification.isNotJavadocTarget()) {
+            // 対象外の場合
 
-            // Java区分を判別
-            this.classification = JavaClassificationTypes.identify(codeLine);
-
-            // Javadoc対象外か
-            if (this.classification.isNotJavadocTarget()) {
-                // 対象外の場合
-
-                continue;
-
-            }
-
-            // 要素名を取得
-            try {
-
-                this.elementName = this.classification.getElementName(codeLine);
-
-            } catch (final KmgMsgException e) {
-
-                final KmgToolGenMsgTypes msgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN33000;
-                final Object[]           msgArgs  = {
-                    codeLine, this.classification.getDisplayName(),
-                };
-
-                throw new KmgToolMsgException(msgTypes, msgArgs, e);
-
-            }
-
-            result = true;
-            break;
+            return result;
 
         }
+
+        // 要素名を取得
+        try {
+
+            this.elementName = this.classification.getElementName(this.codeBlock);
+
+        } catch (final KmgMsgException e) {
+
+            final KmgToolGenMsgTypes msgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN33000;
+            final Object[]           msgArgs  = {
+                this.codeBlock, this.classification.getDisplayName(),
+            };
+
+            throw new KmgToolMsgException(msgTypes, msgArgs, e);
+
+        }
+
+        result = true;
 
         return result;
 
