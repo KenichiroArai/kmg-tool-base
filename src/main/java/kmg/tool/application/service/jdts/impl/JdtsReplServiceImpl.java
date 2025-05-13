@@ -396,6 +396,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
                 this.logReplaceTag(targetBlockModel);
 
+                continue;
+
             }
 
             /* 次のタグを処理するか */
