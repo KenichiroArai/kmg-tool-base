@@ -206,8 +206,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         } catch (final IOException e) {
 
             final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
-            final Object[]               genMsgArgs  = {
-                this.targetPath.toString()
+            final Object[]           genMsgArgs  = {
+                this.targetPath.toString(),
             };
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
@@ -248,8 +248,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
             final IOException e) {
 
             final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32012;
-            final Object[]               genMsgArgs  = {
-                this.currentFilePath.toString()
+            final Object[]           genMsgArgs  = {
+                this.currentFilePath.toString(),
             };
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
@@ -327,8 +327,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         } catch (final IOException e) {
 
             final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32011;
-            final Object[]               genMsgArgs  = {
-                this.currentFilePath.toString(), this.writeContent
+            final Object[]           genMsgArgs  = {
+                this.currentFilePath.toString(), this.writeContent,
             };
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
