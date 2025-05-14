@@ -281,6 +281,68 @@ public class JdtsServiceImpl implements JdtsService {
     }
 
     /**
+     * 内容を読み込み、コードモデルを作成・解析する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return 解析済みのコードモデル
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
+     */
+    private JdtsCodeModel loadAndCreateCodeModel() throws KmgToolMsgException, KmgToolValException {
+
+        this.jdtsIoLogic.loadContent();
+        final String        readContent   = this.jdtsIoLogic.getReadContent();
+        final JdtsCodeModel jdtsCodeModel = new JdtsCodeModelImpl(readContent);
+        jdtsCodeModel.parse();
+        return jdtsCodeModel;
+
+    }
+
+    /**
+     * ファイル処理終了ログを出力する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    private void logFileEnd() {
+
+        final KmgToolLogMsgTypes fileEndLogMsgTypes  = KmgToolLogMsgTypes.KMGTOOL_LOG31026;
+        final Object[]           fileStartEndMsgArgs = {
+            this.jdtsIoLogic.getCurrentFilePath()
+        };
+        final String             fileEndLogMsg       = this.messageSource.getLogMessage(fileEndLogMsgTypes,
+            fileStartEndMsgArgs);
+        this.logger.debug(fileEndLogMsg);
+
+    }
+
+    /**
+     * ファイル処理開始ログを出力する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    private void logFileStart() {
+
+        final KmgToolLogMsgTypes fileStartLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31025;
+        final Object[]           fileStartLogMsgArgs  = {
+            this.jdtsIoLogic.getCurrentFilePath()
+        };
+        final String             fileStartLogMsg      = this.messageSource.getLogMessage(fileStartLogMsgTypes,
+            fileStartLogMsgArgs);
+        this.logger.debug(fileStartLogMsg);
+
+    }
+
+    /**
      * ファイルを処理する
      *
      * @author KenichiroArai
@@ -296,62 +358,42 @@ public class JdtsServiceImpl implements JdtsService {
      */
     private long processFile() throws KmgToolMsgException, KmgToolValException {
 
-        long result;
+        this.logFileStart();
+        final JdtsCodeModel jdtsCodeModel = this.loadAndCreateCodeModel();
+        final long          result        = this.replaceJavadoc(jdtsCodeModel);
+        this.logFileEnd();
 
-        /* 現在の対象ファイルの処理の開始ログ */
-        final KmgToolLogMsgTypes fileStartLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31025;
-        final Object[]           fileStartLogMsgArgs  = {
-            this.jdtsIoLogic.getCurrentFilePath(),
-        };
-        final String             fileStartLogMsg      = this.messageSource.getLogMessage(fileStartLogMsgTypes,
-            fileStartLogMsgArgs);
-        this.logger.debug(fileStartLogMsg);
+        return result;
 
-        /* 内容を取得する */
+    }
 
-        // 内容を読み込む
-        this.jdtsIoLogic.loadContent();
+    /**
+     * Javadocを置換し、結果をファイルに書き込む
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param jdtsCodeModel
+     *                      コードモデル
+     *
+     * @return 置換数
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
+     */
+    private long replaceJavadoc(final JdtsCodeModel jdtsCodeModel) throws KmgToolMsgException, KmgToolValException {
 
-        // 内容を取得する
-        final String readContent = this.jdtsIoLogic.getReadContent();
-
-        /* コードモデルを作成する */
-        // 内容から作成する
-        final JdtsCodeModel jdtsCodeModel = new JdtsCodeModelImpl(readContent);
-
-        // コードモデルを解析する
-        jdtsCodeModel.parse();
-
-        /* Javadocを置換する */
-
-        // Javadocタグ設定の入出力サービスを初期化する
         this.jdtsReplService.initialize(this.jdtsConfigsModel, jdtsCodeModel);
-
-        // Javadocを置換する
         this.jdtsReplService.replace();
 
-        // 置換数を取得する
-        result = this.jdtsReplService.getTotalReplaceCount();
-
-        // 置換後の内容を取得する
+        final long   result         = this.jdtsReplService.getTotalReplaceCount();
         final String replaceContent = this.jdtsReplService.getReplaceCode();
 
-        /* 内容を書き込む */
-
-        // 書き込む内容を設定する
         this.jdtsIoLogic.setWriteContent(replaceContent);
-
-        // 内容をファイルに書き込む
         this.jdtsIoLogic.writeContent();
-
-        /* 現在の対象ファイルの処理の終了ログ */
-        final KmgToolLogMsgTypes fileEndLogMsgTypes  = KmgToolLogMsgTypes.KMGTOOL_LOG31026;
-        final Object[]           fileStartEndMsgArgs = {
-            this.jdtsIoLogic.getCurrentFilePath(),
-        };
-        final String             fileEndLogMsg       = this.messageSource.getLogMessage(fileEndLogMsgTypes,
-            fileStartEndMsgArgs);
-        this.logger.debug(fileEndLogMsg);
 
         return result;
 
