@@ -43,7 +43,7 @@ public class JavadocTagSetterTool extends AbstractInputTool {
     private InputService inputService;
 
     /**
-     * Javadoc追加サービス
+     * Javadocタグ設定サービス
      */
     @Autowired
     private JdtsService jdtsService;
