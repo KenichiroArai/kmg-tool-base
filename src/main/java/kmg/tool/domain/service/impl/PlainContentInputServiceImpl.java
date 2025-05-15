@@ -4,12 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.InputService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
@@ -29,45 +25,11 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 @Service
 public class PlainContentInputServiceImpl implements InputService {
 
-    /** メッセージソース */
-    @Autowired
-    private KmgMessageSource messageSource;
-
-    /**
-     * ロガー
-     *
-     * @since 0.1.0
-     */
-    private final Logger logger;
-
     /** 入力ファイルパス */
     private Path inputPath;
 
     /** 入力内容 */
     private String content;
-
-    /**
-     * デフォルトコンストラクタ
-     */
-    public PlainContentInputServiceImpl() {
-
-        this(LoggerFactory.getLogger(PlainContentInputServiceImpl.class));
-
-    }
-
-    /**
-     * カスタムロガーを使用して初期化するコンストラクタ<br>
-     *
-     * @since 0.1.0
-     *
-     * @param logger
-     *               ロガー
-     */
-    protected PlainContentInputServiceImpl(final Logger logger) {
-
-        this.logger = logger;
-
-    }
 
     /**
      * 入力内容を返す<br>
@@ -119,7 +81,7 @@ public class PlainContentInputServiceImpl implements InputService {
         if (inputPath == null) {
 
             final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN12004;
-            final Object[]               messageArgs = {};
+            final Object[]           messageArgs = {};
 
             throw new KmgToolMsgException(genType, messageArgs);
 
@@ -128,7 +90,7 @@ public class PlainContentInputServiceImpl implements InputService {
         if (!Files.exists(inputPath)) {
 
             final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN12005;
-            final Object[]               messageArgs = {
+            final Object[]           messageArgs = {
                 inputPath.toString()
             };
 
@@ -165,11 +127,11 @@ public class PlainContentInputServiceImpl implements InputService {
         } catch (final IOException e) {
 
             final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN12006;
-            final Object[]               messageArgs = {
+            final Object[]           messageArgs = {
                 this.inputPath.toString()
             };
 
-            throw new KmgToolMsgException(genType, messageArgs);
+            throw new KmgToolMsgException(genType, messageArgs, e);
 
         }
 

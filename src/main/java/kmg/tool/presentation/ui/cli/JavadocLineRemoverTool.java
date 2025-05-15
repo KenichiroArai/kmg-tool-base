@@ -1,5 +1,7 @@
 package kmg.tool.presentation.ui.cli;
 
+import java.nio.file.Path;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +12,7 @@ import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.service.JavadocLineRemoverService;
 import kmg.tool.domain.service.InputService;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
@@ -68,7 +71,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
     @Override
     public boolean execute() {
 
-        final boolean result = true;
+        boolean result = true;
 
         final KmgPfaMeasService measService = new KmgPfaMeasServiceImpl(JavadocLineRemoverTool.TOOL_NAME);
 
@@ -77,7 +80,12 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
 
         try {
 
-            /* 処理 */
+            final Path inputPath = this.inputService.getInputPath();
+
+            final Path definitionPath = null;
+
+            /* 初期化 */
+            result &= this.javadocLineRemoverService.initialize(inputPath, definitionPath);
 
             // TODO KenichiroArai 2025/05/14 未実装。
             // // 入力ファイルから対象パスを設定
@@ -98,8 +106,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
 
             /* Javadoc行削除処理 */
             // TODO KenichiroArai 2025/05/14 未実装。
-            // result &= this.jdtsService.initialize(this.targetPath, this.definitionPath);
-            // result &= this.jdtsService.process();
+            result &= this.javadocLineRemoverService.process();
 
             /* 成功 */
             // TODO KenichiroArai 2025/05/14 メッセージ。
@@ -108,17 +115,16 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
 
-            // TODO KenichiroArai 2025/05/14 未実装。
-            // } catch (final KmgToolMsgException e) {
-            //
-            // /* 例外 */
-            // // TODO KenichiroArai 2025/05/14 メッセージ。
-            // final KmgToolGenMsgTypes msgType = KmgToolGenMsgTypes.NONE;
-            // final Object[] messageArgs = {};
-            // final String msg = this.messageSource.getGenMessage(msgType, messageArgs);
-            // measService.error(msg, e);
-            //
-            // result = false;
+        } catch (final KmgToolMsgException e) {
+
+            /* 例外 */
+            // TODO KenichiroArai 2025/05/14 メッセージ。
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
+            final Object[]           messageArgs = {};
+            final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+            measService.error(msg, e);
+
+            result = false;
 
         } finally {
 

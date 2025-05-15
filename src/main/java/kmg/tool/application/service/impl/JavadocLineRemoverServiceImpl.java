@@ -30,9 +30,6 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 @Service
 public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService {
 
-    /** ホームランナーワークパスパターン */
-    private static final String HOME_RUNNER_WORK_PATH_PATTERN = "";
-
     /** 入力ファイルのパス */
     private Path inputPath;
 
