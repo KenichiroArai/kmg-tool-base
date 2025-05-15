@@ -246,11 +246,10 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
         boolean result = true;
 
-        result &= this.getInputService().initialize(AbstractInputTool.getInputPath());
+        result &= this.loadPlainContent(AbstractInputTool.getInputPath());
 
-        result &= this.getInputService().process();
+        final String content = this.getContent();
 
-        final String content = this.getInputService().getContent();
         this.targetPath = Paths.get(content);
 
         return result;
