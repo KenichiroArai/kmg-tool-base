@@ -11,7 +11,7 @@ import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.service.JavadocLineRemoverService;
-import kmg.tool.domain.service.InputService;
+import kmg.tool.domain.service.SimpleInputService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
@@ -35,9 +35,9 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** 入力サービス */
+    /** シンプル入力サービス */
     @Autowired
-    private InputService inputService;
+    private SimpleInputService inputService;
 
     /** Javadoc行削除サービス */
     @Autowired
@@ -143,9 +143,9 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
      * @return 入力サービス
      */
     @Override
-    protected InputService getInputService() {
+    protected SimpleInputService getInputService() {
 
-        final InputService result = this.inputService;
+        final SimpleInputService result = this.inputService;
         return result;
 
     }

@@ -10,16 +10,6 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
 public interface InputService {
 
     /**
-     * 入力内容を返す
-     *
-     * @return 入力内容
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    String getContent() throws KmgToolMsgException;
-
-    /**
      * 入力ファイルパスを返す<br>
      *
      * @author KenichiroArai

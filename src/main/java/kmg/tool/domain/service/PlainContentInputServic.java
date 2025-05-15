@@ -1,5 +1,7 @@
 package kmg.tool.domain.service;
 
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
+
 /**
  * プレーンコンテンツ入力サービスインタフェース<br>
  * <p>
@@ -14,6 +16,14 @@ package kmg.tool.domain.service;
  */
 public interface PlainContentInputServic extends InputService {
 
-    // 処理なし
+    /**
+     * 入力内容を返す
+     *
+     * @return 入力内容
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    String getContent() throws KmgToolMsgException;
 
 }
