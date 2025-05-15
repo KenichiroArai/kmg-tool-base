@@ -15,7 +15,7 @@ import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.service.jdts.JdtsService;
-import kmg.tool.domain.service.InputService;
+import kmg.tool.domain.service.PlainContentInputServic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.exception.KmgToolValException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
@@ -26,7 +26,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class JavadocTagSetterTool extends AbstractInputTool {
+public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
     /** 基準パス */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
@@ -46,9 +46,9 @@ public class JavadocTagSetterTool extends AbstractInputTool {
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** 入力サービス */
+    /** プレーンコンテンツ入力サービス */
     @Autowired
-    private InputService inputService;
+    private PlainContentInputServic inputService;
 
     /**
      * Javadocタグ設定サービス
@@ -205,14 +205,14 @@ public class JavadocTagSetterTool extends AbstractInputTool {
     }
 
     /**
-     * 入力サービスを返す。
+     * プレーンコンテンツ入力サービスを返す。
      *
-     * @return 入力サービス
+     * @return プレーンコンテンツ入力サービス
      */
     @Override
-    protected InputService getInputService() {
+    protected PlainContentInputServic getInputService() {
 
-        final InputService result = this.inputService;
+        final PlainContentInputServic result = this.inputService;
         return result;
 
     }

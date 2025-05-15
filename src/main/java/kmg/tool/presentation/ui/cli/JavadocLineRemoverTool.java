@@ -129,7 +129,6 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
         } finally {
 
             /* 終了 */
-
             measService.end();
 
         }
