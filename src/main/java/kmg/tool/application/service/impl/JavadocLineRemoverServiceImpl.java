@@ -120,8 +120,6 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
         final int lineCount = this.javadocLineRemoverLogic.deleteJavadocLines(inputMap);
 
         /* 情報の出力 */
-        System.out.println(String.format("lineCount: %d", lineCount));
-
         // TODO KenichiroArai 2025/05/17 メッセージ。削除した行数=[{0}]
         final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.NONE;
         final Object[]           logMsgArgs  = {
