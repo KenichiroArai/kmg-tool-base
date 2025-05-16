@@ -30,6 +30,18 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 @Service
 public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService {
 
+    /** アットマーク */
+    private static final String AT_MARK = "@";
+
+    /** ドライブ文字列 */
+    private static final String DRIVE_LETTER = "D:";
+
+    /** ドライブ文字列（エスケープ） */
+    private static final String DRIVE_LETTER_ESCAPED = "D\\";
+
+    /** Javaファイル拡張子 */
+    private static final String JAVA_FILE_EXTENSION = ".java:";
+
     /** 入力ファイルのパス */
     private Path inputPath;
 
@@ -47,15 +59,14 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
 
         String wkLine = line;
 
-        // TODO KenichiroArai 2025/05/14 ハードコード。
-        if (!wkLine.contains("@")) {
+        if (!wkLine.contains(JavadocLineRemoverServiceImpl.AT_MARK)) {
 
             return result;
 
         }
 
-        // TODO KenichiroArai 2025/05/14 ハードコード。
-        wkLine = wkLine.replace("D:", "D\\");
+        wkLine = wkLine.replace(JavadocLineRemoverServiceImpl.DRIVE_LETTER,
+            JavadocLineRemoverServiceImpl.DRIVE_LETTER_ESCAPED);
 
         // ファイルパスと行番号を抽出
         final String[] parts = KmgDelimiterTypes.COLON.split(wkLine);
@@ -69,8 +80,8 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
         // 実際のファイルパスに変換
         String filePath = parts[0].trim();
 
-        // TODO KenichiroArai 2025/05/14 ハードコード。
-        filePath = filePath.replace("D\\", "D:");
+        filePath = filePath.replace(JavadocLineRemoverServiceImpl.DRIVE_LETTER_ESCAPED,
+            JavadocLineRemoverServiceImpl.DRIVE_LETTER);
 
         final Path path = Paths.get(filePath);
 
@@ -246,8 +257,8 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
         try (final Stream<String> stream = Files.lines(this.inputPath)) {
 
             // Javaファイルの行を抽出するストリームを作成する
-            // TODO KenichiroArai 2025/05/14 ハードコード。
-            final Stream<String> filteredLines = stream.filter(line -> line.contains(".java:"));
+            final Stream<String> filteredLines
+                = stream.filter(line -> line.contains(JavadocLineRemoverServiceImpl.JAVA_FILE_EXTENSION));
 
             // ストリームから行をパスと行番号のエントリに変換する
             final Stream<SimpleEntry<Path, Integer>> entries = filteredLines
