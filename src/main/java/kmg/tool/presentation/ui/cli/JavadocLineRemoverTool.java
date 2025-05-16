@@ -80,16 +80,12 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
 
         try {
 
+            /* ファイルのパスの取得 */
+            // 入力ファイルのパス
             final Path inputPath = this.inputService.getInputPath();
 
-            final Path definitionPath = null;
-
-            /* 初期化 */
-            result &= this.javadocLineRemoverService.initialize(inputPath, definitionPath);
-
-            // TODO KenichiroArai 2025/05/14 未実装。
-            // // 入力ファイルから対象パスを設定
-            // result &= this.setTargetPathFromInputFile();
+            /* Javadoc行削除の初期化 */
+            result &= this.javadocLineRemoverService.initialize(inputPath);
 
             if (!result) {
 
@@ -104,8 +100,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
 
             }
 
-            /* Javadoc行削除処理 */
-            // TODO KenichiroArai 2025/05/14 未実装。
+            /* Javadoc行削除を処理する */
             result &= this.javadocLineRemoverService.process();
 
             /* 成功 */

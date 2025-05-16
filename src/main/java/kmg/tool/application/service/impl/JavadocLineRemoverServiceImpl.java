@@ -33,9 +33,6 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
     /** 入力ファイルのパス */
     private Path inputPath;
 
-    /** 対象ファイルのパス */
-    private Path targetPath;
-
     /**
      * 行文字列をパスと行番号のエントリに変換する
      *
@@ -190,23 +187,19 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
      * @return true：成功、false：失敗
      *
      * @param inputPath
-     *                   入力ファイルのパス
-     * @param targetPath
-     *                   対象ファイルパス
+     *                  入力ファイルのパス
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath, final Path targetPath) throws KmgToolMsgException {
+    public boolean initialize(final Path inputPath) throws KmgToolMsgException {
 
         final boolean result = false;
 
         this.inputPath = inputPath;
-        this.targetPath = targetPath;
 
-        // TODO 自動生成されたメソッド・スタブ
         return result;
 
     }
@@ -229,11 +222,9 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
         System.out.println(inputMap.toString());
 
         /* Javadoc行を削除する */
-
         final int lineCount = JavadocLineRemoverServiceImpl.deleteJavadocLines(inputMap);
 
         /* 情報の出力 */
-
         System.out.println(String.format("lineCount: %d", lineCount));
 
         return result;

@@ -17,14 +17,12 @@ public interface JavadocLineRemoverService {
      * @return true：成功、false：失敗
      *
      * @param inputPath
-     *                   入力ファイルのパス
-     * @param targetPath
-     *                   対象ファイルパス
+     *                  入力ファイルのパス
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean initialize(final Path inputPath, final Path targetPath) throws KmgToolMsgException;
+    boolean initialize(final Path inputPath) throws KmgToolMsgException;
 
     /**
      * 処理する
