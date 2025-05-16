@@ -2,12 +2,16 @@ package kmg.tool.application.service.impl;
 
 import java.nio.file.Path;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.JavadocLineRemoverLogic;
 import kmg.tool.application.service.JavadocLineRemoverService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * Javadoc行削除サービス<br>
@@ -17,12 +21,60 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
 @Service
 public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService {
 
-    /** 入力ファイルのパス */
-    private Path inputPath;
+    /**
+     * ロガー
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private KmgMessageSource messageSource;
 
     /** Javadoc行削除ロジック */
     @Autowired
     private JavadocLineRemoverLogic javadocLineRemoverLogic;
+
+    /** 入力ファイルのパス */
+    private Path inputPath;
+
+    /**
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    public JavadocLineRemoverServiceImpl() {
+
+        this(LoggerFactory.getLogger(JavadocLineRemoverServiceImpl.class));
+
+    }
+
+    /**
+     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected JavadocLineRemoverServiceImpl(final Logger logger) {
+
+        this.logger = logger;
+
+    }
 
     /**
      * 初期化する
@@ -69,6 +121,14 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
 
         /* 情報の出力 */
         System.out.println(String.format("lineCount: %d", lineCount));
+
+        // TODO KenichiroArai 2025/05/17 メッセージ。削除した行数=[{0}]
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.NONE;
+        final Object[]           logMsgArgs  = {
+            lineCount,
+        };
+        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        this.logger.debug(logMsg);
 
         return result;
 
