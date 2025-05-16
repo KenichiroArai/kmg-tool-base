@@ -135,9 +135,11 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/05/14 メッセージ。
+                // TODO KenichiroArai 2025/05/14 メッセージ。ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]
                 final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
-                final Object[]           genMsgArgs  = {};
+                final Object[]           genMsgArgs  = {
+                    javaFile.toString(),
+                };
                 throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
             }
@@ -176,9 +178,11 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/05/14 メッセージ。
+                // TODO KenichiroArai 2025/05/14 メッセージ。ファイルの書き込み中にエラーが発生しました。ファイル=[{0}]
                 final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
-                final Object[]           genMsgArgs  = {};
+                final Object[]           genMsgArgs  = {
+                    javaFile.toString(),
+                };
                 throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
             }
@@ -234,9 +238,11 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/05/14 メッセージ。
+            // TODO KenichiroArai 2025/05/14 メッセージ。入力ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]
             final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
-            final Object[]           genMsgArgs  = {};
+            final Object[]           genMsgArgs  = {
+                inputPath.toString(),
+            };
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
