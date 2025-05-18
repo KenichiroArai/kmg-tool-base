@@ -20,6 +20,9 @@
     <properties>
         <java.version>21</java.version>
         <javafx.version>21.0.2</javafx.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -62,6 +65,16 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
             <version>${javafx.version}</version>
         </dependency>
 
@@ -126,6 +139,19 @@
                 <version>0.0.8</version>
                 <configuration>
                     <mainClass>kmg.tool.presentation.ui.gui.InsertionSqlCreationScreenTool</mainClass>
+                    <options>
+                        <option>--add-opens</option>
+                        <option>java.base/java.lang=ALL-UNNAMED</option>
+                    </options>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -138,7 +164,7 @@
                         <argument>--module-path</argument>
                         <argument>${project.build.directory}/dependency</argument>
                         <argument>--add-modules</argument>
-                        <argument>javafx.controls,javafx.fxml</argument>
+                        <argument>javafx.controls,javafx.fxml,javafx.graphics,javafx.base</argument>
                     </arguments>
                 </configuration>
             </plugin>
