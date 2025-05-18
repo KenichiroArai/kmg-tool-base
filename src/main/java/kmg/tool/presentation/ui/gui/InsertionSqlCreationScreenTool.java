@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * 挿入SQL作成画面ＧＵＩ<br>
+ * 挿入SQL作成ツール<br>
  *
  * @author KenichiroArai
  *
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  *
  * @version 1.0.0
  */
-public class InsertionSqlCreationScreenGui extends Application {
+public class InsertionSqlCreationScreenTool extends Application {
 
     /**
      * エントリポイント<br>
@@ -58,7 +58,7 @@ public class InsertionSqlCreationScreenGui extends Application {
         try {
 
             final URL        url   = this.getClass()
-                .getResource("/kmg/tool/application/ui/gui/InsertionSqlCreationScreenGui.fxml");
+                .getResource("/kmg/tool/application/ui/gui/KmgTlInsertionSqlCreationScreenGui.fxml");
             final FXMLLoader fxml  = new FXMLLoader(url);
             final AnchorPane root  = fxml.load();
             final Scene      scene = new Scene(root);
