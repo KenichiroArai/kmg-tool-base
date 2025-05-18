@@ -332,6 +332,15 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
     KMGTOOL_LOG31026("対象のファイルの処理を終了します。対象のファイルのパス=[{0}]"),
 
     /**
+     * 削除した行数=[{0}] Javadoc行の削除が完了しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_LOG31027("削除した行数=[{0}] Javadoc行の削除が完了しました。"),
+
+    /**
      * クリア処理中にエラーが発生しました。
      *
      * @author KenichiroArai

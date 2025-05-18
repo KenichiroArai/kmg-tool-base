@@ -135,8 +135,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/05/14 メッセージ。KMGTOOL_GEN32015=ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32015;
                 final Object[]           genMsgArgs  = {
                     javaFile.toString(),
                 };
@@ -178,8 +177,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/05/14 メッセージ。KMGTOOL_GEN32014=ファイルの書き込み中にエラーが発生しました。ファイル=[{0}]
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32014;
                 final Object[]           genMsgArgs  = {
                     javaFile.toString(),
                 };
@@ -238,8 +236,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/05/14 メッセージ。KMGTOOL_GEN32016=入力ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32016;
             final Object[]           genMsgArgs  = {
                 inputPath.toString(),
             };

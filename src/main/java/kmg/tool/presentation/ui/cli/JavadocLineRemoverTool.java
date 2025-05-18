@@ -90,8 +90,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
             if (!result) {
 
                 /* メッセージの出力 */
-                // TODO KenichiroArai 2025/05/14 メッセージ。KMGTOOL_GEN41006=Javadoc行削除の初期化に失敗しました。
-                final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
+                final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41006;
                 final Object[]           messageArgs = {};
                 final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
                 measService.warn(msg);
@@ -104,8 +103,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
             result &= this.javadocLineRemoverService.process();
 
             /* 成功 */
-            // TODO KenichiroArai 2025/05/14 メッセージ。KMGTOOL_GEN41007=Javadoc行削除が正常に完了しました。
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41007;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
@@ -113,8 +111,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
         } catch (final KmgToolMsgException e) {
 
             /* 例外 */
-            // TODO KenichiroArai 2025/05/14 メッセージ。KMGTOOL_GEN41008=Javadoc行削除中にエラーが発生しました。
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41008;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);
