@@ -1,4 +1,4 @@
-package kmg.tool.domain.service.impl;
+package kmg.tool.domain.service.isc.impl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -11,9 +11,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.domain.logic.KmgTlInsertionSqlDataSheetCreationLogic;
-import kmg.tool.domain.logic.impl.KmgTlInsertionSqlDataSheetCreationLogicImpl;
-import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
+import kmg.tool.domain.logic.isc.KmgTlInsertionSqlDataSheetCreationLogic;
+import kmg.tool.domain.logic.isc.impl.KmgTlInsertionSqlDataSheetCreationLogicImpl;
+import kmg.tool.domain.service.isc.InsertionSqlDataSheetCreationService;
 
 /**
  * 挿入SQLデータシート作成サービス<br>

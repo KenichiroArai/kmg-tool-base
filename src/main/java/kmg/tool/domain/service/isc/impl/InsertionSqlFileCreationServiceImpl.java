@@ -1,4 +1,4 @@
-package kmg.tool.domain.service.impl;
+package kmg.tool.domain.service.isc.impl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,10 +14,10 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.domain.logic.KmgTlInsertionSqlBasicInformationLogic;
-import kmg.tool.domain.logic.impl.KmgTlInsertionSqlBasicInformationLogicImpl;
-import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
-import kmg.tool.domain.service.InsertionSqlFileCreationService;
+import kmg.tool.domain.logic.isc.KmgTlInsertionSqlBasicInformationLogic;
+import kmg.tool.domain.logic.isc.impl.KmgTlInsertionSqlBasicInformationLogicImpl;
+import kmg.tool.domain.service.isc.InsertionSqlDataSheetCreationService;
+import kmg.tool.domain.service.isc.InsertionSqlFileCreationService;
 
 /**
  * 挿入SQLファイル作成サービス<br>

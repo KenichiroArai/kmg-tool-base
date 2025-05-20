@@ -1,9 +1,9 @@
-package kmg.tool.domain.service;
+package kmg.tool.domain.service.isc;
 
 import java.nio.file.Path;
 
 /**
- * 挿入SQLファイル作成サービスインタフェース<br>
+ * 挿入SQL作成サービスインタフェース<br>
  *
  * @author KenichiroArai
  *
@@ -11,7 +11,7 @@ import java.nio.file.Path;
  *
  * @version 1.0.0
  */
-public interface InsertionSqlFileCreationService {
+public interface InsertionSqlCreationService {
 
     /**
      * 初期化する<br>

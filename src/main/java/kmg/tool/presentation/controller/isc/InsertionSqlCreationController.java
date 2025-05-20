@@ -17,8 +17,8 @@ import javafx.stage.FileChooser;
 import kmg.core.infrastructure.model.KmgPfaMeasModel;
 import kmg.core.infrastructure.model.impl.KmgPfaMeasModelImpl;
 import kmg.core.infrastructure.type.KmgString;
-import kmg.tool.domain.service.InsertionSqlCreationService;
-import kmg.tool.domain.service.impl.InsertionSqlCreationServiceImpl;
+import kmg.tool.domain.service.isc.InsertionSqlCreationService;
+import kmg.tool.domain.service.isc.impl.InsertionSqlCreationServiceImpl;
 
 /**
  * 挿入SQL作成画面画面コントローラ<br>

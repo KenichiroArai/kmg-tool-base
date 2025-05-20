@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic;
+package kmg.tool.domain.logic.isc;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

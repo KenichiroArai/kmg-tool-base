@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic.impl;
+package kmg.tool.domain.logic.isc.impl;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -23,7 +23,7 @@ import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateTimeUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateUtils;
 import kmg.core.infrastructure.utils.KmgPoiUtils;
-import kmg.tool.domain.logic.KmgTlInsertionSqlDataSheetCreationLogic;
+import kmg.tool.domain.logic.isc.KmgTlInsertionSqlDataSheetCreationLogic;
 
 /**
  * ＫＭＧツール挿入SQLデータシート作成ロジック<br>

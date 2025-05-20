@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic.impl;
+package kmg.tool.domain.logic.isc.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.core.infrastructure.utils.KmgPoiUtils;
-import kmg.tool.domain.logic.KmgTlInsertionSqlBasicInformationLogic;
+import kmg.tool.domain.logic.isc.KmgTlInsertionSqlBasicInformationLogic;
 
 /**
  * ＫＭＧツール挿入SQL基本情報ロジック<br>
