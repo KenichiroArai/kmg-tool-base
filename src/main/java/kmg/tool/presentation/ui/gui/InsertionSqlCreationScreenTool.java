@@ -59,22 +59,26 @@ public class InsertionSqlCreationScreenTool extends Application {
     @Override
     public void start(final Stage stage) {
 
-        stage.setTitle(STAGE_TITLE);
+        stage.setTitle(InsertionSqlCreationScreenTool.STAGE_TITLE);
+
+        final URL        url  = this.getClass().getResource(InsertionSqlCreationScreenTool.FXML_PATH);
+        final FXMLLoader fxml = new FXMLLoader(url);
+        AnchorPane       root;
 
         try {
 
-            final URL        url   = this.getClass().getResource(FXML_PATH);
-            final FXMLLoader fxml  = new FXMLLoader(url);
-            final AnchorPane root  = fxml.load();
-            final Scene      scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            root = fxml.load();
 
         } catch (final IOException e) {
 
+            // TODO KenichiroArai 2025/05/21 例外処理
             e.printStackTrace();
+            return;
 
         }
+        final Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 }
