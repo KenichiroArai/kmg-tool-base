@@ -26,7 +26,7 @@ import kmg.tool.domain.service.InsertionSqlDataSheetCreationService;
  */
 public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDataSheetCreationService {
 
-    /** ＫＭＧＤＢの種類 */
+    /** KMG DBの種類 */
     private KmgDbTypes kmgDbTypes;
 
     /** 入力シート */
@@ -48,7 +48,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
      * @version 1.0.0
      *
      * @param kmgDbTypes
-     *                   ＫＭＧＤＢの種類
+     *                   KMG DBの種類
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap

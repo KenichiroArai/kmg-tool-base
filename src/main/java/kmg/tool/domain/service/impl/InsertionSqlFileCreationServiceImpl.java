@@ -85,7 +85,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
                 = new KmgTlInsertionSqlBasicInformationLogicImpl();
             insertionSqlFileCreationLogic.initialize(inputWb);
 
-            /* ＫＭＧＤＢの種類を取得 */
+            /* KMG DBの種類を取得 */
             final KmgDbTypes kmgDbTypes = insertionSqlFileCreationLogic.getKmgDbTypes();
 
             /* SQLＩＤマップ */
