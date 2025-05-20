@@ -20,6 +20,12 @@ import javafx.stage.Stage;
  */
 public class InsertionSqlCreationScreenTool extends Application {
 
+    /** ステージタイトル */
+    private static final String STAGE_TITLE = "挿入SQL作成画面";
+
+    /** FXMLファイルパス */
+    private static final String FXML_PATH = "/kmg/tool/application/ui/gui/KmgTlInsertionSqlCreationScreenGui.fxml";
+
     /**
      * エントリポイント<br>
      *
@@ -53,12 +59,11 @@ public class InsertionSqlCreationScreenTool extends Application {
     @Override
     public void start(final Stage stage) {
 
-        stage.setTitle("挿入SQL作成画面");
+        stage.setTitle(STAGE_TITLE);
 
         try {
 
-            final URL        url   = this.getClass()
-                .getResource("/kmg/tool/application/ui/gui/KmgTlInsertionSqlCreationScreenGui.fxml");
+            final URL        url   = this.getClass().getResource(FXML_PATH);
             final FXMLLoader fxml  = new FXMLLoader(url);
             final AnchorPane root  = fxml.load();
             final Scene      scene = new Scene(root);
