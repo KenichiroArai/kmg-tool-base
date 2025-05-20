@@ -144,12 +144,11 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
         if (this.threadNum > 0) {
 
             result = Executors.newFixedThreadPool(this.threadNum);
-
-        } else {
-
-            result = Executors.newCachedThreadPool();
+            return result;
 
         }
+
+        result = Executors.newCachedThreadPool();
 
         return result;
 
