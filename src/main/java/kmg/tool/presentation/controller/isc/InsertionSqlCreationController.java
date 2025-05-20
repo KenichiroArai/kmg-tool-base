@@ -1,4 +1,4 @@
-package kmg.tool.presentation.controller;
+package kmg.tool.presentation.controller.isc;
 
 import java.io.File;
 import java.net.URL;
