@@ -71,7 +71,7 @@ public class InsertionSqlCreationTool extends Application {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/05/21 例外処理
+            // TODO KenichiroArai 2025/05/21 【挿入SQL作成】例外処理
             e.printStackTrace();
             return;
 

@@ -42,6 +42,24 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
     /** 挿入SQLテンプレート */
     private static final String INSERT_SQL_TEMPLATE = "INSERT INTO %s (%s) VALUES (%s);";
 
+    /** 無限小 */
+    private static final String NEGATIVE_INFINITY = "-infinity";
+
+    /** 無限大 */
+    private static final String POSITIVE_INFINITY = "infinity";
+
+    /** シングルクォート付き文字列フォーマット */
+    private static final String SINGLE_QUOTED_STRING_FORMAT = "'%s'";
+
+    /** レコード削除コメントフォーマット */
+    private static final String DELETE_COMMENT_FORMAT = "-- %sのレコード削除";
+
+    /** レコード挿入コメントフォーマット */
+    private static final String INSERT_COMMENT_FORMAT = "-- %sのレコード挿入";
+
+    /** 出力ファイル名フォーマット */
+    private static final String OUTPUT_FILENAME_FORMAT = "%s_insert_%s.sql";
+
     /** KMG DBの種類 */
     private KmgDbTypes kmgDbTypes;
 
@@ -237,7 +255,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             return result;
 
         }
-        result = String.format("-- %sのレコード削除", this.getTableLogicName());
+        result = String.format(InsertionSqlDataSheetCreationLogicImpl.DELETE_COMMENT_FORMAT, this.getTableLogicName());
         this.deleteComment = result;
         return result;
 
@@ -293,7 +311,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             return result;
 
         }
-        result = String.format("-- %sのレコード挿入", this.getTableLogicName());
+        result = String.format(InsertionSqlDataSheetCreationLogicImpl.INSERT_COMMENT_FORMAT, this.getTableLogicName());
         this.insertComment = result;
         return result;
 
@@ -432,7 +450,8 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
 
         }
         result = Paths.get(this.outputPath.toAbsolutePath().toString(),
-            String.format("%s_insert_%s.sql", this.getSqlId(), this.getTablePhysicsName()));
+            String.format(InsertionSqlDataSheetCreationLogicImpl.OUTPUT_FILENAME_FORMAT, this.getSqlId(),
+                this.getTablePhysicsName()));
         this.outputFilePath = result;
         return result;
 
@@ -581,7 +600,8 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             case NONE:
                 // 指定無し
                 outputData = KmgPoiUtils.getStringValue(dataCell);
-                outputData = String.format("'%s'", outputData);
+                outputData
+                    = String.format(InsertionSqlDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             case INTEGER:
@@ -607,12 +627,11 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             case DATE:
                 // 日付型
                 final String dateStrTmp = KmgPoiUtils.getStringValue(dataCell);
-                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：列挙型
-                if (KmgString.equals("-infinity", dateStrTmp)) {
+                if (KmgString.equals(InsertionSqlDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateStrTmp)) {
 
                     outputData = dateStrTmp;
 
-                } else if (KmgString.equals("infinity", dateStrTmp)) {
+                } else if (KmgString.equals(InsertionSqlDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateStrTmp)) {
 
                     outputData = dateStrTmp;
 
@@ -622,18 +641,18 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
                     outputData = KmgLocalDateUtils.formatYyyyMmDd(date);
 
                 }
-                outputData = String.format("'%s'", outputData);
+                outputData
+                    = String.format(InsertionSqlDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             case TIME:
                 // 日時型
                 final String dateTimeStrTmp = KmgPoiUtils.getStringValue(dataCell);
-                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ハードコード
-                if (KmgString.equals("-infinity", dateTimeStrTmp)) {
+                if (KmgString.equals(InsertionSqlDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateTimeStrTmp)) {
 
                     outputData = dateTimeStrTmp;
 
-                } else if (KmgString.equals("infinity", dateTimeStrTmp)) {
+                } else if (KmgString.equals(InsertionSqlDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateTimeStrTmp)) {
 
                     outputData = dateTimeStrTmp;
 
@@ -643,13 +662,15 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
                     outputData = KmgLocalDateTimeUtils.formatYyyyMmDdHhMmSsSss(date);
 
                 }
-                outputData = String.format("'%s'", outputData);
+                outputData
+                    = String.format(InsertionSqlDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             case STRING:
                 // 文字列型
                 outputData = KmgPoiUtils.getStringValue(dataCell);
-                outputData = String.format("'%s'", outputData);
+                outputData
+                    = String.format(InsertionSqlDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             default:
