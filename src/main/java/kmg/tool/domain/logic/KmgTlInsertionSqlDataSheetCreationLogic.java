@@ -132,7 +132,7 @@ public interface KmgTlInsertionSqlDataSheetCreationLogic {
     String getInsertSql(final Row datasRow);
 
     /**
-     * ＫＭＧＤＢデータ型リストを返す<br>
+     * KMG DBデータ型リストを返す<br>
      *
      * @author KenichiroArai
      *
@@ -206,7 +206,7 @@ public interface KmgTlInsertionSqlDataSheetCreationLogic {
      * @version 1.0.0
      *
      * @param kmgDbTypes
-     *                   ＫＭＧＤＢの種類
+     *                   KMG DBの種類
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap

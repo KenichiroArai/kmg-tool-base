@@ -24,7 +24,7 @@ public interface KmgTlInsertionSqlBasicInformationLogic {
     String LIST_NAME = "一覧";
 
     /**
-     * ＫＭＧＤＢの種類を返す<br>
+     * KMG DBの種類を返す<br>
      *
      * @author KenichiroArai
      *
@@ -32,7 +32,7 @@ public interface KmgTlInsertionSqlBasicInformationLogic {
      *
      * @version 1.0.0
      *
-     * @return ＫＭＧＤＢの種類
+     * @return KMG DBの種類
      */
     KmgDbTypes getKmgDbTypes();
 

@@ -28,7 +28,7 @@ public interface InsertionSqlDataSheetCreationService extends Runnable {
      * @version 1.0.0
      *
      * @param KmgDbTypes
-     *                   ＫＭＧＤＢの種類
+     *                   KMG DBの種類
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap

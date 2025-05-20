@@ -26,7 +26,7 @@ public class KmgTlInsertionSqlBasicInformationLogicImpl implements KmgTlInsertio
     private Workbook inputWk;
 
     /**
-     * ＫＭＧＤＢの種類を返す<br>
+     * KMG DBの種類を返す<br>
      *
      * @author KenichiroArai
      *
@@ -34,7 +34,7 @@ public class KmgTlInsertionSqlBasicInformationLogicImpl implements KmgTlInsertio
      *
      * @version 1.0.0
      *
-     * @return ＫＭＧＤＢの種類
+     * @return KMG DBの種類
      */
     @Override
     public KmgDbTypes getKmgDbTypes() {

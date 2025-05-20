@@ -42,7 +42,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     /** 挿入SQLテンプレート */
     private static final String INSERT_SQL_TEMPLATE = "INSERT INTO %s (%s) VALUES (%s);";
 
-    /** ＫＭＧＤＢの種類 */
+    /** KMG DBの種類 */
     private KmgDbTypes kmgDbTypes;
 
     /** 入力シート */
@@ -78,7 +78,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     /** カラム物理名リスト */
     private List<String> columnPhysicsNameList;
 
-    /** ＫＭＧＤＢデータ型リスト */
+    /** KMG DBデータ型リスト */
     private List<KmgDbDataTypeTypes> dbDataTypeList;
 
     /** 挿入コメント */
@@ -372,7 +372,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
     }
 
     /**
-     * ＫＭＧＤＢ型リストを返す<br>
+     * KMG DB型リストを返す<br>
      *
      * @author KenichiroArai
      *
@@ -380,7 +380,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      *
      * @version 1.0.0
      *
-     * @return ＫＭＧＤＢ型リスト
+     * @return KMG DB型リスト
      */
     @Override
     public List<KmgDbDataTypeTypes> getKmgDbDataTypeList() {
@@ -535,7 +535,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * @version 1.0.0
      *
      * @param kmgDbTypes
-     *                   ＫＭＧＤＢの種類
+     *                   KMG DBの種類
      * @param inputSheet
      *                   入力シート
      * @param sqlIdMap
@@ -567,7 +567,7 @@ public class KmgTlInsertionSqlDataSheetCreationLogicImpl implements KmgTlInserti
      * @param dataCell
      *                      データセル
      * @param kmgDbDataType
-     *                      ＫＭＧＤＢ型の種類
+     *                      KMG DB型の種類
      *
      * @return 出力データ
      */
