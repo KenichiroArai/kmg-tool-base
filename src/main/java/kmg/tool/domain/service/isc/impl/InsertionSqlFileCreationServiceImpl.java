@@ -91,19 +91,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
             /* SQLＩＤマップ */
             final Map<String, String> sqlIdMap = insertionSqlFileCreationLogic.getSqlIdMap();
 
-            ExecutorService service = null;
-
-            try {
-
-                if (this.threadNum > 0) {
-
-                    service = Executors.newFixedThreadPool(this.threadNum);
-
-                } else {
-
-                    service = Executors.newCachedThreadPool();
-
-                }
+            try (ExecutorService service = this.getExecutorService()) {
 
                 for (int i = 0; i < inputWb.getNumberOfSheets(); i++) {
 
@@ -128,14 +116,6 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
 
                 }
 
-            } finally {
-
-                if (service != null) {
-
-                    service.shutdown();
-
-                }
-
             }
 
         } catch (final EncryptedDocumentException | IOException e) {
@@ -145,6 +125,33 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
             return;
 
         }
+
+    }
+
+    /**
+     * 執行者サービスを取得する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @return 執行者サービス
+     */
+    private ExecutorService getExecutorService() {
+
+        ExecutorService result;
+
+        if (this.threadNum > 0) {
+
+            result = Executors.newFixedThreadPool(this.threadNum);
+
+        } else {
+
+            result = Executors.newCachedThreadPool();
+
+        }
+
+        return result;
 
     }
 
