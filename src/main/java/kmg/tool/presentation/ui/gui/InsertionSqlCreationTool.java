@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  *
  * @version 1.0.0
  */
-public class InsertionSqlCreationScreenTool extends Application {
+public class InsertionSqlCreationTool extends Application {
 
     /** ステージタイトル */
     private static final String STAGE_TITLE = "挿入SQL作成画面";
@@ -59,9 +59,9 @@ public class InsertionSqlCreationScreenTool extends Application {
     @Override
     public void start(final Stage stage) {
 
-        stage.setTitle(InsertionSqlCreationScreenTool.STAGE_TITLE);
+        stage.setTitle(InsertionSqlCreationTool.STAGE_TITLE);
 
-        final URL        url  = this.getClass().getResource(InsertionSqlCreationScreenTool.FXML_PATH);
+        final URL        url  = this.getClass().getResource(InsertionSqlCreationTool.FXML_PATH);
         final FXMLLoader fxml = new FXMLLoader(url);
         AnchorPane       root;
 
