@@ -16,6 +16,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import kmg.core.infrastructure.model.KmgPfaMeasModel;
 import kmg.core.infrastructure.model.impl.KmgPfaMeasModelImpl;
+import kmg.core.infrastructure.type.KmgString;
 import kmg.tool.domain.service.InsertionSqlCreationService;
 import kmg.tool.domain.service.impl.InsertionSqlCreationServiceImpl;
 
@@ -29,6 +30,15 @@ import kmg.tool.domain.service.impl.InsertionSqlCreationServiceImpl;
  * @version 1.0.0
  */
 public class InsertionSqlCreationController implements Initializable {
+
+    /** ファイル選択ダイアログのタイトル */
+    private static final String FILE_CHOOSER_TITLE = "ファイル選択";
+
+    /** ディレクトリ選択ダイアログのタイトル */
+    private static final String DIRECTORY_CHOOSER_TITLE = "ディレクトリ選択";
+
+    /** デフォルトのディレクトリパス */
+    private static final String DEFAULT_DIRECTORY_PATH = "c:/";
 
     /** 入力ファイルテキストボックス */
     @FXML
@@ -79,16 +89,8 @@ public class InsertionSqlCreationController implements Initializable {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        /* 入力ファイルの初期値を設定する */
-        this.txtInputFile.setText(
-            "D:\\project\\投資システム\\No002_三段階スクリーン・トレーディング・システム\\ドキュメント\\AF010_環境\\BB010_DB\\CB030_データ\\DA010_管理\\DA010001_初期データ.xlsm");
-
-        /* 出力ファイルの初期値を設定する */
-        this.txtOutputDirectory.setText(
-            "D:\\project\\投資システム\\No002_三段階スクリーン・トレーディング・システム\\ドキュメント\\AF010_環境\\BB010_DB\\CB030_データ\\DA010_管理\\output");
-
         /* スレッド数の初期値を設定する */
-        // ＣＰＵの論理プロセッサ数を取得
+        // CPUの論理プロセッサ数を取得
         final Runtime runtime   = Runtime.getRuntime();
         final int     threadNum = runtime.availableProcessors();
         // テキストボックスに設定
@@ -136,12 +138,12 @@ public class InsertionSqlCreationController implements Initializable {
     private void onCalcInputFileOpenClicked(final ActionEvent event) {
 
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("ファイル選択");
+        fileChooser.setTitle(InsertionSqlCreationController.FILE_CHOOSER_TITLE);
         String defaultFilePath = this.txtInputFile.getText();
 
-        if ((defaultFilePath == null) || defaultFilePath.isEmpty()) {
+        if (KmgString.isEmpty(defaultFilePath)) {
 
-            defaultFilePath = "c:/";
+            defaultFilePath = InsertionSqlCreationController.DEFAULT_DIRECTORY_PATH;
 
         }
         File defaultFile = new File(defaultFilePath);
@@ -173,12 +175,12 @@ public class InsertionSqlCreationController implements Initializable {
     private void onCalcOutputDirectoryOpenClicked(final ActionEvent event) {
 
         final DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("ディレクトリ選択");
+        directoryChooser.setTitle(InsertionSqlCreationController.DIRECTORY_CHOOSER_TITLE);
         String defaultFilePath = this.txtOutputDirectory.getText();
 
-        if ((defaultFilePath == null) || defaultFilePath.isEmpty()) {
+        if (KmgString.isEmpty(defaultFilePath)) {
 
-            defaultFilePath = "c:/";
+            defaultFilePath = InsertionSqlCreationController.DEFAULT_DIRECTORY_PATH;
 
         }
         File defaultFile = new File(defaultFilePath);
