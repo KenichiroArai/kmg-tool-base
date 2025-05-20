@@ -21,7 +21,7 @@ import kmg.core.infrastructure.types.KmgDbTypes;
  *
  * @version 1.0.0
  */
-public interface KmgTlInsertionSqlDataSheetCreationLogic {
+public interface InsertionSqlDataSheetCreationLogic {
 
     /**
      * 出力ファイルのディレクトリを作成する<br>

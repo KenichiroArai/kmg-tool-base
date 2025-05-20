@@ -15,7 +15,7 @@ import kmg.core.infrastructure.types.KmgDbTypes;
  *
  * @version 1.0.0
  */
-public interface KmgTlInsertionSqlBasicInformationLogic {
+public interface InsertionSqlBasicInformationLogic {
 
     /** 設定シート名 */
     String SETTING_SHEET_NAME = "設定情報";

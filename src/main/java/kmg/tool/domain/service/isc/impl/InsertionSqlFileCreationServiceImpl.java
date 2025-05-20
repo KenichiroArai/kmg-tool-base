@@ -14,8 +14,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.domain.logic.isc.KmgTlInsertionSqlBasicInformationLogic;
-import kmg.tool.domain.logic.isc.impl.KmgTlInsertionSqlBasicInformationLogicImpl;
+import kmg.tool.domain.logic.isc.InsertionSqlBasicInformationLogic;
+import kmg.tool.domain.logic.isc.impl.InsertionSqlBasicInformationLogicImpl;
 import kmg.tool.domain.service.isc.InsertionSqlDataSheetCreationService;
 import kmg.tool.domain.service.isc.InsertionSqlFileCreationService;
 
@@ -81,8 +81,8 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
         try (final FileInputStream is = new FileInputStream(this.inputPath.toFile());
             final Workbook inputWb = WorkbookFactory.create(is);) {
 
-            final KmgTlInsertionSqlBasicInformationLogic insertionSqlFileCreationLogic
-                = new KmgTlInsertionSqlBasicInformationLogicImpl();
+            final InsertionSqlBasicInformationLogic insertionSqlFileCreationLogic
+                = new InsertionSqlBasicInformationLogicImpl();
             insertionSqlFileCreationLogic.initialize(inputWb);
 
             /* KMG DBの種類を取得 */
@@ -110,13 +110,13 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
                     final Sheet wkSheet = inputWb.getSheetAt(i);
 
                     if (KmgString.equals(wkSheet.getSheetName(),
-                        KmgTlInsertionSqlBasicInformationLogic.SETTING_SHEET_NAME)) {
+                        InsertionSqlBasicInformationLogic.SETTING_SHEET_NAME)) {
 
                         continue;
 
                     }
 
-                    if (KmgString.equals(wkSheet.getSheetName(), KmgTlInsertionSqlBasicInformationLogic.LIST_NAME)) {
+                    if (KmgString.equals(wkSheet.getSheetName(), InsertionSqlBasicInformationLogic.LIST_NAME)) {
 
                         continue;
 
