@@ -165,8 +165,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
     @Override
     public short getColumnNum() {
 
-        final short result    = (short) this.getColumnPhysicsNameList().size();
-        final short columnNum = result;
+        final short result = (short) this.getColumnPhysicsNameList().size();
         return result;
 
     }
@@ -266,8 +265,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             return result;
 
         }
-        result = String.format(InsertionSqlDataSheetCreationLogicImpl.DELETE_SQL_TEMPLATE,
-            this.getTablePhysicsName());
+        result = String.format(InsertionSqlDataSheetCreationLogicImpl.DELETE_SQL_TEMPLATE, this.getTablePhysicsName());
         this.deleteSql = result;
         return result;
 
@@ -363,8 +361,8 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
 
         }
 
-        result = String.format(InsertionSqlDataSheetCreationLogicImpl.INSERT_SQL_TEMPLATE,
-            this.getTablePhysicsName(), KmgDelimiterTypes.COMMA.joinAll(this.getColumnPhysicsNameList()),
+        result = String.format(InsertionSqlDataSheetCreationLogicImpl.INSERT_SQL_TEMPLATE, this.getTablePhysicsName(),
+            KmgDelimiterTypes.COMMA.joinAll(this.getColumnPhysicsNameList()),
             KmgDelimiterTypes.COMMA.joinAll(dataList));
 
         return result;
