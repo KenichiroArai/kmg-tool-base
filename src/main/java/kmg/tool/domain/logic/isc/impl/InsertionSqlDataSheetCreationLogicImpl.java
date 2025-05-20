@@ -26,7 +26,7 @@ import kmg.core.infrastructure.utils.KmgPoiUtils;
 import kmg.tool.domain.logic.isc.InsertionSqlDataSheetCreationLogic;
 
 /**
- * ＫＭＧツール挿入SQLデータシート作成ロジック<br>
+ * 挿入SQLデータシート作成ロジック<br>
  *
  * @author KenichiroArai
  *

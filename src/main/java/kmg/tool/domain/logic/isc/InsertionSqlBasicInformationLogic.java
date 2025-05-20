@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
- * ＫＭＧツール挿入SQL基本情報ロジックインタフェース<br>
+ * 挿入SQL基本情報ロジックインタフェース<br>
  *
  * @author KenichiroArai
  *
