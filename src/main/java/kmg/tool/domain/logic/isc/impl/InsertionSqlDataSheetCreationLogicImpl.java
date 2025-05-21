@@ -13,6 +13,7 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgCharsetTypes;
@@ -36,6 +37,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
  *
  * @version 1.0.0
  */
+@Service
 public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataSheetCreationLogic {
 
     /** 削除SQLテンプレート */

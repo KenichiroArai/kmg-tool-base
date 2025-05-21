@@ -11,11 +11,11 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.domain.logic.isc.InsertionSqlBasicInformationLogic;
-import kmg.tool.domain.logic.isc.impl.InsertionSqlBasicInformationLogicImpl;
 import kmg.tool.domain.service.isc.InsertionSqlDataSheetCreationService;
 import kmg.tool.domain.service.isc.InsertionSqlFileCreationService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
@@ -31,6 +31,14 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
  * @version 1.0.0
  */
 public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCreationService {
+
+    /** 挿入SQLデータシート作成サービス */
+    @Autowired
+    private InsertionSqlDataSheetCreationService insertionSqlDataSheetCreationService;
+
+    /** 挿入SQL基本情報ロジック */
+    @Autowired
+    private InsertionSqlBasicInformationLogic insertionSqlFileCreationLogic;
 
     /** 入力パス */
     private Path inputPath;
@@ -89,16 +97,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
 
                 this.processWorkbook(inputWb);
 
-            } catch (final IOException e) {
-
-                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。ワークブックの読み込みに失敗しました。入力ファイルのパス=[{0}]
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
-                final Object[]           genMsgArgs  = {
-                    this.inputPath,
-                };
-                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
-
-            } catch (final EncryptedDocumentException e) {
+            } catch (final IOException | EncryptedDocumentException e) {
 
                 // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。暗号化されたファイルです。入力ファイルのパス=[{0}]
                 final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
@@ -162,15 +161,13 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
      */
     private void processWorkbook(final Workbook inputWb) {
 
-        final InsertionSqlBasicInformationLogic insertionSqlFileCreationLogic
-            = new InsertionSqlBasicInformationLogicImpl();
-        insertionSqlFileCreationLogic.initialize(inputWb);
+        this.insertionSqlFileCreationLogic.initialize(inputWb);
 
         /* KMG DBの種類を取得 */
-        final KmgDbTypes kmgDbTypes = insertionSqlFileCreationLogic.getKmgDbTypes();
+        final KmgDbTypes kmgDbTypes = this.insertionSqlFileCreationLogic.getKmgDbTypes();
 
         /* SQL IDマップ */
-        final Map<String, String> sqlIdMap = insertionSqlFileCreationLogic.getSqlIdMap();
+        final Map<String, String> sqlIdMap = this.insertionSqlFileCreationLogic.getSqlIdMap();
 
         try (ExecutorService service = this.getExecutorService()) {
 
@@ -189,10 +186,8 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
                     continue;
 
                 }
-                final InsertionSqlDataSheetCreationService insertionSqlDataSheetCreationService
-                    = new InsertionSqlDataSheetCreationServiceImpl();
-                insertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap, this.outputPath);
-                service.execute(insertionSqlDataSheetCreationService);
+                this.insertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap, this.outputPath);
+                service.execute(this.insertionSqlDataSheetCreationService);
 
             }
 

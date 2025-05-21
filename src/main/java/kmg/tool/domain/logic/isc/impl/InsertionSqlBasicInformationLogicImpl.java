@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.core.infrastructure.utils.KmgPoiUtils;
@@ -20,6 +21,7 @@ import kmg.tool.domain.logic.isc.InsertionSqlBasicInformationLogic;
  *
  * @version 1.0.0
  */
+@Service
 public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicInformationLogic {
 
     /** 入力ワークブック */

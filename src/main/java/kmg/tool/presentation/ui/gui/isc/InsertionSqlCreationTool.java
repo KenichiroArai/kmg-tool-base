@@ -5,6 +5,7 @@ import java.net.URL;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,9 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
  *
  * @version 1.0.0
  */
+@SpringBootApplication(scanBasePackages = {
+    "kmg"
+})
 public class InsertionSqlCreationTool extends Application {
 
     /** ステージタイトル */
