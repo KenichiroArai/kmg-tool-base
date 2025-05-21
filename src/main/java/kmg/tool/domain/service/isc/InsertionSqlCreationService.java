@@ -2,6 +2,8 @@ package kmg.tool.domain.service.isc;
 
 import java.nio.file.Path;
 
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
+
 /**
  * 挿入SQL作成サービスインタフェース<br>
  *
@@ -33,6 +35,9 @@ public interface InsertionSqlCreationService {
 
     /**
      * 挿入SQLを出力する<br>
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    void outputInsertionSql();
+    void outputInsertionSql() throws KmgToolMsgException;
 }

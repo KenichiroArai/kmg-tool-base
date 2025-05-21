@@ -18,6 +18,8 @@ import kmg.tool.domain.logic.isc.InsertionSqlBasicInformationLogic;
 import kmg.tool.domain.logic.isc.impl.InsertionSqlBasicInformationLogicImpl;
 import kmg.tool.domain.service.isc.InsertionSqlDataSheetCreationService;
 import kmg.tool.domain.service.isc.InsertionSqlFileCreationService;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * 挿入SQLファイル作成サービス<br>
@@ -73,56 +75,48 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
      * @sine 1.0.0
      *
      * @version 1.0.0
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public void outputInsertionSql() {
+    public void outputInsertionSql() throws KmgToolMsgException {
 
         /* ワークブック読み込み */
-        try (final FileInputStream is = new FileInputStream(this.inputPath.toFile());
-            final Workbook inputWb = WorkbookFactory.create(is);) {
+        try (final FileInputStream is = new FileInputStream(this.inputPath.toFile());) {
 
-            final InsertionSqlBasicInformationLogic insertionSqlFileCreationLogic
-                = new InsertionSqlBasicInformationLogicImpl();
-            insertionSqlFileCreationLogic.initialize(inputWb);
+            try (final Workbook inputWb = WorkbookFactory.create(is);) {
 
-            /* KMG DBの種類を取得 */
-            final KmgDbTypes kmgDbTypes = insertionSqlFileCreationLogic.getKmgDbTypes();
+                this.processWorkbook(inputWb);
 
-            /* SQLＩＤマップ */
-            final Map<String, String> sqlIdMap = insertionSqlFileCreationLogic.getSqlIdMap();
+            } catch (final IOException e) {
 
-            try (ExecutorService service = this.getExecutorService()) {
+                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。ワークブックの読み込みに失敗しました。入力ファイルのパス=[{0}]
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final Object[]           genMsgArgs  = {
+                    this.inputPath,
+                };
+                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
-                for (int i = 0; i < inputWb.getNumberOfSheets(); i++) {
+            } catch (final EncryptedDocumentException e) {
 
-                    final Sheet wkSheet = inputWb.getSheetAt(i);
-
-                    if (KmgString.equals(wkSheet.getSheetName(),
-                        InsertionSqlBasicInformationLogic.SETTING_SHEET_NAME)) {
-
-                        continue;
-
-                    }
-
-                    if (KmgString.equals(wkSheet.getSheetName(), InsertionSqlBasicInformationLogic.LIST_NAME)) {
-
-                        continue;
-
-                    }
-                    final InsertionSqlDataSheetCreationService insertionSqlDataSheetCreationService
-                        = new InsertionSqlDataSheetCreationServiceImpl();
-                    insertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap, this.outputPath);
-                    service.execute(insertionSqlDataSheetCreationService);
-
-                }
+                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。暗号化されたファイルです。入力ファイルのパス=[{0}]
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final Object[]           genMsgArgs  = {
+                    this.inputPath,
+                };
+                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
             }
 
-        } catch (final EncryptedDocumentException | IOException e) {
+        } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理
-            e.printStackTrace();
-            return;
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[{0}]
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final Object[]           genMsgArgs  = {
+                this.inputPath,
+            };
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -151,6 +145,58 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
         result = Executors.newCachedThreadPool();
 
         return result;
+
+    }
+
+    /**
+     * ワークブックを処理する<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @param inputWb
+     *                入力ワークブック
+     */
+    private void processWorkbook(final Workbook inputWb) {
+
+        final InsertionSqlBasicInformationLogic insertionSqlFileCreationLogic
+            = new InsertionSqlBasicInformationLogicImpl();
+        insertionSqlFileCreationLogic.initialize(inputWb);
+
+        /* KMG DBの種類を取得 */
+        final KmgDbTypes kmgDbTypes = insertionSqlFileCreationLogic.getKmgDbTypes();
+
+        /* SQL IDマップ */
+        final Map<String, String> sqlIdMap = insertionSqlFileCreationLogic.getSqlIdMap();
+
+        try (ExecutorService service = this.getExecutorService()) {
+
+            for (int i = 0; i < inputWb.getNumberOfSheets(); i++) {
+
+                final Sheet wkSheet = inputWb.getSheetAt(i);
+
+                if (KmgString.equals(wkSheet.getSheetName(), InsertionSqlBasicInformationLogic.SETTING_SHEET_NAME)) {
+
+                    continue;
+
+                }
+
+                if (KmgString.equals(wkSheet.getSheetName(), InsertionSqlBasicInformationLogic.LIST_NAME)) {
+
+                    continue;
+
+                }
+                final InsertionSqlDataSheetCreationService insertionSqlDataSheetCreationService
+                    = new InsertionSqlDataSheetCreationServiceImpl();
+                insertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap, this.outputPath);
+                service.execute(insertionSqlDataSheetCreationService);
+
+            }
+
+        }
 
     }
 

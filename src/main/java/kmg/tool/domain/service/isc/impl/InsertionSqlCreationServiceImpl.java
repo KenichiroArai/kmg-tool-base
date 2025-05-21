@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import kmg.tool.domain.service.isc.InsertionSqlCreationService;
 import kmg.tool.domain.service.isc.InsertionSqlFileCreationService;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 挿入SQL作成サービス<br>
@@ -54,14 +55,11 @@ public class InsertionSqlCreationServiceImpl implements InsertionSqlCreationServ
     /**
      * 挿入SQLを出力する<br>
      *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public void outputInsertionSql() {
+    public void outputInsertionSql() throws KmgToolMsgException {
 
         final InsertionSqlFileCreationService insertionSqlFileCreationService
             = new InsertionSqlFileCreationServiceImpl();

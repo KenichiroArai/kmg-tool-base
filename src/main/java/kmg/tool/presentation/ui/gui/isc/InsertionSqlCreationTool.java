@@ -3,11 +3,16 @@ package kmg.tool.presentation.ui.gui.isc;
 import java.io.IOException;
 import java.net.URL;
 
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 挿入SQL作成ツール<br>
@@ -26,6 +31,17 @@ public class InsertionSqlCreationTool extends Application {
     /** FXMLファイルパス */
     private static final String FXML_PATH = "/kmg/tool/application/ui/gui/KmgTlInsertionSqlCreationScreenGui.fxml";
 
+    /** メッセージソース */
+    @Autowired
+    private KmgMessageSource messageSource;
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
     /**
      * エントリポイント<br>
      *
@@ -41,6 +57,20 @@ public class InsertionSqlCreationTool extends Application {
     public static void main(final String[] args) {
 
         Application.launch(args);
+
+    }
+
+    /**
+     * カスタムロガーを使用して初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected InsertionSqlCreationTool(final Logger logger) {
+
+        this.logger = logger;
 
     }
 
@@ -71,8 +101,13 @@ public class InsertionSqlCreationTool extends Application {
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/05/21 【挿入SQL作成】例外処理
-            e.printStackTrace();
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ログ。挿入SQL作成ツールの開始に失敗しました。
+            // ログの出力
+            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.NONE;
+            final Object[]           messageArgs = {};
+            final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
+            this.logger.error(msg, e);
+
             return;
 
         }

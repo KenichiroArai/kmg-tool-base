@@ -24,6 +24,8 @@ import kmg.core.infrastructure.utils.KmgLocalDateTimeUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateUtils;
 import kmg.core.infrastructure.utils.KmgPoiUtils;
 import kmg.tool.domain.logic.isc.InsertionSqlDataSheetCreationLogic;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * 挿入SQLデータシート作成ロジック<br>
@@ -109,15 +111,26 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
      *
      * @sine 1.0.0
      *
-     * @version 1.0.0
-     *
-     * @throws IOException
-     *                     入出力例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public void createOutputFileDirectories() throws IOException {
+    public void createOutputFileDirectories() throws KmgToolMsgException {
 
-        Files.createDirectories(this.outputPath);
+        try {
+
+            Files.createDirectories(this.outputPath);
+
+        } catch (final IOException e) {
+
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[{0}]
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final Object[]           genMsgArgs  = {
+                this.outputPath,
+            };
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+
+        }
 
     }
 

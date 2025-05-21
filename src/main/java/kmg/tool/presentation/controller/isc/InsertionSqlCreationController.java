@@ -6,6 +6,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,11 +20,14 @@ import javafx.stage.FileChooser;
 import kmg.core.infrastructure.model.KmgPfaMeasModel;
 import kmg.core.infrastructure.model.impl.KmgPfaMeasModelImpl;
 import kmg.core.infrastructure.type.KmgString;
+import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.isc.InsertionSqlCreationService;
 import kmg.tool.domain.service.isc.impl.InsertionSqlCreationServiceImpl;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
- * 挿入SQL作成画面画面コントローラ<br>
+ * 挿入SQL作成画面コントローラ<br>
  *
  * @author KenichiroArai
  *
@@ -39,6 +45,17 @@ public class InsertionSqlCreationController implements Initializable {
 
     /** デフォルトのディレクトリパス */
     private static final String DEFAULT_DIRECTORY_PATH = "c:/";
+
+    /** メッセージソース */
+    @Autowired
+    private KmgMessageSource messageSource;
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
 
     /** 入力ファイルテキストボックス */
     @FXML
@@ -71,6 +88,20 @@ public class InsertionSqlCreationController implements Initializable {
     /** 処理時間単位ラベル */
     @FXML
     private Label lblProcTimeUnit;
+
+    /**
+     * カスタムロガーを使用して初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected InsertionSqlCreationController(final Logger logger) {
+
+        this.logger = logger;
+
+    }
 
     /**
      * 初期化<br>
@@ -111,8 +142,11 @@ public class InsertionSqlCreationController implements Initializable {
      *                   入力パス
      * @param outputPath
      *                   出力パス
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    protected void mainProc(final Path inputPath, final Path outputPath) {
+    protected void mainProc(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
 
         /* 挿入SQL作成サービス */
         final InsertionSqlCreationService insertSqlCreationService = new InsertionSqlCreationServiceImpl();
@@ -214,12 +248,24 @@ public class InsertionSqlCreationController implements Initializable {
         final KmgPfaMeasModel pfaMeas = new KmgPfaMeasModelImpl();
         pfaMeas.start();
 
+        final Path inputPath  = Paths.get(this.txtInputFile.getText());
+        final Path outputPath = Paths.get(this.txtOutputDirectory.getText());
+
         try {
 
             // メイン処理
-            final Path inputPath  = Paths.get(this.txtInputFile.getText());
-            final Path outputPath = Paths.get(this.txtOutputDirectory.getText());
             this.mainProc(inputPath, outputPath);
+
+        } catch (final KmgToolMsgException e) {
+
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ログ。挿入SQL作成画面の実行ボタンの処理に失敗しました。
+            // ログの出力
+            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.NONE;
+            final Object[]           messageArgs = {
+                inputPath, outputPath,
+            };
+            final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
+            this.logger.error(msg, e);
 
         } finally {
 

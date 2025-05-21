@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 挿入SQLデータシート作成サービスインタフェース<br>
@@ -40,6 +41,9 @@ public interface InsertionSqlDataSheetCreationService extends Runnable {
 
     /**
      * 挿入SQLを出力する<br>
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    void outputInsertionSql();
+    void outputInsertionSql() throws KmgToolMsgException;
 }

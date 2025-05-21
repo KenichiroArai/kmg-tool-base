@@ -1,6 +1,5 @@
 package kmg.tool.domain.logic.isc;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.List;
@@ -11,6 +10,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 挿入SQLデータシート作成ロジックインタフェース<br>
@@ -32,10 +32,10 @@ public interface InsertionSqlDataSheetCreationLogic {
      *
      * @version 1.0.0
      *
-     * @throws IOException
-     *                     入出力例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    void createOutputFileDirectories() throws IOException;
+    void createOutputFileDirectories() throws KmgToolMsgException;
 
     /**
      * 文字セットを返す<br>

@@ -9,11 +9,17 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
+import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.logic.isc.InsertionSqlDataSheetCreationLogic;
 import kmg.tool.domain.logic.isc.impl.InsertionSqlDataSheetCreationLogicImpl;
 import kmg.tool.domain.service.isc.InsertionSqlDataSheetCreationService;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 挿入SQLデータシート作成サービス<br>
@@ -26,6 +32,17 @@ import kmg.tool.domain.service.isc.InsertionSqlDataSheetCreationService;
  */
 public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDataSheetCreationService {
 
+    /** メッセージソース */
+    @Autowired
+    private KmgMessageSource messageSource;
+
+    /**
+     * ロガー
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
     /** KMG DBの種類 */
     private KmgDbTypes kmgDbTypes;
 
@@ -37,6 +54,20 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
     /** 出力パス */
     private Path outputPath;
+
+    /**
+     * カスタムロガーを使用して初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected InsertionSqlDataSheetCreationServiceImpl(final Logger logger) {
+
+        this.logger = logger;
+
+    }
 
     /**
      * 初期化する<br>
@@ -71,32 +102,18 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
     /**
      * 挿入SQLを出力する<br>
      *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    public void outputInsertionSql() {
+    public void outputInsertionSql() throws KmgToolMsgException {
 
         final InsertionSqlDataSheetCreationLogic insertionSqlDataSheetCreationLogic
             = new InsertionSqlDataSheetCreationLogicImpl();
-        insertionSqlDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap,
-            this.outputPath);
+        insertionSqlDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap, this.outputPath);
 
         /* 出力ファイルのディレクトリの作成 */
-        try {
-
-            insertionSqlDataSheetCreationLogic.createOutputFileDirectories();
-
-        } catch (final IOException e) {
-
-            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：例外処理
-            e.printStackTrace();
-            return;
-
-        }
+        insertionSqlDataSheetCreationLogic.createOutputFileDirectories();
 
         /* 出力ファイルパスの取得 */
         final Path outputFilePath = insertionSqlDataSheetCreationLogic.getOutputFilePath();
@@ -138,9 +155,12 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：例外処理
-            e.printStackTrace();
-            return;
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。出力ファイルへの書き込みに失敗しました。出力ファイルパス=[{0}]
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final Object[]           genMsgArgs  = {
+                outputFilePath,
+            };
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -152,13 +172,24 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
      * @author KenichiroArai
      *
      * @sine 1.0.0
-     *
-     * @version 1.0.0
      */
     @Override
     public void run() {
 
-        this.outputInsertionSql();
+        try {
+
+            this.outputInsertionSql();
+
+        } catch (final KmgToolMsgException e) {
+
+            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ログ。挿入SQL出力に失敗しました。
+            // ログの出力
+            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.NONE;
+            final Object[]           messageArgs = {};
+            final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
+            this.logger.error(msg, e);
+
+        }
 
     }
 
