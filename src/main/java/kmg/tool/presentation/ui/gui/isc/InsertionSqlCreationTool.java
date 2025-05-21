@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +37,6 @@ public class InsertionSqlCreationTool extends Application {
     private static final String FXML_PATH = "/kmg/tool/application/ui/gui/KmgTlInsertionSqlCreationScreenGui.fxml";
 
     /** メッセージソース */
-    @Autowired
     private KmgMessageSource messageSource;
 
     /**
@@ -45,6 +45,27 @@ public class InsertionSqlCreationTool extends Application {
      * @since 0.1.0
      */
     private Logger logger;
+
+    /** Springアプリケーションコンテキスト */
+    private ConfigurableApplicationContext springContext;
+
+    /**
+     * エントリポイント<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @param args
+     *             オプション
+     */
+    public static void main(final String[] args) {
+
+        Application.launch(args);
+
+    }
 
     /**
      * デフォルトコンストラクタ<br>
@@ -71,20 +92,20 @@ public class InsertionSqlCreationTool extends Application {
     }
 
     /**
-     * エントリポイント<br>
+     * 初期化<br>
      *
      * @author KenichiroArai
      *
      * @sine 1.0.0
      *
      * @version 1.0.0
-     *
-     * @param args
-     *             オプション
      */
-    public static void main(final String[] args) {
+    @SuppressWarnings("resource")
+    @Override
+    public void init() {
 
-        Application.launch(args);
+        this.springContext = SpringApplication.run(InsertionSqlCreationTool.class);
+        this.messageSource = this.springContext.getBean(KmgMessageSource.class);
 
     }
 
@@ -107,7 +128,8 @@ public class InsertionSqlCreationTool extends Application {
 
         final URL        url  = this.getClass().getResource(InsertionSqlCreationTool.FXML_PATH);
         final FXMLLoader fxml = new FXMLLoader(url);
-        AnchorPane       root;
+        fxml.setControllerFactory(this.springContext::getBean);
+        AnchorPane root;
 
         try {
 
@@ -121,13 +143,28 @@ public class InsertionSqlCreationTool extends Application {
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);
-
             return;
 
         }
         final Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
+    }
+
+    /**
+     * 停止<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     */
+    @Override
+    public void stop() {
+
+        this.springContext.close();
 
     }
 }
