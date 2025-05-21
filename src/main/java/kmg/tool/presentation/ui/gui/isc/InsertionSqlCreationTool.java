@@ -44,7 +44,31 @@ public class InsertionSqlCreationTool extends Application {
      *
      * @since 0.1.0
      */
-    private final Logger logger;
+    private Logger logger;
+
+    /**
+     * デフォルトコンストラクタ<br>
+     *
+     * @since 0.1.0
+     */
+    public InsertionSqlCreationTool() {
+
+        // デフォルトコンストラクタ
+    }
+
+    /**
+     * カスタムロガーを使用して初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected InsertionSqlCreationTool(final Logger logger) {
+
+        this.logger = logger;
+
+    }
 
     /**
      * エントリポイント<br>
@@ -61,20 +85,6 @@ public class InsertionSqlCreationTool extends Application {
     public static void main(final String[] args) {
 
         Application.launch(args);
-
-    }
-
-    /**
-     * カスタムロガーを使用して初期化するコンストラクタ<br>
-     *
-     * @since 0.1.0
-     *
-     * @param logger
-     *               ロガー
-     */
-    protected InsertionSqlCreationTool(final Logger logger) {
-
-        this.logger = logger;
 
     }
 
