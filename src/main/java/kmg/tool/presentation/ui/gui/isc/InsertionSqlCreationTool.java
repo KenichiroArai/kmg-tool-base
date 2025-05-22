@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -37,15 +36,15 @@ public class InsertionSqlCreationTool extends Application {
     /** FXMLファイルパス */
     private static final String FXML_PATH = "/kmg/tool/application/ui/gui/KmgTlInsertionSqlCreationScreenGui.fxml";
 
-    /** メッセージソース */
-    private KmgMessageSource messageSource;
-
     /**
      * ロガー
      *
      * @since 0.1.0
      */
-    private final Logger logger;
+    private Logger logger;
+
+    /** メッセージソース */
+    private KmgMessageSource messageSource;
 
     /** Springアプリケーションコンテキスト */
     private ConfigurableApplicationContext springContext;
@@ -69,31 +68,6 @@ public class InsertionSqlCreationTool extends Application {
     }
 
     /**
-     * デフォルトコンストラクタ<br>
-     *
-     * @since 0.1.0
-     */
-    public InsertionSqlCreationTool() {
-
-        this(LoggerFactory.getLogger(InsertionSqlCreationTool.class));
-
-    }
-
-    /**
-     * カスタムロガーを使用して初期化するコンストラクタ<br>
-     *
-     * @since 0.1.0
-     *
-     * @param logger
-     *               ロガー
-     */
-    protected InsertionSqlCreationTool(final Logger logger) {
-
-        this.logger = logger;
-
-    }
-
-    /**
      * 初期化<br>
      *
      * @author KenichiroArai
@@ -107,6 +81,7 @@ public class InsertionSqlCreationTool extends Application {
     public void init() {
 
         this.springContext = SpringApplication.run(InsertionSqlCreationTool.class);
+        this.logger = this.springContext.getBean(Logger.class);
         this.messageSource = this.springContext.getBean(KmgMessageSource.class);
 
     }
