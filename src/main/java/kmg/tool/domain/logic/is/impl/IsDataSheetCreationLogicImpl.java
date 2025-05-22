@@ -24,12 +24,15 @@ import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateTimeUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateUtils;
 import kmg.core.infrastructure.utils.KmgPoiUtils;
-import kmg.tool.domain.logic.is.InsertionSqlDataSheetCreationLogic;
+import kmg.tool.domain.logic.is.IsDataSheetCreationLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * 挿入SQLデータシート作成ロジック<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -38,7 +41,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
  * @version 1.0.0
  */
 @Service
-public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataSheetCreationLogic {
+public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
     /** 削除SQLテンプレート */
     private static final String DELETE_SQL_TEMPLATE = "DELETE FROM %s;";
@@ -269,7 +272,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             return result;
 
         }
-        result = String.format(InsertionSqlDataSheetCreationLogicImpl.DELETE_COMMENT_FORMAT, this.getTableLogicName());
+        result = String.format(IsDataSheetCreationLogicImpl.DELETE_COMMENT_FORMAT, this.getTableLogicName());
         this.deleteComment = result;
         return result;
 
@@ -297,7 +300,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             return result;
 
         }
-        result = String.format(InsertionSqlDataSheetCreationLogicImpl.DELETE_SQL_TEMPLATE, this.getTablePhysicsName());
+        result = String.format(IsDataSheetCreationLogicImpl.DELETE_SQL_TEMPLATE, this.getTablePhysicsName());
         this.deleteSql = result;
         return result;
 
@@ -325,7 +328,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             return result;
 
         }
-        result = String.format(InsertionSqlDataSheetCreationLogicImpl.INSERT_COMMENT_FORMAT, this.getTableLogicName());
+        result = String.format(IsDataSheetCreationLogicImpl.INSERT_COMMENT_FORMAT, this.getTableLogicName());
         this.insertComment = result;
         return result;
 
@@ -393,7 +396,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
 
         }
 
-        result = String.format(InsertionSqlDataSheetCreationLogicImpl.INSERT_SQL_TEMPLATE, this.getTablePhysicsName(),
+        result = String.format(IsDataSheetCreationLogicImpl.INSERT_SQL_TEMPLATE, this.getTablePhysicsName(),
             KmgDelimiterTypes.COMMA.joinAll(this.getColumnPhysicsNameList()),
             KmgDelimiterTypes.COMMA.joinAll(dataList));
 
@@ -464,7 +467,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
 
         }
         result = Paths.get(this.outputPath.toAbsolutePath().toString(),
-            String.format(InsertionSqlDataSheetCreationLogicImpl.OUTPUT_FILENAME_FORMAT, this.getSqlId(),
+            String.format(IsDataSheetCreationLogicImpl.OUTPUT_FILENAME_FORMAT, this.getSqlId(),
                 this.getTablePhysicsName()));
         this.outputFilePath = result;
         return result;
@@ -615,7 +618,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
                 // 指定無し
                 outputData = KmgPoiUtils.getStringValue(dataCell);
                 outputData
-                    = String.format(InsertionSqlDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
+                    = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             case INTEGER:
@@ -641,11 +644,11 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
             case DATE:
                 // 日付型
                 final String dateStrTmp = KmgPoiUtils.getStringValue(dataCell);
-                if (KmgString.equals(InsertionSqlDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateStrTmp)) {
+                if (KmgString.equals(IsDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateStrTmp)) {
 
                     outputData = dateStrTmp;
 
-                } else if (KmgString.equals(InsertionSqlDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateStrTmp)) {
+                } else if (KmgString.equals(IsDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateStrTmp)) {
 
                     outputData = dateStrTmp;
 
@@ -656,17 +659,17 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
 
                 }
                 outputData
-                    = String.format(InsertionSqlDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
+                    = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             case TIME:
                 // 日時型
                 final String dateTimeStrTmp = KmgPoiUtils.getStringValue(dataCell);
-                if (KmgString.equals(InsertionSqlDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateTimeStrTmp)) {
+                if (KmgString.equals(IsDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateTimeStrTmp)) {
 
                     outputData = dateTimeStrTmp;
 
-                } else if (KmgString.equals(InsertionSqlDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateTimeStrTmp)) {
+                } else if (KmgString.equals(IsDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateTimeStrTmp)) {
 
                     outputData = dateTimeStrTmp;
 
@@ -677,14 +680,14 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
 
                 }
                 outputData
-                    = String.format(InsertionSqlDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
+                    = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             case STRING:
                 // 文字列型
                 outputData = KmgPoiUtils.getStringValue(dataCell);
                 outputData
-                    = String.format(InsertionSqlDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
+                    = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             default:

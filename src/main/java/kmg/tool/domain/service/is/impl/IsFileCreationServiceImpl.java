@@ -15,14 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.domain.logic.is.InsertionSqlBasicInformationLogic;
-import kmg.tool.domain.service.is.InsertionSqlDataSheetCreationService;
-import kmg.tool.domain.service.is.InsertionSqlFileCreationService;
+import kmg.tool.domain.logic.is.IsBasicInformationLogic;
+import kmg.tool.domain.service.is.IslDataSheetCreationService;
+import kmg.tool.domain.service.is.IsFileCreationService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * 挿入SQLファイル作成サービス<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -30,15 +33,15 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
  *
  * @version 1.0.0
  */
-public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCreationService {
+public class IsFileCreationServiceImpl implements IsFileCreationService {
 
     /** 挿入SQLデータシート作成サービス */
     @Autowired
-    private InsertionSqlDataSheetCreationService insertionSqlDataSheetCreationService;
+    private IslDataSheetCreationService islDataSheetCreationService;
 
     /** 挿入SQL基本情報ロジック */
     @Autowired
-    private InsertionSqlBasicInformationLogic insertionSqlFileCreationLogic;
+    private IsBasicInformationLogic insertionSqlFileCreationLogic;
 
     /** 入力パス */
     private Path inputPath;
@@ -173,19 +176,19 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
 
                 final Sheet wkSheet = inputWb.getSheetAt(i);
 
-                if (KmgString.equals(wkSheet.getSheetName(), InsertionSqlBasicInformationLogic.SETTING_SHEET_NAME)) {
+                if (KmgString.equals(wkSheet.getSheetName(), IsBasicInformationLogic.SETTING_SHEET_NAME)) {
 
                     continue;
 
                 }
 
-                if (KmgString.equals(wkSheet.getSheetName(), InsertionSqlBasicInformationLogic.LIST_NAME)) {
+                if (KmgString.equals(wkSheet.getSheetName(), IsBasicInformationLogic.LIST_NAME)) {
 
                     continue;
 
                 }
-                this.insertionSqlDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap, this.outputPath);
-                service.execute(this.insertionSqlDataSheetCreationService);
+                this.islDataSheetCreationService.initialize(kmgDbTypes, wkSheet, sqlIdMap, this.outputPath);
+                service.execute(this.islDataSheetCreationService);
 
             }
 

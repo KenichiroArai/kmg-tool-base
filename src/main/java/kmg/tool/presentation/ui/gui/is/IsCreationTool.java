@@ -20,6 +20,9 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 挿入SQL作成ツール<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -30,13 +33,13 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
-public class InsertionSqlCreationTool extends Application {
+public class IsCreationTool extends Application {
 
     /** ステージタイトル */
     private static final String STAGE_TITLE = "挿入SQL作成画面";
 
     /** FXMLファイルパス */
-    private static final String FXML_PATH = "/kmg/tool/application/ui/gui/KmgTlInsertionSqlCreationScreenGui.fxml";
+    private static final String FXML_PATH = "/kmg/tool/application/ui/gui/IsCreationScreenGui.fxml";
 
     /**
      * ロガー
@@ -66,7 +69,7 @@ public class InsertionSqlCreationTool extends Application {
      */
     public static void main(final String[] args) {
 
-        Application.launch(InsertionSqlCreationTool.class, args);
+        Application.launch(IsCreationTool.class, args);
 
     }
 
@@ -75,9 +78,9 @@ public class InsertionSqlCreationTool extends Application {
      *
      * @since 0.1.0
      */
-    public InsertionSqlCreationTool() {
+    public IsCreationTool() {
 
-        this(LoggerFactory.getLogger(InsertionSqlCreationTool.class));
+        this(LoggerFactory.getLogger(IsCreationTool.class));
 
     }
 
@@ -89,7 +92,7 @@ public class InsertionSqlCreationTool extends Application {
      * @param logger
      *               ロガー
      */
-    protected InsertionSqlCreationTool(final Logger logger) {
+    protected IsCreationTool(final Logger logger) {
 
         this.logger = logger;
 
@@ -109,7 +112,7 @@ public class InsertionSqlCreationTool extends Application {
     public void init() {
 
         // this.springContext = SpringApplication.run(InsertionSqlCreationTool.class);
-        this.springContext = new SpringApplicationBuilder(InsertionSqlCreationTool.class).run();
+        this.springContext = new SpringApplicationBuilder(IsCreationTool.class).run();
 
     }
 
@@ -128,9 +131,9 @@ public class InsertionSqlCreationTool extends Application {
     @Override
     public void start(final Stage stage) {
 
-        stage.setTitle(InsertionSqlCreationTool.STAGE_TITLE);
+        stage.setTitle(IsCreationTool.STAGE_TITLE);
 
-        final URL        url  = this.getClass().getResource(InsertionSqlCreationTool.FXML_PATH);
+        final URL        url  = this.getClass().getResource(IsCreationTool.FXML_PATH);
         final FXMLLoader fxml = new FXMLLoader(url);
         fxml.setControllerFactory(this.springContext::getBean);
         AnchorPane root;

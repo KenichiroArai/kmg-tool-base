@@ -8,6 +8,9 @@ import kmg.core.infrastructure.types.KmgDbTypes;
 
 /**
  * 挿入SQL基本情報ロジックインタフェース<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -15,7 +18,7 @@ import kmg.core.infrastructure.types.KmgDbTypes;
  *
  * @version 1.0.0
  */
-public interface InsertionSqlBasicInformationLogic {
+public interface IsBasicInformationLogic {
 
     /** 設定シート名 */
     String SETTING_SHEET_NAME = "設定情報";

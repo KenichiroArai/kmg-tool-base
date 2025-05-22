@@ -6,6 +6,9 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 挿入SQLファイル作成サービスインタフェース<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -13,7 +16,7 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
  *
  * @version 1.0.0
  */
-public interface InsertionSqlFileCreationService {
+public interface IsFileCreationService {
 
     /**
      * 初期化する<br>

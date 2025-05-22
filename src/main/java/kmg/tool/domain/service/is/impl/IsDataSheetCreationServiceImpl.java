@@ -16,14 +16,17 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.logic.is.InsertionSqlDataSheetCreationLogic;
-import kmg.tool.domain.service.is.InsertionSqlDataSheetCreationService;
+import kmg.tool.domain.logic.is.IsDataSheetCreationLogic;
+import kmg.tool.domain.service.is.IslDataSheetCreationService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 挿入SQLデータシート作成サービス<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -32,7 +35,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
  * @version 1.0.0
  */
 @Service
-public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDataSheetCreationService {
+public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationService {
 
     /**
      * ロガー
@@ -47,7 +50,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
     /** 挿入SQLデータシート作成ロジック */
     @Autowired
-    private InsertionSqlDataSheetCreationLogic insertionSqlDataSheetCreationLogic;
+    private IsDataSheetCreationLogic isDataSheetCreationLogic;
 
     /** KMG DBの種類 */
     private KmgDbTypes kmgDbTypes;
@@ -66,9 +69,9 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
      *
      * @since 0.1.0
      */
-    public InsertionSqlDataSheetCreationServiceImpl() {
+    public IsDataSheetCreationServiceImpl() {
 
-        this(LoggerFactory.getLogger(InsertionSqlDataSheetCreationServiceImpl.class));
+        this(LoggerFactory.getLogger(IsDataSheetCreationServiceImpl.class));
 
     }
 
@@ -80,7 +83,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
      * @param logger
      *               ロガー
      */
-    protected InsertionSqlDataSheetCreationServiceImpl(final Logger logger) {
+    protected IsDataSheetCreationServiceImpl(final Logger logger) {
 
         this.logger = logger;
 
@@ -125,31 +128,31 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
     @Override
     public void outputInsertionSql() throws KmgToolMsgException {
 
-        this.insertionSqlDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap,
+        this.isDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap,
             this.outputPath);
 
         /* 出力ファイルのディレクトリの作成 */
-        this.insertionSqlDataSheetCreationLogic.createOutputFileDirectories();
+        this.isDataSheetCreationLogic.createOutputFileDirectories();
 
         /* 出力ファイルパスの取得 */
-        final Path outputFilePath = this.insertionSqlDataSheetCreationLogic.getOutputFilePath();
+        final Path outputFilePath = this.isDataSheetCreationLogic.getOutputFilePath();
 
         /* 文字セットを取得 */
-        final Charset charset = this.insertionSqlDataSheetCreationLogic.getCharset();
+        final Charset charset = this.isDataSheetCreationLogic.getCharset();
 
         try (BufferedWriter bw = Files.newBufferedWriter(outputFilePath, charset)) {
 
             /* 削除SQLの出力 */
-            final String deleteComment = this.insertionSqlDataSheetCreationLogic.getDeleteComment();
+            final String deleteComment = this.isDataSheetCreationLogic.getDeleteComment();
             bw.write(deleteComment);
             bw.newLine();
-            final String deleteSql = this.insertionSqlDataSheetCreationLogic.getDeleteSql();
+            final String deleteSql = this.isDataSheetCreationLogic.getDeleteSql();
             bw.write(deleteSql);
             bw.newLine();
             bw.newLine();
 
             /* 挿入SQLの出力 */
-            final String insertComment = this.insertionSqlDataSheetCreationLogic.getInsertComment();
+            final String insertComment = this.isDataSheetCreationLogic.getInsertComment();
             bw.write(insertComment);
             bw.newLine();
 
@@ -163,7 +166,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
                 }
 
-                final String datas = this.insertionSqlDataSheetCreationLogic.getInsertSql(datasRow);
+                final String datas = this.isDataSheetCreationLogic.getInsertSql(datasRow);
                 bw.write(datas);
                 bw.write(System.lineSeparator());
 

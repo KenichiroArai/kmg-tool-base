@@ -10,6 +10,9 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 挿入SQLデータシート作成サービスインタフェース<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -17,7 +20,7 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
  *
  * @version 1.0.0
  */
-public interface InsertionSqlDataSheetCreationService extends Runnable {
+public interface IslDataSheetCreationService extends Runnable {
 
     /**
      * 初期化する<br>

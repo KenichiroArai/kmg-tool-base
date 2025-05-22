@@ -2,12 +2,15 @@ package kmg.tool.domain.service.is.impl;
 
 import java.nio.file.Path;
 
-import kmg.tool.domain.service.is.InsertionSqlCreationService;
-import kmg.tool.domain.service.is.InsertionSqlFileCreationService;
+import kmg.tool.domain.service.is.IsCreationService;
+import kmg.tool.domain.service.is.IsFileCreationService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 挿入SQL作成サービス<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -15,7 +18,7 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
  *
  * @version 1.0.0
  */
-public class InsertionSqlCreationServiceImpl implements InsertionSqlCreationService {
+public class IsCreationServiceImpl implements IsCreationService {
 
     /** 入力パス */
     private Path inputPath;
@@ -61,10 +64,10 @@ public class InsertionSqlCreationServiceImpl implements InsertionSqlCreationServ
     @Override
     public void outputInsertionSql() throws KmgToolMsgException {
 
-        final InsertionSqlFileCreationService insertionSqlFileCreationService
-            = new InsertionSqlFileCreationServiceImpl();
-        insertionSqlFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
-        insertionSqlFileCreationService.outputInsertionSql();
+        final IsFileCreationService isFileCreationService
+            = new IsFileCreationServiceImpl();
+        isFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
+        isFileCreationService.outputInsertionSql();
 
     }
 

@@ -10,10 +10,13 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.core.infrastructure.utils.KmgPoiUtils;
-import kmg.tool.domain.logic.is.InsertionSqlBasicInformationLogic;
+import kmg.tool.domain.logic.is.IsBasicInformationLogic;
 
 /**
  * 挿入SQL基本情報ロジック<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -22,7 +25,7 @@ import kmg.tool.domain.logic.is.InsertionSqlBasicInformationLogic;
  * @version 1.0.0
  */
 @Service
-public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicInformationLogic {
+public class IsBasicInformationLogicImpl implements IsBasicInformationLogic {
 
     /** 入力ワークブック */
     private Workbook inputWk;
@@ -43,7 +46,7 @@ public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicI
 
         KmgDbTypes result = null;
 
-        final Sheet wkSheet = this.inputWk.getSheet(InsertionSqlBasicInformationLogic.SETTING_SHEET_NAME);
+        final Sheet wkSheet = this.inputWk.getSheet(IsBasicInformationLogic.SETTING_SHEET_NAME);
         final Cell  wkCell  = KmgPoiUtils.getCell(wkSheet, 0, 1);
 
         result = KmgDbTypes.getEnum(KmgPoiUtils.getStringValue(wkCell));
@@ -68,7 +71,7 @@ public class InsertionSqlBasicInformationLogicImpl implements InsertionSqlBasicI
 
         final Map<String, String> result = new HashMap<>();
 
-        final Sheet wkSheet = this.inputWk.getSheet(InsertionSqlBasicInformationLogic.LIST_NAME);
+        final Sheet wkSheet = this.inputWk.getSheet(IsBasicInformationLogic.LIST_NAME);
 
         for (int rowIdx = 1; rowIdx <= wkSheet.getLastRowNum(); rowIdx++) {
 

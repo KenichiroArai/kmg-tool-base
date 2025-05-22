@@ -14,6 +14,9 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 挿入SQLデータシート作成ロジックインタフェース<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -21,7 +24,7 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
  *
  * @version 1.0.0
  */
-public interface InsertionSqlDataSheetCreationLogic {
+public interface IsDataSheetCreationLogic {
 
     /**
      * 出力ファイルのディレクトリを作成する<br>

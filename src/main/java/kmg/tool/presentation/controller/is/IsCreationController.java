@@ -23,13 +23,16 @@ import kmg.core.infrastructure.model.KmgPfaMeasModel;
 import kmg.core.infrastructure.model.impl.KmgPfaMeasModelImpl;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.service.is.InsertionSqlCreationService;
-import kmg.tool.domain.service.is.impl.InsertionSqlCreationServiceImpl;
+import kmg.tool.domain.service.is.IsCreationService;
+import kmg.tool.domain.service.is.impl.IsCreationServiceImpl;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 挿入SQL作成画面コントローラ<br>
+ * <p>
+ * 「Is」は、InsertionSqlの略。
+ * </p>
  *
  * @author KenichiroArai
  *
@@ -38,7 +41,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
  * @version 1.0.0
  */
 @Controller
-public class InsertionSqlCreationController implements Initializable {
+public class IsCreationController implements Initializable {
 
     /** ファイル選択ダイアログのタイトル */
     private static final String FILE_CHOOSER_TITLE = "ファイル選択";
@@ -97,9 +100,9 @@ public class InsertionSqlCreationController implements Initializable {
      *
      * @since 0.1.0
      */
-    public InsertionSqlCreationController() {
+    public IsCreationController() {
 
-        this(LoggerFactory.getLogger(InsertionSqlCreationController.class));
+        this(LoggerFactory.getLogger(IsCreationController.class));
 
     }
 
@@ -111,7 +114,7 @@ public class InsertionSqlCreationController implements Initializable {
      * @param logger
      *               ロガー
      */
-    protected InsertionSqlCreationController(final Logger logger) {
+    protected IsCreationController(final Logger logger) {
 
         this.logger = logger;
 
@@ -163,7 +166,7 @@ public class InsertionSqlCreationController implements Initializable {
     protected void mainProc(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
 
         /* 挿入SQL作成サービス */
-        final InsertionSqlCreationService insertSqlCreationService = new InsertionSqlCreationServiceImpl();
+        final IsCreationService insertSqlCreationService = new IsCreationServiceImpl();
         final short                       threadNum                = Short.parseShort(this.txtThreadNum.getText());
         insertSqlCreationService.initialize(inputPath, outputPath, threadNum);
         insertSqlCreationService.outputInsertionSql();
@@ -186,12 +189,12 @@ public class InsertionSqlCreationController implements Initializable {
     private void onCalcInputFileOpenClicked(final ActionEvent event) {
 
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(InsertionSqlCreationController.FILE_CHOOSER_TITLE);
+        fileChooser.setTitle(IsCreationController.FILE_CHOOSER_TITLE);
         String defaultFilePath = this.txtInputFile.getText();
 
         if (KmgString.isEmpty(defaultFilePath)) {
 
-            defaultFilePath = InsertionSqlCreationController.DEFAULT_DIRECTORY_PATH;
+            defaultFilePath = IsCreationController.DEFAULT_DIRECTORY_PATH;
 
         }
         File defaultFile = new File(defaultFilePath);
@@ -223,12 +226,12 @@ public class InsertionSqlCreationController implements Initializable {
     private void onCalcOutputDirectoryOpenClicked(final ActionEvent event) {
 
         final DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle(InsertionSqlCreationController.DIRECTORY_CHOOSER_TITLE);
+        directoryChooser.setTitle(IsCreationController.DIRECTORY_CHOOSER_TITLE);
         String defaultFilePath = this.txtOutputDirectory.getText();
 
         if (KmgString.isEmpty(defaultFilePath)) {
 
-            defaultFilePath = InsertionSqlCreationController.DEFAULT_DIRECTORY_PATH;
+            defaultFilePath = IsCreationController.DEFAULT_DIRECTORY_PATH;
 
         }
         File defaultFile = new File(defaultFilePath);
