@@ -1,4 +1,4 @@
-package kmg.tool.domain.service.isc;
+package kmg.tool.domain.service.is;
 
 import java.nio.file.Path;
 import java.util.Map;

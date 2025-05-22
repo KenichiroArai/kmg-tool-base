@@ -1,4 +1,4 @@
-package kmg.tool.domain.service.isc.impl;
+package kmg.tool.domain.service.is.impl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.domain.logic.isc.InsertionSqlBasicInformationLogic;
-import kmg.tool.domain.service.isc.InsertionSqlDataSheetCreationService;
-import kmg.tool.domain.service.isc.InsertionSqlFileCreationService;
+import kmg.tool.domain.logic.is.InsertionSqlBasicInformationLogic;
+import kmg.tool.domain.service.is.InsertionSqlDataSheetCreationService;
+import kmg.tool.domain.service.is.InsertionSqlFileCreationService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 

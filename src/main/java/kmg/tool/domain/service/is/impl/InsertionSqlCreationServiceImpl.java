@@ -1,9 +1,9 @@
-package kmg.tool.domain.service.isc.impl;
+package kmg.tool.domain.service.is.impl;
 
 import java.nio.file.Path;
 
-import kmg.tool.domain.service.isc.InsertionSqlCreationService;
-import kmg.tool.domain.service.isc.InsertionSqlFileCreationService;
+import kmg.tool.domain.service.is.InsertionSqlCreationService;
+import kmg.tool.domain.service.is.InsertionSqlFileCreationService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**

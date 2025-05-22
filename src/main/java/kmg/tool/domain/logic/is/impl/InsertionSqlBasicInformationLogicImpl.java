@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic.isc.impl;
+package kmg.tool.domain.logic.is.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.core.infrastructure.utils.KmgPoiUtils;
-import kmg.tool.domain.logic.isc.InsertionSqlBasicInformationLogic;
+import kmg.tool.domain.logic.is.InsertionSqlBasicInformationLogic;
 
 /**
  * 挿入SQL基本情報ロジック<br>

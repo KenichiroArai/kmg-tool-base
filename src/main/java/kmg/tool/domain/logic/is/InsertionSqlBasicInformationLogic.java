@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic.isc;
+package kmg.tool.domain.logic.is;
 
 import java.util.Map;
 

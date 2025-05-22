@@ -1,11 +1,11 @@
-package kmg.tool.domain.service.isc;
+package kmg.tool.domain.service.is;
 
 import java.nio.file.Path;
 
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
- * 挿入SQL作成サービスインタフェース<br>
+ * 挿入SQLファイル作成サービスインタフェース<br>
  *
  * @author KenichiroArai
  *
@@ -13,7 +13,7 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
  *
  * @version 1.0.0
  */
-public interface InsertionSqlCreationService {
+public interface InsertionSqlFileCreationService {
 
     /**
      * 初期化する<br>
