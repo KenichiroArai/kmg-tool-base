@@ -111,10 +111,6 @@ public class InsertionSqlCreationTool extends Application {
         // this.springContext = SpringApplication.run(InsertionSqlCreationTool.class);
         this.springContext = new SpringApplicationBuilder(InsertionSqlCreationTool.class).run();
 
-        // TODO KenichiroArai 2025/05/22 作業中
-        // this.logger = this.springContext.getBean(Logger.class);
-        // this.messageSource = this.springContext.getBean(KmgMessageSource.class);
-
     }
 
     /**

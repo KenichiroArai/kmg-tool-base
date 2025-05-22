@@ -49,16 +49,16 @@ public class InsertionSqlCreationController implements Initializable {
     /** デフォルトのディレクトリパス */
     private static final String DEFAULT_DIRECTORY_PATH = "c:/";
 
-    /** メッセージソース */
-    @Autowired
-    private KmgMessageSource messageSource;
-
     /**
      * ロガー
      *
      * @since 0.1.0
      */
     private final Logger logger;
+
+    /** メッセージソース */
+    @Autowired
+    private KmgMessageSource messageSource;
 
     /** 入力ファイルテキストボックス */
     @FXML
