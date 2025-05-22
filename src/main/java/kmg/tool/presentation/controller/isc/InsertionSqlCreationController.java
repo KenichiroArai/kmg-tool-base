@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +36,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
  *
  * @version 1.0.0
  */
+@Controller
 public class InsertionSqlCreationController implements Initializable {
 
     /** ファイル選択ダイアログのタイトル */
