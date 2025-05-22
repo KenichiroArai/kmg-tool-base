@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -44,7 +45,7 @@ public class InsertionSqlCreationTool extends Application {
      *
      * @since 0.1.0
      */
-    private Logger logger;
+    private final Logger logger;
 
     /** Springアプリケーションコンテキスト */
     private ConfigurableApplicationContext springContext;
@@ -63,7 +64,7 @@ public class InsertionSqlCreationTool extends Application {
      */
     public static void main(final String[] args) {
 
-        Application.launch(args);
+        Application.launch(InsertionSqlCreationTool.class, args);
 
     }
 
@@ -74,7 +75,8 @@ public class InsertionSqlCreationTool extends Application {
      */
     public InsertionSqlCreationTool() {
 
-        // デフォルトコンストラクタ
+        this(LoggerFactory.getLogger(InsertionSqlCreationTool.class));
+
     }
 
     /**
