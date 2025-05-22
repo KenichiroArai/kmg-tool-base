@@ -141,9 +141,8 @@ public class InsertionSqlCreationTool extends Application {
 
         } catch (final IOException e) {
 
-            // final TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ログ。挿入SQL作成ツールの開始に失敗しました。
             // ログの出力
-            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.NONE;
+            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG43001;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);

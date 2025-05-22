@@ -215,6 +215,15 @@ public enum KmgToolGenMsgTypes implements KmgToolComGenMsgTypes, KmgToolComExcMs
     KMGTOOL_GEN13008("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
+     * 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN13009("出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
      * ファイル処理に失敗しました。
      *
      * @author KenichiroArai

@@ -272,9 +272,8 @@ public class InsertionSqlCreationController implements Initializable {
 
         } catch (final KmgToolMsgException e) {
 
-            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ログ。挿入SQL作成画面の実行ボタンの処理に失敗しました。
             // ログの出力
-            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.NONE;
+            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG43000;
             final Object[]           messageArgs = {
                 inputPath, outputPath,
             };

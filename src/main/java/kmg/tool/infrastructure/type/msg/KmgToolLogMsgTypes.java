@@ -67,6 +67,15 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
     KMGTOOL_LOG12006("CSVファイルに書き込む処理を終了します。"),
 
     /**
+     * 挿入SQL出力に失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_LOG12007("挿入SQL出力に失敗しました。"),
+
+    /**
      * リーダーリソースのクローズ処理中にエラーが発生しました。入力ファイルパス=[{0}]
      *
      * @author KenichiroArai
@@ -375,6 +384,24 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
      * @since 0.1.0
      */
     KMGTOOL_LOG41002("初期化で例外が発生しました。"),
+
+    /**
+     * 挿入SQL作成画面の実行ボタンの処理に失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_LOG43000("挿入SQL作成画面の実行ボタンの処理に失敗しました。"),
+
+    /**
+     * 挿入SQL作成ツールの開始に失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_LOG43001("挿入SQL作成ツールの開始に失敗しました。"),
 
     /* 定義：終了 */
     ;

@@ -197,9 +197,8 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
         } catch (final KmgToolMsgException e) {
 
-            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ログ。挿入SQL出力に失敗しました。
             // ログの出力
-            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.NONE;
+            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG12007;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);
