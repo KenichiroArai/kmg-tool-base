@@ -3,9 +3,8 @@ package kmg.tool.presentation.ui.gui.isc;
 import java.io.IOException;
 import java.net.URL;
 
-import org.slf4j.Logger;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import javafx.application.Application;
@@ -13,8 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 挿入SQL作成ツール<br>
@@ -36,15 +33,12 @@ public class InsertionSqlCreationTool extends Application {
     /** FXMLファイルパス */
     private static final String FXML_PATH = "/kmg/tool/application/ui/gui/KmgTlInsertionSqlCreationScreenGui.fxml";
 
-    /**
-     * ロガー
-     *
-     * @since 0.1.0
-     */
-    private Logger logger;
-
-    /** メッセージソース */
-    private KmgMessageSource messageSource;
+    // TODO KenichiroArai 2025/05/22 作業中
+    // /** ロガー */
+    // private Logger logger;
+    //
+    // /** メッセージソース */
+    // private KmgMessageSource messageSource;
 
     /** Springアプリケーションコンテキスト */
     private ConfigurableApplicationContext springContext;
@@ -80,9 +74,12 @@ public class InsertionSqlCreationTool extends Application {
     @Override
     public void init() {
 
-        this.springContext = SpringApplication.run(InsertionSqlCreationTool.class);
-        this.logger = this.springContext.getBean(Logger.class);
-        this.messageSource = this.springContext.getBean(KmgMessageSource.class);
+        // this.springContext = SpringApplication.run(InsertionSqlCreationTool.class);
+        this.springContext = new SpringApplicationBuilder(InsertionSqlCreationTool.class).run();
+
+        // TODO KenichiroArai 2025/05/22 作業中
+        // this.logger = this.springContext.getBean(Logger.class);
+        // this.messageSource = this.springContext.getBean(KmgMessageSource.class);
 
     }
 
@@ -116,10 +113,10 @@ public class InsertionSqlCreationTool extends Application {
 
             // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：ログ。挿入SQL作成ツールの開始に失敗しました。
             // ログの出力
-            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.NONE;
-            final Object[]           messageArgs = {};
-            final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
-            this.logger.error(msg, e);
+            // final KmgToolLogMsgTypes logType = KmgToolLogMsgTypes.NONE;
+            // final Object[] messageArgs = {};
+            // final String msg = this.messageSource.getLogMessage(logType, messageArgs);
+            // this.logger.error(msg, e);
             return;
 
         }

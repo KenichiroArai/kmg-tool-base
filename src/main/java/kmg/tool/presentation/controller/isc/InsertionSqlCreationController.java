@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -90,6 +91,17 @@ public class InsertionSqlCreationController implements Initializable {
     /** 処理時間単位ラベル */
     @FXML
     private Label lblProcTimeUnit;
+
+    /**
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     */
+    public InsertionSqlCreationController() {
+
+        this(LoggerFactory.getLogger(InsertionSqlCreationController.class));
+
+    }
 
     /**
      * カスタムロガーを使用して初期化するコンストラクタ<br>

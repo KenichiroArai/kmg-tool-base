@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +60,17 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
     /** 出力パス */
     private Path outputPath;
+
+    /**
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @since 0.1.0
+     */
+    public InsertionSqlDataSheetCreationServiceImpl() {
+
+        this(LoggerFactory.getLogger(InsertionSqlDataSheetCreationServiceImpl.class));
+
+    }
 
     /**
      * カスタムロガーを使用して初期化するコンストラクタ<br>
