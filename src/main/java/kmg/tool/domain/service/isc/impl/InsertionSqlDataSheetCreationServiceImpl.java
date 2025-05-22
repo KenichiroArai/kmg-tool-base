@@ -171,8 +171,7 @@ public class InsertionSqlDataSheetCreationServiceImpl implements InsertionSqlDat
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。出力ファイルへの書き込みに失敗しました。出力ファイルパス=[{0}]
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12010;
             final Object[]           genMsgArgs  = {
                 outputFilePath,
             };

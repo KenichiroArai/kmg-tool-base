@@ -125,8 +125,7 @@ public class InsertionSqlDataSheetCreationLogicImpl implements InsertionSqlDataS
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[{0}]
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
             final Object[]           genMsgArgs  = {
                 this.outputPath,
             };

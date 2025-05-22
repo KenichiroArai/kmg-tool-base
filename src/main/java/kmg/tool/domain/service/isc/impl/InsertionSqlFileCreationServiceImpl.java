@@ -99,8 +99,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
 
             } catch (final IOException | EncryptedDocumentException e) {
 
-                // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。暗号化されたファイルです。入力ファイルのパス=[{0}]
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12008;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };
@@ -110,8 +109,7 @@ public class InsertionSqlFileCreationServiceImpl implements InsertionSqlFileCrea
 
         } catch (final IOException e) {
 
-            // TODO KenichiroArai 2025/04/25 【挿入SQL作成】：エラー処理。入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[{0}]
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12009;
             final Object[]           genMsgArgs  = {
                 this.inputPath,
             };

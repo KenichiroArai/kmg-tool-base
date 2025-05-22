@@ -107,6 +107,33 @@ public enum KmgToolGenMsgTypes implements KmgToolComGenMsgTypes, KmgToolComExcMs
     KMGTOOL_GEN12007("バリデーションエラーが発生しました。"),
 
     /**
+     * 暗号化されたファイルです。入力ファイルのパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN12008("暗号化されたファイルです。入力ファイルのパス=[{0}]"),
+
+    /**
+     * 入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN12009("入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[{0}]"),
+
+    /**
+     * 出力ファイルへの書き込みに失敗しました。出力ファイルパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN12010("出力ファイルへの書き込みに失敗しました。出力ファイルパス=[{0}]"),
+
+    /**
      * 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}
      *
      * @author KenichiroArai
