@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.core.infrastructure.utils.KmgPoiUtils;
+import kmg.fund.infrastructure.utils.KmgPoiUtils;
 import kmg.tool.application.logic.is.IsBasicInformationLogic;
 
 /**
