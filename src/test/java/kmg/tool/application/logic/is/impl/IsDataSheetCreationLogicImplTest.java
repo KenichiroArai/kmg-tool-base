@@ -551,15 +551,16 @@ public class IsDataSheetCreationLogicImplTest {
      */
     private Sheet createTestSheet() {
 
+        final Sheet    result;
         final Workbook workbook = new XSSFWorkbook();
-        final Sheet    sheet    = workbook.createSheet("テストシート");
+        result = workbook.createSheet("テストシート");
 
         // 1行目にテーブル物理名を設定
-        final Row  row0    = sheet.createRow(0);
+        final Row  row0    = result.createRow(0);
         final Cell cell0_0 = row0.createCell(0);
         cell0_0.setCellValue("test_table");
 
-        return sheet;
+        return result;
 
     }
 
@@ -570,16 +571,17 @@ public class IsDataSheetCreationLogicImplTest {
      */
     private Sheet createTestSheetWithColumns() {
 
+        final Sheet    result;
         final Workbook workbook = new XSSFWorkbook();
-        final Sheet    sheet    = workbook.createSheet("テストシート");
+        result = workbook.createSheet("テストシート");
 
         // 1行目にテーブル物理名を設定
-        final Row  row0    = sheet.createRow(0);
+        final Row  row0    = result.createRow(0);
         final Cell cell0_0 = row0.createCell(0);
         cell0_0.setCellValue("test_table");
 
         // 3行目（インデックス2）にカラム物理名を設定
-        final Row  row2    = sheet.createRow(2);
+        final Row  row2    = result.createRow(2);
         final Cell cell2_0 = row2.createCell(0);
         cell2_0.setCellValue("id");
         final Cell cell2_1 = row2.createCell(1);
@@ -587,7 +589,7 @@ public class IsDataSheetCreationLogicImplTest {
         final Cell cell2_2 = row2.createCell(2);
         cell2_2.setCellValue("value");
 
-        return sheet;
+        return result;
 
     }
 
@@ -639,15 +641,16 @@ public class IsDataSheetCreationLogicImplTest {
      */
     private Sheet createTestSheetWithName(final String sheetName) {
 
+        final Sheet    result;
         final Workbook workbook = new XSSFWorkbook();
-        final Sheet    sheet    = workbook.createSheet(sheetName);
+        result = workbook.createSheet(sheetName);
 
         // 1行目にテーブル物理名を設定
-        final Row  row0    = sheet.createRow(0);
+        final Row  row0    = result.createRow(0);
         final Cell cell0_0 = row0.createCell(0);
         cell0_0.setCellValue("test_table");
 
-        return sheet;
+        return result;
 
     }
 
@@ -661,15 +664,16 @@ public class IsDataSheetCreationLogicImplTest {
      */
     private Sheet createTestSheetWithPhysicsName(final String physicsName) {
 
+        final Sheet    result;
         final Workbook workbook = new XSSFWorkbook();
-        final Sheet    sheet    = workbook.createSheet("テストシート");
+        result = workbook.createSheet("テストシート");
 
         // 1行目にテーブル物理名を設定
-        final Row  row0    = sheet.createRow(0);
+        final Row  row0    = result.createRow(0);
         final Cell cell0_0 = row0.createCell(0);
         cell0_0.setCellValue(physicsName);
 
-        return sheet;
+        return result;
 
     }
 }
