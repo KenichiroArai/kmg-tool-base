@@ -19,6 +19,7 @@ import kmg.tool.infrastructure.common.msg.KmgToolComValMsgTypes;
  *
  * @version 0.1.0
  */
+@SuppressWarnings("nls")
 public enum KmgToolValMsgTypes implements KmgToolComValMsgTypes, KmgToolComExcMsgTypes {
 
     /* 定義：開始 */

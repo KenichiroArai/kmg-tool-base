@@ -22,16 +22,16 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic implements AccessorCreationLogic {
 
     /** Javadocコメントの開始の正規表現パターン */
-    private static final String JAVADOC_COMMENT_START_PATTERN = "/\\*\\*";
+    private static final String JAVADOC_COMMENT_START_PATTERN = "/\\*\\*"; //$NON-NLS-1$
 
     /** 1行Javadocコメントの正規表現パターン */
-    private static final String SINGLE_LINE_JAVADOC_PATTERN = "/\\*\\*\\s+(\\S+)\\s+\\*/";
+    private static final String SINGLE_LINE_JAVADOC_PATTERN = "/\\*\\*\\s+(\\S+)\\s+\\*/"; //$NON-NLS-1$
 
     /** 複数行Javadocコメント開始の正規表現パターン */
-    private static final String MULTI_LINE_JAVADOC_START_PATTERN = "/\\*\\*(\\S+)";
+    private static final String MULTI_LINE_JAVADOC_START_PATTERN = "/\\*\\*(\\S+)"; //$NON-NLS-1$
 
     /** privateフィールド宣言の正規表現パターン */
-    private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);";
+    private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);"; //$NON-NLS-1$
 
     /** Javadocの解析中かを管理する */
     private boolean inJavadocParsing;
@@ -61,7 +61,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
         if (this.item == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32001;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
@@ -89,7 +89,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
         if (this.javadocComment == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32002;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
@@ -117,7 +117,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
         if (this.tyep == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32003;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }

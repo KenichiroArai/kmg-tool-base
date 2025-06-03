@@ -29,17 +29,17 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 public class JdtsBlockModelImpl implements JdtsBlockModel {
 
     /** Javadocブロック終了文字列 */
-    private static final String JAVADOC_END = "*/";
+    private static final String JAVADOC_END = "*/"; //$NON-NLS-1$
 
     /** アノテーション開始文字 */
-    private static final String ANNOTATION_START = "@";
+    private static final String ANNOTATION_START = "@"; //$NON-NLS-1$
 
     /** 改行文字の正規表現 */
-    private static final String LINE_SEPARATOR_REGEX = "\\R";
+    private static final String LINE_SEPARATOR_REGEX = "\\R"; //$NON-NLS-1$
 
     /** Javadocブロック分割用の正規表現 */
     private static final String JAVADOC_BLOCK_SPLIT_REGEX
-        = String.format("%s\\s+", Pattern.quote(JdtsBlockModelImpl.JAVADOC_END));
+        = String.format("%s\\s+", Pattern.quote(JdtsBlockModelImpl.JAVADOC_END)); //$NON-NLS-1$
 
     /** 識別子 */
     private final UUID id;

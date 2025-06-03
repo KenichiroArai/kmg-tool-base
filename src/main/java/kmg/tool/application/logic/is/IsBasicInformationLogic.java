@@ -21,10 +21,10 @@ import kmg.core.infrastructure.types.KmgDbTypes;
 public interface IsBasicInformationLogic {
 
     /** 設定シート名 */
-    String SETTING_SHEET_NAME = "設定情報";
+    String SETTING_SHEET_NAME = "設定情報"; //$NON-NLS-1$
 
     /** 一覧シート名 */
-    String LIST_NAME = "一覧";
+    String LIST_NAME = "一覧"; //$NON-NLS-1$
 
     /**
      * KMG DBの種類を返す<br>

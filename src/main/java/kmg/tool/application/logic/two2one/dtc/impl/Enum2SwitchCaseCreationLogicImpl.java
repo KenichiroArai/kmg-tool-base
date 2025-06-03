@@ -28,7 +28,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
     implements Enum2SwitchCaseCreationLogic {
 
     /** 列挙型定義の正規表現パターン */
-    private static final String ENUM_DEFINITION_PATTERN = "(\\w+)\\(\"(\\S+)\",";
+    private static final String ENUM_DEFINITION_PATTERN = "(\\w+)\\(\"(\\S+)\","; //$NON-NLS-1$
 
     /** 項目 */
     private String item;
@@ -52,7 +52,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
         if (this.itemName == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32009;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
@@ -80,7 +80,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
         if (this.item == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32010;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }

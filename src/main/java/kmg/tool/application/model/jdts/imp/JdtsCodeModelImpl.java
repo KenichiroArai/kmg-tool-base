@@ -23,10 +23,10 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
 public class JdtsCodeModelImpl implements JdtsCodeModel {
 
     /** Javadocコメント開始文字列 */
-    private static final String JAVADOC_START = "/**";
+    private static final String JAVADOC_START = "/**"; //$NON-NLS-1$
 
     /** Javadocブロック分割用の正規表現フォーマット */
-    private static final String JAVADOC_BLOCK_SPLIT_FORMAT = "%s\\s+";
+    private static final String JAVADOC_BLOCK_SPLIT_FORMAT = "%s\\s+"; //$NON-NLS-1$
 
     /** オリジナルコード */
     private final String orgCode;

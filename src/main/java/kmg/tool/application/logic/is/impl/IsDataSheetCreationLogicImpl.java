@@ -44,28 +44,28 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
     /** 削除SQLテンプレート */
-    private static final String DELETE_SQL_TEMPLATE = "DELETE FROM %s;";
+    private static final String DELETE_SQL_TEMPLATE = "DELETE FROM %s;"; //$NON-NLS-1$
 
     /** 挿入SQLテンプレート */
-    private static final String INSERT_SQL_TEMPLATE = "INSERT INTO %s (%s) VALUES (%s);";
+    private static final String INSERT_SQL_TEMPLATE = "INSERT INTO %s (%s) VALUES (%s);"; //$NON-NLS-1$
 
     /** 無限小 */
-    private static final String NEGATIVE_INFINITY = "-infinity";
+    private static final String NEGATIVE_INFINITY = "-infinity"; //$NON-NLS-1$
 
     /** 無限大 */
-    private static final String POSITIVE_INFINITY = "infinity";
+    private static final String POSITIVE_INFINITY = "infinity"; //$NON-NLS-1$
 
     /** シングルクォート付き文字列フォーマット */
-    private static final String SINGLE_QUOTED_STRING_FORMAT = "'%s'";
+    private static final String SINGLE_QUOTED_STRING_FORMAT = "'%s'"; //$NON-NLS-1$
 
     /** レコード削除コメントフォーマット */
-    private static final String DELETE_COMMENT_FORMAT = "-- %sのレコード削除";
+    private static final String DELETE_COMMENT_FORMAT = "-- %sのレコード削除"; //$NON-NLS-1$
 
     /** レコード挿入コメントフォーマット */
-    private static final String INSERT_COMMENT_FORMAT = "-- %sのレコード挿入";
+    private static final String INSERT_COMMENT_FORMAT = "-- %sのレコード挿入"; //$NON-NLS-1$
 
     /** 出力ファイル名フォーマット */
-    private static final String OUTPUT_FILENAME_FORMAT = "%s_insert_%s.sql";
+    private static final String OUTPUT_FILENAME_FORMAT = "%s_insert_%s.sql"; //$NON-NLS-1$
 
     /** KMG DBの種類 */
     private KmgDbTypes kmgDbTypes;
@@ -466,9 +466,8 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
             return result;
 
         }
-        result = Paths.get(this.outputPath.toAbsolutePath().toString(),
-            String.format(IsDataSheetCreationLogicImpl.OUTPUT_FILENAME_FORMAT, this.getSqlId(),
-                this.getTablePhysicsName()));
+        result = Paths.get(this.outputPath.toAbsolutePath().toString(), String
+            .format(IsDataSheetCreationLogicImpl.OUTPUT_FILENAME_FORMAT, this.getSqlId(), this.getTablePhysicsName()));
         this.outputFilePath = result;
         return result;
 
@@ -617,8 +616,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
             case NONE:
                 // 指定無し
                 outputData = KmgPoiUtils.getStringValue(dataCell);
-                outputData
-                    = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
+                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             case INTEGER:
@@ -658,8 +656,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
                     outputData = KmgLocalDateUtils.formatYyyyMmDd(date);
 
                 }
-                outputData
-                    = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
+                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             case TIME:
@@ -679,15 +676,13 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
                     outputData = KmgLocalDateTimeUtils.formatYyyyMmDdHhMmSsSss(date);
 
                 }
-                outputData
-                    = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
+                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             case STRING:
                 // 文字列型
                 outputData = KmgPoiUtils.getStringValue(dataCell);
-                outputData
-                    = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
+                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
             default:

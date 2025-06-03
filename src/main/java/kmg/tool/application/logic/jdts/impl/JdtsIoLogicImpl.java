@@ -32,7 +32,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 public class JdtsIoLogicImpl implements JdtsIoLogic {
 
     /** 対象ファイルの拡張子 */
-    private static final String TARGET_FILE_EXTENSION = ".java";
+    private static final String TARGET_FILE_EXTENSION = ".java"; //$NON-NLS-1$
 
     /**
      * 対象ファイルパス

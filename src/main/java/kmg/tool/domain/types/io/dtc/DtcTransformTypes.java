@@ -18,6 +18,7 @@ import kmg.core.infrastructure.type.KmgString;
  *
  * @version 0.1.0
  */
+@SuppressWarnings("nls")
 public enum DtcTransformTypes implements KmgComTypes<String> {
 
     /* 定義：開始 */

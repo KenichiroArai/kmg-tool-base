@@ -31,16 +31,16 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
     /** アットマーク */
-    private static final String AT_MARK = "@";
+    private static final String AT_MARK = "@"; //$NON-NLS-1$
 
     /** ドライブ文字列 */
-    private static final String DRIVE_LETTER = "D:";
+    private static final String DRIVE_LETTER = "D:"; //$NON-NLS-1$
 
     /** ドライブ文字列（エスケープ） */
-    private static final String DRIVE_LETTER_ESCAPED = "D\\";
+    private static final String DRIVE_LETTER_ESCAPED = "D\\"; //$NON-NLS-1$
 
     /** Javaファイル拡張子 */
-    private static final String JAVA_FILE_EXTENSION = ".java:";
+    private static final String JAVA_FILE_EXTENSION = ".java:"; //$NON-NLS-1$
 
     /**
      * 行文字列をパスと行番号のエントリに変換する

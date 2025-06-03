@@ -1,26 +1,9 @@
 package kmg.tool.application.logic.jdts.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import kmg.core.infrastructure.exception.KmgReflectionException;
-import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
-import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
-import kmg.tool.application.model.jdts.JdtsTagConfigModel;
-import kmg.tool.application.model.jdts.imp.JdtsBlockModelImpl;
-import kmg.tool.application.model.jdts.imp.JdtsConfigsModelImpl;
-import kmg.tool.application.types.jdts.JdtsInsertPositionTypes;
-import kmg.tool.application.types.jdts.JdtsOverwriteTypes;
-import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定のブロック置換ロジック実装のテスト<br>
@@ -38,32 +21,6 @@ public class JdtsBlockReplLogicImplTest {
     public JdtsBlockReplLogicImplTest() {
 
         // 処理なし
-    }
-
-    /**
-     * JdtsBlockReplLogicImplの基本的なインスタンス生成テスト - 正常系:インスタンスが正しく生成されることの確認
-     * <p>
-     * JdtsBlockReplLogicImplクラスのインスタンスが正しく生成されることを確認します。
-     * </p>
-     */
-    @Test
-    public void testJdtsBlockReplLogicImpl_normalInstanceCreated() {
-
-        /* 期待値の定義 */
-        // インスタンスが正常に生成されること
-
-        /* 準備 */
-        // なし
-
-        /* テスト対象の実行 */
-        final JdtsBlockReplLogicImpl testResult = new JdtsBlockReplLogicImpl();
-
-        /* 検証の準備 */
-        final JdtsBlockReplLogicImpl actualInstance = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertNotNull(actualInstance, "インスタンスが正しく生成されること");
-
     }
 
     /**
@@ -89,79 +46,6 @@ public class JdtsBlockReplLogicImplTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedConfigsModel, actualConfigsModel, "初期状態でnullが返されること");
-
-    }
-
-    /**
-     * hasExistingTag メソッドのテスト - 正常系:初期状態でfalseが返されることの確認
-     * <p>
-     * 初期化前の状態でhasExistingTagを呼び出した場合にfalseが返されることを確認します。
-     * </p>
-     */
-    @Test
-    public void testHasExistingTag_normalInitialStateReturnsFalse() {
-
-        /* 期待値の定義 */
-        final boolean expectedHasExistingTag = false;
-
-        /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
-
-        /* テスト対象の実行 */
-        final boolean testResult = testTarget.hasExistingTag();
-
-        /* 検証の準備 */
-        final boolean actualHasExistingTag = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedHasExistingTag, actualHasExistingTag, "初期状態でfalseが返されること");
-
-    }
-
-    /**
-     * removeCurrentTag メソッドのテスト - 準正常系:初期状態でfalseが返されることの確認
-     * <p>
-     * 初期化前の状態でremoveCurrentTagを呼び出した場合にfalseが返されることを確認します。
-     * </p>
-     */
-    @Test
-    public void testRemoveCurrentTag_semiInitialStateReturnsFalse() {
-
-        /* 期待値の定義 */
-        final boolean expectedRemoveResult = false;
-
-        /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
-
-        /* テスト対象の実行 */
-        final boolean testResult = testTarget.removeCurrentTag();
-
-        /* 検証の準備 */
-        final boolean actualRemoveResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedRemoveResult, actualRemoveResult, "初期状態でfalseが返されること");
-
-    }
-
-    /**
-     * shouldAddNewTag メソッドのテスト - 例外系:初期状態でNullPointerExceptionが発生することの確認
-     * <p>
-     * 初期化前の状態でshouldAddNewTagを呼び出した場合にNullPointerExceptionが発生することを確認します。
-     * </p>
-     */
-    @Test
-    public void testShouldAddNewTag_errorInitialStateThrowsNullPointerException() {
-
-        /* 期待値の定義 */
-        // NullPointerExceptionが発生すること
-
-        /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
-
-        /* テスト対象の実行と検証の実施 */
-        Assertions.assertThrows(NullPointerException.class, () -> testTarget.shouldAddNewTag(),
-            "初期状態でNullPointerExceptionが発生すること");
 
     }
 
@@ -213,6 +97,58 @@ public class JdtsBlockReplLogicImplTest {
     }
 
     /**
+     * hasExistingTag メソッドのテスト - 正常系:初期状態でfalseが返されることの確認
+     * <p>
+     * 初期化前の状態でhasExistingTagを呼び出した場合にfalseが返されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testHasExistingTag_normalInitialStateReturnsFalse() {
+
+        /* 期待値の定義 */
+        final boolean expectedHasExistingTag = false;
+
+        /* 準備 */
+        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
+
+        /* テスト対象の実行 */
+        final boolean testResult = testTarget.hasExistingTag();
+
+        /* 検証の準備 */
+        final boolean actualHasExistingTag = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedHasExistingTag, actualHasExistingTag, "初期状態でfalseが返されること");
+
+    }
+
+    /**
+     * JdtsBlockReplLogicImplの基本的なインスタンス生成テスト - 正常系:インスタンスが正しく生成されることの確認
+     * <p>
+     * JdtsBlockReplLogicImplクラスのインスタンスが正しく生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testJdtsBlockReplLogicImpl_normalInstanceCreated() {
+
+        /* 期待値の定義 */
+        // インスタンスが正常に生成されること
+
+        /* 準備 */
+        // なし
+
+        /* テスト対象の実行 */
+        final JdtsBlockReplLogicImpl testResult = new JdtsBlockReplLogicImpl();
+
+        /* 検証の準備 */
+        final JdtsBlockReplLogicImpl actualInstance = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualInstance, "インスタンスが正しく生成されること");
+
+    }
+
+    /**
      * nextTag メソッドのテスト - 例外系:初期状態でNullPointerExceptionが発生することの確認
      * <p>
      * 初期化前の状態でnextTagを呼び出した場合にNullPointerExceptionが発生することを確認します。
@@ -229,6 +165,53 @@ public class JdtsBlockReplLogicImplTest {
 
         /* テスト対象の実行と検証の実施 */
         Assertions.assertThrows(NullPointerException.class, () -> testTarget.nextTag(),
+            "初期状態でNullPointerExceptionが発生すること");
+
+    }
+
+    /**
+     * removeCurrentTag メソッドのテスト - 準正常系:初期状態でfalseが返されることの確認
+     * <p>
+     * 初期化前の状態でremoveCurrentTagを呼び出した場合にfalseが返されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testRemoveCurrentTag_semiInitialStateReturnsFalse() {
+
+        /* 期待値の定義 */
+        final boolean expectedRemoveResult = false;
+
+        /* 準備 */
+        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
+
+        /* テスト対象の実行 */
+        final boolean testResult = testTarget.removeCurrentTag();
+
+        /* 検証の準備 */
+        final boolean actualRemoveResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedRemoveResult, actualRemoveResult, "初期状態でfalseが返されること");
+
+    }
+
+    /**
+     * shouldAddNewTag メソッドのテスト - 例外系:初期状態でNullPointerExceptionが発生することの確認
+     * <p>
+     * 初期化前の状態でshouldAddNewTagを呼び出した場合にNullPointerExceptionが発生することを確認します。
+     * </p>
+     */
+    @Test
+    public void testShouldAddNewTag_errorInitialStateThrowsNullPointerException() {
+
+        /* 期待値の定義 */
+        // NullPointerExceptionが発生すること
+
+        /* 準備 */
+        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
+
+        /* テスト対象の実行と検証の実施 */
+        Assertions.assertThrows(NullPointerException.class, () -> testTarget.shouldAddNewTag(),
             "初期状態でNullPointerExceptionが発生すること");
 
     }

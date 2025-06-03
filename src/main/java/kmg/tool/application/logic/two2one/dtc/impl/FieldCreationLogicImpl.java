@@ -36,7 +36,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     private static final int DATA_TYPE_INDEX = 2;
 
     /** 完全修飾名を削除する正規表現パターン（例：java.lang.String → String） */
-    private static final String REMOVE_PACKAGE_NAME_PATTERN = "(\\w+\\.)+";
+    private static final String REMOVE_PACKAGE_NAME_PATTERN = "(\\w+\\.)+"; //$NON-NLS-1$
 
     /** フィールドのコメント */
     private String comment;
@@ -64,7 +64,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         if (this.comment == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32006;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
@@ -94,7 +94,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         if (this.field == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32007;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
@@ -124,7 +124,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         if (this.type == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32008;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }

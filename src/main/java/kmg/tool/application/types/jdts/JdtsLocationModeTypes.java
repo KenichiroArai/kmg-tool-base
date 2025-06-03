@@ -17,6 +17,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  *
  * @version 0.1.0
  */
+@SuppressWarnings("nls")
 public enum JdtsLocationModeTypes implements KmgComTypes<String> {
 
     /* 定義：開始 */

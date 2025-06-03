@@ -14,6 +14,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  *
  * @version 0.1.0
  */
+@SuppressWarnings("nls")
 public enum JavadocGroupIndexTypes implements KmgComTypes<Integer> {
 
     /* 定義：開始 */

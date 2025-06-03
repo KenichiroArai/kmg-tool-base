@@ -17,17 +17,17 @@ import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 public interface JavadocTagsModel {
 
     /** 行頭のアスタリスクのみの行を検出する正規表現パターン */
-    String PATTERN_LINE_START_ASTERISK_ONLY = "^\\*$";
+    String PATTERN_LINE_START_ASTERISK_ONLY = "^\\*$"; //$NON-NLS-1$
 
     /** 行頭のアスタリスクを検出する正規表現パターン */
-    String PATTERN_LINE_START_ASTERISK = "^\\*";
+    String PATTERN_LINE_START_ASTERISK = "^\\*"; //$NON-NLS-1$
 
     /**
      * Javadocタグを抽出する正規表現パターン
      *
      * @since 0.1.0
      */
-    String TAG_PATTERN = "\\s+\\*\\s+(@\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?";
+    String TAG_PATTERN = "\\s+\\*\\s+(@\\w+)\\s+([^\\s\\n]+)(?:\\s+([^@\\n]+))?"; //$NON-NLS-1$
 
     /**
      * コンパイル済みのJavadocタグパターン

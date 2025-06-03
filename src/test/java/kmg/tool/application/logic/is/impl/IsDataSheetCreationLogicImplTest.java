@@ -22,7 +22,6 @@ import kmg.core.infrastructure.types.KmgCharsetTypes;
 import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * 挿入SQLデータシート作成ロジック実装のテスト<br>
@@ -125,38 +124,6 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getCharset メソッドのテスト - 正常系:PostgreSQLでMS932が返されることの確認
-     * <p>
-     * PostgreSQLの場合にMS932文字セットが返されることを確認します。
-     * </p>
-     */
-    @Test
-    public void testGetCharset_normalPostgreSqlReturnsMs932() {
-
-        /* 期待値の定義 */
-        final Charset expectedCharset = KmgCharsetTypes.MS932.toCharset();
-
-        /* 準備 */
-        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
-
-        // 初期化
-        final Sheet               testSheet      = this.createTestSheet();
-        final Map<String, String> testSqlIdMap   = new HashMap<>();
-        final Path                testOutputPath = Paths.get("test");
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
-
-        /* テスト対象の実行 */
-        final Charset testResult = testTarget.getCharset();
-
-        /* 検証の準備 */
-        final Charset actualCharset = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedCharset, actualCharset, "PostgreSQLの場合はMS932文字セットが返されること");
-
-    }
-
-    /**
      * getCharset メソッドのテスト - 正常系:MySQLでUTF8が返されることの確認
      * <p>
      * MySQLの場合にUTF8文字セットが返されることを確認します。
@@ -185,6 +152,38 @@ public class IsDataSheetCreationLogicImplTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedCharset, actualCharset, "MySQLの場合はUTF8文字セットが返されること");
+
+    }
+
+    /**
+     * getCharset メソッドのテスト - 正常系:PostgreSQLでMS932が返されることの確認
+     * <p>
+     * PostgreSQLの場合にMS932文字セットが返されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetCharset_normalPostgreSqlReturnsMs932() {
+
+        /* 期待値の定義 */
+        final Charset expectedCharset = KmgCharsetTypes.MS932.toCharset();
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // 初期化
+        final Sheet               testSheet      = this.createTestSheet();
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        /* テスト対象の実行 */
+        final Charset testResult = testTarget.getCharset();
+
+        /* 検証の準備 */
+        final Charset actualCharset = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedCharset, actualCharset, "PostgreSQLの場合はMS932文字セットが返されること");
 
     }
 
@@ -565,6 +564,72 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
+     * カラム情報を持つテスト用シートを作成する<br>
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithColumns() {
+
+        final Workbook workbook = new XSSFWorkbook();
+        final Sheet    sheet    = workbook.createSheet("テストシート");
+
+        // 1行目にテーブル物理名を設定
+        final Row  row0    = sheet.createRow(0);
+        final Cell cell0_0 = row0.createCell(0);
+        cell0_0.setCellValue("test_table");
+
+        // 3行目（インデックス2）にカラム物理名を設定
+        final Row  row2    = sheet.createRow(2);
+        final Cell cell2_0 = row2.createCell(0);
+        cell2_0.setCellValue("id");
+        final Cell cell2_1 = row2.createCell(1);
+        cell2_1.setCellValue("name");
+        final Cell cell2_2 = row2.createCell(2);
+        cell2_2.setCellValue("value");
+
+        return sheet;
+
+    }
+
+    /**
+     * データ型情報を持つテスト用シートを作成する<br>
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithDataTypes() {
+
+        final Sheet    result;
+        final Workbook workbook = new XSSFWorkbook();
+        result = workbook.createSheet("テストシート");
+
+        // 1行目にテーブル物理名を設定
+        final Row  row0    = result.createRow(0);
+        final Cell cell0_0 = row0.createCell(0);
+        cell0_0.setCellValue("test_table");
+
+        // 3行目（インデックス2）にカラム物理名を設定
+        final Row  row2    = result.createRow(2);
+        final Cell cell2_0 = row2.createCell(0);
+        cell2_0.setCellValue("id");
+        final Cell cell2_1 = row2.createCell(1);
+        cell2_1.setCellValue("name");
+        final Cell cell2_2 = row2.createCell(2);
+        cell2_2.setCellValue("value");
+
+        // 4行目（インデックス3）にデータ型を設定
+        final Row  row3    = result.createRow(3);
+        final Cell cell3_0 = row3.createCell(0);
+        cell3_0.setCellValue("INTEGER");
+        final Cell cell3_1 = row3.createCell(1);
+        cell3_1.setCellValue("STRING");
+        final Cell cell3_2 = row3.createCell(2);
+        cell3_2.setCellValue("DOUBLE");
+
+        return result;
+
+    }
+
+    /**
      * 指定した名前のテスト用シートを作成する<br>
      *
      * @param sheetName
@@ -603,71 +668,6 @@ public class IsDataSheetCreationLogicImplTest {
         final Row  row0    = sheet.createRow(0);
         final Cell cell0_0 = row0.createCell(0);
         cell0_0.setCellValue(physicsName);
-
-        return sheet;
-
-    }
-
-    /**
-     * カラム情報を持つテスト用シートを作成する<br>
-     *
-     * @return テスト用シート
-     */
-    private Sheet createTestSheetWithColumns() {
-
-        final Workbook workbook = new XSSFWorkbook();
-        final Sheet    sheet    = workbook.createSheet("テストシート");
-
-        // 1行目にテーブル物理名を設定
-        final Row  row0    = sheet.createRow(0);
-        final Cell cell0_0 = row0.createCell(0);
-        cell0_0.setCellValue("test_table");
-
-        // 3行目（インデックス2）にカラム物理名を設定
-        final Row  row2    = sheet.createRow(2);
-        final Cell cell2_0 = row2.createCell(0);
-        cell2_0.setCellValue("id");
-        final Cell cell2_1 = row2.createCell(1);
-        cell2_1.setCellValue("name");
-        final Cell cell2_2 = row2.createCell(2);
-        cell2_2.setCellValue("value");
-
-        return sheet;
-
-    }
-
-    /**
-     * データ型情報を持つテスト用シートを作成する<br>
-     *
-     * @return テスト用シート
-     */
-    private Sheet createTestSheetWithDataTypes() {
-
-        final Workbook workbook = new XSSFWorkbook();
-        final Sheet    sheet    = workbook.createSheet("テストシート");
-
-        // 1行目にテーブル物理名を設定
-        final Row  row0    = sheet.createRow(0);
-        final Cell cell0_0 = row0.createCell(0);
-        cell0_0.setCellValue("test_table");
-
-        // 3行目（インデックス2）にカラム物理名を設定
-        final Row  row2    = sheet.createRow(2);
-        final Cell cell2_0 = row2.createCell(0);
-        cell2_0.setCellValue("id");
-        final Cell cell2_1 = row2.createCell(1);
-        cell2_1.setCellValue("name");
-        final Cell cell2_2 = row2.createCell(2);
-        cell2_2.setCellValue("value");
-
-        // 4行目（インデックス3）にデータ型を設定
-        final Row  row3    = sheet.createRow(3);
-        final Cell cell3_0 = row3.createCell(0);
-        cell3_0.setCellValue("INTEGER");
-        final Cell cell3_1 = row3.createCell(1);
-        cell3_1.setCellValue("STRING");
-        final Cell cell3_2 = row3.createCell(2);
-        cell3_2.setCellValue("DOUBLE");
 
         return sheet;
 

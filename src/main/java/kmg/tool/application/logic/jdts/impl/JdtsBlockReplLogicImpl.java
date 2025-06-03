@@ -47,10 +47,10 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
 public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
     /** Javadocタグの開始文字列 */
-    private static final String JAVADOC_TAG_START = "* @";
+    private static final String JAVADOC_TAG_START = "* @"; //$NON-NLS-1$
 
     /** タグのフォーマット */
-    private static final String TAG_FORMAT = "* %s %s %s";
+    private static final String TAG_FORMAT = "* %s %s %s"; //$NON-NLS-1$
 
     /** 構成モデル */
     private JdtsConfigsModel configsModel;
