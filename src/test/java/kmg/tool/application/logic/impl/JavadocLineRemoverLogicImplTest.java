@@ -614,6 +614,71 @@ public class JavadocLineRemoverLogicImplTest {
     }
 
     /**
+     * deleteJavadocLines メソッドのテスト - 正常系:inputMapのcontainsKeyチェックの動作確認
+     * <p>
+     * このテストは、deleteJavadocLinesメソッド内のcontainsKeyチェックが機能することを確認します。 通常の使用では発生しない状況ですが、コードカバレッジのためにテストします。
+     * カスタムMapを使用してcontainsKeyが常にfalseを返すケースをシミュレートします。
+     * </p>
+     *
+     * @param tempDir
+     *                一時ディレクトリ
+     *
+     * @throws IOException
+     *                             入出力例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @Test
+    public void testDeleteJavadocLines_normalInputMapContainsKeyCheck(@TempDir final Path tempDir)
+        throws IOException, KmgToolMsgException {
+
+        /* 期待値の定義 */
+        final int expectedDeletedLinesCount = 0; // containsKeyがfalseなので削除されない
+
+        /* 準備 */
+        final Path     testJavaFile  = tempDir.resolve("Test.java");
+        final String[] originalLines = {
+            "package test;", "// comment", "public class Test {", "}",
+        };
+        Files.write(testJavaFile, java.util.Arrays.asList(originalLines));
+
+        final Set<Integer> testLineNumbers = new LinkedHashSet<>();
+        testLineNumbers.add(2);
+
+        // containsKeyが常にfalseを返すカスタムMap
+        final Map<Path, Set<Integer>> testInputMap = new LinkedHashMap<Path, Set<Integer>>() {
+
+            private static final long serialVersionUID = 1L;
+
+            {
+
+                put(testJavaFile, testLineNumbers);
+
+            }
+
+            @Override
+            public boolean containsKey(final Object key) {
+
+                return false; // 常にfalseを返す
+
+            }
+        };
+
+        final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
+
+        /* テスト対象の実行 */
+        final int testResult = testTarget.deleteJavadocLines(testInputMap);
+
+        /* 検証の準備 */
+        final java.util.List<String> actualRemainingLines = Files.readAllLines(testJavaFile);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedDeletedLinesCount, testResult, "containsKeyがfalseのため削除されない");
+        Assertions.assertEquals(originalLines.length, actualRemainingLines.size(), "元のファイルが変更されていない");
+
+    }
+
+    /**
      * getInputMap メソッドのテスト - 正常系:Javaファイル拡張子を含まない行がフィルタされることの確認
      * <p>
      * Javaファイル拡張子を含まない行が適切にフィルタされることを確認します。
