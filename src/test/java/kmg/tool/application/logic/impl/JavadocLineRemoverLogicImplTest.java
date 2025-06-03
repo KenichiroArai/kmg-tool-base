@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import kmg.core.infrastructure.exception.KmgReflectionException;
+import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.presentation.ui.cli.JavadocLineRemoverTool;
@@ -300,6 +303,404 @@ public class JavadocLineRemoverLogicImplTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedMapSize, actualMapSize, "空の入力ファイルの場合は空のマップが返されること");
+
+    }
+
+    /**
+     * convertLineToPathLineEntry メソッドのテスト - 正常系:有効なJavaファイル行が正しく変換されることの確認
+     * <p>
+     * 正常なJavaファイルの行文字列から、パスと行番号のエントリが正しく作成されることを確認します。
+     * </p>
+     *
+     * @throws KmgReflectionException
+     *                                KMGリフレクション例外
+     */
+    @Test
+    public void testConvertLineToPathLineEntry_normalValidJavaFileLine() throws KmgReflectionException {
+
+        /* 期待値の定義 */
+        final Path expectedPath       = Paths.get("D:\\test\\Sample.java");
+        final int  expectedLineNumber = 123;
+
+        /* 準備 */
+        final String                      testInputLine = "D:\\test\\Sample.java:123: @SuppressWarnings";
+        final JavadocLineRemoverLogicImpl testTarget    = new JavadocLineRemoverLogicImpl();
+        final KmgReflectionModelImpl      reflection    = new KmgReflectionModelImpl(testTarget);
+
+        /* テスト対象の実行 */
+        @SuppressWarnings("unchecked")
+        final SimpleEntry<Path, Integer> testResult
+            = (SimpleEntry<Path, Integer>) reflection.getMethod("convertLineToPathLineEntry", testInputLine);
+
+        /* 検証の準備 */
+        final Path actualPath       = testResult.getKey();
+        final int  actualLineNumber = testResult.getValue();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedPath, actualPath, "パスが正しく変換されること");
+        Assertions.assertEquals(expectedLineNumber, actualLineNumber, "行番号が正しく変換されること");
+
+    }
+
+    /**
+     * convertLineToPathLineEntry メソッドのテスト - 準正常系:@マークが含まれない行でnullが返されることの確認
+     * <p>
+     *
+     * @マークが含まれない行の場合に、nullが返されることを確認します。
+     *                                    </p>
+     *
+     * @throws KmgReflectionException
+     *                                KMGリフレクション例外
+     */
+    @Test
+    public void testConvertLineToPathLineEntry_semiNoAtMarkReturnsNull() throws KmgReflectionException {
+
+        /* 期待値の定義 */
+        final SimpleEntry<Path, Integer> expectedResult = null;
+
+        /* 準備 */
+        final String                      testInputLine = "D:\\test\\Sample.java:123: SuppressWarnings";
+        final JavadocLineRemoverLogicImpl testTarget    = new JavadocLineRemoverLogicImpl();
+        final KmgReflectionModelImpl      reflection    = new KmgReflectionModelImpl(testTarget);
+
+        /* テスト対象の実行 */
+        @SuppressWarnings("unchecked")
+        final SimpleEntry<Path, Integer> testResult
+            = (SimpleEntry<Path, Integer>) reflection.getMethod("convertLineToPathLineEntry", testInputLine);
+
+        /* 検証の準備 */
+        // 準備なし（結果を直接検証）
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, testResult, "@マークが含まれない場合はnullが返されること");
+
+    }
+
+    /**
+     * convertLineToPathLineEntry メソッドのテスト - 準正常系:コロンが不足する行でnullが返されることの確認
+     * <p>
+     * コロンで区切られた部分が2つ未満の場合に、nullが返されることを確認します。
+     * </p>
+     *
+     * @throws KmgReflectionException
+     *                                KMGリフレクション例外
+     */
+    @Test
+    public void testConvertLineToPathLineEntry_semiInsufficientColonReturnsNull() throws KmgReflectionException {
+
+        /* 期待値の定義 */
+        final SimpleEntry<Path, Integer> expectedResult = null;
+
+        /* 準備 */
+        final String                      testInputLine = "D:\\test\\Sample.java @SuppressWarnings";
+        final JavadocLineRemoverLogicImpl testTarget    = new JavadocLineRemoverLogicImpl();
+        final KmgReflectionModelImpl      reflection    = new KmgReflectionModelImpl(testTarget);
+
+        /* テスト対象の実行 */
+        @SuppressWarnings("unchecked")
+        final SimpleEntry<Path, Integer> testResult
+            = (SimpleEntry<Path, Integer>) reflection.getMethod("convertLineToPathLineEntry", testInputLine);
+
+        /* 検証の準備 */
+        // 準備なし（結果を直接検証）
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, testResult, "コロンが不足する場合はnullが返されること");
+
+    }
+
+    /**
+     * convertLineToPathLineEntry メソッドのテスト - 準正常系:無効な行番号でnullが返されることの確認
+     * <p>
+     * 行番号部分が数値でない場合に、nullが返されることを確認します。
+     * </p>
+     *
+     * @throws KmgReflectionException
+     *                                KMGリフレクション例外
+     */
+    @Test
+    public void testConvertLineToPathLineEntry_semiInvalidLineNumberReturnsNull() throws KmgReflectionException {
+
+        /* 期待値の定義 */
+        final SimpleEntry<Path, Integer> expectedResult = null;
+
+        /* 準備 */
+        final String                      testInputLine = "D:\\test\\Sample.java:abc: @SuppressWarnings";
+        final JavadocLineRemoverLogicImpl testTarget    = new JavadocLineRemoverLogicImpl();
+        final KmgReflectionModelImpl      reflection    = new KmgReflectionModelImpl(testTarget);
+
+        /* テスト対象の実行 */
+        @SuppressWarnings("unchecked")
+        final SimpleEntry<Path, Integer> testResult
+            = (SimpleEntry<Path, Integer>) reflection.getMethod("convertLineToPathLineEntry", testInputLine);
+
+        /* 検証の準備 */
+        // 準備なし（結果を直接検証）
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, testResult, "無効な行番号の場合はnullが返されること");
+
+    }
+
+    /**
+     * convertLineToPathLineEntry メソッドのテスト - 正常系:ドライブ文字の置換が正しく動作することの確認
+     * <p>
+     * ドライブ文字の置換処理が正しく動作することを確認します。
+     * </p>
+     *
+     * @throws KmgReflectionException
+     *                                KMGリフレクション例外
+     */
+    @Test
+    public void testConvertLineToPathLineEntry_normalDriveLetterReplacement() throws KmgReflectionException {
+
+        /* 期待値の定義 */
+        final Path expectedPath       = Paths.get("D:\\eclipse\\workspace\\Sample.java");
+        final int  expectedLineNumber = 456;
+
+        /* 準備 */
+        final String                      testInputLine = "D:\\eclipse\\workspace\\Sample.java:456: @Override";
+        final JavadocLineRemoverLogicImpl testTarget    = new JavadocLineRemoverLogicImpl();
+        final KmgReflectionModelImpl      reflection    = new KmgReflectionModelImpl(testTarget);
+
+        /* テスト対象の実行 */
+        @SuppressWarnings("unchecked")
+        final SimpleEntry<Path, Integer> testResult
+            = (SimpleEntry<Path, Integer>) reflection.getMethod("convertLineToPathLineEntry", testInputLine);
+
+        /* 検証の準備 */
+        final Path actualPath       = testResult.getKey();
+        final int  actualLineNumber = testResult.getValue();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedPath, actualPath, "ドライブ文字の置換が正しく動作すること");
+        Assertions.assertEquals(expectedLineNumber, actualLineNumber, "行番号が正しく変換されること");
+
+    }
+
+    /**
+     * deleteJavadocLines メソッドのテスト - 正常系:空のマップで0が返されることの確認
+     * <p>
+     * 空のマップが渡された場合に、削除された行数として0が返されることを確認します。
+     * </p>
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @Test
+    public void testDeleteJavadocLines_normalEmptyMapReturnsZero() throws KmgToolMsgException {
+
+        /* 期待値の定義 */
+        final int expectedDeletedLinesCount = 0;
+
+        /* 準備 */
+        final Map<Path, Set<Integer>>     testInputMap = new LinkedHashMap<>();
+        final JavadocLineRemoverLogicImpl testTarget   = new JavadocLineRemoverLogicImpl();
+
+        /* テスト対象の実行 */
+        final int testResult = testTarget.deleteJavadocLines(testInputMap);
+
+        /* 検証の準備 */
+        // 準備なし（結果を直接検証）
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedDeletedLinesCount, testResult, "空のマップの場合は0が返されること");
+
+    }
+
+    /**
+     * deleteJavadocLines メソッドのテスト - 準正常系:ファイル書き込み時のIOExceptionが適切に処理されることの確認
+     * <p>
+     * 読み込み専用ファイルへの書き込み時にIOExceptionが発生し、適切な例外が投げられることを確認します。
+     * </p>
+     *
+     * @param tempDir
+     *                一時ディレクトリ
+     *
+     * @throws IOException
+     *                     入出力例外
+     */
+    @Test
+    public void testDeleteJavadocLines_semiWriteIOExceptionThrowsException(@TempDir final Path tempDir)
+        throws IOException {
+
+        /* 期待値の定義 */
+        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN32014;
+
+        /* 準備 */
+        final Path     testJavaFile  = tempDir.resolve("ReadOnlyTest.java");
+        final String[] originalLines = {
+            "package test;", "public class Test {", "}",
+        };
+        Files.write(testJavaFile, java.util.Arrays.asList(originalLines));
+
+        // ファイルを読み込み専用に設定
+        testJavaFile.toFile().setReadOnly();
+
+        final Map<Path, Set<Integer>> testInputMap    = new LinkedHashMap<>();
+        final Set<Integer>            testLineNumbers = new LinkedHashSet<>();
+        testLineNumbers.add(2);
+        testInputMap.put(testJavaFile, testLineNumbers);
+
+        final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
+
+        /* テスト対象の実行と検証の実施 */
+        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+            testTarget.deleteJavadocLines(testInputMap);
+
+        }, "読み込み専用ファイルの書き込み時は例外が発生すること");
+
+        /* 検証の準備 */
+        final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");
+
+    }
+
+    /**
+     * deleteJavadocLines メソッドのテスト - 正常系:降順でない行番号セットが正しく処理されることの確認
+     * <p>
+     * 降順でない行番号のセットが渡された場合でも、正しく行が削除されることを確認します。
+     * </p>
+     *
+     * @param tempDir
+     *                一時ディレクトリ
+     *
+     * @throws IOException
+     *                             入出力例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @Test
+    public void testDeleteJavadocLines_normalUnorderedLineNumbers(@TempDir final Path tempDir)
+        throws IOException, KmgToolMsgException {
+
+        /* 期待値の定義 */
+        final int      expectedDeletedLinesCount = 3;
+        final String[] expectedRemainingLines    = {
+            "package test;", "// line 3", "public class Test {",
+        };
+
+        /* 準備 */
+        final Path     testJavaFile  = tempDir.resolve("Test.java");
+        final String[] originalLines = {
+            "package test;", "// line 2", "// line 3", "// line 4", "public class Test {", "}",
+        };
+        Files.write(testJavaFile, java.util.Arrays.asList(originalLines));
+
+        final Map<Path, Set<Integer>> testInputMap    = new LinkedHashMap<>();
+        final Set<Integer>            testLineNumbers = new LinkedHashSet<>();
+        // 削除対象: 行2、行3、行4 (コメント行を削除)
+        testLineNumbers.add(2);
+        testLineNumbers.add(3);
+        testLineNumbers.add(4);
+        testInputMap.put(testJavaFile, testLineNumbers);
+
+        final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
+
+        /* テスト対象の実行 */
+        final int testResult = testTarget.deleteJavadocLines(testInputMap);
+
+        /* 検証の準備 */
+        final java.util.List<String> actualRemainingLines = Files.readAllLines(testJavaFile);
+        final String[]               actualLinesArray     = actualRemainingLines.toArray(new String[0]);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedDeletedLinesCount, testResult, "削除された行数が正しいこと");
+        Assertions.assertArrayEquals(expectedRemainingLines, actualLinesArray, "残った行の内容が正しいこと");
+
+    }
+
+    /**
+     * getInputMap メソッドのテスト - 正常系:Javaファイル拡張子を含まない行がフィルタされることの確認
+     * <p>
+     * Javaファイル拡張子を含まない行が適切にフィルタされることを確認します。
+     * </p>
+     *
+     * @param tempDir
+     *                一時ディレクトリ
+     *
+     * @throws IOException
+     *                             入出力例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @Test
+    public void testGetInputMap_normalNonJavaFileLinesFiltered(@TempDir final Path tempDir)
+        throws IOException, KmgToolMsgException {
+
+        /* 期待値の定義 */
+        final int  expectedMapSize = 1;
+        final Path expectedPath    = Paths.get("D:\\test\\Sample.java");
+
+        /* 準備 */
+        final Path     testInputFile = tempDir.resolve("input.txt");
+        final String[] inputLines    = {
+            "D:\\test\\Sample.java:123: @SuppressWarnings", "D:\\test\\Sample.txt:456: @Override",           // .java以外
+            "D:\\test\\Sample.cpp:789: @Deprecated",                                                         // .java以外
+            "some random text",
+        };
+        Files.write(testInputFile, java.util.Arrays.asList(inputLines));
+
+        final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
+
+        /* テスト対象の実行 */
+        final Map<Path, Set<Integer>> testResult = testTarget.getInputMap(testInputFile);
+
+        /* 検証の準備 */
+        final int actualMapSize = testResult.size();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedMapSize, actualMapSize, "Javaファイルのみが含まれること");
+        Assertions.assertTrue(testResult.containsKey(expectedPath), "Javaファイルのパスが含まれること");
+
+    }
+
+    /**
+     * getInputMap メソッドのテスト - 正常系:行番号が降順でソートされることの確認
+     * <p>
+     * 同一ファイルの行番号が降順でソートされることを確認します。
+     * </p>
+     *
+     * @param tempDir
+     *                一時ディレクトリ
+     *
+     * @throws IOException
+     *                             入出力例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @Test
+    public void testGetInputMap_normalLineNumbersSortedDescending(@TempDir final Path tempDir)
+        throws IOException, KmgToolMsgException {
+
+        /* 期待値の定義 */
+        final Path      expectedPath        = Paths.get("D:\\test\\Sample.java");
+        final Integer[] expectedLineNumbers = {
+            789, 456, 123
+        };                                                                       // 降順
+
+        /* 準備 */
+        final Path     testInputFile = tempDir.resolve("input.txt");
+        final String[] inputLines    = {
+            "D:\\test\\Sample.java:123: @SuppressWarnings", "D:\\test\\Sample.java:456: @Override",
+            "D:\\test\\Sample.java:789: @Deprecated",
+        };
+        Files.write(testInputFile, java.util.Arrays.asList(inputLines));
+
+        final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
+
+        /* テスト対象の実行 */
+        final Map<Path, Set<Integer>> testResult = testTarget.getInputMap(testInputFile);
+
+        /* 検証の準備 */
+        final Set<Integer> actualLineNumbers      = testResult.get(expectedPath);
+        final Integer[]    actualLineNumbersArray = actualLineNumbers.toArray(new Integer[0]);
+
+        /* 検証の実施 */
+        Assertions.assertArrayEquals(expectedLineNumbers, actualLineNumbersArray, "行番号が降順でソートされること");
 
     }
 
