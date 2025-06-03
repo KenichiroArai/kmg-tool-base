@@ -769,4 +769,58 @@ public class JavadocLineRemoverLogicImplTest {
 
     }
 
+    /**
+     * getInputMap メソッドのテスト - 正常系:nullエントリと非nullエントリが混在する場合の正しい処理確認
+     * <p>
+     * convertLineToPathLineEntryがnullを返す行と有効なエントリを返す行が混在する場合に、 nullエントリが正しくフィルタリングされ、有効なエントリのみが処理されることを確認します。
+     * </p>
+     *
+     * @param tempDir
+     *                一時ディレクトリ
+     *
+     * @throws IOException
+     *                             入出力例外
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @Test
+    public void testGetInputMap_normalMixedValidAndInvalidEntries(@TempDir final Path tempDir)
+        throws IOException, KmgToolMsgException {
+
+        /* 期待値の定義 */
+        final Path expectedPath            = Paths.get("D:\\test\\Sample.java");
+        final int  expectedMapSize         = 1;
+        final int  expectedLineNumberCount = 2;
+
+        /* 準備 */
+        final Path     testInputFile = tempDir.resolve("input.txt");
+        final String[] inputLines    = {
+            "D:\\test\\Sample.java:123: @SuppressWarnings",                     // 有効（@マークあり）
+            "D:\\test\\Sample.java:456: @Override",                             // 有効（@マークあり）
+            "D:\\test\\Sample.java:789: SuppressWarnings",                      // 無効（@マークなし、nullを返す）
+            "D:\\test\\Sample.java:abc: @Deprecated",                           // 無効（行番号が数値でない、nullを返す）
+            "D:\\test\\Sample.java @TestAnnotation",                            // 無効（コロン不足、nullを返す）
+        };
+        Files.write(testInputFile, java.util.Arrays.asList(inputLines));
+
+        final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
+
+        /* テスト対象の実行 */
+        final Map<Path, Set<Integer>> testResult = testTarget.getInputMap(testInputFile);
+
+        /* 検証の準備 */
+        final int actualMapSize = testResult.size();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedMapSize, actualMapSize, "1つのファイルパスが含まれること");
+        Assertions.assertTrue(testResult.containsKey(expectedPath), "Sample.javaのパスが含まれること");
+
+        final Set<Integer> actualLineNumbers = testResult.get(expectedPath);
+        Assertions.assertEquals(expectedLineNumberCount, actualLineNumbers.size(), "有効な行番号のみが含まれること");
+        Assertions.assertTrue(actualLineNumbers.contains(123), "行番号123が含まれること");
+        Assertions.assertTrue(actualLineNumbers.contains(456), "行番号456が含まれること");
+        Assertions.assertFalse(actualLineNumbers.contains(789), "無効な行番号789は含まれないこと");
+
+    }
+
 }
