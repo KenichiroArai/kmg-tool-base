@@ -36,7 +36,7 @@ public class Enum2SwitchCaseCreationTool extends AbstractDtcTool {
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "列挙型からcase文作成ツール";
+    private static final String TOOL_NAME = "列挙型からcase文作成ツール"; //$NON-NLS-1$
 
     /**
      * <h3>列挙型からcase文作成サービス</h3>

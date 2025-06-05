@@ -29,10 +29,10 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
     /** 基準パス */
-    private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io"));
+    private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io")); //$NON-NLS-1$
 
     /** 定義ファイルのパスのフォーマット */
-    private static final String DEFINITION_FILE_PATH_FORMAT = "template/%s.yml";
+    private static final String DEFINITION_FILE_PATH_FORMAT = "template/%s.yml"; //$NON-NLS-1$
 
     /**
      * <h3>ツール名</h3>
@@ -40,7 +40,7 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "Javadocタグ設定ツール";
+    private static final String TOOL_NAME = "Javadocタグ設定ツール"; //$NON-NLS-1$
 
     /** メッセージソース */
     @Autowired

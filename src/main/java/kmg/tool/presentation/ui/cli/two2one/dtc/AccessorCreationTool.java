@@ -36,7 +36,7 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "アクセサ作成ツール";
+    private static final String TOOL_NAME = "アクセサ作成ツール"; //$NON-NLS-1$
 
     /**
      * <h3>アクセサ作成サービス</h3>

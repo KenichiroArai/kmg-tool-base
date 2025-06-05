@@ -18,7 +18,7 @@ import kmg.tool.application.service.two2one.SimpleTwo2OneService;
 public class SimpleTwo2OneTool extends AbstractTwo2OneTool {
 
     /** ツール名 */
-    private static final String TOOL_NAME = "シンプル2入力ファイルから1出力ファイルへの変換ツール";
+    private static final String TOOL_NAME = "シンプル2入力ファイルから1出力ファイルへの変換ツール"; //$NON-NLS-1$
 
     /** シンプル2入力ファイルから1出力ファイルへの変換サービス */
     @Autowired

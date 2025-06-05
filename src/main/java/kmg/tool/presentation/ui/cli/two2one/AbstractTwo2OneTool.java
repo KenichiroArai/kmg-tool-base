@@ -20,7 +20,7 @@ import kmg.tool.presentation.ui.cli.AbstractIoTool;
 public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
     /** テンプレートファイルのパスのフォーマット */
-    private static final String TEMPLATE_FILE_PATH_FORMAT = "template/%s.yml";
+    private static final String TEMPLATE_FILE_PATH_FORMAT = "template/%s.yml"; //$NON-NLS-1$
 
     /** メッセージソース */
     @Autowired
@@ -98,8 +98,8 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
             // ログの出力
             final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG41001;
-            final Object[]               messageArgs = {};
-            final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
+            final Object[]           messageArgs = {};
+            final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);
 
             result = false;

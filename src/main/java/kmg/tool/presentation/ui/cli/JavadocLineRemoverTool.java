@@ -29,7 +29,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "Javadoc行削除ツール";
+    private static final String TOOL_NAME = "Javadoc行削除ツール"; //$NON-NLS-1$
 
     /** メッセージソース */
     @Autowired

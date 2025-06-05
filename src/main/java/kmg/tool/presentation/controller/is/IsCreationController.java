@@ -44,13 +44,13 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 public class IsCreationController implements Initializable {
 
     /** ファイル選択ダイアログのタイトル */
-    private static final String FILE_CHOOSER_TITLE = "ファイル選択";
+    private static final String FILE_CHOOSER_TITLE = "ファイル選択"; //$NON-NLS-1$
 
     /** ディレクトリ選択ダイアログのタイトル */
-    private static final String DIRECTORY_CHOOSER_TITLE = "ディレクトリ選択";
+    private static final String DIRECTORY_CHOOSER_TITLE = "ディレクトリ選択"; //$NON-NLS-1$
 
     /** デフォルトのディレクトリパス */
-    private static final String DEFAULT_DIRECTORY_PATH = "c:/";
+    private static final String DEFAULT_DIRECTORY_PATH = "c:/"; //$NON-NLS-1$
 
     /**
      * ロガー
@@ -167,7 +167,7 @@ public class IsCreationController implements Initializable {
 
         /* 挿入SQL作成サービス */
         final IsCreationService insertSqlCreationService = new IsCreationServiceImpl();
-        final short                       threadNum                = Short.parseShort(this.txtThreadNum.getText());
+        final short             threadNum                = Short.parseShort(this.txtThreadNum.getText());
         insertSqlCreationService.initialize(inputPath, outputPath, threadNum);
         insertSqlCreationService.outputInsertionSql();
 

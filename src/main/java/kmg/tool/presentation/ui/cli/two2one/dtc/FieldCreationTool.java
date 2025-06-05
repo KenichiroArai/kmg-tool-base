@@ -28,7 +28,7 @@ import kmg.tool.application.service.two2one.FieldCreationService;
 public class FieldCreationTool extends AbstractDtcTool {
 
     /** ツール名 */
-    private static final String TOOL_NAME = "フィールド作成ツール";
+    private static final String TOOL_NAME = "フィールド作成ツール"; //$NON-NLS-1$
 
     /** フィールド作成サービス */
     @Autowired

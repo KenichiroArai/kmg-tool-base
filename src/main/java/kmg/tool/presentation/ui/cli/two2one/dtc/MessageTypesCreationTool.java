@@ -36,7 +36,7 @@ public class MessageTypesCreationTool extends AbstractDtcTool {
      * このツールの表示名を定義します。
      * </p>
      */
-    private static final String TOOL_NAME = "メッセージの種類作成ツール";
+    private static final String TOOL_NAME = "メッセージの種類作成ツール"; //$NON-NLS-1$
 
     /**
      * <h3>メッセージの種類作成サービス</h3>

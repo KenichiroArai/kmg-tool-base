@@ -58,13 +58,13 @@ import kmg.tool.domain.service.InputService;
 public abstract class AbstractInputTool extends AbstractTool {
 
     /** 優先的に使用する基準パス */
-    private static final Path PRIMARY_BASE_PATH = Paths.get("work/io");
+    private static final Path PRIMARY_BASE_PATH = Paths.get("work/io"); //$NON-NLS-1$
 
     /** 代替の基準パス */
-    private static final Path SECONDARY_BASE_PATH = Paths.get("src/main/resources/tool/io");
+    private static final Path SECONDARY_BASE_PATH = Paths.get("src/main/resources/tool/io"); //$NON-NLS-1$
 
     /** 入力ファイル名 */
-    private static final Path INPUT_FILE_NAME = Paths.get("input.txt");
+    private static final Path INPUT_FILE_NAME = Paths.get("input.txt"); //$NON-NLS-1$
 
     /**
      * 基準パスを取得します。

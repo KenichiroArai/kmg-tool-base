@@ -36,10 +36,10 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 public class IsCreationTool extends Application {
 
     /** ステージタイトル */
-    private static final String STAGE_TITLE = "挿入SQL作成画面";
+    private static final String STAGE_TITLE = "挿入SQL作成画面"; //$NON-NLS-1$
 
     /** FXMLファイルパス */
-    private static final String FXML_PATH = "/kmg/tool/application/ui/gui/IsCreationScreenGui.fxml";
+    private static final String FXML_PATH = "/kmg/tool/application/ui/gui/IsCreationScreenGui.fxml"; //$NON-NLS-1$
 
     /**
      * ロガー
