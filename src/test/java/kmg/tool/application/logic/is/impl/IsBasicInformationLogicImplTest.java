@@ -35,6 +35,45 @@ public class IsBasicInformationLogicImplTest {
     }
 
     /**
+     * getKmgDbTypes メソッドのテスト - 正常系:MySQLの設定値が正しく取得されることの確認
+     * <p>
+     * 設定シートの指定セルからMySQLの設定値が正しく取得されることを確認します。
+     * </p>
+     *
+     * @throws Exception
+     *                   例外が発生した場合
+     */
+    @Test
+    public void testGetKmgDbTypes_normalMysqlValue() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDbTypes expectedDbTypes = KmgDbTypes.MYSQL;
+
+        /* 準備 */
+        final IsBasicInformationLogicImpl testTarget = new IsBasicInformationLogicImpl();
+
+        try (Workbook testWorkbook = WorkbookFactory.create(true)) {
+
+            final Sheet testSheet = testWorkbook.createSheet(IsBasicInformationLogic.SETTING_SHEET_NAME);
+            final Row   testRow   = testSheet.createRow(0);
+            final Cell  testCell  = testRow.createCell(1);
+            testCell.setCellValue("MySQL");
+
+            /* テスト対象の実行 */
+            testTarget.initialize(testWorkbook);
+            final KmgDbTypes testResult = testTarget.getKmgDbTypes();
+
+            /* 検証の準備 */
+            final KmgDbTypes actualDbTypes = testResult;
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedDbTypes, actualDbTypes, "MySQLの設定値が正しく取得されること");
+
+        }
+
+    }
+
+    /**
      * getKmgDbTypes メソッドのテスト - 正常系:PostgreSQLの設定値が正しく取得されることの確認
      * <p>
      * 設定シートの指定セルからPostgreSQLの設定値が正しく取得されることを確認します。
@@ -74,19 +113,19 @@ public class IsBasicInformationLogicImplTest {
     }
 
     /**
-     * getKmgDbTypes メソッドのテスト - 正常系:MySQLの設定値が正しく取得されることの確認
+     * getKmgDbTypes メソッドのテスト - 準正常系:セルがnullの場合NONEが返されることの確認
      * <p>
-     * 設定シートの指定セルからMySQLの設定値が正しく取得されることを確認します。
+     * 設定シートの指定セルがnullの場合に、NONEが返されることを確認します。
      * </p>
      *
      * @throws Exception
      *                   例外が発生した場合
      */
     @Test
-    public void testGetKmgDbTypes_normalMysqlValue() throws Exception {
+    public void testGetKmgDbTypes_semiNullCellReturnsNone() throws Exception {
 
         /* 期待値の定義 */
-        final KmgDbTypes expectedDbTypes = KmgDbTypes.MYSQL;
+        final KmgDbTypes expectedDbTypes = KmgDbTypes.NONE;
 
         /* 準備 */
         final IsBasicInformationLogicImpl testTarget = new IsBasicInformationLogicImpl();
@@ -94,9 +133,7 @@ public class IsBasicInformationLogicImplTest {
         try (Workbook testWorkbook = WorkbookFactory.create(true)) {
 
             final Sheet testSheet = testWorkbook.createSheet(IsBasicInformationLogic.SETTING_SHEET_NAME);
-            final Row   testRow   = testSheet.createRow(0);
-            final Cell  testCell  = testRow.createCell(1);
-            testCell.setCellValue("MySQL");
+            testSheet.createRow(0); // セルは作成しない（null）
 
             /* テスト対象の実行 */
             testTarget.initialize(testWorkbook);
@@ -106,7 +143,7 @@ public class IsBasicInformationLogicImplTest {
             final KmgDbTypes actualDbTypes = testResult;
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedDbTypes, actualDbTypes, "MySQLの設定値が正しく取得されること");
+            Assertions.assertEquals(expectedDbTypes, actualDbTypes, "セルがnullの場合はNONEが返されること");
 
         }
 
@@ -152,37 +189,37 @@ public class IsBasicInformationLogicImplTest {
     }
 
     /**
-     * getKmgDbTypes メソッドのテスト - 準正常系:セルがnullの場合NONEが返されることの確認
+     * getSqlIdMap メソッドのテスト - 正常系:空のシートで空のマップが返されることの確認
      * <p>
-     * 設定シートの指定セルがnullの場合に、NONEが返されることを確認します。
+     * データ行が存在しない一覧シートの場合に、空のマップが返されることを確認します。
      * </p>
      *
      * @throws Exception
      *                   例外が発生した場合
      */
     @Test
-    public void testGetKmgDbTypes_semiNullCellReturnsNone() throws Exception {
+    public void testGetSqlIdMap_normalEmptySheetReturnsEmptyMap() throws Exception {
 
         /* 期待値の定義 */
-        final KmgDbTypes expectedDbTypes = KmgDbTypes.NONE;
+        final int expectedMapSize = 0;
 
         /* 準備 */
         final IsBasicInformationLogicImpl testTarget = new IsBasicInformationLogicImpl();
 
         try (Workbook testWorkbook = WorkbookFactory.create(true)) {
 
-            final Sheet testSheet = testWorkbook.createSheet(IsBasicInformationLogic.SETTING_SHEET_NAME);
-            testSheet.createRow(0); // セルは作成しない（null）
+            testWorkbook.createSheet(IsBasicInformationLogic.LIST_NAME);
+            // データ行は作成しない
 
             /* テスト対象の実行 */
             testTarget.initialize(testWorkbook);
-            final KmgDbTypes testResult = testTarget.getKmgDbTypes();
+            final Map<String, String> testResult = testTarget.getSqlIdMap();
 
             /* 検証の準備 */
-            final KmgDbTypes actualDbTypes = testResult;
+            final int actualMapSize = testResult.size();
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedDbTypes, actualDbTypes, "セルがnullの場合はNONEが返されること");
+            Assertions.assertEquals(expectedMapSize, actualMapSize, "空のシートの場合は空のマップが返されること");
 
         }
 
@@ -213,7 +250,7 @@ public class IsBasicInformationLogicImplTest {
             final Sheet testSheet = testWorkbook.createSheet(IsBasicInformationLogic.LIST_NAME);
 
             // ヘッダー行（行番号0）
-            final Row headerRow = testSheet.createRow(0);
+            testSheet.createRow(0);
 
             // データ行1（行番号1）
             final Row dataRow1 = testSheet.createRow(1);
@@ -238,43 +275,6 @@ public class IsBasicInformationLogicImplTest {
             Assertions.assertEquals(expectedMapSize, actualMapSize, "マップのサイズが正しいこと");
             Assertions.assertEquals(expectedSqlId1, actualSqlId1, "table1のSQLIDが正しく取得されること");
             Assertions.assertEquals(expectedSqlId2, actualSqlId2, "table2のSQLIDが正しく取得されること");
-
-        }
-
-    }
-
-    /**
-     * getSqlIdMap メソッドのテスト - 正常系:空のシートで空のマップが返されることの確認
-     * <p>
-     * データ行が存在しない一覧シートの場合に、空のマップが返されることを確認します。
-     * </p>
-     *
-     * @throws Exception
-     *                   例外が発生した場合
-     */
-    @Test
-    public void testGetSqlIdMap_normalEmptySheetReturnsEmptyMap() throws Exception {
-
-        /* 期待値の定義 */
-        final int expectedMapSize = 0;
-
-        /* 準備 */
-        final IsBasicInformationLogicImpl testTarget = new IsBasicInformationLogicImpl();
-
-        try (Workbook testWorkbook = WorkbookFactory.create(true)) {
-
-            final Sheet testSheet = testWorkbook.createSheet(IsBasicInformationLogic.LIST_NAME);
-            // データ行は作成しない
-
-            /* テスト対象の実行 */
-            testTarget.initialize(testWorkbook);
-            final Map<String, String> testResult = testTarget.getSqlIdMap();
-
-            /* 検証の準備 */
-            final int actualMapSize = testResult.size();
-
-            /* 検証の実施 */
-            Assertions.assertEquals(expectedMapSize, actualMapSize, "空のシートの場合は空のマップが返されること");
 
         }
 
@@ -329,6 +329,37 @@ public class IsBasicInformationLogicImplTest {
     }
 
     /**
+     * initialize メソッドのテスト - 正常系:nullワークブックでも例外が発生しないことの確認
+     * <p>
+     * nullワークブックで初期化した場合でも例外が発生しないことを確認します。 ただし、その後のメソッド呼び出しではNullPointerExceptionが発生することが期待されます。
+     * </p>
+     */
+    @Test
+    public void testInitialize_normalNullWorkbookNoException() {
+
+        /* 期待値の定義 */
+        // 例外が発生しないことを確認
+
+        /* 準備 */
+        final IsBasicInformationLogicImpl testTarget = new IsBasicInformationLogicImpl();
+
+        /* テスト対象の実行 */
+        testTarget.initialize(null);
+
+        /* 検証の準備 */
+        // 準備なし（例外が発生しないことを検証）
+
+        /* 検証の実施 */
+        // initialize自体は例外を投げないが、後続のメソッド呼び出しでNullPointerExceptionが発生することを確認
+        Assertions.assertThrows(NullPointerException.class, () -> {
+
+            testTarget.getKmgDbTypes();
+
+        }, "nullワークブック使用時は後続メソッドでNullPointerExceptionが発生すること");
+
+    }
+
+    /**
      * initialize メソッドのテスト - 正常系:ワークブックが正しく設定されることの確認
      * <p>
      * 引数で指定されたワークブックが正しく内部フィールドに設定されることを確認します。
@@ -366,37 +397,6 @@ public class IsBasicInformationLogicImplTest {
             Assertions.assertEquals(expectedDbTypes, actualDbTypes, "ワークブックが正しく設定され、動作すること");
 
         }
-
-    }
-
-    /**
-     * initialize メソッドのテスト - 正常系:nullワークブックでも例外が発生しないことの確認
-     * <p>
-     * nullワークブックで初期化した場合でも例外が発生しないことを確認します。 ただし、その後のメソッド呼び出しではNullPointerExceptionが発生することが期待されます。
-     * </p>
-     */
-    @Test
-    public void testInitialize_normalNullWorkbookNoException() {
-
-        /* 期待値の定義 */
-        // 例外が発生しないことを確認
-
-        /* 準備 */
-        final IsBasicInformationLogicImpl testTarget = new IsBasicInformationLogicImpl();
-
-        /* テスト対象の実行 */
-        testTarget.initialize(null);
-
-        /* 検証の準備 */
-        // 準備なし（例外が発生しないことを検証）
-
-        /* 検証の実施 */
-        // initialize自体は例外を投げないが、後続のメソッド呼び出しでNullPointerExceptionが発生することを確認
-        Assertions.assertThrows(NullPointerException.class, () -> {
-
-            testTarget.getKmgDbTypes();
-
-        }, "nullワークブック使用時は後続メソッドでNullPointerExceptionが発生すること");
 
     }
 
