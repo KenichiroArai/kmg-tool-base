@@ -551,16 +551,24 @@ public class IsDataSheetCreationLogicImplTest {
      */
     private Sheet createTestSheet() {
 
-        final Sheet    result;
-        final Workbook workbook = new XSSFWorkbook();
-        result = workbook.createSheet("テストシート");
+        final Sheet result;
 
-        // 1行目にテーブル物理名を設定
-        final Row  row0    = result.createRow(0);
-        final Cell cell0_0 = row0.createCell(0);
-        cell0_0.setCellValue("test_table");
+        try (final Workbook workbook = new XSSFWorkbook()) {
 
-        return result;
+            result = workbook.createSheet("テストシート");
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            return result;
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
 
     }
 
@@ -571,25 +579,33 @@ public class IsDataSheetCreationLogicImplTest {
      */
     private Sheet createTestSheetWithColumns() {
 
-        final Sheet    result;
-        final Workbook workbook = new XSSFWorkbook();
-        result = workbook.createSheet("テストシート");
+        final Sheet result;
 
-        // 1行目にテーブル物理名を設定
-        final Row  row0    = result.createRow(0);
-        final Cell cell0_0 = row0.createCell(0);
-        cell0_0.setCellValue("test_table");
+        try (final Workbook workbook = new XSSFWorkbook()) {
 
-        // 3行目（インデックス2）にカラム物理名を設定
-        final Row  row2    = result.createRow(2);
-        final Cell cell2_0 = row2.createCell(0);
-        cell2_0.setCellValue("id");
-        final Cell cell2_1 = row2.createCell(1);
-        cell2_1.setCellValue("name");
-        final Cell cell2_2 = row2.createCell(2);
-        cell2_2.setCellValue("value");
+            result = workbook.createSheet("テストシート");
 
-        return result;
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            // 3行目（インデックス2）にカラム物理名を設定
+            final Row  row2    = result.createRow(2);
+            final Cell cell2_0 = row2.createCell(0);
+            cell2_0.setCellValue("id");
+            final Cell cell2_1 = row2.createCell(1);
+            cell2_1.setCellValue("name");
+            final Cell cell2_2 = row2.createCell(2);
+            cell2_2.setCellValue("value");
+
+            return result;
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
 
     }
 
@@ -600,34 +616,42 @@ public class IsDataSheetCreationLogicImplTest {
      */
     private Sheet createTestSheetWithDataTypes() {
 
-        final Sheet    result;
-        final Workbook workbook = new XSSFWorkbook();
-        result = workbook.createSheet("テストシート");
+        final Sheet result;
 
-        // 1行目にテーブル物理名を設定
-        final Row  row0    = result.createRow(0);
-        final Cell cell0_0 = row0.createCell(0);
-        cell0_0.setCellValue("test_table");
+        try (final Workbook workbook = new XSSFWorkbook()) {
 
-        // 3行目（インデックス2）にカラム物理名を設定
-        final Row  row2    = result.createRow(2);
-        final Cell cell2_0 = row2.createCell(0);
-        cell2_0.setCellValue("id");
-        final Cell cell2_1 = row2.createCell(1);
-        cell2_1.setCellValue("name");
-        final Cell cell2_2 = row2.createCell(2);
-        cell2_2.setCellValue("value");
+            result = workbook.createSheet("テストシート");
 
-        // 4行目（インデックス3）にデータ型を設定
-        final Row  row3    = result.createRow(3);
-        final Cell cell3_0 = row3.createCell(0);
-        cell3_0.setCellValue("INTEGER");
-        final Cell cell3_1 = row3.createCell(1);
-        cell3_1.setCellValue("STRING");
-        final Cell cell3_2 = row3.createCell(2);
-        cell3_2.setCellValue("DOUBLE");
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
 
-        return result;
+            // 3行目（インデックス2）にカラム物理名を設定
+            final Row  row2    = result.createRow(2);
+            final Cell cell2_0 = row2.createCell(0);
+            cell2_0.setCellValue("id");
+            final Cell cell2_1 = row2.createCell(1);
+            cell2_1.setCellValue("name");
+            final Cell cell2_2 = row2.createCell(2);
+            cell2_2.setCellValue("value");
+
+            // 4行目（インデックス3）にデータ型を設定
+            final Row  row3    = result.createRow(3);
+            final Cell cell3_0 = row3.createCell(0);
+            cell3_0.setCellValue("INTEGER");
+            final Cell cell3_1 = row3.createCell(1);
+            cell3_1.setCellValue("STRING");
+            final Cell cell3_2 = row3.createCell(2);
+            cell3_2.setCellValue("DOUBLE");
+
+            return result;
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
 
     }
 
@@ -641,16 +665,24 @@ public class IsDataSheetCreationLogicImplTest {
      */
     private Sheet createTestSheetWithName(final String sheetName) {
 
-        final Sheet    result;
-        final Workbook workbook = new XSSFWorkbook();
-        result = workbook.createSheet(sheetName);
+        final Sheet result;
 
-        // 1行目にテーブル物理名を設定
-        final Row  row0    = result.createRow(0);
-        final Cell cell0_0 = row0.createCell(0);
-        cell0_0.setCellValue("test_table");
+        try (final Workbook workbook = new XSSFWorkbook()) {
 
-        return result;
+            result = workbook.createSheet(sheetName);
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            return result;
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
 
     }
 
@@ -664,16 +696,24 @@ public class IsDataSheetCreationLogicImplTest {
      */
     private Sheet createTestSheetWithPhysicsName(final String physicsName) {
 
-        final Sheet    result;
-        final Workbook workbook = new XSSFWorkbook();
-        result = workbook.createSheet("テストシート");
+        final Sheet result;
 
-        // 1行目にテーブル物理名を設定
-        final Row  row0    = result.createRow(0);
-        final Cell cell0_0 = row0.createCell(0);
-        cell0_0.setCellValue(physicsName);
+        try (final Workbook workbook = new XSSFWorkbook()) {
 
-        return result;
+            result = workbook.createSheet("テストシート");
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue(physicsName);
+
+            return result;
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
 
     }
 }
