@@ -20,6 +20,9 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 @Service
 public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
+    /** テンプレート置換用プレースホルダー */
+    private static final String TEMPLATE_NAME_PLACEHOLDER = "{ name }"; //$NON-NLS-1$
+
     /** 入力ファイルパス */
     private Path inputPath;
 
@@ -137,7 +140,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
             // 例外をスローする
             final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN31002;
-            final Object[]               messageArgs = {
+            final Object[]           messageArgs = {
                 this.templatePath.toString()
             };
             throw new KmgToolMsgException(msgType, messageArgs, e);
@@ -154,7 +157,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
             while ((line = brInput.readLine()) != null) {
 
-                final String wk = template.replace("{ name }", line);
+                final String wk = template.replace(SimpleTwo2OneServiceImpl.TEMPLATE_NAME_PLACEHOLDER, line);
                 output.append(wk);
 
             }
@@ -165,7 +168,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
             // 例外をスローする
             final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN31001;
-            final Object[]               messageArgs = {};
+            final Object[]           messageArgs = {};
             throw new KmgToolMsgException(msgType, messageArgs, e);
 
         }
