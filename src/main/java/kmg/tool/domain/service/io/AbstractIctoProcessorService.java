@@ -23,7 +23,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 public abstract class AbstractIctoProcessorService implements IctoProcessorService {
 
     /** 一時CSVファイルのサフィックスと拡張子 */
-    private static final String TEMP_CSV_FILE_SUFFIX_EXTENSION = "Temp.csv";
+    private static final String TEMP_CSV_FILE_SUFFIX_EXTENSION = "Temp.csv"; //$NON-NLS-1$
 
     /**
      * ロガー
@@ -208,8 +208,8 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
         try {
 
             final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12004;
-            final Object[]               startLogMsgArgs  = {};
-            final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+            final Object[]           startLogMsgArgs  = {};
+            final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
                 startLogMsgArgs);
             this.logger.debug(startLogMsg);
 
@@ -218,9 +218,8 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
         } finally {
 
             final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12006;
-            final Object[]               endLogMsgArgs  = {};
-            final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
-                endLogMsgArgs);
+            final Object[]           endLogMsgArgs  = {};
+            final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
             this.logger.debug(endLogMsg);
 
         }
@@ -256,7 +255,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
         } catch (final IOException e) {
 
             final KmgToolGenMsgTypes genMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
-            final Object[]               getMsgArgs = {
+            final Object[]           getMsgArgs = {
                 csvFileNameOnly, suffixExtension,
             };
             throw new KmgToolMsgException(genMsgType, getMsgArgs, e);
