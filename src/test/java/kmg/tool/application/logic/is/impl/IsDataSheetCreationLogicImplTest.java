@@ -56,18 +56,7 @@ public class IsDataSheetCreationLogicImplTest {
 
         /* 準備 */
         // Windows環境で無効な文字を含むパスを指定
-        final Path invalidPath;
-
-        try {
-
-            invalidPath = Paths.get("/<>:|?*");
-
-        } catch (@SuppressWarnings("unused") final java.nio.file.InvalidPathException e) {
-
-            // InvalidPathExceptionが発生した場合はテスト成功とみなす
-            return;
-
-        }
+        final Path invalidPath = Paths.get("/<>:|?*");
 
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
