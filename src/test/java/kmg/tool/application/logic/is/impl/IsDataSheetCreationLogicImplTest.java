@@ -43,6 +43,52 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
+     * createOutputFileDirectories メソッドのテスト - 異常系:不正なパスでIOException発生時の確認
+     * <p>
+     * 無効なパスでのディレクトリ作成時にKmgToolMsgExceptionが発生することを確認します。
+     * </p>
+     */
+    @Test
+    public void testCreateOutputFileDirectories_errorInvalidPathThrowsException() {
+
+        /* 期待値の定義 */
+        final Class<KmgToolMsgException> expectedExceptionType = KmgToolMsgException.class;
+
+        /* 準備 */
+        // Windows環境で無効な文字を含むパスを指定
+        final Path invalidPath;
+
+        try {
+
+            invalidPath = Paths.get("/<>:|?*");
+
+        } catch (final java.nio.file.InvalidPathException e) {
+
+            // InvalidPathExceptionが発生した場合はテスト成功とみなす
+            return;
+
+        }
+
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // 初期化
+        final Sheet               testSheet    = this.createTestSheet();
+        final Map<String, String> testSqlIdMap = new HashMap<>();
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, invalidPath);
+
+        /* テスト対象の実行と検証の実施 */
+        final KmgToolMsgException actualException = Assertions.assertThrows(expectedExceptionType,
+            () -> testTarget.createOutputFileDirectories(), "無効なパスでディレクトリ作成時にKmgToolMsgExceptionが発生すること");
+
+        /* 検証の準備 */
+        final String actualExceptionMessage = actualException.getMessage();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualExceptionMessage.contains("KMGTOOL_GEN13009"), "適切なエラーメッセージが含まれること");
+
+    }
+
+    /**
      * createOutputFileDirectories メソッドのテスト - 正常系:出力ディレクトリが正しく作成されることの確認
      * <p>
      * 指定されたパスに出力ディレクトリが正しく作成されることを確認します。
@@ -125,48 +171,41 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * createOutputFileDirectories メソッドのテスト - 異常系:不正なパスでIOException発生時の確認
+     * getCharset メソッドのテスト - 正常系:キャッシュされた文字セットが返されることの確認
      * <p>
-     * 無効なパスでのディレクトリ作成時にKmgToolMsgExceptionが発生することを確認します。
+     * 既にキャッシュされた文字セットが返されることを確認します。
      * </p>
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testCreateOutputFileDirectories_errorInvalidPathThrowsException() {
+    public void testGetCharset_normalCachedCharsetReturned() throws Exception {
 
         /* 期待値の定義 */
-        final Class<KmgToolMsgException> expectedExceptionType = KmgToolMsgException.class;
+        final Charset expectedCharset = KmgCharsetTypes.MS932.toCharset();
 
         /* 準備 */
-        // Windows環境で無効な文字を含むパスを指定
-        final Path invalidPath;
-
-        try {
-
-            invalidPath = Paths.get("/<>:|?*");
-
-        } catch (final java.nio.file.InvalidPathException e) {
-
-            // InvalidPathExceptionが発生した場合はテスト成功とみなす
-            return;
-
-        }
-
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
         // 初期化
-        final Sheet               testSheet    = this.createTestSheet();
-        final Map<String, String> testSqlIdMap = new HashMap<>();
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, invalidPath);
+        final Sheet               testSheet      = this.createTestSheet();
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
 
-        /* テスト対象の実行と検証の実施 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(expectedExceptionType,
-            () -> testTarget.createOutputFileDirectories(), "無効なパスでディレクトリ作成時にKmgToolMsgExceptionが発生すること");
+        // リフレクションを使ってcharsetフィールドに直接値を設定
+        final KmgReflectionModelImpl testReflection = new KmgReflectionModelImpl(testTarget);
+        testReflection.set("charset", expectedCharset);
+
+        /* テスト対象の実行 */
+        final Charset testResult = testTarget.getCharset();
 
         /* 検証の準備 */
-        final String actualExceptionMessage = actualException.getMessage();
+        final Charset actualCharset = testResult;
 
         /* 検証の実施 */
-        Assertions.assertTrue(actualExceptionMessage.contains("KMGTOOL_GEN13009"), "適切なエラーメッセージが含まれること");
+        Assertions.assertEquals(expectedCharset, actualCharset, "キャッシュされた文字セットが返されること");
 
     }
 
@@ -203,38 +242,6 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getCharset メソッドのテスト - 正常系:PostgreSQLでMS932が返されることの確認
-     * <p>
-     * PostgreSQLの場合にMS932文字セットが返されることを確認します。
-     * </p>
-     */
-    @Test
-    public void testGetCharset_normalPostgreSqlReturnsMs932() {
-
-        /* 期待値の定義 */
-        final Charset expectedCharset = KmgCharsetTypes.MS932.toCharset();
-
-        /* 準備 */
-        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
-
-        // 初期化
-        final Sheet               testSheet      = this.createTestSheet();
-        final Map<String, String> testSqlIdMap   = new HashMap<>();
-        final Path                testOutputPath = Paths.get("test");
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
-
-        /* テスト対象の実行 */
-        final Charset testResult = testTarget.getCharset();
-
-        /* 検証の準備 */
-        final Charset actualCharset = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedCharset, actualCharset, "PostgreSQLの場合はMS932文字セットが返されること");
-
-    }
-
-    /**
      * getCharset メソッドのテスト - 正常系:OracleでUTF8が返されることの確認
      * <p>
      * Oracleの場合にUTF8文字セットが返されることを確認します。
@@ -263,6 +270,38 @@ public class IsDataSheetCreationLogicImplTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedCharset, actualCharset, "Oracleの場合はUTF8文字セットが返されること");
+
+    }
+
+    /**
+     * getCharset メソッドのテスト - 正常系:PostgreSQLでMS932が返されることの確認
+     * <p>
+     * PostgreSQLの場合にMS932文字セットが返されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetCharset_normalPostgreSqlReturnsMs932() {
+
+        /* 期待値の定義 */
+        final Charset expectedCharset = KmgCharsetTypes.MS932.toCharset();
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // 初期化
+        final Sheet               testSheet      = this.createTestSheet();
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        /* テスト対象の実行 */
+        final Charset testResult = testTarget.getCharset();
+
+        /* 検証の準備 */
+        final Charset actualCharset = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedCharset, actualCharset, "PostgreSQLの場合はMS932文字セットが返されること");
 
     }
 
@@ -327,45 +366,6 @@ public class IsDataSheetCreationLogicImplTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedCharset, actualCharset, "NONEの場合はnullが返されること");
-
-    }
-
-    /**
-     * getCharset メソッドのテスト - 正常系:キャッシュされた文字セットが返されることの確認
-     * <p>
-     * 既にキャッシュされた文字セットが返されることを確認します。
-     * </p>
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testGetCharset_normalCachedCharsetReturned() throws Exception {
-
-        /* 期待値の定義 */
-        final Charset expectedCharset = KmgCharsetTypes.MS932.toCharset();
-
-        /* 準備 */
-        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
-
-        // 初期化
-        final Sheet               testSheet      = this.createTestSheet();
-        final Map<String, String> testSqlIdMap   = new HashMap<>();
-        final Path                testOutputPath = Paths.get("test");
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
-
-        // リフレクションを使ってcharsetフィールドに直接値を設定
-        final KmgReflectionModelImpl testReflection = new KmgReflectionModelImpl(testTarget);
-        testReflection.set("charset", expectedCharset);
-
-        /* テスト対象の実行 */
-        final Charset testResult = testTarget.getCharset();
-
-        /* 検証の準備 */
-        final Charset actualCharset = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedCharset, actualCharset, "キャッシュされた文字セットが返されること");
 
     }
 
@@ -436,38 +436,6 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getDeleteComment メソッドのテスト - 正常系:削除コメントが正しく生成されることの確認
-     * <p>
-     * テーブル論理名から削除コメントが正しく生成されることを確認します。
-     * </p>
-     */
-    @Test
-    public void testGetDeleteComment_normalCorrectDeleteComment() {
-
-        /* 期待値の定義 */
-        final String expectedDeleteComment = "-- テストテーブルのレコード削除";
-
-        /* 準備 */
-        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
-
-        // テストシートの作成
-        final Sheet               testSheet      = this.createTestSheetWithName("テストテーブル");
-        final Map<String, String> testSqlIdMap   = new HashMap<>();
-        final Path                testOutputPath = Paths.get("test");
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
-
-        /* テスト対象の実行 */
-        final String testResult = testTarget.getDeleteComment();
-
-        /* 検証の準備 */
-        final String actualDeleteComment = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedDeleteComment, actualDeleteComment, "削除コメントが正しく生成されること");
-
-    }
-
-    /**
      * getDeleteComment メソッドのテスト - 正常系:キャッシュされた削除コメントが返されることの確認
      * <p>
      * 既にキャッシュされた削除コメントが返されることを確認します。
@@ -507,34 +475,34 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getDeleteSql メソッドのテスト - 正常系:削除SQLが正しく生成されることの確認
+     * getDeleteComment メソッドのテスト - 正常系:削除コメントが正しく生成されることの確認
      * <p>
-     * テーブル物理名から削除SQLが正しく生成されることを確認します。
+     * テーブル論理名から削除コメントが正しく生成されることを確認します。
      * </p>
      */
     @Test
-    public void testGetDeleteSql_normalCorrectDeleteSql() {
+    public void testGetDeleteComment_normalCorrectDeleteComment() {
 
         /* 期待値の定義 */
-        final String expectedDeleteSql = "DELETE FROM test_table;";
+        final String expectedDeleteComment = "-- テストテーブルのレコード削除";
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
         // テストシートの作成
-        final Sheet               testSheet      = this.createTestSheetWithPhysicsName("test_table");
+        final Sheet               testSheet      = this.createTestSheetWithName("テストテーブル");
         final Map<String, String> testSqlIdMap   = new HashMap<>();
         final Path                testOutputPath = Paths.get("test");
         testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
 
         /* テスト対象の実行 */
-        final String testResult = testTarget.getDeleteSql();
+        final String testResult = testTarget.getDeleteComment();
 
         /* 検証の準備 */
-        final String actualDeleteSql = testResult;
+        final String actualDeleteComment = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedDeleteSql, actualDeleteSql, "削除SQLが正しく生成されること");
+        Assertions.assertEquals(expectedDeleteComment, actualDeleteComment, "削除コメントが正しく生成されること");
 
     }
 
@@ -578,34 +546,34 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getInsertComment メソッドのテスト - 正常系:挿入コメントが正しく生成されることの確認
+     * getDeleteSql メソッドのテスト - 正常系:削除SQLが正しく生成されることの確認
      * <p>
-     * テーブル論理名から挿入コメントが正しく生成されることを確認します。
+     * テーブル物理名から削除SQLが正しく生成されることを確認します。
      * </p>
      */
     @Test
-    public void testGetInsertComment_normalCorrectInsertComment() {
+    public void testGetDeleteSql_normalCorrectDeleteSql() {
 
         /* 期待値の定義 */
-        final String expectedInsertComment = "-- テストテーブルのレコード挿入";
+        final String expectedDeleteSql = "DELETE FROM test_table;";
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
         // テストシートの作成
-        final Sheet               testSheet      = this.createTestSheetWithName("テストテーブル");
+        final Sheet               testSheet      = this.createTestSheetWithPhysicsName("test_table");
         final Map<String, String> testSqlIdMap   = new HashMap<>();
         final Path                testOutputPath = Paths.get("test");
         testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
 
         /* テスト対象の実行 */
-        final String testResult = testTarget.getInsertComment();
+        final String testResult = testTarget.getDeleteSql();
 
         /* 検証の準備 */
-        final String actualInsertComment = testResult;
+        final String actualDeleteSql = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedInsertComment, actualInsertComment, "挿入コメントが正しく生成されること");
+        Assertions.assertEquals(expectedDeleteSql, actualDeleteSql, "削除SQLが正しく生成されること");
 
     }
 
@@ -649,6 +617,74 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
+     * getInsertComment メソッドのテスト - 正常系:挿入コメントが正しく生成されることの確認
+     * <p>
+     * テーブル論理名から挿入コメントが正しく生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetInsertComment_normalCorrectInsertComment() {
+
+        /* 期待値の定義 */
+        final String expectedInsertComment = "-- テストテーブルのレコード挿入";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet               testSheet      = this.createTestSheetWithName("テストテーブル");
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertComment();
+
+        /* 検証の準備 */
+        final String actualInsertComment = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedInsertComment, actualInsertComment, "挿入コメントが正しく生成されること");
+
+    }
+
+    /**
+     * getInsertSql メソッドのテスト - 正常系:空データを含む挿入SQLが正しく生成されることの確認
+     * <p>
+     * 空データを含むデータ行から挿入SQLが正しく生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetInsertSql_normalInsertSqlWithEmptyData() {
+
+        /* 期待値の定義 */
+        final String expectedInsertSql = "INSERT INTO test_table (id,name,value) VALUES ('1.0',null,null);";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成（データ型と空データを含む）
+        final Sheet testSheet = this.createTestSheetWithEmptyData();
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4); // 5行目（インデックス4）にデータが設定されている
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedInsertSql, actualInsertSql, "空データを含む挿入SQLが正しく生成されること");
+
+    }
+
+    /**
      * getInsertSql メソッドのテスト - 正常系:PostgreSQL向けの挿入SQLが正しく生成されることの確認
      * <p>
      * データ行から挿入SQLが正しく生成されることを確認します。
@@ -685,42 +721,6 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getInsertSql メソッドのテスト - 正常系:空データを含む挿入SQLが正しく生成されることの確認
-     * <p>
-     * 空データを含むデータ行から挿入SQLが正しく生成されることを確認します。
-     * </p>
-     */
-    @Test
-    public void testGetInsertSql_normalInsertSqlWithEmptyData() {
-
-        /* 期待値の定義 */
-        final String expectedInsertSql = "INSERT INTO test_table (id, name, value) VALUES (1, null, null);";
-
-        /* 準備 */
-        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
-
-        // テストシートの作成（データ型と空データを含む）
-        final Sheet testSheet = this.createTestSheetWithEmptyData();
-
-        final Map<String, String> testSqlIdMap   = new HashMap<>();
-        final Path                testOutputPath = Paths.get("test");
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
-
-        // テストデータ行を作成
-        final Row testDataRow = testSheet.getRow(4); // 5行目（インデックス4）にデータが設定されている
-
-        /* テスト対象の実行 */
-        final String testResult = testTarget.getInsertSql(testDataRow);
-
-        /* 検証の準備 */
-        final String actualInsertSql = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedInsertSql, actualInsertSql, "空データを含む挿入SQLが正しく生成されること");
-
-    }
-
-    /**
      * getInsertSql メソッドのテスト - 準正常系:NONEデータベース種別で処理されることの確認
      * <p>
      * NONE DBタイプの場合の処理を確認します。
@@ -753,51 +753,6 @@ public class IsDataSheetCreationLogicImplTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedInsertSql, actualInsertSql, "NONE DBタイプの場合は処理されずnullで埋められること");
-
-    }
-
-    /**
-     * getKmgDbDataTypeList メソッドのテスト - 正常系:データ型リストが正しく取得されることの確認
-     * <p>
-     * シートからデータ型のリストが正しく取得されることを確認します。適切なキーを使用して実際のデータ型を確認します。
-     * </p>
-     */
-    @Test
-    public void testGetKmgDbDataTypeList_normalCorrectDataTypeList() {
-
-        /* 期待値の定義 */
-        // 適切なキーを使用して実際のデータ型が取得されることを確認
-        final KmgDbDataTypeTypes[] expectedDataTypes = {
-            KmgDbDataTypeTypes.INTEGER, KmgDbDataTypeTypes.STRING, KmgDbDataTypeTypes.DOUBLE
-        };
-
-        /* 準備 */
-        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
-
-        // テストシートの作成（正しいキーを使用）
-        final Sheet testSheet = this.createTestSheetWithCorrectDataTypes();
-
-        final Map<String, String> testSqlIdMap   = new HashMap<>();
-        final Path                testOutputPath = Paths.get("test");
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
-
-        /* テスト対象の実行 */
-        final List<KmgDbDataTypeTypes> testResult = testTarget.getKmgDbDataTypeList();
-
-        /* 検証の準備 */
-        final KmgDbDataTypeTypes[] actualDataTypes = testResult.toArray(new KmgDbDataTypeTypes[0]);
-
-        // enumのインスタンス比較ではなくgetKey()で比較
-        String[] expectedKeys = new String[expectedDataTypes.length];
-        String[] actualKeys   = new String[actualDataTypes.length];
-
-        for (int i = 0; i < expectedDataTypes.length; i++) {
-
-            expectedKeys[i] = expectedDataTypes[i].getKey();
-            actualKeys[i] = actualDataTypes[i].getKey();
-
-        }
-        Assertions.assertArrayEquals(expectedKeys, actualKeys, "データ型リストが正しく取得されること");
 
     }
 
@@ -842,35 +797,47 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getOutputFilePath メソッドのテスト - 正常系:出力ファイルパスが正しく生成されることの確認
+     * getKmgDbDataTypeList メソッドのテスト - 正常系:データ型リストが正しく取得されることの確認
      * <p>
-     * SQLIDとテーブル物理名から出力ファイルパスが正しく生成されることを確認します。
+     * シートからデータ型のリストが正しく取得されることを確認します。適切なキーを使用して実際のデータ型を確認します。
      * </p>
      */
     @Test
-    public void testGetOutputFilePath_normalCorrectOutputFilePath() {
+    public void testGetKmgDbDataTypeList_normalCorrectDataTypeList() {
 
         /* 期待値の定義 */
-        final String expectedFileName = "SQL001_insert_test_table.sql";
+        // 適切なキーを使用して実際のデータ型が取得されることを確認
+        final KmgDbDataTypeTypes[] expectedDataTypes = {
+            KmgDbDataTypeTypes.INTEGER, KmgDbDataTypeTypes.STRING, KmgDbDataTypeTypes.DOUBLE
+        };
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
-        // テストシートの作成
-        final Sheet               testSheet    = this.createTestSheetWithPhysicsName("test_table");
-        final Map<String, String> testSqlIdMap = new HashMap<>();
-        testSqlIdMap.put("test_table", "SQL001");
-        final Path testOutputPath = Paths.get("output");
+        // テストシートの作成（正しいキーを使用）
+        final Sheet testSheet = this.createTestSheetWithCorrectDataTypes();
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
         testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
 
         /* テスト対象の実行 */
-        final Path testResult = testTarget.getOutputFilePath();
+        final List<KmgDbDataTypeTypes> testResult = testTarget.getKmgDbDataTypeList();
 
         /* 検証の準備 */
-        final String actualFileName = testResult.getFileName().toString();
+        final KmgDbDataTypeTypes[] actualDataTypes = testResult.toArray(new KmgDbDataTypeTypes[0]);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedFileName, actualFileName, "出力ファイルパスが正しく生成されること");
+        // enumのインスタンス比較ではなくgetKey()で比較
+        final String[] expectedKeys = new String[expectedDataTypes.length];
+        final String[] actualKeys   = new String[actualDataTypes.length];
+
+        for (int i = 0; i < expectedDataTypes.length; i++) {
+
+            expectedKeys[i] = expectedDataTypes[i].getKey();
+            actualKeys[i] = actualDataTypes[i].getKey();
+
+        }
+        Assertions.assertArrayEquals(expectedKeys, actualKeys, "データ型リストが正しく取得されること");
 
     }
 
@@ -915,16 +882,16 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getSqlId メソッドのテスト - 正常系:SQLIDが正しく取得されることの確認
+     * getOutputFilePath メソッドのテスト - 正常系:出力ファイルパスが正しく生成されることの確認
      * <p>
-     * SQLIDマップからSQLIDが正しく取得されることを確認します。
+     * SQLIDとテーブル物理名から出力ファイルパスが正しく生成されることを確認します。
      * </p>
      */
     @Test
-    public void testGetSqlId_normalCorrectSqlId() {
+    public void testGetOutputFilePath_normalCorrectOutputFilePath() {
 
         /* 期待値の定義 */
-        final String expectedSqlId = "SQL001";
+        final String expectedFileName = "SQL001_insert_test_table.sql";
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
@@ -933,17 +900,17 @@ public class IsDataSheetCreationLogicImplTest {
         final Sheet               testSheet    = this.createTestSheetWithPhysicsName("test_table");
         final Map<String, String> testSqlIdMap = new HashMap<>();
         testSqlIdMap.put("test_table", "SQL001");
-        final Path testOutputPath = Paths.get("test");
+        final Path testOutputPath = Paths.get("output");
         testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
 
         /* テスト対象の実行 */
-        final String testResult = testTarget.getSqlId();
+        final Path testResult = testTarget.getOutputFilePath();
 
         /* 検証の準備 */
-        final String actualSqlId = testResult;
+        final String actualFileName = testResult.getFileName().toString();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedSqlId, actualSqlId, "SQLIDが正しく取得されること");
+        Assertions.assertEquals(expectedFileName, actualFileName, "出力ファイルパスが正しく生成されること");
 
     }
 
@@ -988,34 +955,35 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getTableLogicName メソッドのテスト - 正常系:テーブル論理名が正しく取得されることの確認
+     * getSqlId メソッドのテスト - 正常系:SQLIDが正しく取得されることの確認
      * <p>
-     * シート名からテーブル論理名が正しく取得されることを確認します。
+     * SQLIDマップからSQLIDが正しく取得されることを確認します。
      * </p>
      */
     @Test
-    public void testGetTableLogicName_normalCorrectTableLogicName() {
+    public void testGetSqlId_normalCorrectSqlId() {
 
         /* 期待値の定義 */
-        final String expectedTableLogicName = "テストテーブル";
+        final String expectedSqlId = "SQL001";
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
         // テストシートの作成
-        final Sheet               testSheet      = this.createTestSheetWithName("テストテーブル");
-        final Map<String, String> testSqlIdMap   = new HashMap<>();
-        final Path                testOutputPath = Paths.get("test");
+        final Sheet               testSheet    = this.createTestSheetWithPhysicsName("test_table");
+        final Map<String, String> testSqlIdMap = new HashMap<>();
+        testSqlIdMap.put("test_table", "SQL001");
+        final Path testOutputPath = Paths.get("test");
         testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
 
         /* テスト対象の実行 */
-        final String testResult = testTarget.getTableLogicName();
+        final String testResult = testTarget.getSqlId();
 
         /* 検証の準備 */
-        final String actualTableLogicName = testResult;
+        final String actualSqlId = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedTableLogicName, actualTableLogicName, "テーブル論理名が正しく取得されること");
+        Assertions.assertEquals(expectedSqlId, actualSqlId, "SQLIDが正しく取得されること");
 
     }
 
@@ -1055,6 +1023,38 @@ public class IsDataSheetCreationLogicImplTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTableLogicName, actualTableLogicName, "キャッシュされたテーブル論理名が返されること");
+
+    }
+
+    /**
+     * getTableLogicName メソッドのテスト - 正常系:テーブル論理名が正しく取得されることの確認
+     * <p>
+     * シート名からテーブル論理名が正しく取得されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetTableLogicName_normalCorrectTableLogicName() {
+
+        /* 期待値の定義 */
+        final String expectedTableLogicName = "テストテーブル";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet               testSheet      = this.createTestSheetWithName("テストテーブル");
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getTableLogicName();
+
+        /* 検証の準備 */
+        final String actualTableLogicName = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTableLogicName, actualTableLogicName, "テーブル論理名が正しく取得されること");
 
     }
 
@@ -1186,11 +1186,11 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * データ型情報を持つテスト用シートを作成する<br>
+     * データ型行にKmgDbDataTypeTypesの正しいキーを設定したテスト用シートを作成する<br>
      *
      * @return テスト用シート
      */
-    private Sheet createTestSheetWithDataTypes() {
+    private Sheet createTestSheetWithCorrectDataTypes() {
 
         final Sheet result;
 
@@ -1212,76 +1212,23 @@ public class IsDataSheetCreationLogicImplTest {
             final Cell cell2_2 = row2.createCell(2);
             cell2_2.setCellValue("value");
 
-            // 4行目（インデックス3）にデータ型を設定
+            // 4行目（インデックス3）にKmgDbDataTypeTypesの正しいキーを設定
             final Row  row3    = result.createRow(3);
             final Cell cell3_0 = row3.createCell(0);
-            cell3_0.setCellValue("INTEGER");
+            cell3_0.setCellValue(KmgDbDataTypeTypes.INTEGER.getKey()); // 例: "4バイト整数"
             final Cell cell3_1 = row3.createCell(1);
-            cell3_1.setCellValue("STRING");
+            cell3_1.setCellValue(KmgDbDataTypeTypes.STRING.getKey()); // 例: "文字列型"
             final Cell cell3_2 = row3.createCell(2);
-            cell3_2.setCellValue("DOUBLE");
+            cell3_2.setCellValue(KmgDbDataTypeTypes.DOUBLE.getKey()); // 例: "8バイト実数"
 
-            return result;
-
-        } catch (final Exception e) {
-
-            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
-
-        }
-
-    }
-
-    /**
-     * 指定した名前のテスト用シートを作成する<br>
-     *
-     * @param sheetName
-     *                  シート名
-     *
-     * @return テスト用シート
-     */
-    private Sheet createTestSheetWithName(final String sheetName) {
-
-        final Sheet result;
-
-        try (final Workbook workbook = new XSSFWorkbook()) {
-
-            result = workbook.createSheet(sheetName);
-
-            // 1行目にテーブル物理名を設定
-            final Row  row0    = result.createRow(0);
-            final Cell cell0_0 = row0.createCell(0);
-            cell0_0.setCellValue("test_table");
-
-            return result;
-
-        } catch (final Exception e) {
-
-            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
-
-        }
-
-    }
-
-    /**
-     * テーブル物理名を持つテスト用シートを作成する<br>
-     *
-     * @param physicsName
-     *                    テーブル物理名
-     *
-     * @return テスト用シート
-     */
-    private Sheet createTestSheetWithPhysicsName(final String physicsName) {
-
-        final Sheet result;
-
-        try (final Workbook workbook = new XSSFWorkbook()) {
-
-            result = workbook.createSheet("テストシート");
-
-            // 1行目にテーブル物理名を設定
-            final Row  row0    = result.createRow(0);
-            final Cell cell0_0 = row0.createCell(0);
-            cell0_0.setCellValue(physicsName);
+            // 5行目（インデックス4）にテストデータを設定
+            final Row  row4    = result.createRow(4);
+            final Cell cell4_0 = row4.createCell(0);
+            cell4_0.setCellValue(1);
+            final Cell cell4_1 = row4.createCell(1);
+            cell4_1.setCellValue("test");
+            final Cell cell4_2 = row4.createCell(2);
+            cell4_2.setCellValue(123.45);
 
             return result;
 
@@ -1349,6 +1296,53 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
+     * データ型情報を持つテスト用シートを作成する<br>
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithDataTypes() {
+
+        final Sheet result;
+
+        try (final Workbook workbook = new XSSFWorkbook()) {
+
+            result = workbook.createSheet("テストシート");
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            // 3行目（インデックス2）にカラム物理名を設定
+            final Row  row2    = result.createRow(2);
+            final Cell cell2_0 = row2.createCell(0);
+            cell2_0.setCellValue("id");
+            final Cell cell2_1 = row2.createCell(1);
+            cell2_1.setCellValue("name");
+            final Cell cell2_2 = row2.createCell(2);
+            cell2_2.setCellValue("value");
+
+            // 4行目（インデックス3）にデータ型を設定
+            final Row  row3    = result.createRow(3);
+            final Cell cell3_0 = row3.createCell(0);
+            cell3_0.setCellValue("INTEGER");
+            final Cell cell3_1 = row3.createCell(1);
+            cell3_1.setCellValue("STRING");
+            final Cell cell3_2 = row3.createCell(2);
+            cell3_2.setCellValue("DOUBLE");
+
+            return result;
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
+
+    }
+
+    // TODO KenichiroArai 2025/06/07 コードを整理する
+    /**
      * 空データを含むテスト用シートを作成する<br>
      *
      * @return テスト用シート
@@ -1401,11 +1395,45 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * データ型行にKmgDbDataTypeTypesの正しいキーを設定したテスト用シートを作成する<br>
+     * 指定した名前のテスト用シートを作成する<br>
+     *
+     * @param sheetName
+     *                  シート名
      *
      * @return テスト用シート
      */
-    private Sheet createTestSheetWithCorrectDataTypes() {
+    private Sheet createTestSheetWithName(final String sheetName) {
+
+        final Sheet result;
+
+        try (final Workbook workbook = new XSSFWorkbook()) {
+
+            result = workbook.createSheet(sheetName);
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            return result;
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
+
+    }
+
+    /**
+     * テーブル物理名を持つテスト用シートを作成する<br>
+     *
+     * @param physicsName
+     *                    テーブル物理名
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithPhysicsName(final String physicsName) {
 
         final Sheet result;
 
@@ -1416,34 +1444,7 @@ public class IsDataSheetCreationLogicImplTest {
             // 1行目にテーブル物理名を設定
             final Row  row0    = result.createRow(0);
             final Cell cell0_0 = row0.createCell(0);
-            cell0_0.setCellValue("test_table");
-
-            // 3行目（インデックス2）にカラム物理名を設定
-            final Row  row2    = result.createRow(2);
-            final Cell cell2_0 = row2.createCell(0);
-            cell2_0.setCellValue("id");
-            final Cell cell2_1 = row2.createCell(1);
-            cell2_1.setCellValue("name");
-            final Cell cell2_2 = row2.createCell(2);
-            cell2_2.setCellValue("value");
-
-            // 4行目（インデックス3）にKmgDbDataTypeTypesの正しいキーを設定
-            final Row  row3    = result.createRow(3);
-            final Cell cell3_0 = row3.createCell(0);
-            cell3_0.setCellValue(KmgDbDataTypeTypes.INTEGER.getKey()); // 例: "4バイト整数"
-            final Cell cell3_1 = row3.createCell(1);
-            cell3_1.setCellValue(KmgDbDataTypeTypes.STRING.getKey()); // 例: "文字列型"
-            final Cell cell3_2 = row3.createCell(2);
-            cell3_2.setCellValue(KmgDbDataTypeTypes.DOUBLE.getKey()); // 例: "8バイト実数"
-
-            // 5行目（インデックス4）にテストデータを設定
-            final Row  row4    = result.createRow(4);
-            final Cell cell4_0 = row4.createCell(0);
-            cell4_0.setCellValue(1);
-            final Cell cell4_1 = row4.createCell(1);
-            cell4_1.setCellValue("test");
-            final Cell cell4_2 = row4.createCell(2);
-            cell4_2.setCellValue(123.45);
+            cell0_0.setCellValue(physicsName);
 
             return result;
 
