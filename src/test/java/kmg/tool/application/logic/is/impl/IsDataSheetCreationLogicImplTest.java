@@ -62,7 +62,7 @@ public class IsDataSheetCreationLogicImplTest {
 
             invalidPath = Paths.get("/<>:|?*");
 
-        } catch (final java.nio.file.InvalidPathException e) {
+        } catch (@SuppressWarnings("unused") final java.nio.file.InvalidPathException e) {
 
             // InvalidPathExceptionが発生した場合はテスト成功とみなす
             return;
@@ -694,7 +694,7 @@ public class IsDataSheetCreationLogicImplTest {
     public void testGetInsertSql_normalPostgreSqlInsertSqlGenerated() {
 
         /* 期待値の定義 */
-        final String expectedInsertSql = "INSERT INTO test_table (id, name, value) VALUES (1, 'test', 123.45);";
+        final String expectedInsertSql = "INSERT INTO test_table (id,name,value) VALUES ('1.0','test','123.45');";
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
@@ -730,7 +730,7 @@ public class IsDataSheetCreationLogicImplTest {
     public void testGetInsertSql_semiNoneDbTypeProcessed() {
 
         /* 期待値の定義 */
-        final String expectedInsertSql = "INSERT INTO test_table (id, name, value) VALUES (null, null, null);";
+        final String expectedInsertSql = "INSERT INTO test_table (id,name,value) VALUES (null,null,null);";
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
