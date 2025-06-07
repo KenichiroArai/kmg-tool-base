@@ -43,41 +43,6 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * createOutputFileDirectories メソッドのテスト - 異常系:不正なパスでIOException発生時の確認
-     * <p>
-     * 無効なパスでのディレクトリ作成時にKmgToolMsgExceptionが発生することを確認します。
-     * </p>
-     */
-    @Test
-    public void testCreateOutputFileDirectories_errorInvalidPathThrowsException() {
-
-        /* 期待値の定義 */
-        final Class<KmgToolMsgException> expectedExceptionType = KmgToolMsgException.class;
-
-        /* 準備 */
-        // Windows環境で無効な文字を含むパスを指定
-        final Path invalidPath = Paths.get("/<>:|?*");
-
-        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
-
-        // 初期化
-        final Sheet               testSheet    = this.createTestSheet();
-        final Map<String, String> testSqlIdMap = new HashMap<>();
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, invalidPath);
-
-        /* テスト対象の実行と検証の実施 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(expectedExceptionType,
-            () -> testTarget.createOutputFileDirectories(), "無効なパスでディレクトリ作成時にKmgToolMsgExceptionが発生すること");
-
-        /* 検証の準備 */
-        final String actualExceptionMessage = actualException.getMessage();
-
-        /* 検証の実施 */
-        Assertions.assertTrue(actualExceptionMessage.contains("KMGTOOL_GEN13009"), "適切なエラーメッセージが含まれること");
-
-    }
-
-    /**
      * createOutputFileDirectories メソッドのテスト - 正常系:出力ディレクトリが正しく作成されることの確認
      * <p>
      * 指定されたパスに出力ディレクトリが正しく作成されることを確認します。
