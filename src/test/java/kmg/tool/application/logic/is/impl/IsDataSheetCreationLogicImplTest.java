@@ -17,6 +17,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.types.KmgCharsetTypes;
@@ -29,6 +32,7 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
  *
  * @author KenichiroArai
  */
+@SpringBootTest(classes = kmg.tool.presentation.ui.gui.is.IsCreationTool.class)
 @SuppressWarnings({
     "nls", "static-method"
 })
@@ -43,64 +47,17 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * createOutputFileDirectories メソッドのテスト - 異常系:IOException発生時のテスト概要確認
+     * createOutputFileDirectories メソッドのテスト - 異常系:IOException発生時のテスト
      * <p>
-     * ディレクトリ作成時にIOExceptionが発生した場合、適切にKmgToolMsgExceptionがスローされることを確認します。 本テストは、実際のIOExceptionを発生させる環境構築が困難なため、
-     * テストケースの実装パターンとIOExceptionハンドリングのロジック確認を目的とします。
-     * </p>
-     * 注意：本テストは実際のIOExceptionテストではなく、テストケースの存在確認のみ行います。 実際のIOExceptionのテストは、統合テストまたは手動テストで実施してください。
-     */
-    @Test
-    public void testCreateOutputFileDirectories_errorIOException() {
-
-        /* 期待値の定義 */
-        final boolean expectedTestExists = true;
-
-        /* 準備 */
-        // IOExceptionを発生させるためには、以下のようなケースが考えられます：
-        // 1. ディスク容量不足
-        // 2. アクセス権限なし
-        // 3. 読み取り専用ファイルシステム
-        // 4. 不正なパス文字
-        // 5. パス長制限超過
-        //
-        // しかし、これらの条件を単体テスト環境で再現するのは困難です。
-        // そのため、本テストではテストケースの存在確認のみ行います。
-
-        /* 検証の準備 */
-        final boolean actualTestExists = true;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedTestExists, actualTestExists,
-            "createOutputFileDirectoriesメソッドのIOException異常系テストケースが存在すること");
-
-        // 実装における例外ハンドリングのロジック確認：
-        // IsDataSheetCreationLogicImpl.createOutputFileDirectories()では、
-        // Files.createDirectories()でIOExceptionが発生した場合、
-        // KmgToolGenMsgTypes.KMGTOOL_GEN13009でKmgToolMsgExceptionをスローする実装になっている
-
-        System.out.println("注意：本テストは概念実証用です。実際のIOExceptionテストは統合テストまたは手動テストで実施してください。");
-
-    }
-
-    /**
-     * createOutputFileDirectories メソッドのテスト - 正常系:出力ディレクトリが正しく作成されることの確認
-     * <p>
-     * 指定されたパスに出力ディレクトリが正しく作成されることを確認します。
+     * ディレクトリ作成時にIOExceptionが発生した場合、適切にKmgToolMsgExceptionがスローされることを確認します。
+     * Mockitoを使用してFiles.createDirectoriesをモックし、IOExceptionを発生させてテストします。
      * </p>
      *
      * @param tempDir
      *                一時ディレクトリ
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
     @Test
-    public void testCreateOutputFileDirectories_normalDirectoryCreationSuccess(@TempDir final Path tempDir)
-        throws KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final boolean expectedDirectoryExists = true;
+    public void testCreateOutputFileDirectories_errorIOException(@TempDir final Path tempDir) {
 
         /* 準備 */
         final Path                         outputPath = tempDir.resolve("output").toAbsolutePath();
@@ -111,42 +68,48 @@ public class IsDataSheetCreationLogicImplTest {
         final Map<String, String> testSqlIdMap = new HashMap<>();
         testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
 
-        /* テスト対象の実行 */
-        testTarget.createOutputFileDirectories();
+        /* テスト実行 */
+        try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-        /* 検証の準備 */
-        final boolean actualDirectoryExists = Files.exists(outputPath);
+            // Files.createDirectoriesがIOExceptionをスローするように設定
+            final IOException testException = new IOException("Disk full");
+            mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedDirectoryExists, actualDirectoryExists, "出力ディレクトリが正しく作成されること");
+            /* 検証の実施 */
+            final KmgToolMsgException exception = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                testTarget.createOutputFileDirectories();
+
+            }, "IOExceptionが発生した場合、KmgToolMsgExceptionがスローされること");
+
+            // TODO KenichiroArai 2025/06/07 例外処理の書き方を共通方式にする。
+            // 例外の詳細検証
+            Assertions.assertTrue(exception.getMessage().contains("KMGTOOL_GEN13009"),
+                "例外メッセージにKMGTOOL_GEN13009が含まれること");
+            Assertions.assertInstanceOf(IOException.class, exception.getCause(), "例外の原因がIOExceptionであること");
+            Assertions.assertEquals("Disk full", exception.getCause().getMessage(), "原因となったIOExceptionのメッセージが正しいこと");
+
+            // モックの呼び出し確認
+            mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+
+        }
 
     }
 
     /**
-     * createOutputFileDirectories メソッドのテスト - 準正常系:既存ディレクトリが存在する場合でも成功することの確認
+     * createOutputFileDirectories メソッドのテスト - 異常系:権限不足によるIOException発生時のテスト
      * <p>
-     * 既に存在するディレクトリに対しても処理が正常に完了することを確認します。
+     * ディレクトリ作成時に権限不足によるIOExceptionが発生した場合の例外処理を確認します。
      * </p>
      *
      * @param tempDir
      *                一時ディレクトリ
-     *
-     * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
     @Test
-    public void testCreateOutputFileDirectories_normalExistingDirectoryHandled(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final boolean expectedDirectoryExists = true;
+    public void testCreateOutputFileDirectories_errorPermissionDenied(@TempDir final Path tempDir) {
 
         /* 準備 */
-        final Path outputPath = tempDir.resolve("existing");
-        Files.createDirectories(outputPath); // 事前にディレクトリを作成
-
+        final Path                         outputPath = tempDir.resolve("restricted").toAbsolutePath();
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
         // 初期化
@@ -154,14 +117,104 @@ public class IsDataSheetCreationLogicImplTest {
         final Map<String, String> testSqlIdMap = new HashMap<>();
         testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
 
-        /* テスト対象の実行 */
-        testTarget.createOutputFileDirectories();
+        /* テスト実行 */
+        try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-        /* 検証の準備 */
-        final boolean actualDirectoryExists = Files.exists(outputPath);
+            // 権限不足のIOExceptionをスロー
+            final IOException testException = new IOException("Access denied");
+            mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedDirectoryExists, actualDirectoryExists, "既存ディレクトリが存在する場合でも正常に処理されること");
+            /* 検証の実施 */
+            final KmgToolMsgException exception = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                testTarget.createOutputFileDirectories();
+
+            }, "権限不足のIOExceptionが発生した場合、KmgToolMsgExceptionがスローされること");
+
+            // 例外の詳細検証
+            Assertions.assertTrue(exception.getMessage().contains("KMGTOOL_GEN13009"),
+                "例外メッセージにKMGTOOL_GEN13009が含まれること");
+            Assertions.assertEquals("Access denied", exception.getCause().getMessage(), "権限不足のメッセージが保持されること");
+
+            // モックの呼び出し確認
+            mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+
+        }
+
+    }
+
+    /**
+     * createOutputFileDirectories メソッドのテスト - 正常系:出力ディレクトリが正しく作成されることの確認
+     * <p>
+     * 指定されたパスに出力ディレクトリが正しく作成されることを確認します。 Mockitoを使用してFiles.createDirectoriesの呼び出しを確認します。
+     * </p>
+     *
+     * @param tempDir
+     *                一時ディレクトリ
+     */
+    @Test
+    public void testCreateOutputFileDirectories_normalDirectoryCreationSuccess(@TempDir final Path tempDir) {
+
+        /* 準備 */
+        final Path                         outputPath = tempDir.resolve("output").toAbsolutePath();
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // 初期化
+        final Sheet               testSheet    = this.createTestSheet();
+        final Map<String, String> testSqlIdMap = new HashMap<>();
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
+
+        /* テスト実行 */
+        try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+
+            // Files.createDirectoriesが正常に実行されるように設定
+            mockedFiles.when(() -> Files.createDirectories(outputPath)).thenReturn(outputPath);
+
+            /* 検証の実施 */
+            Assertions.assertDoesNotThrow(() -> testTarget.createOutputFileDirectories(), "正常系では例外がスローされないこと");
+
+            // モックの呼び出し確認
+            mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+
+        }
+
+    }
+
+    /**
+     * createOutputFileDirectories メソッドのテスト - 準正常系:既存ディレクトリが存在する場合でも成功することの確認
+     * <p>
+     * 既に存在するディレクトリに対しても処理が正常に完了することを確認します。 Mockitoを使用してFiles.createDirectoriesの動作をシミュレートします。
+     * </p>
+     *
+     * @param tempDir
+     *                一時ディレクトリ
+     */
+    @Test
+    public void testCreateOutputFileDirectories_normalExistingDirectoryHandled(@TempDir final Path tempDir) {
+
+        /* 準備 */
+        final Path                         outputPath = tempDir.resolve("existing").toAbsolutePath();
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // 初期化
+        final Sheet               testSheet    = this.createTestSheet();
+        final Map<String, String> testSqlIdMap = new HashMap<>();
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
+
+        /* テスト実行 */
+        try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+
+            // 既存ディレクトリの場合、Files.createDirectoriesは正常に完了
+            mockedFiles.when(() -> Files.createDirectories(outputPath)).thenReturn(outputPath);
+
+            /* 検証の実施 */
+            Assertions.assertDoesNotThrow(() -> testTarget.createOutputFileDirectories(),
+                "既存ディレクトリが存在する場合でも正常に処理されること");
+
+            // モックの呼び出し確認
+            mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+
+        }
 
     }
 
