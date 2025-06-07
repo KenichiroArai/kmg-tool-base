@@ -62,7 +62,7 @@ public class IsDataSheetCreationLogicImplTest {
         final boolean expectedDirectoryExists = true;
 
         /* 準備 */
-        final Path                         outputPath = tempDir.resolve("output");
+        final Path                         outputPath = tempDir.resolve("output").toAbsolutePath();
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
         // 初期化
