@@ -388,10 +388,8 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
                 case SQL_SERVER:
                     break;
 
-                default:
-                    break;
-
             }
+
             dataList.add(outputData);
 
         }
