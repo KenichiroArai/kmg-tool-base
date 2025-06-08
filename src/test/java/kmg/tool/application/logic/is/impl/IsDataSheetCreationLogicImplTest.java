@@ -82,12 +82,16 @@ public class IsDataSheetCreationLogicImplTest {
 
             }, "IOExceptionが発生した場合、KmgToolMsgExceptionがスローされること");
 
-            // TODO KenichiroArai 2025/06/07 例外処理の書き方を共通方式にする。
-            // 例外の詳細検証
-            Assertions.assertTrue(exception.getMessage().contains("KMGTOOL_GEN13009"),
-                "例外メッセージにKMGTOOL_GEN13009が含まれること");
-            Assertions.assertInstanceOf(IOException.class, exception.getCause(), "例外の原因がIOExceptionであること");
-            Assertions.assertEquals("Disk full", exception.getCause().getMessage(), "原因となったIOExceptionのメッセージが正しいこと");
+            /* 検証の準備 */
+            final String    expectedMessageId    = "KMGTOOL_GEN13009";
+            final String    expectedCauseMessage = "Disk full";
+            final Throwable actualCause          = exception.getCause();
+            final String    actualMessage        = exception.getMessage();
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualMessage.contains(expectedMessageId), "例外メッセージにKMGTOOL_GEN13009が含まれること");
+            Assertions.assertInstanceOf(IOException.class, actualCause, "例外の原因がIOExceptionであること");
+            Assertions.assertEquals(expectedCauseMessage, actualCause.getMessage(), "原因となったIOExceptionのメッセージが正しいこと");
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
@@ -131,10 +135,16 @@ public class IsDataSheetCreationLogicImplTest {
 
             }, "権限不足のIOExceptionが発生した場合、KmgToolMsgExceptionがスローされること");
 
-            // 例外の詳細検証
-            Assertions.assertTrue(exception.getMessage().contains("KMGTOOL_GEN13009"),
-                "例外メッセージにKMGTOOL_GEN13009が含まれること");
-            Assertions.assertEquals("Access denied", exception.getCause().getMessage(), "権限不足のメッセージが保持されること");
+            /* 検証の準備 */
+            final String    expectedMessageId    = "KMGTOOL_GEN13009";
+            final String    expectedCauseMessage = "Access denied";
+            final Throwable actualCause          = exception.getCause();
+            final String    actualMessage        = exception.getMessage();
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualMessage.contains(expectedMessageId), "例外メッセージにKMGTOOL_GEN13009が含まれること");
+            Assertions.assertInstanceOf(IOException.class, actualCause, "例外の原因がIOExceptionであること");
+            Assertions.assertEquals(expectedCauseMessage, actualCause.getMessage(), "権限不足のメッセージが保持されること");
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
