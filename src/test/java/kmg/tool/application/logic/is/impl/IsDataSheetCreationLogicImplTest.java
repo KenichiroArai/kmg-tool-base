@@ -769,42 +769,6 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
-     * getInsertSql メソッドのテスト - 準正常系:NONEデータベース種別で処理されることの確認
-     * <p>
-     * NONE DBタイプの場合の処理を確認します。
-     * </p>
-     */
-    @Test
-    public void testGetInsertSql_semiNoneDbTypeProcessed() {
-
-        /* 期待値の定義 */
-        final String expectedInsertSql = "INSERT INTO test_table (id,name,value) VALUES (null,null,null);";
-
-        /* 準備 */
-        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
-
-        // テストシートの作成
-        final Sheet testSheet = this.createTestSheetWithData();
-
-        final Map<String, String> testSqlIdMap   = new HashMap<>();
-        final Path                testOutputPath = Paths.get("test");
-        testTarget.initialize(KmgDbTypes.NONE, testSheet, testSqlIdMap, testOutputPath);
-
-        // テストデータ行を作成
-        final Row testDataRow = testSheet.getRow(4); // 5行目（インデックス4）にデータが設定されている
-
-        /* テスト対象の実行 */
-        final String testResult = testTarget.getInsertSql(testDataRow);
-
-        /* 検証の準備 */
-        final String actualInsertSql = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedInsertSql, actualInsertSql, "NONE DBタイプの場合は処理されずnullで埋められること");
-
-    }
-
-    /**
      * getInsertSql メソッドのテスト - 準正常系:MySQLデータベース種別で処理されることの確認
      * <p>
      * MySQL DBタイプの場合の処理を確認します。
@@ -837,6 +801,42 @@ public class IsDataSheetCreationLogicImplTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedInsertSql, actualInsertSql, "MySQL DBタイプの場合は処理されずnullで埋められること");
+
+    }
+
+    /**
+     * getInsertSql メソッドのテスト - 準正常系:NONEデータベース種別で処理されることの確認
+     * <p>
+     * NONE DBタイプの場合の処理を確認します。
+     * </p>
+     */
+    @Test
+    public void testGetInsertSql_semiNoneDbTypeProcessed() {
+
+        /* 期待値の定義 */
+        final String expectedInsertSql = "INSERT INTO test_table (id,name,value) VALUES (null,null,null);";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithData();
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.NONE, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4); // 5行目（インデックス4）にデータが設定されている
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedInsertSql, actualInsertSql, "NONE DBタイプの場合は処理されずnullで埋められること");
 
     }
 
@@ -994,6 +994,560 @@ public class IsDataSheetCreationLogicImplTest {
 
         }
         Assertions.assertArrayEquals(expectedKeys, actualKeys, "データ型リストが正しく取得されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:BIG_DECIMALデータ型の出力データが正しく生成されることの確認
+     * <p>
+     * BIG_DECIMALデータ型の場合に実数として出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalBigDecimalDataType() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "99.99";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.BIG_DECIMAL, 99.99);
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData), "BIG_DECIMALデータ型の場合は実数として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:DATEデータ型で通常の日付の出力データが正しく生成されることの確認
+     * <p>
+     * DATEデータ型の場合に日付フォーマットでシングルクォート付きの出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalDateDataType() {
+
+        /* 期待値の定義 */
+        final String expectedDateFormat = "2025/01/15";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // 特定の日付を持つテストシートの作成
+        final java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.set(2025, 0, 15); // 2025年1月15日（月は0始まり）
+        final java.util.Date testDate = calendar.getTime();
+
+        final Sheet testSheet = this.createTestSheetWithDateData(KmgDbDataTypeTypes.DATE, testDate);
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains("'" + expectedDateFormat + "'"),
+            "DATEデータ型の場合は日付フォーマットでシングルクォート付きで出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:DATEデータ型で-infinityの出力データが正しく生成されることの確認
+     * <p>
+     * DATEデータ型で-infinityが指定された場合に正しく出力されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalDateDataTypeNegativeInfinity() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "'-infinity'";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.DATE, "-infinity");
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData),
+            "DATEデータ型で-infinityの場合は'-infinity'として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:DATEデータ型でinfinityの出力データが正しく生成されることの確認
+     * <p>
+     * DATEデータ型でinfinityが指定された場合に正しく出力されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalDateDataTypePositiveInfinity() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "'infinity'";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.DATE, "infinity");
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData),
+            "DATEデータ型でinfinityの場合は'infinity'として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:DOUBLEデータ型の出力データが正しく生成されることの確認
+     * <p>
+     * DOUBLEデータ型の場合に実数として出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalDoubleDataType() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "56.78";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.DOUBLE, 56.78);
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData), "DOUBLEデータ型の場合は実数として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:FLOATデータ型の出力データが正しく生成されることの確認
+     * <p>
+     * FLOATデータ型の場合に実数として出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalFloatDataType() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "12.34";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.FLOAT, 12.34);
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData), "FLOATデータ型の場合は実数として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:INTEGERデータ型の出力データが正しく生成されることの確認
+     * <p>
+     * INTEGERデータ型の場合に数値として出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalIntegerDataType() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "123";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.INTEGER, 123);
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData), "INTEGERデータ型の場合は数値として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:LONGデータ型の出力データが正しく生成されることの確認
+     * <p>
+     * LONGデータ型の場合に数値として出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalLongDataType() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "456";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.LONG, 456);
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData), "LONGデータ型の場合は数値として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:NONEデータ型の出力データが正しく生成されることの確認
+     * <p>
+     * NONEデータ型の場合にシングルクォート付きの文字列として出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalNoneDataType() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "'test value'";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.NONE, "test value");
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData), "NONEデータ型の場合はシングルクォート付きの文字列として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:SERIALデータ型の出力データが正しく生成されることの確認
+     * <p>
+     * SERIALデータ型の場合に数値として出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalSerialDataType() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "321";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.SERIAL, 321);
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData), "SERIALデータ型の場合は数値として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:SMALLSERIALデータ型の出力データが正しく生成されることの確認
+     * <p>
+     * SMALLSERIALデータ型の場合に数値として出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalSmallSerialDataType() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "789";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.SMALLSERIAL, 789);
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData), "SMALLSERIALデータ型の場合は数値として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:STRINGデータ型の出力データが正しく生成されることの確認
+     * <p>
+     * STRINGデータ型の場合にシングルクォート付きの出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalStringDataType() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "'test string'";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.STRING, "test string");
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData), "STRINGデータ型の場合はシングルクォート付きの文字列として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:TIMEデータ型で通常の日時の出力データが正しく生成されることの確認
+     * <p>
+     * TIMEデータ型の場合に日時フォーマットでシングルクォート付きの出力データが生成されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalTimeDataType() {
+
+        /* 期待値の定義 */
+        final String expectedDateTimePrefix = "2025/01/15 14:30:25";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // 特定の日時を持つテストシートの作成
+        final java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.set(2025, 0, 15, 14, 30, 25); // 2025年1月15日 14:30:25
+        final java.util.Date testDateTime = calendar.getTime();
+
+        final Sheet testSheet = this.createTestSheetWithDateData(KmgDbDataTypeTypes.TIME, testDateTime);
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains("'" + expectedDateTimePrefix),
+            "TIMEデータ型の場合は日時フォーマットでシングルクォート付きで出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:TIMEデータ型で-infinityの出力データが正しく生成されることの確認
+     * <p>
+     * TIMEデータ型で-infinityが指定された場合に正しく出力されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalTimeDataTypeNegativeInfinity() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "'-infinity'";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.TIME, "-infinity");
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData),
+            "TIMEデータ型で-infinityの場合は'-infinity'として出力されること");
+
+    }
+
+    /**
+     * getOutputDataForPostgreSql メソッドのテスト - 正常系:TIMEデータ型でinfinityの出力データが正しく生成されることの確認
+     * <p>
+     * TIMEデータ型でinfinityが指定された場合に正しく出力されることを確認します。
+     * </p>
+     */
+    @Test
+    public void testGetOutputDataForPostgreSql_normalTimeDataTypePositiveInfinity() {
+
+        /* 期待値の定義 */
+        final String expectedOutputData = "'infinity'";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithSpecificDataType(KmgDbDataTypeTypes.TIME, "infinity");
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4);
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualInsertSql.contains(expectedOutputData),
+            "TIMEデータ型でinfinityの場合は'infinity'として出力されること");
 
     }
 
@@ -1497,6 +2051,54 @@ public class IsDataSheetCreationLogicImplTest {
 
     }
 
+    /**
+     * 指定したデータ型と日付データを持つテスト用シートを作成する<br>
+     *
+     * @param dataType
+     *                  データ型
+     * @param dateValue
+     *                  日付値
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithDateData(final KmgDbDataTypeTypes dataType, final java.util.Date dateValue) {
+
+        final Sheet result;
+
+        try (final Workbook workbook = new XSSFWorkbook()) {
+
+            result = workbook.createSheet("テストシート");
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            // 3行目（インデックス2）にカラム物理名を設定
+            final Row  row2    = result.createRow(2);
+            final Cell cell2_0 = row2.createCell(0);
+            cell2_0.setCellValue("test_column");
+
+            // 4行目（インデックス3）にデータ型を設定
+            final Row  row3    = result.createRow(3);
+            final Cell cell3_0 = row3.createCell(0);
+            cell3_0.setCellValue(dataType.getKey());
+
+            // 5行目（インデックス4）にテストデータを設定
+            final Row  row4    = result.createRow(4);
+            final Cell cell4_0 = row4.createCell(0);
+            cell4_0.setCellValue(dateValue);
+
+            return result;
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
+
+    }
+
     // TODO KenichiroArai 2025/06/07 コードを整理する
     /**
      * 空データを含むテスト用シートを作成する<br>
@@ -1601,6 +2203,71 @@ public class IsDataSheetCreationLogicImplTest {
             final Row  row0    = result.createRow(0);
             final Cell cell0_0 = row0.createCell(0);
             cell0_0.setCellValue(physicsName);
+
+            return result;
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
+
+    }
+
+    /**
+     * 指定したデータ型と値を持つテスト用シートを作成する<br>
+     *
+     * @param dataType
+     *                 データ型
+     * @param value
+     *                 値
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithSpecificDataType(final KmgDbDataTypeTypes dataType, final Object value) {
+
+        final Sheet result;
+
+        try (final Workbook workbook = new XSSFWorkbook()) {
+
+            result = workbook.createSheet("テストシート");
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            // 3行目（インデックス2）にカラム物理名を設定
+            final Row  row2    = result.createRow(2);
+            final Cell cell2_0 = row2.createCell(0);
+            cell2_0.setCellValue("test_column");
+
+            // 4行目（インデックス3）にデータ型を設定
+            final Row  row3    = result.createRow(3);
+            final Cell cell3_0 = row3.createCell(0);
+            cell3_0.setCellValue(dataType.getKey());
+
+            // 5行目（インデックス4）にテストデータを設定
+            final Row  row4    = result.createRow(4);
+            final Cell cell4_0 = row4.createCell(0);
+
+            if (value instanceof String) {
+
+                cell4_0.setCellValue((String) value);
+
+            } else if (value instanceof Number) {
+
+                cell4_0.setCellValue(((Number) value).doubleValue());
+
+            } else if (value instanceof java.util.Date) {
+
+                cell4_0.setCellValue((java.util.Date) value);
+
+            } else {
+
+                cell4_0.setCellValue(value.toString());
+
+            }
 
             return result;
 
