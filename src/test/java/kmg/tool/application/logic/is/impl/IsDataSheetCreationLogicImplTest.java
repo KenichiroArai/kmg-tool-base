@@ -90,8 +90,10 @@ public class IsDataSheetCreationLogicImplTest {
 
             /* 検証の実施 */
             Assertions.assertTrue(actualMessage.contains(expectedMessageId), "例外メッセージにKMGTOOL_GEN13009が含まれること");
-            Assertions.assertInstanceOf(IOException.class, actualCause, "例外の原因がIOExceptionであること");
-            Assertions.assertEquals(expectedCauseMessage, actualCause.getMessage(), "原因となったIOExceptionのメッセージが正しいこと");
+            final IOException actualIOException
+                = Assertions.assertInstanceOf(IOException.class, actualCause, "例外の原因がIOExceptionであること");
+            Assertions.assertEquals(expectedCauseMessage, actualIOException.getMessage(),
+                "原因となったIOExceptionのメッセージが正しいこと");
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
@@ -143,8 +145,9 @@ public class IsDataSheetCreationLogicImplTest {
 
             /* 検証の実施 */
             Assertions.assertTrue(actualMessage.contains(expectedMessageId), "例外メッセージにKMGTOOL_GEN13009が含まれること");
-            Assertions.assertInstanceOf(IOException.class, actualCause, "例外の原因がIOExceptionであること");
-            Assertions.assertEquals(expectedCauseMessage, actualCause.getMessage(), "権限不足のメッセージが保持されること");
+            final IOException actualIOException
+                = Assertions.assertInstanceOf(IOException.class, actualCause, "例外の原因がIOExceptionであること");
+            Assertions.assertEquals(expectedCauseMessage, actualIOException.getMessage(), "権限不足のメッセージが保持されること");
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
