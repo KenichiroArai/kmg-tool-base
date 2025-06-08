@@ -683,10 +683,6 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
                 outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
                 break;
 
-            default:
-                // デフォルト
-                break;
-
         }
 
         result = outputData;

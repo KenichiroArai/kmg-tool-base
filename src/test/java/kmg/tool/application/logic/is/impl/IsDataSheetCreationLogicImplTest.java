@@ -805,6 +805,114 @@ public class IsDataSheetCreationLogicImplTest {
     }
 
     /**
+     * getInsertSql メソッドのテスト - 準正常系:MySQLデータベース種別で処理されることの確認
+     * <p>
+     * MySQL DBタイプの場合の処理を確認します。
+     * </p>
+     */
+    @Test
+    public void testGetInsertSql_semiMySqlDbTypeProcessed() {
+
+        /* 期待値の定義 */
+        final String expectedInsertSql = "INSERT INTO test_table (id,name,value) VALUES (null,null,null);";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithData();
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.MYSQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4); // 5行目（インデックス4）にデータが設定されている
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedInsertSql, actualInsertSql, "MySQL DBタイプの場合は処理されずnullで埋められること");
+
+    }
+
+    /**
+     * getInsertSql メソッドのテスト - 準正常系:Oracleデータベース種別で処理されることの確認
+     * <p>
+     * Oracle DBタイプの場合の処理を確認します。
+     * </p>
+     */
+    @Test
+    public void testGetInsertSql_semiOracleDbTypeProcessed() {
+
+        /* 期待値の定義 */
+        final String expectedInsertSql = "INSERT INTO test_table (id,name,value) VALUES (null,null,null);";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithData();
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.ORACLE, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4); // 5行目（インデックス4）にデータが設定されている
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedInsertSql, actualInsertSql, "Oracle DBタイプの場合は処理されずnullで埋められること");
+
+    }
+
+    /**
+     * getInsertSql メソッドのテスト - 準正常系:SQL Serverデータベース種別で処理されることの確認
+     * <p>
+     * SQL Server DBタイプの場合の処理を確認します。
+     * </p>
+     */
+    @Test
+    public void testGetInsertSql_semiSqlServerDbTypeProcessed() {
+
+        /* 期待値の定義 */
+        final String expectedInsertSql = "INSERT INTO test_table (id,name,value) VALUES (null,null,null);";
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet testSheet = this.createTestSheetWithData();
+
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.SQL_SERVER, testSheet, testSqlIdMap, testOutputPath);
+
+        // テストデータ行を作成
+        final Row testDataRow = testSheet.getRow(4); // 5行目（インデックス4）にデータが設定されている
+
+        /* テスト対象の実行 */
+        final String testResult = testTarget.getInsertSql(testDataRow);
+
+        /* 検証の準備 */
+        final String actualInsertSql = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedInsertSql, actualInsertSql, "SQL Server DBタイプの場合は処理されずnullで埋められること");
+
+    }
+
+    /**
      * getKmgDbDataTypeList メソッドのテスト - 正常系:キャッシュされたデータ型リストが返されることの確認
      * <p>
      * 既にキャッシュされたデータ型リストが返されることを確認します。
