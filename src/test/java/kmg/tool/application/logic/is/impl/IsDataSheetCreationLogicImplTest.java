@@ -1848,13 +1848,13 @@ public class IsDataSheetCreationLogicImplTest {
             final Cell cell0_0 = row0.createCell(0);
             cell0_0.setCellValue("test_table");
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
+
+        return result;
 
     }
 
@@ -1885,13 +1885,13 @@ public class IsDataSheetCreationLogicImplTest {
             final Cell cell2_2 = row2.createCell(2);
             cell2_2.setCellValue("value");
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
+
+        return result;
 
     }
 
@@ -1940,13 +1940,13 @@ public class IsDataSheetCreationLogicImplTest {
             final Cell cell4_2 = row4.createCell(2);
             cell4_2.setCellValue(123.45);
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
+
+        return result;
 
     }
 
@@ -1995,13 +1995,13 @@ public class IsDataSheetCreationLogicImplTest {
             final Cell cell4_2 = row4.createCell(2);
             cell4_2.setCellValue(123.45);
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
+
+        return result;
 
     }
 
@@ -2041,13 +2041,13 @@ public class IsDataSheetCreationLogicImplTest {
             final Cell cell3_2 = row3.createCell(2);
             cell3_2.setCellValue("DOUBLE");
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
+
+        return result;
 
     }
 
@@ -2089,17 +2089,16 @@ public class IsDataSheetCreationLogicImplTest {
             final Cell cell4_0 = row4.createCell(0);
             cell4_0.setCellValue(dateValue);
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
 
+        return result;
+
     }
 
-    // TODO KenichiroArai 2025/06/07 コードを整理する
     /**
      * 空データを含むテスト用シートを作成する<br>
      *
@@ -2142,13 +2141,13 @@ public class IsDataSheetCreationLogicImplTest {
             cell4_0.setCellValue(1);
             // cell4_1とcell4_2は空のまま
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
+
+        return result;
 
     }
 
@@ -2173,13 +2172,13 @@ public class IsDataSheetCreationLogicImplTest {
             final Cell cell0_0 = row0.createCell(0);
             cell0_0.setCellValue("test_table");
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
+
+        return result;
 
     }
 
@@ -2204,13 +2203,13 @@ public class IsDataSheetCreationLogicImplTest {
             final Cell cell0_0 = row0.createCell(0);
             cell0_0.setCellValue(physicsName);
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
+
+        return result;
 
     }
 
@@ -2269,13 +2268,13 @@ public class IsDataSheetCreationLogicImplTest {
 
             }
 
-            return result;
-
         } catch (final Exception e) {
 
             throw new RuntimeException("テスト用シートの作成に失敗しました", e);
 
         }
+
+        return result;
 
     }
 }
