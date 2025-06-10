@@ -102,7 +102,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testAddNewTagByPosition_normalBeginningWithInvalidOffset() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagContent = "* @since 1.0.0 ";
+        final String expectedTagContent = "* @since 1.0.0";
 
         /* 準備 */
         // モックの設定
@@ -181,7 +181,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testAddNewTagByPosition_normalEnd() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagContent = "* @version 2.0.0 ";
+        final String expectedTagContent = "* @version 2.0.0";
 
         /* 準備 */
         // モックの設定
@@ -900,6 +900,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         // モデルの設定
         Mockito.when(javadocTagsModel.findByTag(KmgJavadocTagTypes.VERSION)).thenReturn(javadocTag);
         Mockito.when(javadocModel.getJavadocTagsModel()).thenReturn(javadocTagsModel);
+        Mockito.when(javadocModel.getSrcJavadoc()).thenReturn("/** Test javadoc */");
         Mockito.when(srcBlockModel.getJavadocModel()).thenReturn(javadocModel);
         Mockito.when(configsModel.getJdaTagConfigModels())
             .thenReturn(java.util.Collections.singletonList(tagConfigModel));
@@ -949,6 +950,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         // モデルの設定
         Mockito.when(javadocTagsModel.findByTag(KmgJavadocTagTypes.VERSION)).thenReturn(javadocTag);
         Mockito.when(javadocModel.getJavadocTagsModel()).thenReturn(javadocTagsModel);
+        Mockito.when(javadocModel.getSrcJavadoc()).thenReturn("/** Test javadoc */");
         Mockito.when(srcBlockModel.getJavadocModel()).thenReturn(javadocModel);
         Mockito.when(configsModel.getJdaTagConfigModels())
             .thenReturn(java.util.Collections.singletonList(tagConfigModel));
@@ -998,6 +1000,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         // モデルの設定
         Mockito.when(javadocTagsModel.findByTag(KmgJavadocTagTypes.VERSION)).thenReturn(javadocTag);
         Mockito.when(javadocModel.getJavadocTagsModel()).thenReturn(javadocTagsModel);
+        Mockito.when(javadocModel.getSrcJavadoc()).thenReturn("/** Test javadoc */");
         Mockito.when(srcBlockModel.getJavadocModel()).thenReturn(javadocModel);
         Mockito.when(configsModel.getJdaTagConfigModels())
             .thenReturn(java.util.Collections.singletonList(tagConfigModel));
@@ -1047,6 +1050,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         // モデルの設定
         Mockito.when(javadocTagsModel.findByTag(KmgJavadocTagTypes.AUTHOR)).thenReturn(javadocTag);
         Mockito.when(javadocModel.getJavadocTagsModel()).thenReturn(javadocTagsModel);
+        Mockito.when(javadocModel.getSrcJavadoc()).thenReturn("/** Test javadoc */");
         Mockito.when(srcBlockModel.getJavadocModel()).thenReturn(javadocModel);
         Mockito.when(configsModel.getJdaTagConfigModels())
             .thenReturn(java.util.Collections.singletonList(tagConfigModel));
