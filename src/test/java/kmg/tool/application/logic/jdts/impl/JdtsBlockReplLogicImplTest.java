@@ -993,9 +993,9 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
     @Test
-    void testShouldOverwriteBasedOnVersion_ExistingVersionEqual() throws KmgToolMsgException {
+    public void testShouldOverwriteBasedOnVersion_ExistingVersionEqual() throws KmgToolMsgException {
 
-        // 準備
+        /* 準備 */
         final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
         final JdtsConfigsModel       configsModel     = Mockito.mock(JdtsConfigsModel.class);
         final JdtsBlockModel         srcBlockModel    = Mockito.mock(JdtsBlockModel.class);
@@ -1024,10 +1024,10 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         // 初期化
         logic.initialize(configsModel, srcBlockModel);
 
-        // 実行
+        /* テスト対象の実行 */
         final boolean result = logic.shouldOverwriteTag();
 
-        // 検証
+        /* 検証の実施 */
         Assertions.assertFalse(result, "既存バージョンと新規バージョンが同じ場合はfalseを返すべき");
 
     }
@@ -1042,9 +1042,9 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
     @Test
-    void testShouldOverwriteBasedOnVersion_ExistingVersionGreater() throws KmgToolMsgException {
+    public void testShouldOverwriteBasedOnVersion_ExistingVersionGreater() throws KmgToolMsgException {
 
-        // 準備
+        /* 準備 */
         final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
         final JdtsConfigsModel       configsModel     = Mockito.mock(JdtsConfigsModel.class);
         final JdtsBlockModel         srcBlockModel    = Mockito.mock(JdtsBlockModel.class);
@@ -1073,10 +1073,10 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         // 初期化
         logic.initialize(configsModel, srcBlockModel);
 
-        // 実行
+        /* テスト対象の実行 */
         final boolean result = logic.shouldOverwriteTag();
 
-        // 検証
+        /* 検証の実施 */
         Assertions.assertTrue(result, "既存バージョンが新規バージョンより大きい場合はtrueを返すべき");
 
     }
@@ -1091,9 +1091,9 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
     @Test
-    void testShouldOverwriteBasedOnVersion_ExistingVersionLower() throws KmgToolMsgException {
+    public void testShouldOverwriteBasedOnVersion_ExistingVersionLower() throws KmgToolMsgException {
 
-        // 準備
+        /* 準備 */
         final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
         final JdtsConfigsModel       configsModel     = Mockito.mock(JdtsConfigsModel.class);
         final JdtsBlockModel         srcBlockModel    = Mockito.mock(JdtsBlockModel.class);
@@ -1122,10 +1122,10 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         // 初期化
         logic.initialize(configsModel, srcBlockModel);
 
-        // 実行
+        /* テスト対象の実行 */
         final boolean result = logic.shouldOverwriteTag();
 
-        // 検証
+        /* 検証の実施 */
         Assertions.assertFalse(result, "既存バージョンが新規バージョンより小さい場合はfalseを返すべき");
 
     }
@@ -1140,9 +1140,9 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
     @Test
-    void testShouldOverwriteBasedOnVersion_NotVersionTag() throws KmgToolMsgException {
+    public void testShouldOverwriteBasedOnVersion_NotVersionTag() throws KmgToolMsgException {
 
-        // 準備
+        /* 準備 */
         final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
         final JdtsConfigsModel       configsModel     = Mockito.mock(JdtsConfigsModel.class);
         final JdtsBlockModel         srcBlockModel    = Mockito.mock(JdtsBlockModel.class);
@@ -1171,10 +1171,10 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         // 初期化
         logic.initialize(configsModel, srcBlockModel);
 
-        // 実行
+        /* テスト対象の実行 */
         final boolean result = logic.shouldOverwriteTag();
 
-        // 検証
+        /* 検証の実施 */
         Assertions.assertTrue(result, "バージョンタグでない場合は常にtrueを返すべき");
 
     }
