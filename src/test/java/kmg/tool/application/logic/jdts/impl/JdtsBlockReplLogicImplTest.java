@@ -962,7 +962,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean result = logic.shouldOverwriteTag();
 
         /* 検証の実施 */
-        Assertions.assertTrue(result, "既存バージョンが新規バージョンより大きい場合はtrueを返すべき");
+        Assertions.assertTrue(result, "既存バージョン>上書きするバージョン場合はtrueを返すべき");
 
     }
 
