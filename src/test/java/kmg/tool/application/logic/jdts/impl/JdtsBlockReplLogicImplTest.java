@@ -926,7 +926,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
     @Test
-    public void testShouldOverwriteBasedOnVersion_ExistingVersionGreater() throws KmgToolMsgException {
+    public void testShouldOverwriteBasedOnVersion_ExistingVersionGreaterThanNewVersion() throws KmgToolMsgException {
 
         /* 準備 */
         final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
