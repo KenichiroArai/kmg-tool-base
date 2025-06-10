@@ -82,6 +82,7 @@ public class IsDataSheetCreationLogicImplTest {
 
             }, "IOExceptionが発生した場合、KmgToolMsgExceptionがスローされること");
 
+            // TODO KenichiroArai 2025/06/10 変数の定義の順番とメッセージの検証を共通処理で行う
             /* 検証の準備 */
             final String    expectedMessageId    = "KMGTOOL_GEN13009";
             final String    expectedCauseMessage = "Disk full";
@@ -136,6 +137,8 @@ public class IsDataSheetCreationLogicImplTest {
                 testTarget.createOutputFileDirectories();
 
             }, "権限不足のIOExceptionが発生した場合、KmgToolMsgExceptionがスローされること");
+
+            // TODO KenichiroArai 2025/06/10 変数の定義の順番とメッセージの検証を共通処理で行う
 
             /* 検証の準備 */
             final String    expectedMessageId    = "KMGTOOL_GEN13009";
