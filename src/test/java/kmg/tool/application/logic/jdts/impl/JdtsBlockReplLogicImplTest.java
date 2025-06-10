@@ -140,9 +140,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testAddNewTagByPosition_normalBeginningWithValidOffset() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagContent   = "* @author Test Author";
-        final String expectedUpdatedBlock
-                                          = "/**\n * @author Test Author\n * Test javadoc\n * @author KenichiroArai\n */";
+        final String expectedTagContent = "* @author Test Author";
 
         /* 準備 */
         // モックの設定
@@ -515,9 +513,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final List<JdtsTagConfigModel> testTagConfigModels = new ArrayList<>();
         testTagConfigModels.add(this.mockTagConfigModel);
 
-        @SuppressWarnings("unchecked")
-        final Iterator<JdtsTagConfigModel> testIterator = Mockito.mock(Iterator.class);
-
         Mockito.when(this.mockConfigsModel.getJdaTagConfigModels()).thenReturn(testTagConfigModels);
         Mockito.when(this.mockSrcBlockModel.getJavadocModel()).thenReturn(this.mockJavadocModel);
         Mockito.when(this.mockJavadocModel.getSrcJavadoc()).thenReturn("/** Test javadoc */");
@@ -551,7 +546,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean expectedResult = true;
 
         /* 準備 */
-        @SuppressWarnings("unchecked")
         final Iterator<JdtsTagConfigModel> testIterator = Mockito.mock(Iterator.class);
         Mockito.when(testIterator.hasNext()).thenReturn(true);
         Mockito.when(testIterator.next()).thenReturn(this.mockTagConfigModel);
@@ -594,7 +588,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean expectedResult = false;
 
         /* 準備 */
-        @SuppressWarnings("unchecked")
         final Iterator<JdtsTagConfigModel> testIterator = Mockito.mock(Iterator.class);
         Mockito.when(testIterator.hasNext()).thenReturn(false);
 
@@ -725,8 +718,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean expectedResult = true;
 
         /* 準備 */
-        final String testTargetStr  = "* @author OldAuthor";
-        final String testNewContent = "* @author NewAuthor Description";
+        final String testTargetStr = "* @author OldAuthor";
 
         Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn(testTargetStr);
         Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
@@ -871,115 +863,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "適切な配置の場合は新しいタグを追加すべきでtrueが返されること");
-
-    }
-
-    /**
-     * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がALWAYS
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testShouldOverwriteTag_normalAlways() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
-        /* 準備 */
-        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.ALWAYS);
-        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.shouldOverwriteTag();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がALWAYSの場合はtrueが返されること");
-
-    }
-
-    /**
-     * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がIF_LOWER
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testShouldOverwriteTag_normalIfLower() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
-        /* 準備 */
-        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
-        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
-        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.shouldOverwriteTag();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がIF_LOWERでバージョンタグでない場合はtrueが返されること");
-
-    }
-
-    /**
-     * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がNEVER
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testShouldOverwriteTag_semiNever() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
-        /* 準備 */
-        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.NEVER);
-        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.shouldOverwriteTag();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がNEVERの場合はfalseが返されること");
-
-    }
-
-    /**
-     * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がNONE
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testShouldOverwriteTag_semiNone() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
-        /* 準備 */
-        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.NONE);
-        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.shouldOverwriteTag();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がNONEの場合はfalseが返されること");
 
     }
 
@@ -1176,6 +1059,115 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(result, "バージョンタグでない場合は常にtrueを返すべき");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がALWAYS
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_normalAlways() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.ALWAYS);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がALWAYSの場合はtrueが返されること");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がIF_LOWER
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_normalIfLower() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がIF_LOWERでバージョンタグでない場合はtrueが返されること");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がNEVER
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_semiNever() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.NEVER);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がNEVERの場合はfalseが返されること");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がNONE
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_semiNone() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.NONE);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がNONEの場合はfalseが返されること");
 
     }
 
