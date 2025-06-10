@@ -27,7 +27,6 @@ import kmg.tool.application.types.jdts.JdtsOverwriteTypes;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.JavadocTagModel;
 import kmg.tool.domain.model.JavadocTagsModel;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定のブロック置換ロジック実装のテスト<br>
@@ -41,7 +40,7 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
-    "nls", "static-method"
+    "nls",
 })
 public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
@@ -918,6 +917,69 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "上書き設定がIF_LOWERでバージョンタグでない場合はtrueが返されること");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がIF_LOWERでバージョンタグ（既存バージョンが高い）
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_normalIfLowerVersionHigher() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("1.0.0");
+        Mockito.when(this.mockJavadocTagModel.getValue()).thenReturn("2.0.0");
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がIF_LOWERでバージョンタグ（既存バージョンが高い）の場合はtrueが返されること");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がIF_LOWERでバージョンタグ（既存バージョンが低いまたは同じ）
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_semiIfLowerVersionLowerOrEqual() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("2.0.0");
+        Mockito.when(this.mockJavadocTagModel.getValue()).thenReturn("1.0.0");
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult,
+            "上書き設定がIF_LOWERでバージョンタグ（既存バージョンが低いまたは同じ）の場合はfalseが返されること");
 
     }
 
