@@ -6,561 +6,807 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.type.KmgString;
 
 /**
  * Javadocタグ設定の入出力ロジック実装のテスト<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class JdtsIoLogicImplTest {
+public class JdtsIoLogicImplTest extends AbstractKmgTest {
+
+    /** テスト対象 */
+    private JdtsIoLogicImpl testTarget;
+
+    /** テスト用一時ディレクトリ */
+    private Path testTempDir;
+
+    /** テスト用Javaファイル */
+    private Path testJavaFile;
+
+    /** テスト用空のディレクトリ */
+    private Path testEmptyDir;
 
     /**
-     * デフォルトコンストラクタ<br>
-     */
-    public JdtsIoLogicImplTest() {
-
-        // 処理なし
-    }
-
-    /**
-     * getCurrentFilePath メソッドのテスト - 正常系:現在のファイルパスが正しく返されることの確認
-     * <p>
-     * ファイルを読み込んだ後に現在のファイルパスが正しく返されることを確認します。
-     * </p>
+     * テスト前処理<br>
      *
-     * @param tempDir
-     *                一時ディレクトリ
+     * @since 0.1.0
      *
      * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     *                     入出力例外
      */
-    @Test
-    public void testGetCurrentFilePath_normalCurrentFilePathReturned(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+    @BeforeEach
+    public void setUp() throws IOException {
 
-        /* 期待値の定義 */
-        final String expectedFileName = "TestClass.java";
+        this.testTarget = new JdtsIoLogicImpl();
 
-        /* 準備 */
-        final Path testFile = tempDir.resolve(expectedFileName);
-        Files.writeString(testFile, "public class TestClass {}");
+        /* テスト用一時ディレクトリの作成 */
+        this.testTempDir = Files.createTempDirectory("jdts_test");
+        this.testEmptyDir = Files.createTempDirectory("jdts_empty");
 
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
+        /* テスト用Javaファイルの作成 */
+        this.testJavaFile = this.testTempDir.resolve("TestFile.java");
+        Files.writeString(this.testJavaFile, "public class TestFile {\n}\n");
 
-        // 初期化とロード
-        testTarget.initialize(tempDir);
-        testTarget.load();
-
-        /* テスト対象の実行 */
-        final Path testResult = testTarget.getCurrentFilePath();
-
-        /* 検証の準備 */
-        final String actualFileName = testResult.getFileName().toString();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedFileName, actualFileName, "現在のファイルパスが正しく返されること");
+        /* テスト用の非Javaファイル */
+        final Path testTxtFile = this.testTempDir.resolve("TestFile.txt");
+        Files.writeString(testTxtFile, "This is a text file.");
 
     }
 
     /**
-     * getFilePathList メソッドのテスト - 正常系:ファイルパスリストが正しく取得されることの確認
-     * <p>
-     * 指定ディレクトリ内のJavaファイルのパスリストが正しく取得されることを確認します。
-     * </p>
+     * テスト後処理<br>
      *
-     * @param tempDir
-     *                一時ディレクトリ
+     * @since 0.1.0
      *
      * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     *                     入出力例外
      */
-    @Test
-    public void testGetFilePathList_normalFilePathListReturned(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+    @AfterEach
+    public void tearDown() throws IOException {
 
-        /* 期待値の定義 */
-        final int expectedFileCount = 2;
-
-        /* 準備 */
-        final Path testFile1 = tempDir.resolve("TestClass1.java");
-        final Path testFile2 = tempDir.resolve("TestClass2.java");
-        Files.writeString(testFile1, "public class TestClass1 {}");
-        Files.writeString(testFile2, "public class TestClass2 {}");
-
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
-
-        // 初期化とロード
-        testTarget.initialize(tempDir);
-        testTarget.load();
-
-        /* テスト対象の実行 */
-        final List<Path> testResult = testTarget.getFilePathList();
-
-        /* 検証の準備 */
-        final int actualFileCount = testResult.size();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedFileCount, actualFileCount, "ファイルパスリストが正しく取得されること");
+        /* テストファイルとディレクトリの削除を再帰的に実行 */
+        this.deleteDirectoryRecursively(this.testTempDir);
+        this.deleteDirectoryRecursively(this.testEmptyDir);
 
     }
 
     /**
-     * getReadContent メソッドのテスト - 正常系:読み込んだ内容が正しく返されることの確認
-     * <p>
-     * ファイルの内容が正しく読み込まれることを確認します。
-     * </p>
+     * ディレクトリを再帰的に削除する<br>
      *
-     * @param tempDir
-     *                一時ディレクトリ
+     * @param directory
+     *                  削除するディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     *                     入出力例外
      */
-    @Test
-    public void testGetReadContent_normalContentReturned(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+    private void deleteDirectoryRecursively(final Path directory) throws IOException {
 
-        /* 期待値の定義 */
-        final String expectedContent = "public class TestClass {}";
+        if (!Files.exists(directory)) {
 
-        /* 準備 */
-        final Path testFile = tempDir.resolve("TestClass.java");
-        Files.writeString(testFile, expectedContent);
+            return;
 
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
+        }
 
-        // 初期化とロード
-        testTarget.initialize(tempDir);
-        testTarget.load();
-        testTarget.loadContent();
+        Files.walk(directory).sorted((a, b) -> b.compareTo(a)).forEach(path -> {
 
-        /* テスト対象の実行 */
-        final String testResult = testTarget.getReadContent();
+            try {
 
-        /* 検証の準備 */
-        final String actualContent = testResult;
+                Files.delete(path);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedContent, actualContent, "読み込んだ内容が正しく返されること");
+            } catch (final IOException e) {
+
+                // テスト用のため例外を無視
+            }
+
+        });
 
     }
 
     /**
-     * getTargetPath メソッドのテスト - 正常系:対象パスが正しく返されることの確認
-     * <p>
-     * 初期化で設定した対象パスが正しく返されることを確認します。
-     * </p>
-     *
-     * @param tempDir
-     *                一時ディレクトリ
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * getCurrentFilePath メソッドのテスト - 正常系:初期化後
      */
     @Test
-    public void testGetTargetPath_normalTargetPathReturned(@TempDir final Path tempDir) throws KmgToolMsgException {
+    public void testGetCurrentFilePath_normalAfterInitialize() {
 
         /* 期待値の定義 */
-        final Path expectedTargetPath = tempDir;
-
-        /* 準備 */
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
-
-        // 初期化
-        testTarget.initialize(tempDir);
+        final Path expectedCurrentFilePath = null;
 
         /* テスト対象の実行 */
-        final Path testResult = testTarget.getTargetPath();
-
-        /* 検証の準備 */
-        final Path actualTargetPath = testResult;
+        final Path actualCurrentFilePath = this.testTarget.getCurrentFilePath();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedTargetPath, actualTargetPath, "対象パスが正しく返されること");
+        Assertions.assertEquals(expectedCurrentFilePath, actualCurrentFilePath, "初期化後のカレントファイルパスがnullであること");
 
     }
 
     /**
-     * initialize メソッドのテスト - 正常系:初期化が正しく実行されることの確認
-     * <p>
-     * 対象パスが正しく設定されることを確認します。
-     * </p>
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * getCurrentFilePath メソッドのテスト - 正常系:ロード後
      */
     @Test
-    public void testInitialize_normalInitializationSuccess() throws KmgToolMsgException {
+    public void testGetCurrentFilePath_normalAfterLoad() {
 
         /* 期待値の定義 */
-        final boolean expectedInitResult = true;
+        final Path expectedCurrentFilePath = this.testJavaFile;
 
         /* 準備 */
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
-        final Path            testPath   = Paths.get("test");
+        try {
 
-        /* テスト対象の実行 */
-        final boolean testResult = testTarget.initialize(testPath);
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
 
-        /* 検証の準備 */
-        final boolean actualInitResult = testResult;
+        } catch (final Exception e) {
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedInitResult, actualInitResult, "初期化が正しく実行されること");
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
 
-    }
-
-    /**
-     * load メソッドのテスト - 正常系:Javaファイルが正しくロードされることの確認
-     * <p>
-     * 指定ディレクトリ内のJavaファイルが正しくロードされることを確認します。
-     * </p>
-     *
-     * @param tempDir
-     *                一時ディレクトリ
-     *
-     * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    @Test
-    public void testLoad_normalJavaFilesLoaded(@TempDir final Path tempDir) throws IOException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final boolean expectedLoadResult = true;
-
-        /* 準備 */
-        final Path testFile = tempDir.resolve("TestClass.java");
-        Files.writeString(testFile, "public class TestClass {}");
-
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
-
-        // 初期化
-        testTarget.initialize(tempDir);
-
-        /* テスト対象の実行 */
-        final boolean testResult = testTarget.load();
-
-        /* 検証の準備 */
-        final boolean actualLoadResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedLoadResult, actualLoadResult, "Javaファイルが正しくロードされること");
-
-    }
-
-    /**
-     * load メソッドのテスト - 正常系:非Javaファイルが除外されることの確認
-     * <p>
-     * .java拡張子を持たないファイルが除外されることを確認します。
-     * </p>
-     *
-     * @param tempDir
-     *                一時ディレクトリ
-     *
-     * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    @Test
-    public void testLoad_normalNonJavaFilesExcluded(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final int expectedFileCount = 1;
-
-        /* 準備 */
-        final Path javaFile = tempDir.resolve("TestClass.java");
-        final Path txtFile  = tempDir.resolve("readme.txt");
-        Files.writeString(javaFile, "public class TestClass {}");
-        Files.writeString(txtFile, "This is a text file");
-
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
-
-        // 初期化とロード
-        testTarget.initialize(tempDir);
-        testTarget.load();
-
-        /* テスト対象の実行 */
-        final List<Path> testResult = testTarget.getFilePathList();
-
-        /* 検証の準備 */
-        final int actualFileCount = testResult.size();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedFileCount, actualFileCount, "非Javaファイルが除外されること");
-
-    }
-
-    /**
-     * loadContent メソッドのテスト - 正常系:ファイル内容が正しく読み込まれることの確認
-     * <p>
-     * 現在のファイルの内容が正しく読み込まれることを確認します。
-     * </p>
-     *
-     * @param tempDir
-     *                一時ディレクトリ
-     *
-     * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    @Test
-    public void testLoadContent_normalContentLoaded(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final boolean expectedLoadResult = true;
-
-        /* 準備 */
-        final Path testFile = tempDir.resolve("TestClass.java");
-        Files.writeString(testFile, "public class TestClass {}");
-
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
-
-        // 初期化とロード
-        testTarget.initialize(tempDir);
-        testTarget.load();
-
-        /* テスト対象の実行 */
-        final boolean testResult = testTarget.loadContent();
-
-        /* 検証の準備 */
-        final boolean actualLoadResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedLoadResult, actualLoadResult, "ファイル内容が正しく読み込まれること");
-
-    }
-
-    /**
-     * loadContent メソッドのテスト - 準正常系:空ファイルの場合にfalseが返されることの確認
-     * <p>
-     * 空のファイルの場合にfalseが返されることを確認します。
-     * </p>
-     *
-     * @param tempDir
-     *                一時ディレクトリ
-     *
-     * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    @Test
-    public void testLoadContent_semiEmptyFileReturnsFalse(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final boolean expectedLoadResult = false;
-
-        /* 準備 */
-        final Path testFile = tempDir.resolve("EmptyClass.java");
-        Files.writeString(testFile, ""); // 空ファイル
-
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
-
-        // 初期化とロード
-        testTarget.initialize(tempDir);
-        testTarget.load();
-
-        /* テスト対象の実行 */
-        final boolean testResult = testTarget.loadContent();
-
-        /* 検証の準備 */
-        final boolean actualLoadResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedLoadResult, actualLoadResult, "空ファイルの場合にfalseが返されること");
-
-    }
-
-    /**
-     * nextFile メソッドのテスト - 正常系:次のファイルに正しく移動することの確認
-     * <p>
-     * 複数のファイルがある場合に次のファイルに正しく移動できることを確認します。
-     * </p>
-     *
-     * @param tempDir
-     *                一時ディレクトリ
-     *
-     * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    @Test
-    public void testNextFile_normalNextFileExists(@TempDir final Path tempDir) throws IOException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final boolean expectedNextFileResult = true;
-
-        /* 準備 */
-        final Path testFile1 = tempDir.resolve("TestClass1.java");
-        final Path testFile2 = tempDir.resolve("TestClass2.java");
-        Files.writeString(testFile1, "public class TestClass1 {}");
-        Files.writeString(testFile2, "public class TestClass2 {}");
-
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
-
-        // 初期化とロード
-        testTarget.initialize(tempDir);
-        testTarget.load();
-
-        /* テスト対象の実行 */
-        final boolean testResult = testTarget.nextFile();
-
-        /* 検証の準備 */
-        final boolean actualNextFileResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedNextFileResult, actualNextFileResult, "次のファイルに正しく移動できること");
-
-    }
-
-    /**
-     * nextFile メソッドのテスト - 正常系:次のファイルが存在しない場合にfalseが返されることの確認
-     * <p>
-     * すべてのファイルを処理し終えた場合にfalseが返されることを確認します。
-     * </p>
-     *
-     * @param tempDir
-     *                一時ディレクトリ
-     *
-     * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    @Test
-    public void testNextFile_normalNoNextFileReturnsFalse(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final boolean expectedNextFileResult = false;
-
-        /* 準備 */
-        final Path testFile = tempDir.resolve("TestClass.java");
-        Files.writeString(testFile, "public class TestClass {}");
-
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
-
-        // 初期化とロード
-        testTarget.initialize(tempDir);
-        testTarget.load();
-
-        // すべてのファイルを処理し終える
-        while (testTarget.nextFile()) {
-
-            // 何もしない
         }
 
         /* テスト対象の実行 */
-        final boolean testResult = testTarget.nextFile();
-
-        /* 検証の準備 */
-        final boolean actualNextFileResult = testResult;
+        final Path actualCurrentFilePath = this.testTarget.getCurrentFilePath();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedNextFileResult, actualNextFileResult, "次のファイルが存在しない場合にfalseが返されること");
+        Assertions.assertEquals(expectedCurrentFilePath, actualCurrentFilePath, "ロード後のカレントファイルパスが設定されていること");
 
     }
 
     /**
-     * setWriteContent メソッドのテスト - 正常系:書き込み内容が正しく設定されることの確認
-     * <p>
-     * 書き込み内容が正しく設定されることを確認します。
-     * </p>
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * getFilePathList メソッドのテスト - 正常系:初期化後
      */
     @Test
-    public void testSetWriteContent_normalWriteContentSet() throws KmgToolMsgException {
+    public void testGetFilePathList_normalAfterInitialize() {
 
         /* 期待値の定義 */
-        // setWriteContentは void なので、後続のwriteContentで検証
-
-        /* 準備 */
-        final String          testContent = "public class ModifiedClass {}";
-        final JdtsIoLogicImpl testTarget  = new JdtsIoLogicImpl();
-        final Path            testPath    = Paths.get("test");
-
-        // 初期化
-        testTarget.initialize(testPath);
+        final int expectedSize = 0;
 
         /* テスト対象の実行 */
-        testTarget.setWriteContent(testContent);
-
-        /* 検証の準備 */
-        // setWriteContentの結果は内部状態として保存されるため、
-        // 実際の検証はwriteContentメソッドのテストで行う
+        final List<Path> actualFilePathList = this.testTarget.getFilePathList();
 
         /* 検証の実施 */
-        Assertions.assertDoesNotThrow(() -> testTarget.setWriteContent(testContent), "書き込み内容が正しく設定されること");
+        Assertions.assertEquals(expectedSize, actualFilePathList.size(), "初期化後のファイルパスリストが空であること");
 
     }
 
     /**
-     * writeContent メソッドのテスト - 正常系:ファイルが正しく書き込まれることの確認
-     * <p>
-     * 設定した内容がファイルに正しく書き込まれることを確認します。
-     * </p>
-     *
-     * @param tempDir
-     *                一時ディレクトリ
-     *
-     * @throws IOException
-     *                             入出力例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * getFilePathList メソッドのテスト - 正常系:ロード後
      */
     @Test
-    public void testWriteContent_normalContentWritten(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+    public void testGetFilePathList_normalAfterLoad() {
 
         /* 期待値の定義 */
-        final boolean expectedWriteResult = true;
-        final String  expectedContent     = "public class ModifiedClass {}";
+        final int expectedSize = 1;
 
         /* 準備 */
-        final Path testFile = tempDir.resolve("TestClass.java");
-        Files.writeString(testFile, "public class TestClass {}");
+        try {
 
-        final JdtsIoLogicImpl testTarget = new JdtsIoLogicImpl();
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
 
-        // 初期化とロード
-        testTarget.initialize(tempDir);
-        testTarget.load();
-        testTarget.setWriteContent(expectedContent);
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
 
         /* テスト対象の実行 */
-        final boolean testResult = testTarget.writeContent();
-
-        /* 検証の準備 */
-        final boolean actualWriteResult = testResult;
-        final String  actualContent     = Files.readString(testFile);
+        final List<Path> actualFilePathList = this.testTarget.getFilePathList();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedWriteResult, actualWriteResult, "ファイルが正しく書き込まれること");
-        Assertions.assertEquals(expectedContent, actualContent, "書き込まれた内容が正しいこと");
+        Assertions.assertEquals(expectedSize, actualFilePathList.size(), "ロード後のファイルパスリストにJavaファイルが含まれること");
+        Assertions.assertTrue(actualFilePathList.contains(this.testJavaFile), "Javaファイルがリストに含まれること");
 
     }
+
+    /**
+     * getReadContent メソッドのテスト - 正常系:初期化後
+     */
+    @Test
+    public void testGetReadContent_normalAfterInitialize() {
+
+        /* 期待値の定義 */
+        final String expectedReadContent = KmgString.EMPTY;
+
+        /* テスト対象の実行 */
+        final String actualReadContent = this.testTarget.getReadContent();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedReadContent, actualReadContent, "初期化後の読み込み内容が空文字列であること");
+
+    }
+
+    /**
+     * getReadContent メソッドのテスト - 正常系:コンテンツロード後
+     */
+    @Test
+    public void testGetReadContent_normalAfterLoadContent() {
+
+        /* 期待値の定義 */
+        final String expectedReadContent = "public class TestFile {\n}\n";
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            this.testTarget.loadContent();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        final String actualReadContent = this.testTarget.getReadContent();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedReadContent, actualReadContent, "コンテンツロード後に正しい内容が読み込まれること");
+
+    }
+
+    /**
+     * getTargetPath メソッドのテスト - 正常系:初期化後
+     */
+    @Test
+    public void testGetTargetPath_normalAfterInitialize() {
+
+        /* 期待値の定義 */
+        final Path expectedTargetPath = this.testTempDir;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        final Path actualTargetPath = this.testTarget.getTargetPath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTargetPath, actualTargetPath, "初期化後に対象パスが設定されること");
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 正常系:初期化成功
+     */
+    @Test
+    public void testInitialize_normalSuccess() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.initialize(this.testTempDir);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("初期化で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final Path       actualTargetPath      = this.testTarget.getTargetPath();
+        final List<Path> actualFilePathList    = this.testTarget.getFilePathList();
+        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+        final String     actualReadContent     = this.testTarget.getReadContent();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "初期化が成功すること");
+        Assertions.assertEquals(this.testTempDir, actualTargetPath, "対象パスが設定されること");
+        Assertions.assertEquals(0, actualFilePathList.size(), "ファイルパスリストがクリアされること");
+        Assertions.assertEquals(null, actualCurrentFilePath, "カレントファイルパスがnullに設定されること");
+        Assertions.assertEquals(KmgString.EMPTY, actualReadContent, "読み込み内容が空文字列に設定されること");
+
+    }
+
+    /**
+     * load メソッドのテスト - 正常系:Javaファイルあり
+     */
+    @Test
+    public void testLoad_normalWithJavaFiles() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult    = true;
+        final int     expectedFileCount = 1;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("ロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final List<Path> actualFilePathList    = this.testTarget.getFilePathList();
+        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ロードが成功すること");
+        Assertions.assertEquals(expectedFileCount, actualFilePathList.size(), "Javaファイルがロードされること");
+        Assertions.assertEquals(this.testJavaFile, actualCurrentFilePath, "最初のJavaファイルがカレントファイルに設定されること");
+
+    }
+
+    /**
+     * load メソッドのテスト - 正常系:Javaファイルなし
+     */
+    @Test
+    public void testLoad_normalNoJavaFiles() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult    = true;
+        final int     expectedFileCount = 0;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testEmptyDir);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("ロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final List<Path> actualFilePathList    = this.testTarget.getFilePathList();
+        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ロードが成功すること");
+        Assertions.assertEquals(expectedFileCount, actualFilePathList.size(), "Javaファイルがない場合はリストが空であること");
+        Assertions.assertEquals(null, actualCurrentFilePath, "Javaファイルがない場合はカレントファイルがnullであること");
+
+    }
+
+    /**
+     * load メソッドのテスト - 異常系:存在しないディレクトリ
+     */
+    @Test
+    public void testLoad_errorNonExistentDirectory() {
+
+        /* 準備 */
+        final Path nonExistentPath = Paths.get("non/existent/path");
+
+        try {
+
+            this.testTarget.initialize(nonExistentPath);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行・検証の実施 */
+        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+
+            this.testTarget.load();
+
+        }, "存在しないディレクトリで例外がスローされること");
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "例外が発生すること");
+
+    }
+
+    /**
+     * loadContent メソッドのテスト - 正常系:内容あり
+     */
+    @Test
+    public void testLoadContent_normalWithContent() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult  = true;
+        final String  expectedContent = "public class TestFile {\n}\n";
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.loadContent();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("コンテンツロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final String actualReadContent = this.testTarget.getReadContent();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "コンテンツロードが成功すること");
+        Assertions.assertEquals(expectedContent, actualReadContent, "正しい内容が読み込まれること");
+
+    }
+
+    /**
+     * loadContent メソッドのテスト - 準正常系:内容が空
+     */
+    @Test
+    public void testLoadContent_semiEmptyContent() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Path emptyJavaFile = null;
+
+        try {
+
+            /* 既存のファイルを削除して空のファイルのみにする */
+            Files.delete(this.testJavaFile);
+            emptyJavaFile = this.testTempDir.resolve("EmptyFile.java");
+            Files.writeString(emptyJavaFile, "");
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = true;
+
+        try {
+
+            actualResult = this.testTarget.loadContent();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("コンテンツロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final String actualReadContent = this.testTarget.getReadContent();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "空のコンテンツの場合falseが返されること");
+        Assertions.assertEquals("", actualReadContent, "空の内容が読み込まれること");
+
+    }
+
+    /**
+     * loadContent メソッドのテスト - 準正常系:内容がブランク
+     */
+    @Test
+    public void testLoadContent_semiBlankContent() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Path blankJavaFile = null;
+
+        try {
+
+            /* 既存のファイルを削除してブランクファイルのみにする */
+            Files.delete(this.testJavaFile);
+            blankJavaFile = this.testTempDir.resolve("BlankFile.java");
+            Files.writeString(blankJavaFile, "   \n  \t  ");
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = true;
+
+        try {
+
+            actualResult = this.testTarget.loadContent();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("コンテンツロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final String actualReadContent = this.testTarget.getReadContent();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ブランクのコンテンツの場合falseが返されること");
+        Assertions.assertEquals("   \n  \t  ", actualReadContent, "ブランクの内容が読み込まれること");
+
+    }
+
+    /**
+     * loadContent メソッドのテスト - 異常系:ファイル読み込みエラー
+     */
+    @Test
+    public void testLoadContent_errorFileReadError() {
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            /* ファイルを削除してエラーを発生させる */
+            Files.delete(this.testJavaFile);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行・検証の実施 */
+        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+
+            this.testTarget.loadContent();
+
+        }, "ファイル読み込みエラーで例外がスローされること");
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "例外が発生すること");
+
+    }
+
+    /**
+     * nextFile メソッドのテスト - 正常系:次のファイルあり
+     */
+    @Test
+    public void testNextFile_normalHasNextFile() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        Path secondJavaFile = null;
+
+        try {
+
+            secondJavaFile = this.testTempDir.resolve("SecondFile.java");
+            Files.writeString(secondJavaFile, "public class SecondFile {}");
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.nextFile();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("nextFile処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final Path actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "次のファイルが存在する場合trueが返されること");
+        Assertions.assertTrue(actualCurrentFilePath.getFileName().toString().endsWith(".java"),
+            "次のJavaファイルがカレントファイルに設定されること");
+
+    }
+
+    /**
+     * nextFile メソッドのテスト - 準正常系:次のファイルなし
+     */
+    @Test
+    public void testNextFile_semiNoNextFile() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = true;
+
+        try {
+
+            actualResult = this.testTarget.nextFile();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("nextFile処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "次のファイルが存在しない場合falseが返されること");
+
+    }
+
+    /**
+     * setWriteContent メソッドのテスト - 正常系:書き込み内容設定
+     */
+    @Test
+    public void testSetWriteContent_normalSetContent() {
+
+        /* 期待値の定義 */
+        final String expectedContent = "Modified content";
+
+        /* テスト対象の実行 */
+        this.testTarget.setWriteContent(expectedContent);
+
+        /* 検証は writeContent で間接的に確認 */
+        Assertions.assertTrue(true, "setWriteContentメソッドが正常に実行されること");
+
+    }
+
+    /**
+     * writeContent メソッドのテスト - 正常系:書き込み成功
+     */
+    @Test
+    public void testWriteContent_normalSuccess() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult  = true;
+        final String  expectedContent = "Modified Java content";
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            this.testTarget.setWriteContent(expectedContent);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.writeContent();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("書き込み処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        String actualFileContent = "";
+
+        try {
+
+            actualFileContent = Files.readString(this.testJavaFile);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("ファイル読み込みで例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "書き込みが成功すること");
+        Assertions.assertEquals(expectedContent, actualFileContent, "指定された内容でファイルが書き込まれること");
+
+    }
+
+    /**
+     * writeContent メソッドのテスト - 異常系:書き込みエラー
+     */
+    @Test
+    public void testWriteContent_errorWriteError() {
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            this.testTarget.setWriteContent("Test content");
+            /* ファイルを削除してディレクトリを作成し、書き込みエラーを発生させる */
+            Files.delete(this.testJavaFile);
+            Files.createDirectory(this.testJavaFile);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行・検証の実施 */
+        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+
+            this.testTarget.writeContent();
+
+        }, "書き込みエラーで例外がスローされること");
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "例外が発生すること");
+
+    }
+
 }
