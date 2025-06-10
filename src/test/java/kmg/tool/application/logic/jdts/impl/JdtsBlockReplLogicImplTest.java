@@ -1,218 +1,1182 @@
 package kmg.tool.application.logic.jdts.impl;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+
+import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
+import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.types.JavaClassificationTypes;
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
+import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
+import kmg.tool.application.model.jdts.JdtsLocationConfigModel;
+import kmg.tool.application.model.jdts.JdtsTagConfigModel;
+import kmg.tool.application.types.jdts.JdtsInsertPositionTypes;
+import kmg.tool.application.types.jdts.JdtsOverwriteTypes;
+import kmg.tool.domain.model.JavadocModel;
+import kmg.tool.domain.model.JavadocTagModel;
+import kmg.tool.domain.model.JavadocTagsModel;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定のブロック置換ロジック実装のテスト<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class JdtsBlockReplLogicImplTest {
+public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
+
+    /** テスト対象 */
+    private JdtsBlockReplLogicImpl testTarget;
+
+    /** モック: 構成モデル */
+    @Mock
+    private JdtsConfigsModel mockConfigsModel;
+
+    /** モック: ブロックモデル */
+    @Mock
+    private JdtsBlockModel mockSrcBlockModel;
+
+    /** モック: タグ構成モデル */
+    @Mock
+    private JdtsTagConfigModel mockTagConfigModel;
+
+    /** モック: Javadocモデル */
+    @Mock
+    private JavadocModel mockJavadocModel;
+
+    /** モック: Javadocタグ集合モデル */
+    @Mock
+    private JavadocTagsModel mockJavadocTagsModel;
+
+    /** モック: Javadocタグモデル */
+    @Mock
+    private JavadocTagModel mockJavadocTagModel;
+
+    /** モック: 配置設定モデル */
+    @Mock
+    private JdtsLocationConfigModel mockLocationConfigModel;
+
+    /** リフレクションモデル */
+    private KmgReflectionModelImpl reflectionModel;
 
     /**
-     * デフォルトコンストラクタ<br>
+     * テスト前処理<br>
+     *
+     * @since 0.1.0
      */
-    public JdtsBlockReplLogicImplTest() {
+    @BeforeEach
+    public void setUp() {
 
-        // 処理なし
+        this.testTarget = new JdtsBlockReplLogicImpl();
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
     }
 
     /**
-     * getConfigsModel メソッドのテスト - 正常系:初期状態でnullが返されることの確認
-     * <p>
-     * 初期化前の状態で設定モデルを取得した場合にnullが返されることを確認します。
-     * </p>
+     * addNewTagByPosition メソッドのテスト - 正常系:BEGINNING位置でheadTagPosOffsetが無効
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
      */
     @Test
-    public void testGetConfigsModel_normalInitialStateReturnsNull() {
+    public void testAddNewTagByPosition_normalBeginningWithInvalidOffset() throws Exception {
 
         /* 期待値の定義 */
-        final JdtsConfigsModel expectedConfigsModel = null;
+        final String expectedTagContent = "* @since 1.0.0 ";
 
         /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
+        // モックの設定
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.BEGINNING);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.SINCE);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("1.0.0");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("");
+
+        // リフレクションでフィールドを設定
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test javadoc */"));
+        this.reflectionModel.set("headTagPosOffset", -1); // 無効な値
 
         /* テスト対象の実行 */
-        final JdtsConfigsModel testResult = testTarget.getConfigsModel();
+        this.testTarget.addNewTagByPosition();
+
+        /* 検証の準備 */
+        final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
+            "Javadocブロックに新しいタグが末尾に追加されること");
+
+    }
+
+    /**
+     * addNewTagByPosition メソッドのテスト - 正常系:BEGINNING位置でheadTagPosOffsetが有効
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testAddNewTagByPosition_normalBeginningWithValidOffset() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTagContent   = "* @author Test Author";
+        final String expectedUpdatedBlock
+                                          = "/**\n * @author Test Author\n * Test javadoc\n * @author KenichiroArai\n */";
+
+        /* 準備 */
+        // モックの設定
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.BEGINNING);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("Test Author");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("");
+
+        // リフレクションでフィールドを設定
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock",
+            new StringBuilder("/**\n * Test javadoc\n * @author KenichiroArai\n */"));
+        this.reflectionModel.set("headTagPosOffset", 20);
+
+        /* テスト対象の実行 */
+        this.testTarget.addNewTagByPosition();
+
+        /* 検証の準備 */
+        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent       = (String) this.reflectionModel.get("tagContentToApply");
+        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
+            "Javadocブロックに新しいタグが先頭に挿入されること");
+        Assertions.assertEquals(20 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+
+    }
+
+    /**
+     * addNewTagByPosition メソッドのテスト - 正常系:END位置
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testAddNewTagByPosition_normalEnd() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTagContent = "* @version 2.0.0 ";
+
+        /* 準備 */
+        // モックの設定
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.END);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("2.0.0");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("");
+
+        // リフレクションでフィールドを設定
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test javadoc */"));
+        this.reflectionModel.set("headTagPosOffset", 0);
+
+        /* テスト対象の実行 */
+        this.testTarget.addNewTagByPosition();
+
+        /* 検証の準備 */
+        final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent),
+            "Javadocブロックに新しいタグが末尾に追加されること");
+
+    }
+
+    /**
+     * addNewTagByPosition メソッドのテスト - 正常系:NONE位置
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testAddNewTagByPosition_normalNone() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTagContent = "* @param testParam テストパラメータ";
+
+        /* 準備 */
+        // モックの設定
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.NONE);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.PARAM);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("testParam");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("テストパラメータ");
+
+        // リフレクションでフィールドを設定
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test javadoc */"));
+        this.reflectionModel.set("headTagPosOffset", 10);
+
+        /* テスト対象の実行 */
+        this.testTarget.addNewTagByPosition();
+
+        /* 検証の準備 */
+        final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent),
+            "Javadocブロックに新しいタグが末尾に追加されること");
+
+    }
+
+    /**
+     * addNewTagByPosition メソッドのテスト - 正常系:PRESERVE位置
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testAddNewTagByPosition_normalPreserve() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTagContent = "* @return 戻り値";
+
+        /* 準備 */
+        // モックの設定
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.PRESERVE);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.RETURN);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("戻り値");
+
+        // リフレクションでフィールドを設定
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test javadoc */"));
+        this.reflectionModel.set("headTagPosOffset", 5);
+
+        /* テスト対象の実行 */
+        this.testTarget.addNewTagByPosition();
+
+        /* 検証の準備 */
+        final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent),
+            "Javadocブロックに新しいタグが末尾に追加されること");
+
+    }
+
+    /**
+     * createTagContent メソッドのテスト - 正常系:タグ内容の生成
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testCreateTagContent_normalCreateContent() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedContent = "* @author TestAuthor TestDescription";
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("TestAuthor");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("TestDescription");
+
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final String testResult = (String) this.reflectionModel.getMethod("createTagContent");
+
+        /* 検証の準備 */
+        final String actualContent = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedContent, actualContent, "タグ内容が正しく生成されること");
+
+    }
+
+    /**
+     * getConfigsModel メソッドのテスト - 正常系:構成モデルを返す
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testGetConfigsModel_normalReturnConfigsModel() throws Exception {
+
+        /* 期待値の定義 */
+        final JdtsConfigsModel expectedConfigsModel = this.mockConfigsModel;
+
+        /* 準備 */
+        this.reflectionModel.set("configsModel", this.mockConfigsModel);
+
+        /* テスト対象の実行 */
+        final JdtsConfigsModel testResult = this.testTarget.getConfigsModel();
 
         /* 検証の準備 */
         final JdtsConfigsModel actualConfigsModel = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedConfigsModel, actualConfigsModel, "初期状態でnullが返されること");
+        Assertions.assertEquals(expectedConfigsModel, actualConfigsModel, "構成モデルが正しく返されること");
 
     }
 
     /**
-     * getReplacedJavadocBlock メソッドのテスト - 例外系:初期状態でNullPointerExceptionが発生することの確認
-     * <p>
-     * 初期化前の状態でgetReplacedJavadocBlockを呼び出した場合にNullPointerExceptionが発生することを確認します。
-     * </p>
+     * getCurrentSrcJavadocTag メソッドのテスト - 正常系:現在のJavadocタグを返す
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
      */
     @Test
-    public void testGetReplacedJavadocBlock_errorInitialStateThrowsNullPointerException() {
+    public void testGetCurrentSrcJavadocTag_normalReturnCurrentTag() throws Exception {
 
         /* 期待値の定義 */
-        // NullPointerExceptionが発生すること
+        final JavadocTagModel expectedJavadocTag = this.mockJavadocTagModel;
 
         /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
-
-        /* テスト対象の実行と検証の実施 */
-        Assertions.assertThrows(NullPointerException.class, () -> testTarget.getReplacedJavadocBlock(),
-            "初期状態でNullPointerExceptionが発生すること");
-
-    }
-
-    /**
-     * getTagContentToApply メソッドのテスト - 正常系:初期状態でnullが返されることの確認
-     * <p>
-     * 初期化前の状態でgetTagContentToApplyを呼び出した場合にnullが返されることを確認します。
-     * </p>
-     */
-    @Test
-    public void testGetTagContentToApply_normalInitialStateReturnsNull() {
-
-        /* 期待値の定義 */
-        final String expectedTagContent = null;
-
-        /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
 
         /* テスト対象の実行 */
-        final String testResult = testTarget.getTagContentToApply();
+        final JavadocTagModel testResult = this.testTarget.getCurrentSrcJavadocTag();
+
+        /* 検証の準備 */
+        final JavadocTagModel actualJavadocTag = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedJavadocTag, actualJavadocTag, "現在のJavadocタグが正しく返されること");
+
+    }
+
+    /**
+     * getCurrentTagConfigModel メソッドのテスト - 正常系:現在のタグ構成モデルを返す
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testGetCurrentTagConfigModel_normalReturnCurrentTagConfig() throws Exception {
+
+        /* 期待値の定義 */
+        final JdtsTagConfigModel expectedTagConfigModel = this.mockTagConfigModel;
+
+        /* 準備 */
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final JdtsTagConfigModel testResult = this.testTarget.getCurrentTagConfigModel();
+
+        /* 検証の準備 */
+        final JdtsTagConfigModel actualTagConfigModel = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagConfigModel, actualTagConfigModel, "現在のタグ構成モデルが正しく返されること");
+
+    }
+
+    /**
+     * getReplacedJavadocBlock メソッドのテスト - 正常系:置換後のJavadocブロックを返す
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testGetReplacedJavadocBlock_normalReturnReplacedBlock() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedJavadocBlock = "/** Test replaced javadoc */";
+
+        /* 準備 */
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder(expectedJavadocBlock));
+
+        /* テスト対象の実行 */
+        final String testResult = this.testTarget.getReplacedJavadocBlock();
+
+        /* 検証の準備 */
+        final String actualJavadocBlock = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedJavadocBlock, actualJavadocBlock, "置換後のJavadocブロックが正しく返されること");
+
+    }
+
+    /**
+     * getTagContentToApply メソッドのテスト - 正常系:設定するタグの内容を返す
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testGetTagContentToApply_normalReturnTagContent() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTagContent = "* @author TestAuthor TestDescription";
+
+        /* 準備 */
+        this.reflectionModel.set("tagContentToApply", expectedTagContent);
+
+        /* テスト対象の実行 */
+        final String testResult = this.testTarget.getTagContentToApply();
 
         /* 検証の準備 */
         final String actualTagContent = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedTagContent, actualTagContent, "初期状態でnullが返されること");
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "設定するタグの内容が正しく返されること");
 
     }
 
     /**
-     * hasExistingTag メソッドのテスト - 正常系:初期状態でfalseが返されることの確認
-     * <p>
-     * 初期化前の状態でhasExistingTagを呼び出した場合にfalseが返されることを確認します。
-     * </p>
+     * hasExistingTag メソッドのテスト - 正常系:既存タグが存在する場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
      */
     @Test
-    public void testHasExistingTag_normalInitialStateReturnsFalse() {
+    public void testHasExistingTag_normalTagExists() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedHasExistingTag = false;
+        final boolean expectedResult = true;
 
         /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
 
         /* テスト対象の実行 */
-        final boolean testResult = testTarget.hasExistingTag();
+        final boolean testResult = this.testTarget.hasExistingTag();
 
         /* 検証の準備 */
-        final boolean actualHasExistingTag = testResult;
+        final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedHasExistingTag, actualHasExistingTag, "初期状態でfalseが返されること");
+        Assertions.assertEquals(expectedResult, actualResult, "既存タグが存在する場合はtrueが返されること");
 
     }
 
     /**
-     * JdtsBlockReplLogicImplの基本的なインスタンス生成テスト - 正常系:インスタンスが正しく生成されることの確認
-     * <p>
-     * JdtsBlockReplLogicImplクラスのインスタンスが正しく生成されることを確認します。
-     * </p>
+     * hasExistingTag メソッドのテスト - 正常系:既存タグが存在しない場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
      */
     @Test
-    public void testJdtsBlockReplLogicImpl_normalInstanceCreated() {
+    public void testHasExistingTag_normalTagNotExists() throws Exception {
 
         /* 期待値の定義 */
-        // インスタンスが正常に生成されること
+        final boolean expectedResult = false;
 
         /* 準備 */
-        // なし
+        this.reflectionModel.set("currentSrcJavadocTag", null);
 
         /* テスト対象の実行 */
-        final JdtsBlockReplLogicImpl testResult = new JdtsBlockReplLogicImpl();
+        final boolean testResult = this.testTarget.hasExistingTag();
 
         /* 検証の準備 */
-        final JdtsBlockReplLogicImpl actualInstance = testResult;
+        final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertNotNull(actualInstance, "インスタンスが正しく生成されること");
+        Assertions.assertEquals(expectedResult, actualResult, "既存タグが存在しない場合はfalseが返されること");
 
     }
 
     /**
-     * nextTag メソッドのテスト - 例外系:初期状態でNullPointerExceptionが発生することの確認
-     * <p>
-     * 初期化前の状態でnextTagを呼び出した場合にNullPointerExceptionが発生することを確認します。
-     * </p>
+     * initialize メソッドのテスト - 正常系:初期化が成功する場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
      */
     @Test
-    public void testNextTag_errorInitialStateThrowsNullPointerException() {
+    public void testInitialize_normalSuccessful() throws Exception {
 
         /* 期待値の定義 */
-        // NullPointerExceptionが発生すること
+        final boolean expectedResult = true;
 
         /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
+        final List<JdtsTagConfigModel> testTagConfigModels = new ArrayList<>();
+        testTagConfigModels.add(this.mockTagConfigModel);
 
-        /* テスト対象の実行と検証の実施 */
-        Assertions.assertThrows(NullPointerException.class, () -> testTarget.nextTag(),
-            "初期状態でNullPointerExceptionが発生すること");
+        @SuppressWarnings("unchecked")
+        final Iterator<JdtsTagConfigModel> testIterator = Mockito.mock(Iterator.class);
 
-    }
-
-    /**
-     * removeCurrentTag メソッドのテスト - 準正常系:初期状態でfalseが返されることの確認
-     * <p>
-     * 初期化前の状態でremoveCurrentTagを呼び出した場合にfalseが返されることを確認します。
-     * </p>
-     */
-    @Test
-    public void testRemoveCurrentTag_semiInitialStateReturnsFalse() {
-
-        /* 期待値の定義 */
-        final boolean expectedRemoveResult = false;
-
-        /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
+        Mockito.when(this.mockConfigsModel.getJdaTagConfigModels()).thenReturn(testTagConfigModels);
+        Mockito.when(this.mockSrcBlockModel.getJavadocModel()).thenReturn(this.mockJavadocModel);
+        Mockito.when(this.mockJavadocModel.getSrcJavadoc()).thenReturn("/** Test javadoc */");
+        Mockito.when(this.mockJavadocModel.getJavadocTagsModel()).thenReturn(this.mockJavadocTagsModel);
 
         /* テスト対象の実行 */
-        final boolean testResult = testTarget.removeCurrentTag();
+        final boolean testResult = this.testTarget.initialize(this.mockConfigsModel, this.mockSrcBlockModel);
 
         /* 検証の準備 */
-        final boolean actualRemoveResult = testResult;
+        final boolean       actualResult           = testResult;
+        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedRemoveResult, actualRemoveResult, "初期状態でfalseが返されること");
+        Assertions.assertEquals(expectedResult, actualResult, "初期化が成功すること");
+        Assertions.assertNotNull(actualReplacedBlock, "置換用Javadocブロックが初期化されること");
+        Assertions.assertEquals(-1, actualHeadTagPosOffset, "先頭タグの位置オフセットが設定されること");
 
     }
 
     /**
-     * shouldAddNewTag メソッドのテスト - 例外系:初期状態でNullPointerExceptionが発生することの確認
-     * <p>
-     * 初期化前の状態でshouldAddNewTagを呼び出した場合にNullPointerExceptionが発生することを確認します。
-     * </p>
+     * nextTag メソッドのテスト - 正常系:次のタグが存在する場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
      */
     @Test
-    public void testShouldAddNewTag_errorInitialStateThrowsNullPointerException() {
+    public void testNextTag_normalHasNextTag() throws Exception {
 
         /* 期待値の定義 */
-        // NullPointerExceptionが発生すること
+        final boolean expectedResult = true;
 
         /* 準備 */
-        final JdtsBlockReplLogicImpl testTarget = new JdtsBlockReplLogicImpl();
+        @SuppressWarnings("unchecked")
+        final Iterator<JdtsTagConfigModel> testIterator = Mockito.mock(Iterator.class);
+        Mockito.when(testIterator.hasNext()).thenReturn(true);
+        Mockito.when(testIterator.next()).thenReturn(this.mockTagConfigModel);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(this.mockJavadocTagsModel.findByTag(KmgJavadocTagTypes.AUTHOR))
+            .thenReturn(this.mockJavadocTagModel);
 
-        /* テスト対象の実行と検証の実施 */
-        Assertions.assertThrows(NullPointerException.class, () -> testTarget.shouldAddNewTag(),
-            "初期状態でNullPointerExceptionが発生すること");
+        this.reflectionModel.set("tagConfigIterator", testIterator);
+        this.reflectionModel.set("srcBlockModel", this.mockSrcBlockModel);
+        Mockito.when(this.mockSrcBlockModel.getJavadocModel()).thenReturn(this.mockJavadocModel);
+        Mockito.when(this.mockJavadocModel.getJavadocTagsModel()).thenReturn(this.mockJavadocTagsModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.nextTag();
+
+        /* 検証の準備 */
+        final boolean            actualResult            = testResult;
+        final JdtsTagConfigModel actualCurrentTagConfig  = (JdtsTagConfigModel) this.reflectionModel
+            .get("currentTagConfigModel");
+        final JavadocTagModel    actualCurrentJavadocTag = (JavadocTagModel) this.reflectionModel
+            .get("currentSrcJavadocTag");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "次のタグが存在する場合はtrueが返されること");
+        Assertions.assertEquals(this.mockTagConfigModel, actualCurrentTagConfig, "現在のタグ構成モデルが設定されること");
+        Assertions.assertEquals(this.mockJavadocTagModel, actualCurrentJavadocTag, "現在のJavadocタグが設定されること");
 
     }
+
+    /**
+     * nextTag メソッドのテスト - 正常系:次のタグが存在しない場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testNextTag_normalNoNextTag() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        @SuppressWarnings("unchecked")
+        final Iterator<JdtsTagConfigModel> testIterator = Mockito.mock(Iterator.class);
+        Mockito.when(testIterator.hasNext()).thenReturn(false);
+
+        this.reflectionModel.set("tagConfigIterator", testIterator);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.nextTag();
+
+        /* 検証の準備 */
+        final boolean            actualResult            = testResult;
+        final JdtsTagConfigModel actualCurrentTagConfig  = (JdtsTagConfigModel) this.reflectionModel
+            .get("currentTagConfigModel");
+        final JavadocTagModel    actualCurrentJavadocTag = (JavadocTagModel) this.reflectionModel
+            .get("currentSrcJavadocTag");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "次のタグが存在しない場合はfalseが返されること");
+        Assertions.assertNull(actualCurrentTagConfig, "現在のタグ構成モデルがクリアされること");
+        Assertions.assertNull(actualCurrentJavadocTag, "現在のJavadocタグがクリアされること");
+
+    }
+
+    /**
+     * removeCurrentTag メソッドのテスト - 正常系:現在のタグが存在する場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRemoveCurrentTag_normalTagExists() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testTargetStr = "* @author TestAuthor";
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn(testTargetStr);
+
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
+        this.reflectionModel.set("replacedJavadocBlock",
+            new StringBuilder("/** Test javadoc\n" + testTargetStr + "\n */"));
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.removeCurrentTag();
+
+        /* 検証の準備 */
+        final boolean       actualResult        = testResult;
+        final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "タグの削除が成功すること");
+        Assertions.assertFalse(actualReplacedBlock.toString().contains(testTargetStr), "指定されたタグが削除されること");
+
+    }
+
+    /**
+     * removeCurrentTag メソッドのテスト - 準正常系:現在のタグが存在しない場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRemoveCurrentTag_semiTagNotExists() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        this.reflectionModel.set("currentSrcJavadocTag", null);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.removeCurrentTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "タグが存在しない場合はfalseが返されること");
+
+    }
+
+    /**
+     * removeCurrentTagOnError メソッドのテスト - 正常系:誤配置時削除が設定されており配置が不適切
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRemoveCurrentTagOnError_normalRemoveIfMisplaced() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testTargetStr = "* @author TestAuthor";
+        Mockito.when(this.mockLocationConfigModel.isRemoveIfMisplaced()).thenReturn(true);
+        Mockito.when(this.mockTagConfigModel.getLocation()).thenReturn(this.mockLocationConfigModel);
+        Mockito.when(this.mockTagConfigModel.isProperlyPlaced(JavaClassificationTypes.CLASS)).thenReturn(false);
+        Mockito.when(this.mockSrcBlockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn(testTargetStr);
+
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
+        this.reflectionModel.set("srcBlockModel", this.mockSrcBlockModel);
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test\n" + testTargetStr + "\n */"));
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.removeCurrentTagOnError();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "誤配置時削除が設定されており配置が不適切な場合はタグが削除されること");
+
+    }
+
+    /**
+     * replaceExistingTag メソッドのテスト - 正常系:既存タグの置換が成功
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testReplaceExistingTag_normalSuccessful() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testTargetStr  = "* @author OldAuthor";
+        final String testNewContent = "* @author NewAuthor Description";
+
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn(testTargetStr);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("NewAuthor");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("Description");
+
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test\n" + testTargetStr + "\n */"));
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.replaceExistingTag();
+
+        /* 検証の準備 */
+        final boolean       actualResult        = testResult;
+        final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "既存タグの置換が成功すること");
+        Assertions.assertFalse(actualReplacedBlock.toString().contains(testTargetStr), "古いタグ内容が削除されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().contains("NewAuthor"), "新しいタグ内容が設定されること");
+
+    }
+
+    /**
+     * replaceExistingTag メソッドのテスト - 準正常系:既存タグが見つからない場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testReplaceExistingTag_semiTagNotFound() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testTargetStr = "* @author NotFound";
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn(testTargetStr);
+
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test javadoc without target */"));
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.replaceExistingTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "既存タグが見つからない場合はfalseが返されること");
+
+    }
+
+    /**
+     * repositionTagIfNeeded メソッドのテスト - 正常系:BEGINNING位置への再配置
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRepositionTagIfNeeded_normalBeginningReposition() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testTargetStr = "* @author TestAuthor";
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.BEGINNING);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("TestAuthor");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("");
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn(testTargetStr);
+
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test\n" + testTargetStr + "\n */"));
+        this.reflectionModel.set("headTagPosOffset", -1);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.repositionTagIfNeeded();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "BEGINNING位置への再配置が成功すること");
+
+    }
+
+    /**
+     * repositionTagIfNeeded メソッドのテスト - 準正常系:PRESERVE位置で再配置不要
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRepositionTagIfNeeded_semiPreserveNoReposition() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.PRESERVE);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.repositionTagIfNeeded();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "PRESERVE位置の場合は再配置不要でfalseが返されること");
+
+    }
+
+    /**
+     * shouldAddNewTag メソッドのテスト - 正常系:新しいタグを追加すべき場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldAddNewTag_normalShouldAdd() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.isProperlyPlaced(JavaClassificationTypes.CLASS)).thenReturn(true);
+        Mockito.when(this.mockSrcBlockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("srcBlockModel", this.mockSrcBlockModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldAddNewTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "適切な配置の場合は新しいタグを追加すべきでtrueが返されること");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がALWAYS
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_normalAlways() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.ALWAYS);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がALWAYSの場合はtrueが返されること");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がIF_LOWER
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_normalIfLower() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がIF_LOWERでバージョンタグでない場合はtrueが返されること");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がNEVER
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_semiNever() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.NEVER);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がNEVERの場合はfalseが返されること");
+
+    }
+
+    /**
+     * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がNONE
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testShouldOverwriteTag_semiNone() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.NONE);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.shouldOverwriteTag();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がNONEの場合はfalseが返されること");
+
+    }
+
+    /**
+     * バージョン比較に基づいて上書きすべきか判断する - 既存バージョンと新規バージョンが同じ場合<br>
+     * <p>
+     * 既存バージョンと新規バージョンが同じ場合はfalseを返すことを確認する。
+     * </p>
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
+     */
+    @Test
+    void testShouldOverwriteBasedOnVersion_ExistingVersionEqual() throws KmgToolMsgException {
+
+        // 準備
+        final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
+        final JdtsConfigsModel       configsModel     = Mockito.mock(JdtsConfigsModel.class);
+        final JdtsBlockModel         srcBlockModel    = Mockito.mock(JdtsBlockModel.class);
+        final JavadocModel           javadocModel     = Mockito.mock(JavadocModel.class);
+        final JavadocTagsModel       javadocTagsModel = Mockito.mock(JavadocTagsModel.class);
+        final JavadocTagModel        javadocTag       = Mockito.mock(JavadocTagModel.class);
+        final JdtsTagConfigModel     tagConfigModel   = Mockito.mock(JdtsTagConfigModel.class);
+
+        // タグ設定
+        Mockito.when(tagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
+        Mockito.when(tagConfigModel.getTagValue()).thenReturn("0.1.0");
+        Mockito.when(tagConfigModel.getTagDescription()).thenReturn("test description");
+        Mockito.when(tagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
+
+        // 既存のタグ設定
+        Mockito.when(javadocTag.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
+        Mockito.when(javadocTag.getTargetStr()).thenReturn("* @version 0.1.0");
+
+        // モデルの設定
+        Mockito.when(javadocTagsModel.findByTag(KmgJavadocTagTypes.VERSION)).thenReturn(javadocTag);
+        Mockito.when(javadocModel.getJavadocTagsModel()).thenReturn(javadocTagsModel);
+        Mockito.when(srcBlockModel.getJavadocModel()).thenReturn(javadocModel);
+        Mockito.when(configsModel.getJdaTagConfigModels())
+            .thenReturn(java.util.Collections.singletonList(tagConfigModel));
+
+        // 初期化
+        logic.initialize(configsModel, srcBlockModel);
+
+        // 実行
+        final boolean result = logic.shouldOverwriteTag();
+
+        // 検証
+        Assertions.assertFalse(result, "既存バージョンと新規バージョンが同じ場合はfalseを返すべき");
+
+    }
+
+    /**
+     * バージョン比較に基づいて上書きすべきか判断する - 既存バージョンが新規バージョンより大きい場合<br>
+     * <p>
+     * 既存バージョンが新規バージョンより大きい場合はtrueを返すことを確認する。
+     * </p>
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
+     */
+    @Test
+    void testShouldOverwriteBasedOnVersion_ExistingVersionGreater() throws KmgToolMsgException {
+
+        // 準備
+        final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
+        final JdtsConfigsModel       configsModel     = Mockito.mock(JdtsConfigsModel.class);
+        final JdtsBlockModel         srcBlockModel    = Mockito.mock(JdtsBlockModel.class);
+        final JavadocModel           javadocModel     = Mockito.mock(JavadocModel.class);
+        final JavadocTagsModel       javadocTagsModel = Mockito.mock(JavadocTagsModel.class);
+        final JavadocTagModel        javadocTag       = Mockito.mock(JavadocTagModel.class);
+        final JdtsTagConfigModel     tagConfigModel   = Mockito.mock(JdtsTagConfigModel.class);
+
+        // タグ設定
+        Mockito.when(tagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
+        Mockito.when(tagConfigModel.getTagValue()).thenReturn("0.1.0");
+        Mockito.when(tagConfigModel.getTagDescription()).thenReturn("test description");
+        Mockito.when(tagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
+
+        // 既存のタグ設定
+        Mockito.when(javadocTag.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
+        Mockito.when(javadocTag.getTargetStr()).thenReturn("* @version 0.2.0");
+
+        // モデルの設定
+        Mockito.when(javadocTagsModel.findByTag(KmgJavadocTagTypes.VERSION)).thenReturn(javadocTag);
+        Mockito.when(javadocModel.getJavadocTagsModel()).thenReturn(javadocTagsModel);
+        Mockito.when(srcBlockModel.getJavadocModel()).thenReturn(javadocModel);
+        Mockito.when(configsModel.getJdaTagConfigModels())
+            .thenReturn(java.util.Collections.singletonList(tagConfigModel));
+
+        // 初期化
+        logic.initialize(configsModel, srcBlockModel);
+
+        // 実行
+        final boolean result = logic.shouldOverwriteTag();
+
+        // 検証
+        Assertions.assertTrue(result, "既存バージョンが新規バージョンより大きい場合はtrueを返すべき");
+
+    }
+
+    /**
+     * バージョン比較に基づいて上書きすべきか判断する - 既存バージョンが新規バージョンより小さい場合<br>
+     * <p>
+     * 既存バージョンが新規バージョンより小さい場合はfalseを返すことを確認する。
+     * </p>
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
+     */
+    @Test
+    void testShouldOverwriteBasedOnVersion_ExistingVersionLower() throws KmgToolMsgException {
+
+        // 準備
+        final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
+        final JdtsConfigsModel       configsModel     = Mockito.mock(JdtsConfigsModel.class);
+        final JdtsBlockModel         srcBlockModel    = Mockito.mock(JdtsBlockModel.class);
+        final JavadocModel           javadocModel     = Mockito.mock(JavadocModel.class);
+        final JavadocTagsModel       javadocTagsModel = Mockito.mock(JavadocTagsModel.class);
+        final JavadocTagModel        javadocTag       = Mockito.mock(JavadocTagModel.class);
+        final JdtsTagConfigModel     tagConfigModel   = Mockito.mock(JdtsTagConfigModel.class);
+
+        // タグ設定
+        Mockito.when(tagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
+        Mockito.when(tagConfigModel.getTagValue()).thenReturn("0.2.0");
+        Mockito.when(tagConfigModel.getTagDescription()).thenReturn("test description");
+        Mockito.when(tagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
+
+        // 既存のタグ設定
+        Mockito.when(javadocTag.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
+        Mockito.when(javadocTag.getTargetStr()).thenReturn("* @version 0.1.0");
+
+        // モデルの設定
+        Mockito.when(javadocTagsModel.findByTag(KmgJavadocTagTypes.VERSION)).thenReturn(javadocTag);
+        Mockito.when(javadocModel.getJavadocTagsModel()).thenReturn(javadocTagsModel);
+        Mockito.when(srcBlockModel.getJavadocModel()).thenReturn(javadocModel);
+        Mockito.when(configsModel.getJdaTagConfigModels())
+            .thenReturn(java.util.Collections.singletonList(tagConfigModel));
+
+        // 初期化
+        logic.initialize(configsModel, srcBlockModel);
+
+        // 実行
+        final boolean result = logic.shouldOverwriteTag();
+
+        // 検証
+        Assertions.assertFalse(result, "既存バージョンが新規バージョンより小さい場合はfalseを返すべき");
+
+    }
+
+    /**
+     * バージョン比較に基づいて上書きすべきか判断する - バージョンタグでない場合<br>
+     * <p>
+     * バージョンタグでない場合は常にtrueを返すことを確認する。
+     * </p>
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
+     */
+    @Test
+    void testShouldOverwriteBasedOnVersion_NotVersionTag() throws KmgToolMsgException {
+
+        // 準備
+        final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
+        final JdtsConfigsModel       configsModel     = Mockito.mock(JdtsConfigsModel.class);
+        final JdtsBlockModel         srcBlockModel    = Mockito.mock(JdtsBlockModel.class);
+        final JavadocModel           javadocModel     = Mockito.mock(JavadocModel.class);
+        final JavadocTagsModel       javadocTagsModel = Mockito.mock(JavadocTagsModel.class);
+        final JavadocTagModel        javadocTag       = Mockito.mock(JavadocTagModel.class);
+        final JdtsTagConfigModel     tagConfigModel   = Mockito.mock(JdtsTagConfigModel.class);
+
+        // タグ設定
+        Mockito.when(tagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(tagConfigModel.getTagValue()).thenReturn("test");
+        Mockito.when(tagConfigModel.getTagDescription()).thenReturn("test description");
+        Mockito.when(tagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
+
+        // 既存のタグ設定
+        Mockito.when(javadocTag.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(javadocTag.getTargetStr()).thenReturn("* @author test");
+
+        // モデルの設定
+        Mockito.when(javadocTagsModel.findByTag(KmgJavadocTagTypes.AUTHOR)).thenReturn(javadocTag);
+        Mockito.when(javadocModel.getJavadocTagsModel()).thenReturn(javadocTagsModel);
+        Mockito.when(srcBlockModel.getJavadocModel()).thenReturn(javadocModel);
+        Mockito.when(configsModel.getJdaTagConfigModels())
+            .thenReturn(java.util.Collections.singletonList(tagConfigModel));
+
+        // 初期化
+        logic.initialize(configsModel, srcBlockModel);
+
+        // 実行
+        final boolean result = logic.shouldOverwriteTag();
+
+        // 検証
+        Assertions.assertTrue(result, "バージョンタグでない場合は常にtrueを返すべき");
+
+    }
+
 }
