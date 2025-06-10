@@ -6,6 +6,7 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.application.logic.jdts.JdtsBlockReplLogic;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.application.model.jdts.JdtsConfigsModel;
@@ -580,7 +581,11 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* タグ内容の生成 */
         String result = String.format(JdtsBlockReplLogicImpl.TAG_FORMAT, this.currentTagConfigModel.getTag().getKey(),
             this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
+
+        /* 余分な空白を正規化 */
+        result = result.replaceAll(KmgDelimiterTypes.SERIES_HALF_SPACE.get(), KmgDelimiterTypes.HALF_SPACE.get());
         result = result.trim();
+
         return result;
 
     }
