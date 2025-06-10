@@ -22,6 +22,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
+import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgCharsetTypes;
 import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
@@ -36,7 +37,7 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class IsDataSheetCreationLogicImplTest {
+public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * デフォルトコンストラクタ<br>
