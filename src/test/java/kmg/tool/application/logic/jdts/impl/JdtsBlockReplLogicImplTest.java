@@ -897,6 +897,98 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * repositionTagIfNeeded メソッドのテスト - 正常系:END位置への再配置
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRepositionTagIfNeeded_normalEndReposition() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testTargetStr = "* @author TestAuthor";
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.END);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("TestAuthor");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("");
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn(testTargetStr);
+
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
+        this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test\n" + testTargetStr + "\n */"));
+        this.reflectionModel.set("headTagPosOffset", -1);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.repositionTagIfNeeded();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "END位置への再配置が成功すること");
+
+    }
+
+    /**
+     * repositionTagIfNeeded メソッドのテスト - 準正常系:NONE位置で再配置不要
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRepositionTagIfNeeded_semiNoneNoReposition() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.NONE);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.repositionTagIfNeeded();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "NONE位置の場合は再配置不要でfalseが返されること");
+
+    }
+
+    /**
+     * repositionTagIfNeeded メソッドのテスト - 準正常系:現在のタグ削除が失敗
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRepositionTagIfNeeded_semiRemoveCurrentTagFailed() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.BEGINNING);
+
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("currentSrcJavadocTag", null); // タグが存在しない状態でremoveCurrentTagが失敗
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.repositionTagIfNeeded();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "現在のタグ削除が失敗した場合はfalseが返されること");
+
+    }
+
+    /**
      * shouldAddNewTag メソッドのテスト - 正常系:新しいタグを追加すべき場合
      *
      * @throws Exception
