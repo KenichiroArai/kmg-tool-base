@@ -244,8 +244,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
             this.readContent = Files.readString(this.currentFilePath);
 
-        } catch (
-            final IOException e) {
+        } catch (final IOException e) {
 
             final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32012;
             final Object[]           genMsgArgs  = {
