@@ -705,6 +705,67 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * removeCurrentTagOnError メソッドのテスト - 準正常系:誤配置時削除が設定されていない場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRemoveCurrentTagOnError_semiRemoveIfMisplacedFalse() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockLocationConfigModel.isRemoveIfMisplaced()).thenReturn(false);
+        Mockito.when(this.mockTagConfigModel.getLocation()).thenReturn(this.mockLocationConfigModel);
+
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.removeCurrentTagOnError();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "誤配置時削除が設定されていない場合はタグが削除されないこと");
+
+    }
+
+    /**
+     * removeCurrentTagOnError メソッドのテスト - 準正常系:配置が適切な場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRemoveCurrentTagOnError_semiProperlyPlacedTrue() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockLocationConfigModel.isRemoveIfMisplaced()).thenReturn(true);
+        Mockito.when(this.mockTagConfigModel.getLocation()).thenReturn(this.mockLocationConfigModel);
+        Mockito.when(this.mockTagConfigModel.isProperlyPlaced(JavaClassificationTypes.CLASS)).thenReturn(true);
+        Mockito.when(this.mockSrcBlockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("srcBlockModel", this.mockSrcBlockModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.removeCurrentTagOnError();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "配置が適切な場合はタグが削除されないこと");
+
+    }
+
+    /**
      * replaceExistingTag メソッドのテスト - 正常系:既存タグの置換が成功
      *
      * @throws Exception
