@@ -917,16 +917,16 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * バージョン比較に基づいて上書きすべきか判断する - 既存バージョン>上書きするバージョンの場合<br>
+     * バージョン比較に基づいて上書きすべきか判断する - 新規バージョン>上書きするバージョンの場合<br>
      * <p>
-     * 既存バージョン>上書きするバージョンの場合はtrueを返すことを確認する。
+     * 新規バージョン>上書きするバージョンの場合はtrueを返すことを確認する。
      * </p>
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
     @Test
-    public void testShouldOverwriteBasedOnVersion_ExistingVersionGreaterThanNewVersion() throws KmgToolMsgException {
+    public void testShouldOverwriteBasedOnVersion_NewVersionGreaterThanExistingVersion() throws KmgToolMsgException {
 
         /* 準備 */
         final JdtsBlockReplLogicImpl logic            = new JdtsBlockReplLogicImpl();
@@ -962,7 +962,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean result = logic.shouldOverwriteTag();
 
         /* 検証の実施 */
-        Assertions.assertTrue(result, "既存バージョン>上書きするバージョン場合はtrueを返すべき");
+        Assertions.assertTrue(result, "新規バージョン>上書きするバージョンの場合はtrueを返すべき");
 
     }
 
