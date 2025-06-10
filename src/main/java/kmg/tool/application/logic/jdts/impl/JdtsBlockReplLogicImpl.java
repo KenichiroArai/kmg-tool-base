@@ -554,7 +554,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 break;
 
             case IF_LOWER:
-                /* 既存のバージョンより小さい場合のみ上書き */
+                /* 既存バージョン>上書きするバージョン場合のみ上書き */
 
                 result = this.shouldOverwriteBasedOnVersion();
 
@@ -607,12 +607,11 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         }
 
         /* バージョン比較処理 */
-        // 既存バージョンと新規バージョンをComparableVersionに変換
-        final ComparableVersion srcVer  = new ComparableVersion(this.currentSrcJavadocTag.getTag().get());
+        // 既存バージョンと上書きするバージョンをComparableVersionに変換
+        final ComparableVersion srcVer  = new ComparableVersion(this.currentSrcJavadocTag.getValue());
         final ComparableVersion destVer = new ComparableVersion(this.currentTagConfigModel.getTagValue());
 
-        // 既存のバージョンと新規バージョンを比較
-        // 既存のバージョンが新規バージョンより大きい場合に上書きを許可
+        // 既存バージョン>上書きするバージョンに場合に上書きを許可
         result = srcVer.compareTo(destVer) > 0;
 
         return result;

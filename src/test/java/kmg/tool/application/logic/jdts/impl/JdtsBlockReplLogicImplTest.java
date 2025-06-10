@@ -917,9 +917,9 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * バージョン比較に基づいて上書きすべきか判断する - 既存バージョンが新規バージョンより大きい場合<br>
+     * バージョン比較に基づいて上書きすべきか判断する - 既存バージョン>上書きするバージョンの場合<br>
      * <p>
-     * 既存バージョンが新規バージョンより大きい場合はtrueを返すことを確認する。
+     * 既存バージョン>上書きするバージョンの場合はtrueを返すことを確認する。
      * </p>
      *
      * @throws KmgToolMsgException
@@ -945,7 +945,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         // 既存のタグ設定
         Mockito.when(javadocTag.getTag()).thenReturn(KmgJavadocTagTypes.VERSION);
-        Mockito.when(javadocTag.getTargetStr()).thenReturn("* @version 0.2.0");
+        Mockito.when(javadocTag.getValue()).thenReturn("0.2.0");
 
         // モデルの設定
         Mockito.when(javadocTagsModel.findByTag(KmgJavadocTagTypes.VERSION)).thenReturn(javadocTag);
