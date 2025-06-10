@@ -578,9 +578,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     private String createTagContent() {
 
         /* タグ内容の生成 */
-        final String result
-            = String.format(JdtsBlockReplLogicImpl.TAG_FORMAT, this.currentTagConfigModel.getTag().getKey(),
-                this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
+        String result = String.format(JdtsBlockReplLogicImpl.TAG_FORMAT, this.currentTagConfigModel.getTag().getKey(),
+            this.currentTagConfigModel.getTagValue(), this.currentTagConfigModel.getTagDescription());
+        result = result.trim();
         return result;
 
     }
