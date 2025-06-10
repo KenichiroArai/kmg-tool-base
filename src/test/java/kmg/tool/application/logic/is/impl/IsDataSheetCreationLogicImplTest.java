@@ -27,6 +27,7 @@ import kmg.core.infrastructure.types.KmgCharsetTypes;
 import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * 挿入SQLデータシート作成ロジック実装のテスト<br>
@@ -60,8 +61,13 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     @Test
     public void testCreateOutputFileDirectories_errorIOException(@TempDir final Path tempDir) {
 
+        /* 期待値の定義 */
+        final Path               outputPath            = tempDir.resolve("output").toAbsolutePath();
+        final String             expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
+            "KMGTOOL_GEN13009", outputPath);
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
+
         /* 準備 */
-        final Path                         outputPath = tempDir.resolve("output").toAbsolutePath();
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
         // 初期化
@@ -76,26 +82,16 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
             final IOException testException = new IOException("Disk full");
             mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
-            /* 検証の実施 */
-            final KmgToolMsgException exception = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                 testTarget.createOutputFileDirectories();
 
             }, "IOExceptionが発生した場合、KmgToolMsgExceptionがスローされること");
 
-            // TODO KenichiroArai 2025/06/10 変数の定義の順番とメッセージの検証を共通処理で行う
             /* 検証の準備 */
-            final String    expectedMessageId    = "KMGTOOL_GEN13009";
-            final String    expectedCauseMessage = "Disk full";
-            final Throwable actualCause          = exception.getCause();
-            final String    actualMessage        = exception.getMessage();
-
             /* 検証の実施 */
-            Assertions.assertTrue(actualMessage.contains(expectedMessageId), "例外メッセージにKMGTOOL_GEN13009が含まれること");
-            final IOException actualIOException
-                = Assertions.assertInstanceOf(IOException.class, actualCause, "例外の原因がIOExceptionであること");
-            Assertions.assertEquals(expectedCauseMessage, actualIOException.getMessage(),
-                "原因となったIOExceptionのメッセージが正しいこと");
+            this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
@@ -116,8 +112,13 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     @Test
     public void testCreateOutputFileDirectories_errorPermissionDenied(@TempDir final Path tempDir) {
 
+        /* 期待値の定義 */
+        final Path               outputPath            = tempDir.resolve("restricted").toAbsolutePath();
+        final String             expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
+            "KMGTOOL_GEN13009", outputPath);
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
+
         /* 準備 */
-        final Path                         outputPath = tempDir.resolve("restricted").toAbsolutePath();
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
 
         // 初期化
@@ -132,26 +133,16 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
             final IOException testException = new IOException("Access denied");
             mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
-            /* 検証の実施 */
-            final KmgToolMsgException exception = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                 testTarget.createOutputFileDirectories();
 
             }, "権限不足のIOExceptionが発生した場合、KmgToolMsgExceptionがスローされること");
 
-            // TODO KenichiroArai 2025/06/10 変数の定義の順番とメッセージの検証を共通処理で行う
-
             /* 検証の準備 */
-            final String    expectedMessageId    = "KMGTOOL_GEN13009";
-            final String    expectedCauseMessage = "Access denied";
-            final Throwable actualCause          = exception.getCause();
-            final String    actualMessage        = exception.getMessage();
-
             /* 検証の実施 */
-            Assertions.assertTrue(actualMessage.contains(expectedMessageId), "例外メッセージにKMGTOOL_GEN13009が含まれること");
-            final IOException actualIOException
-                = Assertions.assertInstanceOf(IOException.class, actualCause, "例外の原因がIOExceptionであること");
-            Assertions.assertEquals(expectedCauseMessage, actualIOException.getMessage(), "権限不足のメッセージが保持されること");
+            this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
