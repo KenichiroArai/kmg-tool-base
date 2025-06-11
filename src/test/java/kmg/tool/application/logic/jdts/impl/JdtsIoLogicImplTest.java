@@ -10,9 +10,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.type.KmgString;
+import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * Javadocタグ設定の入出力ロジック実装のテスト<br>
@@ -23,6 +26,7 @@ import kmg.core.infrastructure.type.KmgString;
  *
  * @version 0.1.0
  */
+@SpringBootTest(classes = kmg.tool.presentation.ui.gui.is.IsCreationTool.class)
 @SuppressWarnings({
     "nls", "static-method"
 })
@@ -81,38 +85,6 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         /* テストファイルとディレクトリの削除を再帰的に実行 */
         this.deleteDirectoryRecursively(this.testTempDir);
         this.deleteDirectoryRecursively(this.testEmptyDir);
-
-    }
-
-    /**
-     * ディレクトリを再帰的に削除する<br>
-     *
-     * @param directory
-     *                  削除するディレクトリ
-     *
-     * @throws IOException
-     *                     入出力例外
-     */
-    private void deleteDirectoryRecursively(final Path directory) throws IOException {
-
-        if (!Files.exists(directory)) {
-
-            return;
-
-        }
-
-        Files.walk(directory).sorted((a, b) -> b.compareTo(a)).forEach(path -> {
-
-            try {
-
-                Files.delete(path);
-
-            } catch (final IOException e) {
-
-                // テスト用のため例外を無視
-            }
-
-        });
 
     }
 
@@ -322,19 +294,22 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * load メソッドのテスト - 正常系:Javaファイルあり
+     * load メソッドのテスト - 異常系:存在しないディレクトリ
      */
     @Test
-    public void testLoad_normalWithJavaFiles() {
+    public void testLoad_errorNonExistentDirectory() {
 
         /* 期待値の定義 */
-        final boolean expectedResult    = true;
-        final int     expectedFileCount = 1;
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non/existent/path]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
 
         /* 準備 */
+        final Path nonExistentPath = Paths.get("non/existent/path");
+
         try {
 
-            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.initialize(nonExistentPath);
 
         } catch (final Exception e) {
 
@@ -342,27 +317,76 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         }
 
-        /* テスト対象の実行 */
-        boolean actualResult = false;
+        /* テスト対象の実行・検証の実施 */
+        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        try {
+            this.testTarget.load();
 
-            actualResult = this.testTarget.load();
+        }, "存在しないディレクトリでKmgToolMsgExceptionがスローされること");
 
-        } catch (final Exception e) {
+        /* 検証の実施 */
+        this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
 
-            Assertions.fail("ロード処理で例外が発生しました: " + e.getMessage());
+    }
+
+    /**
+     * load メソッドのテスト - 異常系:ルートディレクトリの存在しないドライブ
+     */
+    @Test
+    public void testLoad_errorRootDriveNotExists() {
+
+        /* 期待値の定義 */
+        final String expectedDomainMessage;
+
+        // TODO KenichiroArai 2025/06/11 期待値を一つにする
+
+        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+
+            expectedDomainMessage
+                = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[Z:\\InvalidRootPath]";
+
+        } else {
+
+            expectedDomainMessage
+                = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[/invalidroot/deep/path/that/does/not/exist]";
+
+        }
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
+
+        /* 準備 */
+        Path invalidRootPath = null;
+
+        /* Windowsの場合は存在しないドライブレターを使用 */
+        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+
+            invalidRootPath = Paths.get("Z:\\InvalidRootPath");
+
+        } else {
+
+            /* Unix系の場合は深い非存在パスを使用 */
+            invalidRootPath = Paths.get("/invalidroot/deep/path/that/does/not/exist");
 
         }
 
-        /* 検証の準備 */
-        final List<Path> actualFilePathList    = this.testTarget.getFilePathList();
-        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+        try {
+
+            this.testTarget.initialize(invalidRootPath);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行・検証の実施 */
+        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+            this.testTarget.load();
+
+        }, "存在しないルートドライブでKmgToolMsgExceptionがスローされること");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "ロードが成功すること");
-        Assertions.assertEquals(expectedFileCount, actualFilePathList.size(), "Javaファイルがロードされること");
-        Assertions.assertEquals(this.testJavaFile, actualCurrentFilePath, "最初のJavaファイルがカレントファイルに設定されること");
+        this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
 
     }
 
@@ -412,17 +436,63 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * load メソッドのテスト - 異常系:存在しないディレクトリ
+     * load メソッドのテスト - 正常系:Javaファイルあり
      */
     @Test
-    public void testLoad_errorNonExistentDirectory() {
+    public void testLoad_normalWithJavaFiles() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult    = true;
+        final int     expectedFileCount = 1;
 
         /* 準備 */
-        final Path nonExistentPath = Paths.get("non/existent/path");
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
 
         try {
 
-            this.testTarget.initialize(nonExistentPath);
+            actualResult = this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("ロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final List<Path> actualFilePathList    = this.testTarget.getFilePathList();
+        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ロードが成功すること");
+        Assertions.assertEquals(expectedFileCount, actualFilePathList.size(), "Javaファイルがロードされること");
+        Assertions.assertEquals(this.testJavaFile, actualCurrentFilePath, "最初のJavaファイルがカレントファイルに設定されること");
+
+    }
+
+    /**
+     * loadContent メソッドのテスト - 異常系:ファイル読み込みエラー
+     */
+    @Test
+    public void testLoadContent_errorFileReadError() {
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            /* ファイルを削除してエラーを発生させる */
+            Files.delete(this.testJavaFile);
 
         } catch (final Exception e) {
 
@@ -433,9 +503,9 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         /* テスト対象の実行・検証の実施 */
         final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
 
-            this.testTarget.load();
+            this.testTarget.loadContent();
 
-        }, "存在しないディレクトリで例外がスローされること");
+        }, "ファイル読み込みエラーで例外がスローされること");
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualException, "例外が発生すること");
@@ -483,55 +553,6 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "コンテンツロードが成功すること");
         Assertions.assertEquals(expectedContent, actualReadContent, "正しい内容が読み込まれること");
-
-    }
-
-    /**
-     * loadContent メソッドのテスト - 準正常系:内容が空
-     */
-    @Test
-    public void testLoadContent_semiEmptyContent() {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
-        /* 準備 */
-        Path emptyJavaFile = null;
-
-        try {
-
-            /* 既存のファイルを削除して空のファイルのみにする */
-            Files.delete(this.testJavaFile);
-            emptyJavaFile = this.testTempDir.resolve("EmptyFile.java");
-            Files.writeString(emptyJavaFile, "");
-            this.testTarget.initialize(this.testTempDir);
-            this.testTarget.load();
-
-        } catch (final Exception e) {
-
-            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
-
-        }
-
-        /* テスト対象の実行 */
-        boolean actualResult = true;
-
-        try {
-
-            actualResult = this.testTarget.loadContent();
-
-        } catch (final Exception e) {
-
-            Assertions.fail("コンテンツロード処理で例外が発生しました: " + e.getMessage());
-
-        }
-
-        /* 検証の準備 */
-        final String actualReadContent = this.testTarget.getReadContent();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "空のコンテンツの場合falseが返されること");
-        Assertions.assertEquals("", actualReadContent, "空の内容が読み込まれること");
 
     }
 
@@ -585,18 +606,25 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * loadContent メソッドのテスト - 異常系:ファイル読み込みエラー
+     * loadContent メソッドのテスト - 準正常系:内容が空
      */
     @Test
-    public void testLoadContent_errorFileReadError() {
+    public void testLoadContent_semiEmptyContent() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
 
         /* 準備 */
+        Path emptyJavaFile = null;
+
         try {
 
+            /* 既存のファイルを削除して空のファイルのみにする */
+            Files.delete(this.testJavaFile);
+            emptyJavaFile = this.testTempDir.resolve("EmptyFile.java");
+            Files.writeString(emptyJavaFile, "");
             this.testTarget.initialize(this.testTempDir);
             this.testTarget.load();
-            /* ファイルを削除してエラーを発生させる */
-            Files.delete(this.testJavaFile);
 
         } catch (final Exception e) {
 
@@ -604,15 +632,25 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         }
 
-        /* テスト対象の実行・検証の実施 */
-        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+        /* テスト対象の実行 */
+        boolean actualResult = true;
 
-            this.testTarget.loadContent();
+        try {
 
-        }, "ファイル読み込みエラーで例外がスローされること");
+            actualResult = this.testTarget.loadContent();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("コンテンツロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final String actualReadContent = this.testTarget.getReadContent();
 
         /* 検証の実施 */
-        Assertions.assertNotNull(actualException, "例外が発生すること");
+        Assertions.assertEquals(expectedResult, actualResult, "空のコンテンツの場合falseが返されること");
+        Assertions.assertEquals("", actualReadContent, "空の内容が読み込まれること");
 
     }
 
@@ -721,6 +759,40 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * writeContent メソッドのテスト - 異常系:書き込みエラー
+     */
+    @Test
+    public void testWriteContent_errorWriteError() {
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            this.testTarget.setWriteContent("Test content");
+            /* ファイルを削除してディレクトリを作成し、書き込みエラーを発生させる */
+            Files.delete(this.testJavaFile);
+            Files.createDirectory(this.testJavaFile);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行・検証の実施 */
+        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+
+            this.testTarget.writeContent();
+
+        }, "書き込みエラーで例外がスローされること");
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "例外が発生すること");
+
+    }
+
+    /**
      * writeContent メソッドのテスト - 正常系:書き込み成功
      */
     @Test
@@ -776,36 +848,34 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * writeContent メソッドのテスト - 異常系:書き込みエラー
+     * ディレクトリを再帰的に削除する<br>
+     *
+     * @param directory
+     *                  削除するディレクトリ
+     *
+     * @throws IOException
+     *                     入出力例外
      */
-    @Test
-    public void testWriteContent_errorWriteError() {
+    private void deleteDirectoryRecursively(final Path directory) throws IOException {
 
-        /* 準備 */
-        try {
+        if (!Files.exists(directory)) {
 
-            this.testTarget.initialize(this.testTempDir);
-            this.testTarget.load();
-            this.testTarget.setWriteContent("Test content");
-            /* ファイルを削除してディレクトリを作成し、書き込みエラーを発生させる */
-            Files.delete(this.testJavaFile);
-            Files.createDirectory(this.testJavaFile);
-
-        } catch (final Exception e) {
-
-            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+            return;
 
         }
 
-        /* テスト対象の実行・検証の実施 */
-        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+        Files.walk(directory).sorted((a, b) -> b.compareTo(a)).forEach(path -> {
 
-            this.testTarget.writeContent();
+            try {
 
-        }, "書き込みエラーで例外がスローされること");
+                Files.delete(path);
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(actualException, "例外が発生すること");
+            } catch (final IOException e) {
+
+                // テスト用のため例外を無視
+            }
+
+        });
 
     }
 
