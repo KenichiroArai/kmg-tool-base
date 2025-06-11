@@ -294,42 +294,6 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * load メソッドのテスト - 異常系:存在しないディレクトリ
-     */
-    @Test
-    public void testLoad_errorNonExistentDirectory() {
-
-        /* 期待値の定義 */
-        final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
-
-        /* 準備 */
-        final Path nonExistentPath = Paths.get("non/existent/path");
-
-        try {
-
-            this.testTarget.initialize(nonExistentPath);
-
-        } catch (final Exception e) {
-
-            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
-
-        }
-
-        /* テスト対象の実行・検証の実施 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-            this.testTarget.load();
-
-        }, "存在しないディレクトリでKmgToolMsgExceptionがスローされること");
-
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
-
-    }
-
-    /**
      * load メソッドのテスト - 異常系:深いディレクトリ階層の非存在パス
      */
     @Test
@@ -360,6 +324,42 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
             this.testTarget.load();
 
         }, "深い階層の非存在ディレクトリでKmgToolMsgExceptionがスローされること");
+
+        /* 検証の実施 */
+        this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
+
+    }
+
+    /**
+     * load メソッドのテスト - 異常系:存在しないディレクトリ
+     */
+    @Test
+    public void testLoad_errorNonExistentDirectory() {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
+
+        /* 準備 */
+        final Path nonExistentPath = Paths.get("non/existent/path");
+
+        try {
+
+            this.testTarget.initialize(nonExistentPath);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行・検証の実施 */
+        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+            this.testTarget.load();
+
+        }, "存在しないディレクトリでKmgToolMsgExceptionがスローされること");
 
         /* 検証の実施 */
         this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
@@ -832,6 +832,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
      * @throws IOException
      *                     入出力例外
      */
+    @SuppressWarnings("resource")
     private void deleteDirectoryRecursively(final Path directory) throws IOException {
 
         if (!Files.exists(directory)) {
@@ -848,7 +849,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
             } catch (final IOException e) {
 
-                // テスト用のため例外を無視
+                e.printStackTrace();
+
             }
 
         });
