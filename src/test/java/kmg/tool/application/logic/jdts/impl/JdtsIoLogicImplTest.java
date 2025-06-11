@@ -330,47 +330,23 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * load メソッドのテスト - 異常系:ルートディレクトリの存在しないドライブ
+     * load メソッドのテスト - 異常系:深いディレクトリ階層の非存在パス
      */
     @Test
-    public void testLoad_errorRootDriveNotExists() {
+    public void testLoad_errorDeepNonExistentPath() {
 
         /* 期待値の定義 */
-        final String expectedDomainMessage;
-
-        // TODO KenichiroArai 2025/06/11 期待値を一つにする
-
-        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-
-            expectedDomainMessage
-                = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[Z:\\InvalidRootPath]";
-
-        } else {
-
-            expectedDomainMessage
-                = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[/invalidroot/deep/path/that/does/not/exist]";
-
-        }
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[nonexistent\\very\\deep\\directory\\structure\\that\\does\\not\\exist]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
 
         /* 準備 */
-        Path invalidRootPath = null;
-
-        /* Windowsの場合は存在しないドライブレターを使用 */
-        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-
-            invalidRootPath = Paths.get("Z:\\InvalidRootPath");
-
-        } else {
-
-            /* Unix系の場合は深い非存在パスを使用 */
-            invalidRootPath = Paths.get("/invalidroot/deep/path/that/does/not/exist");
-
-        }
+        final Path deepNonExistentPath
+            = Paths.get("nonexistent", "very", "deep", "directory", "structure", "that", "does", "not", "exist");
 
         try {
 
-            this.testTarget.initialize(invalidRootPath);
+            this.testTarget.initialize(deepNonExistentPath);
 
         } catch (final Exception e) {
 
@@ -383,7 +359,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
             this.testTarget.load();
 
-        }, "存在しないルートドライブでKmgToolMsgExceptionがスローされること");
+        }, "深い階層の非存在ディレクトリでKmgToolMsgExceptionがスローされること");
 
         /* 検証の実施 */
         this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
