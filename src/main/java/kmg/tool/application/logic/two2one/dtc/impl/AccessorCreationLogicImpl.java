@@ -328,10 +328,10 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     @Override
     public boolean removeModifier() {
 
-        boolean result = true;
+        boolean result = false;
 
-        result &= this.replaceInLine(KmgJavaKeywordTypes.FINAL.getKey(), KmgString.EMPTY);
-        result &= this.replaceInLine(KmgJavaKeywordTypes.STATIC.getKey(), KmgString.EMPTY);
+        result |= this.replaceInLine(KmgJavaKeywordTypes.FINAL.getKey(), KmgString.EMPTY);
+        result |= this.replaceInLine(KmgJavaKeywordTypes.STATIC.getKey(), KmgString.EMPTY);
 
         return result;
 

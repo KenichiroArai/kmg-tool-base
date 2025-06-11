@@ -1027,9 +1027,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     @Test
     public void testRemoveModifier_normalRemoveFinalOnly() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private final String testField;");
 
@@ -1041,7 +1038,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String  actualConvertedLine = this.testTarget.getConvertedLine();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
         Assertions.assertEquals("private  String testField;", actualConvertedLine, "finalが削除されていること");
 
     }
