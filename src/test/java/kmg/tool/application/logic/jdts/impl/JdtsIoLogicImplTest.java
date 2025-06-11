@@ -301,7 +301,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non/existent/path]";
+                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
 
         /* 準備 */
