@@ -274,7 +274,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
         } catch (final IOException e) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN31007;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
@@ -322,7 +322,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
             } catch (final IOException e) {
 
                 final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13005;
-                final Object[]               messageArgs  = {
+                final Object[]           messageArgs  = {
                     this.outputPath.toString()
                 };
                 throw new KmgToolMsgException(messageTypes, messageArgs, e);
@@ -339,7 +339,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
         } catch (final IOException e) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13006;
-            final Object[]               messageArgs  = {
+            final Object[]           messageArgs  = {
                 this.outputPath.toString()
             };
             throw new KmgToolMsgException(messageTypes, messageArgs, e);
@@ -427,10 +427,10 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
             this.reader = null;
 
             final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13000;
-            final Object[]               logMsgArgs  = {
+            final Object[]           logMsgArgs  = {
                 this.inputPath.toString(),
             };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
 
             throw e;
@@ -462,10 +462,10 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
             this.writer = null;
 
             final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13001;
-            final Object[]               logMsgArgs  = {
+            final Object[]           logMsgArgs  = {
                 this.outputPath.toString(),
             };
-            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
 
             throw e;
@@ -490,7 +490,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
         } catch (final IOException e) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13007;
-            final Object[]               messageArgs  = {
+            final Object[]           messageArgs  = {
                 this.inputPath.toString()
             };
             throw new KmgToolMsgException(messageTypes, messageArgs, e);
@@ -515,7 +515,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
         } catch (final IOException e) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13008;
-            final Object[]               messageArgs  = {
+            final Object[]           messageArgs  = {
                 this.outputPath.toString()
             };
             throw new KmgToolMsgException(messageTypes, messageArgs, e);

@@ -50,7 +50,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         if (this.itemName == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32000;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
@@ -78,7 +78,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         if (this.item == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32004;
-            final Object[]               messageArgs  = {};
+            final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
         }
@@ -112,7 +112,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
             // 分かれない場合
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32005;
-            final Object[]               messageArgs  = {
+            final Object[]           messageArgs  = {
                 this.getNowLineNumber(), this.getLineOfDataRead(),
             };
             throw new KmgToolMsgException(messageTypes, messageArgs);

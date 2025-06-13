@@ -64,8 +64,7 @@ public class IsCreationServiceImpl implements IsCreationService {
     @Override
     public void outputInsertionSql() throws KmgToolMsgException {
 
-        final IsFileCreationService isFileCreationService
-            = new IsFileCreationServiceImpl();
+        final IsFileCreationService isFileCreationService = new IsFileCreationServiceImpl();
         isFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
         isFileCreationService.outputInsertionSql();
 

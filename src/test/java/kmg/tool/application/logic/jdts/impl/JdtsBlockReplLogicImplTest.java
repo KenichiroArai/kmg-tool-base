@@ -705,35 +705,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * removeCurrentTagOnError メソッドのテスト - 準正常系:誤配置時削除が設定されていない場合
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testRemoveCurrentTagOnError_semiRemoveIfMisplacedFalse() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
-        /* 準備 */
-        Mockito.when(this.mockLocationConfigModel.isRemoveIfMisplaced()).thenReturn(false);
-        Mockito.when(this.mockTagConfigModel.getLocation()).thenReturn(this.mockLocationConfigModel);
-
-        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.removeCurrentTagOnError();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "誤配置時削除が設定されていない場合はタグが削除されないこと");
-
-    }
-
-    /**
      * removeCurrentTagOnError メソッドのテスト - 準正常系:配置が適切な場合
      *
      * @throws Exception
@@ -762,6 +733,35 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "配置が適切な場合はタグが削除されないこと");
+
+    }
+
+    /**
+     * removeCurrentTagOnError メソッドのテスト - 準正常系:誤配置時削除が設定されていない場合
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRemoveCurrentTagOnError_semiRemoveIfMisplacedFalse() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockLocationConfigModel.isRemoveIfMisplaced()).thenReturn(false);
+        Mockito.when(this.mockTagConfigModel.getLocation()).thenReturn(this.mockLocationConfigModel);
+
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.removeCurrentTagOnError();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "誤配置時削除が設定されていない場合はタグが削除されないこと");
 
     }
 
@@ -870,33 +870,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * repositionTagIfNeeded メソッドのテスト - 準正常系:PRESERVE位置で再配置不要
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testRepositionTagIfNeeded_semiPreserveNoReposition() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
-        /* 準備 */
-        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.PRESERVE);
-        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.repositionTagIfNeeded();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "PRESERVE位置の場合は再配置不要でfalseが返されること");
-
-    }
-
-    /**
      * repositionTagIfNeeded メソッドのテスト - 正常系:END位置への再配置
      *
      * @throws Exception
@@ -956,6 +929,33 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "NONE位置の場合は再配置不要でfalseが返されること");
+
+    }
+
+    /**
+     * repositionTagIfNeeded メソッドのテスト - 準正常系:PRESERVE位置で再配置不要
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testRepositionTagIfNeeded_semiPreserveNoReposition() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.PRESERVE);
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.repositionTagIfNeeded();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "PRESERVE位置の場合は再配置不要でfalseが返されること");
 
     }
 
