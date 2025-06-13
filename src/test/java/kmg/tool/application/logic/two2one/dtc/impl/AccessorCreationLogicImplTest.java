@@ -11,12 +11,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
@@ -34,13 +39,16 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /** テンポラリディレクトリ */
     @TempDir
-    Path tempDir;
+    private Path tempDir;
 
     /** テスト対象 */
     private AccessorCreationLogicImpl testTarget;
 
     /** リフレクションモデル */
     private KmgReflectionModelImpl reflectionModel;
+
+    /** モックKMGメッセージソース */
+    private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
@@ -54,6 +62,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         this.testTarget = new AccessorCreationLogicImpl();
         this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* モックの初期化 */
+        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
     }
 
@@ -98,13 +109,25 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         /* 準備 */
         this.reflectionModel.set("item", null);
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException
-            = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToCsvRows());
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, KmgToolMsgException.class, expectedDomainMessage,
-            expectedMessageTypes);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToCsvRows());
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -155,13 +178,25 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         /* 準備 */
         this.reflectionModel.set("javadocComment", null);
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException
-            = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addJavadocCommentToCsvRows());
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, KmgToolMsgException.class, expectedDomainMessage,
-            expectedMessageTypes);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class,
+                () -> this.testTarget.addJavadocCommentToCsvRows());
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -240,13 +275,25 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         /* 準備 */
         this.reflectionModel.set("type", null);
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException
-            = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addTypeToCsvRows());
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, KmgToolMsgException.class, expectedDomainMessage,
-            expectedMessageTypes);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addTypeToCsvRows());
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
