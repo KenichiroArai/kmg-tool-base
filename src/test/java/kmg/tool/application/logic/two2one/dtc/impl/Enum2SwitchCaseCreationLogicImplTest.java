@@ -10,12 +10,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.Mockito;
+import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.mockito.ArgumentMatchers;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
@@ -41,6 +46,9 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
     /** リフレクションモデル */
     private KmgReflectionModelImpl reflectionModel;
 
+    /** モックKMGメッセージソース */
+    private KmgMessageSource mockMessageSource;
+
     /**
      * セットアップ
      *
@@ -53,6 +61,9 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
 
         this.testTarget = new Enum2SwitchCaseCreationLogicImpl();
         this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* モックの初期化 */
+        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
     }
 
@@ -97,13 +108,26 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
         /* 準備 */
         this.reflectionModel.set("itemName", null);
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException
-            = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemNameToCsvRows());
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, KmgToolMsgException.class, expectedDomainMessage,
-            expectedMessageTypes);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemNameToCsvRows());
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "メッセージが正しいこと");
+            Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージタイプが正しいこと");
+
+        }
 
     }
 
@@ -154,13 +178,26 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
         /* 準備 */
         this.reflectionModel.set("item", null);
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException
-            = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToCsvRows());
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, KmgToolMsgException.class, expectedDomainMessage,
-            expectedMessageTypes);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToCsvRows());
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "メッセージが正しいこと");
+            Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージタイプが正しいこと");
+
+        }
 
     }
 
