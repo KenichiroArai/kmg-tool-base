@@ -40,7 +40,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     private String javadocComment;
 
     /** 型 */
-    private String tyep;
+    private String type;
 
     /** 項目名 */
     private String item;
@@ -114,7 +114,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         boolean result = false;
 
-        if (this.tyep == null) {
+        if (this.type == null) {
 
             final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32003;
             final Object[]           messageArgs  = {};
@@ -122,7 +122,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         }
 
-        super.addCsvRow(this.tyep);
+        super.addCsvRow(this.type);
         result = true;
 
         return result;
@@ -140,7 +140,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
         boolean result = super.clearProcessingData();
 
         this.javadocComment = null;
-        this.tyep = null;
+        this.type = null;
         this.item = null;
 
         result = true;
@@ -174,7 +174,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
         }
 
         // フィールドの情報を取得
-        this.tyep = matcherSrc.group(AccessorRegexGroupTypes.PRIVATE_FIELD_TYPE.getGroupIndex()); // 型
+        this.type = matcherSrc.group(AccessorRegexGroupTypes.PRIVATE_FIELD_TYPE.getGroupIndex()); // 型
         this.item = matcherSrc.group(AccessorRegexGroupTypes.PRIVATE_FIELD_ITEM_NAME.getGroupIndex()); // 項目名
 
         result = true;
@@ -302,7 +302,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     @Override
     public String getTyep() {
 
-        final String result = this.tyep;
+        final String result = this.type;
         return result;
 
     }

@@ -238,7 +238,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32003;
 
         /* 準備 */
-        this.reflectionModel.set("tyep", null);
+        this.reflectionModel.set("type", null);
 
         /* テスト対象の実行 */
         final KmgToolMsgException actualException
@@ -263,7 +263,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean expectedResult = true;
 
         /* 準備 */
-        this.reflectionModel.set("tyep", "String");
+        this.reflectionModel.set("type", "String");
         this.testTarget.addOneLineOfDataToCsvRows();
 
         /* テスト対象の実行 */
@@ -325,7 +325,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         this.reflectionModel.set("javadocComment", "テストコメント");
-        this.reflectionModel.set("tyep", "String");
+        this.reflectionModel.set("type", "String");
         this.reflectionModel.set("item", "testItem");
 
         /* テスト対象の実行 */
@@ -812,7 +812,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String expectedType = "String";
 
         /* 準備 */
-        this.reflectionModel.set("tyep", expectedType);
+        this.reflectionModel.set("type", expectedType);
 
         /* テスト対象の実行 */
         final String testResult = this.testTarget.getTyep();
