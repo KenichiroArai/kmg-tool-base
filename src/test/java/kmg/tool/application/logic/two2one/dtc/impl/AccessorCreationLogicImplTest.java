@@ -28,7 +28,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
-    "nls", "static-method"
+    "nls",
 })
 public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
@@ -48,6 +48,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
      * @throws Exception
      *                   例外
      */
+    @SuppressWarnings("resource")
     @BeforeEach
     public void setUp() throws Exception {
 
@@ -73,7 +74,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
             } catch (final IOException e) {
 
-                // テスト後のクリーンアップでのエラーは無視
+                e.printStackTrace();
+
             }
 
         }
