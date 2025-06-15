@@ -149,6 +149,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
         this.target.initialize(inputFile, outputFile);
         this.target.readOneLineOfData();
         this.target.convertFields();
+        this.target.addOneLineOfDataToCsvRows();
 
         /* テスト対象の実行 */
         final boolean testResult = this.target.addCommentToCsvRows();
@@ -223,6 +224,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
         this.target.initialize(inputFile, outputFile);
         this.target.readOneLineOfData();
         this.target.convertFields();
+        this.target.addOneLineOfDataToCsvRows();
 
         /* テスト対象の実行 */
         final boolean testResult = this.target.addFieldToCsvRows();
@@ -297,6 +299,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
         this.target.initialize(inputFile, outputFile);
         this.target.readOneLineOfData();
         this.target.convertFields();
+        this.target.addOneLineOfDataToCsvRows();
 
         /* テスト対象の実行 */
         final boolean testResult = this.target.addTypeToCsvRows();
@@ -324,7 +327,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
         final boolean expectedResult  = true;
         final String  expectedComment = "コメント";
         final String  expectedField   = "fieldName";
-        final String  expectedType    = "String";
+        final String  expectedType    = "VARCHAR";
 
         /* 準備 */
         final Path inputFile  = this.tempDir.resolve("input.txt");
@@ -493,6 +496,13 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
         /* 準備 */
         final Path inputFile  = this.tempDir.resolve("input.txt");
         final Path outputFile = this.tempDir.resolve("output.txt");
+
+        // 空のファイルを作成
+        try (BufferedWriter writer = Files.newBufferedWriter(inputFile)) {
+
+            // 空のファイルを作成（何も書き込まない）
+        }
+
         this.target.initialize(inputFile, outputFile);
         this.target.readOneLineOfData();
 
