@@ -176,7 +176,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         /* 型情報の変換 */
         final KmgDbDataTypeTypes dbDataTypeTypes = KmgDbDataTypeTypes.getEnum(dbDataType);
 
-        if (dbDataTypeTypes == null) {
+        if (dbDataTypeTypes == KmgDbDataTypeTypes.NONE) {
 
             this.type = dbDataType;
 
