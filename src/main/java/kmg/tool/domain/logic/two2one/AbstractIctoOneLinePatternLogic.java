@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -364,7 +365,21 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         boolean result;
 
-        final List<String> row = this.csvRows.getLast();
+        final List<String> row;
+
+        try {
+
+            row = this.csvRows.getLast();
+
+        } catch (final NoSuchElementException e) {
+
+            // TODO KenichiroArai 2025/06/15 例外処理。詰め替える。
+
+            e.printStackTrace();
+            result = false;
+            return result;
+
+        }
         result = row.add(csvRow);
 
         return result;
