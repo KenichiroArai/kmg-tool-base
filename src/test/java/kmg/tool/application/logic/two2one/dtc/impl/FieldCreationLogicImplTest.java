@@ -376,7 +376,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
         try (BufferedWriter writer = Files.newBufferedWriter(inputFile)) {
 
-            writer.write("コメント field_name INTEGER");
+            writer.write("コメント field_name Integer");
 
         }
         this.target.initialize(inputFile, outputFile);
