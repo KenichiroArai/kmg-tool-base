@@ -9,8 +9,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
+import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
@@ -23,10 +33,12 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
  *
  * @since 1.0.0
  */
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls",
 })
-public class FieldCreationLogicImplTest {
+public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /** テスト対象クラス */
     private FieldCreationLogicImpl target;
@@ -34,6 +46,9 @@ public class FieldCreationLogicImplTest {
     /** 一時ディレクトリ */
     @TempDir
     private Path tempDir;
+
+    /** モックKMGメッセージソース */
+    private KmgMessageSource mockMessageSource;
 
     /**
      * テスト前の準備
@@ -43,6 +58,9 @@ public class FieldCreationLogicImplTest {
     public void setUp() {
 
         this.target = new FieldCreationLogicImpl();
+
+        /* モックの初期化 */
+        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
     }
 
@@ -78,24 +96,31 @@ public class FieldCreationLogicImplTest {
     public void testAddCommentToCsvRows_errorCommentNotSet() {
 
         /* 期待値の定義 */
-        final String             expectedMessageStart = "コメントが設定されていません。";
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32006;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN32006] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32006;
 
         /* 準備 */
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.target.addCommentToCsvRows();
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の準備 */
-        final String actualMessage = testException.getMessage();
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addCommentToCsvRows());
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualMessage.startsWith(expectedMessageStart), "例外メッセージが一致しません");
-        Assertions.assertEquals(expectedMessageTypes, testException.getMessageTypes(), "例外のメッセージタイプが一致しません");
+            /* 検証の実施 */
+            Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "例外メッセージが一致しません");
+            Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "例外のメッセージタイプが一致しません");
+
+        }
 
     }
 
@@ -145,24 +170,31 @@ public class FieldCreationLogicImplTest {
     public void testAddFieldToCsvRows_errorFieldNotSet() {
 
         /* 期待値の定義 */
-        final String             expectedMessageStart = "フィールド名が設定されていません。";
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32007;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN32007] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32007;
 
         /* 準備 */
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.target.addFieldToCsvRows();
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の準備 */
-        final String actualMessage = testException.getMessage();
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addFieldToCsvRows());
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualMessage.startsWith(expectedMessageStart), "例外メッセージが一致しません");
-        Assertions.assertEquals(expectedMessageTypes, testException.getMessageTypes(), "例外のメッセージタイプが一致しません");
+            /* 検証の実施 */
+            Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "例外メッセージが一致しません");
+            Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "例外のメッセージタイプが一致しません");
+
+        }
 
     }
 
@@ -212,24 +244,31 @@ public class FieldCreationLogicImplTest {
     public void testAddTypeToCsvRows_errorTypeNotSet() {
 
         /* 期待値の定義 */
-        final String             expectedMessageStart = "型情報が設定されていません。";
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32008;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN32008] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32008;
 
         /* 準備 */
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.target.addTypeToCsvRows();
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の準備 */
-        final String actualMessage = testException.getMessage();
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addTypeToCsvRows());
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualMessage.startsWith(expectedMessageStart), "例外メッセージが一致しません");
-        Assertions.assertEquals(expectedMessageTypes, testException.getMessageTypes(), "例外のメッセージタイプが一致しません");
+            /* 検証の実施 */
+            Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "例外メッセージが一致しません");
+            Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "例外のメッセージタイプが一致しません");
+
+        }
 
     }
 
