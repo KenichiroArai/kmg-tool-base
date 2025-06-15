@@ -59,6 +59,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /** 現在の行番号 */
     private int nowLineNumber;
 
+    // TODO KenichiroArai 2025/06/15 現状はcsvだけではなく区切り文字が指定できるため、変数名はlineRowsの方がいい。
     /** 書き込み対象のCSVデータのリスト */
     private final List<List<String>> csvRows;
 
