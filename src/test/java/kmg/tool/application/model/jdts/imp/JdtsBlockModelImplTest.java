@@ -243,6 +243,43 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * parse メソッドのテスト - 正常系:空行を含むコードブロックのクラス定義解析
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalClassDefinitionWithBlankLines() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean                 expectedResult         = true;
+        final JavaClassificationTypes expectedClassification = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName    = "TestClass";
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n\n\npublic class TestClass {\n\n    // メソッド\n\n}";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final JavadocModel            actualJavadocModel   = this.testTarget.getJavadocModel();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertNotNull(actualJavadocModel, "Javadocモデルが作成されること");
+
+    }
+
+    /**
      * parse メソッドのテスト - 正常系:アノテーション付きクラス定義の解析
      *
      * @throws Exception
@@ -263,6 +300,48 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final String testBlock = "/** テストJavadoc */\n@Component\n@Service\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation1, actualAnnotations.get(0), "1番目のアノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation2, actualAnnotations.get(1), "2番目のアノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:空行を含むアノテーション付きクラス定義の解析
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalClassWithAnnotationsAndBlankLines() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean                 expectedResult          = true;
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 2;
+        final String                  expectedAnnotation1     = "@Component";
+        final String                  expectedAnnotation2     = "@Service";
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@Component\n\n@Service\n\npublic class TestClass {";
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
         /* テスト対象の実行 */
@@ -338,6 +417,42 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final String testBlock = "/** テストメソッドのJavadoc */\npublic String testMethod() {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がMETHODであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:メソッド定義で空行を含む解析
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalMethodDefinitionWithBlankLines() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean                 expectedResult         = true;
+        final JavaClassificationTypes expectedClassification = JavaClassificationTypes.METHOD;
+        final String                  expectedElementName    = "testMethod";
+
+        /* 準備 */
+        final String testBlock
+            = "/** テストメソッドのJavadoc */\n\n\npublic String testMethod() {\n\n    return \"test\";\n\n}";
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
         /* テスト対象の実行 */
