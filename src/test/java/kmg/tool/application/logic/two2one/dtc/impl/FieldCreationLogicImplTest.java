@@ -324,10 +324,9 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalDbDataType() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult  = true;
-        final String  expectedComment = "コメント";
-        final String  expectedField   = "fieldName";
-        final String  expectedType    = "VARCHAR";
+        final String expectedComment = "コメント";
+        final String expectedField   = "fieldName";
+        final String expectedType    = "String";
 
         /* 準備 */
         final Path inputFile  = this.tempDir.resolve("input.txt");
@@ -335,7 +334,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
         try (BufferedWriter writer = Files.newBufferedWriter(inputFile)) {
 
-            writer.write("コメント field_name VARCHAR");
+            writer.write("コメント field_name 文字列型");
 
         }
         this.target.initialize(inputFile, outputFile);
@@ -351,7 +350,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
         final String  actualType    = this.target.getType();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "フィールド変換の戻り値が一致しません");
+        Assertions.assertTrue(actualResult, "フィールド変換の戻り値が一致しません");
         Assertions.assertEquals(expectedComment, actualComment, "コメントが一致しません");
         Assertions.assertEquals(expectedField, actualField, "フィールド名が一致しません");
         Assertions.assertEquals(expectedType, actualType, "型情報が一致しません");
@@ -359,19 +358,19 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * convertFields メソッドのテスト - 正常系：パッケージ名を含む型情報の変換
+     * convertFields メソッドのテスト - 正常系：未知の型情報の場合
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
      */
     @Test
-    public void testConvertFields_normalPackageNameType() throws Exception {
+    public void testConvertFields_normalUnknownType() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult  = true;
         final String  expectedComment = "コメント";
         final String  expectedField   = "fieldName";
-        final String  expectedType    = "Integer";
+        final String  expectedType    = "UNKNOWN_TYPE";
 
         /* 準備 */
         final Path inputFile  = this.tempDir.resolve("input.txt");
@@ -379,51 +378,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
         try (BufferedWriter writer = Files.newBufferedWriter(inputFile)) {
 
-            writer.write("コメント field_name Integer");
-
-        }
-        this.target.initialize(inputFile, outputFile);
-        this.target.readOneLineOfData();
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.target.convertFields();
-
-        /* 検証の準備 */
-        final boolean actualResult  = testResult;
-        final String  actualComment = this.target.getComment();
-        final String  actualField   = this.target.getField();
-        final String  actualType    = this.target.getType();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "フィールド変換の戻り値が一致しません");
-        Assertions.assertEquals(expectedComment, actualComment, "コメントが一致しません");
-        Assertions.assertEquals(expectedField, actualField, "フィールド名が一致しません");
-        Assertions.assertEquals(expectedType, actualType, "型情報が一致しません");
-
-    }
-
-    /**
-     * convertFields メソッドのテスト - 正常系：標準データ型の場合
-     *
-     * @throws Exception
-     *                   テスト実行時にエラーが発生した場合
-     */
-    @Test
-    public void testConvertFields_normalStandardType() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult  = true;
-        final String  expectedComment = "コメント";
-        final String  expectedField   = "fieldName";
-        final String  expectedType    = "String";
-
-        /* 準備 */
-        final Path inputFile  = this.tempDir.resolve("input.txt");
-        final Path outputFile = this.tempDir.resolve("output.txt");
-
-        try (BufferedWriter writer = Files.newBufferedWriter(inputFile)) {
-
-            writer.write("コメント field_name String");
+            writer.write("コメント field_name UNKNOWN_TYPE");
 
         }
         this.target.initialize(inputFile, outputFile);
