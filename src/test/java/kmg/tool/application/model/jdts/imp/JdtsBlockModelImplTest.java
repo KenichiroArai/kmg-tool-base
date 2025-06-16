@@ -217,7 +217,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_normalClassDefinition() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult         = true;
         final JavaClassificationTypes expectedClassification = JavaClassificationTypes.CLASS;
         final String                  expectedElementName    = "TestClass";
 
@@ -235,7 +234,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final JavadocModel            actualJavadocModel   = this.testTarget.getJavadocModel();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
         Assertions.assertNotNull(actualJavadocModel, "Javadocモデルが作成されること");
@@ -254,7 +253,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_normalClassDefinitionWithBlankLines() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult         = true;
         final JavaClassificationTypes expectedClassification = JavaClassificationTypes.CLASS;
         final String                  expectedElementName    = "TestClass";
 
@@ -272,7 +270,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final JavadocModel            actualJavadocModel   = this.testTarget.getJavadocModel();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
         Assertions.assertNotNull(actualJavadocModel, "Javadocモデルが作成されること");
@@ -291,7 +289,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_normalClassWithAnnotations() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult          = true;
         final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
         final String                  expectedElementName     = "TestClass";
         final int                     expectedAnnotationCount = 2;
@@ -312,7 +309,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
         Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
@@ -333,7 +330,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_normalClassWithAnnotationsAndBlankLines() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult          = true;
         final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
         final String                  expectedElementName     = "TestClass";
         final int                     expectedAnnotationCount = 2;
@@ -354,7 +350,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
         Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
@@ -375,7 +371,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_normalInvalidClassDefinition() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult         = true;
         final JavaClassificationTypes expectedClassification = JavaClassificationTypes.NONE;
         final String                  expectedElementName    = null;
 
@@ -393,7 +388,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final String                  actualElementName    = this.testTarget.getElementName();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がNONEであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名がnullであること");
 
@@ -411,7 +406,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_normalMethodDefinition() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult         = true;
         final JavaClassificationTypes expectedClassification = JavaClassificationTypes.METHOD;
         final String                  expectedElementName    = "testMethod";
 
@@ -428,7 +422,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final String                  actualElementName    = this.testTarget.getElementName();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がMETHODであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
 
@@ -446,7 +440,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_normalMethodDefinitionWithBlankLines() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult         = true;
         final JavaClassificationTypes expectedClassification = JavaClassificationTypes.METHOD;
         final String                  expectedElementName    = "testMethod";
 
@@ -464,7 +457,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final String                  actualElementName    = this.testTarget.getElementName();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がMETHODであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
 
@@ -482,7 +475,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_normalNonJavadocTarget() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult         = true;
         final JavaClassificationTypes expectedClassification = JavaClassificationTypes.NONE;
         final String                  expectedElementName    = null;
 
@@ -499,7 +491,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final String                  actualElementName    = this.testTarget.getElementName();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がNONEであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名がnullであること");
 
@@ -517,7 +509,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testSpecifyClassification_normalClassClassification() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult         = true;
         final JavaClassificationTypes expectedClassification = JavaClassificationTypes.CLASS;
         final String                  expectedElementName    = "TestClass";
 
@@ -538,7 +529,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final String                  actualElementName    = this.testTarget.getElementName();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "区分の特定が成功すること");
+        Assertions.assertTrue(actualResult, "区分の特定が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
 
@@ -556,7 +547,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testSpecifyClassification_normalInvalidClassDefinition() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult         = false;
         final JavaClassificationTypes expectedClassification = JavaClassificationTypes.NONE;
         final String                  expectedElementName    = null;
 
@@ -577,7 +567,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final String                  actualElementName    = this.testTarget.getElementName();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "無効な定義の場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "無効な定義の場合はfalseが返されること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がNONEであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名がnullであること");
 
@@ -595,7 +585,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testSpecifyClassification_normalNonJavadocTargetClassification() throws Exception {
 
         /* 期待値の定義 */
-        final boolean                 expectedResult         = false;
         final JavaClassificationTypes expectedClassification = JavaClassificationTypes.NONE;
 
         /* 準備 */
@@ -614,7 +603,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "Javadoc対象外の場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "Javadoc対象外の場合はfalseが返されること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がNONEのままであること");
 
     }
