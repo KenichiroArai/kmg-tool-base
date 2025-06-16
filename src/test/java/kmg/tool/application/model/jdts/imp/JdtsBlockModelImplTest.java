@@ -24,7 +24,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
  * @version 0.1.0
  */
 @SuppressWarnings({
-    "nls", "static-method"
+    "nls",
 })
 public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
