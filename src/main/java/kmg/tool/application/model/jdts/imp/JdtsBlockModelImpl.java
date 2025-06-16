@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import kmg.core.infrastructure.exception.KmgMsgException;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.domain.model.impl.JavadocModelImpl;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * Javadocタグ設定のブロックモデルインタフェース<br>
@@ -291,20 +289,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         }
 
         // 要素名を取得
-        try {
-
-            this.elementName = this.classification.getElementName(this.codeBlock);
-
-        } catch (final KmgMsgException e) {
-
-            final KmgToolGenMsgTypes msgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN33000;
-            final Object[]           msgArgs  = {
-                this.codeBlock, this.classification.getDisplayName(),
-            };
-
-            throw new KmgToolMsgException(msgTypes, msgArgs, e);
-
-        }
+        this.elementName = this.classification.getElementName(this.codeBlock);
 
         result = true;
 
