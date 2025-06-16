@@ -11,8 +11,6 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.domain.model.JavadocModel;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * Javadocタグ設定のブロックモデル実装のテスト<br>
@@ -208,42 +206,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 異常系:要素名取得に失敗する場合
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testParse_errorElementNameExtraction() throws Exception {
-
-        /* 期待値の定義 */
-        final String expectedMessagePrefix = "Java区分から要素名が取得できません";
-
-        /* 準備 */
-        // getElementNameで例外が発生するような無効なクラス定義
-        final String testBlock = "/** テストJavadoc */\npublic class {"; // クラス名なし
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行 */
-        final KmgToolMsgException exception = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-            this.testTarget.parse();
-
-        });
-
-        /* 検証の準備 */
-        final KmgToolMsgException actualException = exception;
-
-        /* 検証の実施 */
-        Assertions.assertTrue(actualException.getMessage().contains(expectedMessagePrefix), "適切なエラーメッセージが設定されること");
-        Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN33000, actualException.getMessageTypes(),
-            "適切なメッセージタイプが設定されること");
-
-    }
-
-    /**
      * parse メソッドのテスト - 正常系:クラス定義の解析
      *
      * @throws Exception
@@ -323,6 +285,42 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * parse メソッドのテスト - 正常系:無効なクラス定義でもJavadoc対象外として正常処理される
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalInvalidClassDefinition() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean                 expectedResult         = true;
+        final JavaClassificationTypes expectedClassification = JavaClassificationTypes.NONE;
+        final String                  expectedElementName    = null;
+
+        /* 準備 */
+        // 無効なクラス定義（クラス名なし）
+        final String testBlock = "/** テストJavadoc */\npublic class {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がNONEであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名がnullであること");
+
+    }
+
+    /**
      * parse メソッドのテスト - 正常系:メソッド定義の解析
      *
      * @throws Exception
@@ -393,45 +391,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * specifyClassification メソッドのテスト - 異常系:要素名取得に失敗する場合
-     *
-     * @since 0.1.0
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testSpecifyClassification_errorGetElementName() throws Exception {
-
-        /* 期待値の定義 */
-        final String expectedMessagePrefix = "Java区分から要素名が取得できません";
-
-        /* 準備 */
-        final String testBlock = "/** テストJavadoc */\npublic class {"; // 無効なクラス定義
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
-
-        // codeBlockを直接設定
-        this.reflectionModel.set("codeBlock", "public class {");
-
-        /* テスト対象の実行 */
-        final KmgToolMsgException exception = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-            this.reflectionModel.getMethod("specifyClassification");
-
-        });
-
-        /* 検証の準備 */
-        final KmgToolMsgException actualException = exception;
-
-        /* 検証の実施 */
-        Assertions.assertTrue(actualException.getMessage().contains(expectedMessagePrefix), "適切なエラーメッセージが設定されること");
-        Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN33000, actualException.getMessageTypes(),
-            "適切なメッセージタイプが設定されること");
-
-    }
-
-    /**
      * specifyClassification メソッドのテスト - 正常系:クラス定義の区分特定
      *
      * @since 0.1.0
@@ -467,6 +426,45 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedResult, actualResult, "区分の特定が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+
+    }
+
+    /**
+     * specifyClassification メソッドのテスト - 正常系:無効なクラス定義でもNONE区分として正常処理される
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testSpecifyClassification_normalInvalidClassDefinition() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean                 expectedResult         = false;
+        final JavaClassificationTypes expectedClassification = JavaClassificationTypes.NONE;
+        final String                  expectedElementName    = null;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class {"; // 無効なクラス定義
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        // codeBlockを直接設定
+        this.reflectionModel.set("codeBlock", "public class {");
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("specifyClassification");
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "無効な定義の場合はfalseが返されること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がNONEであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名がnullであること");
 
     }
 
