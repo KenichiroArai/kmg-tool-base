@@ -615,6 +615,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 1;
+        final int expectedBeforeParseSize     = 0;
 
         /* 準備 */
         final String            testCode        = "/**\n * テストクラス\n */\npublic class TestClass {}";
@@ -631,7 +632,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
         final int                  afterParseSize    = afterParseListRef.size();
 
         /* 検証の実施 */
-        Assertions.assertEquals(0, beforeParseSize, "parse実行前は空のリストであること");
+        Assertions.assertEquals(expectedBeforeParseSize, beforeParseSize, "parse実行前は空のリストであること");
         Assertions.assertEquals(expectedJdtsBlockModelsSize, afterParseSize, "parse実行後は1つのブロックが追加されること");
         Assertions.assertSame(beforeParseListRef, afterParseListRef, "同じリストインスタンスが返されること");
 
