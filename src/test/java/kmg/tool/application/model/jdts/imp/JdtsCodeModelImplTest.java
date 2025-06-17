@@ -27,7 +27,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
  * @version 0.1.0
  */
 @SuppressWarnings({
-    "nls",
+    "nls", "static-method",
 })
 public class JdtsCodeModelImplTest extends AbstractKmgTest {
 
@@ -50,6 +50,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
 
         /* モックの初期化 */
         this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+
+        /* テスト対象のクリア */
+        this.testTarget = null;
 
     }
 
@@ -614,22 +617,28 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
         final int expectedJdtsBlockModelsSize = 1;
 
         /* 準備 */
-        final String testCode = "/**\n * テストクラス\n */\npublic class TestClass {}";
-        this.testTarget = new JdtsCodeModelImpl(testCode);
+        final String            testCode        = "/**\n * テストクラス\n */\npublic class TestClass {}";
+        final JdtsCodeModelImpl localTestTarget = new JdtsCodeModelImpl(testCode);
 
         /* テスト対象の実行 */
-        final List<JdtsBlockModel> beforeParse = this.testTarget.getJdtsBlockModels();
-        this.testTarget.parse();
-        final List<JdtsBlockModel> afterParse = this.testTarget.getJdtsBlockModels();
+        // parse実行前の状態を確認（この時点ではリストは空）
+        final int                  beforeParseSize    = localTestTarget.getJdtsBlockModels().size();
+        final List<JdtsBlockModel> beforeParseListRef = localTestTarget.getJdtsBlockModels();
 
-        /* 検証の準備 */
-        final int actualBeforeParseSize = beforeParse.size();
-        final int actualAfterParseSize  = afterParse.size();
+        localTestTarget.parse();
+
+        final List<JdtsBlockModel> afterParseListRef = localTestTarget.getJdtsBlockModels();
+        final int                  afterParseSize    = afterParseListRef.size();
 
         /* 検証の実施 */
-        Assertions.assertEquals(0, actualBeforeParseSize, "parse実行前は空のリストであること");
-        Assertions.assertEquals(expectedJdtsBlockModelsSize, actualAfterParseSize, "parse実行後は1つのブロックが追加されること");
-        Assertions.assertSame(beforeParse, afterParse, "同じリストインスタンスが返されること");
+        Assertions.assertEquals(0, beforeParseSize, "parse実行前は空のリストであること");
+        Assertions.assertEquals(expectedJdtsBlockModelsSize, afterParseSize, "parse実行後は1つのブロックが追加されること");
+        Assertions.assertSame(beforeParseListRef, afterParseListRef, "同じリストインスタンスが返されること");
+
+        // parse実行後は、以前に取得したリスト参照も変更されていることを確認
+        // （getJdtsBlockModelsは同じリストインスタンスの参照を返すため）
+        Assertions.assertEquals(expectedJdtsBlockModelsSize, beforeParseListRef.size(),
+            "parse実行後は、以前に取得したリスト参照も変更されていること");
 
     }
 
