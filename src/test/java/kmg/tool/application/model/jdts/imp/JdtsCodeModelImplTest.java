@@ -5,11 +5,17 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.application.model.jdts.JdtsBlockModel;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * Javadocタグ設定のコードモデル実装のテスト<br>
@@ -31,6 +37,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /** リフレクションモデル */
     private KmgReflectionModelImpl reflectionModel;
 
+    /** モックKMGメッセージソース */
+    private KmgMessageSource mockMessageSource;
+
     /**
      * テスト前処理<br>
      *
@@ -39,7 +48,8 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     @BeforeEach
     public void setUp() {
 
-        // 処理なし
+        /* モックの初期化 */
+        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
     }
 
@@ -308,7 +318,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 正常系:parse実行時にJdtsBlockModelImplのparseが例外を投げる場合
+     * parse メソッドのテスト - 異常系:parse実行時にJdtsBlockModelImplのparseが例外を投げる場合
      *
      * @since 0.1.0
      *
@@ -319,6 +329,8 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     public void testParse_errorJdtsBlockModelImplParseException() throws KmgToolMsgException {
 
         /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN12000] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
 
         /* 準備 */
         final String testCode = "/**\n * テストクラス\n */\npublic class TestClass {}";
@@ -354,15 +366,25 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
             }
         };
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException
-            = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.parse());
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の準備 */
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(actualException, "JdtsBlockModelImplのparse実行中に例外が発生した場合は例外が投げられること");
-        Assertions.assertEquals("テスト例外", actualException.getMessage(), "適切な例外メッセージが設定されていること");
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.parse());
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -578,7 +600,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 正常系:nullコードの解析
+     * parse メソッドのテスト - 異常系:nullコードの解析
      *
      * @since 0.1.0
      *
@@ -586,22 +608,35 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalNullCode() throws KmgToolMsgException {
+    public void testParse_errorNullCode() throws KmgToolMsgException {
 
         /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN12004] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN12004;
 
         /* 準備 */
         final String testCode = null;
         this.testTarget = new JdtsCodeModelImpl(testCode);
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException
-            = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.parse());
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の準備 */
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(actualException, "nullコードの場合は例外が発生すること");
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.parse());
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
