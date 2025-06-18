@@ -337,41 +337,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final String testCode = "/**\n * テストクラス\n */\npublic class TestClass {}";
+        this.testTarget = new JdtsCodeModelImpl(testCode);
 
-        // TODO KenichiroArai 2025/06/18 下記のモック化を検討する
-        this.testTarget = new JdtsCodeModelImpl(testCode) {
-
-            @Override
-            public void parse() throws KmgToolMsgException {
-
-                // 「/**」でブロックに分ける
-                final String[] blocks
-                    = this.getOrgCode().split(String.format("%s\\s+", java.util.regex.Pattern.quote("/**")));
-
-                // ブロックの0番目はJavadocではないので、1番目から進める
-                for (int i = 1; i < blocks.length; i++) {
-
-                    final JdtsBlockModelImpl jdtsBlockModel = new JdtsBlockModelImpl(blocks[i]) {
-
-                        @Override
-                        public boolean parse() throws KmgToolMsgException {
-
-                            throw new KmgToolMsgException(
-                                kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes.KMGTOOL_GEN12000, new Object[] {
-                                    "テスト例外1", "テスト例外2"
-                            });
-
-                        }
-                    };
-                    this.getJdtsBlockModels().add(jdtsBlockModel);
-                    jdtsBlockModel.parse();
-
-                }
-
-            }
-        };
-
-        // SpringApplicationContextHelperのモック化
+        // SpringApplicationContextHelperを先にモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
@@ -382,12 +350,32 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.parse());
+            // 例外インスタンスを先に作成
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN12000, new Object[] {
+                    "テスト例外1", "テスト例外2"
+                });
 
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
+            // JdtsBlockModelImplのコンストラクタをモック化
+            try (final var mockedConstruction = Mockito.mockConstruction(JdtsBlockModelImpl.class, (mock, context) -> {
+
+                // parseメソッドが例外を投げるように設定（先に作成した例外を使用）
+                Mockito.doThrow(testException).when(mock).parse();
+
+            })) {
+
+                /* テスト対象の実行 */
+                final KmgToolMsgException actualException
+                    = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.parse());
+
+                /* 検証の実施 */
+                Assertions.assertNull(actualException.getCause(), "KmgToolMsgExceptionの原因がnullであること");
+                Assertions.assertEquals(expectedDomainMessage, actualException.getMessage(),
+                    "KmgToolMsgExceptionのメッセージが正しいこと");
+                Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージの種類が正しいこと");
+                Assertions.assertTrue(actualException.isMatchMessageArgsCount(), "メッセージ引数の数が一致していること");
+
+            }
 
         }
 
