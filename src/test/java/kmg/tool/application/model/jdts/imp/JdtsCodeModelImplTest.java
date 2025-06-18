@@ -337,6 +337,8 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final String testCode = "/**\n * テストクラス\n */\npublic class TestClass {}";
+
+        // TODO KenichiroArai 2025/06/18 下記のモック化を検討する
         this.testTarget = new JdtsCodeModelImpl(testCode) {
 
             @Override
