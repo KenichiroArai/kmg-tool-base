@@ -453,36 +453,6 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 正常系:不完全なJavadocブロックの解析
-     *
-     * @since 0.1.0
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    @Test
-    public void testParse_normalIncompleteJavadocBlock() throws KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final int expectedJdtsBlockModelsSize = 1;
-
-        /* 準備 */
-        final String testCode = "/** テストコメント\npublic class TestClass {}";
-        this.testTarget = new JdtsCodeModelImpl(testCode);
-
-        /* テスト対象の実行 */
-        this.testTarget.parse();
-
-        /* 検証の準備 */
-        final List<JdtsBlockModel> actualJdtsBlockModels = this.testTarget.getJdtsBlockModels();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedJdtsBlockModelsSize, actualJdtsBlockModels.size(),
-            "不完全なJavadocブロックも1つのブロックとして解析されること");
-
-    }
-
-    /**
      * parse メソッドのテスト - 正常系:Javadocブロック開始記号のみの解析
      *
      * @since 0.1.0

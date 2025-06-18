@@ -105,7 +105,14 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
             final JdtsBlockModel jdtsBlockModel = new JdtsBlockModelImpl(blocks[i]);
             this.jdtsBlockModels.add(jdtsBlockModel);
 
-            jdtsBlockModel.parse();
+            // ブロックモデルを解析する
+            final boolean blockParseResult = jdtsBlockModel.parse();
+
+            if (!blockParseResult) {
+
+                // TODO KenichiroArai 2025/06/18 警告のログを出力する
+
+            }
 
         }
 

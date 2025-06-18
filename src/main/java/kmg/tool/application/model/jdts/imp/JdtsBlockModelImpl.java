@@ -198,6 +198,15 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         // 「*/」でJavadocとCodeのブロックに分ける
         final String[] javadocCodeBlock = this.orgBlock.split(JdtsBlockModelImpl.JAVADOC_BLOCK_SPLIT_REGEX, 2);
 
+        // 「*/がないか
+        if (javadocCodeBlock.length < 2) {
+            // ない場合
+
+            // 失敗とする
+            return result;
+
+        }
+
         /* Javadoc部分をJavadocモデルに変換する */
         this.javadocModel = new JavadocModelImpl(javadocCodeBlock[0]);
 
