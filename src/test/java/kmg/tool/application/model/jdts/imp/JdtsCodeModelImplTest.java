@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
+import org.mockito.MockedConstruction;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -354,13 +355,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
             final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.NONE, new Object[] {});
 
             // JdtsBlockModelImplのコンストラクタをモック化
-            // TODO KenichiroArai 2025/06/18 varを具体的なクラスに変更する
-            try (final var mockedConstruction = Mockito.mockConstruction(JdtsBlockModelImpl.class, (mock, context) -> {
+            try (final MockedConstruction<JdtsBlockModelImpl> mockedConstruction
+                = Mockito.mockConstruction(JdtsBlockModelImpl.class, (mock, context) -> {
 
-                // parseメソッドが例外を投げるように設定（先に作成した例外を使用）
-                Mockito.doThrow(testException).when(mock).parse();
+                    // parseメソッドが例外を投げるように設定（先に作成した例外を使用）
+                    Mockito.doThrow(testException).when(mock).parse();
 
-            })) {
+                })) {
 
                 /* テスト対象の実行 */
                 final KmgToolMsgException actualException
