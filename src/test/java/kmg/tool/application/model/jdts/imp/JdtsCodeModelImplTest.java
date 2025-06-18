@@ -332,8 +332,8 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     public void testParse_errorJdtsBlockModelImplParseException() throws KmgToolMsgException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN12000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
+        final String             expectedDomainMessage = "[NONE] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.NONE;
 
         /* 準備 */
         final String testCode = "/**\n * テストクラス\n */\npublic class TestClass {}";
@@ -351,12 +351,10 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // 例外インスタンスを先に作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN12000, new Object[] {
-                    "テスト例外1", "テスト例外2"
-                });
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.NONE, new Object[] {});
 
             // JdtsBlockModelImplのコンストラクタをモック化
+            // TODO KenichiroArai 2025/06/18 varを具体的なクラスに変更する
             try (final var mockedConstruction = Mockito.mockConstruction(JdtsBlockModelImpl.class, (mock, context) -> {
 
                 // parseメソッドが例外を投げるように設定（先に作成した例外を使用）
@@ -368,12 +366,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
                 final KmgToolMsgException actualException
                     = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.parse());
 
+                /* 検証の準備 */
                 /* 検証の実施 */
-                Assertions.assertNull(actualException.getCause(), "KmgToolMsgExceptionの原因がnullであること");
-                Assertions.assertEquals(expectedDomainMessage, actualException.getMessage(),
-                    "KmgToolMsgExceptionのメッセージが正しいこと");
-                Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージの種類が正しいこと");
-                Assertions.assertTrue(actualException.isMatchMessageArgsCount(), "メッセージ引数の数が一致していること");
+                this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
             }
 
