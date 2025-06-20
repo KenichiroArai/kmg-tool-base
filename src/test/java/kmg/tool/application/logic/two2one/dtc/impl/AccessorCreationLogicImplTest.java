@@ -125,7 +125,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
                 = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToCsvRows());
 
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/06/18 IllegalAccessExceptionを期待値として定義する。他も同様に対応する。
+            // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
             this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
 
         }
@@ -195,7 +195,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
                 () -> this.testTarget.addJavadocCommentToCsvRows());
 
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/06/18 IllegalAccessExceptionを期待値として定義する。他も同様に対応する。
+            // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
             this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
 
         }
@@ -293,7 +293,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
                 = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addTypeToCsvRows());
 
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/06/18 IllegalAccessExceptionを期待値として定義する。他も同様に対応する。
+            // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
             this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
 
         }
