@@ -62,6 +62,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     public void testCreateOutputFileDirectories_errorIOException(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */
+        final Class<?>           expectedCauseClass    = IOException.class;
         final Path               outputPath            = tempDir.resolve("output").toAbsolutePath();
         final String             expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
             "KMGTOOL_GEN13009", outputPath);
@@ -91,8 +92,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
             /* 検証の準備 */
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
-            this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
@@ -114,6 +115,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     public void testCreateOutputFileDirectories_errorPermissionDenied(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */
+        final Class<?>           expectedCauseClass    = IOException.class;
         final Path               outputPath            = tempDir.resolve("restricted").toAbsolutePath();
         final String             expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
             "KMGTOOL_GEN13009", outputPath);
@@ -143,8 +145,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
             /* 検証の準備 */
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
-            this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));

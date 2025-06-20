@@ -103,6 +103,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddItemToCsvRows_errorItemNull() throws Exception {
 
         /* 期待値の定義 */
+        final Class<?>           expectedCauseClass    = null;
         final String             expectedDomainMessage = "[KMGTOOL_GEN32001] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32001;
 
@@ -125,8 +126,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
                 = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToCsvRows());
 
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
-            this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -173,6 +174,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddJavadocCommentToCsvRows_errorJavadocNull() throws Exception {
 
         /* 期待値の定義 */
+        final Class<?>           expectedCauseClass    = null;
         final String             expectedDomainMessage = "[KMGTOOL_GEN32002] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32002;
 
@@ -195,8 +197,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
                 () -> this.testTarget.addJavadocCommentToCsvRows());
 
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
-            this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -271,6 +273,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddTypeToCsvRows_errorTypeNull() throws Exception {
 
         /* 期待値の定義 */
+        final Class<?>           expectedCauseClass    = null;
         final String             expectedDomainMessage = "[KMGTOOL_GEN32003] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32003;
 
@@ -293,8 +296,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
                 = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addTypeToCsvRows());
 
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
-            this.verifyKmgMsgException(actualException, (Class<?>) null, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 

@@ -300,13 +300,13 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     public void testLoad_errorDeepNonExistentPath() {
 
         /* 期待値の定義 */
+        final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[nonexistent\\very\\deep\\directory\\structure\\that\\does\\not\\exist]";
+                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[deep\\non\\existent\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
 
         /* 準備 */
-        final Path deepNonExistentPath
-            = Paths.get("nonexistent", "very", "deep", "directory", "structure", "that", "does", "not", "exist");
+        final Path deepNonExistentPath = Paths.get("deep/non/existent/path");
 
         try {
 
@@ -326,8 +326,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         }, "深い階層の非存在ディレクトリでKmgToolMsgExceptionがスローされること");
 
         /* 検証の実施 */
-        // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
-        this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
+        this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
 
     }
 
@@ -338,6 +337,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     public void testLoad_errorNonExistentDirectory() {
 
         /* 期待値の定義 */
+        final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
                                                        = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
@@ -363,8 +363,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         }, "存在しないディレクトリでKmgToolMsgExceptionがスローされること");
 
         /* 検証の実施 */
-        // TODO KenichiroArai 2025/06/21 Exceptionを期待値として定義する。他も同様に対応する。
-        this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
+        this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
 
     }
 
