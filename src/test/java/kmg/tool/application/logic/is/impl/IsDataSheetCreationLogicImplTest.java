@@ -91,6 +91,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
             /* 検証の準備 */
             /* 検証の実施 */
+            // TODO KenichiroArai 2025/06/18 IllegalAccessExceptionを期待値として定義する。他も同様に対応する。
             this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
 
             // モックの呼び出し確認
@@ -142,6 +143,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
             /* 検証の準備 */
             /* 検証の実施 */
+            // TODO KenichiroArai 2025/06/18 IllegalAccessExceptionを期待値として定義する。他も同様に対応する。
             this.verifyKmgMsgException(actualException, IOException.class, expectedDomainMessage, expectedMessageTypes);
 
             // モックの呼び出し確認
