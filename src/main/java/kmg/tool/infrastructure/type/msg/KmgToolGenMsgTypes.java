@@ -225,6 +225,15 @@ public enum KmgToolGenMsgTypes implements KmgToolComGenMsgTypes, KmgToolComExcMs
     KMGTOOL_GEN13009("出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[{0}]"),
 
     /**
+     * 書き込み対象のCSVデータの最後がリストに存在しません。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN13010("書き込み対象のCSVデータの最後がリストに存在しません。"),
+
+    /**
      * ファイル処理に失敗しました。
      *
      * @author KenichiroArai

@@ -360,8 +360,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *               CSVデータ
      *
      * @return true：追加成功、false：追加失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    protected boolean addCsvRow(final String csvRow) {
+    protected boolean addCsvRow(final String csvRow) throws KmgToolMsgException {
 
         boolean result;
 
@@ -373,11 +376,9 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final NoSuchElementException e) {
 
-            // TODO KenichiroArai 2025/06/15 例外処理。詰め替える。
-
-            e.printStackTrace();
-            result = false;
-            return result;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13010;
+            final Object[]           messageArgs  = {};
+            throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
         result = row.add(csvRow);
