@@ -498,17 +498,6 @@ public enum KmgToolGenMsgTypes implements KmgToolComGenMsgTypes, KmgToolComExcMs
      */
     KMGTOOL_GEN32016("入力ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]"),
 
-    // TODO KenichiroArai 2025/06/16 下記は不要なので削除する
-    /**
-     * Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]
-     *
-     * @author KenichiroArai
-     *
-     * @since 0.1.0
-     */
-    @Deprecated
-    KMGTOOL_GEN33000("Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]"),
-
     /**
      * 失敗
      *
