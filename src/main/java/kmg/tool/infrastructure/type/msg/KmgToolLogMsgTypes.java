@@ -360,6 +360,15 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
     KMGTOOL_LOG32005("クリア処理中にエラーが発生しました。"),
 
     /**
+     * Javadocタグ設定のコードの解析に失敗しました。識別子=[{0}]、オリジナルブロック=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_LOG33000("Javadocタグ設定のコードの解析に失敗しました。識別子=[{0}]、オリジナルブロック=[{1}]"),
+
+    /**
      * 初期化の失敗
      *
      * @author KenichiroArai
