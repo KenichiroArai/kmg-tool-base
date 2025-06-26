@@ -1,7 +1,7 @@
-# CSVから直接取得するプレースホルダー定義
+# 中間から直接取得するプレースホルダー定義
 # displayName: 画面表示用の名称
 # replacementPattern: 置換対象のパターン
-csvPlaceholders:
+intermediatePlaceholders:
     - displayName: "項目"
       replacementPattern: "{item}"
     - displayName: "項目名"

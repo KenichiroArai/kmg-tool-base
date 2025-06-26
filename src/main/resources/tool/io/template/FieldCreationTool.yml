@@ -1,5 +1,5 @@
-# CSVから直接取得するプレースホルダー定義
-csvPlaceholders:
+# 中間から直接取得するプレースホルダー定義
+intermediatePlaceholders:
     - displayName: "コメント"
       replacementPattern: "{comment}"
     - displayName: "項目"
