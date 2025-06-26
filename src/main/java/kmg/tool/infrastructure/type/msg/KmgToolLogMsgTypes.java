@@ -50,22 +50,22 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
     KMGTOOL_LOG12002("テンプレートの動的変換処理を終了します。"),
 
     /**
-     * CSVファイルに書き込む処理を開始します。
+     * 中間ファイルに書き込む処理を開始します。
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG12004("CSVファイルに書き込む処理を開始します。"),
+    KMGTOOL_LOG12004("中間ファイルに書き込む処理を開始します。"),
 
     /**
-     * CSVファイルに書き込む処理を終了します。
+     * 中間ファイルに書き込む処理を終了します。
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG12006("CSVファイルに書き込む処理を終了します。"),
+    KMGTOOL_LOG12006("中間ファイルに書き込む処理を終了します。"),
 
     /**
      * 挿入SQL出力に失敗しました。
@@ -104,22 +104,22 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
     KMGTOOL_LOG31000("クリア処理中にエラーが発生しました。"),
 
     /**
-     * CSVファイルに書き込み中にエラーが発生しました。
+     * 中間ファイルに書き込み中にエラーが発生しました。
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG31001("CSVファイルに書き込み中にエラーが発生しました。"),
+    KMGTOOL_LOG31001("中間ファイルに書き込み中にエラーが発生しました。"),
 
     /**
-     * CSVファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]
+     * 中間ファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG31002("CSVファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]"),
+    KMGTOOL_LOG31002("中間ファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]"),
 
     /**
      * クリア処理中にエラーが発生しました。
@@ -185,31 +185,31 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
     KMGTOOL_LOG31009("1行データの読み込み中にエラーが発生しました。"),
 
     /**
-     * CSVファイルに書き込み中にエラーが発生しました。
+     * 中間ファイルに書き込み中にエラーが発生しました。
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG31010("CSVファイルに書き込み中にエラーが発生しました。"),
+    KMGTOOL_LOG31010("中間ファイルに書き込み中にエラーが発生しました。"),
 
     /**
-     * CSVファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]
+     * 中間ファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG31011("CSVファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]"),
+    KMGTOOL_LOG31011("中間ファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]"),
 
     /**
-     * CSVファイルに書き込み中にエラーが発生しました。
+     * 中間ファイルに書き込み中にエラーが発生しました。
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG31012("CSVファイルに書き込み中にエラーが発生しました。"),
+    KMGTOOL_LOG31012("中間ファイルに書き込み中にエラーが発生しました。"),
 
     /**
      * クリア処理中にエラーが発生しました。
@@ -239,31 +239,31 @@ public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
     KMGTOOL_LOG31015("1行データの読み込み中にエラーが発生しました。"),
 
     /**
-     * CSVファイルに書き込み中にエラーが発生しました。
+     * 中間ファイルに書き込み中にエラーが発生しました。
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG31016("CSVファイルに書き込み中にエラーが発生しました。"),
+    KMGTOOL_LOG31016("中間ファイルに書き込み中にエラーが発生しました。"),
 
     /**
-     * CSVファイルに書き込み完了。項目=[{0}]、項目名=[{1}]
+     * 中間ファイルに書き込み完了。項目=[{0}]、項目名=[{1}]
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG31017("CSVファイルに書き込み完了。項目=[{0}]、項目名=[{1}]"),
+    KMGTOOL_LOG31017("中間ファイルに書き込み完了。項目=[{0}]、項目名=[{1}]"),
 
     /**
-     * CSVファイルに書き込み完了。コメント=[{0}]
+     * 中間ファイルに書き込み完了。コメント=[{0}]
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_LOG31018("CSVファイルに書き込み完了。コメント=[{0}]"),
+    KMGTOOL_LOG31018("中間ファイルに書き込み完了。コメント=[{0}]"),
 
     /**
      * Javadocタグ設定処理を開始します。
