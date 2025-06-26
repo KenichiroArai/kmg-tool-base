@@ -93,7 +93,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
      * addCommentToRows メソッドのテスト - 異常系：コメント未設定時の例外
      */
     @Test
-    public void testAddCommentToCsvRows_errorCommentNotSet() {
+    public void testAddCommentToRows_errorCommentNotSet() {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN32006] ";
@@ -131,7 +131,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
      *                   テスト実行時にエラーが発生した場合
      */
     @Test
-    public void testAddCommentToCsvRows_normalCommentSet() throws Exception {
+    public void testAddCommentToRows_normalCommentSet() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult  = true;
@@ -168,7 +168,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
      * addFieldToRows メソッドのテスト - 異常系：フィールド名未設定時の例外
      */
     @Test
-    public void testAddFieldToCsvRows_errorFieldNotSet() {
+    public void testAddFieldToRows_errorFieldNotSet() {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN32007] ";
@@ -206,7 +206,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
      *                   テスト実行時にエラーが発生した場合
      */
     @Test
-    public void testAddFieldToCsvRows_normalFieldSet() throws Exception {
+    public void testAddFieldToRows_normalFieldSet() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = true;
@@ -243,7 +243,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
      * addTypeToRows メソッドのテスト - 異常系：型情報未設定時の例外
      */
     @Test
-    public void testAddTypeToCsvRows_errorTypeNotSet() {
+    public void testAddTypeToRows_errorTypeNotSet() {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN32008] ";
@@ -281,7 +281,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
      *                   テスト実行時にエラーが発生した場合
      */
     @Test
-    public void testAddTypeToCsvRows_normalTypeSet() throws Exception {
+    public void testAddTypeToRows_normalTypeSet() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = true;

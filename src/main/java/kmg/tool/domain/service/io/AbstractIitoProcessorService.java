@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.domain.service.IctoProcessorService;
+import kmg.tool.domain.service.IitoProcessorService;
 import kmg.tool.domain.service.io.dtc.DtcService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
@@ -18,9 +18,9 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 入力、中間、テンプレート、出力の処理サービス抽象クラス<br>
- * 「Icto」→「InputCsvTemplateOutput」の略。
+ * 「Iito」→「InputIntermediateTemplateOutput」の略。
  */
-public abstract class AbstractIctoProcessorService implements IctoProcessorService {
+public abstract class AbstractIitoProcessorService implements IitoProcessorService {
 
     /** 一時中間ファイルのサフィックスと拡張子 */
     private static final String TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION = "Temp.tmp"; //$NON-NLS-1$
@@ -61,9 +61,9 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      *
      * @since 0.1.0
      */
-    public AbstractIctoProcessorService() {
+    public AbstractIitoProcessorService() {
 
-        this(LoggerFactory.getLogger(AbstractIctoProcessorService.class));
+        this(LoggerFactory.getLogger(AbstractIitoProcessorService.class));
 
     }
 
@@ -75,7 +75,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
      * @param logger
      *               ロガー
      */
-    protected AbstractIctoProcessorService(final Logger logger) {
+    protected AbstractIitoProcessorService(final Logger logger) {
 
         this.logger = logger;
 
@@ -245,7 +245,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
         Path result = null;
 
         final String intermediateFileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
-        final String suffixExtension          = AbstractIctoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
+        final String suffixExtension          = AbstractIitoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
 
         try {
 

@@ -1,6 +1,6 @@
 package kmg.tool.presentation.ui.cli.two2one.dtc;
 
-import kmg.tool.domain.service.IctoProcessorService;
+import kmg.tool.domain.service.IitoProcessorService;
 import kmg.tool.presentation.ui.cli.two2one.AbstractTwo2OneTool;
 
 /**
@@ -26,11 +26,11 @@ public abstract class AbstractDtcTool extends AbstractTwo2OneTool {
     }
 
     /**
-     * 入力、CSV、テンプレート、出力の処理サービスを返す。
+     * 入力、中間、テンプレート、出力の処理サービスを返す。
      *
-     * @return 入力、CSV、テンプレート、出力の処理サービス
+     * @return 入力、中間、テンプレート、出力の処理サービス
      */
     @Override
-    protected abstract IctoProcessorService getIoService();
+    protected abstract IitoProcessorService getIoService();
 
 }

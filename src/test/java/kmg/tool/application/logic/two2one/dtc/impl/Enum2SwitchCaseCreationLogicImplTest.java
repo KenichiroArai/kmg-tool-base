@@ -151,14 +151,14 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.addItemNameToRows();
 
         /* 検証の準備 */
-        final boolean            actualResult  = testResult;
-        final List<List<String>> actualCsvRows = this.testTarget.getRows();
+        final boolean            actualResult = testResult;
+        final List<List<String>> actualRows   = this.testTarget.getRows();
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualCsvRows.size(), "CSVの行数が正しいこと");
-        Assertions.assertEquals(1, actualCsvRows.get(0).size(), "CSVの列数が正しいこと");
-        Assertions.assertEquals("テスト項目名", actualCsvRows.get(0).get(0), "項目名が正しく追加されていること");
+        Assertions.assertEquals(1, actualRows.size(), "中間の行数が正しいこと");
+        Assertions.assertEquals(1, actualRows.get(0).size(), "中間の列数が正しいこと");
+        Assertions.assertEquals("テスト項目名", actualRows.get(0).get(0), "項目名が正しく追加されていること");
 
     }
 
@@ -221,14 +221,14 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.addItemToRows();
 
         /* 検証の準備 */
-        final boolean            actualResult  = testResult;
-        final List<List<String>> actualCsvRows = this.testTarget.getRows();
+        final boolean            actualResult = testResult;
+        final List<List<String>> actualRows   = this.testTarget.getRows();
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualCsvRows.size(), "CSVの行数が正しいこと");
-        Assertions.assertEquals(1, actualCsvRows.get(0).size(), "CSVの列数が正しいこと");
-        Assertions.assertEquals("TEST_ITEM", actualCsvRows.get(0).get(0), "項目が正しく追加されていること");
+        Assertions.assertEquals(1, actualRows.size(), "中間の行数が正しいこと");
+        Assertions.assertEquals(1, actualRows.get(0).size(), "中間の列数が正しいこと");
+        Assertions.assertEquals("TEST_ITEM", actualRows.get(0).get(0), "項目が正しく追加されていること");
 
     }
 

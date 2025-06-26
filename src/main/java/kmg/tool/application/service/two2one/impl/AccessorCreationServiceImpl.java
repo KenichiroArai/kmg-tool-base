@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.two2one.dtc.AccessorCreationLogic;
 import kmg.tool.application.service.two2one.AccessorCreationService;
-import kmg.tool.domain.service.io.AbstractIctoProcessorService;
+import kmg.tool.domain.service.io.AbstractIitoProcessorService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
@@ -21,7 +21,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
  * @author KenichiroArai
  */
 @Service
-public class AccessorCreationServiceImpl extends AbstractIctoProcessorService implements AccessorCreationService {
+public class AccessorCreationServiceImpl extends AbstractIitoProcessorService implements AccessorCreationService {
 
     /**
      * ロガー

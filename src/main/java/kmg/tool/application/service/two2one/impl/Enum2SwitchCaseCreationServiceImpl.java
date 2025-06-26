@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.two2one.dtc.Enum2SwitchCaseCreationLogic;
 import kmg.tool.application.service.two2one.Enum2SwitchCaseCreationService;
-import kmg.tool.domain.service.io.AbstractIctoProcessorService;
+import kmg.tool.domain.service.io.AbstractIitoProcessorService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
@@ -28,7 +28,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
  * @since 1.0.0
  */
 @Service
-public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorService
+public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorService
     implements Enum2SwitchCaseCreationService {
 
     /**

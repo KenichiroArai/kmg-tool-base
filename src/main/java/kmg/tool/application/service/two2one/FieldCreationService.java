@@ -1,6 +1,6 @@
 package kmg.tool.application.service.two2one;
 
-import kmg.tool.domain.service.IctoProcessorService;
+import kmg.tool.domain.service.IitoProcessorService;
 
 /**
  * フィールド作成サービスインターフェース
@@ -11,6 +11,6 @@ import kmg.tool.domain.service.IctoProcessorService;
  *
  * @since 1.0.0
  */
-public interface FieldCreationService extends IctoProcessorService {
+public interface FieldCreationService extends IitoProcessorService {
     // 処理なし
 }

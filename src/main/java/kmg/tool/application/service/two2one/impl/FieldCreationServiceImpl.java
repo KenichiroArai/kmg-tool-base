@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.application.logic.two2one.dtc.FieldCreationLogic;
 import kmg.tool.application.service.two2one.FieldCreationService;
-import kmg.tool.domain.service.io.AbstractIctoProcessorService;
+import kmg.tool.domain.service.io.AbstractIitoProcessorService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
@@ -25,7 +25,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
  * @since 1.0.0
  */
 @Service
-public class FieldCreationServiceImpl extends AbstractIctoProcessorService implements FieldCreationService {
+public class FieldCreationServiceImpl extends AbstractIitoProcessorService implements FieldCreationService {
 
     /**
      * ロガー
