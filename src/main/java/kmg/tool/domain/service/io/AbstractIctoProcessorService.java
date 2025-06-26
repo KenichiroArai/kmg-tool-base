@@ -17,13 +17,13 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
- * 入力、CSV、テンプレート、出力の処理サービス抽象クラス<br>
+ * 入力、中間、テンプレート、出力の処理サービス抽象クラス<br>
  * 「Icto」→「InputCsvTemplateOutput」の略。
  */
 public abstract class AbstractIctoProcessorService implements IctoProcessorService {
 
-    /** 一時CSVファイルのサフィックスと拡張子 */
-    private static final String TEMP_CSV_FILE_SUFFIX_EXTENSION = "Temp.csv"; //$NON-NLS-1$
+    /** 一時中間ファイルのサフィックスと拡張子 */
+    private static final String TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION = "Temp.tmp"; //$NON-NLS-1$
 
     /**
      * ロガー
@@ -49,8 +49,8 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
     /** 出力ファイルパス */
     private Path outputPath;
 
-    /** CSVファイルパス */
-    private Path csvPath;
+    /** 中間ファイルパス */
+    private Path intermediatePath;
 
     /** テンプレートの動的変換サービス */
     @Autowired
@@ -82,24 +82,6 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
     }
 
     /**
-     * CSVファイルパスを返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @sine 1.0.0
-     *
-     * @version 1.0.0
-     *
-     * @return CSVファイルパス
-     */
-    public Path getCsvPath() {
-
-        final Path result = this.csvPath;
-        return result;
-
-    }
-
-    /**
      * 入力ファイルパスを返す<br>
      *
      * @author KenichiroArai
@@ -114,6 +96,24 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
     public Path getInputPath() {
 
         final Path result = this.inputPath;
+        return result;
+
+    }
+
+    /**
+     * 中間ファイルパスを返す<br>
+     *
+     * @author KenichiroArai
+     *
+     * @sine 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @return 中間ファイルパス
+     */
+    public Path getIntermediatePath() {
+
+        final Path result = this.intermediatePath;
         return result;
 
     }
@@ -183,7 +183,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
         this.outputPath = outputPath;
 
         // 一時ファイルの作成
-        this.csvPath = this.createTempCsvFile();
+        this.intermediatePath = this.createTempntermediateFile();
 
         result = true;
         return result;
@@ -203,7 +203,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
 
         boolean result = false;
 
-        /* CSVファイルに書き込む */
+        /* 中間ファイルに書き込む */
 
         try {
 
@@ -213,7 +213,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
                 startLogMsgArgs);
             this.logger.debug(startLogMsg);
 
-            result = this.writeCsvFile();
+            result = this.writeIntermediateFile();
 
         } finally {
 
@@ -225,7 +225,7 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
         }
 
         /* テンプレートの動的変換サービスで出力ファイルに出力する */
-        result = this.dtcService.initialize(this.getCsvPath(), this.templatePath, this.outputPath);
+        result = this.dtcService.initialize(this.getIntermediatePath(), this.templatePath, this.outputPath);
         result = this.dtcService.process();
 
         return result;
@@ -233,30 +233,30 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
     }
 
     /**
-     * 一時的なCSVファイルを作成する。
+     * 一時的な中間ファイルを作成する。
      *
-     * @return CSVファイルパス
+     * @return 中間ファイルパス
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    protected Path createTempCsvFile() throws KmgToolMsgException {
+    protected Path createTempntermediateFile() throws KmgToolMsgException {
 
         Path result = null;
 
-        final String csvFileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
-        final String suffixExtension = AbstractIctoProcessorService.TEMP_CSV_FILE_SUFFIX_EXTENSION;
+        final String intermediateFileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
+        final String suffixExtension          = AbstractIctoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
 
         try {
 
-            result = Files.createTempFile(csvFileNameOnly, suffixExtension);
+            result = Files.createTempFile(intermediateFileNameOnly, suffixExtension);
             result.toFile().deleteOnExit();
 
         } catch (final IOException e) {
 
             final KmgToolGenMsgTypes genMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
             final Object[]           getMsgArgs = {
-                csvFileNameOnly, suffixExtension,
+                intermediateFileNameOnly, suffixExtension,
             };
             throw new KmgToolMsgException(genMsgType, getMsgArgs, e);
 
@@ -267,13 +267,13 @@ public abstract class AbstractIctoProcessorService implements IctoProcessorServi
     }
 
     /**
-     * CSVファイルに書き込む。
+     * 中間ファイルに書き込む。
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    protected abstract boolean writeCsvFile() throws KmgToolMsgException;
+    protected abstract boolean writeIntermediateFile() throws KmgToolMsgException;
 
 }

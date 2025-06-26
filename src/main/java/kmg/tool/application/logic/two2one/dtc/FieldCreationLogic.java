@@ -22,7 +22,7 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean addCommentToCsvRows() throws KmgToolMsgException;
+    boolean addCommentToRows() throws KmgToolMsgException;
 
     /**
      * フィールドを書き込み対象に追加する
@@ -32,7 +32,7 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean addFieldToCsvRows() throws KmgToolMsgException;
+    boolean addFieldToRows() throws KmgToolMsgException;
 
     /**
      * 型を書き込み対象に追加する
@@ -42,7 +42,7 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean addTypeToCsvRows() throws KmgToolMsgException;
+    boolean addTypeToRows() throws KmgToolMsgException;
 
     /**
      * フィールドデータを変換する

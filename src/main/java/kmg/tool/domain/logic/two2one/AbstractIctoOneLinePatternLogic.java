@@ -20,7 +20,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
- * 入力、CSV、テンプレート、出力の1行パターンの抽象クラス
+ * 入力、中間、テンプレート、出力の1行パターンの抽象クラス
  */
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
@@ -60,9 +60,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /** 現在の行番号 */
     private int nowLineNumber;
 
-    // TODO KenichiroArai 2025/06/15 現状はcsvだけではなく区切り文字が指定できるため、変数名はlineRowsの方がいい。
-    /** 書き込み対象のCSVデータのリスト */
-    private final List<List<String>> csvRows;
+    /** 書き込み対象の行リスト */
+    private final List<List<String>> rows;
 
     /**
      * デフォルトコンストラクタ
@@ -84,7 +83,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     protected AbstractIctoOneLinePatternLogic(final Logger logger) {
 
         this.logger = logger;
-        this.csvRows = new ArrayList<>();
+        this.rows = new ArrayList<>();
 
     }
 
@@ -97,29 +96,12 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addOneLineOfDataToCsvRows() throws KmgToolMsgException {
+    public boolean addOneLineOfDataToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
         final List<String> newRow = new ArrayList<>();
-        this.csvRows.add(newRow);
-
-        result = true;
-        return result;
-
-    }
-
-    /**
-     * 書き込み対象のCSVデータのリストをクリアする。
-     *
-     * @return true：成功、false：失敗
-     */
-    @Override
-    public boolean clearCsvRows() {
-
-        boolean result = false;
-
-        this.csvRows.clear();
+        this.rows.add(newRow);
 
         result = true;
         return result;
@@ -139,6 +121,23 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
         this.lineOfDataRead = null;
         this.convertedLine = null;
         this.nowLineNumber = 0;
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 書き込み対象の行データのリストをクリアする。
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    public boolean clearRows() {
+
+        boolean result = false;
+
+        this.rows.clear();
 
         result = true;
         return result;
@@ -166,19 +165,6 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     public String getConvertedLine() {
 
         final String result = this.convertedLine;
-        return result;
-
-    }
-
-    /**
-     * 書き込み対象のCSVデータのリストを返す。
-     *
-     * @return 書き込み対象のCSVデータのリスト
-     */
-    @Override
-    public List<List<String>> getCsvRows() {
-
-        final List<List<String>> result = this.csvRows;
         return result;
 
     }
@@ -214,6 +200,19 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     }
 
     /**
+     * 書き込み対象の行データのリストを返す。
+     *
+     * @return 書き込み対象の行データのリスト
+     */
+    @Override
+    public List<List<String>> getRows() {
+
+        final List<List<String>> result = this.rows;
+        return result;
+
+    }
+
+    /**
      * 初期化する。
      *
      * @param inputPath
@@ -238,7 +237,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
         /* データのクリア */
         this.clearProcessingData();
 
-        this.clearCsvRows();
+        this.clearRows();
 
         /* ファイルを開く */
 
@@ -297,9 +296,9 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     }
 
     /**
-     * CSVファイルに書き込む。<br>
+     * 中間ファイルに書き込む。<br>
      * <p>
-     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
+     * 入力ファイルから指定の形式に変換して中間ファイルに出力する。
      * </p>
      *
      * @return true：成功、false：失敗
@@ -308,17 +307,17 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean writeCsvFile() throws KmgToolMsgException {
+    public boolean writeIntermediateFile() throws KmgToolMsgException {
 
         boolean result = false;
 
-        /* CSVの書き込み処理 */
-        for (final List<String> csvRow : this.csvRows) {
+        /* 中間の書き込み処理 */
+        for (final List<String> row : this.rows) {
 
             try {
 
-                final String csvLine = KmgDelimiterTypes.COMMA.join(csvRow);
-                this.writer.write(csvLine);
+                final String writeRow = KmgDelimiterTypes.COMMA.join(row);
+                this.writer.write(writeRow);
                 this.writer.write(System.lineSeparator());
 
             } catch (final IOException e) {
@@ -354,17 +353,17 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     }
 
     /**
-     * 書き込み対象のCSVデータの最後のリストにCSVデータを追加する。
+     * 書き込み対象のデータの最後のリストにデータを追加する。
      *
-     * @param csvRow
-     *               CSVデータ
+     * @param data
+     *             データ
      *
      * @return true：追加成功、false：追加失敗
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    protected boolean addCsvRow(final String csvRow) throws KmgToolMsgException {
+    protected boolean addRow(final String data) throws KmgToolMsgException {
 
         boolean result;
 
@@ -372,7 +371,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         try {
 
-            row = this.csvRows.getLast();
+            row = this.rows.getLast();
 
         } catch (final NoSuchElementException e) {
 
@@ -381,7 +380,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
             throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
         }
-        result = row.add(csvRow);
+        result = row.add(data);
 
         return result;
 

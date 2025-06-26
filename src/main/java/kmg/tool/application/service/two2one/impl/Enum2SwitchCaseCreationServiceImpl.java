@@ -76,9 +76,9 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
     }
 
     /**
-     * CSVファイルに書き込む。<br>
+     * 中間ファイルに書き込む。<br>
      * <p>
-     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
+     * 入力ファイルから中間形式に変換して中間ファイルに出力する。
      * </p>
      *
      * @return true：成功、false：失敗
@@ -87,17 +87,17 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
      *                             KMGツールメッセージ例外
      */
     @Override
-    protected boolean writeCsvFile() throws KmgToolMsgException {
+    protected boolean writeIntermediateFile() throws KmgToolMsgException {
 
         boolean result = false;
 
         try {
 
             /* 列挙型からcase文作成ロジックの初期化 */
-            this.enum2SwitchCaseMakingLogic.initialize(this.getInputPath(), this.getCsvPath());
+            this.enum2SwitchCaseMakingLogic.initialize(this.getInputPath(), this.getIntermediatePath());
 
             /* 書き込み対象に行を追加する */
-            this.enum2SwitchCaseMakingLogic.addOneLineOfDataToCsvRows();
+            this.enum2SwitchCaseMakingLogic.addOneLineOfDataToRows();
 
             do {
 
@@ -119,8 +119,8 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
 
                 }
 
-                /* CSVファイルに行を書き込む */
-                this.writeCsvFileLine();
+                /* 中間ファイルに行を書き込む */
+                this.writeIntermediateFileLine();
 
                 /* クリア処理 */
                 this.clearAndPrepareNextLine();
@@ -150,14 +150,14 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
 
         try {
 
-            // 書き込み対象のCSVデータのリストをクリアする
-            this.enum2SwitchCaseMakingLogic.clearCsvRows();
+            // 書き込み対象の行のリストをクリアする
+            this.enum2SwitchCaseMakingLogic.clearRows();
 
             // 処理中のデータをクリアする
             this.enum2SwitchCaseMakingLogic.clearProcessingData();
 
             /* 書き込み対象に行を追加する */
-            this.enum2SwitchCaseMakingLogic.addOneLineOfDataToCsvRows();
+            this.enum2SwitchCaseMakingLogic.addOneLineOfDataToRows();
 
         } catch (final KmgToolMsgException e) {
 
@@ -218,10 +218,10 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
             }
 
             // 項目を書き込み対象に追加する
-            this.enum2SwitchCaseMakingLogic.addItemToCsvRows();
+            this.enum2SwitchCaseMakingLogic.addItemToRows();
 
             // 項目名を書き込み対象に追加する
-            this.enum2SwitchCaseMakingLogic.addItemNameToCsvRows();
+            this.enum2SwitchCaseMakingLogic.addItemNameToRows();
 
         } catch (final KmgToolMsgException e) {
 
@@ -271,16 +271,16 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIctoProcessorSer
     }
 
     /**
-     * CSVファイルに行を書き込む。
+     * 中間ファイルに行を書き込む。
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private void writeCsvFileLine() throws KmgToolMsgException {
+    private void writeIntermediateFileLine() throws KmgToolMsgException {
 
         try {
 
-            this.enum2SwitchCaseMakingLogic.writeCsvFile();
+            this.enum2SwitchCaseMakingLogic.writeIntermediateFile();
 
         } catch (final KmgToolMsgException e) {
 

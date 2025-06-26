@@ -90,7 +90,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addCommentToCsvRows メソッドのテスト - 異常系：コメント未設定時の例外
+     * addCommentToRows メソッドのテスト - 異常系：コメント未設定時の例外
      */
     @Test
     public void testAddCommentToCsvRows_errorCommentNotSet() {
@@ -114,7 +114,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addCommentToCsvRows());
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addCommentToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "例外メッセージが一致しません");
@@ -125,7 +125,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addCommentToCsvRows メソッドのテスト - 正常系：コメントが設定されている場合
+     * addCommentToRows メソッドのテスト - 正常系：コメントが設定されている場合
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -149,10 +149,10 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
         this.target.initialize(inputFile, outputFile);
         this.target.readOneLineOfData();
         this.target.convertFields();
-        this.target.addOneLineOfDataToCsvRows();
+        this.target.addOneLineOfDataToRows();
 
         /* テスト対象の実行 */
-        final boolean testResult = this.target.addCommentToCsvRows();
+        final boolean testResult = this.target.addCommentToRows();
 
         /* 検証の準備 */
         final boolean actualResult  = testResult;
@@ -165,7 +165,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addFieldToCsvRows メソッドのテスト - 異常系：フィールド名未設定時の例外
+     * addFieldToRows メソッドのテスト - 異常系：フィールド名未設定時の例外
      */
     @Test
     public void testAddFieldToCsvRows_errorFieldNotSet() {
@@ -189,7 +189,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addFieldToCsvRows());
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addFieldToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "例外メッセージが一致しません");
@@ -200,7 +200,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addFieldToCsvRows メソッドのテスト - 正常系：フィールド名が設定されている場合
+     * addFieldToRows メソッドのテスト - 正常系：フィールド名が設定されている場合
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -224,10 +224,10 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
         this.target.initialize(inputFile, outputFile);
         this.target.readOneLineOfData();
         this.target.convertFields();
-        this.target.addOneLineOfDataToCsvRows();
+        this.target.addOneLineOfDataToRows();
 
         /* テスト対象の実行 */
-        final boolean testResult = this.target.addFieldToCsvRows();
+        final boolean testResult = this.target.addFieldToRows();
 
         /* 検証の準備 */
         final boolean actualResult = testResult;
@@ -240,7 +240,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addTypeToCsvRows メソッドのテスト - 異常系：型情報未設定時の例外
+     * addTypeToRows メソッドのテスト - 異常系：型情報未設定時の例外
      */
     @Test
     public void testAddTypeToCsvRows_errorTypeNotSet() {
@@ -264,7 +264,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addTypeToCsvRows());
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addTypeToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "例外メッセージが一致しません");
@@ -275,7 +275,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addTypeToCsvRows メソッドのテスト - 正常系：型情報が設定されている場合
+     * addTypeToRows メソッドのテスト - 正常系：型情報が設定されている場合
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -299,10 +299,10 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
         this.target.initialize(inputFile, outputFile);
         this.target.readOneLineOfData();
         this.target.convertFields();
-        this.target.addOneLineOfDataToCsvRows();
+        this.target.addOneLineOfDataToRows();
 
         /* テスト対象の実行 */
-        final boolean testResult = this.target.addTypeToCsvRows();
+        final boolean testResult = this.target.addTypeToRows();
 
         /* 検証の準備 */
         final boolean actualResult = testResult;

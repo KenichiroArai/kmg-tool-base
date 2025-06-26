@@ -18,7 +18,7 @@ public interface AccessorCreationLogic extends IctoOneLinePatternLogic {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean addItemToCsvRows() throws KmgToolMsgException;
+    boolean addItemToRows() throws KmgToolMsgException;
 
     /**
      * Javadocコメントを書き込み対象に追加する。
@@ -28,7 +28,7 @@ public interface AccessorCreationLogic extends IctoOneLinePatternLogic {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean addJavadocCommentToCsvRows() throws KmgToolMsgException;
+    boolean addJavadocCommentToRows() throws KmgToolMsgException;
 
     /**
      * 型情報を書き込み対象に追加する。
@@ -38,7 +38,7 @@ public interface AccessorCreationLogic extends IctoOneLinePatternLogic {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean addTypeToCsvRows() throws KmgToolMsgException;
+    boolean addTypeToRows() throws KmgToolMsgException;
 
     /**
      * フィールド宣言から型、項目名、先頭大文字項目に変換する。

@@ -68,9 +68,9 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
     }
 
     /**
-     * CSVファイルに書き込む。<br>
+     * 中間ファイルに書き込む。<br>
      * <p>
-     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
+     * 入力ファイルから中間形式に変換して中間ファイルに出力する。
      * </p>
      *
      * @return true：成功、false：失敗
@@ -79,17 +79,17 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
      *                             KMGツールメッセージ例外
      */
     @Override
-    protected boolean writeCsvFile() throws KmgToolMsgException {
+    protected boolean writeIntermediateFile() throws KmgToolMsgException {
 
         boolean result = false;
 
         try {
 
             /* アクセサ作成ロジックの初期化 */
-            this.accessorCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
+            this.accessorCreationLogic.initialize(this.getInputPath(), this.getIntermediatePath());
 
             /* 書き込み対象に行を追加する */
-            this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+            this.accessorCreationLogic.addOneLineOfDataToRows();
 
             do {
 
@@ -111,8 +111,8 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
                 }
 
-                /* CSVファイルに行を書き込む */
-                this.writeCsvFileLine();
+                /* 中間ファイルに行を書き込む */
+                this.writeIntermediateFileLine();
 
                 /* クリア処理 */
                 this.clearAndPrepareNextLine();
@@ -133,7 +133,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
     }
 
     /**
-     * 1行分のCSVを格納するリストにカラム1：名称を追加する。
+     * 1行分の中間を格納するリストにカラム1：名称を追加する。
      *
      * @return true：追加した、false：追加していない
      *
@@ -154,7 +154,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
         }
 
         // カラム1：名称を書き込み対象に追加する。
-        this.accessorCreationLogic.addJavadocCommentToCsvRows();
+        this.accessorCreationLogic.addJavadocCommentToRows();
 
         result = true;
         return result;
@@ -162,7 +162,7 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
     }
 
     /**
-     * 1行分のCSVを格納するリストに残りのカラムを追加する。
+     * 1行分の中間を格納するリストに残りのカラムを追加する。
      *
      * @return true：追加した、false：追加していない
      *
@@ -189,9 +189,9 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         // テンプレートの各カラムに対応する値をを書き込み対象に追加する
         // カラム2：型
-        this.accessorCreationLogic.addTypeToCsvRows();
+        this.accessorCreationLogic.addTypeToRows();
         // カラム3：項目
-        this.accessorCreationLogic.addItemToCsvRows();
+        this.accessorCreationLogic.addItemToRows();
 
         result = true;
 
@@ -209,14 +209,14 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
 
         try {
 
-            // 書き込み対象のCSVデータのリストをクリアする
-            this.accessorCreationLogic.clearCsvRows();
+            // 書き込み対象の行データのリストをクリアする
+            this.accessorCreationLogic.clearRows();
 
             // 処理中のデータをクリアする
             this.accessorCreationLogic.clearProcessingData();
 
             /* 書き込み対象に行を追加する */
-            this.accessorCreationLogic.addOneLineOfDataToCsvRows();
+            this.accessorCreationLogic.addOneLineOfDataToRows();
 
         } catch (final KmgToolMsgException e) {
 
@@ -338,16 +338,16 @@ public class AccessorCreationServiceImpl extends AbstractIctoProcessorService im
     }
 
     /**
-     * CSVファイルに行を書き込む。
+     * 中間ファイルに行を書き込む。
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private void writeCsvFileLine() throws KmgToolMsgException {
+    private void writeIntermediateFileLine() throws KmgToolMsgException {
 
         try {
 
-            this.accessorCreationLogic.writeCsvFile();
+            this.accessorCreationLogic.writeIntermediateFile();
 
         } catch (final KmgToolMsgException e) {
 

@@ -45,7 +45,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemNameToCsvRows() throws KmgToolMsgException {
+    public boolean addItemNameToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -57,7 +57,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
         }
 
-        super.addCsvRow(this.itemName);
+        super.addRow(this.itemName);
         result = true;
 
         return result;
@@ -73,7 +73,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemToCsvRows() throws KmgToolMsgException {
+    public boolean addItemToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -85,7 +85,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
         }
 
-        super.addCsvRow(this.item);
+        super.addRow(this.item);
         result = true;
 
         return result;

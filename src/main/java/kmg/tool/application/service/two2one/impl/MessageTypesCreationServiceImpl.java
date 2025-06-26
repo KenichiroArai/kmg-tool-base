@@ -76,9 +76,9 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
     }
 
     /**
-     * CSVファイルに書き込む。<br>
+     * 中間ファイルに書き込む。<br>
      * <p>
-     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
+     * 入力ファイルから中間形式に変換して中間ファイルに出力する。
      * </p>
      *
      * @return true：成功、false：失敗
@@ -87,17 +87,17 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
      *                             KMGツールメッセージ例外
      */
     @Override
-    protected boolean writeCsvFile() throws KmgToolMsgException {
+    protected boolean writeIntermediateFile() throws KmgToolMsgException {
 
         boolean result = false;
 
         try {
 
             /* メッセージの種類作成ロジックを初期化 */
-            this.messageTypesCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
+            this.messageTypesCreationLogic.initialize(this.getInputPath(), this.getIntermediatePath());
 
             /* 書き込み対象に行を追加する */
-            this.messageTypesCreationLogic.addOneLineOfDataToCsvRows();
+            this.messageTypesCreationLogic.addOneLineOfDataToRows();
 
             do {
 
@@ -119,8 +119,8 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
                 }
 
-                /* CSVファイルに行を書き込む */
-                this.writeCsvFileLine();
+                /* 中間ファイルに行を書き込む */
+                this.writeIntermediateFileLine();
 
                 /* クリア処理 */
                 this.clearAndPrepareNextLine();
@@ -150,14 +150,14 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
 
         try {
 
-            // 書き込み対象のCSVデータのリストをクリアする
-            this.messageTypesCreationLogic.clearCsvRows();
+            // 書き込み対象の行のリストをクリアする
+            this.messageTypesCreationLogic.clearRows();
 
             // 処理中のデータをクリアする
             this.messageTypesCreationLogic.clearProcessingData();
 
             /* 書き込み対象に行を追加する */
-            this.messageTypesCreationLogic.addOneLineOfDataToCsvRows();
+            this.messageTypesCreationLogic.addOneLineOfDataToRows();
 
         } catch (final KmgToolMsgException e) {
 
@@ -219,10 +219,10 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
             }
 
             // 項目を書き込み対象に追加する
-            this.messageTypesCreationLogic.addItemToCsvRows();
+            this.messageTypesCreationLogic.addItemToRows();
 
             // 項目名を書き込み対象に追加する
-            this.messageTypesCreationLogic.addItemNameToCsvRows();
+            this.messageTypesCreationLogic.addItemNameToRows();
 
         } catch (final KmgToolMsgException e) {
 
@@ -272,16 +272,16 @@ public class MessageTypesCreationServiceImpl extends AbstractIctoProcessorServic
     }
 
     /**
-     * CSVファイルに行を書き込む。
+     * 中間ファイルに行を書き込む。
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private void writeCsvFileLine() throws KmgToolMsgException {
+    private void writeIntermediateFileLine() throws KmgToolMsgException {
 
         try {
 
-            this.messageTypesCreationLogic.writeCsvFile();
+            this.messageTypesCreationLogic.writeIntermediateFile();
 
         } catch (final KmgToolMsgException e) {
 

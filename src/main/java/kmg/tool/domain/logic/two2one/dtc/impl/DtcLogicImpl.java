@@ -31,7 +31,7 @@ import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
  * 「Dtc」→「DynamicTemplateConversion」の略。
  * </p>
  * <p>
- * このクラスはテンプレートファイルを入力ファイルのデータに基づいて動的に変換するロジックを実装します。 CSVデータとテンプレートを組み合わせて、動的なコンテンツ生成を行います。
+ * このクラスはテンプレートファイルを入力ファイルのデータに基づいて動的に変換するロジックを実装します。 中間データとテンプレートを組み合わせて、動的なコンテンツ生成を行います。
  * </p>
  *
  * @author KenichiroArai
@@ -64,8 +64,8 @@ public class DtcLogicImpl implements DtcLogic {
     /** 変換後の1行データ */
     private String convertedLine;
 
-    /** CSVプレースホルダーの定義マップ */
-    private final Map<String, String> csvPlaceholderMap;
+    /** 中間プレースホルダーの定義マップ */
+    private final Map<String, String> intermediatePlaceholderMap;
 
     /** 派生プレースホルダーの定義リスト */
     private final List<DtcDerivedPlaceholderModel> derivedPlaceholders;
@@ -84,7 +84,7 @@ public class DtcLogicImpl implements DtcLogic {
      */
     public DtcLogicImpl() {
 
-        this.csvPlaceholderMap = new HashMap<>();
+        this.intermediatePlaceholderMap = new HashMap<>();
         this.derivedPlaceholders = new ArrayList<>();
         this.outputBufferContent = new StringBuilder();
 
@@ -116,7 +116,7 @@ public class DtcLogicImpl implements DtcLogic {
     /**
      * 入力ファイルからテンプレートに基づいて変換する。<br>
      * <p>
-     * 現在読み込まれている入力ファイルの1行データに対して、テンプレートを適用し変換処理を行います。 CSVプレースホルダーと派生プレースホルダーの両方を処理します。
+     * 現在読み込まれている入力ファイルの1行データに対して、テンプレートを適用し変換処理を行います。 中間プレースホルダーと派生プレースホルダーの両方を処理します。
      * </p>
      *
      * @author KenichiroArai
@@ -132,14 +132,14 @@ public class DtcLogicImpl implements DtcLogic {
         /* 1件分の内容をコンテンツの内容で初期化 */
         this.contentsOfOneItem = this.templateContent;
 
-        /* CSV値を一時保存するマップ */
-        final Map<String, String> csvValues = new HashMap<>();
+        /* 中間値を一時保存するマップ */
+        final Map<String, String> intermediateValues = new HashMap<>();
 
-        /* CSVプレースホルダーを処理 */
-        this.processCsvPlaceholders(csvValues);
+        /* 中間プレースホルダーを処理 */
+        this.processPlaceholders(intermediateValues);
 
         /* 派生プレースホルダーを処理 */
-        this.processDerivedPlaceholders(csvValues);
+        this.processDerivedPlaceholders(intermediateValues);
 
     }
 
@@ -178,7 +178,7 @@ public class DtcLogicImpl implements DtcLogic {
         this.lineOfDataRead = null;
         this.convertedLine = null;
         this.templateContent = null;
-        this.csvPlaceholderMap.clear();
+        this.intermediatePlaceholderMap.clear();
         this.derivedPlaceholders.clear();
         this.contentsOfOneItem = null;
         this.clearOutputBufferContent();
@@ -304,7 +304,7 @@ public class DtcLogicImpl implements DtcLogic {
      * @version 1.0.0
      *
      * @param inputPath
-     *                     入力ファイルパス - 処理対象のCSVデータファイルのパス
+     *                     入力ファイルパス - 処理対象の中間データファイルのパス
      * @param templatePath
      *                     テンプレートファイルパス - 変換に使用するテンプレート定義ファイルのパス
      * @param outputPath
@@ -345,7 +345,7 @@ public class DtcLogicImpl implements DtcLogic {
     /**
      * テンプレートファイルを読み込む<br>
      * <p>
-     * YAMLフォーマットのテンプレート定義ファイルを読み込み、 テンプレートコンテンツ、CSVプレースホルダー定義、派生プレースホルダー定義を取得します。
+     * YAMLフォーマットのテンプレート定義ファイルを読み込み、 テンプレートコンテンツ、中間プレースホルダー定義、派生プレースホルダー定義を取得します。
      * </p>
      *
      * @author KenichiroArai
@@ -384,8 +384,8 @@ public class DtcLogicImpl implements DtcLogic {
 
         /* プレースホルダー定義の取得 */
 
-        // CSVプレースホルダー定義を読み込む
-        this.loadCsvPlaceholderDefinitions(yamlData);
+        // 中間プレースホルダー定義を読み込む
+        this.loadIntermediatePlaceholderDefinitions(yamlData);
 
         // 派生プレースホルダー定義を読み込む
         this.loadDerivedPlaceholderDefinitions(yamlData);
@@ -521,51 +521,6 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * CSVプレースホルダー定義を読み込む<br>
-     * <p>
-     * YAMLデータからCSVプレースホルダー定義を読み込み、内部マップに格納します。 プレースホルダー定義がない場合は何もしません。
-     * </p>
-     *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @param yamlData
-     *                 YAMLデータ - テンプレート定義ファイルから読み込まれたデータ
-     *
-     * @return true：成功、false：失敗（プレースホルダー定義がない場合）
-     *
-     * @throws KmgToolMsgException
-     *                             テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など
-     */
-    private boolean loadCsvPlaceholderDefinitions(final Map<String, Object> yamlData) throws KmgToolMsgException {
-
-        boolean result = false;
-
-        // CSVプレースホルダー定義を取得する
-        @SuppressWarnings("unchecked")
-        final List<Map<String, String>> csvPlaceholders
-            = (List<Map<String, String>>) yamlData.get(DtcKeyTypes.CSV_PLACEHOLDERS.getKey());
-
-        if (csvPlaceholders == null) {
-
-            return result;
-
-        }
-
-        for (final Map<String, String> placeholderMap : csvPlaceholders) {
-
-            this.csvPlaceholderMap.put(placeholderMap.get(DtcKeyTypes.DISPLAY_NAME.getKey()),
-                placeholderMap.get(DtcKeyTypes.REPLACEMENT_PATTERN.getKey()));
-
-        }
-
-        result = true;
-        return result;
-
-    }
-
-    /**
      * 派生プレースホルダー定義を読み込む<br>
      * <p>
      * YAMLデータから派生プレースホルダー定義を読み込み、内部リストに格納します。 派生プレースホルダー定義がない場合は何もしません。
@@ -609,6 +564,52 @@ public class DtcLogicImpl implements DtcLogic {
             final DtcDerivedPlaceholderModel derivedPlaceholder
                 = new DtcDerivedPlaceholderModelImpl(displayName, replacementPattern, sourceKey, transformTypes);
             this.derivedPlaceholders.add(derivedPlaceholder);
+
+        }
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 中間プレースホルダー定義を読み込む<br>
+     * <p>
+     * YAMLデータから中間プレースホルダー定義を読み込み、内部マップに格納します。 プレースホルダー定義がない場合は何もしません。
+     * </p>
+     *
+     * @author KenichiroArai
+     *
+     * @since 1.0.0
+     *
+     * @param yamlData
+     *                 YAMLデータ - テンプレート定義ファイルから読み込まれたデータ
+     *
+     * @return true：成功、false：失敗（プレースホルダー定義がない場合）
+     *
+     * @throws KmgToolMsgException
+     *                             テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など
+     */
+    private boolean loadIntermediatePlaceholderDefinitions(final Map<String, Object> yamlData)
+        throws KmgToolMsgException {
+
+        boolean result = false;
+
+        // 中間プレースホルダー定義を取得する
+        @SuppressWarnings("unchecked")
+        final List<Map<String, String>> intermediatePlaceholders
+            = (List<Map<String, String>>) yamlData.get(DtcKeyTypes.INTERMEDIATE_PLACEHOLDERS.getKey());
+
+        if (intermediatePlaceholders == null) {
+
+            return result;
+
+        }
+
+        for (final Map<String, String> placeholderMap : intermediatePlaceholders) {
+
+            this.intermediatePlaceholderMap.put(placeholderMap.get(DtcKeyTypes.DISPLAY_NAME.getKey()),
+                placeholderMap.get(DtcKeyTypes.REPLACEMENT_PATTERN.getKey()));
 
         }
 
@@ -703,78 +704,22 @@ public class DtcLogicImpl implements DtcLogic {
     }
 
     /**
-     * CSVプレースホルダーを処理する<br>
-     * <p>
-     * 現在読み込まれているCSV行データを解析し、CSVプレースホルダーを対応する値で置換します。 置換された値はcsvValuesマップに保存され、後続の派生プレースホルダー処理で使用されます。
-     * </p>
-     *
-     * @param csvValues
-     *                  CSV値を保存するマップ - キーはプレースホルダー名、値はCSVから読み取った値
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外 - CSV行の列数が不足している場合など
-     */
-    private void processCsvPlaceholders(final Map<String, String> csvValues) throws KmgToolMsgException {
-
-        /* 置換前の準備 */
-
-        // CSV行に分割
-        final String[] csvLine = KmgDelimiterTypes.COMMA.split(this.convertedLine);
-
-        // CSVプレースホルダーのキー配列
-        final String[] csvPlaceholderKeys = this.csvPlaceholderMap.keySet().toArray(new String[0]);
-
-        // CSVプレースホルダーのパターン配列
-        final String[] csvPlaceholderPatterns = this.csvPlaceholderMap.values().toArray(new String[0]);
-
-        /* 各CSVプレースホルダーを対応する値で置換 */
-        for (int i = 0; i < csvPlaceholderKeys.length; i++) {
-
-            final String key     = csvPlaceholderKeys[i];
-            final String pattern = csvPlaceholderPatterns[i];
-            String       value;
-
-            try {
-
-                value = csvLine[i];
-
-            } catch (final ArrayIndexOutOfBoundsException e) {
-
-                final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13004;
-                final Object[]           messageArgs  = {
-                    this.inputPath.toString(), key, i + 1,
-                };
-                throw new KmgToolMsgException(messageTypes, messageArgs, e);
-
-            }
-
-            // 値を保存
-            csvValues.put(key, value);
-
-            // テンプレートを置換
-            this.contentsOfOneItem = this.contentsOfOneItem.replace(pattern, value);
-
-        }
-
-    }
-
-    /**
      * 派生プレースホルダーを処理する<br>
      * <p>
-     * CSVプレースホルダー処理で得られた値を元に、派生プレースホルダーの変換処理を行います。 各派生プレースホルダーに対して、指定された変換タイプに基づいて値を変換し、 テンプレート内の対応するパターンを置換します。
+     * 中間プレースホルダー処理で得られた値を元に、派生プレースホルダーの変換処理を行います。 各派生プレースホルダーに対して、指定された変換タイプに基づいて値を変換し、 テンプレート内の対応するパターンを置換します。
      * </p>
      *
-     * @param csvValues
-     *                  CSV値を保存するマップ - キーはプレースホルダー名、値はCSVから読み取った値
+     * @param intermediateValues
+     *                           中間値を保存するマップ - キーはプレースホルダー名、値は中間から読み取った値
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外 - 変換処理中にエラーが発生した場合
      */
-    private void processDerivedPlaceholders(final Map<String, String> csvValues) throws KmgToolMsgException {
+    private void processDerivedPlaceholders(final Map<String, String> intermediateValues) throws KmgToolMsgException {
 
         for (final DtcDerivedPlaceholderModel derivedPlaceholder : this.derivedPlaceholders) {
 
-            final String sourceValue = csvValues.get(derivedPlaceholder.getSourceKey());
+            final String sourceValue = intermediateValues.get(derivedPlaceholder.getSourceKey());
 
             if (sourceValue == null) {
 
@@ -790,6 +735,63 @@ public class DtcLogicImpl implements DtcLogic {
             // テンプレートを置換
             this.contentsOfOneItem = this.contentsOfOneItem.replace(derivedPlaceholder.getReplacementPattern(),
                 dtcTransformModel.getTransformedValue());
+
+        }
+
+    }
+
+    /**
+     * 中間プレースホルダーを処理する<br>
+     * <p>
+     * 現在読み込まれている中間行データを解析し、中間プレースホルダーを対応する値で置換します。 置換された値は中間値を保存するマップに保存され、後続の派生プレースホルダー処理で使用されます。
+     * </p>
+     *
+     * @param intermediateValues
+     *                           中間値を保存するマップ - キーはプレースホルダー名、値は中間から読み取った値
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外 - 中間行の列数が不足している場合など
+     */
+    private void processPlaceholders(final Map<String, String> intermediateValues) throws KmgToolMsgException {
+
+        /* 置換前の準備 */
+
+        // 中間行に分割
+        final String[] intermediateLine = KmgDelimiterTypes.COMMA.split(this.convertedLine);
+
+        // 中間プレースホルダーのキー配列
+        final String[] intermediatePlaceholderKeys = this.intermediatePlaceholderMap.keySet().toArray(new String[0]);
+
+        // 中間プレースホルダーのパターン配列
+        final String[] intermediatePlaceholderPatterns
+            = this.intermediatePlaceholderMap.values().toArray(new String[0]);
+
+        /* 各中間プレースホルダーを対応する値で置換 */
+        for (int i = 0; i < intermediatePlaceholderKeys.length; i++) {
+
+            final String key     = intermediatePlaceholderKeys[i];
+            final String pattern = intermediatePlaceholderPatterns[i];
+            String       value;
+
+            try {
+
+                value = intermediateLine[i];
+
+            } catch (final ArrayIndexOutOfBoundsException e) {
+
+                final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13004;
+                final Object[]           messageArgs  = {
+                    this.inputPath.toString(), key, i + 1,
+                };
+                throw new KmgToolMsgException(messageTypes, messageArgs, e);
+
+            }
+
+            // 値を保存
+            intermediateValues.put(key, value);
+
+            // テンプレートを置換
+            this.contentsOfOneItem = this.contentsOfOneItem.replace(pattern, value);
 
         }
 

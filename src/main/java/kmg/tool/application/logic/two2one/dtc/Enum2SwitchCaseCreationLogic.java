@@ -25,7 +25,7 @@ public interface Enum2SwitchCaseCreationLogic extends IctoOneLinePatternLogic {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean addItemNameToCsvRows() throws KmgToolMsgException;
+    boolean addItemNameToRows() throws KmgToolMsgException;
 
     /**
      * 項目を書き込み対象に追加する。
@@ -35,7 +35,7 @@ public interface Enum2SwitchCaseCreationLogic extends IctoOneLinePatternLogic {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean addItemToCsvRows() throws KmgToolMsgException;
+    boolean addItemToRows() throws KmgToolMsgException;
 
     /**
      * 列挙型定義から項目と項目名に変換する。

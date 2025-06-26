@@ -100,13 +100,13 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addItemNameToCsvRows メソッドのテスト - 異常系：項目名がnullの場合
+     * addItemNameToRows メソッドのテスト - 異常系：項目名がnullの場合
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testAddItemNameToCsvRows_errorItemNameNull() throws Exception {
+    public void testaddItemNameToRows_errorItemNameNull() throws Exception {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN32000] ";
@@ -128,7 +128,7 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemNameToCsvRows());
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemNameToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "メッセージが正しいこと");
@@ -139,27 +139,27 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addItemNameToCsvRows メソッドのテスト - 正常系：項目名が設定されている場合
+     * addItemNameToRows メソッドのテスト - 正常系：項目名が設定されている場合
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testAddItemNameToCsvRows_normalItemNameSet() throws Exception {
+    public void testaddItemNameToRows_normalItemNameSet() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = true;
 
         /* 準備 */
         this.reflectionModel.set("itemName", "テスト項目名");
-        this.testTarget.addOneLineOfDataToCsvRows();
+        this.testTarget.addOneLineOfDataToRows();
 
         /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.addItemNameToCsvRows();
+        final boolean testResult = this.testTarget.addItemNameToRows();
 
         /* 検証の準備 */
         final boolean            actualResult  = testResult;
-        final List<List<String>> actualCsvRows = this.testTarget.getCsvRows();
+        final List<List<String>> actualCsvRows = this.testTarget.getRows();
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
@@ -170,13 +170,13 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addItemToCsvRows メソッドのテスト - 異常系：項目がnullの場合
+     * addItemToRows メソッドのテスト - 異常系：項目がnullの場合
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testAddItemToCsvRows_errorItemNull() throws Exception {
+    public void testaddItemToRows_errorItemNull() throws Exception {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN32004] ";
@@ -198,7 +198,7 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToCsvRows());
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "メッセージが正しいこと");
@@ -209,27 +209,27 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addItemToCsvRows メソッドのテスト - 正常系：項目が設定されている場合
+     * addItemToRows メソッドのテスト - 正常系：項目が設定されている場合
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testAddItemToCsvRows_normalItemSet() throws Exception {
+    public void testaddItemToRows_normalItemSet() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = true;
 
         /* 準備 */
         this.reflectionModel.set("item", "TEST_ITEM");
-        this.testTarget.addOneLineOfDataToCsvRows();
+        this.testTarget.addOneLineOfDataToRows();
 
         /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.addItemToCsvRows();
+        final boolean testResult = this.testTarget.addItemToRows();
 
         /* 検証の準備 */
         final boolean            actualResult  = testResult;
-        final List<List<String>> actualCsvRows = this.testTarget.getCsvRows();
+        final List<List<String>> actualCsvRows = this.testTarget.getRows();
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");

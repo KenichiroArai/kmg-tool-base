@@ -43,7 +43,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemNameToCsvRows() throws KmgToolMsgException {
+    public boolean addItemNameToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -55,7 +55,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         }
 
-        super.addCsvRow(this.itemName);
+        super.addRow(this.itemName);
         result = true;
 
         return result;
@@ -71,7 +71,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemToCsvRows() throws KmgToolMsgException {
+    public boolean addItemToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -83,7 +83,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         }
 
-        super.addCsvRow(this.item);
+        super.addRow(this.item);
         result = true;
 
         return result;

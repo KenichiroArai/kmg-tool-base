@@ -7,7 +7,7 @@ import java.util.List;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
- * 入力、CSV、テンプレート、出力の1行パターンインタフェース
+ * 入力、中間、テンプレート、出力の1行パターンインタフェース
  */
 public interface IctoOneLinePatternLogic extends Closeable {
 
@@ -19,14 +19,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean addOneLineOfDataToCsvRows() throws KmgToolMsgException;
-
-    /**
-     * 書き込み対象のCSVデータのリストをクリアする。
-     *
-     * @return true：成功、false：失敗
-     */
-    boolean clearCsvRows();
+    boolean addOneLineOfDataToRows() throws KmgToolMsgException;
 
     /**
      * 処理中のデータをクリアする。
@@ -36,18 +29,18 @@ public interface IctoOneLinePatternLogic extends Closeable {
     boolean clearProcessingData();
 
     /**
+     * 書き込み対象の行データのリストをクリアする。
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean clearRows();
+
+    /**
      * 変換後の1行データを返す。
      *
      * @return 変換後の1行データ
      */
     String getConvertedLine();
-
-    /**
-     * 書き込み対象のCSVデータのリストを返す。
-     *
-     * @return 書き込み対象のCSVデータのリスト
-     */
-    List<List<String>> getCsvRows();
 
     /**
      * 読み込んだ１行データを返す。
@@ -66,6 +59,13 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @return 現在の行番号
      */
     int getNowLineNumber();
+
+    /**
+     * 書き込み対象の行データのリストを返す。
+     *
+     * @return 書き込み対象の行データのリスト
+     */
+    List<List<String>> getRows();
 
     /**
      * 初期化する。
@@ -93,9 +93,9 @@ public interface IctoOneLinePatternLogic extends Closeable {
     boolean readOneLineOfData() throws KmgToolMsgException;
 
     /**
-     * CSVファイルに書き込む。<br>
+     * 中間ファイルに書き込む。<br>
      * <p>
-     * 入力ファイルからCSV形式に変換してCSVファイルに出力する。
+     * 入力ファイルから指定の形式に変換して中間ファイルに出力する。
      * </p>
      *
      * @return true：成功、false：失敗
@@ -103,5 +103,5 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean writeCsvFile() throws KmgToolMsgException;
+    boolean writeIntermediateFile() throws KmgToolMsgException;
 }

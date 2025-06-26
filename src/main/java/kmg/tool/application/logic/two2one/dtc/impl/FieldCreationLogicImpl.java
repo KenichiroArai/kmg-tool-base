@@ -48,7 +48,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     private String type;
 
     /**
-     * コメントを書き込み対象に追加する。 保持しているコメントを書き込み対象のCSVの行に追加します。 コメントが設定されていない場合は例外をスローします。
+     * コメントを書き込み対象に追加する。 保持しているコメントを書き込み対象の中間の行に追加します。 コメントが設定されていない場合は例外をスローします。
      *
      * @return true：成功、false：失敗
      *
@@ -56,7 +56,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      *                             コメントが設定されていない場合
      */
     @Override
-    public boolean addCommentToCsvRows() throws KmgToolMsgException {
+    public boolean addCommentToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -70,7 +70,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         }
 
         /* コメントの追加 */
-        super.addCsvRow(this.comment);
+        super.addRow(this.comment);
         result = true;
 
         return result;
@@ -78,7 +78,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     }
 
     /**
-     * フィールドを書き込み対象に追加する。 保持しているフィールド名を書き込み対象のCSVの行に追加します。 フィールド名が設定されていない場合は例外をスローします。
+     * フィールドを書き込み対象に追加する。 保持しているフィールド名を書き込み対象の中間の行に追加します。 フィールド名が設定されていない場合は例外をスローします。
      *
      * @return true：成功、false：失敗
      *
@@ -86,7 +86,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      *                             フィールド名が設定されていない場合
      */
     @Override
-    public boolean addFieldToCsvRows() throws KmgToolMsgException {
+    public boolean addFieldToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -100,7 +100,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         }
 
         /* フィールド名の追加 */
-        super.addCsvRow(this.field);
+        super.addRow(this.field);
         result = true;
 
         return result;
@@ -108,7 +108,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     }
 
     /**
-     * 型を書き込み対象に追加する。 保持している型情報を書き込み対象のCSVの行に追加します。 型情報が設定されていない場合は例外をスローします。
+     * 型を書き込み対象に追加する。 保持している型情報を書き込み対象の中間の行に追加します。 型情報が設定されていない場合は例外をスローします。
      *
      * @return true：成功、false：失敗
      *
@@ -116,7 +116,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      *                             型情報が設定されていない場合
      */
     @Override
-    public boolean addTypeToCsvRows() throws KmgToolMsgException {
+    public boolean addTypeToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -130,7 +130,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         }
 
         /* 型情報の追加 */
-        super.addCsvRow(this.type);
+        super.addRow(this.type);
         result = true;
 
         return result;

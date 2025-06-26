@@ -33,8 +33,8 @@ public enum DtcKeyTypes implements KmgComTypes<String> {
      */
     NONE("指定無し", "None", "指定無し"),
 
-    /** CSVプレースホルダー定義のキー */
-    CSV_PLACEHOLDERS("CSVプレースホルダー定義", "csvPlaceholders", "CSVから直接取得するプレースホルダー定義のキー"),
+    /** 中間プレースホルダー定義のキー */
+    INTERMEDIATE_PLACEHOLDERS("中間プレースホルダー定義", "intermediatePlaceholders", "中間から直接取得するプレースホルダー定義のキー"),
 
     /** 派生プレースホルダー定義のキー */
     DERIVED_PLACEHOLDERS("派生プレースホルダー定義", "derivedPlaceholders", "他のプレースホルダーから派生するプレースホルダー定義のキー"),

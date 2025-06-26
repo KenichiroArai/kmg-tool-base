@@ -94,13 +94,13 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addItemToCsvRows メソッドのテスト - 異常系：項目名がnullの場合
+     * addItemToRows メソッドのテスト - 異常系：項目名がnullの場合
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testAddItemToCsvRows_errorItemNull() throws Exception {
+    public void testaddItemToRows_errorItemNull() throws Exception {
 
         /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = null;
@@ -123,7 +123,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToCsvRows());
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToRows());
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -134,27 +134,27 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addItemToCsvRows メソッドのテスト - 正常系：項目名が設定されている場合
+     * addItemToRows メソッドのテスト - 正常系：項目名が設定されている場合
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testAddItemToCsvRows_normalItemSet() throws Exception {
+    public void testAddItemToRows_normalItemSet() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = true;
 
         /* 準備 */
         this.reflectionModel.set("item", "testItem");
-        this.testTarget.addOneLineOfDataToCsvRows();
+        this.testTarget.addOneLineOfDataToRows();
 
         /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.addItemToCsvRows();
+        final boolean testResult = this.testTarget.addItemToRows();
 
         /* 検証の準備 */
         final boolean            actualResult  = testResult;
-        final List<List<String>> actualCsvRows = this.testTarget.getCsvRows();
+        final List<List<String>> actualCsvRows = this.testTarget.getRows();
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
@@ -193,8 +193,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class,
-                () -> this.testTarget.addJavadocCommentToCsvRows());
+            final KmgToolMsgException actualException
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addJavadocCommentToRows());
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -218,14 +218,14 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         this.reflectionModel.set("javadocComment", "テストコメント");
-        this.testTarget.addOneLineOfDataToCsvRows();
+        this.testTarget.addOneLineOfDataToRows();
 
         /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.addJavadocCommentToCsvRows();
+        final boolean testResult = this.testTarget.addJavadocCommentToRows();
 
         /* 検証の準備 */
         final boolean            actualResult  = testResult;
-        final List<List<String>> actualCsvRows = this.testTarget.getCsvRows();
+        final List<List<String>> actualCsvRows = this.testTarget.getRows();
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
@@ -236,7 +236,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addOneLineOfDataToCsvRows メソッドのテスト - 正常系：CSVに新しい行を追加する
+     * addOneLineOfDataToRows メソッドのテスト - 正常系：CSVに新しい行を追加する
      *
      * @throws Exception
      *                   例外
@@ -250,11 +250,11 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         /* 準備 */
 
         /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.addOneLineOfDataToCsvRows();
+        final boolean testResult = this.testTarget.addOneLineOfDataToRows();
 
         /* 検証の準備 */
         final boolean            actualResult  = testResult;
-        final List<List<String>> actualCsvRows = this.testTarget.getCsvRows();
+        final List<List<String>> actualCsvRows = this.testTarget.getRows();
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
@@ -264,7 +264,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addTypeToCsvRows メソッドのテスト - 異常系：型がnullの場合
+     * addTypeToRows メソッドのテスト - 異常系：型がnullの場合
      *
      * @throws Exception
      *                   例外
@@ -293,7 +293,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addTypeToCsvRows());
+                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addTypeToRows());
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -304,7 +304,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * addTypeToCsvRows メソッドのテスト - 正常系：型が設定されている場合
+     * addTypeToRows メソッドのテスト - 正常系：型が設定されている場合
      *
      * @throws Exception
      *                   例外
@@ -317,50 +317,20 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         this.reflectionModel.set("type", "String");
-        this.testTarget.addOneLineOfDataToCsvRows();
+        this.testTarget.addOneLineOfDataToRows();
 
         /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.addTypeToCsvRows();
+        final boolean testResult = this.testTarget.addTypeToRows();
 
         /* 検証の準備 */
         final boolean            actualResult  = testResult;
-        final List<List<String>> actualCsvRows = this.testTarget.getCsvRows();
+        final List<List<String>> actualCsvRows = this.testTarget.getRows();
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
         Assertions.assertEquals(1, actualCsvRows.size(), "CSVの行数が正しいこと");
         Assertions.assertEquals(1, actualCsvRows.get(0).size(), "CSVの列数が正しいこと");
         Assertions.assertEquals("String", actualCsvRows.get(0).get(0), "型が正しく追加されていること");
-
-    }
-
-    /**
-     * clearCsvRows メソッドのテスト - 正常系：CSVデータをクリアする
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testClearCsvRows_normalClearCsvRows() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
-        /* 準備 */
-        this.testTarget.addOneLineOfDataToCsvRows();
-        this.reflectionModel.set("item", "testItem");
-        this.testTarget.addItemToCsvRows();
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.clearCsvRows();
-
-        /* 検証の準備 */
-        final boolean            actualResult  = testResult;
-        final List<List<String>> actualCsvRows = this.testTarget.getCsvRows();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(0, actualCsvRows.size(), "CSVデータがクリアされていること");
 
     }
 
@@ -399,6 +369,36 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * clearRows メソッドのテスト - 正常系：CSVデータをクリアする
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testClearRows_normalClearRows() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        this.testTarget.addOneLineOfDataToRows();
+        this.reflectionModel.set("item", "testItem");
+        this.testTarget.addItemToRows();
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.clearRows();
+
+        /* 検証の準備 */
+        final boolean            actualResult  = testResult;
+        final List<List<String>> actualCsvRows = this.testTarget.getRows();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(0, actualCsvRows.size(), "CSVデータがクリアされていること");
+
+    }
+
+    /**
      * close メソッドのテスト - 正常系：リソースをクローズする
      *
      * @throws Exception
@@ -411,7 +411,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.csv");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
         this.testTarget.initialize(testInputFile, testOutputFile);
 
@@ -711,23 +711,23 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * getCsvRows メソッドのテスト - 正常系：CSVデータを取得する
+     * getRows メソッドのテスト - 正常系：中間データを取得する
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testGetCsvRows_normalGetCsvRows() throws Exception {
+    public void testGetCsvRows_normalGetRows() throws Exception {
 
         /* 期待値の定義 */
 
         /* 準備 */
-        this.testTarget.addOneLineOfDataToCsvRows();
+        this.testTarget.addOneLineOfDataToRows();
         this.reflectionModel.set("item", "testItem");
-        this.testTarget.addItemToCsvRows();
+        this.testTarget.addItemToRows();
 
         /* テスト対象の実行 */
-        final List<List<String>> testResult = this.testTarget.getCsvRows();
+        final List<List<String>> testResult = this.testTarget.getRows();
 
         /* 検証の準備 */
         final List<List<String>> actualCsvRows = testResult;
@@ -806,7 +806,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.csv");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test line".getBytes());
         this.testTarget.initialize(testInputFile, testOutputFile);
         this.testTarget.readOneLineOfData();
@@ -836,7 +836,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.csv");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test line".getBytes());
         this.testTarget.initialize(testInputFile, testOutputFile);
         this.testTarget.readOneLineOfData();
@@ -892,7 +892,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.csv");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
 
         /* テスト対象の実行 */
@@ -972,7 +972,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.csv");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test line 1\ntest line 2".getBytes());
         this.testTarget.initialize(testInputFile, testOutputFile);
 
@@ -1005,7 +1005,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.csv");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "".getBytes());
         this.testTarget.initialize(testInputFile, testOutputFile);
 
@@ -1233,7 +1233,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * writeCsvFile メソッドのテスト - 正常系：CSVファイルに書き込む
+     * writeIntermediateFile メソッドのテスト - 正常系：中間ファイルに書き込む
      *
      * @throws Exception
      *                   例外
@@ -1246,31 +1246,31 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.csv");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
         this.testTarget.initialize(testInputFile, testOutputFile);
 
         // テストデータを追加
-        this.testTarget.addOneLineOfDataToCsvRows();
+        this.testTarget.addOneLineOfDataToRows();
         this.reflectionModel.set("item", "testItem1");
-        this.testTarget.addItemToCsvRows();
+        this.testTarget.addItemToRows();
         this.reflectionModel.set("javadocComment", "テストコメント1");
-        this.testTarget.addJavadocCommentToCsvRows();
+        this.testTarget.addJavadocCommentToRows();
 
-        this.testTarget.addOneLineOfDataToCsvRows();
+        this.testTarget.addOneLineOfDataToRows();
         this.reflectionModel.set("item", "testItem2");
-        this.testTarget.addItemToCsvRows();
+        this.testTarget.addItemToRows();
         this.reflectionModel.set("javadocComment", "テストコメント2");
-        this.testTarget.addJavadocCommentToCsvRows();
+        this.testTarget.addJavadocCommentToRows();
 
         /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.writeCsvFile();
+        final boolean testResult = this.testTarget.writeIntermediateFile();
 
         /* 検証の準備 */
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "CSVファイルへの書き込みが成功すること");
+        Assertions.assertEquals(expectedResult, actualResult, "中間ファイルへの書き込みが成功すること");
         Assertions.assertTrue(Files.exists(testOutputFile), "出力ファイルが作成されていること");
 
     }

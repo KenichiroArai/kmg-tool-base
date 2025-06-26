@@ -54,7 +54,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemToCsvRows() throws KmgToolMsgException {
+    public boolean addItemToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -66,7 +66,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         }
 
-        super.addCsvRow(this.item);
+        super.addRow(this.item);
         result = true;
 
         return result;
@@ -82,7 +82,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addJavadocCommentToCsvRows() throws KmgToolMsgException {
+    public boolean addJavadocCommentToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -94,7 +94,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         }
 
-        super.addCsvRow(this.javadocComment);
+        super.addRow(this.javadocComment);
         result = true;
 
         return result;
@@ -110,7 +110,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addTypeToCsvRows() throws KmgToolMsgException {
+    public boolean addTypeToRows() throws KmgToolMsgException {
 
         boolean result = false;
 
@@ -122,7 +122,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         }
 
-        super.addCsvRow(this.type);
+        super.addRow(this.type);
         result = true;
 
         return result;

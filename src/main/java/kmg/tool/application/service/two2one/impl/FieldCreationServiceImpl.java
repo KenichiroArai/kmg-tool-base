@@ -67,17 +67,17 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
      * {@inheritDoc}
      */
     @Override
-    protected boolean writeCsvFile() throws KmgToolMsgException {
+    protected boolean writeIntermediateFile() throws KmgToolMsgException {
 
         boolean result = false;
 
         try {
 
             /* フィールド作成ロジックの初期化 */
-            this.fieldCreationLogic.initialize(this.getInputPath(), this.getCsvPath());
+            this.fieldCreationLogic.initialize(this.getInputPath(), this.getIntermediatePath());
 
             /* 書き込み対象に行を追加する */
-            this.fieldCreationLogic.addOneLineOfDataToCsvRows();
+            this.fieldCreationLogic.addOneLineOfDataToRows();
 
             do {
 
@@ -99,8 +99,8 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
                 }
 
-                /* CSVファイルに行を書き込む */
-                this.writeCsvFileLine();
+                /* 中間ファイルに行を書き込む */
+                this.writeIntermediateFileLine();
 
                 /* クリア処理 */
                 this.clearAndPrepareNextLine();
@@ -130,14 +130,14 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
 
         try {
 
-            // 書き込み対象のCSVデータのリストをクリアする
-            this.fieldCreationLogic.clearCsvRows();
+            // 書き込み対象の行のリストをクリアする
+            this.fieldCreationLogic.clearRows();
 
             // 処理中のデータをクリアする
             this.fieldCreationLogic.clearProcessingData();
 
             /* 書き込み対象に行を追加する */
-            this.fieldCreationLogic.addOneLineOfDataToCsvRows();
+            this.fieldCreationLogic.addOneLineOfDataToRows();
 
         } catch (final KmgToolMsgException e) {
 
@@ -198,9 +198,9 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
             }
 
             /* 各カラムを追加する */
-            this.fieldCreationLogic.addCommentToCsvRows();
-            this.fieldCreationLogic.addFieldToCsvRows();
-            this.fieldCreationLogic.addTypeToCsvRows();
+            this.fieldCreationLogic.addCommentToRows();
+            this.fieldCreationLogic.addFieldToRows();
+            this.fieldCreationLogic.addTypeToRows();
 
         } catch (final KmgToolMsgException e) {
 
@@ -250,16 +250,16 @@ public class FieldCreationServiceImpl extends AbstractIctoProcessorService imple
     }
 
     /**
-     * CSVファイルに行を書き込む
+     * 中間ファイルに行を書き込む
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private void writeCsvFileLine() throws KmgToolMsgException {
+    private void writeIntermediateFileLine() throws KmgToolMsgException {
 
         try {
 
-            this.fieldCreationLogic.writeCsvFile();
+            this.fieldCreationLogic.writeIntermediateFile();
 
         } catch (final KmgToolMsgException e) {
 
