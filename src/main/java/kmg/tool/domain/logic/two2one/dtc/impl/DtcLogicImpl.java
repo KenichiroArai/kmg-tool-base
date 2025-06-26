@@ -757,6 +757,7 @@ public class DtcLogicImpl implements DtcLogic {
         /* 置換前の準備 */
 
         // 中間行に分割
+        // TODO KenichiroArai 2025/06/26 中間をカンマ以外も指定できるようにする
         final String[] intermediateLine = KmgDelimiterTypes.COMMA.split(this.convertedLine);
 
         // 中間プレースホルダーのキー配列
