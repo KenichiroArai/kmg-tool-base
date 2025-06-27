@@ -1,4 +1,4 @@
-package kmg.tool.application.service.two2one.impl;
+package kmg.tool.accessorcreation.application.service.impl;
 
 import java.io.IOException;
 
@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.two2one.dtc.AccessorCreationLogic;
-import kmg.tool.application.service.two2one.AccessorCreationService;
+import kmg.tool.accessorcreation.application.logic.AccessorCreationLogic;
+import kmg.tool.accessorcreation.application.service.AccessorCreationService;
 import kmg.tool.domain.service.io.AbstractIitoProcessorService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;

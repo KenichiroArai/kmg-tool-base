@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.application.service.two2one.AccessorCreationService;
+import kmg.tool.accessorcreation.application.service.AccessorCreationService;
 
 /**
  * <h2>インタフェースのアクセサ作成ツール</h2>

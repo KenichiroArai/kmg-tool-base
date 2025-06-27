@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.two2one.dtc.impl;
+package kmg.tool.accessorcreation.application.logic.impl;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
-import kmg.tool.application.logic.two2one.dtc.AccessorCreationLogic;
-import kmg.tool.application.types.two2one.AccessorRegexGroupTypes;
+import kmg.tool.accessorcreation.application.logic.AccessorCreationLogic;
+import kmg.tool.accessorcreation.application.types.AccessorRegexGroupTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;

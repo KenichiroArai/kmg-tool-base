@@ -1,4 +1,4 @@
-package kmg.tool.application.types.two2one;
+package kmg.tool.accessorcreation.application.types;
 
 import java.util.HashMap;
 import java.util.Map;

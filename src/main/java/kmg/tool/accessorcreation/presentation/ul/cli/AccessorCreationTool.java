@@ -1,11 +1,12 @@
-package kmg.tool.presentation.ui.cli.two2one.dtc;
+package kmg.tool.accessorcreation.presentation.ul.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.application.service.two2one.AccessorCreationService;
+import kmg.tool.accessorcreation.application.service.AccessorCreationService;
+import kmg.tool.presentation.ui.cli.two2one.dtc.AbstractDtcTool;
 
 /**
  * <h2>アクセサ作成ツール</h2>
