@@ -1,13 +1,13 @@
-package kmg.tool.application.logic.two2one.dtc.impl;
+package kmg.tool.e2scc.application.logic.impl;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
-import kmg.tool.application.logic.two2one.dtc.Enum2SwitchCaseCreationLogic;
 import kmg.tool.application.types.two2one.ConvertEnumDefinitionTypes;
 import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
+import kmg.tool.e2scc.application.logic.Enum2SwitchCaseCreationLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 

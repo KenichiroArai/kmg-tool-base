@@ -1,4 +1,4 @@
-package kmg.tool.application.service.two2one.impl;
+package kmg.tool.e2scc.service.impl;
 
 import java.io.IOException;
 
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.two2one.dtc.Enum2SwitchCaseCreationLogic;
-import kmg.tool.application.service.two2one.Enum2SwitchCaseCreationService;
 import kmg.tool.domain.service.io.AbstractIitoProcessorService;
+import kmg.tool.e2scc.application.logic.Enum2SwitchCaseCreationLogic;
+import kmg.tool.e2scc.service.Enum2SwitchCaseCreationService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;

@@ -1,4 +1,4 @@
-package kmg.tool.application.service.two2one;
+package kmg.tool.e2scc.service;
 
 import kmg.tool.domain.service.IitoProcessorService;
 

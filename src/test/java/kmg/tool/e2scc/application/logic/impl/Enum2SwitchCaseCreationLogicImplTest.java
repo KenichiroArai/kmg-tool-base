@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.two2one.dtc.impl;
+package kmg.tool.e2scc.application.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -21,6 +21,7 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
+import kmg.tool.e2scc.application.logic.impl.Enum2SwitchCaseCreationLogicImpl;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
