@@ -1,4 +1,4 @@
-package kmg.tool.application.service.two2one;
+package kmg.tool.msgtpcrt.service;
 
 import kmg.tool.domain.service.IitoProcessorService;
 

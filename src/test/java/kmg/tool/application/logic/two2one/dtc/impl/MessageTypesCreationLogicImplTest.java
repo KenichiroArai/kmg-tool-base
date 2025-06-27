@@ -23,6 +23,7 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.msgtpcrt.application.logic.impl.MessageTypesCreationLogicImpl;
 
 /**
  * <h2>メッセージの種類作成ロジック実装クラスのテスト</h2>

@@ -1,11 +1,12 @@
-package kmg.tool.presentation.ui.cli.two2one.dtc;
+package kmg.tool.msgtpcrt.presentation.ul.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.application.service.two2one.MessageTypesCreationService;
+import kmg.tool.msgtpcrt.service.MessageTypesCreationService;
+import kmg.tool.presentation.ui.cli.two2one.dtc.AbstractDtcTool;
 
 /**
  * <h2>メッセージの種類作成ツール</h2>

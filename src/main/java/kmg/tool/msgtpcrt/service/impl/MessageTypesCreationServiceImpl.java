@@ -1,4 +1,4 @@
-package kmg.tool.application.service.two2one.impl;
+package kmg.tool.msgtpcrt.service.impl;
 
 import java.io.IOException;
 
@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.two2one.dtc.MessageTypesCreationLogic;
-import kmg.tool.application.service.two2one.MessageTypesCreationService;
 import kmg.tool.domain.service.io.AbstractIitoProcessorService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
+import kmg.tool.msgtpcrt.application.logic.MessageTypesCreationLogic;
+import kmg.tool.msgtpcrt.service.MessageTypesCreationService;
 
 /**
  * <h2>メッセージの種類作成サービス実装クラス</h2>
