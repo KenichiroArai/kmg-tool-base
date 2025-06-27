@@ -1,11 +1,11 @@
-package kmg.tool.accessorcreation.presentation.ul.cli;
+package kmg.tool.acccrt.presentation.ul.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.accessorcreation.application.service.AccessorCreationService;
+import kmg.tool.acccrt.application.service.AccessorCreationService;
 import kmg.tool.presentation.ui.cli.two2one.dtc.AbstractDtcTool;
 
 /**

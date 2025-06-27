@@ -1,4 +1,4 @@
-package kmg.tool.accessorcreation.application.logic;
+package kmg.tool.acccrt.application.logic;
 
 import kmg.tool.domain.logic.two2one.IctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;

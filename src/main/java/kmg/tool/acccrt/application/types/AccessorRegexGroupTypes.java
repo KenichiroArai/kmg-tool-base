@@ -1,4 +1,4 @@
-package kmg.tool.accessorcreation.application.types;
+package kmg.tool.acccrt.application.types;
 
 import java.util.HashMap;
 import java.util.Map;
