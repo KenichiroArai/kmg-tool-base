@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.application.logic.is.IsBasicInformationLogic;
+import kmg.tool.is.application.logic.IsBasicInformationLogic;
+import kmg.tool.is.application.logic.impl.IsBasicInformationLogicImpl;
 import kmg.tool.presentation.ui.gui.is.IsCreationTool;
 
 /**

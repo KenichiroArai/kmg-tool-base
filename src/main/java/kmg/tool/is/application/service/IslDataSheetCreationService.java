@@ -1,11 +1,15 @@
-package kmg.tool.application.service.is;
+package kmg.tool.is.application.service;
 
 import java.nio.file.Path;
+import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Sheet;
+
+import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 
 /**
- * 挿入SQL作成サービスインタフェース<br>
+ * 挿入SQLデータシート作成サービスインタフェース<br>
  * <p>
  * 「Is」は、InsertionSqlの略。
  * </p>
@@ -16,7 +20,7 @@ import kmg.tool.infrastructure.exception.KmgToolMsgException;
  *
  * @version 1.0.0
  */
-public interface IsCreationService {
+public interface IslDataSheetCreationService extends Runnable {
 
     /**
      * 初期化する<br>
@@ -27,14 +31,16 @@ public interface IsCreationService {
      *
      * @version 1.0.0
      *
-     * @param inputPath
-     *                   入力パス
+     * @param KmgDbTypes
+     *                   KMG DBの種類
+     * @param inputSheet
+     *                   入力シート
+     * @param sqlIdMap
+     *                   SQLＩＤマップ
      * @param outputPath
      *                   出力パス
-     * @param threadNum
-     *                   スレッド数
      */
-    void initialize(final Path inputPath, final Path outputPath, short threadNum);
+    void initialize(KmgDbTypes KmgDbTypes, Sheet inputSheet, Map<String, String> sqlIdMap, final Path outputPath);
 
     /**
      * 挿入SQLを出力する<br>

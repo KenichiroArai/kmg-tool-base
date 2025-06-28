@@ -1,10 +1,10 @@
-package kmg.tool.application.service.is.impl;
+package kmg.tool.is.application.service.impl;
 
 import java.nio.file.Path;
 
-import kmg.tool.application.service.is.IsCreationService;
-import kmg.tool.application.service.is.IsFileCreationService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.is.application.service.IsCreationService;
+import kmg.tool.is.application.service.IsFileCreationService;
 
 /**
  * 挿入SQL作成サービス<br>

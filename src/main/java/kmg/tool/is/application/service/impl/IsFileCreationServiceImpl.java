@@ -1,4 +1,4 @@
-package kmg.tool.application.service.is.impl;
+package kmg.tool.is.application.service.impl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,11 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.application.logic.is.IsBasicInformationLogic;
-import kmg.tool.application.service.is.IsFileCreationService;
-import kmg.tool.application.service.is.IslDataSheetCreationService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.is.application.logic.IsBasicInformationLogic;
+import kmg.tool.is.application.service.IsFileCreationService;
+import kmg.tool.is.application.service.IslDataSheetCreationService;
 
 /**
  * 挿入SQLファイル作成サービス<br>

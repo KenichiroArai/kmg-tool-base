@@ -23,10 +23,10 @@ import kmg.core.infrastructure.model.KmgPfaMeasModel;
 import kmg.core.infrastructure.model.impl.KmgPfaMeasModelImpl;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.service.is.IsCreationService;
-import kmg.tool.application.service.is.impl.IsCreationServiceImpl;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
+import kmg.tool.is.application.service.IsCreationService;
+import kmg.tool.is.application.service.impl.IsCreationServiceImpl;
 
 /**
  * 挿入SQL作成画面コントローラ<br>

@@ -28,6 +28,7 @@ import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.is.application.logic.impl.IsDataSheetCreationLogicImpl;
 
 /**
  * 挿入SQLデータシート作成ロジック実装のテスト<br>
