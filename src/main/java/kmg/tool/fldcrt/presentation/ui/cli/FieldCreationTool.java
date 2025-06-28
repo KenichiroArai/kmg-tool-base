@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli.two2one.dtc;
+package kmg.tool.fldcrt.presentation.ui.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.tool.application.service.two2one.FieldCreationService;
+import kmg.tool.presentation.ui.cli.two2one.dtc.AbstractDtcTool;
 
 /**
  * <h2>フィールド作成ツール</h2>
