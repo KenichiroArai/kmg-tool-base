@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic.two2one.dtc.impl;
+package kmg.tool.dtc.domain.logic.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,13 +15,13 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.domain.logic.two2one.dtc.DtcLogic;
-import kmg.tool.domain.model.two2one.dtc.DtcDerivedPlaceholderModel;
-import kmg.tool.domain.model.two2one.dtc.DtcTransformModel;
-import kmg.tool.domain.model.two2one.dtc.impl.DtcDerivedPlaceholderModelImpl;
-import kmg.tool.domain.model.two2one.dtc.impl.DtcTransformModelImpl;
-import kmg.tool.domain.types.io.dtc.DtcKeyTypes;
-import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
+import kmg.tool.dtc.domain.logic.DtcLogic;
+import kmg.tool.dtc.domain.model.DtcDerivedPlaceholderModel;
+import kmg.tool.dtc.domain.model.DtcTransformModel;
+import kmg.tool.dtc.domain.model.impl.DtcDerivedPlaceholderModelImpl;
+import kmg.tool.dtc.domain.model.impl.DtcTransformModelImpl;
+import kmg.tool.dtc.domain.types.DtcKeyTypes;
+import kmg.tool.dtc.domain.types.DtcTransformTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 

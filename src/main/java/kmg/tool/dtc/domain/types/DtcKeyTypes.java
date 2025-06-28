@@ -1,4 +1,4 @@
-package kmg.tool.domain.types.io.dtc;
+package kmg.tool.dtc.domain.types;
 
 import java.util.HashMap;
 import java.util.Map;

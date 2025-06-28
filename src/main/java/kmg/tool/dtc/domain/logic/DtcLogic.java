@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic.two2one.dtc;
+package kmg.tool.dtc.domain.logic;
 
 import java.io.Closeable;
 import java.io.IOException;

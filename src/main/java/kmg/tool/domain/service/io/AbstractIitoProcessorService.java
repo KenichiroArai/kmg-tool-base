@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.domain.service.IitoProcessorService;
-import kmg.tool.domain.service.io.dtc.DtcService;
+import kmg.tool.dtc.domain.service.DtcService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;

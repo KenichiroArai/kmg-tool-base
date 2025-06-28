@@ -1,8 +1,8 @@
-package kmg.tool.domain.model.two2one.dtc.impl;
+package kmg.tool.dtc.domain.model.impl;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.tool.domain.model.two2one.dtc.DtcTransformModel;
-import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
+import kmg.tool.dtc.domain.model.DtcTransformModel;
+import kmg.tool.dtc.domain.types.DtcTransformTypes;
 
 /**
  * テンプレートの動的変換モデル実装<br>

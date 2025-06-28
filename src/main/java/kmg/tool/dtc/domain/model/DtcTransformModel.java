@@ -1,4 +1,4 @@
-package kmg.tool.domain.model.two2one.dtc;
+package kmg.tool.dtc.domain.model;
 
 /**
  * テンプレートの動的変換モデル<br>

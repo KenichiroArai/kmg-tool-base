@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli.two2one.dtc;
+package kmg.tool.dtc.presentation.ui.cli;
 
 import kmg.tool.domain.service.IitoProcessorService;
 import kmg.tool.two2one.presentation.ui.cli.AbstractTwo2OneTool;

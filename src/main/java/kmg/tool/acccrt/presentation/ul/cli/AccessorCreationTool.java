@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.tool.acccrt.application.service.AccessorCreationService;
-import kmg.tool.presentation.ui.cli.two2one.dtc.AbstractDtcTool;
+import kmg.tool.dtc.presentation.ui.cli.AbstractDtcTool;
 
 /**
  * <h2>アクセサ作成ツール</h2>

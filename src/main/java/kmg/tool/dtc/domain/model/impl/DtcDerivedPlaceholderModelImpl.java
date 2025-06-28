@@ -1,7 +1,7 @@
-package kmg.tool.domain.model.two2one.dtc.impl;
+package kmg.tool.dtc.domain.model.impl;
 
-import kmg.tool.domain.model.two2one.dtc.DtcDerivedPlaceholderModel;
-import kmg.tool.domain.types.io.dtc.DtcTransformTypes;
+import kmg.tool.dtc.domain.model.DtcDerivedPlaceholderModel;
+import kmg.tool.dtc.domain.types.DtcTransformTypes;
 
 /**
  * テンプレートの動的変換派生プレースホルダー定義モデル実装<br>
