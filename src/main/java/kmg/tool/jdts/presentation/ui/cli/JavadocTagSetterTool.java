@@ -1,4 +1,4 @@
-package kmg.tool.jdtagst.presentation.ui.cli;
+package kmg.tool.jdts.presentation.ui.cli;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
