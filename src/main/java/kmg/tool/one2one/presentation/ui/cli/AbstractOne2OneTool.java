@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli.one2one;
+package kmg.tool.one2one.presentation.ui.cli;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
