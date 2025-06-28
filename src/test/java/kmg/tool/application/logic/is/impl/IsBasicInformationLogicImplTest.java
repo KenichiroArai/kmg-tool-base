@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.is.application.logic.IsBasicInformationLogic;
 import kmg.tool.is.application.logic.impl.IsBasicInformationLogicImpl;
-import kmg.tool.presentation.ui.gui.is.IsCreationTool;
+import kmg.tool.is.presentation.ui.gui.IsCreationTool;
 
 /**
  * 挿入SQL基本情報ロジック実装のテスト<br>

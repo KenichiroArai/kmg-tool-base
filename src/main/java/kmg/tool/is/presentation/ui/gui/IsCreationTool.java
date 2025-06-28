@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.gui.is;
+package kmg.tool.is.presentation.ui.gui;
 
 import java.io.IOException;
 import java.net.URL;

@@ -35,7 +35,7 @@ import kmg.tool.is.application.logic.impl.IsDataSheetCreationLogicImpl;
  *
  * @author KenichiroArai
  */
-@SpringBootTest(classes = kmg.tool.presentation.ui.gui.is.IsCreationTool.class)
+@SpringBootTest(classes = kmg.tool.is.presentation.ui.gui.IsCreationTool.class)
 @SuppressWarnings({
     "nls", "static-method"
 })
