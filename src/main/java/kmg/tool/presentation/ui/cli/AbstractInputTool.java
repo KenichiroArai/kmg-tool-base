@@ -169,6 +169,6 @@ public abstract class AbstractInputTool extends AbstractTool {
      *
      * @since 0.1.0
      */
-    protected abstract InputService getInputService();
+    public abstract InputService getInputService();
 
 }

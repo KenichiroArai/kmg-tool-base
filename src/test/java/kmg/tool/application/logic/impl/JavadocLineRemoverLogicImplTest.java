@@ -20,7 +20,7 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.jdocr.application.logic.impl.JavadocLineRemoverLogicImpl;
-import kmg.tool.presentation.ui.cli.JavadocLineRemoverTool;
+import kmg.tool.jdocr.presentation.ui.cli.JavadocLineRemoverTool;
 
 /**
  * Javadoc行削除ロジック実装のテスト<br>

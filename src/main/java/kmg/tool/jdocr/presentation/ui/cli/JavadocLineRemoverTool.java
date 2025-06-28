@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli;
+package kmg.tool.jdocr.presentation.ui.cli;
 
 import java.nio.file.Path;
 
@@ -14,6 +14,7 @@ import kmg.tool.domain.service.SimpleInputService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.jdocr.service.JavadocLineRemoverService;
+import kmg.tool.presentation.ui.cli.AbstractInputTool;
 
 /**
  * Javadoc行削除ツール
@@ -135,7 +136,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
      * @return 入力サービス
      */
     @Override
-    protected SimpleInputService getInputService() {
+    public SimpleInputService getInputService() {
 
         final SimpleInputService result = this.inputService;
         return result;

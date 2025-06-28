@@ -210,7 +210,7 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
      * @return プレーンコンテンツ入力サービス
      */
     @Override
-    protected PlainContentInputServic getInputService() {
+    public PlainContentInputServic getInputService() {
 
         final PlainContentInputServic result = this.inputService;
         return result;

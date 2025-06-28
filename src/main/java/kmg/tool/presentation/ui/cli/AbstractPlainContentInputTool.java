@@ -26,6 +26,14 @@ public abstract class AbstractPlainContentInputTool extends AbstractInputTool {
     }
 
     /**
+     * プレーンコンテンツ入力サービスを返す。
+     *
+     * @return プレーンコンテンツ入力サービス
+     */
+    @Override
+    public abstract PlainContentInputServic getInputService();
+
+    /**
      * 入力ファイルからプレーンコンテンツを読み込む
      *
      * @return true：成功、false：失敗
@@ -49,13 +57,5 @@ public abstract class AbstractPlainContentInputTool extends AbstractInputTool {
         return result;
 
     }
-
-    /**
-     * プレーンコンテンツ入力サービスを返す。
-     *
-     * @return プレーンコンテンツ入力サービス
-     */
-    @Override
-    protected abstract PlainContentInputServic getInputService();
 
 }
