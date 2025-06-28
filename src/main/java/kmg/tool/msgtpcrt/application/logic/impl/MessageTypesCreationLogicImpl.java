@@ -3,11 +3,11 @@ package kmg.tool.msgtpcrt.application.logic.impl;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.types.two2one.MessageTypesRegexGroupTypes;
-import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.msgtpcrt.application.logic.MessageTypesCreationLogic;
+import kmg.tool.two2one.application.types.MessageTypesRegexGroupTypes;
+import kmg.tool.two2one.domain.logic.AbstractIctoOneLinePatternLogic;
 
 /**
  * <h2>メッセージの種類作成ロジック実装クラス</h2>

@@ -1,7 +1,7 @@
 package kmg.tool.acccrt.application.logic;
 
-import kmg.tool.domain.logic.two2one.IctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.two2one.domain.logic.IctoOneLinePatternLogic;
 
 /**
  * アクセサ作成ロジックインタフェース<br>

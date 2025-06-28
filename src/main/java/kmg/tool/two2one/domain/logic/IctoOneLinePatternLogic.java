@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic.two2one;
+package kmg.tool.two2one.domain.logic;
 
 import java.io.Closeable;
 import java.nio.file.Path;

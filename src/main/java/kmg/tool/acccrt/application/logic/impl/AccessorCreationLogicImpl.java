@@ -9,9 +9,9 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
 import kmg.tool.acccrt.application.logic.AccessorCreationLogic;
 import kmg.tool.acccrt.application.types.AccessorRegexGroupTypes;
-import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.two2one.domain.logic.AbstractIctoOneLinePatternLogic;
 
 /**
  * アクセサ作成ロジック<br>

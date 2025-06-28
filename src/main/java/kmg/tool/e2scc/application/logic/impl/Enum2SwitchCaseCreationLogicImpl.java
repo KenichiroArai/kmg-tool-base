@@ -5,11 +5,11 @@ import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
-import kmg.tool.application.types.two2one.ConvertEnumDefinitionTypes;
-import kmg.tool.domain.logic.two2one.AbstractIctoOneLinePatternLogic;
 import kmg.tool.e2scc.application.logic.Enum2SwitchCaseCreationLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.two2one.application.types.ConvertEnumDefinitionTypes;
+import kmg.tool.two2one.domain.logic.AbstractIctoOneLinePatternLogic;
 
 /**
  * <h2>列挙型からcase文作成ロジック実装クラス</h2>

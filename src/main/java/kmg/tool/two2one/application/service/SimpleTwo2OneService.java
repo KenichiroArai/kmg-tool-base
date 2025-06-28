@@ -1,4 +1,4 @@
-package kmg.tool.application.service.two2one;
+package kmg.tool.two2one.application.service;
 
 import kmg.tool.domain.service.io.Two2OneService;
 

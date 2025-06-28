@@ -1,4 +1,4 @@
-package kmg.tool.application.service.two2one.impl;
+package kmg.tool.two2one.application.service.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.service.two2one.SimpleTwo2OneService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.two2one.application.service.SimpleTwo2OneService;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス<br>

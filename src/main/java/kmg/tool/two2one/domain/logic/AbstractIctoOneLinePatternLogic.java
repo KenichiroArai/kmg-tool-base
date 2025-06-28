@@ -1,4 +1,4 @@
-package kmg.tool.domain.logic.two2one;
+package kmg.tool.two2one.domain.logic;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

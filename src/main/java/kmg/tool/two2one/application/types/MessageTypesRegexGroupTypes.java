@@ -1,4 +1,4 @@
-package kmg.tool.application.types.two2one;
+package kmg.tool.two2one.application.types;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,9 +6,9 @@ import java.util.Map;
 import kmg.core.infrastructure.common.KmgComTypes;
 
 /**
- * 列挙型定義変換の種類<br>
+ * メッセージの種類作成用正規表現グループの種類<br>
  * <p>
- * 列挙型定義変換ツールで使用する正規表現パターンのグループインデックスを管理する列挙型です。
+ * アメッセージの種類作成ツールで使用する正規表現パターンのグループインデックスを管理する列挙型です。
  * </p>
  *
  * @author KenichiroArai
@@ -18,7 +18,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  * @version 0.1.0
  */
 @SuppressWarnings("nls")
-public enum ConvertEnumDefinitionTypes implements KmgComTypes<String> {
+public enum MessageTypesRegexGroupTypes implements KmgComTypes<String> {
 
     /* 定義：開始 */
 
@@ -30,39 +30,31 @@ public enum ConvertEnumDefinitionTypes implements KmgComTypes<String> {
     NONE("指定無し", "None", "指定無し", -1),
 
     /**
-     * 列挙型定義パターン：フルマッチ
+     * メッセージの種類パターン：フルマッチ
      *
      * @since 0.1.0
      */
-    ENUM_DEFINITION_FULL_MATCH("列挙型定義パターン：フルマッチ", "enumDefinitionFullMatch", "列挙型定義パターンの全体マッチ", 0),
+    MESSAGE_TYPE_FULL_MATCH("メッセージの種類パターン：フルマッチ", "messageTypeFullMatch", "メッセージの種類パターンの全体マッチ", 0),
 
     /**
-     * 列挙型定義パターン：定数名
+     * メッセージの種類パターン：項目
+     * <p>
+     * 例：KMGTOOL_GEN32000
+     * </p>
      *
      * @since 0.1.0
      */
-    ENUM_DEFINITION_CONSTANT_NAME("列挙型定義パターン：定数名", "enumDefinitionConstantName", "列挙型定義パターンの定数名部分", 1),
+    MESSAGE_TYPE_ITEM("メッセージの種類パターン：項目", "messageTypeItem", "メッセージの種類パターンの項目部分", 0),
 
     /**
-     * 列挙型定義パターン：表示名
+     * メッセージの種類パターン：項目名
+     * <p>
+     * 例：メッセージの種類が指定されていません。
+     * </p>
      *
      * @since 0.1.0
      */
-    ENUM_DEFINITION_DISPLAY_NAME("列挙型定義パターン：表示名", "enumDefinitionDisplayName", "列挙型定義パターンの表示名部分", 2),
-
-    /**
-     * 列挙型定義パターン：キー
-     *
-     * @since 0.1.0
-     */
-    ENUM_DEFINITION_KEY("列挙型定義パターン：キー", "enumDefinitionKey", "列挙型定義パターンのキー部分", 3),
-
-    /**
-     * 列挙型定義パターン：詳細
-     *
-     * @since 0.1.0
-     */
-    ENUM_DEFINITION_DETAIL("列挙型定義パターン：詳細", "enumDefinitionDetail", "列挙型定義パターンの詳細部分", 4),
+    MESSAGE_TYPE_ITEM_NAME("メッセージの種類パターン：項目名", "messageTypeItemName", "メッセージの種類パターンの項目名部分", 1),
 
     /* 定義：終了 */
     ;
@@ -72,14 +64,14 @@ public enum ConvertEnumDefinitionTypes implements KmgComTypes<String> {
      *
      * @since 0.1.0
      */
-    private static final Map<String, ConvertEnumDefinitionTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, MessageTypesRegexGroupTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final ConvertEnumDefinitionTypes type : ConvertEnumDefinitionTypes.values()) {
+        for (final MessageTypesRegexGroupTypes type : MessageTypesRegexGroupTypes.values()) {
 
-            ConvertEnumDefinitionTypes.VALUES_MAP.put(type.get(), type);
+            MessageTypesRegexGroupTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -120,9 +112,9 @@ public enum ConvertEnumDefinitionTypes implements KmgComTypes<String> {
      *
      * @return デフォルト値
      */
-    public static ConvertEnumDefinitionTypes getDefault() {
+    public static MessageTypesRegexGroupTypes getDefault() {
 
-        final ConvertEnumDefinitionTypes result = NONE;
+        final MessageTypesRegexGroupTypes result = NONE;
         return result;
 
     }
@@ -140,9 +132,9 @@ public enum ConvertEnumDefinitionTypes implements KmgComTypes<String> {
      *
      * @return 種類。指定無し（NONE）：キーが存在しない場合。
      */
-    public static ConvertEnumDefinitionTypes getEnum(final String key) {
+    public static MessageTypesRegexGroupTypes getEnum(final String key) {
 
-        ConvertEnumDefinitionTypes result = ConvertEnumDefinitionTypes.VALUES_MAP.get(key);
+        MessageTypesRegexGroupTypes result = MessageTypesRegexGroupTypes.VALUES_MAP.get(key);
 
         if (result == null) {
 
@@ -160,9 +152,9 @@ public enum ConvertEnumDefinitionTypes implements KmgComTypes<String> {
      *
      * @return 初期値
      */
-    public static ConvertEnumDefinitionTypes getInitValue() {
+    public static MessageTypesRegexGroupTypes getInitValue() {
 
-        final ConvertEnumDefinitionTypes result = NONE;
+        final MessageTypesRegexGroupTypes result = NONE;
         return result;
 
     }
@@ -181,7 +173,7 @@ public enum ConvertEnumDefinitionTypes implements KmgComTypes<String> {
      * @param groupIndex
      *                    グループインデックス
      */
-    ConvertEnumDefinitionTypes(final String displayName, final String key, final String detail, final int groupIndex) {
+    MessageTypesRegexGroupTypes(final String displayName, final String key, final String detail, final int groupIndex) {
 
         this.displayName = displayName;
         this.key = key;

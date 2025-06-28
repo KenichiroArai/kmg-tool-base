@@ -1,7 +1,7 @@
 package kmg.tool.presentation.ui.cli.two2one.dtc;
 
 import kmg.tool.domain.service.IitoProcessorService;
-import kmg.tool.presentation.ui.cli.two2one.AbstractTwo2OneTool;
+import kmg.tool.two2one.presentation.ui.cli.AbstractTwo2OneTool;
 
 /**
  * テンプレートの動的変換ツール抽象クラス
