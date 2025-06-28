@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.two2one.dtc;
+package kmg.tool.fldcrt.application.logic;
 
 import kmg.tool.domain.logic.two2one.IctoOneLinePatternLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
