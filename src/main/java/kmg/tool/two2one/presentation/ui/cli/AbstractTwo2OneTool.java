@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.common.presentation.ui.cli.AbstractIoTool;
 import kmg.tool.domain.service.io.Two2OneService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
-import kmg.tool.presentation.ui.cli.AbstractIoTool;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス抽象クラス

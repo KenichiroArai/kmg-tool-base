@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli;
+package kmg.tool.common.presentation.ui.cli;
 
 /**
  * ツール抽象クラス

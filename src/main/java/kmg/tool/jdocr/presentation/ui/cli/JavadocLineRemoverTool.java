@@ -10,11 +10,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.common.presentation.ui.cli.AbstractInputTool;
 import kmg.tool.domain.service.SimpleInputService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.jdocr.service.JavadocLineRemoverService;
-import kmg.tool.presentation.ui.cli.AbstractInputTool;
 
 /**
  * Javadoc行削除ツール

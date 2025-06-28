@@ -1,4 +1,4 @@
-package kmg.tool.presentation.ui.cli;
+package kmg.tool.jdtagst.presentation.ui.cli;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +14,8 @@ import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.common.presentation.ui.cli.AbstractInputTool;
+import kmg.tool.common.presentation.ui.cli.AbstractPlainContentInputTool;
 import kmg.tool.domain.service.PlainContentInputServic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.exception.KmgToolValException;
