@@ -1,4 +1,4 @@
-package kmg.tool.application.service.jdts.impl;
+package kmg.tool.jdts.application.service.impl;
 
 import java.util.regex.Pattern;
 
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.service.jdts.JdtsReplService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 import kmg.tool.jdts.application.logic.JdtsBlockReplLogic;
 import kmg.tool.jdts.application.model.JdtsBlockModel;
 import kmg.tool.jdts.application.model.JdtsCodeModel;
 import kmg.tool.jdts.application.model.JdtsConfigsModel;
+import kmg.tool.jdts.application.service.JdtsReplService;
 
 /**
  * Javadocタグ設定の入出力サービス<br>

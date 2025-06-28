@@ -1,4 +1,4 @@
-package kmg.tool.application.service.jdts;
+package kmg.tool.jdts.application.service;
 
 import java.nio.file.Path;
 

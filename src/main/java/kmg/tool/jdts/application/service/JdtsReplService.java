@@ -1,4 +1,4 @@
-package kmg.tool.application.service.jdts;
+package kmg.tool.jdts.application.service;
 
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdts.application.model.JdtsCodeModel;
