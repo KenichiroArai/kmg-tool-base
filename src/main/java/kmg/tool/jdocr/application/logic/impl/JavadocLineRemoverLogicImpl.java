@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.impl;
+package kmg.tool.jdocr.application.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,9 +18,9 @@ import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.application.logic.JavadocLineRemoverLogic;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.jdocr.application.logic.JavadocLineRemoverLogic;
 
 /**
  * Javadoc行削除ロジック<br>

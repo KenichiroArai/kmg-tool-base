@@ -1,4 +1,4 @@
-package kmg.tool.application.service.impl;
+package kmg.tool.jdocr.service.impl;
 
 import java.nio.file.Path;
 
@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.application.logic.JavadocLineRemoverLogic;
-import kmg.tool.application.service.JavadocLineRemoverService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
+import kmg.tool.jdocr.application.logic.JavadocLineRemoverLogic;
+import kmg.tool.jdocr.service.JavadocLineRemoverService;
 
 /**
  * Javadoc行削除サービス<br>

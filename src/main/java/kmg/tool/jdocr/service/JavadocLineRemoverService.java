@@ -1,4 +1,4 @@
-package kmg.tool.application.service;
+package kmg.tool.jdocr.service;
 
 import java.nio.file.Path;
 

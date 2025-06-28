@@ -1,4 +1,4 @@
-package kmg.tool.application.logic;
+package kmg.tool.jdocr.application.logic;
 
 import java.nio.file.Path;
 import java.util.Map;
