@@ -1,8 +1,8 @@
 package kmg.tool.application.service.jdts;
 
-import kmg.tool.application.model.jdts.JdtsCodeModel;
-import kmg.tool.application.model.jdts.JdtsConfigsModel;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.jdts.application.model.JdtsCodeModel;
+import kmg.tool.jdts.application.model.JdtsConfigsModel;
 
 /**
  * Javadocタグ設定の入出力サービスインタフェース<br>

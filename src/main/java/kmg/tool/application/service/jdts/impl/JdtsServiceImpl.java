@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.application.logic.jdts.JdtsIoLogic;
-import kmg.tool.application.model.jdts.JdtsCodeModel;
-import kmg.tool.application.model.jdts.JdtsConfigsModel;
-import kmg.tool.application.model.jdts.imp.JdtsCodeModelImpl;
-import kmg.tool.application.model.jdts.imp.JdtsConfigsModelImpl;
 import kmg.tool.application.service.jdts.JdtsReplService;
 import kmg.tool.application.service.jdts.JdtsService;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.infrastructure.exception.KmgToolValException;
 import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
+import kmg.tool.jdts.application.logic.JdtsIoLogic;
+import kmg.tool.jdts.application.model.JdtsCodeModel;
+import kmg.tool.jdts.application.model.JdtsConfigsModel;
+import kmg.tool.jdts.application.model.impl.JdtsCodeModelImpl;
+import kmg.tool.jdts.application.model.impl.JdtsConfigsModelImpl;
 
 /**
  * Javadocタグ設定サービス<br>
