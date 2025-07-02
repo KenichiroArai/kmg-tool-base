@@ -3,7 +3,7 @@ package kmg.tool.acccrt.application.types;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.core.infrastructure.common.KmgComTypes;
+import kmg.core.infrastructure.cmn.KmgCmnTypes;
 
 /**
  * アクセサ作成用正規表現グループの種類<br>
@@ -18,7 +18,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  * @version 0.1.0
  */
 @SuppressWarnings("nls")
-public enum AccessorRegexGroupTypes implements KmgComTypes<String> {
+public enum AccessorRegexGroupTypes implements KmgCmnTypes<String> {
 
     /* 定義：開始 */
 

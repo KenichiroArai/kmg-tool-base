@@ -1,6 +1,6 @@
 package kmg.tool.cmn.infrastructure.common.msg;
 
-import kmg.core.infrastructure.common.msg.KmgComLogMsgTypes;
+import kmg.core.infrastructure.cmn.msg.KmgCmnLogMsgTypes;
 
 /**
  * KMGツール共通ログメッセージの種類のインタフェース
@@ -15,7 +15,7 @@ import kmg.core.infrastructure.common.msg.KmgComLogMsgTypes;
  *
  * @version 0.1.0
  */
-public interface KmgToolComLogMsgTypes extends KmgToolComMsgTypes, KmgComLogMsgTypes {
+public interface KmgToolComLogMsgTypes extends KmgToolComMsgTypes, KmgCmnLogMsgTypes {
 
     // 処理なし
 

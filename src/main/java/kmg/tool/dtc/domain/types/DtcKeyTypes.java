@@ -3,7 +3,7 @@ package kmg.tool.dtc.domain.types;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.core.infrastructure.common.KmgComTypes;
+import kmg.core.infrastructure.cmn.KmgCmnTypes;
 
 /**
  * テンプレートの動的変換のキーの種類<br>
@@ -18,7 +18,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  * @version 0.1.0
  */
 @SuppressWarnings("nls")
-public enum DtcKeyTypes implements KmgComTypes<String> {
+public enum DtcKeyTypes implements KmgCmnTypes<String> {
 
     /* 定義：開始 */
 

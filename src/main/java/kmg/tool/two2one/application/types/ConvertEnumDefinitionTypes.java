@@ -3,7 +3,7 @@ package kmg.tool.two2one.application.types;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.core.infrastructure.common.KmgComTypes;
+import kmg.core.infrastructure.cmn.KmgCmnTypes;
 
 /**
  * 列挙型定義変換の種類<br>
@@ -18,7 +18,7 @@ import kmg.core.infrastructure.common.KmgComTypes;
  * @version 0.1.0
  */
 @SuppressWarnings("nls")
-public enum ConvertEnumDefinitionTypes implements KmgComTypes<String> {
+public enum ConvertEnumDefinitionTypes implements KmgCmnTypes<String> {
 
     /* 定義：開始 */
 
