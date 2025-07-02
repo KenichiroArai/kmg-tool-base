@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.domain.model.JavadocModel;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.jdoc.domain.model.JavadocModel;
 
 /**
  * Javadocタグ設定のブロックモデルインタフェース<br>

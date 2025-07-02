@@ -1,7 +1,7 @@
-package kmg.tool.domain.model.impl;
+package kmg.tool.jdoc.domain.model.impl;
 
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.domain.model.JavadocTagModel;
+import kmg.tool.jdoc.domain.model.JavadocTagModel;
 
 /**
  * Javadocタグ情報<br>

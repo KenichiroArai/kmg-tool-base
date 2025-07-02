@@ -1,4 +1,4 @@
-package kmg.tool.domain.model;
+package kmg.tool.jdoc.domain.model;
 
 /**
  * Javadocモデル<br>

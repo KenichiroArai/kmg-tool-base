@@ -1,4 +1,4 @@
-package kmg.tool.domain.types;
+package kmg.tool.jdoc.domain.types;
 
 import java.util.HashMap;
 import java.util.Map;

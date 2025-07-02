@@ -1,8 +1,8 @@
-package kmg.tool.domain.model.impl;
+package kmg.tool.jdoc.domain.model.impl;
 
-import kmg.tool.domain.model.JavadocModel;
-import kmg.tool.domain.model.JavadocTagsModel;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.jdoc.domain.model.JavadocModel;
+import kmg.tool.jdoc.domain.model.JavadocTagsModel;
 
 /**
  * Javadocモデル<br>

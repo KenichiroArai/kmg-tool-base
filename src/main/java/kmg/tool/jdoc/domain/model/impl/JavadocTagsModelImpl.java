@@ -1,4 +1,4 @@
-package kmg.tool.domain.model.impl;
+package kmg.tool.jdoc.domain.model.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.domain.model.JavadocTagModel;
-import kmg.tool.domain.model.JavadocTagsModel;
-import kmg.tool.domain.types.JavadocGroupIndexTypes;
 import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.jdoc.domain.model.JavadocTagModel;
+import kmg.tool.jdoc.domain.model.JavadocTagsModel;
+import kmg.tool.jdoc.domain.types.JavadocGroupIndexTypes;
 
 /**
  * Javadocタグ一覧情報<br>
