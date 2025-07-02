@@ -12,7 +12,7 @@ import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
-import kmg.tool.common.presentation.ui.cli.AbstractInputTool;
+import kmg.tool.cmn.presentation.ui.cli.AbstractInputTool;
 import kmg.tool.domain.service.SimpleInputService;
 import kmg.tool.jdocr.service.JavadocLineRemoverService;
 

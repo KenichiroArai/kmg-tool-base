@@ -17,8 +17,8 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
 import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
-import kmg.tool.common.presentation.ui.cli.AbstractInputTool;
-import kmg.tool.common.presentation.ui.cli.AbstractPlainContentInputTool;
+import kmg.tool.cmn.presentation.ui.cli.AbstractInputTool;
+import kmg.tool.cmn.presentation.ui.cli.AbstractPlainContentInputTool;
 import kmg.tool.domain.service.PlainContentInputServic;
 import kmg.tool.jdts.application.service.JdtsService;
 

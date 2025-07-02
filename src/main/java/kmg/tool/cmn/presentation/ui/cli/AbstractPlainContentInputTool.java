@@ -1,4 +1,4 @@
-package kmg.tool.common.presentation.ui.cli;
+package kmg.tool.cmn.presentation.ui.cli;
 
 import java.nio.file.Path;
 
