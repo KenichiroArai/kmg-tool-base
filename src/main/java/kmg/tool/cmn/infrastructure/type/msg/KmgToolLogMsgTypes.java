@@ -1,9 +1,9 @@
-package kmg.tool.infrastructure.type.msg;
+package kmg.tool.cmn.infrastructure.type.msg;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.tool.infrastructure.common.msg.KmgToolComLogMsgTypes;
+import kmg.tool.cmn.infrastructure.common.msg.KmgToolComLogMsgTypes;
 
 /**
  * KMGツールログメッセージの種類<br>

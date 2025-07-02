@@ -1,6 +1,6 @@
 package kmg.tool.jdoc.domain.model.impl;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 import kmg.tool.jdoc.domain.model.JavadocTagsModel;
 

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 
 /**

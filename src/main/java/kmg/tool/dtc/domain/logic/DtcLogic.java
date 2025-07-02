@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * テンプレートの動的変換ロジックインタフェース<br>

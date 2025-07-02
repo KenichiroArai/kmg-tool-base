@@ -2,7 +2,7 @@ package kmg.tool.domain.service.io;
 
 import java.nio.file.Path;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 入出力サービスインタフェース

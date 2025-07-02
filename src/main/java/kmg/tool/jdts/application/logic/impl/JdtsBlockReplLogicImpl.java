@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocTagModel;
 import kmg.tool.jdts.application.logic.JdtsBlockReplLogic;
 import kmg.tool.jdts.application.model.JdtsBlockModel;

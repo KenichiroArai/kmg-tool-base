@@ -1,4 +1,4 @@
-package kmg.tool.infrastructure.common.msg;
+package kmg.tool.cmn.infrastructure.common.msg;
 
 import kmg.fund.infrastructure.common.msg.KmgFundComExcMsgTypes;
 

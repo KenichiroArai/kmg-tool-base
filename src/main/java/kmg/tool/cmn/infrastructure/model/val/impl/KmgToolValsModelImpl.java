@@ -1,4 +1,4 @@
-package kmg.tool.infrastructure.model.val.impl;
+package kmg.tool.cmn.infrastructure.model.val.impl;
 
 import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 

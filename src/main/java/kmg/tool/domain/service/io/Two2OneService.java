@@ -2,7 +2,7 @@ package kmg.tool.domain.service.io;
 
 import java.nio.file.Path;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービスインタフェース<br>

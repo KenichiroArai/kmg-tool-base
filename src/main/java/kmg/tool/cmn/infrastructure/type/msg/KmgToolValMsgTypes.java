@@ -1,10 +1,10 @@
-package kmg.tool.infrastructure.type.msg;
+package kmg.tool.cmn.infrastructure.type.msg;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.tool.infrastructure.common.msg.KmgToolComExcMsgTypes;
-import kmg.tool.infrastructure.common.msg.KmgToolComValMsgTypes;
+import kmg.tool.cmn.infrastructure.common.msg.KmgToolComExcMsgTypes;
+import kmg.tool.cmn.infrastructure.common.msg.KmgToolComValMsgTypes;
 
 /**
  * KMGツールバリデーションメッセージの種類<br>

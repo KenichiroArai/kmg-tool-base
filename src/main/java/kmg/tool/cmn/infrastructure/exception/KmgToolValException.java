@@ -1,4 +1,4 @@
-package kmg.tool.infrastructure.exception;
+package kmg.tool.cmn.infrastructure.exception;
 
 import kmg.core.infrastructure.model.val.KmgValsModel;
 import kmg.fund.infrastructure.exception.KmgFundValException;

@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.nio.file.Path;
 import java.util.List;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 入力、中間、テンプレート、出力の1行パターンインタフェース

@@ -14,8 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.type.KmgString;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.jdts.application.logic.impl.JdtsIoLogicImpl;
 
 /**

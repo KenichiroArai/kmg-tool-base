@@ -5,9 +5,9 @@ import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.e2scc.application.logic.Enum2SwitchCaseCreationLogic;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.two2one.application.types.ConvertEnumDefinitionTypes;
 import kmg.tool.two2one.domain.logic.AbstractIctoOneLinePatternLogic;
 

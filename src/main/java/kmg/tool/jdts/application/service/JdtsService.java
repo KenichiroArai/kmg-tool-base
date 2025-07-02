@@ -2,8 +2,8 @@ package kmg.tool.jdts.application.service;
 
 import java.nio.file.Path;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.exception.KmgToolValException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
 
 /**
  * Javadocタグ設定サービスインタフェース<br>

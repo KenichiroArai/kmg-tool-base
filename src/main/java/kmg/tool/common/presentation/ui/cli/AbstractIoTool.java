@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.domain.service.io.IoService;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * 入出力ツール抽象クラス

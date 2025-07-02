@@ -2,7 +2,7 @@ package kmg.tool.jdts.application.model;
 
 import java.util.List;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定のコードモデルインタフェース<br>

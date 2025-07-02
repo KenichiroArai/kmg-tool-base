@@ -1,6 +1,6 @@
 package kmg.tool.acccrt.application.logic;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.two2one.domain.logic.IctoOneLinePatternLogic;
 
 /**

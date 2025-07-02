@@ -16,7 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 挿入SQL作成ツール<br>

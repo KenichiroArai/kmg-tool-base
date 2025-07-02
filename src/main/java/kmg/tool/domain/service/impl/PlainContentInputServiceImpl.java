@@ -5,10 +5,10 @@ import java.nio.file.Files;
 
 import org.springframework.stereotype.Service;
 
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.domain.service.AbstractInputService;
 import kmg.tool.domain.service.PlainContentInputServic;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * プレーンコンテンツ入力サービス<br>

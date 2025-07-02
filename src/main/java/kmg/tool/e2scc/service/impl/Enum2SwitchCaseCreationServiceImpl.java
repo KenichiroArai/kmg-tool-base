@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
 import kmg.tool.domain.service.io.AbstractIitoProcessorService;
 import kmg.tool.e2scc.application.logic.Enum2SwitchCaseCreationLogic;
 import kmg.tool.e2scc.service.Enum2SwitchCaseCreationService;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * <h2>列挙型からcase文作成サービス実装クラス</h2>

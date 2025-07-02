@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocTagModel;
 import kmg.tool.jdoc.domain.model.JavadocTagsModel;
 import kmg.tool.jdoc.domain.types.JavadocGroupIndexTypes;

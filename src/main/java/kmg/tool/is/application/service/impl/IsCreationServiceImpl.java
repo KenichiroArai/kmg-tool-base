@@ -2,7 +2,7 @@ package kmg.tool.is.application.service.impl;
 
 import java.nio.file.Path;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.is.application.service.IsCreationService;
 import kmg.tool.is.application.service.IsFileCreationService;
 

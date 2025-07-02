@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 import kmg.tool.jdoc.domain.model.impl.JavadocModelImpl;
 import kmg.tool.jdts.application.model.JdtsBlockModel;

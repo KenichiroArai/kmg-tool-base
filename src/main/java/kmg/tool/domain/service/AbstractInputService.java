@@ -5,8 +5,8 @@ import java.nio.file.Path;
 
 import org.springframework.stereotype.Service;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
 
 /**
  * 抽象入力サービス

@@ -2,7 +2,7 @@ package kmg.tool.jdocr.service;
 
 import java.nio.file.Path;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadoc行削除サービスインタフェース<br>

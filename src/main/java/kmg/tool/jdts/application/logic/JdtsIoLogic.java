@@ -3,7 +3,7 @@ package kmg.tool.jdts.application.logic;
 import java.nio.file.Path;
 import java.util.List;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * Javadocタグ設定の入出力ロジックインタフェース<br>

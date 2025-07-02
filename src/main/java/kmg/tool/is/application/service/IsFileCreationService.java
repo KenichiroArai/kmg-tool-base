@@ -2,7 +2,7 @@ package kmg.tool.is.application.service;
 
 import java.nio.file.Path;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 挿入SQLファイル作成サービスインタフェース<br>

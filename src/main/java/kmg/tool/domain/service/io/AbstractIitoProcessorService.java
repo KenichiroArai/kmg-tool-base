@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
 import kmg.tool.domain.service.IitoProcessorService;
 import kmg.tool.dtc.domain.service.DtcService;
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.infrastructure.type.msg.KmgToolGenMsgTypes;
-import kmg.tool.infrastructure.type.msg.KmgToolLogMsgTypes;
 
 /**
  * 入力、中間、テンプレート、出力の処理サービス抽象クラス<br>

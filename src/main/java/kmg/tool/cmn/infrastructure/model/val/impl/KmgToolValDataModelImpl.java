@@ -1,9 +1,9 @@
-package kmg.tool.infrastructure.model.val.impl;
+package kmg.tool.cmn.infrastructure.model.val.impl;
 
 import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.infrastructure.common.msg.KmgToolComValMsgTypes;
+import kmg.tool.cmn.infrastructure.common.msg.KmgToolComValMsgTypes;
 
 /**
  * KMGツールバリデーションデータモデル<br>

@@ -1,6 +1,6 @@
 package kmg.tool.domain.service;
 
-import kmg.tool.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * プレーンコンテンツ入力サービスインタフェース<br>
