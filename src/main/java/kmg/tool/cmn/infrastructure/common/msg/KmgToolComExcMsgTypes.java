@@ -1,6 +1,6 @@
 package kmg.tool.cmn.infrastructure.common.msg;
 
-import kmg.fund.infrastructure.common.msg.KmgFundComExcMsgTypes;
+import kmg.fund.infrastructure.cmn.msg.KmgFundCmnExcMsgTypes;
 
 // TODO KenichiroArai 2025/07/02 ComをCmnに変更する。
 
@@ -18,7 +18,7 @@ import kmg.fund.infrastructure.common.msg.KmgFundComExcMsgTypes;
  *
  * @version 0.1.0
  */
-public interface KmgToolComExcMsgTypes extends KmgToolComMsgTypes, KmgFundComExcMsgTypes {
+public interface KmgToolComExcMsgTypes extends KmgToolComMsgTypes, KmgFundCmnExcMsgTypes {
 
     // 処理なし
 
