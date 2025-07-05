@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.e2scc.application.logic.Enum2SwitchCaseCreationLogic;
+import kmg.tool.iito.domain.logic.AbstractIctoOneLinePatternLogic;
 import kmg.tool.two2one.application.types.ConvertEnumDefinitionTypes;
-import kmg.tool.two2one.domain.logic.AbstractIctoOneLinePatternLogic;
 
 /**
  * <h2>列挙型からcase文作成ロジック実装クラス</h2>

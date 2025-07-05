@@ -1,4 +1,4 @@
-package kmg.tool.sample.domain.service;
+package kmg.tool.simple.domain.service;
 
 import org.springframework.stereotype.Service;
 

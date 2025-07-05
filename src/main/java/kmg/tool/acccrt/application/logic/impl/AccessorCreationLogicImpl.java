@@ -11,7 +11,7 @@ import kmg.tool.acccrt.application.logic.AccessorCreationLogic;
 import kmg.tool.acccrt.application.types.AccessorRegexGroupTypes;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.two2one.domain.logic.AbstractIctoOneLinePatternLogic;
+import kmg.tool.iito.domain.logic.AbstractIctoOneLinePatternLogic;
 
 /**
  * アクセサ作成ロジック<br>

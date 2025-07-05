@@ -1,7 +1,7 @@
 package kmg.tool.e2scc.application.logic;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.two2one.domain.logic.IctoOneLinePatternLogic;
+import kmg.tool.iito.domain.logic.IctoOneLinePatternLogic;
 
 /**
  * <h2>列挙型からcase文作成ロジックインタフェース</h2>

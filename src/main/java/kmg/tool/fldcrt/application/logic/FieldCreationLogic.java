@@ -1,7 +1,7 @@
 package kmg.tool.fldcrt.application.logic;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.two2one.domain.logic.IctoOneLinePatternLogic;
+import kmg.tool.iito.domain.logic.IctoOneLinePatternLogic;
 
 /**
  * フィールド作成ロジックインターフェース

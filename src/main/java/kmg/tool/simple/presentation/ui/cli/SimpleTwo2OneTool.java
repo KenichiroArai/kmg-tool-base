@@ -1,11 +1,12 @@
-package kmg.tool.two2one.presentation.ui.cli;
+package kmg.tool.simple.presentation.ui.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import kmg.tool.two2one.application.service.SimpleTwo2OneService;
+import kmg.tool.simple.application.service.SimpleTwo2OneService;
+import kmg.tool.two2one.presentation.ui.cli.AbstractTwo2OneTool;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツール

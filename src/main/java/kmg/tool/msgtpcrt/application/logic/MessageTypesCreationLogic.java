@@ -1,7 +1,7 @@
 package kmg.tool.msgtpcrt.application.logic;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.two2one.domain.logic.IctoOneLinePatternLogic;
+import kmg.tool.iito.domain.logic.IctoOneLinePatternLogic;
 
 /**
  * <h2>メッセージの種類作成ロジックインタフェース</h2>

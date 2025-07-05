@@ -1,4 +1,4 @@
-package kmg.tool.two2one.domain.logic;
+package kmg.tool.iito.domain.logic;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,6 +22,7 @@ import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 /**
  * 入力、中間、テンプレート、出力の1行パターンの抽象クラス
  */
+// TODO KenichiroArai 2025/07/06 中間の名称を考え直す
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
     /**
@@ -56,6 +57,9 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /** 変換後の1行データ */
     private String convertedLine;
+
+    /** 出力ファイルの区切り文字 */
+    private KmgDelimiterTypes outputDelimiter;
 
     /** 現在の行番号 */
     private int nowLineNumber;
@@ -296,7 +300,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     }
 
     /**
-     * 中間ファイルに書き込む。<br>
+     * 出力ファイルに書き込む。<br>
      * <p>
      * 入力ファイルから指定の形式に変換して中間ファイルに出力する。
      * </p>
@@ -311,12 +315,12 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         boolean result = false;
 
-        /* 中間の書き込み処理 */
+        /* 書き込み処理 */
         for (final List<String> row : this.rows) {
 
             try {
 
-                final String writeRow = KmgDelimiterTypes.COMMA.join(row);
+                final String writeRow = this.outputDelimiter.join(row);
                 this.writer.write(writeRow);
                 this.writer.write(System.lineSeparator());
 

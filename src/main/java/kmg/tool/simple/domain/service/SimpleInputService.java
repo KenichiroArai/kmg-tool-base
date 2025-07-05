@@ -1,4 +1,4 @@
-package kmg.tool.sample.domain.service;
+package kmg.tool.simple.domain.service;
 
 import kmg.tool.input.domain.service.InputService;
 
