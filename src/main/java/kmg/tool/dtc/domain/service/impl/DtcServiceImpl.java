@@ -227,10 +227,6 @@ public class DtcServiceImpl implements DtcService {
 
             result = true;
 
-        } catch (final KmgToolMsgException e) {
-
-            throw e;
-
         } finally {
 
             try {
