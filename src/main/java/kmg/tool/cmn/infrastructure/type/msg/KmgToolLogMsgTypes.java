@@ -3,7 +3,7 @@ package kmg.tool.cmn.infrastructure.type.msg;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.tool.cmn.infrastructure.common.msg.KmgToolComLogMsgTypes;
+import kmg.tool.cmn.infrastructure.msg.KmgToolCmnLogMsgTypes;
 
 /**
  * KMGツールログメッセージの種類<br>
@@ -18,7 +18,7 @@ import kmg.tool.cmn.infrastructure.common.msg.KmgToolComLogMsgTypes;
  * @version 0.1.0
  */
 @SuppressWarnings("nls")
-public enum KmgToolLogMsgTypes implements KmgToolComLogMsgTypes {
+public enum KmgToolLogMsgTypes implements KmgToolCmnLogMsgTypes {
 
     /* 定義：開始 */
 
