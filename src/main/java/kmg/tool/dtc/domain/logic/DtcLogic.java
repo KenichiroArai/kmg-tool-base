@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
@@ -131,6 +132,26 @@ public interface DtcLogic extends Closeable {
      * @return true：成功、false：失敗
      */
     boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) throws KmgToolMsgException;
+
+    /**
+     * 初期化する
+     *
+     * @param inputPath
+     *                              入力ファイルパス
+     * @param templatePath
+     *                              テンプレートファイルパス
+     * @param outputPath
+     *                              出力ファイルパス
+     * @param intermediateDelimiter
+     *                              中間行の区切り文字
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     *
+     * @return true：成功、false：失敗
+     */
+    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath,
+        KmgDelimiterTypes intermediateDelimiter) throws KmgToolMsgException;
 
     /**
      * テンプレートファイルを読み込む<br>

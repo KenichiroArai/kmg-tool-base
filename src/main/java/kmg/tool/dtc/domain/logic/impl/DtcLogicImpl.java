@@ -64,6 +64,9 @@ public class DtcLogicImpl implements DtcLogic {
     /** 変換後の1行データ */
     private String convertedLine;
 
+    /** 中間行の区切り文字 */
+    private KmgDelimiterTypes intermediateDelimiter;
+
     /** 中間プレースホルダーの定義マップ */
     private final Map<String, String> intermediatePlaceholderMap;
 
@@ -320,11 +323,39 @@ public class DtcLogicImpl implements DtcLogic {
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
         throws KmgToolMsgException {
 
+        final boolean result = this.initialize(inputPath, templatePath, outputPath, KmgDelimiterTypes.COMMA);
+        return result;
+
+    }
+
+    /**
+     * 初期化する
+     *
+     * @param inputPath
+     *                              入力ファイルパス
+     * @param templatePath
+     *                              テンプレートファイルパス
+     * @param outputPath
+     *                              出力ファイルパス
+     * @param intermediateDelimiter
+     *                              中間行の区切り文字
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     *
+     * @return true：成功、false：失敗
+     */
+    @Override
+    @SuppressWarnings("hiding")
+    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath,
+        final KmgDelimiterTypes intermediateDelimiter) throws KmgToolMsgException {
+
         boolean result = false;
 
         this.inputPath = inputPath;
         this.templatePath = templatePath;
         this.outputPath = outputPath;
+        this.intermediateDelimiter = intermediateDelimiter;
 
         /* データのクリア */
         this.clearReadingData();
@@ -757,8 +788,7 @@ public class DtcLogicImpl implements DtcLogic {
         /* 置換前の準備 */
 
         // 中間行に分割
-        // TODO KenichiroArai 2025/06/26 中間をカンマ以外も指定できるようにする
-        final String[] intermediateLine = KmgDelimiterTypes.COMMA.split(this.convertedLine);
+        final String[] intermediateLine = this.intermediateDelimiter.split(this.convertedLine);
 
         // 中間プレースホルダーのキー配列
         final String[] intermediatePlaceholderKeys = this.intermediatePlaceholderMap.keySet().toArray(new String[0]);
