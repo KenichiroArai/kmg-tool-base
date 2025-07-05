@@ -11,7 +11,7 @@ import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
-import kmg.tool.cmn.presentation.ui.cli.AbstractIoTool;
+import kmg.tool.io.presentation.ui.cli.AbstractIoTool;
 import kmg.tool.two2one.domain.service.Two2OneService;
 
 /**

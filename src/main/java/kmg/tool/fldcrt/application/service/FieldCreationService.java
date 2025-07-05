@@ -1,6 +1,6 @@
 package kmg.tool.fldcrt.application.service;
 
-import kmg.tool.domain.service.IitoProcessorService;
+import kmg.tool.iito.domain.service.IitoProcessorService;
 
 /**
  * フィールド作成サービスインターフェース

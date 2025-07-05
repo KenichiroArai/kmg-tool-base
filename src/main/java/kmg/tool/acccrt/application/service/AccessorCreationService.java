@@ -1,6 +1,6 @@
 package kmg.tool.acccrt.application.service;
 
-import kmg.tool.domain.service.IitoProcessorService;
+import kmg.tool.iito.domain.service.IitoProcessorService;
 
 /**
  * アクセサ作成サービスインタフェース<br>

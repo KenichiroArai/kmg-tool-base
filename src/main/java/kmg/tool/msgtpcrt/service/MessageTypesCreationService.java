@@ -1,6 +1,6 @@
 package kmg.tool.msgtpcrt.service;
 
-import kmg.tool.domain.service.IitoProcessorService;
+import kmg.tool.iito.domain.service.IitoProcessorService;
 
 /**
  * <h2>メッセージの種類作成サービスインタフェース</h2>

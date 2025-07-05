@@ -1,6 +1,6 @@
 package kmg.tool.e2scc.service;
 
-import kmg.tool.domain.service.IitoProcessorService;
+import kmg.tool.iito.domain.service.IitoProcessorService;
 
 /**
  * <h2>列挙型からcase文作成サービスインタフェース</h2>
