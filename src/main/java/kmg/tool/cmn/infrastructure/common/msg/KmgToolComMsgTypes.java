@@ -5,7 +5,7 @@ import kmg.fund.infrastructure.common.msg.KmgFundComMsgTypes;
 /**
  * KMGツール共通メッセージの種類のインタフェース
  * <p>
- * Comは、Commonの略。<br>
+ * Cmnは、Commonの略。<br>
  * Msgは、Messageの略。
  * </p>
  *

@@ -7,7 +7,7 @@ import kmg.fund.infrastructure.common.msg.KmgFundComExcMsgTypes;
 /**
  * KMG 共通例外メッセージの種類のインタフェース
  * <p>
- * Comは、Commonの略。<br>
+ * Cmnは、Commonの略。<br>
  * Excは、Exceptionの略。<br>
  * Msgは、Messageの略。
  * </p>

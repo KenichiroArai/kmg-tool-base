@@ -5,7 +5,7 @@ import kmg.core.infrastructure.cmn.msg.KmgCmnGenMsgTypes;
 /**
  * KMG共通一般メッセージの種類のインタフェース
  * <p>
- * Comは、Commonの略。<br>
+ * Cmnは、Commonの略。<br>
  * Genは、Generalの略。<br>
  * Msgは、Messageの略。
  * </p>

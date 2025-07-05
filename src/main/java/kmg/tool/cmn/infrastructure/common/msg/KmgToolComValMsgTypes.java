@@ -5,7 +5,7 @@ import kmg.core.infrastructure.cmn.msg.KmgCmnValMsgTypes;
 /**
  * KMG共通バリデーションメッセージの種類のインタフェース
  * <p>
- * Comは、Commonの略。<br>
+ * Cmnは、Commonの略。<br>
  * Valは、Validationの略。<br>
  * Msgは、Messageの略。
  * </p>

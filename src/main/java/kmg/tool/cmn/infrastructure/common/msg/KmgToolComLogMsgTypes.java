@@ -5,7 +5,7 @@ import kmg.core.infrastructure.cmn.msg.KmgCmnLogMsgTypes;
 /**
  * KMGツール共通ログメッセージの種類のインタフェース
  * <p>
- * Comは、Commonの略。<br>
+ * Cmnは、Commonの略。<br>
  * Msgは、Messageの略。
  * </p>
  *
