@@ -3,7 +3,7 @@ package kmg.tool.cmn.infrastructure.msg;
 import kmg.core.infrastructure.cmn.msg.KmgCmnLogMsgTypes;
 
 /**
- * KMGツール共通ログメッセージの種類のインタフェース
+ * KMGツール共通ログメッセージのインタフェース
  * <p>
  * Cmnは、Commonの略。<br>
  * Msgは、Messageの略。
@@ -15,7 +15,7 @@ import kmg.core.infrastructure.cmn.msg.KmgCmnLogMsgTypes;
  *
  * @version 0.1.0
  */
-public interface KmgToolCmnLogMsgTypes extends KmgToolCmnMsgTypes, KmgCmnLogMsgTypes {
+public interface KmgToolCmnLogMsg extends KmgToolCmnMsg, KmgCmnLogMsgTypes {
 
     // 処理なし
 

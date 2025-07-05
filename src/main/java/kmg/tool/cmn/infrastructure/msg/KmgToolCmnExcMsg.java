@@ -2,10 +2,8 @@ package kmg.tool.cmn.infrastructure.msg;
 
 import kmg.fund.infrastructure.cmn.msg.KmgFundCmnExcMsgTypes;
 
-// TODO KenichiroArai 2025/07/02 ComをCmnに変更する。
-
 /**
- * KMG 共通例外メッセージの種類のインタフェース
+ * KMG 共通例外メッセージのインタフェース
  * <p>
  * Cmnは、Commonの略。<br>
  * Excは、Exceptionの略。<br>
@@ -18,7 +16,7 @@ import kmg.fund.infrastructure.cmn.msg.KmgFundCmnExcMsgTypes;
  *
  * @version 0.1.0
  */
-public interface KmgToolCmnExcMsgTypes extends KmgToolCmnMsgTypes, KmgFundCmnExcMsgTypes {
+public interface KmgToolCmnExcMsg extends KmgToolCmnMsg, KmgFundCmnExcMsgTypes {
 
     // 処理なし
 

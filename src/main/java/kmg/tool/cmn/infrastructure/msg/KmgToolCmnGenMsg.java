@@ -3,7 +3,7 @@ package kmg.tool.cmn.infrastructure.msg;
 import kmg.core.infrastructure.cmn.msg.KmgCmnGenMsgTypes;
 
 /**
- * KMG共通一般メッセージの種類のインタフェース
+ * KMG共通一般メッセージのインタフェース
  * <p>
  * Cmnは、Commonの略。<br>
  * Genは、Generalの略。<br>
@@ -16,7 +16,7 @@ import kmg.core.infrastructure.cmn.msg.KmgCmnGenMsgTypes;
  *
  * @version 0.1.0
  */
-public interface KmgToolCmnGenMsgTypes extends KmgToolCmnMsgTypes, KmgCmnGenMsgTypes {
+public interface KmgToolCmnGenMsg extends KmgToolCmnMsg, KmgCmnGenMsgTypes {
 
     // 処理なし
 

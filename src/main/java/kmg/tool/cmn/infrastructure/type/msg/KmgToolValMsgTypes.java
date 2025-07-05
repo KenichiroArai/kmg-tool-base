@@ -3,8 +3,8 @@ package kmg.tool.cmn.infrastructure.type.msg;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.tool.cmn.infrastructure.msg.KmgToolCmnExcMsgTypes;
-import kmg.tool.cmn.infrastructure.msg.KmgToolCmnValMsgTypes;
+import kmg.tool.cmn.infrastructure.msg.KmgToolCmnExcMsg;
+import kmg.tool.cmn.infrastructure.msg.KmgToolCmnValMsg;
 
 /**
  * KMGツールバリデーションメッセージの種類<br>
@@ -20,7 +20,7 @@ import kmg.tool.cmn.infrastructure.msg.KmgToolCmnValMsgTypes;
  * @version 0.1.0
  */
 @SuppressWarnings("nls")
-public enum KmgToolValMsgTypes implements KmgToolCmnValMsgTypes, KmgToolCmnExcMsgTypes {
+public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
 
     /* 定義：開始 */
 
