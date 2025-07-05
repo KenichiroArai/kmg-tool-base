@@ -11,7 +11,7 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
-import kmg.tool.io.domain.service.AbstractIitoProcessorService;
+import kmg.tool.iito.domain.service.AbstractIitoProcessorService;
 import kmg.tool.msgtpcrt.application.logic.MessageTypesCreationLogic;
 import kmg.tool.msgtpcrt.service.MessageTypesCreationService;
 
