@@ -24,7 +24,7 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.acccrt.application.logic.impl.AccessorCreationLogicImpl;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 
 /**
  * アクセサ作成ロジック実装テスト

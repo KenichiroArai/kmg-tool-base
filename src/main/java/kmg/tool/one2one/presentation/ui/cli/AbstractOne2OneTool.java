@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.io.presentation.ui.cli.AbstractIoTool;
 import kmg.tool.one2one.domain.service.One2OneService;
 

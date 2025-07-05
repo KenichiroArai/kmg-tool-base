@@ -13,7 +13,7 @@ import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
 import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolValMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolValMsgTypes;
 import kmg.tool.jdts.application.model.JdtsLocationConfigModel;
 import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
 import kmg.tool.jdts.application.types.JdtsLocationModeTypes;

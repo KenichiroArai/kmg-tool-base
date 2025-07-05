@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.is.application.logic.IsBasicInformationLogic;
 import kmg.tool.is.application.service.IsFileCreationService;
 import kmg.tool.is.application.service.IslDataSheetCreationService;

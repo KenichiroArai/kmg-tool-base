@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.dtc.domain.logic.DtcLogic;
 import kmg.tool.dtc.domain.service.DtcService;
 

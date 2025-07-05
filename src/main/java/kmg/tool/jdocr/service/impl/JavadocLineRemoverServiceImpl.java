@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.jdocr.application.logic.JavadocLineRemoverLogic;
 import kmg.tool.jdocr.service.JavadocLineRemoverService;
 

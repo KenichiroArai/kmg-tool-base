@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdocr.application.logic.impl.JavadocLineRemoverLogicImpl;
 import kmg.tool.jdocr.presentation.ui.cli.JavadocLineRemoverTool;
 

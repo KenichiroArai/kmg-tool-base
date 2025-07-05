@@ -14,7 +14,7 @@ import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgMapUtils;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolValMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolValMsgTypes;
 import kmg.tool.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.jdts.application.model.JdtsTagConfigModel;
 import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;

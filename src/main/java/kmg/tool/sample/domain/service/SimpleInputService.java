@@ -1,4 +1,6 @@
-package kmg.tool.domain.service;
+package kmg.tool.sample.domain.service;
+
+import kmg.tool.input.domain.service.InputService;
 
 /**
  * シンプル入力サービスインタフェース

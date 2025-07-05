@@ -1,8 +1,9 @@
-package kmg.tool.domain.service;
+package kmg.tool.sample.domain.service;
 
 import org.springframework.stereotype.Service;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.input.domain.service.AbstractInputService;
 
 /**
  * シンプル入力サービス

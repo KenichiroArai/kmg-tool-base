@@ -16,10 +16,10 @@ import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
-import kmg.tool.cmn.presentation.ui.cli.AbstractInputTool;
-import kmg.tool.cmn.presentation.ui.cli.AbstractPlainContentInputTool;
-import kmg.tool.domain.service.PlainContentInputServic;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.input.domain.service.PlainContentInputServic;
+import kmg.tool.input.presentation.ui.cli.AbstractInputTool;
+import kmg.tool.input.presentation.ui.cli.AbstractPlainContentInputTool;
 import kmg.tool.jdts.application.service.JdtsService;
 
 /**

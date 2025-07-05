@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.msgtpcrt.application.logic.MessageTypesCreationLogic;
 import kmg.tool.two2one.application.types.MessageTypesRegexGroupTypes;
 import kmg.tool.two2one.domain.logic.AbstractIctoOneLinePatternLogic;

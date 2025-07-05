@@ -1,4 +1,4 @@
-package kmg.tool.cmn.infrastructure.type.msg;
+package kmg.tool.cmn.infrastructure.types;
 
 import java.util.HashMap;
 import java.util.Map;

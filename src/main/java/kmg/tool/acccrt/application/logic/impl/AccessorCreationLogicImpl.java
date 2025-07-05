@@ -10,7 +10,7 @@ import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
 import kmg.tool.acccrt.application.logic.AccessorCreationLogic;
 import kmg.tool.acccrt.application.types.AccessorRegexGroupTypes;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.two2one.domain.logic.AbstractIctoOneLinePatternLogic;
 
 /**

@@ -1,4 +1,4 @@
-package kmg.tool.domain.service;
+package kmg.tool.input.domain.service;
 
 import java.nio.file.Path;
 

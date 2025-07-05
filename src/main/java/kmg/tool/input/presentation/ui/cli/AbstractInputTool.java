@@ -1,9 +1,10 @@
-package kmg.tool.cmn.presentation.ui.cli;
+package kmg.tool.input.presentation.ui.cli;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import kmg.tool.domain.service.InputService;
+import kmg.tool.cmn.presentation.ui.cli.AbstractTool;
+import kmg.tool.input.domain.service.InputService;
 
 /**
  * 入力処理ツールの抽象基底クラス

@@ -16,7 +16,7 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.dtc.domain.logic.DtcLogic;
 import kmg.tool.dtc.domain.model.DtcDerivedPlaceholderModel;
 import kmg.tool.dtc.domain.model.DtcTransformModel;

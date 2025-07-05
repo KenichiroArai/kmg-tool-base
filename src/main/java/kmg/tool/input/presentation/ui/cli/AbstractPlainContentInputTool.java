@@ -1,9 +1,9 @@
-package kmg.tool.cmn.presentation.ui.cli;
+package kmg.tool.input.presentation.ui.cli;
 
 import java.nio.file.Path;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.domain.service.PlainContentInputServic;
+import kmg.tool.input.domain.service.PlainContentInputServic;
 
 /**
  * プレーンコンテンツ入力処理ツール抽象クラス

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdts.application.logic.JdtsIoLogic;
 
 /**
