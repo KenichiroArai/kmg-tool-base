@@ -1,4 +1,4 @@
-package kmg.tool.cmn.infrastructure.model.val.impl;
+package kmg.tool.val.model.impl;
 
 import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
