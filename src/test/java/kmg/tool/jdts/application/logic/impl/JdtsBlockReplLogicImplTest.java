@@ -21,7 +21,6 @@ import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 import kmg.tool.jdoc.domain.model.JavadocTagModel;
 import kmg.tool.jdoc.domain.model.JavadocTagsModel;
-import kmg.tool.jdts.application.logic.impl.JdtsBlockReplLogicImpl;
 import kmg.tool.jdts.application.model.JdtsBlockModel;
 import kmg.tool.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.jdts.application.model.JdtsLocationConfigModel;

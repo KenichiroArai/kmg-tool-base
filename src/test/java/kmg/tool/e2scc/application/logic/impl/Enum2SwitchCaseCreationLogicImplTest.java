@@ -23,7 +23,6 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.e2scc.application.logic.impl.Enum2SwitchCaseCreationLogicImpl;
 
 /**
  * 列挙型からcase文作成ロジック実装テスト

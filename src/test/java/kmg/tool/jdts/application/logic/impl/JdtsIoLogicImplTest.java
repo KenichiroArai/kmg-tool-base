@@ -16,7 +16,6 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.jdts.application.logic.impl.JdtsIoLogicImpl;
 
 /**
  * Javadocタグ設定の入出力ロジック実装のテスト<br>
