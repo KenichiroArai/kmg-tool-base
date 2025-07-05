@@ -11,9 +11,9 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
-import kmg.tool.domain.service.io.AbstractIitoProcessorService;
 import kmg.tool.fldcrt.application.logic.FieldCreationLogic;
 import kmg.tool.fldcrt.application.service.FieldCreationService;
+import kmg.tool.io.domain.service.AbstractIitoProcessorService;
 
 /**
  * フィールド作成サービス実装クラス

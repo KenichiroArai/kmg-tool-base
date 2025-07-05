@@ -1,8 +1,9 @@
-package kmg.tool.domain.service.io;
+package kmg.tool.one2one.domain.service;
 
 import java.nio.file.Path;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.io.domain.service.IoService;
 
 /**
  * 1入力ファイルから1出力ファイルへの変換ツールサービスインタフェース<br>

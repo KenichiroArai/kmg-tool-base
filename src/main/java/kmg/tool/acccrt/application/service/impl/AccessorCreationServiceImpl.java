@@ -13,7 +13,7 @@ import kmg.tool.acccrt.application.service.AccessorCreationService;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.type.msg.KmgToolGenMsgTypes;
 import kmg.tool.cmn.infrastructure.type.msg.KmgToolLogMsgTypes;
-import kmg.tool.domain.service.io.AbstractIitoProcessorService;
+import kmg.tool.io.domain.service.AbstractIitoProcessorService;
 
 /**
  * アクセサ作成サービス<br>

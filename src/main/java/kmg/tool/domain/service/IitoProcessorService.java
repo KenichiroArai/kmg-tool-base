@@ -1,6 +1,6 @@
 package kmg.tool.domain.service;
 
-import kmg.tool.domain.service.io.Two2OneService;
+import kmg.tool.two2one.domain.service.Two2OneService;
 
 /**
  * 入力、中間、テンプレート、出力の処理サービスインタフェース<br>
