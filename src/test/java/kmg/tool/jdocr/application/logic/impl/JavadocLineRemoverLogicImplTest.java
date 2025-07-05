@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.impl;
+package kmg.tool.jdocr.application.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;

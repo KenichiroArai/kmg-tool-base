@@ -1,4 +1,4 @@
-package kmg.tool.application.logic.is.impl;
+package kmg.tool.is.impl;
 
 import java.util.Map;
 
