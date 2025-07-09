@@ -17,6 +17,9 @@ import kmg.tool.dtc.presentation.ui.cli.AbstractDtcTool;
  * このツールは入力ファイルとテンプレートファイルを使用して、アクセサメソッドを含む出力ファイルを生成します。
  * </p>
  * <p>
+ * このツールは、AbstractDtcToolを継承しており、テンプレートの動的変換する処理を実装しています。
+ * </p>
+ * <p>
  * AbstractTwo2OneToolを継承しており、2つの入力ファイルから1つの出力ファイルを生成する処理を実装しています。
  * </p>
  *
