@@ -26,14 +26,15 @@ public interface MapTransformService {
      * @return true：成功、false：失敗
      *
      * @param targetPath
-     *                   対象ファイルパス
-     * @param mapping
-     *                   マッピング
+     *                                             対象ファイルパス
+     * @param targetValueToReplacementValueMapping
+     *                                             対象値と置換値のマッピング
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean initialize(final Path targetPath, Map<String, String> mapping) throws KmgToolMsgException;
+    boolean initialize(final Path targetPath, Map<String, String> targetValueToReplacementValueMapping)
+        throws KmgToolMsgException;
 
     /**
      * 処理する

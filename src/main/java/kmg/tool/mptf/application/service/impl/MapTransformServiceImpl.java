@@ -58,8 +58,11 @@ public class MapTransformServiceImpl implements MapTransformService {
      */
     private Path targetPath;
 
-    /** マッピング */
-    private final Map<String, String> mapping;
+    /** 対象値と置換値のマッピング */
+    private final Map<String, String> targetValueToReplacementValueMapping;
+
+    /** UUIDと置換値のマッピング */
+    private final Map<String, String> uuidToReplacementValueMapping;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
@@ -87,7 +90,8 @@ public class MapTransformServiceImpl implements MapTransformService {
     protected MapTransformServiceImpl(final Logger logger) {
 
         this.logger = logger;
-        this.mapping = new HashMap<>();
+        this.targetValueToReplacementValueMapping = new HashMap<>();
+        this.uuidToReplacementValueMapping = new HashMap<>();
 
     }
 
@@ -116,9 +120,9 @@ public class MapTransformServiceImpl implements MapTransformService {
      * @since 0.1.0
      *
      * @param targetPath
-     *                   対象ファイルパス
-     * @param mapping
-     *                   マッピング
+     *                                             対象ファイルパス
+     * @param targetValueToReplacementValueMapping
+     *                                             対象値と置換値のマッピング
      *
      * @return true：成功、false：失敗
      *
@@ -127,12 +131,13 @@ public class MapTransformServiceImpl implements MapTransformService {
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path targetPath, final Map<String, String> mapping) throws KmgToolMsgException {
+    public boolean initialize(final Path targetPath, final Map<String, String> targetValueToReplacementValueMapping)
+        throws KmgToolMsgException {
 
         boolean result = false;
 
         this.targetPath = targetPath;
-        this.mapping.putAll(mapping);
+        this.targetValueToReplacementValueMapping.putAll(targetValueToReplacementValueMapping);
 
         /* Javadocタグ設定の入出力ロジックの初期化 */
         this.jdtsIoLogic.initialize(targetPath);
@@ -244,13 +249,17 @@ public class MapTransformServiceImpl implements MapTransformService {
         String content = this.jdtsIoLogic.getReadContent();
 
         // 対象値からUUIDに置換する
-        for (final Map.Entry<String, String> entry : this.mapping.entrySet()) {
+        for (final Map.Entry<String, String> entry : this.targetValueToReplacementValueMapping.entrySet()) {
 
             final String targetValue = entry.getKey();
             final String uuid        = java.util.UUID.randomUUID().toString();
 
             // 一時的にUUIDに置換
             content = content.replace(targetValue, uuid);
+
+            // UUIDと置換値のマッピングに追加
+            this.uuidToReplacementValueMapping.put(uuid, entry.getValue());
+
             result++;
 
         }
@@ -291,13 +300,13 @@ public class MapTransformServiceImpl implements MapTransformService {
         String content = this.jdtsIoLogic.getReadContent();
 
         // UUIDから置換値に置換する
-        for (final Map.Entry<String, String> entry : this.mapping.entrySet()) {
+        for (final Map.Entry<String, String> entry : this.uuidToReplacementValueMapping.entrySet()) {
 
-            final String targetValue      = entry.getKey();
+            final String uuid             = entry.getKey();
             final String replacementValue = entry.getValue();
 
             // UUIDを置換値に置換
-            content = content.replace(targetValue, replacementValue);
+            content = content.replace(uuid, replacementValue);
 
         }
 
