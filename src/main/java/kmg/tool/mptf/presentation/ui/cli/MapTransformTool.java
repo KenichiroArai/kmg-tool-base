@@ -122,8 +122,8 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
 
             }
 
-            /* Javadoc追加処理 */
-            result &= this.mapTransformService.initialize(this.targetPath);
+            /* マッピング変換処理 */
+            result &= this.mapTransformService.initialize(this.targetPath, this.mapping);
             result &= this.mapTransformService.process();
 
             /* 成功 */

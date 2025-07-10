@@ -1,6 +1,7 @@
 package kmg.tool.mptf.application.service;
 
 import java.nio.file.Path;
+import java.util.Map;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
@@ -26,11 +27,13 @@ public interface MapTransformService {
      *
      * @param targetPath
      *                   対象ファイルパス
+     * @param mapping
+     *                   マッピング
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean initialize(final Path targetPath) throws KmgToolMsgException;
+    boolean initialize(final Path targetPath, Map<String, String> mapping) throws KmgToolMsgException;
 
     /**
      * 処理する

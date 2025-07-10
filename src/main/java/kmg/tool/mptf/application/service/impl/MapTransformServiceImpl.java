@@ -1,6 +1,8 @@
 package kmg.tool.mptf.application.service.impl;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +58,9 @@ public class MapTransformServiceImpl implements MapTransformService {
      */
     private Path targetPath;
 
+    /** マッピング */
+    private final Map<String, String> mapping;
+
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
@@ -82,6 +87,7 @@ public class MapTransformServiceImpl implements MapTransformService {
     protected MapTransformServiceImpl(final Logger logger) {
 
         this.logger = logger;
+        this.mapping = new HashMap<>();
 
     }
 
@@ -111,6 +117,8 @@ public class MapTransformServiceImpl implements MapTransformService {
      *
      * @param targetPath
      *                   対象ファイルパス
+     * @param mapping
+     *                   マッピング
      *
      * @return true：成功、false：失敗
      *
@@ -119,11 +127,12 @@ public class MapTransformServiceImpl implements MapTransformService {
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path targetPath) throws KmgToolMsgException {
+    public boolean initialize(final Path targetPath, final Map<String, String> mapping) throws KmgToolMsgException {
 
         boolean result = false;
 
         this.targetPath = targetPath;
+        this.mapping.putAll(mapping);
 
         /* Javadocタグ設定の入出力ロジックの初期化 */
         this.jdtsIoLogic.initialize(targetPath);
