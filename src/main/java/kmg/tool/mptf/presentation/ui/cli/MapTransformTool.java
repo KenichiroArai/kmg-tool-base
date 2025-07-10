@@ -55,6 +55,9 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
     /** 対象ファイルのパス */
     private Path targetPath;
 
+    /** マッピング */
+    private final Map<String, String> mapping;
+
     /**
      * メインメソッド
      *
@@ -72,6 +75,15 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
         tool.execute();
 
         ctx.close();
+
+    }
+
+    /**
+     * コンストラクタ
+     */
+    public MapTransformTool() {
+
+        this.mapping = new HashMap<>();
 
     }
 
@@ -188,7 +200,7 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
         final String content = this.getContent();
 
         // コンテンツを行に分割
-        final String[] lines = content.split(System.lineSeparator());
+        final String[] lines = KmgDelimiterTypes.REGEX_LINE_SEPARATOR.split(content);
 
         if (lines.length < 2) {
 
@@ -201,8 +213,6 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
         this.targetPath = Paths.get(lines[0].trim());
 
         // 2行目以降をマッピングデータとして処理
-        final Map<String, String> mapping = new HashMap<>();
-
         for (int i = 1; i < lines.length; i++) {
 
             final String line = lines[i].trim();
@@ -224,7 +234,7 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
             final String targetValue      = parts[0].trim();
             final String replacementValue = parts[1].trim();
 
-            mapping.put(targetValue, replacementValue);
+            this.mapping.put(targetValue, replacementValue);
 
         }
 
