@@ -5,6 +5,7 @@ import java.util.List;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
+// TODO KenichiroArai 2025/07/11 汎用化する。対象ファイルパスを読み込むようにする。拡張子の指定はオプション扱いにする。
 /**
  * Javadocタグ設定の入出力ロジックインタフェース<br>
  * <p>
@@ -105,6 +106,16 @@ public interface JdtsIoLogic {
      *                             KMGツールメッセージ例外
      */
     boolean nextFile() throws KmgToolMsgException;
+
+    /**
+     * ファイルインデックスを初期化する。
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    boolean resetFileIndex() throws KmgToolMsgException;
 
     /**
      * 書き込む内容を設定する。

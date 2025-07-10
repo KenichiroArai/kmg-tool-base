@@ -172,21 +172,43 @@ public class MapTransformServiceImpl implements MapTransformService {
         // Javaファイルのリストをロードする
         this.jdtsIoLogic.load();
 
-        /* 次のファイルがあるまで置換する */
+        /* 対象値からUUIDに置き換える */
 
-        // 合計置換数
-        long totalReplaceCount = 0;
+        // UUIDの合計置換数
+        long uuidReplaceCount = 0;
 
         do {
 
-            totalReplaceCount += this.processFile();
+            uuidReplaceCount += this.replaceTargetValuesWithUuid();
 
         } while (this.jdtsIoLogic.nextFile());
+
+        // Javaファイルのカレントをリセットする
+        this.jdtsIoLogic.resetFileIndex();
+
+        /* UUIDから置換値に置き換える */
+
+        // 置換値の合計置換数
+        long replaceValueReplaceCount = 0;
+
+        do {
+
+            replaceValueReplaceCount += this.replaceUuidWithReplacementValues();
+
+        } while (this.jdtsIoLogic.nextFile());
+
+        /* 置換数の確認 */
+        if (uuidReplaceCount != replaceValueReplaceCount) {
+
+            // TODO KenichiroArai 2025/07/10 メッセージ
+            return result;
+
+        }
 
         // TODO KenichiroArai 2025/07/10 メッセージ
         final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.NONE;
         final Object[]           endLogMsgArgs  = {
-            this.jdtsIoLogic.getFilePathList().size(), totalReplaceCount,
+            this.jdtsIoLogic.getFilePathList().size(), uuidReplaceCount,
         };
         final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
         this.logger.debug(endLogMsg);
@@ -197,7 +219,7 @@ public class MapTransformServiceImpl implements MapTransformService {
     }
 
     /**
-     * ファイルを処理する
+     * 対象値をUUIDに一時置換する
      *
      * @author KenichiroArai
      *
@@ -208,7 +230,7 @@ public class MapTransformServiceImpl implements MapTransformService {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private long processFile() throws KmgToolMsgException {
+    private long replaceTargetValuesWithUuid() throws KmgToolMsgException {
 
         long result = 0;
 
@@ -232,6 +254,41 @@ public class MapTransformServiceImpl implements MapTransformService {
             result++;
 
         }
+
+        // 置換後の内容を設定
+        this.jdtsIoLogic.setWriteContent(content);
+
+        // ファイルに書き込む
+        this.jdtsIoLogic.writeContent();
+
+        return result;
+
+    }
+
+    /**
+     * UUIDを置換値に置換する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return 置換数
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    private long replaceUuidWithReplacementValues() throws KmgToolMsgException {
+
+        final long result = 0;
+
+        // ファイルの内容を読み込む
+        if (!this.jdtsIoLogic.loadContent()) {
+
+            return result;
+
+        }
+
+        String content = this.jdtsIoLogic.getReadContent();
 
         // UUIDから置換値に置換する
         for (final Map.Entry<String, String> entry : this.mapping.entrySet()) {

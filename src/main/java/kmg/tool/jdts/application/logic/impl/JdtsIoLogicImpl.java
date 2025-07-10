@@ -16,6 +16,7 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdts.application.logic.JdtsIoLogic;
 
+// TODO KenichiroArai 2025/07/11 汎用化する。対象ファイルパスを読み込むようにする。拡張子の指定はオプション扱いにする。
 /**
  * Javadocタグ設定の入出力ロジック<br>
  * <p>
@@ -294,6 +295,39 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     }
 
     /**
+     * ファイルインデックスを初期化する。
+     * <p>
+     * currentFileIndexを0に設定し、currentFilePathを先頭のファイルに設定する。
+     * </p>
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @Override
+    public boolean resetFileIndex() throws KmgToolMsgException {
+
+        boolean result;
+
+        this.currentFileIndex = 0;
+
+        if (KmgListUtils.isNotEmpty(this.filePathList)) {
+
+            this.currentFilePath = this.filePathList.get(this.currentFileIndex);
+
+        } else {
+
+            this.currentFilePath = null;
+
+        }
+
+        result = true;
+        return result;
+
+    }
+
+    /**
      * 書き込む内容を設定する。
      *
      * @param content
@@ -337,4 +371,5 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         return result;
 
     }
+
 }
