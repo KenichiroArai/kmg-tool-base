@@ -1,0 +1,191 @@
+package kmg.tool.mptf.application.service.impl;
+
+import java.nio.file.Path;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
+import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.jdts.application.logic.JdtsIoLogic;
+import kmg.tool.mptf.application.service.MapTransformService;
+
+/**
+ * マッピング変換サービス<br>
+ *
+ * @author KenichiroArai
+ */
+@Service
+public class MapTransformServiceImpl implements MapTransformService {
+
+    /**
+     * ロガー
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    private final Logger logger;
+
+    /**
+     * KMGメッセージリソース
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private KmgMessageSource messageSource;
+
+    /**
+     * Javadocタグ設定の入出力ロジック
+     */
+    @Autowired
+    private JdtsIoLogic jdtsIoLogic;
+
+    /**
+     * 対象ファイルパス
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    private Path targetPath;
+
+    /**
+     * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    public MapTransformServiceImpl() {
+
+        this(LoggerFactory.getLogger(MapTransformServiceImpl.class));
+
+    }
+
+    /**
+     * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param logger
+     *               ロガー
+     */
+    protected MapTransformServiceImpl(final Logger logger) {
+
+        this.logger = logger;
+
+    }
+
+    /**
+     * 対象ファイルパスを返す。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return 対象ファイルパス
+     */
+    @Override
+    public Path getTargetPath() {
+
+        final Path result = this.targetPath;
+        return result;
+
+    }
+
+    /**
+     * 初期化する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @param targetPath
+     *                   対象ファイルパス
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @SuppressWarnings("hiding")
+    @Override
+    public boolean initialize(final Path targetPath) throws KmgToolMsgException {
+
+        boolean result = false;
+
+        this.targetPath = targetPath;
+
+        /* Javadocタグ設定の入出力ロジックの初期化 */
+        this.jdtsIoLogic.initialize(targetPath);
+
+        result = true;
+        return result;
+
+    }
+
+    /**
+     * 処理する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     * @throws KmgToolValException
+     *                             KMGツールバリデーション例外
+     */
+    @Override
+    public boolean process() throws KmgToolMsgException, KmgToolValException {
+
+        boolean result = false;
+
+        // TODO KenichiroArai 2025/07/10 メッセージ
+        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.NONE;
+        final Object[]           startLogMsgArgs  = {};
+        final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
+        this.logger.debug(startLogMsg);
+
+        /* 準備 */
+
+        // Javaファイルのリストをロードする
+        this.jdtsIoLogic.load();
+
+        /* 次のファイルがあるまで置換する */
+
+        // 合計置換数
+        final long totalReplaceCount = 0;
+
+        do {
+
+            // TODO KenichiroArai 2025/07/10 置換処理を実装する
+            // totalReplaceCount += this.processFile();
+
+        } while (this.jdtsIoLogic.nextFile());
+
+        // TODO KenichiroArai 2025/07/10 メッセージ
+        final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.NONE;
+        final Object[]           endLogMsgArgs  = {
+            this.jdtsIoLogic.getFilePathList().size(), totalReplaceCount,
+        };
+        final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
+        this.logger.debug(endLogMsg);
+
+        result = true;
+        return result;
+
+    }
+
+}
