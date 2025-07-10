@@ -2,6 +2,8 @@ package kmg.tool.mptf.presentation.ui.cli;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +12,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.core.domain.service.KmgPfaMeasService;
 import kmg.core.domain.service.impl.KmgPfaMeasServiceImpl;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
@@ -184,7 +187,46 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
 
         final String content = this.getContent();
 
-        this.targetPath = Paths.get(content);
+        // コンテンツを行に分割
+        final String[] lines = content.split(System.lineSeparator());
+
+        if (lines.length < 2) {
+
+            result = false;
+            return result;
+
+        }
+
+        // 1行目はパス
+        this.targetPath = Paths.get(lines[0].trim());
+
+        // 2行目以降をマッピングデータとして処理
+        final Map<String, String> mapping = new HashMap<>();
+
+        for (int i = 1; i < lines.length; i++) {
+
+            final String line = lines[i].trim();
+
+            if (line.isEmpty()) {
+
+                continue;
+
+            }
+
+            final String[] parts = KmgDelimiterTypes.COMMA.split(line);
+
+            if (parts.length < 2) {
+
+                continue;
+
+            }
+
+            final String targetValue      = parts[0].trim();
+            final String replacementValue = parts[1].trim();
+
+            mapping.put(targetValue, replacementValue);
+
+        }
 
         return result;
 
