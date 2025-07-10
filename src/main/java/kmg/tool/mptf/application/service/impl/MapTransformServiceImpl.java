@@ -166,12 +166,11 @@ public class MapTransformServiceImpl implements MapTransformService {
         /* 次のファイルがあるまで置換する */
 
         // 合計置換数
-        final long totalReplaceCount = 0;
+        long totalReplaceCount = 0;
 
         do {
 
-            // TODO KenichiroArai 2025/07/10 置換処理を実装する
-            // totalReplaceCount += this.processFile();
+            totalReplaceCount += this.processFile();
 
         } while (this.jdtsIoLogic.nextFile());
 
@@ -184,6 +183,25 @@ public class MapTransformServiceImpl implements MapTransformService {
         this.logger.debug(endLogMsg);
 
         result = true;
+        return result;
+
+    }
+
+    /**
+     * ファイルを処理する
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     *
+     * @return 置換数
+     */
+    private long processFile() {
+
+        final int result = 0;
+
+        // TODO KenichiroArai 2025/07/10 置換処理を実装する
+
         return result;
 
     }
