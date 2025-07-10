@@ -91,8 +91,8 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
 
             /* 処理 */
 
-            // 入力ファイルから対象パスを設定
-            result &= this.setTargetPathFromInputFile();
+            // 入力ファイルから設定する
+            result &= this.fromInputFile();
 
             if (!result) {
 
@@ -169,14 +169,14 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
     }
 
     /**
-     * 入力ファイルから対象パスを設定する
+     * 入力ファイルから設定する
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private boolean setTargetPathFromInputFile() throws KmgToolMsgException {
+    private boolean fromInputFile() throws KmgToolMsgException {
 
         boolean result = true;
 

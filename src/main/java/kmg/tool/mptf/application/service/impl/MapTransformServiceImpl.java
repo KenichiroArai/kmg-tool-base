@@ -202,6 +202,10 @@ public class MapTransformServiceImpl implements MapTransformService {
 
         // TODO KenichiroArai 2025/07/10 置換処理を実装する
 
+        // TODO KenichiroArai 2025/07/10 対象値からUUIDに置換する
+
+        // TODO KenichiroArai 2025/07/10 UUIDから置換値に置換する
+
         return result;
 
     }
