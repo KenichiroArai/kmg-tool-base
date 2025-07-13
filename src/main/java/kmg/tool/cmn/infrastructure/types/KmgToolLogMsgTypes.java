@@ -413,6 +413,24 @@ public enum KmgToolLogMsgTypes implements KmgToolCmnLogMsg {
      */
     KMGTOOL_LOG17000("初期化の失敗"),
 
+    /**
+     * マッピング変換処理を開始します。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_LOG19000("マッピング変換処理を開始します。"),
+
+    /**
+     * マッピング変換処理を終了します。読み込みファイル数:[{0}]、合計置換数:[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_LOG19001("マッピング変換処理を終了します。読み込みファイル数:[{0}]、合計置換数:[{1}]"),
+
     /* 定義：終了 */
     ;
 

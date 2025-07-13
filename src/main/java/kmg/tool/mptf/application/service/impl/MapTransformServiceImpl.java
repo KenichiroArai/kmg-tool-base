@@ -167,8 +167,7 @@ public class MapTransformServiceImpl implements MapTransformService {
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/07/10 メッセージ マッピング変換処理を開始します。
-        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.NONE;
+        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG19000;
         final Object[]           startLogMsgArgs  = {};
         final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
         this.logger.debug(startLogMsg);
@@ -206,16 +205,15 @@ public class MapTransformServiceImpl implements MapTransformService {
         /* 置換数の確認 */
         if (uuidReplaceCount != replaceValueReplaceCount) {
 
-            // TODO KenichiroArai 2025/07/10 メッセージ
-            // 対象値からUUIDへの置換数とUUIDから置換値への置換数が一致しません。対象値からUUIDへの置換数：[{0}]、UUIDから置換値への置換数：[{1}]
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
-            final Object[]           genMsgArgs  = {};
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN19004;
+            final Object[]           genMsgArgs  = {
+                uuidReplaceCount, replaceValueReplaceCount
+            };
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs);
 
         }
 
-        // TODO KenichiroArai 2025/07/10 メッセージ マッピング変換処理を終了します。読み込みファイル数:[{0}]、合計置換数:[{1}]
-        final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.NONE;
+        final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG19001;
         final Object[]           endLogMsgArgs  = {
             this.jdtsIoLogic.getFilePathList().size(), uuidReplaceCount,
         };

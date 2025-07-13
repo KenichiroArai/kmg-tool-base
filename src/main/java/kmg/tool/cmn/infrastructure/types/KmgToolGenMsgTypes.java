@@ -539,6 +539,51 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      */
     KMGTOOL_GEN16001("テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]"),
 
+    /**
+     * 入力ファイルから対象パスを設定に失敗しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN19000("入力ファイルから対象パスを設定に失敗しました。"),
+
+    /**
+     * 実行が成功しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN19001("実行が成功しました。"),
+
+    /**
+     * 実行中に例外が発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN19002("実行中に例外が発生しました。"),
+
+    /**
+     * バリデーションエラーが発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN19003("バリデーションエラーが発生しました。"),
+
+    /**
+     * 対象値からUUIDへの置換数とUUIDから置換値への置換数が一致しません。対象値からUUIDへの置換数：[{0}]、UUIDから置換値への置換数：[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN19004("対象値からUUIDへの置換数とUUIDから置換値への置換数が一致しません。対象値からUUIDへの置換数：[{0}]、UUIDから置換値への置換数：[{1}]"),
+
     /* 定義：終了 */
 
     ;
