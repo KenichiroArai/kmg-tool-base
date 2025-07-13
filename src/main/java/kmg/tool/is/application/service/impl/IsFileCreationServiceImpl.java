@@ -102,7 +102,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
             } catch (final IOException | EncryptedDocumentException e) {
 
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12008;
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10001;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };
@@ -112,7 +112,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12009;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10002;
             final Object[]           genMsgArgs  = {
                 this.inputPath,
             };

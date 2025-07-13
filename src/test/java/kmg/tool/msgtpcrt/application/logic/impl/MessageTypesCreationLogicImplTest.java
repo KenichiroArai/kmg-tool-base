@@ -109,8 +109,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testaddItemNameToRows_errorItemNameNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN32000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32000;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN14000] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14000;
 
         /* 準備 */
         this.reflectionModel.set("itemName", null);
@@ -179,8 +179,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testaddItemToRows_errorItemNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN32004] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32004;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN14001] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14001;
 
         /* 準備 */
         this.reflectionModel.set("item", null);
@@ -249,8 +249,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertMessageTypesDefinition_errorInvalidSplitCount() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN32005] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32005;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN14002] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14002;
 
         /* 準備 */
         final String testLine = "INVALID_FORMAT";
@@ -292,11 +292,11 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final boolean expectedResult   = true;
-        final String  expectedItem     = "KMGTOOL_GEN32000";
+        final String  expectedItem     = "KMGTOOL_GEN14000";
         final String  expectedItemName = "メッセージの種類が指定されていません。";
 
         /* 準備 */
-        final String testLine = "KMGTOOL_GEN32000=メッセージの種類が指定されていません。";
+        final String testLine = "KMGTOOL_GEN14000=メッセージの種類が指定されていません。";
         this.reflectionModel.set("convertedLine", testLine);
 
         /* テスト対象の実行 */
@@ -325,11 +325,11 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final boolean expectedResult   = true;
-        final String  expectedItem     = "KMGTOOL_GEN32000";
+        final String  expectedItem     = "KMGTOOL_GEN14000";
         final String  expectedItemName = "メッセージの種類が指定されていません。値={0}";
 
         /* 準備 */
-        final String testLine = "KMGTOOL_GEN32000=メッセージの種類が指定されていません。値={0}";
+        final String testLine = "KMGTOOL_GEN14000=メッセージの種類が指定されていません。値={0}";
         this.reflectionModel.set("convertedLine", testLine);
 
         /* テスト対象の実行 */
@@ -461,7 +461,7 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testSetConvertedLine_normalSetConvertedLine() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedConvertedLine = "KMGTOOL_GEN32000=メッセージの種類が指定されていません。";
+        final String expectedConvertedLine = "KMGTOOL_GEN14000=メッセージの種類が指定されていません。";
 
         /* テスト対象の実行 */
         this.reflectionModel.set("convertedLine", expectedConvertedLine);

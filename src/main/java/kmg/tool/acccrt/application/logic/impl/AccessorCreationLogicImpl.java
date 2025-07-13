@@ -60,7 +60,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         if (this.item == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32001;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -88,7 +88,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         if (this.javadocComment == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32002;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -116,7 +116,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
         if (this.type == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32003;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 

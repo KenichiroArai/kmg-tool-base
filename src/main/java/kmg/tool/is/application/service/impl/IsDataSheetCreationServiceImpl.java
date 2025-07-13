@@ -173,7 +173,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12010;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10003;
             final Object[]           genMsgArgs  = {
                 outputFilePath,
             };

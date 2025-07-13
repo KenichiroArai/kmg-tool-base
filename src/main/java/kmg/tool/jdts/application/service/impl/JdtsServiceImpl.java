@@ -264,7 +264,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         } catch (final KmgFundMsgException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN31006;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13003;
             final Object[]           genMsgArgs  = {
                 this.definitionPath.toString(),
             };

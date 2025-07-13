@@ -135,7 +135,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
             } catch (final IOException e) {
 
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32015;
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12001;
                 final Object[]           genMsgArgs  = {
                     javaFile.toString(),
                 };
@@ -177,7 +177,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
             } catch (final IOException e) {
 
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32014;
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
                 final Object[]           genMsgArgs  = {
                     javaFile.toString(),
                 };
@@ -236,7 +236,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32016;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12002;
             final Object[]           genMsgArgs  = {
                 inputPath.toString(),
             };

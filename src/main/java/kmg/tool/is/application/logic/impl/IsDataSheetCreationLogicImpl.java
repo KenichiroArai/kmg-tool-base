@@ -128,7 +128,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10000;
             final Object[]           genMsgArgs  = {
                 this.outputPath,
             };

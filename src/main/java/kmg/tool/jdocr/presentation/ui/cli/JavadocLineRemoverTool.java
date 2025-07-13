@@ -91,7 +91,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
             if (!result) {
 
                 /* メッセージの出力 */
-                final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41006;
+                final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN12003;
                 final Object[]           messageArgs = {};
                 final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
                 measService.warn(msg);
@@ -104,7 +104,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
             result &= this.javadocLineRemoverService.process();
 
             /* 成功 */
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41007;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN12004;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
@@ -112,7 +112,7 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
         } catch (final KmgToolMsgException e) {
 
             /* 例外 */
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41008;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN12005;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);

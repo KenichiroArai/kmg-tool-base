@@ -39,7 +39,7 @@ public enum MessageTypesRegexGroupTypes implements KmgCmnTypes<String> {
     /**
      * メッセージの種類パターン：項目
      * <p>
-     * 例：KMGTOOL_GEN32000
+     * 例：KMGTOOL_GEN14000
      * </p>
      *
      * @since 0.1.0

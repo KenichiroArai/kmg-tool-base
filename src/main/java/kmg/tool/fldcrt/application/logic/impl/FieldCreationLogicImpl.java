@@ -63,7 +63,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         /* コメントの存在チェック */
         if (this.comment == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32006;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN05000;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -93,7 +93,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         /* フィールド名の存在チェック */
         if (this.field == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32007;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -123,7 +123,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         /* 型情報の存在チェック */
         if (this.type == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32008;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN05002;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 

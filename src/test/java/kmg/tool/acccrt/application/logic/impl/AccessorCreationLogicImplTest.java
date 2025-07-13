@@ -104,8 +104,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = null;
-        final String             expectedDomainMessage = "[KMGTOOL_GEN32001] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32001;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
         /* 準備 */
         this.reflectionModel.set("item", null);
@@ -175,8 +175,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = null;
-        final String             expectedDomainMessage = "[KMGTOOL_GEN32002] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32002;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01002] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
 
         /* 準備 */
         this.reflectionModel.set("javadocComment", null);
@@ -274,8 +274,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = null;
-        final String             expectedDomainMessage = "[KMGTOOL_GEN32003] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32003;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01003] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
 
         /* 準備 */
         this.reflectionModel.set("type", null);

@@ -64,7 +64,7 @@ public class PlainContentInputServiceImpl extends AbstractInputService implement
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN12006;
+            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN08002;
             final Object[]           messageArgs = {
                 this.getInputPath(),
             };

@@ -253,7 +253,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
+            final KmgToolGenMsgTypes genMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN07006;
             final Object[]           getMsgArgs = {
                 intermediateFileNameOnly, suffixExtension,
             };

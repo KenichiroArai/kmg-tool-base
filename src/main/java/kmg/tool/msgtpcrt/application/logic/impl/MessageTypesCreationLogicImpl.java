@@ -49,7 +49,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         if (this.itemName == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32000;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN14000;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -77,7 +77,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         if (this.item == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32004;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN14001;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs);
 
@@ -103,7 +103,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
         boolean result = false;
 
-        // 項目と項目名に分ける（例：KMGTOOL_GEN32000=メッセージの種類が指定されていません。）
+        // 項目と項目名に分ける（例：KMGTOOL_GEN14000=メッセージの種類が指定されていません。）
         final String[] inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(this.getConvertedLine(),
             MessageTypesCreationLogicImpl.MESSAGE_TYPE_SPLIT_COUNT);
 
@@ -111,7 +111,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         if (inputDatas.length != MessageTypesCreationLogicImpl.MESSAGE_TYPE_SPLIT_COUNT) {
             // 分かれない場合
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN32005;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN14002;
             final Object[]           messageArgs  = {
                 this.getNowLineNumber(), this.getLineOfDataRead(),
             };

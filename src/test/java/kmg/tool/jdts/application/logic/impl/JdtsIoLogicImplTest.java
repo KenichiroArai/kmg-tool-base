@@ -302,8 +302,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[deep\\non\\existent\\path]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
+                                                       = "[KMGTOOL_GEN13002] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[deep\\non\\existent\\path]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13002;
 
         /* 準備 */
         final Path deepNonExistentPath = Paths.get("deep/non/existent/path");
@@ -339,8 +339,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN32013] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32013;
+                                                       = "[KMGTOOL_GEN13002] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13002;
 
         /* 準備 */
         final Path nonExistentPath = Paths.get("non/existent/path");

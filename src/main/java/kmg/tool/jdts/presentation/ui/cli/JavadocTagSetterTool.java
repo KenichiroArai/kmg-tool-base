@@ -134,7 +134,7 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
             if (!result) {
 
                 /* メッセージの出力 */
-                final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41003;
+                final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN13004;
                 final Object[]           messageArgs = {};
                 final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
                 measService.warn(msg);
@@ -148,7 +148,7 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
             result &= this.jdtsService.process();
 
             /* 成功 */
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41004;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN13005;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.info(msg);
@@ -156,7 +156,7 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
         } catch (final KmgToolMsgException e) {
 
             /* 例外 */
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN41005;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN13006;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);
@@ -166,7 +166,7 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
         } catch (final KmgToolValException e) {
 
             /* 例外 */
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN12007;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN13007;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);

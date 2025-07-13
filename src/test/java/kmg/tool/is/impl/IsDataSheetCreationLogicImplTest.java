@@ -66,8 +66,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
         final Class<?>           expectedCauseClass    = IOException.class;
         final Path               outputPath            = tempDir.resolve("output").toAbsolutePath();
         final String             expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
-            "KMGTOOL_GEN13009", outputPath);
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
+            "KMGTOOL_GEN10000", outputPath);
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10000;
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
@@ -119,8 +119,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
         final Class<?>           expectedCauseClass    = IOException.class;
         final Path               outputPath            = tempDir.resolve("restricted").toAbsolutePath();
         final String             expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
-            "KMGTOOL_GEN13009", outputPath);
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
+            "KMGTOOL_GEN10000", outputPath);
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10000;
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();

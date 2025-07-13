@@ -56,7 +56,7 @@ public abstract class AbstractInputService implements InputService {
         // 入力パスの検証
         if (inputPath == null) {
 
-            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN12004;
+            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
             final Object[]           messageArgs = {};
 
             throw new KmgToolMsgException(genType, messageArgs);
@@ -65,7 +65,7 @@ public abstract class AbstractInputService implements InputService {
 
         if (!Files.exists(inputPath)) {
 
-            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN12005;
+            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN08001;
             final Object[]           messageArgs = {
                 inputPath.toString()
             };

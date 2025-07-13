@@ -281,7 +281,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN31007;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07000;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
@@ -329,7 +329,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             } catch (final IOException e) {
 
-                final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13005;
+                final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07001;
                 final Object[]           messageArgs  = {
                     this.outputPath.toString()
                 };
@@ -346,7 +346,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13006;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07002;
             final Object[]           messageArgs  = {
                 this.outputPath.toString()
             };
@@ -382,7 +382,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final NoSuchElementException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13010;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07005;
             final Object[]           messageArgs  = {};
             throw new KmgToolMsgException(messageTypes, messageArgs, e);
 
@@ -512,7 +512,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13007;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07003;
             final Object[]           messageArgs  = {
                 this.inputPath.toString()
             };
@@ -537,7 +537,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13008;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07004;
             final Object[]           messageArgs  = {
                 this.outputPath.toString()
             };

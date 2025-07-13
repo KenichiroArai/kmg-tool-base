@@ -102,8 +102,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
     public void testaddItemNameToRows_errorItemNameNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN32009] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32009;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN04000] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN04000;
 
         /* 準備 */
         this.reflectionModel.set("itemName", null);
@@ -172,8 +172,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
     public void testaddItemToRows_errorItemNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN32010] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN32010;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN04001] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN04001;
 
         /* 準備 */
         this.reflectionModel.set("item", null);

@@ -480,7 +480,7 @@ public class JavadocLineRemoverLogicImplTest {
 
         /* 期待値の定義 */
         final Path               nonExistentFile = Paths.get("nonexistent.java");
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN32015;
+        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12001;
 
         /* 準備 */
         final Map<Path, Set<Integer>> testInputMap    = new LinkedHashMap<>();
@@ -522,7 +522,7 @@ public class JavadocLineRemoverLogicImplTest {
         throws IOException {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN32014;
+        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
 
         /* 準備 */
         final Path     testJavaFile  = tempDir.resolve("ReadOnlyTest.java");
@@ -805,7 +805,7 @@ public class JavadocLineRemoverLogicImplTest {
 
         /* 期待値の定義 */
         final Path               nonExistentInputFile = Paths.get("nonexistent_input.txt");
-        final KmgToolGenMsgTypes expectedMsgType      = KmgToolGenMsgTypes.KMGTOOL_GEN32016;
+        final KmgToolGenMsgTypes expectedMsgType      = KmgToolGenMsgTypes.KMGTOOL_GEN12002;
 
         /* 準備 */
         final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();

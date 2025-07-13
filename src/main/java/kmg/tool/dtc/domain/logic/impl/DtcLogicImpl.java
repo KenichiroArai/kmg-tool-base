@@ -402,7 +402,7 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final KmgFundMsgException e) {
 
-            final KmgToolGenMsgTypes genMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12001;
+            final KmgToolGenMsgTypes genMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN03000;
             final Object[]           genMsgArgs = {
                 this.templatePath.toString()
             };
@@ -458,7 +458,7 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13000;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN03001;
             final Object[]           messageArgs  = {
                 this.inputPath.toString(),
             };
@@ -494,7 +494,7 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN13001;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN03002;
             final Object[]           messageArgs = {
                 this.inputPath.toString(), this.templatePath.toString(), this.outputPath.toString(),
             };
@@ -696,7 +696,7 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13002;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN03003;
             final Object[]           messageArgs  = {
                 this.inputPath.toString()
             };
@@ -724,7 +724,7 @@ public class DtcLogicImpl implements DtcLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13003;
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN03004;
             final Object[]           messageArgs  = {
                 this.outputPath.toString()
             };
@@ -810,7 +810,7 @@ public class DtcLogicImpl implements DtcLogic {
 
             } catch (final ArrayIndexOutOfBoundsException e) {
 
-                final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13004;
+                final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN03005;
                 final Object[]           messageArgs  = {
                     this.inputPath.toString(), key, i + 1,
                 };

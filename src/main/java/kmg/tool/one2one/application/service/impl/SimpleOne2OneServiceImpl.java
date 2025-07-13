@@ -117,7 +117,7 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
         } catch (final IOException e) {
 
             // 例外をスローする
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN31000;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
             final Object[]           messageArgs = {};
             throw new KmgToolMsgException(msgType, messageArgs, e);
 

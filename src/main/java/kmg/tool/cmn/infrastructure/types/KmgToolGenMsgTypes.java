@@ -42,7 +42,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12000("一時的な中間ファイルの作成に失敗しました。中間ファイル名のみ=[{0}]、サフィックスと拡張子=[{1}]"),
+    KMGTOOL_GEN07006("一時的な中間ファイルの作成に失敗しました。中間ファイル名のみ=[{0}]、サフィックスと拡張子=[{1}]"),
 
     /**
      * テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0}]
@@ -51,7 +51,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12001("テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0}]"),
+    KMGTOOL_GEN03000("テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0}]"),
 
     /**
      * テンプレートの動的変換ロジックをクローズ中にエラーが発生しました。
@@ -60,7 +60,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12002("テンプレートの動的変換ロジックをクローズ中にエラーが発生しました。"),
+    KMGTOOL_GEN03006("テンプレートの動的変換ロジックをクローズ中にエラーが発生しました。"),
 
     /**
      * 入力ファイルパスがnullです。
@@ -69,7 +69,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12004("入力ファイルパスがnullです。"),
+    KMGTOOL_GEN08000("入力ファイルパスがnullです。"),
 
     /**
      * 入力パスファイルが存在しません。入力ファイルパス=[{0}]
@@ -78,7 +78,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12005("入力パスファイルが存在しません。入力ファイルパス=[{0}]"),
+    KMGTOOL_GEN08001("入力パスファイルが存在しません。入力ファイルパス=[{0}]"),
 
     /**
      * 入力ファイルの読み込みに失敗しました。入力ファイルパス=[{0}]
@@ -87,7 +87,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12006("入力ファイルの読み込みに失敗しました。入力ファイルパス=[{0}]"),
+    KMGTOOL_GEN08002("入力ファイルの読み込みに失敗しました。入力ファイルパス=[{0}]"),
 
     /**
      * バリデーションエラーが発生しました。
@@ -96,7 +96,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12007("バリデーションエラーが発生しました。"),
+    KMGTOOL_GEN13007("バリデーションエラーが発生しました。"),
 
     /**
      * 暗号化されたファイルです。入力ファイルのパス=[{0}]
@@ -105,7 +105,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12008("暗号化されたファイルです。入力ファイルのパス=[{0}]"),
+    KMGTOOL_GEN10001("暗号化されたファイルです。入力ファイルのパス=[{0}]"),
 
     /**
      * 入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[{0}]
@@ -114,7 +114,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12009("入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[{0}]"),
+    KMGTOOL_GEN10002("入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[{0}]"),
 
     /**
      * 出力ファイルへの書き込みに失敗しました。出力ファイルパス=[{0}]
@@ -123,7 +123,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN12010("出力ファイルへの書き込みに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN10003("出力ファイルへの書き込みに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
      * 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}
@@ -132,7 +132,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13000("入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}"),
+    KMGTOOL_GEN03001("入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}"),
 
     /**
      * 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]、 テンプレートパス：[{1}]、 出力ファイルパス=[{2}]
@@ -141,7 +141,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13001("出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]、 テンプレートパス：[{1}]、 出力ファイルパス=[{2}]"),
+    KMGTOOL_GEN03002("出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]、 テンプレートパス：[{1}]、 出力ファイルパス=[{2}]"),
 
     /**
      * 入力ファイルを開くことができませんでした。入力ファイルパス：[{0}]
@@ -150,7 +150,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13002("入力ファイルを開くことができませんでした。入力ファイルパス：[{0}]"),
+    KMGTOOL_GEN03003("入力ファイルを開くことができませんでした。入力ファイルパス：[{0}]"),
 
     /**
      * 出力ファイルを開くことができませんでした。出力ファイルパス：[{0}]
@@ -159,7 +159,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13003("出力ファイルを開くことができませんでした。出力ファイルパス：[{0}]"),
+    KMGTOOL_GEN03004("出力ファイルを開くことができませんでした。出力ファイルパス：[{0}]"),
 
     /**
      * 中間の列が不足しています。入力ファイルパス: [{0}]、 プレースホルダーキー: [{1}]、 列: [{2}] 番目
@@ -168,7 +168,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13004("中間の列が不足しています。入力ファイルパス: [{0}]、 プレースホルダーキー: [{1}]、 列: [{2}] 番目"),
+    KMGTOOL_GEN03005("中間の列が不足しています。入力ファイルパス: [{0}]、 プレースホルダーキー: [{1}]、 列: [{2}] 番目"),
 
     /**
      * 中間データの書き込みに失敗しました。出力ファイルパス=[{0}]
@@ -177,7 +177,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13005("中間データの書き込みに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN07001("中間データの書き込みに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
      * ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]
@@ -186,7 +186,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13006("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN07002("ファイルのフラッシュに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
      * 入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]
@@ -195,7 +195,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13007("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
+    KMGTOOL_GEN07003("入力ファイルを開くのに失敗しました。入力ファイルパス=[{0}]"),
 
     /**
      * 出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]
@@ -204,7 +204,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13008("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN07004("出力ファイルを開くのに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
      * 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[{0}]
@@ -213,7 +213,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13009("出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[{0}]"),
+    KMGTOOL_GEN10000("出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[{0}]"),
 
     /**
      * 書き込み対象の中間データの最後がリストに存在しません。
@@ -222,7 +222,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN13010("書き込み対象の中間データの最後がリストに存在しません。"),
+    KMGTOOL_GEN07005("書き込み対象の中間データの最後がリストに存在しません。"),
 
     /**
      * ファイル処理に失敗しました。
@@ -231,7 +231,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN31000("ファイル処理に失敗しました。"),
+    KMGTOOL_GEN15000("ファイル処理に失敗しました。"),
 
     /**
      * ファイル処理に失敗しました。
@@ -240,7 +240,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN31001("ファイル処理に失敗しました。"),
+    KMGTOOL_GEN16000("ファイル処理に失敗しました。"),
 
     /**
      * テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]
@@ -249,7 +249,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN31002("テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]"),
+    KMGTOOL_GEN16001("テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]"),
 
     /**
      * アクセサ作成ロジックをクローズ中にエラーが発生しました。
@@ -258,7 +258,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN31003("アクセサ作成ロジックをクローズ中にエラーが発生しました。"),
+    KMGTOOL_GEN01000("アクセサ作成ロジックをクローズ中にエラーが発生しました。"),
 
     /**
      * 列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。
@@ -267,7 +267,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN31004("列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。"),
+    KMGTOOL_GEN04002("列挙型からcase文作成ロジックをクローズ中にエラーが発生しました。"),
 
     /**
      * フィールド作成ロジックをクローズ中にエラーが発生しました。
@@ -276,7 +276,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN31005("フィールド作成ロジックをクローズ中にエラーが発生しました。"),
+    KMGTOOL_GEN05003("フィールド作成ロジックをクローズ中にエラーが発生しました。"),
 
     /**
      * 定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]
@@ -285,7 +285,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN31006("定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]"),
+    KMGTOOL_GEN13003("定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]"),
 
     /**
      * 1行読み込みに失敗しました。
@@ -294,7 +294,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN31007("1行読み込みに失敗しました。"),
+    KMGTOOL_GEN07000("1行読み込みに失敗しました。"),
 
     /**
      * メッセージの種類作成ロジックをクローズ中にエラーが発生しました。
@@ -303,7 +303,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN31010("メッセージの種類作成ロジックをクローズ中にエラーが発生しました。"),
+    KMGTOOL_GEN14003("メッセージの種類作成ロジックをクローズ中にエラーが発生しました。"),
 
     /**
      * 項目名がnullです。
@@ -312,7 +312,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32000("項目名がnullです。"),
+    KMGTOOL_GEN14000("項目名がnullです。"),
 
     /**
      * 項目名がnullです。
@@ -321,7 +321,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32001("項目名がnullです。"),
+    KMGTOOL_GEN01001("項目名がnullです。"),
 
     /**
      * Javadocコメントがnullです。
@@ -330,7 +330,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32002("Javadocコメントがnullです。"),
+    KMGTOOL_GEN01002("Javadocコメントがnullです。"),
 
     /**
      * 型情報がnullです。
@@ -339,7 +339,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32003("型情報がnullです。"),
+    KMGTOOL_GEN01003("型情報がnullです。"),
 
     /**
      * 項目がnullです。
@@ -348,7 +348,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32004("項目がnullです。"),
+    KMGTOOL_GEN14001("項目がnullです。"),
 
     /**
      * 項目と項目名に分かれていません。「項目=項目名」の設定にしてください。行番号=[{0}]、行データ=[{1}]
@@ -357,7 +357,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32005("項目と項目名に分かれていません。「項目=項目名」の設定にしてください。行番号=[{0}]、行データ=[{1}]"),
+    KMGTOOL_GEN14002("項目と項目名に分かれていません。「項目=項目名」の設定にしてください。行番号=[{0}]、行データ=[{1}]"),
 
     /**
      * コメントがnullです。
@@ -366,7 +366,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32006("コメントがnullです。"),
+    KMGTOOL_GEN05000("コメントがnullです。"),
 
     /**
      * フィールドがnullです。
@@ -375,7 +375,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32007("フィールドがnullです。"),
+    KMGTOOL_GEN05001("フィールドがnullです。"),
 
     /**
      * 型がnullです。
@@ -384,7 +384,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32008("型がnullです。"),
+    KMGTOOL_GEN05002("型がnullです。"),
 
     /**
      * 項目名がnullです。
@@ -393,7 +393,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32009("項目名がnullです。"),
+    KMGTOOL_GEN04000("項目名がnullです。"),
 
     /**
      * 項目名がnullです。
@@ -402,7 +402,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32010("項目名がnullです。"),
+    KMGTOOL_GEN04001("項目名がnullです。"),
 
     /**
      * Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]
@@ -411,7 +411,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32011("Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]"),
+    KMGTOOL_GEN13000("Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]"),
 
     /**
      * Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]
@@ -420,7 +420,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32012("Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]"),
+    KMGTOOL_GEN13001("Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]"),
 
     /**
      * Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]
@@ -429,7 +429,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32013("Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]"),
+    KMGTOOL_GEN13002("Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]"),
 
     /**
      * ファイルの書き込み中にエラーが発生しました。ファイル=[{0}]
@@ -438,7 +438,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32014("ファイルの書き込み中にエラーが発生しました。ファイル=[{0}]"),
+    KMGTOOL_GEN12000("ファイルの書き込み中にエラーが発生しました。ファイル=[{0}]"),
 
     /**
      * ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]
@@ -447,7 +447,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32015("ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]"),
+    KMGTOOL_GEN12001("ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]"),
 
     /**
      * 入力ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]
@@ -456,7 +456,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN32016("入力ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]"),
+    KMGTOOL_GEN12002("入力ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]"),
 
     /**
      * 失敗
@@ -465,7 +465,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN41000("失敗"),
+    KMGTOOL_GEN09000("失敗"),
 
     /**
      * 成功
@@ -474,7 +474,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN41001("成功"),
+    KMGTOOL_GEN09001("成功"),
 
     /**
      * 例外発生
@@ -483,7 +483,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN41002("例外発生"),
+    KMGTOOL_GEN09002("例外発生"),
 
     /**
      * 入力ファイルから対象パスを設定に失敗しました。
@@ -492,7 +492,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN41003("入力ファイルから対象パスを設定に失敗しました。"),
+    KMGTOOL_GEN13004("入力ファイルから対象パスを設定に失敗しました。"),
 
     /**
      * 実行が成功しました。
@@ -501,7 +501,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN41004("実行が成功しました。"),
+    KMGTOOL_GEN13005("実行が成功しました。"),
 
     /**
      * 実行中に例外が発生しました。
@@ -510,7 +510,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN41005("実行中に例外が発生しました。"),
+    KMGTOOL_GEN13006("実行中に例外が発生しました。"),
 
     /**
      * Javadoc行削除の初期化に失敗しました。
@@ -519,7 +519,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN41006("Javadoc行削除の初期化に失敗しました。"),
+    KMGTOOL_GEN12003("Javadoc行削除の初期化に失敗しました。"),
 
     /**
      * Javadoc行削除が正常に完了しました。
@@ -528,7 +528,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN41007("Javadoc行削除が正常に完了しました。"),
+    KMGTOOL_GEN12004("Javadoc行削除が正常に完了しました。"),
 
     /**
      * Javadoc行削除中にエラーが発生しました。
@@ -537,7 +537,7 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN41008("Javadoc行削除中にエラーが発生しました。"),
+    KMGTOOL_GEN12005("Javadoc行削除中にエラーが発生しました。"),
 
     /* 定義：終了 */
 
