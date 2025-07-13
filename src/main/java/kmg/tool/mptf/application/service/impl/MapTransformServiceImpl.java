@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.jdts.application.logic.JdtsIoLogic;
 import kmg.tool.mptf.application.service.MapTransformService;
@@ -166,7 +167,7 @@ public class MapTransformServiceImpl implements MapTransformService {
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/07/10 メッセージ
+        // TODO KenichiroArai 2025/07/10 メッセージ マッピング変換処理を開始します。
         final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.NONE;
         final Object[]           startLogMsgArgs  = {};
         final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
@@ -206,11 +207,14 @@ public class MapTransformServiceImpl implements MapTransformService {
         if (uuidReplaceCount != replaceValueReplaceCount) {
 
             // TODO KenichiroArai 2025/07/10 メッセージ
-            return result;
+            // 対象値からUUIDへの置換数とUUIDから置換値への置換数が一致しません。対象値からUUIDへの置換数：[{0}]、UUIDから置換値への置換数：[{1}]
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final Object[]           genMsgArgs  = {};
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs);
 
         }
 
-        // TODO KenichiroArai 2025/07/10 メッセージ
+        // TODO KenichiroArai 2025/07/10 メッセージ マッピング変換処理を終了します。読み込みファイル数:[{0}]、合計置換数:[{1}]
         final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.NONE;
         final Object[]           endLogMsgArgs  = {
             this.jdtsIoLogic.getFilePathList().size(), uuidReplaceCount,

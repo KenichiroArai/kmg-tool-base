@@ -112,7 +112,7 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
             if (!result) {
 
                 /* メッセージの出力 */
-                // TODO KenichiroArai 2025/07/10 メッセージ
+                // TODO KenichiroArai 2025/07/10 メッセージ 入力ファイルから対象パスを設定に失敗しました。
                 final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
                 final Object[]           messageArgs = {};
                 final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
@@ -127,7 +127,7 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
             result &= this.mapTransformService.process();
 
             /* 成功 */
-            // TODO KenichiroArai 2025/07/10 メッセージ
+            // TODO KenichiroArai 2025/07/10 メッセージ 実行が成功しました。
             final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
@@ -136,7 +136,7 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
         } catch (final KmgToolMsgException e) {
 
             /* 例外 */
-            // TODO KenichiroArai 2025/07/10 メッセージ
+            // TODO KenichiroArai 2025/07/10 メッセージ 実行中に例外が発生しました。
             final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
@@ -147,7 +147,7 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
         } catch (final KmgToolValException e) {
 
             /* 例外 */
-            // TODO KenichiroArai 2025/07/10 メッセージ
+            // TODO KenichiroArai 2025/07/10 メッセージ バリデーションエラーが発生しました。
             final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
