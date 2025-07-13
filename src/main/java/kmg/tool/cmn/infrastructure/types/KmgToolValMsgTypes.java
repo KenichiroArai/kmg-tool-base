@@ -123,6 +123,15 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
      */
     KMGTOOL_VAL13009("[{0}]が正しく設定されていません。[{0}]=[{1}]"),
 
+    /**
+     * Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_VAL13010("Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]"),
+
     /* 定義：終了 */
 
     ;
