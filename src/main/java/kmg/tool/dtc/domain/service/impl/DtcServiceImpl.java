@@ -185,7 +185,7 @@ public class DtcServiceImpl implements DtcService {
 
         boolean result = false;
 
-        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12000;
+        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG03000;
         final Object[]           startLogMsgArgs  = {};
         final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
         this.logger.debug(startLogMsg);
@@ -236,7 +236,7 @@ public class DtcServiceImpl implements DtcService {
 
             } finally {
 
-                final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12002;
+                final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG03001;
                 final Object[]           endLogMsgArgs  = {};
                 final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
                     endLogMsgArgs);

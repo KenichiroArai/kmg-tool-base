@@ -449,7 +449,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.reader = null;
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13000;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG07000;
             final Object[]           logMsgArgs  = {
                 this.inputPath.toString(),
             };
@@ -484,7 +484,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.writer = null;
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13001;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG07001;
             final Object[]           logMsgArgs  = {
                 this.outputPath.toString(),
             };

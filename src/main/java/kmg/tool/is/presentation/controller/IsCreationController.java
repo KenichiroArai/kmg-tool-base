@@ -276,7 +276,7 @@ public class IsCreationController implements Initializable {
         } catch (final KmgToolMsgException e) {
 
             // ログの出力
-            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG43000;
+            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG10001;
             final Object[]           messageArgs = {
                 inputPath, outputPath,
             };

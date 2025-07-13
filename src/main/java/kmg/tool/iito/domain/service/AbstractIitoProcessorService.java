@@ -206,7 +206,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
         try {
 
-            final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12004;
+            final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG07002;
             final Object[]           startLogMsgArgs  = {};
             final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
                 startLogMsgArgs);
@@ -216,7 +216,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
         } finally {
 
-            final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12006;
+            final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG07003;
             final Object[]           endLogMsgArgs  = {};
             final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
             this.logger.debug(endLogMsg);

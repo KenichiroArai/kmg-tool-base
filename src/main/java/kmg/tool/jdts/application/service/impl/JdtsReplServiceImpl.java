@@ -229,7 +229,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      */
     private void logAddNewTag(final JdtsBlockModel targetBlockModel) {
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31021;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13001;
         final Object[]           logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
@@ -247,7 +247,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      */
     private void logRemoveTag(final JdtsBlockModel targetBlockModel) {
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31022;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13002;
         final Object[]           logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
@@ -268,7 +268,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      */
     private void logReplaceTag(final JdtsBlockModel targetBlockModel) {
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31024;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13004;
         final Object[]           logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
@@ -293,7 +293,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      */
     private void logRepositionTag(final JdtsBlockModel targetBlockModel) {
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31023;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13003;
         final Object[]           logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),

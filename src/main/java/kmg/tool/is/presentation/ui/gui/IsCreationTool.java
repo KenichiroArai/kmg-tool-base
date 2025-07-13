@@ -145,7 +145,7 @@ public class IsCreationTool extends Application {
         } catch (final IOException e) {
 
             // ログの出力
-            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG43001;
+            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG10002;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);

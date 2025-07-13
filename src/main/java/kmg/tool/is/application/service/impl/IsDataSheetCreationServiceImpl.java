@@ -200,7 +200,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
         } catch (final KmgToolMsgException e) {
 
             // ログの出力
-            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG12007;
+            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG10000;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);

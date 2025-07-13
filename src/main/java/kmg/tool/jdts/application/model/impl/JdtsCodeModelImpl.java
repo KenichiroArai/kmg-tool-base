@@ -159,7 +159,7 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
                 // 解析に失敗した場合
 
                 /* ログの出力 */
-                final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG33000;
+                final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13000;
                 final Object[]           logMsgArgs  = {
                     jdtsBlockModel.getId(), jdtsBlockModel.getOrgBlock(),
                 };

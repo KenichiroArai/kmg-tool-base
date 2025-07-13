@@ -198,7 +198,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         boolean result = false;
 
-        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31019;
+        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13005;
         final Object[]           startLogMsgArgs  = {};
         final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
         this.logger.debug(startLogMsg);
@@ -222,7 +222,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         } while (this.jdtsIoLogic.nextFile());
 
-        final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31020;
+        final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13006;
         final Object[]           endLogMsgArgs  = {
             this.jdtsIoLogic.getFilePathList().size(), totalReplaceCount,
         };
@@ -313,7 +313,7 @@ public class JdtsServiceImpl implements JdtsService {
      */
     private void logFileEnd() {
 
-        final KmgToolLogMsgTypes fileEndLogMsgTypes  = KmgToolLogMsgTypes.KMGTOOL_LOG31026;
+        final KmgToolLogMsgTypes fileEndLogMsgTypes  = KmgToolLogMsgTypes.KMGTOOL_LOG13008;
         final Object[]           fileStartEndMsgArgs = {
             this.jdtsIoLogic.getCurrentFilePath()
         };
@@ -332,7 +332,7 @@ public class JdtsServiceImpl implements JdtsService {
      */
     private void logFileStart() {
 
-        final KmgToolLogMsgTypes fileStartLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31025;
+        final KmgToolLogMsgTypes fileStartLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13007;
         final Object[]           fileStartLogMsgArgs  = {
             this.jdtsIoLogic.getCurrentFilePath()
         };

@@ -161,7 +161,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31013;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG14000;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -226,7 +226,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31014;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG14001;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -258,7 +258,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31015;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG14002;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -285,7 +285,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31016;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG14003;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -294,7 +294,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31017;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG14004;
         final Object[]           logMsgArgs  = {
             this.messageTypesCreationLogic.getItem(), this.messageTypesCreationLogic.getItemName(),
         };

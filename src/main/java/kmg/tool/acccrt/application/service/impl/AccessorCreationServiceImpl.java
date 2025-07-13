@@ -220,7 +220,7 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31003;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01002;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -292,7 +292,7 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31004;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01003;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -324,7 +324,7 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31005;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01004;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -351,7 +351,7 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31001;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01000;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -359,7 +359,7 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31002;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01001;
         final Object[]           logMsgArgs  = {
             this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
         };

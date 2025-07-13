@@ -141,7 +141,7 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31000;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05000;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -204,7 +204,7 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31008;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05001;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -236,7 +236,7 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31009;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05002;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -263,7 +263,7 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31012;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05003;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -271,7 +271,7 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31018;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05004;
         final Object[]           logMsgArgs  = {
             this.fieldCreationLogic.getComment(),
         };

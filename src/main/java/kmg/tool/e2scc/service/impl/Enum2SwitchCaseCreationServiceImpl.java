@@ -161,7 +161,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG32005;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG04000;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -225,7 +225,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31006;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG04001;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -257,7 +257,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31007;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG04002;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -284,7 +284,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
 
         } catch (final KmgToolMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31010;
+            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG04003;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -292,7 +292,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG31011;
+        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG04004;
         final Object[]           logMsgArgs  = {
             this.enum2SwitchCaseMakingLogic.getItem(), this.enum2SwitchCaseMakingLogic.getItemName(),
         };
