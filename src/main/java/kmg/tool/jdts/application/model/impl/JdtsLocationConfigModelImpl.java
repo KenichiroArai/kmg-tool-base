@@ -72,7 +72,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
             if (this.mode != JdtsLocationModeTypes.MANUAL) {
 
-                final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33002;
+                final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13002;
                 final Object[]           valMsgArgs   = {
                     JdtsConfigKeyTypes.TARGET_ELEMENTS.getDisplayName(), JdtsLocationModeTypes.MANUAL.getDisplayName(),
                 };
@@ -87,7 +87,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
                 if (type == JavaClassificationTypes.NONE) {
 
-                    final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33003;
+                    final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13003;
                     final Object[]           valMsgArgs   = {
                         JdtsConfigKeyTypes.TARGET_ELEMENTS.getDisplayName(),
                     };
@@ -102,7 +102,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
         } else if (this.mode == JdtsLocationModeTypes.MANUAL) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33004;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13004;
             final Object[]           valMsgArgs   = {
                 JdtsLocationModeTypes.MANUAL.getDisplayName(), JdtsConfigKeyTypes.TARGET_ELEMENTS.getDisplayName(),
             };

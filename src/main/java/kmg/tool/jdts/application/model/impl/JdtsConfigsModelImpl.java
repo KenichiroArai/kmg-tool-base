@@ -54,7 +54,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         if (KmgMapUtils.isEmpty(yamlData)) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33000;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13000;
             final Object[]           valMsgArgs   = {};
             final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);
@@ -70,7 +70,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         if (KmgListUtils.isEmpty(javadocTags)) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33001;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13001;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.JDTS_CONFIGS.getDisplayName(), JdtsConfigKeyTypes.JDTS_CONFIGS.get(),
             };

@@ -255,7 +255,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (KmgString.isEmpty(this.tagName)) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33005;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13005;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.TAG_NAME.getDisplayName(), JdtsConfigKeyTypes.TAG_NAME.getKey(),
             };
@@ -269,7 +269,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (this.tag == KmgJavadocTagTypes.NONE) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33006;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13006;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.TAG_NAME.getDisplayName(), this.tag,
             };
@@ -283,7 +283,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (KmgString.isEmpty(this.tagValue)) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33007;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13007;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.TAG_VALUE.getDisplayName(), JdtsConfigKeyTypes.TAG_VALUE.getKey(),
             };
@@ -317,7 +317,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (this.insertPosition == JdtsInsertPositionTypes.NONE) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33008;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13008;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.INSERT_POSITION.getDisplayName(), this.insertPosition,
             };
@@ -377,7 +377,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (this.overwrite == JdtsOverwriteTypes.NONE) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL33009;
+            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13009;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.OVERWRITE.getDisplayName(), this.overwrite,
             };
