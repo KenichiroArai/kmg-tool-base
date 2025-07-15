@@ -1,7 +1,7 @@
-# CSVから直接取得するプレースホルダー定義
+# 中間から直接取得するプレースホルダー定義
 # displayName: 画面表示用の名称
 # replacementPattern: 置換対象のパターン
-csvPlaceholders:
+intermediatePlaceholders:
     - displayName: "名称"
       replacementPattern: "{name}"
     - displayName: "型"
@@ -9,10 +9,10 @@ csvPlaceholders:
     - displayName: "項目"
       replacementPattern: "{item}"
 
-# CSVから取得した値を変換して生成するプレースホルダー定義
+# 中間から取得した値を変換して生成するプレースホルダー定義
 # displayName: 画面表示用の名称
 # replacementPattern: 置換対象のパターン
-# sourceKey: 変換元となるCSVプレースホルダーのdisplayName
+# sourceKey: 変換元となる中間プレースホルダーのdisplayName
 # transformation: 適用する変換処理
 derivedPlaceholders:
     - displayName: "先頭大文字項目"

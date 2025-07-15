@@ -60,7 +60,7 @@ JdtsConfigs:
 # 4. 上書き設定（overwrite）
 #    - never: 上書きしない（既存が存在しない場合のみ追加）
 #    - always: 常に上書き
-#    - ifLower: 既存のバージョンより小さい場合のみ上書き
+#    - ifLower: 既存バージョン>上書きするバージョン場合のみ上書き
 
 # -----------------------------------
 # 設定例と説明
@@ -91,4 +91,4 @@ JdtsConfigs:
 #       mode: "compliant"    # 自動配置モード
 #       removeIfMisplaced: true  # 指定外の場所にあるタグは削除
 #   insertPosition: "beginning"
-#   overwrite: "ifLower"     # 既存より小さい場合のみ上書き
+#   overwrite: "ifLower"     # 既存バージョン>上書きするバージョン場合のみ上書き

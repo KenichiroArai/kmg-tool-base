@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.3</version>
+        <version>3.5.3</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
@@ -20,7 +20,25 @@
     <properties>
         <java.version>21</java.version>
         <javafx.version>21.0.2</javafx.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit-jupiter.version>5.10.2</junit-jupiter.version>
+        <junit-platform.version>1.10.2</junit-platform.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- JUnit BOM to ensure version alignment -->
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -29,18 +47,23 @@
             <groupId>kmg.core</groupId>
             <artifactId>kmg-core</artifactId>
             <version>0.2.0</version>
+            <scope>system</scope>
+            <!-- TODO KenichiroArai 2025/05/19 kmg-coreのv0.2.0がリリースするまで仮で直接指定 -->
+            <systemPath>${project.basedir}/../kmg-core/target/kmg-core-0.2.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>kmg.fund</groupId>
             <artifactId>kmg-fund</artifactId>
             <version>0.1.0</version>
+            <scope>system</scope>
+            <!-- TODO KenichiroArai 2025/05/19 kmg-cundのv0.2.0がリリースするまで仮で直接指定 -->
+            <systemPath>${project.basedir}/../kmg-fund/target/kmg-fund-0.1.0.jar</systemPath>
         </dependency>
 
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -62,6 +85,16 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
             <version>${javafx.version}</version>
         </dependency>
 
@@ -99,10 +132,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -125,7 +174,15 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>kmg.tool.presentation.ui.gui.InsertionSqlCreationScreenGui</mainClass>
+                    <mainClass>kmg.tool.presentation.ui.gui.is.InsertionSqlCreationTool</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -133,7 +190,13 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>kmg.tool.presentation.ui.gui.InsertionSqlCreationScreenGui</mainClass>
+                    <mainClass>kmg.tool.presentation.ui.gui.is.InsertionSqlCreationTool</mainClass>
+                    <arguments>
+                        <argument>--module-path</argument>
+                        <argument>${project.build.directory}/dependency</argument>
+                        <argument>--add-modules</argument>
+                        <argument>javafx.controls,javafx.fxml,javafx.graphics,javafx.base</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
@@ -142,6 +205,8 @@
     <repositories>
 
         <!-- KMG シリーズ -->
+        <!-- TODO KenichiroArai 2025/05/19 kmg-coreのv0.2.0がリリースするまで仮で直接指定 -->
+        <!--
         <repository>
             <id>github-kmg-core</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
@@ -152,16 +217,20 @@
             <name>GitHub KenichiroArai Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/KenichiroArai/kmg-fund</url>
         </repository>
+        -->
     </repositories>
 
     <distributionManagement>
 
         <!-- KMG シリーズ -->
+        <!-- TODO KenichiroArai 2025/05/19 kmg-coreのv0.2.0がリリースするまで仮で直接指定 -->
+        <!--
         <repository>
             <id>github-kmg-tool</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/KenichiroArai/kmg-tool</url>
         </repository>
+        -->
     </distributionManagement>
 
 </project>

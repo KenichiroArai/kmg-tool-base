@@ -134,7 +134,7 @@ classDiagram
     }
 
     class Enum2SwitchCaseCreationTool.yml {
-        csvPlaceholders
+        intermediatePlaceholders
         derivedPlaceholders
         templateContent
     }
@@ -227,7 +227,7 @@ sequenceDiagram
 
 Enum2SwitchCaseCreationTool.ymlは以下の構造を持っています：
 
-1. **csvPlaceholders**: CSVから直接取得するプレースホルダー定義
+1. **intermediatePlaceholders**: 中間から直接取得するプレースホルダー定義
    - displayName: 画面表示用の名称
    - replacementPattern: 置換対象のパターン
 
@@ -291,11 +291,11 @@ Enum2SwitchCaseCreationTool.ymlは以下の構造を持っています：
 
 - YAMLフォーマットで定義されたテンプレート設定ファイル
 - 以下の主要セクションで構成：
-  - `csvPlaceholders`: CSVから直接取得するプレースホルダー定義
+  - `intermediatePlaceholders`: 中間から直接取得するプレースホルダー定義
   - `derivedPlaceholders`: CSVから取得した値を変換して生成するプレースホルダー定義
   - `templateContent`: 実際のテンプレート内容
 
-#### csvPlaceholders
+#### intermediatePlaceholders
 
 - CSVファイルの各列から直接マッピングされるプレースホルダー
   - `{item}`: 列挙型の項目名
