@@ -17,6 +17,8 @@ import org.mockito.quality.Strictness;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 
 /**
  * アクセサ作成ロジック実装テスト
@@ -1152,6 +1154,93 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "中間ファイルへの書き込みが成功すること");
         Assertions.assertTrue(Files.exists(testOutputFile), "出力ファイルが作成されていること");
+
+    }
+
+    /**
+     * addItemToRows メソッドのテスト - 異常系：項目名がnullの場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testAddItemToRows_abnormalItemNull() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+
+        /* 準備 */
+        this.reflectionModel.set("item", null);
+        this.testTarget.addOneLineOfDataToRows();
+
+        /* テスト対象の実行 */
+        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            this.testTarget.addItemToRows();
+        }, "項目名がnullの場合は例外が発生すること");
+
+        /* 検証の準備 */
+        final Object actualMessageTypes = actualException.getMessageTypes();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
+
+    }
+
+    /**
+     * addJavadocCommentToRows メソッドのテスト - 異常系：Javadocコメントがnullの場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testAddJavadocCommentToRows_abnormalJavadocNull() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
+
+        /* 準備 */
+        this.reflectionModel.set("javadocComment", null);
+        this.testTarget.addOneLineOfDataToRows();
+
+        /* テスト対象の実行 */
+        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            this.testTarget.addJavadocCommentToRows();
+        }, "Javadocコメントがnullの場合は例外が発生すること");
+
+        /* 検証の準備 */
+        final Object actualMessageTypes = actualException.getMessageTypes();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
+
+    }
+
+    /**
+     * addTypeToRows メソッドのテスト - 異常系：型がnullの場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testAddTypeToRows_abnormalTypeNull() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
+
+        /* 準備 */
+        this.reflectionModel.set("type", null);
+        this.testTarget.addOneLineOfDataToRows();
+
+        /* テスト対象の実行 */
+        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            this.testTarget.addTypeToRows();
+        }, "型がnullの場合は例外が発生すること");
+
+        /* 検証の準備 */
+        final Object actualMessageTypes = actualException.getMessageTypes();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
 
     }
 
