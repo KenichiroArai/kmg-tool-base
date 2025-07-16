@@ -298,8 +298,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            // verifyKmgMsgExceptionを使用してメッセージを検証する
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -388,8 +388,9 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testProcessColumns_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedLogMessage  = "カラムの追加中にエラーが発生しました。";
-        final KmgToolLogMsgTypes expectedLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01003;
+        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -400,8 +401,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(this.mockMessageSource);
 
             // モックメッセージソースの設定
-            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedLogMessage);
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
             // convertJavadocは例外を投げないメソッドなので、addJavadocCommentToRowsで例外を投げる
             Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(true);
@@ -437,7 +438,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(actualException, "例外が発生すること");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -543,8 +545,9 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testReadOneLineData_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedLogMessage  = "1行データの読み込み中にエラーが発生しました。";
-        final KmgToolLogMsgTypes expectedLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01004;
+        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -554,8 +557,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(this.mockMessageSource);
 
             // モックメッセージソースの設定
-            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedLogMessage);
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
             /* 準備 */
             // 例外を事前に作成して、モック設定を完了させる
@@ -589,7 +592,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(actualException, "例外が発生すること");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -661,11 +665,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            // 直接検証を行う
-            Assertions.assertInstanceOf(expectedCauseClass, actualException.getCause(),
-                String.format("KmgToolMsgExceptionの原因が%sであること", expectedCauseClass.getSimpleName()));
-            Assertions.assertEquals(expectedDomainMessage, actualException.getMessage(), "KmgToolMsgExceptionのメッセージが正しいこと");
-            Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージの種類が正しいこと");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -886,8 +887,9 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedLogMessage  = "中間ファイルに書き込み中にエラーが発生しました。";
-        final KmgToolLogMsgTypes expectedLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01000;
+        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -897,8 +899,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(this.mockMessageSource);
 
             // モックメッセージソースの設定
-            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedLogMessage);
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
             /* 準備 */
             // 例外を事前に作成して、モック設定を完了させる
@@ -932,7 +934,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(actualException, "例外が発生すること");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
