@@ -18,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import kmg.core.infrastructure.cmn.msg.KmgCmnExcMsgTypes;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
@@ -104,7 +103,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddItemToRows_abnormalItemNull() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -115,7 +115,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] ");
+                .thenReturn(expectedDomainMessage);
 
             /* 準備 */
             this.reflectionModel.set("item", null);
@@ -128,11 +128,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
             }, "項目名がnullの場合は例外が発生すること");
 
-            /* 検証の準備 */
-            final KmgCmnExcMsgTypes actualMessageTypes = actualException.getMessageTypes();
-
             /* 検証の実施 */
-            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -181,7 +178,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddJavadocCommentToRows_abnormalJavadocNull() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01002] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -192,7 +190,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01002] ");
+                .thenReturn(expectedDomainMessage);
 
             /* 準備 */
             this.reflectionModel.set("javadocComment", null);
@@ -205,11 +203,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
             }, "Javadocコメントがnullの場合は例外が発生すること");
 
-            /* 検証の準備 */
-            final KmgCmnExcMsgTypes actualMessageTypes = actualException.getMessageTypes();
-
             /* 検証の実施 */
-            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -287,7 +282,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddTypeToRows_abnormalTypeNull() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01003] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -298,7 +294,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01003] ");
+                .thenReturn(expectedDomainMessage);
 
             /* 準備 */
             this.reflectionModel.set("type", null);
@@ -311,11 +307,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
             }, "型がnullの場合は例外が発生すること");
 
-            /* 検証の準備 */
-            final KmgCmnExcMsgTypes actualMessageTypes = actualException.getMessageTypes();
-
             /* 検証の実施 */
-            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
