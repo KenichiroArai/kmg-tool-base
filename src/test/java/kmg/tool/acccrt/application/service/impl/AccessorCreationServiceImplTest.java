@@ -296,9 +296,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
-            // KmgToolGenMsgTypesはKmgCmnGenMsgTypesを実装しているため、直接検証を行う
-            Assertions.assertNotNull(actualException, "例外が発生すること");
-            Assertions.assertEquals(expectedDomainMessage, actualException.getMessage(), "メッセージが正しいこと");
+            // verifyKmgMsgExceptionを使用してメッセージを検証する
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -658,9 +657,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
                 = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.writeIntermediateFile());
 
             /* 検証の実施 */
-            // KmgToolGenMsgTypesはKmgCmnGenMsgTypesを実装しているため、直接検証を行う
-            Assertions.assertNotNull(actualException, "例外が発生すること");
-            Assertions.assertEquals(expectedDomainMessage, actualException.getMessage(), "メッセージが正しいこと");
+            // verifyKmgMsgExceptionを使用してメッセージを検証する
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
 
         }
 
