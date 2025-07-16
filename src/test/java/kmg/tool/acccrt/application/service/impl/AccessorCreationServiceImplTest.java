@@ -25,7 +25,6 @@ import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.acccrt.application.logic.AccessorCreationLogic;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 
 /**
  * アクセサ作成サービス実装テスト
@@ -388,7 +387,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testProcessColumns_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
         final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
@@ -438,8 +436,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -545,7 +542,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testReadOneLineData_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
         final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
@@ -592,8 +588,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -887,7 +882,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
         final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
@@ -934,8 +928,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
