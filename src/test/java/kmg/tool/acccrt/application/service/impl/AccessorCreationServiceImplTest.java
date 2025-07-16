@@ -60,6 +60,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
      * @throws Exception
      *                   例外
      */
+    @SuppressWarnings("resource")
     @BeforeEach
     public void setUp() throws Exception {
 
@@ -611,7 +612,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01000;
 
         /* 準備 */
-        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testInputFile = this.tempDir.resolve("test_input.txt");
         this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
 
@@ -653,7 +654,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFile_normalSuccess() throws Exception {
 
         /* 準備 */
-        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testInputFile = this.tempDir.resolve("test_input.txt");
         this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
 
@@ -699,7 +700,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFile_semiAddRemainingColumnsFalse() throws Exception {
 
         /* 準備 */
-        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testInputFile = this.tempDir.resolve("test_input.txt");
         this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
 
@@ -748,7 +749,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFile_semiConvertFieldsFalse() throws Exception {
 
         /* 準備 */
-        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testInputFile = this.tempDir.resolve("test_input.txt");
         this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
 
@@ -799,7 +800,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFile_semiProcessColumnsFalse() throws Exception {
 
         /* 準備 */
-        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testInputFile = this.tempDir.resolve("test_input.txt");
         this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
 
@@ -842,6 +843,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
      * @throws Exception
      *                   例外
      */
+    @SuppressWarnings("resource")
     @Test
     public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws Exception {
 
