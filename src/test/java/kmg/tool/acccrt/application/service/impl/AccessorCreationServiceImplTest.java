@@ -130,7 +130,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -156,7 +156,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -185,7 +185,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -212,7 +212,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -471,7 +471,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -501,7 +501,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -529,7 +529,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -617,7 +617,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -661,8 +661,11 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            // verifyKmgMsgExceptionを使用してメッセージを検証する
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            // 直接検証を行う
+            Assertions.assertInstanceOf(expectedCauseClass, actualException.getCause(),
+                String.format("KmgToolMsgExceptionの原因が%sであること", expectedCauseClass.getSimpleName()));
+            Assertions.assertEquals(expectedDomainMessage, actualException.getMessage(), "KmgToolMsgExceptionのメッセージが正しいこと");
+            Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージの種類が正しいこと");
 
         }
 
@@ -711,7 +714,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             final boolean actualResult = testResult;
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+            Assertions.assertTrue(actualResult, "戻り値が正しいこと");
 
         }
 
@@ -763,7 +766,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             final boolean actualResult = testResult;
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+            Assertions.assertTrue(actualResult, "戻り値が正しいこと");
 
         }
 
@@ -817,7 +820,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             final boolean actualResult = testResult;
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+            Assertions.assertTrue(actualResult, "戻り値が正しいこと");
 
         }
 
@@ -867,7 +870,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             final boolean actualResult = testResult;
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+            Assertions.assertTrue(actualResult, "戻り値が正しいこと");
 
         }
 
