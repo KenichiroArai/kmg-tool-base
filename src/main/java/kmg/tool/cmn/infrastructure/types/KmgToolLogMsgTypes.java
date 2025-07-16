@@ -49,6 +49,7 @@ public enum KmgToolLogMsgTypes implements KmgToolCmnLogMsg {
      */
     KMGTOOL_LOG01001("中間ファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]"),
 
+    // TODO Kenichiro 2025/07/16 不要なので削除する
     /**
      * クリア処理中にエラーが発生しました。
      *
@@ -94,6 +95,7 @@ public enum KmgToolLogMsgTypes implements KmgToolCmnLogMsg {
      */
     KMGTOOL_LOG03001("テンプレートの動的変換処理を終了します。"),
 
+    // TODO Kenichiro 2025/07/16 不要なので削除する
     /**
      * クリア処理中にエラーが発生しました。
      *
@@ -139,6 +141,7 @@ public enum KmgToolLogMsgTypes implements KmgToolCmnLogMsg {
      */
     KMGTOOL_LOG04004("中間ファイルに書き込み完了。名称=[{0}]、 項目名=[{1}]"),
 
+    // TODO Kenichiro 2025/07/16 不要なので削除する
     /**
      * クリア処理中にエラーが発生しました。
      *
@@ -341,6 +344,7 @@ public enum KmgToolLogMsgTypes implements KmgToolCmnLogMsg {
      */
     KMGTOOL_LOG13008("対象のファイルの処理を終了します。対象のファイルのパス=[{0}]"),
 
+    // TODO KenichiroArai 2025/07/16 不要なので削除する
     /**
      * クリア処理中にエラーが発生しました。
      *

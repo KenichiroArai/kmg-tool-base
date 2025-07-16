@@ -98,12 +98,9 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * 書き込み対象に行を追加する。
      *
      * @return true：成功、false：失敗
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addOneLineOfDataToRows() throws KmgToolMsgException {
+    public boolean addOneLineOfDataToRows() {
 
         boolean result = false;
 

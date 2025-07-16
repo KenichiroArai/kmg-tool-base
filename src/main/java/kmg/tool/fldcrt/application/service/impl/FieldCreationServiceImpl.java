@@ -122,33 +122,17 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
     /**
      * データをクリアして次の行の準備をする
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
-    private void clearAndPrepareNextLine() throws KmgToolMsgException {
+    private void clearAndPrepareNextLine() {
 
-        try {
+        // 書き込み対象の行のリストをクリアする
+        this.fieldCreationLogic.clearRows();
 
-            // 書き込み対象の行のリストをクリアする
-            this.fieldCreationLogic.clearRows();
+        // 処理中のデータをクリアする
+        this.fieldCreationLogic.clearProcessingData();
 
-            // 処理中のデータをクリアする
-            this.fieldCreationLogic.clearProcessingData();
-
-            /* 書き込み対象に行を追加する */
-            this.fieldCreationLogic.addOneLineOfDataToRows();
-
-        } catch (final KmgToolMsgException e) {
-
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05000;
-            final Object[]           logMsgArgs  = {};
-            final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
-
-        }
+        /* 書き込み対象に行を追加する */
+        this.fieldCreationLogic.addOneLineOfDataToRows();
 
     }
 

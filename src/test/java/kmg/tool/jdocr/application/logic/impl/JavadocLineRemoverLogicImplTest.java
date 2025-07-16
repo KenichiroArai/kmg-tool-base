@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
@@ -46,11 +45,11 @@ public class JavadocLineRemoverLogicImplTest {
      * ドライブ文字の置換処理が正しく動作することを確認します。
      * </p>
      *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_normalDriveLetterReplacement() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_normalDriveLetterReplacement() throws Exception {
 
         /* 期待値の定義 */
         final Path expectedPath       = Paths.get("D:\\eclipse\\workspace\\Sample.java");
@@ -81,12 +80,10 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 正常なJavaファイルの行文字列から、パスと行番号のエントリが正しく作成されることを確認します。
      * </p>
-     *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * * @throws Exception 例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_normalValidJavaFileLine() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_normalValidJavaFileLine() throws Exception {
 
         /* 期待値の定義 */
         final Path expectedPath       = Paths.get("D:\\test\\Sample.java");
@@ -117,12 +114,10 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * コロンで区切られた部分が2つ未満の場合に、nullが返されることを確認します。
      * </p>
-     *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * * @throws Exception 例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_semiInsufficientColonReturnsNull() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_semiInsufficientColonReturnsNull() throws Exception {
 
         /* 期待値の定義 */
         final SimpleEntry<Path, Integer> expectedResult = null;
@@ -150,12 +145,10 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 行番号部分が数値でない場合に、nullが返されることを確認します。
      * </p>
-     *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * * @throws Exception 例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_semiInvalidLineNumberReturnsNull() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_semiInvalidLineNumberReturnsNull() throws Exception {
 
         /* 期待値の定義 */
         final SimpleEntry<Path, Integer> expectedResult = null;
@@ -185,11 +178,11 @@ public class JavadocLineRemoverLogicImplTest {
      * @マークが含まれない行の場合に、nullが返されることを確認します。
      *                                    </p>
      *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_semiNoAtMarkReturnsNull() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_semiNoAtMarkReturnsNull() throws Exception {
 
         /* 期待値の定義 */
         final SimpleEntry<Path, Integer> expectedResult = null;

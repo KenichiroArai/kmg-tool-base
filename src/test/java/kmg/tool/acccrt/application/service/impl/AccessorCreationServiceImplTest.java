@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
@@ -216,48 +217,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
-     * clearAndPrepareNextLine メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testClearAndPrepareNextLine_errorKmgToolMsgException() throws Exception {
-
-        /* 期待値の定義 */
-        final String             expectedLogMessage  = "クリア処理中にエラーが発生しました。";
-        final KmgToolLogMsgTypes expectedLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01002;
-
-        // SpringApplicationContextHelperのモック化
-        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
-
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(this.mockMessageSource);
-
-            // モックメッセージソースの設定
-            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedLogMessage);
-
-            /* 準備 */
-            Mockito.when(this.mockAccessorCreationLogic.clearRows()).thenReturn(true);
-            Mockito.doThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001))
-                .when(this.mockAccessorCreationLogic).clearProcessingData();
-
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class,
-                () -> this.reflectionModel.getMethod("clearAndPrepareNextLine"));
-
-            /* 検証の準備 */
-
-            /* 検証の実施 */
-            Assertions.assertNotNull(actualException, "例外が発生すること");
-
-        }
-
-    }
-
-    /**
      * clearAndPrepareNextLine メソッドのテスト - 正常系：正常にクリア処理が完了する場合
      *
      * @throws Exception
@@ -314,8 +273,27 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class,
-                () -> this.reflectionModel.getMethod("closeAccessorCreationLogic"));
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                try {
+
+                    this.reflectionModel.getMethod("closeAccessorCreationLogic");
+
+                } catch (final KmgReflectionException e) {
+
+                    // KmgReflectionExceptionの原因となった例外を再投げする
+                    final Throwable cause = e.getCause();
+
+                    if (cause instanceof KmgToolMsgException) {
+
+                        throw (KmgToolMsgException) cause;
+
+                    }
+                    throw e;
+
+                }
+
+            });
 
             /* 検証の実施 */
             // KmgToolGenMsgTypesはKmgCmnGenMsgTypesを実装しているため、直接検証を行う
@@ -416,6 +394,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
+            /* 準備 */
             mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
                 .thenReturn(this.mockMessageSource);
 
@@ -423,13 +402,36 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedLogMessage);
 
-            /* 準備 */
-            Mockito.when(this.mockAccessorCreationLogic.convertJavadoc())
-                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001));
+            // convertJavadocは例外を投げないメソッドなので、addJavadocCommentToRowsで例外を投げる
+            Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(true);
+
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001);
+
+            Mockito.when(this.mockAccessorCreationLogic.addJavadocCommentToRows()).thenThrow(testException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class,
-                () -> this.reflectionModel.getMethod("processColumns"));
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                try {
+
+                    this.reflectionModel.getMethod("processColumns");
+
+                } catch (final KmgReflectionException e) {
+
+                    // KmgReflectionExceptionの原因となった例外を再投げする
+                    final Throwable cause = e.getCause();
+
+                    if (cause instanceof KmgToolMsgException) {
+
+                        throw (KmgToolMsgException) cause;
+
+                    }
+                    throw e;
+
+                }
+
+            });
 
             /* 検証の準備 */
 
@@ -555,12 +557,33 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedLogMessage);
 
             /* 準備 */
-            Mockito.when(this.mockAccessorCreationLogic.readOneLineOfData())
-                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001));
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001);
+
+            Mockito.when(this.mockAccessorCreationLogic.readOneLineOfData()).thenThrow(testException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class,
-                () -> this.reflectionModel.getMethod("readOneLineData"));
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                try {
+
+                    this.reflectionModel.getMethod("readOneLineData");
+
+                } catch (final KmgReflectionException e) {
+
+                    // KmgReflectionExceptionの原因となった例外を再投げする
+                    final Throwable cause = e.getCause();
+
+                    if (cause instanceof KmgToolMsgException) {
+
+                        throw (KmgToolMsgException) cause;
+
+                    }
+                    throw e;
+
+                }
+
+            });
 
             /* 検証の準備 */
 
@@ -717,12 +740,33 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedLogMessage);
 
             /* 準備 */
-            Mockito.doThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001))
-                .when(this.mockAccessorCreationLogic).writeIntermediateFile();
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001);
+
+            Mockito.doThrow(testException).when(this.mockAccessorCreationLogic).writeIntermediateFile();
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class,
-                () -> this.reflectionModel.getMethod("writeIntermediateFileLine"));
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                try {
+
+                    this.reflectionModel.getMethod("writeIntermediateFileLine");
+
+                } catch (final KmgReflectionException e) {
+
+                    // KmgReflectionExceptionの原因となった例外を再投げする
+                    final Throwable cause = e.getCause();
+
+                    if (cause instanceof KmgToolMsgException) {
+
+                        throw (KmgToolMsgException) cause;
+
+                    }
+                    throw e;
+
+                }
+
+            });
 
             /* 検証の準備 */
 

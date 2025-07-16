@@ -201,33 +201,17 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
     /**
      * データをクリアして次の行の準備をする。
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
-    private void clearAndPrepareNextLine() throws KmgToolMsgException {
+    private void clearAndPrepareNextLine() {
 
-        try {
+        // 書き込み対象の行データのリストをクリアする
+        this.accessorCreationLogic.clearRows();
 
-            // 書き込み対象の行データのリストをクリアする
-            this.accessorCreationLogic.clearRows();
+        // 処理中のデータをクリアする
+        this.accessorCreationLogic.clearProcessingData();
 
-            // 処理中のデータをクリアする
-            this.accessorCreationLogic.clearProcessingData();
-
-            /* 書き込み対象に行を追加する */
-            this.accessorCreationLogic.addOneLineOfDataToRows();
-
-        } catch (final KmgToolMsgException e) {
-
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01002;
-            final Object[]           logMsgArgs  = {};
-            final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
-            this.logger.error(logMsg, e);
-
-            throw e;
-
-        }
+        /* 書き込み対象に行を追加する */
+        this.accessorCreationLogic.addOneLineOfDataToRows();
 
     }
 
