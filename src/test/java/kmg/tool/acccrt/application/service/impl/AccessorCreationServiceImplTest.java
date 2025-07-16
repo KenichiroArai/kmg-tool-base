@@ -115,9 +115,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     @Test
     public void testAddNameColumn_normalJavadocConvertSuccess() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
         /* 準備 */
         Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(true);
         Mockito.when(this.mockAccessorCreationLogic.addJavadocCommentToRows()).thenReturn(true);
@@ -142,9 +139,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     @Test
     public void testAddNameColumn_semiJavadocConvertFailure() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
         /* 準備 */
         Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(false);
 
@@ -167,9 +161,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
      */
     @Test
     public void testAddRemainingColumns_normalFieldConvertSuccess() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         Mockito.when(this.mockAccessorCreationLogic.removeModifier()).thenReturn(true);
@@ -196,9 +187,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
      */
     @Test
     public void testAddRemainingColumns_semiFieldConvertFailure() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockAccessorCreationLogic.removeModifier()).thenReturn(true);
@@ -451,9 +439,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     @Test
     public void testProcessColumns_normalSuccess() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
         /* 準備 */
         Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(true);
         Mockito.when(this.mockAccessorCreationLogic.addJavadocCommentToRows()).thenReturn(true);
@@ -483,9 +468,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     @Test
     public void testProcessColumns_semiAddRemainingColumnsFailure() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
         /* 準備 */
         Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(true);
         Mockito.when(this.mockAccessorCreationLogic.addJavadocCommentToRows()).thenReturn(true);
@@ -512,9 +494,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
      */
     @Test
     public void testProcessColumns_semiJavadocCommentNull() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(true);
@@ -603,9 +582,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     @Test
     public void testReadOneLineData_normalSuccess() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
         /* 準備 */
         Mockito.when(this.mockAccessorCreationLogic.readOneLineOfData()).thenReturn(true);
 
@@ -636,7 +612,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
+        this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
 
         // SpringApplicationContextHelperのモック化
@@ -676,12 +652,9 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     @Test
     public void testWriteIntermediateFile_normalSuccess() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
+        this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
 
         // SpringApplicationContextHelperのモック化
@@ -725,12 +698,9 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     @Test
     public void testWriteIntermediateFile_semiAddRemainingColumnsFalse() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
+        this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
 
         // SpringApplicationContextHelperのモック化
@@ -777,12 +747,9 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     @Test
     public void testWriteIntermediateFile_semiConvertFieldsFalse() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
+        this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
 
         // SpringApplicationContextHelperのモック化
@@ -831,12 +798,9 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     @Test
     public void testWriteIntermediateFile_semiProcessColumnsFalse() throws Exception {
 
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
+        this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
 
         // SpringApplicationContextHelperのモック化
