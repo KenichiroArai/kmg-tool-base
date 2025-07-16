@@ -11,12 +11,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import kmg.core.infrastructure.cmn.msg.KmgCmnExcMsgTypes;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 
@@ -42,6 +48,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /** リフレクションモデル */
     private KmgReflectionModelImpl reflectionModel;
 
+    /** モックKMGメッセージソース */
+    private KmgMessageSource mockMessageSource;
+
     /**
      * セットアップ
      *
@@ -54,6 +63,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         this.testTarget = new AccessorCreationLogicImpl();
         this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* モックの初期化 */
+        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
     }
 
@@ -77,6 +89,50 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
                 e.printStackTrace();
 
             }
+
+        }
+
+    }
+
+    /**
+     * addItemToRows メソッドのテスト - 異常系：項目名がnullの場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testAddItemToRows_abnormalItemNull() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN01001] ");
+
+            /* 準備 */
+            this.reflectionModel.set("item", null);
+            this.testTarget.addOneLineOfDataToRows();
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.addItemToRows();
+
+            }, "項目名がnullの場合は例外が発生すること");
+
+            /* 検証の準備 */
+            final KmgCmnExcMsgTypes actualMessageTypes = actualException.getMessageTypes();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
 
         }
 
@@ -112,6 +168,50 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedRowSize, actualRows.size(), "中間の行数が正しいこと");
         Assertions.assertEquals(expectedColumnSize, actualRows.get(0).size(), "中間の列数が正しいこと");
         Assertions.assertEquals(expectedItem, actualRows.get(0).get(0), "項目名が正しく追加されていること");
+
+    }
+
+    /**
+     * addJavadocCommentToRows メソッドのテスト - 異常系：Javadocコメントがnullの場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testAddJavadocCommentToRows_abnormalJavadocNull() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN01002] ");
+
+            /* 準備 */
+            this.reflectionModel.set("javadocComment", null);
+            this.testTarget.addOneLineOfDataToRows();
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.addJavadocCommentToRows();
+
+            }, "Javadocコメントがnullの場合は例外が発生すること");
+
+            /* 検証の準備 */
+            final KmgCmnExcMsgTypes actualMessageTypes = actualException.getMessageTypes();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
+
+        }
 
     }
 
@@ -174,6 +274,50 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         Assertions.assertTrue(actualResult, "戻り値が正しいこと");
         Assertions.assertEquals(expectedRowSize, actualRows.size(), "新しい行が追加されていること");
         Assertions.assertEquals(expectedColumnSize, actualRows.get(0).size(), "新しい行は空であること");
+
+    }
+
+    /**
+     * addTypeToRows メソッドのテスト - 異常系：型がnullの場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testAddTypeToRows_abnormalTypeNull() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN01003] ");
+
+            /* 準備 */
+            this.reflectionModel.set("type", null);
+            this.testTarget.addOneLineOfDataToRows();
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.addTypeToRows();
+
+            }, "型がnullの場合は例外が発生すること");
+
+            /* 検証の準備 */
+            final KmgCmnExcMsgTypes actualMessageTypes = actualException.getMessageTypes();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
+
+        }
 
     }
 
@@ -256,7 +400,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testClearRows_normalClearRows() throws Exception {
 
         /* 期待値の定義 */
-        final int     expectedRowSize = 0;
+        final int expectedRowSize = 0;
 
         /* 準備 */
         this.testTarget.addOneLineOfDataToRows();
@@ -314,8 +458,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalPrivateArrayField() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedType   = "String[]";
-        final String  expectedItem   = "testArrayField";
+        final String expectedType = "String[]";
+        final String expectedItem = "testArrayField";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String[] testArrayField;");
@@ -345,8 +489,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalPrivateField() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedType   = "String";
-        final String  expectedItem   = "testField";
+        final String expectedType = "String";
+        final String expectedItem = "testField";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -376,8 +520,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalPrivateGenericField() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedType   = "List<String>";
-        final String  expectedItem   = "testGenericField";
+        final String expectedType = "List<String>";
+        final String expectedItem = "testGenericField";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private List<String> testGenericField;");
@@ -432,7 +576,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_normalInJavadocParsingWithStart() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedJavadocComment = "テストコメント";
+        final String expectedJavadocComment = "テストコメント";
 
         /* 準備 */
         this.reflectionModel.set("inJavadocParsing", true);
@@ -461,7 +605,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_normalMultiLineJavadocStart() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedJavadocComment   = "テストコメント";
+        final String expectedJavadocComment = "テストコメント";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "/**テストコメント");
@@ -491,7 +635,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_normalSingleLineJavadoc() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedJavadocComment   = "テストコメント";
+        final String expectedJavadocComment = "テストコメント";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "/** テストコメント */");
@@ -848,8 +992,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReadOneLineOfData_normalReadData() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedLineOfDataRead = "test line 1";
-        final int     expectedNowLineNumber  = 1;
+        final String expectedLineOfDataRead = "test line 1";
+        final int    expectedNowLineNumber  = 1;
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
@@ -910,7 +1054,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalNoModifierToRemove() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedConvertedLine = "private String testField;";
+        final String expectedConvertedLine = "private String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -938,7 +1082,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalRemoveFinalAndStatic() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedConvertedLine = "private   String testField;";
+        final String expectedConvertedLine = "private   String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private static final String testField;");
@@ -966,7 +1110,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalRemoveFinalOnly() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedConvertedLine = "private  String testField;";
+        final String expectedConvertedLine = "private  String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private final String testField;");
@@ -994,7 +1138,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalRemoveStaticOnly() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedConvertedLine = "private  String testField;";
+        final String expectedConvertedLine = "private  String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private static String testField;");
@@ -1022,7 +1166,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReplaceInLine_normalReplaceString() throws Exception {
 
         /* 期待値の定義 */
-        final String  expectedConvertedLine = "private  static String testField;";
+        final String expectedConvertedLine = "private  static String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private final static String testField;");
@@ -1154,93 +1298,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "中間ファイルへの書き込みが成功すること");
         Assertions.assertTrue(Files.exists(testOutputFile), "出力ファイルが作成されていること");
-
-    }
-
-    /**
-     * addItemToRows メソッドのテスト - 異常系：項目名がnullの場合
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testAddItemToRows_abnormalItemNull() throws Exception {
-
-        /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
-
-        /* 準備 */
-        this.reflectionModel.set("item", null);
-        this.testTarget.addOneLineOfDataToRows();
-
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-            this.testTarget.addItemToRows();
-        }, "項目名がnullの場合は例外が発生すること");
-
-        /* 検証の準備 */
-        final Object actualMessageTypes = actualException.getMessageTypes();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
-
-    }
-
-    /**
-     * addJavadocCommentToRows メソッドのテスト - 異常系：Javadocコメントがnullの場合
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testAddJavadocCommentToRows_abnormalJavadocNull() throws Exception {
-
-        /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
-
-        /* 準備 */
-        this.reflectionModel.set("javadocComment", null);
-        this.testTarget.addOneLineOfDataToRows();
-
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-            this.testTarget.addJavadocCommentToRows();
-        }, "Javadocコメントがnullの場合は例外が発生すること");
-
-        /* 検証の準備 */
-        final Object actualMessageTypes = actualException.getMessageTypes();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
-
-    }
-
-    /**
-     * addTypeToRows メソッドのテスト - 異常系：型がnullの場合
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testAddTypeToRows_abnormalTypeNull() throws Exception {
-
-        /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
-
-        /* 準備 */
-        this.reflectionModel.set("type", null);
-        this.testTarget.addOneLineOfDataToRows();
-
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-            this.testTarget.addTypeToRows();
-        }, "型がnullの場合は例外が発生すること");
-
-        /* 検証の準備 */
-        final Object actualMessageTypes = actualException.getMessageTypes();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "例外のメッセージタイプが正しいこと");
 
     }
 
