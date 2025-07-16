@@ -716,6 +716,162 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * writeIntermediateFile メソッドのテスト - 準正常系：addRemainingColumnsがfalseを返す場合（continue文のカバレッジ）
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testWriteIntermediateFile_semiAddRemainingColumnsFalse() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
+        Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
+
+            // モックアクセサ作成ロジックの設定
+            // 1回目のreadOneLineOfDataはtrueを返し、processColumnsがfalseを返すようにする
+            // 2回目のreadOneLineOfDataはfalseを返してループを終了する
+            Mockito.when(this.mockAccessorCreationLogic.readOneLineOfData()).thenReturn(true, false);
+
+            // processColumnsがfalseを返すようにするため、addRemainingColumnsがfalseを返すように設定
+            // convertJavadocをtrueに設定し、getJavadocCommentをnullに設定することで、processColumnsがfalseを返す
+            Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(true);
+            Mockito.when(this.mockAccessorCreationLogic.addJavadocCommentToRows()).thenReturn(true);
+            Mockito.when(this.mockAccessorCreationLogic.getJavadocComment()).thenReturn(null);
+
+            /* テスト対象の実行 */
+            final boolean testResult = this.testTarget.writeIntermediateFile();
+
+            /* 検証の準備 */
+            final boolean actualResult = testResult;
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+
+        }
+
+    }
+
+    /**
+     * writeIntermediateFile メソッドのテスト - 準正常系：convertFieldsがfalseを返す場合（continue文のカバレッジ）
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testWriteIntermediateFile_semiConvertFieldsFalse() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
+        Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
+
+            // モックアクセサ作成ロジックの設定
+            // 1回目のreadOneLineOfDataはtrueを返し、processColumnsがfalseを返すようにする
+            // 2回目のreadOneLineOfDataはfalseを返してループを終了する
+            Mockito.when(this.mockAccessorCreationLogic.readOneLineOfData()).thenReturn(true, false);
+
+            // processColumnsがfalseを返すようにするため、addRemainingColumnsがfalseを返すように設定
+            // convertJavadocをtrueに設定し、getJavadocCommentを有効な値に設定し、convertFieldsをfalseに設定
+            Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(true);
+            Mockito.when(this.mockAccessorCreationLogic.addJavadocCommentToRows()).thenReturn(true);
+            Mockito.when(this.mockAccessorCreationLogic.getJavadocComment()).thenReturn("テストコメント");
+            Mockito.when(this.mockAccessorCreationLogic.removeModifier()).thenReturn(true);
+            Mockito.when(this.mockAccessorCreationLogic.convertFields()).thenReturn(false);
+
+            /* テスト対象の実行 */
+            final boolean testResult = this.testTarget.writeIntermediateFile();
+
+            /* 検証の準備 */
+            final boolean actualResult = testResult;
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+
+        }
+
+    }
+
+    /**
+     * writeIntermediateFile メソッドのテスト - 準正常系：processColumnsがfalseを返す場合（continue文のカバレッジ）
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testWriteIntermediateFile_semiProcessColumnsFalse() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.tmp");
+        Files.write(testInputFile, "/** テストコメント */\nprivate String testField;".getBytes());
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
+
+            // モックアクセサ作成ロジックの設定
+            // 1回目のreadOneLineOfDataはtrueを返し、processColumnsがfalseを返すようにする
+            // 2回目のreadOneLineOfDataはfalseを返してループを終了する
+            Mockito.when(this.mockAccessorCreationLogic.readOneLineOfData()).thenReturn(true, false);
+
+            // processColumnsがfalseを返すようにするため、addNameColumnがfalseを返すように設定
+            // convertJavadocをfalseに設定することで、addNameColumnがfalseを返す
+            Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(false);
+
+            /* テスト対象の実行 */
+            final boolean testResult = this.testTarget.writeIntermediateFile();
+
+            /* 検証の準備 */
+            final boolean actualResult = testResult;
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+
+        }
+
+    }
+
+    /**
      * writeIntermediateFileLine メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
      *
      * @throws Exception
