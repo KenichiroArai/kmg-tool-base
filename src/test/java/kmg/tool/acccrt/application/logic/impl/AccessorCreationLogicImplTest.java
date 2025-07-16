@@ -11,14 +11,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
-import kmg.fund.infrastructure.context.KmgMessageSource;
 
 /**
  * アクセサ作成ロジック実装テスト
@@ -42,9 +40,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /** リフレクションモデル */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
-    private KmgMessageSource mockMessageSource;
-
     /**
      * セットアップ
      *
@@ -57,9 +52,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         this.testTarget = new AccessorCreationLogicImpl();
         this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
-
-        /* モックの初期化 */
-        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
     }
 
@@ -262,7 +254,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testClearRows_normalClearRows() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult  = true;
         final int     expectedRowSize = 0;
 
         /* 準備 */
@@ -321,7 +312,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalPrivateArrayField() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
         final String  expectedType   = "String[]";
         final String  expectedItem   = "testArrayField";
 
@@ -353,7 +343,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalPrivateField() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
         final String  expectedType   = "String";
         final String  expectedItem   = "testField";
 
@@ -385,7 +374,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalPrivateGenericField() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
         final String  expectedType   = "List<String>";
         final String  expectedItem   = "testGenericField";
 
@@ -417,7 +405,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_semiNotPrivateField() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "public void testMethod() {");
@@ -443,7 +430,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_normalInJavadocParsingWithStart() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult         = true;
         final String  expectedJavadocComment = "テストコメント";
 
         /* 準備 */
@@ -473,7 +459,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_normalMultiLineJavadocStart() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult           = true;
         final String  expectedJavadocComment   = "テストコメント";
         final boolean expectedInJavadocParsing = false;
 
@@ -505,7 +490,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_normalSingleLineJavadoc() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult           = true;
         final String  expectedJavadocComment   = "テストコメント";
         final boolean expectedInJavadocParsing = false;
 
@@ -537,7 +521,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_semiInJavadocParsingNotMultiLinePattern() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("inJavadocParsing", true);
@@ -564,7 +547,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_semiNotJavadocStart() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "// 通常のコメント");
@@ -867,7 +849,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReadOneLineOfData_normalReadData() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult         = true;
         final String  expectedLineOfDataRead = "test line 1";
         final int     expectedNowLineNumber  = 1;
 
@@ -902,7 +883,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReadOneLineOfData_semiEndOfFile() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
@@ -931,7 +911,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalNoModifierToRemove() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult        = false;
         final String  expectedConvertedLine = "private String testField;";
 
         /* 準備 */
@@ -960,7 +939,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalRemoveFinalAndStatic() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult        = true;
         final String  expectedConvertedLine = "private   String testField;";
 
         /* 準備 */
@@ -989,7 +967,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalRemoveFinalOnly() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult        = true;
         final String  expectedConvertedLine = "private  String testField;";
 
         /* 準備 */
@@ -1018,7 +995,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalRemoveStaticOnly() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult        = true;
         final String  expectedConvertedLine = "private  String testField;";
 
         /* 準備 */
@@ -1047,7 +1023,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReplaceInLine_normalReplaceString() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult        = true;
         final String  expectedConvertedLine = "private  static String testField;";
 
         /* 準備 */
@@ -1076,7 +1051,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReplaceInLine_semiReplacementNull() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -1102,7 +1076,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReplaceInLine_semiTargetNotFound() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -1128,7 +1101,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReplaceInLine_semiTargetNull() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -1154,7 +1126,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void writeIntermediateFile_normalWriteIntermediateFile() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
