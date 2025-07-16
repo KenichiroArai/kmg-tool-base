@@ -460,7 +460,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String  expectedJavadocComment   = "テストコメント";
-        final boolean expectedInJavadocParsing = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "/**テストコメント");
@@ -491,7 +490,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String  expectedJavadocComment   = "テストコメント";
-        final boolean expectedInJavadocParsing = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "/** テストコメント */");
@@ -769,7 +767,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testInitialize_normalInitialization() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
