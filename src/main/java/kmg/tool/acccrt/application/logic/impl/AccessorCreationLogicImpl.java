@@ -137,7 +137,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     @Override
     public boolean clearProcessingData() {
 
-        boolean result = super.clearProcessingData();
+        boolean result;
 
         this.javadocComment = null;
         this.type = null;
