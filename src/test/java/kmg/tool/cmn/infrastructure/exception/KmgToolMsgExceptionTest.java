@@ -276,16 +276,30 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
             "arg1", "arg2"
         };
 
-        /* テスト対象の実行 */
-        this.testTarget = new KmgToolMsgException(expectedMessageTypes, expectedMessageArgs);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の準備 */
-        final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
-        final Object[]         actualMessageArgs  = this.testTarget.getMessageArgs();
+            this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
-        Assertions.assertEquals(expectedMessageArgs, actualMessageArgs, "メッセージ引数が正しく設定されていること");
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+
+            /* テスト対象の実行 */
+            this.testTarget = new KmgToolMsgException(expectedMessageTypes, expectedMessageArgs);
+
+            /* 検証の準備 */
+            final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+            final Object[]         actualMessageArgs  = this.testTarget.getMessageArgs();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
+            Assertions.assertEquals(expectedMessageArgs, actualMessageArgs, "メッセージ引数が正しく設定されていること");
+
+        }
 
     }
 
@@ -305,18 +319,32 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
         };
         final Throwable        expectedCause        = new RuntimeException("テスト例外");
 
-        /* テスト対象の実行 */
-        this.testTarget = new KmgToolMsgException(expectedMessageTypes, expectedMessageArgs, expectedCause);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の準備 */
-        final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
-        final Object[]         actualMessageArgs  = this.testTarget.getMessageArgs();
-        final Throwable        actualCause        = this.testTarget.getCause();
+            this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
-        Assertions.assertEquals(expectedMessageArgs, actualMessageArgs, "メッセージ引数が正しく設定されていること");
-        Assertions.assertEquals(expectedCause, actualCause, "原因が正しく設定されていること");
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+
+            /* テスト対象の実行 */
+            this.testTarget = new KmgToolMsgException(expectedMessageTypes, expectedMessageArgs, expectedCause);
+
+            /* 検証の準備 */
+            final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+            final Object[]         actualMessageArgs  = this.testTarget.getMessageArgs();
+            final Throwable        actualCause        = this.testTarget.getCause();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
+            Assertions.assertEquals(expectedMessageArgs, actualMessageArgs, "メッセージ引数が正しく設定されていること");
+            Assertions.assertEquals(expectedCause, actualCause, "原因が正しく設定されていること");
+
+        }
 
     }
 
@@ -333,16 +361,30 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
         final KmgToolCmnExcMsg expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
         final Throwable        expectedCause        = new RuntimeException("テスト例外");
 
-        /* テスト対象の実行 */
-        this.testTarget = new KmgToolMsgException(expectedMessageTypes, expectedCause);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の準備 */
-        final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
-        final Throwable        actualCause        = this.testTarget.getCause();
+            this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
-        Assertions.assertEquals(expectedCause, actualCause, "原因が正しく設定されていること");
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+
+            /* テスト対象の実行 */
+            this.testTarget = new KmgToolMsgException(expectedMessageTypes, expectedCause);
+
+            /* 検証の準備 */
+            final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+            final Throwable        actualCause        = this.testTarget.getCause();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
+            Assertions.assertEquals(expectedCause, actualCause, "原因が正しく設定されていること");
+
+        }
 
     }
 
@@ -358,14 +400,28 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final KmgToolCmnExcMsg expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
-        /* テスト対象の実行 */
-        this.testTarget = new KmgToolMsgException(expectedMessageTypes);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の準備 */
-        final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+            this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+
+            /* テスト対象の実行 */
+            this.testTarget = new KmgToolMsgException(expectedMessageTypes);
+
+            /* 検証の準備 */
+            final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
+
+        }
 
     }
 }
