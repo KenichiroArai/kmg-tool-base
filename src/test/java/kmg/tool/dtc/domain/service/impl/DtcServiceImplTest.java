@@ -107,7 +107,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     public void testCloseDtcLogic_errorIOException() throws KmgToolMsgException, Exception {
 
         /* 期待値の定義 */
-        // 期待値なし（例外が発生するため）
+        final String             expectedDomainMessage = "[KMGTOOL_GEN03006] テストメッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03006;
+        final Class<?>           expectedCauseClass    = IOException.class;
 
         /* 準備 */
         try {
@@ -129,20 +131,18 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN03006] テストメッセージ");
+                .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                 this.reflectionModel.getMethod("closeDtcLogic");
 
             });
 
-            /* 検証の準備 */
-            final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
-
             /* 検証の実施 */
-            Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN03006, actualMsgType, "適切なメッセージタイプが設定されること");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -424,8 +424,11 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorCloseIOException() throws KmgToolMsgException {
 
         /* 期待値の定義 */
-        final String expectedStartLogMsg = "処理開始ログメッセージ";
-        final String expectedEndLogMsg   = "処理終了ログメッセージ";
+        final String             expectedStartLogMsg   = "処理開始ログメッセージ";
+        final String             expectedEndLogMsg     = "処理終了ログメッセージ";
+        final String             expectedDomainMessage = "[KMGTOOL_GEN03006] テストメッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03006;
+        final Class<?>           expectedCauseClass    = IOException.class;
 
         /* 準備 */
         final Path inputPath    = this.tempDir.resolve("input.txt");
@@ -460,20 +463,18 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN03006] テストメッセージ");
+                .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                 this.testTarget.process();
 
             });
 
-            /* 検証の準備 */
-            final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
-
             /* 検証の実施 */
-            Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN03006, actualMsgType, "適切なメッセージタイプが設定されること");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
