@@ -50,7 +50,8 @@ public class DtcLogicImplTest {
     @BeforeEach
     public void setUp() throws KmgReflectionException {
 
-        this.testTarget = new DtcLogicImpl();
+        final DtcLogicImpl dtcLogicImpl = new DtcLogicImpl();
+        this.testTarget = dtcLogicImpl;
         this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
 
     }
@@ -72,7 +73,8 @@ public class DtcLogicImplTest {
 
             } catch (final IOException e) {
 
-                // ignore
+                e.printStackTrace();
+
             }
 
         }
@@ -178,7 +180,6 @@ public class DtcLogicImplTest {
     public void testClearReadingData_normalClear() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedLine = null;
 
         /* 準備 */
         this.reflectionModel.set("lineOfDataRead", "abc");
@@ -567,7 +568,6 @@ public class DtcLogicImplTest {
     public void testLoadDerivedPlaceholderDefinitions_semiNoDefinitions() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expected = false;
 
         /* 準備 */
         final Map<String, Object> yamlData = new HashMap<>();
@@ -581,7 +581,7 @@ public class DtcLogicImplTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -595,7 +595,6 @@ public class DtcLogicImplTest {
     public void testLoadIntermediatePlaceholderDefinitions_normalHasDefinitions() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expected = true;
 
         /* 準備 */
         final Map<String, Object>       yamlData                 = new HashMap<>();
@@ -615,7 +614,7 @@ public class DtcLogicImplTest {
         final int     actualSize   = ((Map<?, ?>) this.reflectionModel.get("intermediatePlaceholderMap")).size();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
         Assertions.assertEquals(1, actualSize, "中間プレースホルダーが追加されていること");
 
     }
@@ -630,7 +629,6 @@ public class DtcLogicImplTest {
     public void testLoadIntermediatePlaceholderDefinitions_semiNoDefinitions() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expected = false;
 
         /* 準備 */
         final Map<String, Object> yamlData = new HashMap<>();
@@ -644,7 +642,7 @@ public class DtcLogicImplTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -721,8 +719,7 @@ public class DtcLogicImplTest {
     public void testLoadTemplateContent_normalLoad() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expected        = true;
-        final String  expectedContent = "test template content";
+        final String expectedContent = "test template content";
 
         /* 準備 */
         final Map<String, Object> yamlData = new HashMap<>();
@@ -736,7 +733,7 @@ public class DtcLogicImplTest {
         final String  actualContent = (String) this.reflectionModel.get("templateContent");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
         Assertions.assertEquals(expectedContent, actualContent, "テンプレートコンテンツが正しく設定されていること");
 
     }
@@ -879,8 +876,8 @@ public class DtcLogicImplTest {
         final List<Object> derivedPlaceholders = (List<Object>) this.reflectionModel.get("derivedPlaceholders");
         derivedPlaceholders.clear();
         // 実際のDtcDerivedPlaceholderModelImplインスタンスを作成
-        final Object placeholder = new kmg.tool.dtc.domain.model.impl.DtcDerivedPlaceholderModelImpl(
-            "testName", "${B}", "sourceKey", kmg.tool.dtc.domain.types.DtcTransformTypes.TO_UPPER_CASE);
+        final Object placeholder = new kmg.tool.dtc.domain.model.impl.DtcDerivedPlaceholderModelImpl("testName", "${B}",
+            "sourceKey", kmg.tool.dtc.domain.types.DtcTransformTypes.TO_UPPER_CASE);
         derivedPlaceholders.add(placeholder);
 
         /* テスト対象の実行 */
