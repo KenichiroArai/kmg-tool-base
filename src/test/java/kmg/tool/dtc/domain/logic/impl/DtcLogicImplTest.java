@@ -628,9 +628,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final int    expectedSize               = 1;
-        final String expectedDisplayName        = "testName";
-        final String expectedReplacementPattern = "${TEST}";
-        final String expectedKey                = "TEST";
+        final String expectedDisplayName        = "テスト名";
+        final String expectedReplacementPattern = "{TEST}";
 
         /* 準備 */
         final Map<String, Object>       yamlData                 = new HashMap<>();
@@ -640,6 +639,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         placeholder.put(DtcKeyTypes.REPLACEMENT_PATTERN.getKey(), expectedReplacementPattern);
         intermediatePlaceholders.add(placeholder);
         yamlData.put(DtcKeyTypes.INTERMEDIATE_PLACEHOLDERS.getKey(), intermediatePlaceholders);
+        final String testKey = "テスト名";
 
         /* テスト対象の実行 */
         final boolean testResult
@@ -652,7 +652,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         @SuppressWarnings("unchecked")
         final Map<String, String> actualMap    = (Map<String, String>) this.reflectionModel
             .get("intermediatePlaceholderMap");
-        final String              actualValue  = actualMap.get(expectedKey);
+        final String              actualValue  = actualMap.get(testKey);
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "戻り値が正しいこと");
