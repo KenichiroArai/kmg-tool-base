@@ -91,13 +91,17 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final String expectedContent = "testContent";
+
         /* 準備 */
         this.reflectionModel.set("contentsOfOneItem", expectedContent);
+
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.addOutputBufferContent();
+
         /* 検証の準備 */
         final boolean actualResult = testResult;
         final String  actualBuffer = this.reflectionModel.get("outputBufferContent").toString();
+
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "戻り値が正しいこと");
         Assertions.assertEquals(expectedContent, actualBuffer, "バッファ内容が正しいこと");
@@ -453,7 +457,7 @@ public class DtcLogicImplTest {
         Files.write(testTemplateFile, "template content".getBytes());
         /* テスト対象の実行 */
         final boolean testResult
-            = this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile, KmgDelimiterTypes.TAB);
+            = this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile, KmgDelimiterTypes.COMMA);
         /* 検証の準備 */
         final boolean actualResult = testResult;
         /* 検証の実施 */
