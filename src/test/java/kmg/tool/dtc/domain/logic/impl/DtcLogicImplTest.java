@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
+import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
@@ -28,7 +29,7 @@ import kmg.tool.dtc.domain.types.DtcKeyTypes;
  * @author AI
  */
 @SuppressWarnings({
-    "nls", "static-method"
+    "nls",
 })
 public class DtcLogicImplTest {
 
@@ -120,6 +121,7 @@ public class DtcLogicImplTest {
         /* 期待値の定義 */
         final String expectedTemplate = "A${B}C${D}";
         final String expectedResult   = "A1C2";
+
         /* 準備 */
         this.reflectionModel.set("templateContent", expectedTemplate);
         this.reflectionModel.set("convertedLine", "1,2");
@@ -130,10 +132,13 @@ public class DtcLogicImplTest {
         placeholderMap.clear();
         placeholderMap.put("B", "${B}");
         placeholderMap.put("D", "${D}");
+
         /* テスト対象の実行 */
         this.testTarget.applyTemplateToInputFile();
+
         /* 検証の準備 */
         final String actual = this.testTarget.getContentsOfOneItem();
+
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actual, "テンプレート適用結果が正しいこと");
 
@@ -149,13 +154,17 @@ public class DtcLogicImplTest {
     public void testClearOutputBufferContent_normalClear() throws Exception {
 
         /* 期待値の定義 */
-        final String expected = "";
+        final String expected = KmgString.EMPTY;
+
         /* 準備 */
         this.reflectionModel.set("outputBufferContent", new StringBuilder("abc"));
+
         /* テスト対象の実行 */
         this.testTarget.clearOutputBufferContent();
+
         /* 検証の準備 */
         final String actual = this.reflectionModel.get("outputBufferContent").toString();
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "バッファがクリアされていること");
 
@@ -172,6 +181,7 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final String expectedLine = null;
+
         /* 準備 */
         this.reflectionModel.set("lineOfDataRead", "abc");
         this.reflectionModel.set("convertedLine", "def");
@@ -186,8 +196,10 @@ public class DtcLogicImplTest {
         final List<Object> list = (List<Object>) this.reflectionModel.get("derivedPlaceholders");
         list.clear();
         list.add(null);
+
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.clearReadingData();
+
         /* 検証の準備 */
         final boolean actualResult    = testResult;
         final String  actualLine      = (String) this.reflectionModel.get("lineOfDataRead");
@@ -197,6 +209,7 @@ public class DtcLogicImplTest {
         final String  actualBuffer    = this.reflectionModel.get("outputBufferContent").toString();
         final int     actualMapSize   = ((Map<?, ?>) this.reflectionModel.get("intermediatePlaceholderMap")).size();
         final int     actualListSize  = ((List<?>) this.reflectionModel.get("derivedPlaceholders")).size();
+
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "戻り値が正しいこと");
         Assertions.assertNull(actualLine, "lineOfDataReadがnull");
@@ -219,15 +232,19 @@ public class DtcLogicImplTest {
     public void testClose_normalCloseResources() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");
         final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
         final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
         this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+
         /* テスト対象の実行 */
         this.testTarget.close();
+
         /* 検証の準備 */
+
         /* 検証の実施 */
         // 例外が発生しないことを確認
         Assertions.assertDoesNotThrow(() -> this.testTarget.close(), "closeメソッドが正常に実行されること");
@@ -244,15 +261,19 @@ public class DtcLogicImplTest {
     public void testCloseReader_normalCloseReader() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");
         final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
         final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
         this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("closeReader");
+
         /* 検証の準備 */
+
         /* 検証の実施 */
         // 例外が発生しないことを確認
         Assertions.assertDoesNotThrow(() -> this.reflectionModel.getMethod("closeReader"), "リーダーが正常にクローズされること");
@@ -269,11 +290,15 @@ public class DtcLogicImplTest {
     public void testCloseReader_normalReaderNull() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         this.reflectionModel.set("reader", null);
+
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("closeReader");
+
         /* 検証の準備 */
+
         /* 検証の実施 */
         // 例外が発生しないことを確認
         Assertions.assertDoesNotThrow(() -> this.reflectionModel.getMethod("closeReader"), "リーダーがnullの場合は正常に処理されること");
@@ -290,15 +315,19 @@ public class DtcLogicImplTest {
     public void testCloseWriter_normalCloseWriter() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");
         final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
         final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
         this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("closeWriter");
+
         /* 検証の準備 */
+
         /* 検証の実施 */
         // 例外が発生しないことを確認
         Assertions.assertDoesNotThrow(() -> this.reflectionModel.getMethod("closeWriter"), "ライターが正常にクローズされること");
@@ -315,11 +344,15 @@ public class DtcLogicImplTest {
     public void testCloseWriter_normalWriterNull() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         this.reflectionModel.set("writer", null);
+
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("closeWriter");
+
         /* 検証の準備 */
+
         /* 検証の実施 */
         // 例外が発生しないことを確認
         Assertions.assertDoesNotThrow(() -> this.reflectionModel.getMethod("closeWriter"), "ライターがnullの場合は正常に処理されること");
@@ -337,12 +370,16 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final String expected = "abc";
+
         /* 準備 */
         this.reflectionModel.set("contentsOfOneItem", expected);
+
         /* テスト対象の実行 */
         final String testResult = this.testTarget.getContentsOfOneItem();
+
         /* 検証の準備 */
         final String actual = testResult;
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "内容が正しいこと");
 
@@ -359,12 +396,16 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final Path expected = this.tempDir.resolve("input.txt");
+
         /* 準備 */
         this.reflectionModel.set("inputPath", expected);
+
         /* テスト対象の実行 */
         final Path testResult = this.testTarget.getInputPath();
+
         /* 検証の準備 */
         final Path actual = testResult;
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "inputPathが正しいこと");
 
@@ -381,12 +422,16 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final Path expected = this.tempDir.resolve("output.txt");
+
         /* 準備 */
         this.reflectionModel.set("outputPath", expected);
+
         /* テスト対象の実行 */
         final Path testResult = this.testTarget.getOutputPath();
+
         /* 検証の準備 */
         final Path actual = testResult;
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "outputPathが正しいこと");
 
@@ -403,12 +448,16 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final Path expected = this.tempDir.resolve("test_template.txt");
+
         /* 準備 */
         this.reflectionModel.set("templatePath", expected);
+
         /* テスト対象の実行 */
         final Path testResult = this.testTarget.getTemplatePath();
+
         /* 検証の準備 */
         final Path actual = testResult;
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "templatePathが正しいこと");
 
@@ -424,16 +473,20 @@ public class DtcLogicImplTest {
     public void testInitialize_normalInitialization() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");
         final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
         final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
         Files.write(testTemplateFile, "template content".getBytes());
+
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+
         /* 検証の準備 */
         final boolean actualResult = testResult;
+
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "初期化が成功すること");
 
@@ -449,17 +502,21 @@ public class DtcLogicImplTest {
     public void testInitialize_normalWithDelimiter() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");
         final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
         final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test content".getBytes());
         Files.write(testTemplateFile, "template content".getBytes());
+
         /* テスト対象の実行 */
         final boolean testResult
             = this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile, KmgDelimiterTypes.COMMA);
+
         /* 検証の準備 */
         final boolean actualResult = testResult;
+
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "初期化が成功すること");
 
@@ -476,6 +533,7 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final boolean expected = true;
+
         /* 準備 */
         final Map<String, Object>       yamlData            = new HashMap<>();
         final List<Map<String, String>> derivedPlaceholders = new ArrayList<>();
@@ -486,12 +544,15 @@ public class DtcLogicImplTest {
         placeholder.put(DtcKeyTypes.TRANSFORMATION.getKey(), "UPPER_CASE");
         derivedPlaceholders.add(placeholder);
         yamlData.put(DtcKeyTypes.DERIVED_PLACEHOLDERS.getKey(), derivedPlaceholders);
+
         /* テスト対象の実行 */
         final boolean testResult
             = (Boolean) this.reflectionModel.getMethod("loadDerivedPlaceholderDefinitions", yamlData);
+
         /* 検証の準備 */
         final boolean actualResult = testResult;
         final int     actualSize   = ((List<?>) this.reflectionModel.get("derivedPlaceholders")).size();
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
         Assertions.assertEquals(1, actualSize, "派生プレースホルダーが追加されていること");
@@ -509,14 +570,18 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final boolean expected = false;
+
         /* 準備 */
         final Map<String, Object> yamlData = new HashMap<>();
         yamlData.put(DtcKeyTypes.DERIVED_PLACEHOLDERS.getKey(), null);
+
         /* テスト対象の実行 */
         final boolean testResult
             = (Boolean) this.reflectionModel.getMethod("loadDerivedPlaceholderDefinitions", yamlData);
+
         /* 検証の準備 */
         final boolean actualResult = testResult;
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
 
@@ -533,6 +598,7 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final boolean expected = true;
+
         /* 準備 */
         final Map<String, Object>       yamlData                 = new HashMap<>();
         final List<Map<String, String>> intermediatePlaceholders = new ArrayList<>();
@@ -541,12 +607,15 @@ public class DtcLogicImplTest {
         placeholder.put(DtcKeyTypes.REPLACEMENT_PATTERN.getKey(), "${TEST}");
         intermediatePlaceholders.add(placeholder);
         yamlData.put(DtcKeyTypes.INTERMEDIATE_PLACEHOLDERS.getKey(), intermediatePlaceholders);
+
         /* テスト対象の実行 */
         final boolean testResult
             = (Boolean) this.reflectionModel.getMethod("loadIntermediatePlaceholderDefinitions", yamlData);
+
         /* 検証の準備 */
         final boolean actualResult = testResult;
         final int     actualSize   = ((Map<?, ?>) this.reflectionModel.get("intermediatePlaceholderMap")).size();
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
         Assertions.assertEquals(1, actualSize, "中間プレースホルダーが追加されていること");
@@ -564,14 +633,18 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final boolean expected = false;
+
         /* 準備 */
         final Map<String, Object> yamlData = new HashMap<>();
         yamlData.put(DtcKeyTypes.INTERMEDIATE_PLACEHOLDERS.getKey(), null);
+
         /* テスト対象の実行 */
         final boolean testResult
             = (Boolean) this.reflectionModel.getMethod("loadIntermediatePlaceholderDefinitions", yamlData);
+
         /* 検証の準備 */
         final boolean actualResult = testResult;
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
 
@@ -589,16 +662,20 @@ public class DtcLogicImplTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN03000] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03000;
+
         /* 準備 */
         final Path testTemplateFile = this.tempDir.resolve("test_template.yml");
         this.reflectionModel.set("templatePath", testTemplateFile);
+
         /* テスト対象の実行 */
         final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
             this.testTarget.loadTemplate();
 
         }, "YAML読み込みエラーの場合は例外が発生すること");
+
         /* 検証の準備 */
+
         /* 検証の実施 */
         Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージタイプが正しいこと");
 
@@ -615,16 +692,20 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final String expectedTemplateContent = "template content";
+
         /* 準備 */
         final Path   testTemplateFile = this.tempDir.resolve("test_template.yml");
         final String yamlContent      = "template_content: " + expectedTemplateContent + "\n";
         Files.write(testTemplateFile, yamlContent.getBytes());
         this.reflectionModel.set("templatePath", testTemplateFile);
+
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.loadTemplate();
+
         /* 検証の準備 */
         final boolean actualResult          = testResult;
         final String  actualTemplateContent = (String) this.reflectionModel.get("templateContent");
+
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "テンプレート読み込みが成功すること");
         Assertions.assertEquals(expectedTemplateContent, actualTemplateContent, "テンプレート内容が正しいこと");
@@ -643,14 +724,18 @@ public class DtcLogicImplTest {
         /* 期待値の定義 */
         final boolean expected        = true;
         final String  expectedContent = "test template content";
+
         /* 準備 */
         final Map<String, Object> yamlData = new HashMap<>();
         yamlData.put(DtcKeyTypes.TEMPLATE_CONTENT.getKey(), expectedContent);
+
         /* テスト対象の実行 */
         final boolean testResult = (Boolean) this.reflectionModel.getMethod("loadTemplateContent", yamlData);
+
         /* 検証の準備 */
         final boolean actualResult  = testResult;
         final String  actualContent = (String) this.reflectionModel.get("templateContent");
+
         /* 検証の実施 */
         Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
         Assertions.assertEquals(expectedContent, actualContent, "テンプレートコンテンツが正しく設定されていること");
@@ -669,16 +754,20 @@ public class DtcLogicImplTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN03003] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03003;
+
         /* 準備 */
         final Path testInputFile = this.tempDir.resolve("nonexistent.txt");
         this.reflectionModel.set("inputPath", testInputFile);
+
         /* テスト対象の実行 */
         final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
             this.reflectionModel.getMethod("openInputFile");
 
         }, "入力ファイルが存在しない場合は例外が発生すること");
+
         /* 検証の準備 */
+
         /* 検証の実施 */
         Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージタイプが正しいこと");
 
@@ -694,14 +783,18 @@ public class DtcLogicImplTest {
     public void testOpenInputFile_normalOpen() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         final Path testInputFile = this.tempDir.resolve("test_input.txt");
         Files.write(testInputFile, "test content".getBytes());
         this.reflectionModel.set("inputPath", testInputFile);
+
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("openInputFile");
+
         /* 検証の準備 */
         final Object actualReader = this.reflectionModel.get("reader");
+
         /* 検証の実施 */
         Assertions.assertNotNull(actualReader, "リーダーが作成されていること");
 
@@ -719,17 +812,21 @@ public class DtcLogicImplTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN03004] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03004;
+
         /* 準備 */
         // 権限のないディレクトリを指定（Windowsの場合）
         final Path testOutputFile = Path.of("/invalid/path/test_output.txt");
         this.reflectionModel.set("outputPath", testOutputFile);
+
         /* テスト対象の実行 */
         final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
             this.reflectionModel.getMethod("openOutputFile");
 
         }, "出力ファイルが作成できない場合は例外が発生すること");
+
         /* 検証の準備 */
+
         /* 検証の実施 */
         Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージタイプが正しいこと");
 
@@ -745,13 +842,17 @@ public class DtcLogicImplTest {
     public void testOpenOutputFile_normalOpen() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         final Path testOutputFile = this.tempDir.resolve("test_output.txt");
         this.reflectionModel.set("outputPath", testOutputFile);
+
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("openOutputFile");
+
         /* 検証の準備 */
         final Object actualWriter = this.reflectionModel.get("writer");
+
         /* 検証の実施 */
         Assertions.assertNotNull(actualWriter, "ライターが作成されていること");
 
@@ -768,6 +869,7 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final String expectedResult = "A1C";
+
         /* 準備 */
         this.reflectionModel.set("contentsOfOneItem", "A${B}C");
         final Map<String, String> intermediateValues = new HashMap<>();
@@ -779,10 +881,13 @@ public class DtcLogicImplTest {
         final Object mockPlaceholder = Mockito.mock(Object.class);
         Mockito.when(mockPlaceholder.toString()).thenReturn("test");
         derivedPlaceholders.add(mockPlaceholder);
+
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("processDerivedPlaceholders", intermediateValues);
+
         /* 検証の準備 */
         final String actual = (String) this.reflectionModel.get("contentsOfOneItem");
+
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actual, "派生プレースホルダーが正しく処理されること");
 
@@ -800,6 +905,7 @@ public class DtcLogicImplTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN03005] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03005;
+
         /* 準備 */
         this.reflectionModel.set("contentsOfOneItem", "A${B}C${D}");
         this.reflectionModel.set("convertedLine", "1"); // 1列のみ
@@ -812,13 +918,16 @@ public class DtcLogicImplTest {
         placeholderMap.put("B", "${B}");
         placeholderMap.put("D", "${D}"); // 2列目が必要だが1列しかない
         final Map<String, String> intermediateValues = new HashMap<>();
+
         /* テスト対象の実行 */
         final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
             this.reflectionModel.getMethod("processPlaceholders", intermediateValues);
 
         }, "中間行の列数が不足している場合は例外が発生すること");
+
         /* 検証の準備 */
+
         /* 検証の実施 */
         Assertions.assertEquals(expectedMessageTypes, actualException.getMessageTypes(), "メッセージタイプが正しいこと");
 
@@ -835,6 +944,7 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final String expectedResult = "A1C2";
+
         /* 準備 */
         this.reflectionModel.set("contentsOfOneItem", "A${B}C${D}");
         this.reflectionModel.set("convertedLine", "1,2");
@@ -846,10 +956,13 @@ public class DtcLogicImplTest {
         placeholderMap.put("B", "${B}");
         placeholderMap.put("D", "${D}");
         final Map<String, String> intermediateValues = new HashMap<>();
+
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("processPlaceholders", intermediateValues);
+
         /* 検証の準備 */
         final String actual = (String) this.reflectionModel.get("contentsOfOneItem");
+
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actual, "中間プレースホルダーが正しく処理されること");
 
@@ -866,17 +979,21 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final String expectedLineOfDataRead = "test line 1";
+
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");
         final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
         final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "test line 1\ntest line 2".getBytes());
         this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.readOneLineOfData();
+
         /* 検証の準備 */
         final boolean actualResult         = testResult;
         final String  actualLineOfDataRead = (String) this.reflectionModel.get("lineOfDataRead");
+
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "データが読み込めること");
         Assertions.assertEquals(expectedLineOfDataRead, actualLineOfDataRead, "読み込んだデータが正しいこと");
@@ -893,16 +1010,20 @@ public class DtcLogicImplTest {
     public void testReadOneLineOfData_semiEndOfFile() throws Exception {
 
         /* 期待値の定義 */
+
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");
         final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
         final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
         Files.write(testInputFile, "".getBytes());
         this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.readOneLineOfData();
+
         /* 検証の準備 */
         final boolean actualResult = testResult;
+
         /* 検証の実施 */
         Assertions.assertFalse(actualResult, "ファイル終端で正しく判定されること");
 
@@ -919,6 +1040,7 @@ public class DtcLogicImplTest {
 
         /* 期待値の定義 */
         final String expectedContent = "test output content";
+
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");
         final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
@@ -926,10 +1048,13 @@ public class DtcLogicImplTest {
         Files.write(testInputFile, "test content".getBytes());
         this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
         this.reflectionModel.set("outputBufferContent", new StringBuilder(expectedContent));
+
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.writeOutputBuffer();
+
         /* 検証の準備 */
         final boolean actualResult = testResult;
+
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "バッファ書き込みが成功すること");
         Assertions.assertTrue(Files.exists(testOutputFile), "出力ファイルが作成されていること");
