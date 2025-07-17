@@ -2,6 +2,7 @@ package kmg.tool.dtc.domain.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -783,6 +784,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN03003] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03003;
+        final Class<?>           expectedCauseClass    = NoSuchFileException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -807,7 +809,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             }, "入力ファイルが存在しない場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
