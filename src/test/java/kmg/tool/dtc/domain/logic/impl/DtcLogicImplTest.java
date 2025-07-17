@@ -38,7 +38,7 @@ import kmg.tool.dtc.domain.types.DtcKeyTypes;
 /**
  * DtcLogicImplのテストクラス
  *
- * @author AI
+ * @author KenichiroArai
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)

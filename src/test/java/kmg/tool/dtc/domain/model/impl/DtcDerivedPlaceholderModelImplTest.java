@@ -9,7 +9,7 @@ import kmg.tool.dtc.domain.types.DtcTransformTypes;
 /**
  * DtcDerivedPlaceholderModelImplのテストクラス
  *
- * @author AI
+ * @author KenichiroArai
  */
 @SuppressWarnings({
     "nls",
