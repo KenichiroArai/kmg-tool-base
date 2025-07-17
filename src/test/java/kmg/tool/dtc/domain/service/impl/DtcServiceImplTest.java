@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -19,6 +21,7 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
@@ -116,18 +119,32 @@ public class DtcServiceImplTest extends AbstractKmgTest {
             // テスト用の例外なので無視
         }
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.reflectionModel.getMethod("closeDtcLogic");
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN03006] テストメッセージ");
 
-        /* 検証の準備 */
-        final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+            /* テスト対象の実行 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN03006, actualMsgType, "適切なメッセージタイプが設定されること");
+                this.reflectionModel.getMethod("closeDtcLogic");
+
+            });
+
+            /* 検証の準備 */
+            final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN03006, actualMsgType, "適切なメッセージタイプが設定されること");
+
+        }
 
     }
 
