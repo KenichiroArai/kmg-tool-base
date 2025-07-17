@@ -12,12 +12,23 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
+import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.dtc.domain.types.DtcKeyTypes;
 
@@ -26,10 +37,12 @@ import kmg.tool.dtc.domain.types.DtcKeyTypes;
  *
  * @author AI
  */
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls",
 })
-public class DtcLogicImplTest {
+public class DtcLogicImplTest extends AbstractKmgTest {
 
     /** テンポラリディレクトリ */
     @TempDir
@@ -41,18 +54,25 @@ public class DtcLogicImplTest {
     /** リフレクションモデル */
     private KmgReflectionModelImpl reflectionModel;
 
+    /** モックKMGメッセージソース */
+    private KmgMessageSource mockMessageSource;
+
     /**
      * セットアップ
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
+    @SuppressWarnings("resource")
     @BeforeEach
     public void setUp() throws KmgReflectionException {
 
         final DtcLogicImpl dtcLogicImpl = new DtcLogicImpl();
         this.testTarget = dtcLogicImpl;
         this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* モックの初期化 */
+        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
     }
 
@@ -662,22 +682,32 @@ public class DtcLogicImplTest {
         final String             expectedDomainMessage = "[KMGTOOL_GEN03000] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03000;
 
-        /* 準備 */
-        final Path testTemplateFile = this.tempDir.resolve("test_template.yml");
-        this.reflectionModel.set("templatePath", testTemplateFile);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-            this.testTarget.loadTemplate();
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        }, "YAML読み込みエラーの場合は例外が発生すること");
+            /* 準備 */
+            final Path testTemplateFile = this.tempDir.resolve("test_template.yml");
+            this.reflectionModel.set("templatePath", testTemplateFile);
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        // SpringApplicationContextHelperがnullのため、KmgToolMsgExceptionではなく一般的なExceptionを期待
-        Assertions.assertTrue(actualException instanceof Exception, "例外が発生すること");
+                this.testTarget.loadTemplate();
+
+            }, "YAML読み込みエラーの場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -754,22 +784,32 @@ public class DtcLogicImplTest {
         final String             expectedDomainMessage = "[KMGTOOL_GEN03003] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03003;
 
-        /* 準備 */
-        final Path testInputFile = this.tempDir.resolve("nonexistent.txt");
-        this.reflectionModel.set("inputPath", testInputFile);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-            this.reflectionModel.getMethod("openInputFile");
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        }, "入力ファイルが存在しない場合は例外が発生すること");
+            /* 準備 */
+            final Path testInputFile = this.tempDir.resolve("nonexistent.txt");
+            this.reflectionModel.set("inputPath", testInputFile);
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        // SpringApplicationContextHelperがnullのため、KmgToolMsgExceptionではなく一般的なExceptionを期待
-        Assertions.assertTrue(actualException instanceof Exception, "例外が発生すること");
+                this.reflectionModel.getMethod("openInputFile");
+
+            }, "入力ファイルが存在しない場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -813,23 +853,33 @@ public class DtcLogicImplTest {
         final String             expectedDomainMessage = "[KMGTOOL_GEN03004] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03004;
 
-        /* 準備 */
-        // 権限のないディレクトリを指定（Windowsの場合）
-        final Path testOutputFile = Path.of("/invalid/path/test_output.txt");
-        this.reflectionModel.set("outputPath", testOutputFile);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-            this.reflectionModel.getMethod("openOutputFile");
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        }, "出力ファイルが作成できない場合は例外が発生すること");
+            /* 準備 */
+            // 権限のないディレクトリを指定（Windowsの場合）
+            final Path testOutputFile = Path.of("/invalid/path/test_output.txt");
+            this.reflectionModel.set("outputPath", testOutputFile);
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        // SpringApplicationContextHelperがnullのため、KmgToolMsgExceptionではなく一般的なExceptionを期待
-        Assertions.assertTrue(actualException instanceof Exception, "例外が発生すること");
+                this.reflectionModel.getMethod("openOutputFile");
+
+            }, "出力ファイルが作成できない場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -907,31 +957,41 @@ public class DtcLogicImplTest {
         final String             expectedDomainMessage = "[KMGTOOL_GEN03005] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03005;
 
-        /* 準備 */
-        this.reflectionModel.set("contentsOfOneItem", "A${B}C${D}");
-        this.reflectionModel.set("convertedLine", "1"); // 1列のみ
-        this.reflectionModel.set("intermediateDelimiter", KmgDelimiterTypes.COMMA);
-        this.reflectionModel.set("inputPath", this.tempDir.resolve("input.txt"));
-        @SuppressWarnings("unchecked")
-        final Map<String, String> placeholderMap
-            = (Map<String, String>) this.reflectionModel.get("intermediatePlaceholderMap");
-        placeholderMap.clear();
-        placeholderMap.put("B", "${B}");
-        placeholderMap.put("D", "${D}"); // 2列目が必要だが1列しかない
-        final Map<String, String> intermediateValues = new HashMap<>();
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-            this.reflectionModel.getMethod("processPlaceholders", intermediateValues);
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        }, "中間行の列数が不足している場合は例外が発生すること");
+            /* 準備 */
+            this.reflectionModel.set("contentsOfOneItem", "A${B}C${D}");
+            this.reflectionModel.set("convertedLine", "1"); // 1列のみ
+            this.reflectionModel.set("intermediateDelimiter", KmgDelimiterTypes.COMMA);
+            this.reflectionModel.set("inputPath", this.tempDir.resolve("input.txt"));
+            @SuppressWarnings("unchecked")
+            final Map<String, String> placeholderMap
+                = (Map<String, String>) this.reflectionModel.get("intermediatePlaceholderMap");
+            placeholderMap.clear();
+            placeholderMap.put("B", "${B}");
+            placeholderMap.put("D", "${D}"); // 2列目が必要だが1列しかない
+            final Map<String, String> intermediateValues = new HashMap<>();
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        // SpringApplicationContextHelperがnullのため、KmgToolMsgExceptionではなく一般的なExceptionを期待
-        Assertions.assertTrue(actualException instanceof Exception, "例外が発生すること");
+                this.reflectionModel.getMethod("processPlaceholders", intermediateValues);
+
+            }, "中間行の列数が不足している場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
