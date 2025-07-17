@@ -72,8 +72,7 @@ public class KmgToolMsgException extends KmgFundMsgException {
      * @param cause
      *                     原因
      */
-    public KmgToolMsgException(final KmgToolCmnExcMsg messageTypes, final Object[] messageArgs,
-        final Throwable cause) {
+    public KmgToolMsgException(final KmgToolCmnExcMsg messageTypes, final Object[] messageArgs, final Throwable cause) {
 
         super(messageTypes, messageArgs, cause);
 
