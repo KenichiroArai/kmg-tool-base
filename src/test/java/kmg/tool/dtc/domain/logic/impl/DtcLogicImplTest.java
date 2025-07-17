@@ -709,7 +709,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             }, "YAML読み込みエラーの場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -884,7 +885,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             }, "出力ファイルが作成できない場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -997,7 +999,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             }, "中間行の列数が不足している場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -1035,6 +1038,79 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actual, "中間プレースホルダーが正しく処理されること");
+
+    }
+
+    /**
+     * readOneLineOfData メソッドのテスト - 異常系：IOExceptionが発生した場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testReadOneLineOfData_errorIOException() throws Exception {
+
+        /* 期待値の定義 */
+        final Path               testInputFile         = this.tempDir.resolve("test_input.txt");
+        final Path               testTemplateFile      = this.tempDir.resolve("test_template.txt");
+        final Path               testOutputFile        = this.tempDir.resolve("test_output.tmp");
+        final String             expectedDomainMessage = KmgString
+            .concat("[KMGTOOL_GEN03001] 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス=[", testInputFile.toString(), "]");
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03001;
+        final Class<?>           expectedCauseClass    = IOException.class;
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenAnswer(invocation -> {
+
+                    String result;
+
+                    final Object[] args = invocation.getArgument(1);
+                    final int  len  = (args == null) ? 0 : args.length;
+
+                    if (len == 1) {
+
+                        result = expectedDomainMessage;
+                        return result;
+
+                    }
+
+                    result = KmgString.EMPTY;
+                    return result;
+
+                });
+
+            /* 準備 */
+            Files.write(testInputFile, "test content".getBytes());
+            this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+
+            // IOExceptionを発生させるモックリーダーを作成
+            try (final BufferedReader mockReader = Mockito.mock(BufferedReader.class);) {
+
+                Mockito.when(mockReader.readLine()).thenThrow(new IOException("Test IOException"));
+                this.reflectionModel.set("reader", mockReader);
+
+            }
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.readOneLineOfData();
+
+            }, "IOExceptionが発生した場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
 
     }
 
@@ -1100,20 +1176,23 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     }
 
     /**
-     * readOneLineOfData メソッドのテスト - 異常系：IOExceptionが発生した場合
+     * writeOutputBuffer メソッドのテスト - 異常系：IOExceptionが発生した場合
      *
      * @throws Exception
      *                   例外
      */
+    @SuppressWarnings("resource")
     @Test
-    public void testReadOneLineOfData_errorIOException() throws Exception {
+    public void testWriteOutputBuffer_errorIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Path testInputFile    = this.tempDir.resolve("test_input.txt");
-        final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
-        final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
-        final String expectedDomainMessage = "[KMGTOOL_GEN03001] 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス=[" + testInputFile.toString() + "]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03001;
+        final Path               testInputFile         = this.tempDir.resolve("test_input.txt");
+        final Path               testTemplateFile      = this.tempDir.resolve("test_template.txt");
+        final Path               testOutputFile        = this.tempDir.resolve("test_output.tmp");
+        final String             expectedDomainMessage = "[KMGTOOL_GEN03002] 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス=["
+            + testInputFile.toString() + "]、 テンプレートパス=[" + testTemplateFile.toString() + "]、 出力ファイルパス=["
+            + testOutputFile.toString() + "]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03002;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
@@ -1125,34 +1204,35 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenAnswer(invocation -> {
-                    Object[] args = invocation.getArgument(1);
-                    int len = (args == null) ? 0 : args.length;
-                    if (len == 1) {
-                        return expectedDomainMessage;
-                    } else {
-                        return "";
-                    }
-                });
+                .thenReturn(expectedDomainMessage);
 
             /* 準備 */
             Files.write(testInputFile, "test content".getBytes());
             this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+            this.reflectionModel.set("outputBufferContent", new StringBuilder("test content"));
 
-            // IOExceptionを発生させるモックリーダーを作成
-            final BufferedReader mockReader = Mockito.mock(BufferedReader.class);
-            Mockito.when(mockReader.readLine()).thenThrow(new IOException("Test IOException"));
-            this.reflectionModel.set("reader", mockReader);
+            // IOExceptionを発生させるモックライターを作成
+            try (final BufferedWriter mockWriter = Mockito.mock(BufferedWriter.class);) {
+
+                Mockito.doThrow(new IOException("Test IOException")).when(mockWriter)
+                    .write(ArgumentMatchers.anyString());
+                this.reflectionModel.set("writer", mockWriter);
+
+            }
+            this.reflectionModel.set("inputPath", testInputFile);
+            this.reflectionModel.set("templatePath", testTemplateFile);
+            this.reflectionModel.set("outputPath", testOutputFile);
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                this.testTarget.readOneLineOfData();
+                this.testTarget.writeOutputBuffer();
 
             }, "IOExceptionが発生した場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -1187,61 +1267,6 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "バッファ書き込みが成功すること");
         Assertions.assertTrue(Files.exists(testOutputFile), "出力ファイルが作成されていること");
-
-    }
-
-    /**
-     * writeOutputBuffer メソッドのテスト - 異常系：IOExceptionが発生した場合
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testWriteOutputBuffer_errorIOException() throws Exception {
-
-        /* 期待値の定義 */
-        final Path testInputFile    = this.tempDir.resolve("test_input.txt");
-        final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
-        final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
-        final String expectedDomainMessage = "[KMGTOOL_GEN03002] 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス=[" + testInputFile.toString() + "]、 テンプレートパス=[" + testTemplateFile.toString() + "]、 出力ファイルパス=[" + testOutputFile.toString() + "]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03002;
-        final Class<?>           expectedCauseClass    = IOException.class;
-
-        // SpringApplicationContextHelperのモック化
-        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
-
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(this.mockMessageSource);
-
-            // モックメッセージソースの設定
-            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
-
-            /* 準備 */
-            Files.write(testInputFile, "test content".getBytes());
-            this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
-            this.reflectionModel.set("outputBufferContent", new StringBuilder("test content"));
-
-            // IOExceptionを発生させるモックライターを作成
-            final BufferedWriter mockWriter = Mockito.mock(BufferedWriter.class);
-            Mockito.doThrow(new IOException("Test IOException")).when(mockWriter).write(ArgumentMatchers.anyString());
-            this.reflectionModel.set("writer", mockWriter);
-            this.reflectionModel.set("inputPath", testInputFile);
-            this.reflectionModel.set("templatePath", testTemplateFile);
-            this.reflectionModel.set("outputPath", testOutputFile);
-
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-                this.testTarget.writeOutputBuffer();
-
-            }, "IOExceptionが発生した場合は例外が発生すること");
-
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
-
-        }
 
     }
 
