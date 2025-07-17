@@ -119,18 +119,20 @@ public class DtcServiceImplTest extends AbstractKmgTest {
         } catch (final IOException e) {
 
             // テスト用の例外なので無視
+            e.printStackTrace();
+
         }
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
             mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSource);
+                .thenReturn(mockMessageSourceTestMethod);
 
             // モックメッセージソースの設定
-            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
