@@ -1098,6 +1098,55 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * readOneLineOfData メソッドのテスト - 異常系：IOExceptionが発生した場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testReadOneLineOfData_errorIOException() throws Exception {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN03001] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03001;
+        final Class<?>           expectedCauseClass    = IOException.class;
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* 準備 */
+            final Path testInputFile    = this.tempDir.resolve("test_input.txt");
+            final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
+            final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
+            Files.write(testInputFile, "test content".getBytes());
+            this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+
+            // リーダーをnullにしてIOExceptionを発生させる
+            this.reflectionModel.set("reader", null);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.readOneLineOfData();
+
+            }, "IOExceptionが発生した場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+
+        }
+
+    }
+
+    /**
      * writeOutputBuffer メソッドのテスト - 正常系：バッファ書き込みが成功する場合
      *
      * @throws Exception
@@ -1126,6 +1175,56 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "バッファ書き込みが成功すること");
         Assertions.assertTrue(Files.exists(testOutputFile), "出力ファイルが作成されていること");
+
+    }
+
+    /**
+     * writeOutputBuffer メソッドのテスト - 異常系：IOExceptionが発生した場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testWriteOutputBuffer_errorIOException() throws Exception {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN03002] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03002;
+        final Class<?>           expectedCauseClass    = IOException.class;
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* 準備 */
+            final Path testInputFile    = this.tempDir.resolve("test_input.txt");
+            final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
+            final Path testOutputFile   = this.tempDir.resolve("test_output.tmp");
+            Files.write(testInputFile, "test content".getBytes());
+            this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+            this.reflectionModel.set("outputBufferContent", new StringBuilder("test content"));
+
+            // ライターをnullにしてIOExceptionを発生させる
+            this.reflectionModel.set("writer", null);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.writeOutputBuffer();
+
+            }, "IOExceptionが発生した場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
