@@ -531,7 +531,7 @@ public class DtcLogicImplTest {
     public void testLoadDerivedPlaceholderDefinitions_normalHasDefinitions() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expected = true;
+        final int     expectedSize   = 1;
 
         /* 準備 */
         final Map<String, Object>       yamlData            = new HashMap<>();
@@ -553,8 +553,8 @@ public class DtcLogicImplTest {
         final int     actualSize   = ((List<?>) this.reflectionModel.get("derivedPlaceholders")).size();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualSize, "派生プレースホルダーが追加されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedSize, actualSize, "派生プレースホルダーが追加されていること");
 
     }
 
@@ -595,6 +595,7 @@ public class DtcLogicImplTest {
     public void testLoadIntermediatePlaceholderDefinitions_normalHasDefinitions() throws Exception {
 
         /* 期待値の定義 */
+        final int     expectedSize   = 1;
 
         /* 準備 */
         final Map<String, Object>       yamlData                 = new HashMap<>();
@@ -615,7 +616,7 @@ public class DtcLogicImplTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualSize, "中間プレースホルダーが追加されていること");
+        Assertions.assertEquals(expectedSize, actualSize, "中間プレースホルダーが追加されていること");
 
     }
 
