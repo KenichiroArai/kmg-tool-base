@@ -48,30 +48,37 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testCreateMessage_normalCreateMessage() throws Exception {
 
         /* 期待値の定義 */
-        final String           expectedMessage = "[KMGTOOL_GEN01001] 項目名がnullです。";
-        final KmgToolCmnExcMsg messageTypes    = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
-        final Object[]         messageArgs     = {
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] 項目名がnullです。";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final Object[]           messageArgs           = {
             "arg1"
         };
 
-        /* 準備 */
-        this.testTarget = new KmgToolMsgException(messageTypes, messageArgs);
-        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
-        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
-        // メッセージソースを設定
-        this.reflectionModel.set("messageSource", this.mockMessageSource);
-        // モックメッセージソースの設定
-        Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn(expectedMessage);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final String testResult = (String) this.reflectionModel.getMethod("createMessage");
+            this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        /* 検証の準備 */
-        final String actualMessage = testResult;
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMessage, actualMessage, "メッセージが正しく作成されること");
+            /* 準備 */
+            this.testTarget = new KmgToolMsgException(expectedMessageTypes, messageArgs);
+
+            /* テスト対象の実行 */
+            final String testResult = this.testTarget.getMessage();
+
+            /* 検証の準備 */
+            final String actualMessage = testResult;
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(this.testTarget, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -85,19 +92,24 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testCreateMessageSource_normalCreateMessageSource() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
-
-        /* 準備 */
-        this.testTarget = new KmgToolMsgException(messageTypes);
-        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
-        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
+            this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
             mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
                 .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* 準備 */
+            this.testTarget = new KmgToolMsgException(expectedMessageTypes);
+            this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
 
             /* テスト対象の実行 */
             this.reflectionModel.getMethod("createMessageSource");
@@ -107,6 +119,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertEquals(this.mockMessageSource, actualMessageSource, "メッセージソースが正しく設定されていること");
+            this.verifyKmgMsgException(this.testTarget, expectedDomainMessage, expectedMessageTypes);
 
         }
 
