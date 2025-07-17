@@ -855,6 +855,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN03004] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03004;
+        final Class<?>           expectedCauseClass    = NoSuchFileException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -880,7 +881,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             }, "出力ファイルが作成できない場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
 
         }
 
