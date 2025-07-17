@@ -970,6 +970,41 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * processDerivedPlaceholders メソッドのテスト - 準正常系：sourceValueがnullの場合（プライベートメソッド）
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testProcessDerivedPlaceholders_semiSourceValueNull() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedResult = "A${B}C"; // 置換されない
+
+        /* 準備 */
+        this.reflectionModel.set("contentsOfOneItem", "A${B}C");
+        final Map<String, String> intermediateValues = new HashMap<>();
+        // sourceValueがnullになるように、sourceKeyに対応する値を設定しない
+        @SuppressWarnings("unchecked")
+        final List<Object> derivedPlaceholders = (List<Object>) this.reflectionModel.get("derivedPlaceholders");
+        derivedPlaceholders.clear();
+        // 実際のDtcDerivedPlaceholderModelImplインスタンスを作成
+        final Object placeholder = new kmg.tool.dtc.domain.model.impl.DtcDerivedPlaceholderModelImpl("testName", "${B}",
+            "sourceKey", kmg.tool.dtc.domain.types.DtcTransformTypes.TO_UPPER_CASE);
+        derivedPlaceholders.add(placeholder);
+
+        /* テスト対象の実行 */
+        this.reflectionModel.getMethod("processDerivedPlaceholders", intermediateValues);
+
+        /* 検証の準備 */
+        final String actual = (String) this.reflectionModel.get("contentsOfOneItem");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actual, "sourceValueがnullの場合は置換されないこと");
+
+    }
+
+    /**
      * processPlaceholders メソッドのテスト - 異常系：中間行の列数が不足している場合（プライベートメソッド）
      *
      * @throws Exception
