@@ -682,6 +682,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN03000] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03000;
+        final Class<?>           expectedCauseClass    = kmg.fund.infrastructure.exception.KmgFundMsgException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -706,7 +707,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             }, "YAML読み込みエラーの場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -960,6 +961,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN03005] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03005;
+        final Class<?>           expectedCauseClass    = ArrayIndexOutOfBoundsException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -993,7 +995,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             }, "中間行の列数が不足している場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
 
         }
 
