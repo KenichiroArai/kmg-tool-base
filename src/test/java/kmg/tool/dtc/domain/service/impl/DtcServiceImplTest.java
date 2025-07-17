@@ -183,7 +183,6 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     public void testConstructor_normalCustomLogger() {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final Logger mockLogger = Mockito.mock(Logger.class);
@@ -192,10 +191,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
         final DtcServiceImpl testConstructor = new DtcServiceImpl(mockLogger);
 
         /* 検証の準備 */
-        final boolean actualResult = testConstructor != null;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "インスタンスが正常に作成されること");
+        Assertions.assertNotNull(testConstructor, "インスタンスが正常に作成されること");
 
     }
 
@@ -206,7 +204,6 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     public void testConstructor_normalStandardLogger() {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         // 準備なし
@@ -215,10 +212,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
         final DtcServiceImpl testConstructor = new DtcServiceImpl();
 
         /* 検証の準備 */
-        final boolean actualResult = testConstructor != null;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "インスタンスが正常に作成されること");
+        Assertions.assertNotNull(testConstructor, "インスタンスが正常に作成されること");
 
     }
 
@@ -258,7 +254,6 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     public void testGetInputPath_semiNullPath() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final Path expectedPath = null;
 
         /* 準備 */
         this.reflectionModel.set("inputPath", null);
@@ -267,10 +262,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
         final Path testResult = this.testTarget.getInputPath();
 
         /* 検証の準備 */
-        final Path actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedPath, actualResult, "nullの入力ファイルパスが正しく取得されること");
+        Assertions.assertNull(testResult, "nullの入力ファイルパスが正しく取得されること");
 
     }
 
@@ -388,10 +382,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     public void testInitialize_normalInitialization() throws KmgToolMsgException {
 
         /* 期待値の定義 */
-        final boolean expectedResult       = true;
-        final Path    expectedInputPath    = this.tempDir.resolve("input.txt");
-        final Path    expectedTemplatePath = this.tempDir.resolve("template.yml");
-        final Path    expectedOutputPath   = this.tempDir.resolve("output.txt");
+        final Path expectedInputPath    = this.tempDir.resolve("input.txt");
+        final Path expectedTemplatePath = this.tempDir.resolve("template.yml");
+        final Path expectedOutputPath   = this.tempDir.resolve("output.txt");
 
         /* 準備 */
         // 準備なし
@@ -407,7 +400,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
         final Path    actualOutputPath   = this.testTarget.getOutputPath();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "初期化が成功すること");
+        Assertions.assertTrue(actualResult, "初期化が成功すること");
         Assertions.assertEquals(expectedInputPath, actualInputPath, "入力ファイルパスが正しく設定されること");
         Assertions.assertEquals(expectedTemplatePath, actualTemplatePath, "テンプレートファイルパスが正しく設定されること");
         Assertions.assertEquals(expectedOutputPath, actualOutputPath, "出力ファイルパスが正しく設定されること");
@@ -451,18 +444,20 @@ public class DtcServiceImplTest extends AbstractKmgTest {
         } catch (final IOException e) {
 
             // テスト用の例外なので無視
+            e.printStackTrace();
+
         }
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            final KmgMessageSource mockMessageSourceTestMothod = Mockito.mock(KmgMessageSource.class);
             mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSource);
+                .thenReturn(mockMessageSourceTestMothod);
 
             // モックメッセージソースの設定
-            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            Mockito.when(mockMessageSourceTestMothod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
@@ -486,6 +481,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
+    @SuppressWarnings("resource")
     @Test
     public void testProcess_normalProcess() throws KmgToolMsgException {
 
