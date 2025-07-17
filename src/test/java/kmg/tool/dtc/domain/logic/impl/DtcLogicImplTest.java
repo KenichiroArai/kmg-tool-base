@@ -557,16 +557,20 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     public void testLoadDerivedPlaceholderDefinitions_normalHasDefinitions() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expected = true;
+        final int    expectedSize               = 1;
+        final String expectedDisplayName        = "testName";
+        final String expectedReplacementPattern = "${TEST}";
+        final String expectedSourceKey          = "sourceKey";
+        final String expectedTransformation     = "UPPER_CASE";
 
         /* 準備 */
         final Map<String, Object>       yamlData            = new HashMap<>();
         final List<Map<String, String>> derivedPlaceholders = new ArrayList<>();
         final Map<String, String>       placeholder         = new HashMap<>();
-        placeholder.put(DtcKeyTypes.DISPLAY_NAME.getKey(), "testName");
-        placeholder.put(DtcKeyTypes.REPLACEMENT_PATTERN.getKey(), "${TEST}");
-        placeholder.put(DtcKeyTypes.SOURCE_KEY.getKey(), "sourceKey");
-        placeholder.put(DtcKeyTypes.TRANSFORMATION.getKey(), "UPPER_CASE");
+        placeholder.put(DtcKeyTypes.DISPLAY_NAME.getKey(), expectedDisplayName);
+        placeholder.put(DtcKeyTypes.REPLACEMENT_PATTERN.getKey(), expectedReplacementPattern);
+        placeholder.put(DtcKeyTypes.SOURCE_KEY.getKey(), expectedSourceKey);
+        placeholder.put(DtcKeyTypes.TRANSFORMATION.getKey(), expectedTransformation);
         derivedPlaceholders.add(placeholder);
         yamlData.put(DtcKeyTypes.DERIVED_PLACEHOLDERS.getKey(), derivedPlaceholders);
 
@@ -575,12 +579,14 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             = (Boolean) this.reflectionModel.getMethod("loadDerivedPlaceholderDefinitions", yamlData);
 
         /* 検証の準備 */
-        final boolean actualResult = testResult;
-        final int     actualSize   = ((List<?>) this.reflectionModel.get("derivedPlaceholders")).size();
+        final boolean actualResult      = testResult;
+        final int     actualSize        = ((List<?>) this.reflectionModel.get("derivedPlaceholders")).size();
+        final Object  actualPlaceholder = ((List<?>) this.reflectionModel.get("derivedPlaceholders")).get(0);
 
         /* 検証の実施 */
-        Assertions.assertEquals(expected, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualSize, "派生プレースホルダーが追加されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedSize, actualSize, "派生プレースホルダーが追加されていること");
+        Assertions.assertNotNull(actualPlaceholder, "派生プレースホルダーオブジェクトが作成されていること");
 
     }
 
@@ -621,13 +627,17 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     public void testLoadIntermediatePlaceholderDefinitions_normalHasDefinitions() throws Exception {
 
         /* 期待値の定義 */
+        final int    expectedSize               = 1;
+        final String expectedDisplayName        = "testName";
+        final String expectedReplacementPattern = "${TEST}";
+        final String expectedKey                = "TEST";
 
         /* 準備 */
         final Map<String, Object>       yamlData                 = new HashMap<>();
         final List<Map<String, String>> intermediatePlaceholders = new ArrayList<>();
         final Map<String, String>       placeholder              = new HashMap<>();
-        placeholder.put(DtcKeyTypes.DISPLAY_NAME.getKey(), "testName");
-        placeholder.put(DtcKeyTypes.REPLACEMENT_PATTERN.getKey(), "${TEST}");
+        placeholder.put(DtcKeyTypes.DISPLAY_NAME.getKey(), expectedDisplayName);
+        placeholder.put(DtcKeyTypes.REPLACEMENT_PATTERN.getKey(), expectedReplacementPattern);
         intermediatePlaceholders.add(placeholder);
         yamlData.put(DtcKeyTypes.INTERMEDIATE_PLACEHOLDERS.getKey(), intermediatePlaceholders);
 
@@ -636,12 +646,18 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             = (Boolean) this.reflectionModel.getMethod("loadIntermediatePlaceholderDefinitions", yamlData);
 
         /* 検証の準備 */
-        final boolean actualResult = testResult;
-        final int     actualSize   = ((Map<?, ?>) this.reflectionModel.get("intermediatePlaceholderMap")).size();
+        final boolean             actualResult = testResult;
+        final int                 actualSize   = ((Map<?, ?>) this.reflectionModel.get("intermediatePlaceholderMap"))
+            .size();
+        @SuppressWarnings("unchecked")
+        final Map<String, String> actualMap    = (Map<String, String>) this.reflectionModel
+            .get("intermediatePlaceholderMap");
+        final String              actualValue  = actualMap.get(expectedKey);
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualSize, "中間プレースホルダーが追加されていること");
+        Assertions.assertEquals(expectedSize, actualSize, "中間プレースホルダーが追加されていること");
+        Assertions.assertEquals(expectedReplacementPattern, actualValue, "プレースホルダーマップに正しい値が設定されていること");
 
     }
 
