@@ -438,10 +438,12 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
      */
     @SuppressWarnings("resource")
     @Test
-    public void testProcess_normalProcess() throws KmgToolMsgException {
+    public void testProcess_normalProcess() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -463,7 +465,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         Mockito.doNothing().when(this.mockFieldCreationLogic).writeIntermediateFile();
         Mockito.doNothing().when(this.mockFieldCreationLogic).clearRows();
         Mockito.doNothing().when(this.mockFieldCreationLogic).clearProcessingData();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+        try {
+            Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+        } catch (final IOException e) {
+            // テスト用の例外なので無視
+        }
 
         // DtcServiceのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -685,9 +691,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
      */
     @Test
-    public void testWriteIntermediateFile_errorCloseIOException() throws KmgToolMsgException {
+    public void testWriteIntermediateFile_errorCloseIOException() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN05003] テストメッセージ";
@@ -748,9 +756,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
      */
     @Test
-    public void testWriteIntermediateFile_normalProcess() throws KmgToolMsgException {
+    public void testWriteIntermediateFile_normalProcess() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -771,7 +781,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         Mockito.doNothing().when(this.mockFieldCreationLogic).writeIntermediateFile();
         Mockito.doNothing().when(this.mockFieldCreationLogic).clearRows();
         Mockito.doNothing().when(this.mockFieldCreationLogic).clearProcessingData();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+        try {
+            Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+        } catch (final IOException e) {
+            // テスト用の例外なので無視
+        }
 
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.writeIntermediateFile();
@@ -789,9 +803,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
      */
     @Test
-    public void testWriteIntermediateFile_semiNoData() throws KmgToolMsgException {
+    public void testWriteIntermediateFile_semiNoData() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -805,7 +821,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         Mockito.doNothing().when(this.mockFieldCreationLogic).initialize(inputPath, intermediatePath);
         Mockito.doNothing().when(this.mockFieldCreationLogic).addOneLineOfDataToRows();
         Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(false);
-        Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+        try {
+            Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+        } catch (final IOException e) {
+            // テスト用の例外なので無視
+        }
 
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.writeIntermediateFile();
@@ -823,9 +843,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
      */
     @Test
-    public void testWriteIntermediateFile_semiProcessSkip() throws KmgToolMsgException {
+    public void testWriteIntermediateFile_semiProcessSkip() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -846,7 +868,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         Mockito.doNothing().when(this.mockFieldCreationLogic).writeIntermediateFile();
         Mockito.doNothing().when(this.mockFieldCreationLogic).clearRows();
         Mockito.doNothing().when(this.mockFieldCreationLogic).clearProcessingData();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+        try {
+            Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+        } catch (final IOException e) {
+            // テスト用の例外なので無視
+        }
 
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.writeIntermediateFile();
