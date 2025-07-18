@@ -109,9 +109,9 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         final boolean expectedResult = true;
 
         /* 準備 */
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).clearRows();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).clearProcessingData();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.clearRows()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.clearProcessingData()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("clearAndPrepareNextLine");
@@ -266,23 +266,37 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         final Class<?>           expectedExceptionClass = KmgToolMsgException.class;
 
         /* 準備 */
-        final KmgToolMsgException testException
-            = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
-        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.convertEnumDefinition()).thenThrow(testException);
-        Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
-            .thenReturn(expectedLogMsg);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
 
-            this.reflectionModel.getMethod("processColumns");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
 
-        });
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
+            Mockito.when(this.mockEnum2SwitchCaseCreationLogic.convertEnumDefinition()).thenThrow(testException);
+            Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
+                .thenReturn(expectedLogMsg);
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertInstanceOf(expectedExceptionClass, actualException, "KmgToolMsgExceptionが発生すること");
+                this.reflectionModel.getMethod("processColumns");
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertInstanceOf(expectedExceptionClass, actualException, "KmgToolMsgExceptionが発生すること");
+
+        }
 
     }
 
@@ -302,8 +316,8 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.convertEnumDefinition()).thenReturn(true);
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addItemToRows();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addItemNameToRows();
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addItemToRows()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addItemNameToRows()).thenReturn(true);
 
         /* テスト対象の実行 */
         final boolean testResult = (Boolean) this.reflectionModel.getMethod("processColumns");
@@ -361,23 +375,37 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         final Class<?>           expectedExceptionClass = KmgToolMsgException.class;
 
         /* 準備 */
-        final KmgToolMsgException testException
-            = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
-        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.readOneLineOfData()).thenThrow(testException);
-        Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
-            .thenReturn(expectedLogMsg);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
 
-            this.reflectionModel.getMethod("readOneLineData");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
 
-        });
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
+            Mockito.when(this.mockEnum2SwitchCaseCreationLogic.readOneLineOfData()).thenThrow(testException);
+            Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
+                .thenReturn(expectedLogMsg);
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertInstanceOf(expectedExceptionClass, actualException, "KmgToolMsgExceptionが発生すること");
+                this.reflectionModel.getMethod("readOneLineData");
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertInstanceOf(expectedExceptionClass, actualException, "KmgToolMsgExceptionが発生すること");
+
+        }
 
     }
 
@@ -459,9 +487,9 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.set("inputPath", expectedInputPath);
         this.reflectionModel.set("intermediatePath", expectedIntermediatePath);
 
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).initialize(expectedInputPath,
-            expectedIntermediatePath);
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.initialize(expectedInputPath, expectedIntermediatePath))
+            .thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.readOneLineOfData()).thenReturn(false);
 
         try {
@@ -520,16 +548,16 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.set("inputPath", expectedInputPath);
         this.reflectionModel.set("intermediatePath", expectedIntermediatePath);
 
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).initialize(expectedInputPath,
-            expectedIntermediatePath);
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.initialize(expectedInputPath, expectedIntermediatePath))
+            .thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.readOneLineOfData()).thenReturn(true, true, false);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.convertEnumDefinition()).thenReturn(true);
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addItemToRows();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addItemNameToRows();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).writeIntermediateFile();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).clearRows();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).clearProcessingData();
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addItemToRows()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addItemNameToRows()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.writeIntermediateFile()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.clearRows()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.clearProcessingData()).thenReturn(true);
         Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).close();
 
         /* テスト対象の実行 */
@@ -561,9 +589,9 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.set("inputPath", expectedInputPath);
         this.reflectionModel.set("intermediatePath", expectedIntermediatePath);
 
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).initialize(expectedInputPath,
-            expectedIntermediatePath);
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.initialize(expectedInputPath, expectedIntermediatePath))
+            .thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.readOneLineOfData()).thenReturn(false);
         Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).close();
 
@@ -596,16 +624,16 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.set("inputPath", expectedInputPath);
         this.reflectionModel.set("intermediatePath", expectedIntermediatePath);
 
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).initialize(expectedInputPath,
-            expectedIntermediatePath);
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.initialize(expectedInputPath, expectedIntermediatePath))
+            .thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.readOneLineOfData()).thenReturn(true, true, false);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.convertEnumDefinition()).thenReturn(false, true);
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addItemToRows();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).addItemNameToRows();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).writeIntermediateFile();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).clearRows();
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).clearProcessingData();
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addItemToRows()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addItemNameToRows()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.writeIntermediateFile()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.clearRows()).thenReturn(true);
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.clearProcessingData()).thenReturn(true);
         Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).close();
 
         /* テスト対象の実行 */
@@ -636,23 +664,37 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         final Class<?>           expectedExceptionClass = KmgToolMsgException.class;
 
         /* 準備 */
-        final KmgToolMsgException testException
-            = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
-        Mockito.doThrow(testException).when(this.mockEnum2SwitchCaseCreationLogic).writeIntermediateFile();
-        Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
-            .thenReturn(expectedLogMsg);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
 
-            this.reflectionModel.getMethod("writeIntermediateFileLine");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
 
-        });
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
+            Mockito.when(this.mockEnum2SwitchCaseCreationLogic.writeIntermediateFile()).thenThrow(testException);
+            Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
+                .thenReturn(expectedLogMsg);
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertInstanceOf(expectedExceptionClass, actualException, "KmgToolMsgExceptionが発生すること");
+                this.reflectionModel.getMethod("writeIntermediateFileLine");
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertInstanceOf(expectedExceptionClass, actualException, "KmgToolMsgExceptionが発生すること");
+
+        }
 
     }
 
@@ -671,7 +713,7 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         final String expectedItemName = "テスト項目名";
 
         /* 準備 */
-        Mockito.doNothing().when(this.mockEnum2SwitchCaseCreationLogic).writeIntermediateFile();
+        Mockito.when(this.mockEnum2SwitchCaseCreationLogic.writeIntermediateFile()).thenReturn(true);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.getItem()).thenReturn(expectedItem);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.getItemName()).thenReturn(expectedItemName);
         Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG04004, new Object[] {
