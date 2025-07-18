@@ -448,7 +448,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
-        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
+        final Class<?>           expectedCauseClass    = null;                               // 原因はnull（直接再スローされるため）
 
         /* 準備 */
         Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
@@ -556,7 +556,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
-        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
+        final Class<?>           expectedCauseClass    = null;                               // 原因はnull（直接再スローされるため）
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -885,7 +885,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
-        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
+        final Class<?>           expectedCauseClass    = null;                               // 原因はnull（直接再スローされるため）
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
