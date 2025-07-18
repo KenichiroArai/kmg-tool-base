@@ -827,6 +827,29 @@ public class DtcTransformTypesTest {
     }
 
     /**
+     * transform メソッドのテスト - 準正常系:CAPITALIZEで空文字列の変換
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testTransform_semiCapitalizeEmptyString() {
+
+        /* 期待値の定義 */
+        final String expected = KmgString.EMPTY;
+
+        /* 準備 */
+        final DtcTransformTypes testType  = DtcTransformTypes.CAPITALIZE;
+        final String            testValue = "";
+
+        /* テスト対象の実行 */
+        final String actual = testType.transform(testValue);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "CAPITALIZEで空文字列の場合、空文字列がそのまま返されること");
+
+    }
+
+    /**
      * transform メソッドのテスト - 準正常系:空文字列の変換
      *
      * @since 0.1.0
