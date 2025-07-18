@@ -438,13 +438,15 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
-     * writeIntermediateFile メソッドのテスト - 異常系：closeEnum2SwitchCaseCreationLogicでIOException発生
+     * writeIntermediateFile メソッドのテスト - 異常系：close時にIOException発生
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws Exception
+     *                             例外
      */
     @Test
-    public void testWriteIntermediateFile_errorCloseIOException() throws KmgToolMsgException {
+    public void testWriteIntermediateFile_errorCloseIOException() throws Exception {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage    = "[KMGTOOL_GEN04002] テストメッセージ";
@@ -503,11 +505,11 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 正常系：正常な処理実行
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testWriteIntermediateFile_normalProcess() throws KmgToolMsgException {
+    public void testWriteIntermediateFile_normalProcess() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult           = true;
@@ -544,11 +546,11 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 準正常系：データなし（1行目で終了）
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testWriteIntermediateFile_semiNoData() throws KmgToolMsgException {
+    public void testWriteIntermediateFile_semiNoData() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult           = true;
@@ -579,11 +581,11 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 準正常系：処理スキップ
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testWriteIntermediateFile_semiProcessSkip() throws KmgToolMsgException {
+    public void testWriteIntermediateFile_semiProcessSkip() throws Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult           = true;
@@ -657,13 +659,11 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFileLine メソッドのテスト - 正常系：正常な書き込み
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                   例外
      */
     @Test
-    public void testWriteIntermediateFileLine_normalWrite() throws KmgToolMsgException, Exception {
+    public void testWriteIntermediateFileLine_normalWrite() throws Exception {
 
         /* 期待値の定義 */
         final String expectedLogMsg   = "テストデバッグメッセージ";
