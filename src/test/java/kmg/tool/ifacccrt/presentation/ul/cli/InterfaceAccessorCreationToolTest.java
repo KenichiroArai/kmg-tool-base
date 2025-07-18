@@ -49,35 +49,6 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     }
 
     /**
-     * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタが正常に動作する場合
-     *
-     * @since 1.0.0
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testConstructor_normalDefault() throws Exception {
-
-        /* 期待値の定義 */
-        final String expectedToolName = "インタフェースのアクセサ作成ツール";
-
-        /* 準備 */
-        final InterfaceAccessorCreationTool testTarget = new InterfaceAccessorCreationTool();
-
-        /* テスト対象の実行 */
-        // コンストラクタの実行は準備で完了
-
-        /* 検証の準備 */
-        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(testTarget);
-        final String                 actualToolName  = (String) reflectionModel.get("toolName");
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedToolName, actualToolName, "ツール名が正しく設定されていること");
-
-    }
-
-    /**
      * accessorCreationService フィールドのテスト - 正常系：アクセサ作成サービスが正しく注入される場合
      *
      * @since 1.0.0
@@ -93,11 +64,12 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
 
         /* 準備 */
         final InterfaceAccessorCreationTool testTarget      = new InterfaceAccessorCreationTool();
-        final KmgReflectionModelImpl       reflectionModel = new KmgReflectionModelImpl(testTarget);
+        final KmgReflectionModelImpl        reflectionModel = new KmgReflectionModelImpl(testTarget);
         reflectionModel.set("accessorCreationService", expectedService);
 
         /* テスト対象の実行 */
-        final AccessorCreationService actualService = (AccessorCreationService) reflectionModel.get("accessorCreationService");
+        final AccessorCreationService actualService
+            = (AccessorCreationService) reflectionModel.get("accessorCreationService");
 
         /* 検証の準備 */
         final AccessorCreationService actualResult = actualService;
@@ -179,6 +151,35 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     }
 
     /**
+     * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタが正常に動作する場合
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testConstructor_normalDefault() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedToolName = "インタフェースのアクセサ作成ツール";
+
+        /* 準備 */
+        final InterfaceAccessorCreationTool testTarget = new InterfaceAccessorCreationTool();
+
+        /* テスト対象の実行 */
+        // コンストラクタの実行は準備で完了
+
+        /* 検証の準備 */
+        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(testTarget);
+        final String                 actualToolName  = (String) reflectionModel.get("toolName");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedToolName, actualToolName, "ツール名が正しく設定されていること");
+
+    }
+
+    /**
      * getIoService メソッドのテスト - 正常系：アクセサ作成サービスが正常に返される場合
      *
      * @since 1.0.0
@@ -194,11 +195,12 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
 
         /* 準備 */
         final InterfaceAccessorCreationTool testTarget      = new InterfaceAccessorCreationTool();
-        final KmgReflectionModelImpl       reflectionModel = new KmgReflectionModelImpl(testTarget);
+        final KmgReflectionModelImpl        reflectionModel = new KmgReflectionModelImpl(testTarget);
         reflectionModel.set("accessorCreationService", expectedService);
 
         /* テスト対象の実行 */
-        final AccessorCreationService actualService = (AccessorCreationService) reflectionModel.getMethod("getIoService");
+        final AccessorCreationService actualService
+            = (AccessorCreationService) reflectionModel.getMethod("getIoService");
 
         /* 検証の準備 */
         final AccessorCreationService actualResult = actualService;
@@ -223,11 +225,12 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
 
         /* 準備 */
         final InterfaceAccessorCreationTool testTarget      = new InterfaceAccessorCreationTool();
-        final KmgReflectionModelImpl       reflectionModel = new KmgReflectionModelImpl(testTarget);
+        final KmgReflectionModelImpl        reflectionModel = new KmgReflectionModelImpl(testTarget);
         reflectionModel.set("accessorCreationService", null);
 
         /* テスト対象の実行 */
-        final AccessorCreationService actualService = (AccessorCreationService) reflectionModel.getMethod("getIoService");
+        final AccessorCreationService actualService
+            = (AccessorCreationService) reflectionModel.getMethod("getIoService");
 
         /* 検証の準備 */
         final AccessorCreationService actualResult = actualService;
@@ -255,7 +258,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final Method method           = testClass.getDeclaredMethod("getIoService");
+            final Method   method           = testClass.getDeclaredMethod("getIoService");
             final Class<?> actualReturnType = method.getReturnType();
 
             /* 検証の準備 */
@@ -290,7 +293,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final Method method           = testClass.getDeclaredMethod("getIoService");
+            final Method method          = testClass.getDeclaredMethod("getIoService");
             final int    actualModifiers = method.getModifiers();
 
             /* 検証の準備 */
@@ -344,7 +347,9 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        final String[] testArgs = {"invalid", "arguments"};
+        final String[] testArgs = {
+            "invalid", "arguments"
+        };
 
         /* テスト対象の実行 */
         try {
@@ -357,7 +362,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
             /* 検証の実施 */
             Assertions.assertTrue(actualResult, "mainメソッドが正常に実行されること");
 
-        } catch (final Exception e) {
+        } catch (@SuppressWarnings("unused") final Exception e) {
 
             /* 検証の準備 */
             final boolean actualResult = false;
@@ -393,7 +398,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
             /* 検証の実施 */
             Assertions.assertTrue(actualResult, "mainメソッドが正常に実行されること");
 
-        } catch (final Exception e) {
+        } catch (@SuppressWarnings("unused") final Exception e) {
 
             /* 検証の準備 */
             final boolean actualResult = false;
@@ -429,7 +434,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
             /* 検証の実施 */
             Assertions.assertTrue(actualResult, "mainメソッドが正常に実行されること");
 
-        } catch (final IllegalArgumentException e) {
+        } catch (@SuppressWarnings("unused") final IllegalArgumentException e) {
 
             /* 検証の準備 */
             final boolean actualResult = true;
@@ -437,7 +442,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
             /* 検証の実施 */
             Assertions.assertTrue(actualResult, "null引数でIllegalArgumentExceptionが発生すること");
 
-        } catch (final Exception e) {
+        } catch (@SuppressWarnings("unused") final Exception e) {
 
             /* 検証の準備 */
             final boolean actualResult = false;
@@ -458,7 +463,6 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     public void testSpringBootApplicationAnnotation_normalCorrect() {
 
         /* 期待値の定義 */
-        final Class<?> expectedAnnotationType = SpringBootApplication.class;
 
         /* 準備 */
         final InterfaceAccessorCreationTool testTarget = new InterfaceAccessorCreationTool();
