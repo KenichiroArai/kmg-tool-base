@@ -197,11 +197,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.getMethod("closeFieldCreationLogic");
 
         /* 検証の準備 */
-        // TODO KenichiroArai 2025/07/18 検証の方法を見直してください
-        final boolean actualResult = true;
+        // 正常系のため、モックの呼び出しを検証
+        Mockito.verify(this.mockFieldCreationLogic, Mockito.times(1)).close();
 
         /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "クローズ処理が正常に実行されること");
+        // 例外が発生しないことを確認
 
     }
 
@@ -446,15 +446,12 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     public void testProcessColumns_errorKmgToolMsgException() throws KmgToolMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedLogMsg      = "テストログメッセージ";
-        final KmgToolLogMsgTypes expectedLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05001;
-        final Class<?>           expectedCauseClass  = KmgToolMsgException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
+        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
 
         /* 準備 */
         Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
-
-        Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
-            .thenReturn(expectedLogMsg);
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -466,7 +463,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト例外メッセージ");
+                .thenReturn(expectedDomainMessage);
 
             // KmgToolMsgExceptionの作成（モック設定後に作成）
             final KmgToolMsgException testException
@@ -480,11 +477,9 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
 
             });
 
-            /* 検証の準備 */
-
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/07/18 this.verifyKmgMsgExceptionで置き換えれれば置き換える
-            Assertions.assertInstanceOf(expectedCauseClass, actualException, "KmgToolMsgExceptionが発生すること");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -559,14 +554,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     public void testReadOneLineData_errorKmgToolMsgException() throws KmgToolMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedLogMsg      = "テストログメッセージ";
-        final KmgToolLogMsgTypes expectedLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05002;
-        final Class<?>           expectedCauseClass  = KmgToolMsgException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
+        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
 
         /* 準備 */
-        Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
-            .thenReturn(expectedLogMsg);
-
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
@@ -577,7 +569,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト例外メッセージ");
+                .thenReturn(expectedDomainMessage);
 
             // KmgToolMsgExceptionの作成（モック設定後に作成）
             final KmgToolMsgException testException
@@ -591,11 +583,9 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
 
             });
 
-            /* 検証の準備 */
-
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/07/18 this.verifyKmgMsgExceptionで置き換えれれば置き換える
-            Assertions.assertInstanceOf(expectedCauseClass, actualException, "KmgToolMsgExceptionが発生すること");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -893,14 +883,11 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws KmgToolMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedLogMsg      = "テストログメッセージ";
-        final KmgToolLogMsgTypes expectedLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05003;
-        final Class<?>           expectedCauseClass  = KmgToolMsgException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
+        final Class<?>           expectedCauseClass    = KmgToolMsgException.class;
 
         /* 準備 */
-        Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
-            .thenReturn(expectedLogMsg);
-
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
@@ -911,7 +898,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト例外メッセージ");
+                .thenReturn(expectedDomainMessage);
 
             // KmgToolMsgExceptionの作成（モック設定後に作成）
             final KmgToolMsgException testException
@@ -925,11 +912,9 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
 
             });
 
-            /* 検証の準備 */
-
             /* 検証の実施 */
-            // TODO KenichiroArai 2025/07/18 this.verifyKmgMsgExceptionで置き換えれれば置き換える
-            Assertions.assertInstanceOf(expectedCauseClass, actualException, "KmgToolMsgExceptionが発生すること");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
