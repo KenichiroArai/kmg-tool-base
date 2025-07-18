@@ -197,6 +197,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.getMethod("closeFieldCreationLogic");
 
         /* 検証の準備 */
+        // TODO KenichiroArai 2025/07/18 検証の方法を見直してください
         final boolean actualResult = true;
 
         /* 検証の実施 */
@@ -434,63 +435,6 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
-     * process メソッドのテスト - 正常系：正常な処理実行
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     * @throws KmgReflectionException
-     *                                リフレクション例外
-     */
-    /**
-     * writeIntermediateFile メソッドのテスト - 正常系：正常な処理実行
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     * @throws KmgReflectionException
-     *                                リフレクション例外
-     */
-    @SuppressWarnings("resource")
-    @Test
-    public void testWriteIntermediateFile_normalProcess() throws KmgToolMsgException, KmgReflectionException {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        final Path inputPath    = this.tempDir.resolve("input.txt");
-        final Path templatePath = this.tempDir.resolve("template.yml");
-        final Path outputPath   = this.tempDir.resolve("output.txt");
-
-        this.testTarget.initialize(inputPath, templatePath, outputPath);
-
-        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath,
-            this.testTarget.getIntermediatePath())).thenReturn(true);
-        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
-        Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(true, true, false);
-        Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
-        Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenReturn(true);
-        Mockito.when(this.mockFieldCreationLogic.addFieldToRows()).thenReturn(true);
-        Mockito.when(this.mockFieldCreationLogic.addTypeToRows()).thenReturn(true);
-        Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenReturn(true);
-        Mockito.when(this.mockFieldCreationLogic.clearRows()).thenReturn(true);
-        Mockito.when(this.mockFieldCreationLogic.clearProcessingData()).thenReturn(true);
-        try {
-            Mockito.doNothing().when(this.mockFieldCreationLogic).close();
-        } catch (final IOException e) {
-            // テスト用の例外なので無視
-        }
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.writeIntermediateFile();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "処理が成功すること");
-
-    }
-
-    /**
      * processColumns メソッドのテスト - 異常系：KmgToolMsgException発生
      *
      * @throws KmgToolMsgException
@@ -539,6 +483,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
+            // TODO KenichiroArai 2025/07/18 this.verifyKmgMsgExceptionで置き換えれれば置き換える
             Assertions.assertInstanceOf(expectedCauseClass, actualException, "KmgToolMsgExceptionが発生すること");
 
         }
@@ -649,6 +594,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
+            // TODO KenichiroArai 2025/07/18 this.verifyKmgMsgExceptionで置き換えれれば置き換える
             Assertions.assertInstanceOf(expectedCauseClass, actualException, "KmgToolMsgExceptionが発生すること");
 
         }
@@ -713,7 +659,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
      * writeIntermediateFile メソッドのテスト - 異常系：closeFieldCreationLogicでIOException発生
      *
      * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -775,10 +721,72 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * process メソッドのテスト - 正常系：正常な処理実行
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    /**
+     * writeIntermediateFile メソッドのテスト - 正常系：正常な処理実行
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testWriteIntermediateFile_normalProcess() throws KmgToolMsgException, KmgReflectionException {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Path inputPath    = this.tempDir.resolve("input.txt");
+        final Path templatePath = this.tempDir.resolve("template.yml");
+        final Path outputPath   = this.tempDir.resolve("output.txt");
+
+        this.testTarget.initialize(inputPath, templatePath, outputPath);
+
+        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath, this.testTarget.getIntermediatePath()))
+            .thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(true, true, false);
+        Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addFieldToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addTypeToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.clearRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.clearProcessingData()).thenReturn(true);
+
+        try {
+
+            Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+
+        } catch (final IOException e) {
+
+            // テスト用の例外なので無視
+            e.printStackTrace();
+
+        }
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.writeIntermediateFile();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "処理が成功すること");
+
+    }
+
+    /**
      * writeIntermediateFile メソッドのテスト - 準正常系：データなし（1行目で終了）
      *
      * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -797,10 +805,16 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockFieldCreationLogic.initialize(inputPath, intermediatePath)).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(false);
+
         try {
+
             Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+
         } catch (final IOException e) {
+
             // テスト用の例外なので無視
+            e.printStackTrace();
+
         }
 
         /* テスト対象の実行 */
@@ -818,7 +832,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
      * writeIntermediateFile メソッドのテスト - 準正常系：処理スキップ
      *
      * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -844,10 +858,16 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.clearRows()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.clearProcessingData()).thenReturn(true);
+
         try {
+
             Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+
         } catch (final IOException e) {
+
             // テスト用の例外なので無視
+            e.printStackTrace();
+
         }
 
         /* テスト対象の実行 */
@@ -908,6 +928,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
+            // TODO KenichiroArai 2025/07/18 this.verifyKmgMsgExceptionで置き換えれれば置き換える
             Assertions.assertInstanceOf(expectedCauseClass, actualException, "KmgToolMsgExceptionが発生すること");
 
         }
