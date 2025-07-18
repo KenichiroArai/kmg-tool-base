@@ -107,9 +107,9 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        Mockito.doNothing().when(this.mockFieldCreationLogic).clearRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).clearProcessingData();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockFieldCreationLogic.clearRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.clearProcessingData()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("clearAndPrepareNextLine");
@@ -454,17 +454,17 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
 
         this.testTarget.initialize(inputPath, templatePath, outputPath);
 
-        Mockito.doNothing().when(this.mockFieldCreationLogic).initialize(inputPath,
-            this.testTarget.getIntermediatePath());
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath,
+            this.testTarget.getIntermediatePath())).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(true, true, false);
         Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addCommentToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addFieldToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addTypeToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).writeIntermediateFile();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).clearRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).clearProcessingData();
+        Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addFieldToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addTypeToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.clearRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.clearProcessingData()).thenReturn(true);
         try {
             Mockito.doNothing().when(this.mockFieldCreationLogic).close();
         } catch (final IOException e) {
@@ -518,7 +518,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         final KmgToolMsgException testException
             = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
         Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
-        Mockito.doThrow(testException).when(this.mockFieldCreationLogic).addCommentToRows();
+        Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenThrow(testException);
 
         Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
             .thenReturn(expectedLogMsg);
@@ -552,9 +552,9 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addCommentToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addFieldToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addTypeToRows();
+        Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addFieldToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addTypeToRows()).thenReturn(true);
 
         /* テスト対象の実行 */
         final boolean testResult = (Boolean) this.reflectionModel.getMethod("processColumns");
@@ -709,8 +709,8 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.set("inputPath", inputPath);
         this.reflectionModel.set("intermediatePath", intermediatePath);
 
-        Mockito.doNothing().when(this.mockFieldCreationLogic).initialize(inputPath, intermediatePath);
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath, intermediatePath)).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(false);
 
         try {
@@ -771,16 +771,16 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.set("inputPath", inputPath);
         this.reflectionModel.set("intermediatePath", intermediatePath);
 
-        Mockito.doNothing().when(this.mockFieldCreationLogic).initialize(inputPath, intermediatePath);
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath, intermediatePath)).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(true, true, false);
         Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addCommentToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addFieldToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addTypeToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).writeIntermediateFile();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).clearRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).clearProcessingData();
+        Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addFieldToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addTypeToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.clearRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.clearProcessingData()).thenReturn(true);
         try {
             Mockito.doNothing().when(this.mockFieldCreationLogic).close();
         } catch (final IOException e) {
@@ -818,8 +818,8 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.set("inputPath", inputPath);
         this.reflectionModel.set("intermediatePath", intermediatePath);
 
-        Mockito.doNothing().when(this.mockFieldCreationLogic).initialize(inputPath, intermediatePath);
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath, intermediatePath)).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(false);
         try {
             Mockito.doNothing().when(this.mockFieldCreationLogic).close();
@@ -858,16 +858,16 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.set("inputPath", inputPath);
         this.reflectionModel.set("intermediatePath", intermediatePath);
 
-        Mockito.doNothing().when(this.mockFieldCreationLogic).initialize(inputPath, intermediatePath);
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addOneLineOfDataToRows();
+        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath, intermediatePath)).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(true, true, false);
         Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(false, true);
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addCommentToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addFieldToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).addTypeToRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).writeIntermediateFile();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).clearRows();
-        Mockito.doNothing().when(this.mockFieldCreationLogic).clearProcessingData();
+        Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addFieldToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addTypeToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.clearRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.clearProcessingData()).thenReturn(true);
         try {
             Mockito.doNothing().when(this.mockFieldCreationLogic).close();
         } catch (final IOException e) {
@@ -904,7 +904,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         /* 準備 */
         final KmgToolMsgException testException
             = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
-        Mockito.doThrow(testException).when(this.mockFieldCreationLogic).writeIntermediateFile();
+        Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenThrow(testException);
 
         Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
             .thenReturn(expectedLogMsg);
@@ -939,7 +939,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         final String expectedLogMsg  = "テストログメッセージ";
 
         /* 準備 */
-        Mockito.doNothing().when(this.mockFieldCreationLogic).writeIntermediateFile();
+        Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.getComment()).thenReturn(expectedComment);
         Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG05004, new Object[] {
             expectedComment
