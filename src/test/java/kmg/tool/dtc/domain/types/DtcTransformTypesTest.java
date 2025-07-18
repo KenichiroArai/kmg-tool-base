@@ -3,6 +3,7 @@ package kmg.tool.dtc.domain.types;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.type.KmgString;
 
 /**
@@ -30,6 +31,110 @@ public class DtcTransformTypesTest {
     public DtcTransformTypesTest() {
 
         // 処理なし
+    }
+
+    /**
+     * capitalize メソッドのテスト - 正常系:既に大文字の変換
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション例外
+     */
+    @Test
+    public void testCapitalize_normalAlreadyUpperCase() throws Exception {
+
+        /* 期待値の定義 */
+        final String expected = "Hello";
+
+        /* 準備 */
+        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(DtcTransformTypes.class);
+        final String                 testValue       = "Hello";
+
+        /* テスト対象の実行 */
+        final String actual = (String) reflectionModel.getMethod("capitalize", testValue);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "capitalizeメソッドで既に大文字の場合、そのまま返されること");
+
+    }
+
+    /**
+     * capitalize メソッドのテスト - 正常系:空文字列の変換
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション例外
+     */
+    @Test
+    public void testCapitalize_normalEmptyString() throws Exception {
+
+        /* 期待値の定義 */
+        final String expected = "";
+
+        /* 準備 */
+        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(DtcTransformTypes.class);
+        final String                 testValue       = "";
+
+        /* テスト対象の実行 */
+        final String actual = (String) reflectionModel.getMethod("capitalize", testValue);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "capitalizeメソッドで空文字列の場合、空文字列がそのまま返されること");
+
+    }
+
+    /**
+     * capitalize メソッドのテスト - 正常系:複数文字の変換
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション例外
+     */
+    @Test
+    public void testCapitalize_normalMultipleChars() throws Exception {
+
+        /* 期待値の定義 */
+        final String expected = "Hello";
+
+        /* 準備 */
+        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(DtcTransformTypes.class);
+        final String                 testValue       = "hello";
+
+        /* テスト対象の実行 */
+        final String actual = (String) reflectionModel.getMethod("capitalize", testValue);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "capitalizeメソッドで複数文字の場合、最初の文字が大文字に変換されること");
+
+    }
+
+    /**
+     * capitalize メソッドのテスト - 正常系:1文字の変換
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション例外
+     */
+    @Test
+    public void testCapitalize_normalSingleChar() throws Exception {
+
+        /* 期待値の定義 */
+        final String expected = "A";
+
+        /* 準備 */
+        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(DtcTransformTypes.class);
+        final String                 testValue       = "a";
+
+        /* テスト対象の実行 */
+        final String actual = (String) reflectionModel.getMethod("capitalize", testValue);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "capitalizeメソッドで1文字の場合、大文字に変換されること");
+
     }
 
     /**
@@ -689,6 +794,29 @@ public class DtcTransformTypesTest {
     }
 
     /**
+     * transform メソッドのテスト - 正常系:CAPITALIZEで複数文字の変換
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testTransform_normalCapitalizeMultipleChars() {
+
+        /* 期待値の定義 */
+        final String expected = "Hello";
+
+        /* 準備 */
+        final DtcTransformTypes testType  = DtcTransformTypes.CAPITALIZE;
+        final String            testValue = "hello";
+
+        /* テスト対象の実行 */
+        final String actual = testType.transform(testValue);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "CAPITALIZEで複数文字の場合、最初の文字が大文字に変換されること");
+
+    }
+
+    /**
      * transform メソッドのテスト - 正常系:CAPITALIZEで1文字の変換
      *
      * @since 0.1.0
@@ -827,29 +955,6 @@ public class DtcTransformTypesTest {
     }
 
     /**
-     * transform メソッドのテスト - 準正常系:CAPITALIZEで空文字列の変換
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testTransform_semiCapitalizeEmptyString() {
-
-        /* 期待値の定義 */
-        final String expected = KmgString.EMPTY;
-
-        /* 準備 */
-        final DtcTransformTypes testType  = DtcTransformTypes.CAPITALIZE;
-        final String            testValue = "";
-
-        /* テスト対象の実行 */
-        final String actual = testType.transform(testValue);
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "CAPITALIZEで空文字列の場合、空文字列がそのまま返されること");
-
-    }
-
-    /**
      * transform メソッドのテスト - 準正常系:空文字列の変換
      *
      * @since 0.1.0
@@ -861,7 +966,7 @@ public class DtcTransformTypesTest {
         final String expected = KmgString.EMPTY;
 
         /* 準備 */
-        final DtcTransformTypes testType  = DtcTransformTypes.CAPITALIZE;
+        final DtcTransformTypes testType  = DtcTransformTypes.TO_UPPER_CASE;
         final String            testValue = "";
 
         /* テスト対象の実行 */
