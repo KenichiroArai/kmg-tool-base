@@ -357,7 +357,6 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final Path               testInputFile         = this.tempDir.resolve("test_input.txt");
         final String             expectedDomainMessage = "[KMGTOOL_LOG07000] ";
-        final KmgToolLogMsgTypes expectedMessageTypes  = KmgToolLogMsgTypes.KMGTOOL_LOG07000;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
@@ -508,7 +507,6 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final Path               testOutputFile        = this.tempDir.resolve("test_output.txt");
         final String             expectedDomainMessage = "[KMGTOOL_LOG07001] ";
-        final KmgToolLogMsgTypes expectedMessageTypes  = KmgToolLogMsgTypes.KMGTOOL_LOG07001;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
