@@ -23,6 +23,7 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.dtc.domain.service.DtcService;
 
 /**
@@ -365,7 +366,13 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     public void testInitialize_errorCreateTempFileIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?> expectedCauseClass = IOException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN07006] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN07006;
+        final Class<?>           expectedCauseClass    = IOException.class;
+
+        // モックメッセージソースの設定
+        Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn(expectedDomainMessage);
 
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");
@@ -380,14 +387,15 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
                 .thenThrow(new IOException("Test IOException"));
 
             /* テスト対象の実行 */
-            final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                 this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
 
             }, "createTempntermediateFileでIOExceptionが発生した場合は例外が発生すること");
 
             /* 検証の実施 */
-            Assertions.assertInstanceOf(expectedCauseClass, actualException, "期待した例外の種類の例外が発生したこと");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
