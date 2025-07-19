@@ -1,4 +1,4 @@
-package kmg.tool.iito.domain.logic.impl;
+package kmg.tool.iito.domain.logic;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,7 +32,6 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.iito.domain.logic.AbstractIctoOneLinePatternLogic;
 
 /**
  * AbstractIctoOneLinePatternLogicのテストクラス
