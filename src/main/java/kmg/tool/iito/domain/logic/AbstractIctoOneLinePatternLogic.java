@@ -416,6 +416,12 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         }
 
+        if (this.convertedLine == null) {
+
+            return result;
+
+        }
+
         final String before = this.convertedLine;
         this.convertedLine = this.convertedLine.replace(target, replacement);
         result = !before.equals(this.convertedLine);
