@@ -109,6 +109,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
+    @SuppressWarnings("resource")
     @BeforeEach
     public void setUp() throws KmgReflectionException {
 
@@ -354,9 +355,9 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testCloseReader_errorIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Path               testInputFile         = this.tempDir.resolve("test_input.txt");
-        final String             expectedDomainMessage = "[KMGTOOL_LOG07000] ";
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Path     testInputFile         = this.tempDir.resolve("test_input.txt");
+        final String   expectedDomainMessage = "[KMGTOOL_LOG07000] ";
+        final Class<?> expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -375,6 +376,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
             // IOExceptionを発生させるモックリーダーを作成
             try (final BufferedReader mockReader = Mockito.mock(BufferedReader.class)) {
+
                 Mockito.doThrow(new IOException("Test IOException")).when(mockReader).close();
                 this.reflectionModel.set("reader", mockReader);
 
@@ -387,6 +389,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
                 /* 検証の実施 */
                 Assertions.assertInstanceOf(expectedCauseClass, actualException, "例外の種類が正しいこと");
+
             }
 
         }
@@ -423,6 +426,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             this.reflectionModel.set("messageSource", this.mockMessageSource);
 
             try (final BufferedReader mockReader = Mockito.mock(BufferedReader.class)) {
+
                 this.reflectionModel.set("reader", mockReader);
 
                 // BufferedReaderのcloseメソッドでIOExceptionを発生させる
@@ -438,6 +442,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
                 /* 検証の実施 */
                 Assertions.assertNotNull(actualException, "例外が発生すること");
                 Assertions.assertNull(this.reflectionModel.get("reader"), "readerがnullに設定されること");
+
             }
 
         }
@@ -507,9 +512,9 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testCloseWriter_errorIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Path               testOutputFile        = this.tempDir.resolve("test_output.txt");
-        final String             expectedDomainMessage = "[KMGTOOL_LOG07001] ";
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Path     testOutputFile        = this.tempDir.resolve("test_output.txt");
+        final String   expectedDomainMessage = "[KMGTOOL_LOG07001] ";
+        final Class<?> expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -528,6 +533,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
             // IOExceptionを発生させるモックライターを作成
             try (final BufferedWriter mockWriter = Mockito.mock(BufferedWriter.class)) {
+
                 Mockito.doThrow(new IOException("Test IOException")).when(mockWriter).close();
                 this.reflectionModel.set("writer", mockWriter);
 
@@ -540,6 +546,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
                 /* 検証の実施 */
                 Assertions.assertInstanceOf(expectedCauseClass, actualException, "例外の種類が正しいこと");
+
             }
 
         }
@@ -575,6 +582,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             this.reflectionModel.set("messageSource", this.mockMessageSource);
 
             try (final BufferedWriter mockWriter = Mockito.mock(BufferedWriter.class)) {
+
                 this.reflectionModel.set("writer", mockWriter);
 
                 // BufferedWriterのcloseメソッドでIOExceptionを発生させる
@@ -590,6 +598,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
                 /* 検証の実施 */
                 Assertions.assertNotNull(actualException, "例外が発生すること");
                 Assertions.assertNull(this.reflectionModel.get("writer"), "writerがnullに設定されること");
+
             }
 
         }
@@ -664,7 +673,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
         final Logger customLogger = Mockito.mock(Logger.class);
 
         /* テスト対象の実行 */
-        try (final TestAbstractIctoOneLinePatternLogic testInstance = new TestAbstractIctoOneLinePatternLogic(customLogger)) {
+        try (final TestAbstractIctoOneLinePatternLogic testInstance
+            = new TestAbstractIctoOneLinePatternLogic(customLogger)) {
 
             /* 検証の準備 */
 
@@ -718,8 +728,9 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
         try (final TestAbstractIctoOneLinePatternLogic testInstance = new TestAbstractIctoOneLinePatternLogic()) {
 
             /* 検証の準備 */
-            final KmgReflectionModelImpl testReflectionModel = new KmgReflectionModelImpl(testInstance);
-            final KmgDelimiterTypes      actualOutputDelimiter = (KmgDelimiterTypes) testReflectionModel.get("outputDelimiter");
+            final KmgReflectionModelImpl testReflectionModel   = new KmgReflectionModelImpl(testInstance);
+            final KmgDelimiterTypes      actualOutputDelimiter = (KmgDelimiterTypes) testReflectionModel
+                .get("outputDelimiter");
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedOutputDelimiter, actualOutputDelimiter, "outputDelimiterが正しく初期化されること");
@@ -1136,7 +1147,9 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
         final Path testInputFile = this.tempDir.resolve("test_input.txt");
         Files.write(testInputFile, "".getBytes());
         this.reflectionModel.set("inputPath", testInputFile);
+
         try (final BufferedReader reader = Files.newBufferedReader(testInputFile)) {
+
             this.reflectionModel.set("reader", reader);
 
             /* テスト対象の実行 */
@@ -1151,6 +1164,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             Assertions.assertFalse(actualResult, "空行の場合はfalseが返されること");
             Assertions.assertEquals(expectedLineOfDataRead, actualLineOfDataRead, "空行が正しく読み込まれること");
             Assertions.assertEquals(expectedConvertedLine, actualConvertedLine, "convertedLineが正しく設定されること");
+
         }
 
     }
@@ -1409,24 +1423,24 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             rows.get(0).add("test data");
 
             // flushでIOExceptionを発生させるモックライターを作成
-            try (final BufferedWriter mockWriter = Mockito.mock(BufferedWriter.class);) {
+            try (final BufferedWriter mockWriter = Mockito.mock(BufferedWriter.class)) {
 
                 Mockito.doThrow(new IOException("Test IOException")).when(mockWriter).flush();
                 this.reflectionModel.set("writer", mockWriter);
+                this.reflectionModel.set("outputPath", testOutputFile);
+
+                /* テスト対象の実行 */
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.writeIntermediateFile();
+
+                }, "flushでIOExceptionが発生した場合は例外が発生すること");
+
+                /* 検証の実施 */
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
 
             }
-            this.reflectionModel.set("outputPath", testOutputFile);
-
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-                this.testTarget.writeIntermediateFile();
-
-            }, "flushでIOExceptionが発生した場合は例外が発生すること");
-
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
 
         }
 
@@ -1476,20 +1490,20 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
                 Mockito.doThrow(new IOException("Test IOException")).when(mockWriter)
                     .write(ArgumentMatchers.anyString());
                 this.reflectionModel.set("writer", mockWriter);
+                this.reflectionModel.set("outputPath", testOutputFile);
+
+                /* テスト対象の実行 */
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.writeIntermediateFile();
+
+                }, "IOExceptionが発生した場合は例外が発生すること");
+
+                /* 検証の実施 */
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
 
             }
-            this.reflectionModel.set("outputPath", testOutputFile);
-
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-                this.testTarget.writeIntermediateFile();
-
-            }, "IOExceptionが発生した場合は例外が発生すること");
-
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
 
         }
 
@@ -1545,17 +1559,22 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
         /* 準備 */
         final Path testOutputFile = this.tempDir.resolve("test_output.txt");
         this.reflectionModel.set("outputPath", testOutputFile);
-        this.reflectionModel.set("writer", Files.newBufferedWriter(testOutputFile));
-        this.reflectionModel.set("rows", new ArrayList<>());
 
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.writeIntermediateFile();
+        try (final BufferedWriter writer = Files.newBufferedWriter(testOutputFile)) {
 
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
+            this.reflectionModel.set("writer", writer);
+            this.reflectionModel.set("rows", new ArrayList<>());
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+            /* テスト対象の実行 */
+            final boolean testResult = this.testTarget.writeIntermediateFile();
+
+            /* 検証の準備 */
+            final boolean actualResult = testResult;
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+
+        }
 
     }
 
@@ -1573,28 +1592,33 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
         /* 準備 */
         final Path testOutputFile = this.tempDir.resolve("test_output.txt");
         this.reflectionModel.set("outputPath", testOutputFile);
-        this.reflectionModel.set("writer", Files.newBufferedWriter(testOutputFile));
 
-        // 複数行のデータを準備
-        final List<List<String>> rows = new ArrayList<>();
-        final List<String>       row1 = new ArrayList<>();
-        row1.add("data1");
-        row1.add("data2");
-        rows.add(row1);
-        final List<String> row2 = new ArrayList<>();
-        row2.add("data3");
-        row2.add("data4");
-        rows.add(row2);
-        this.reflectionModel.set("rows", rows);
+        try (final BufferedWriter writer = Files.newBufferedWriter(testOutputFile)) {
 
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.writeIntermediateFile();
+            this.reflectionModel.set("writer", writer);
 
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
+            // 複数行のデータを準備
+            final List<List<String>> rows = new ArrayList<>();
+            final List<String>       row1 = new ArrayList<>();
+            row1.add("data1");
+            row1.add("data2");
+            rows.add(row1);
+            final List<String> row2 = new ArrayList<>();
+            row2.add("data3");
+            row2.add("data4");
+            rows.add(row2);
+            this.reflectionModel.set("rows", rows);
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+            /* テスト対象の実行 */
+            final boolean testResult = this.testTarget.writeIntermediateFile();
+
+            /* 検証の準備 */
+            final boolean actualResult = testResult;
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+
+        }
 
     }
 
