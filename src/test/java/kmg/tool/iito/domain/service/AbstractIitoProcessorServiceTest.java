@@ -194,28 +194,44 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     public void testCreateTempntermediateFile_errorIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?> expectedCauseClass = IOException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN07006] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN07006;
+        final Class<?>           expectedCauseClass    = IOException.class;
 
-        /* 準備 */
-        final Path testInputFile = this.tempDir.resolve("test_input.txt");
-        Files.write(testInputFile, "test content".getBytes());
-        this.reflectionModel.set("inputPath", testInputFile);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        // Files.createTempFileでIOExceptionを発生させるモック
-        try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-            mockedFiles.when(() -> Files.createTempFile(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
-                .thenThrow(new IOException("Test IOException"));
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-            /* テスト対象の実行 */
-            final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+            /* 準備 */
+            final Path testInputFile = this.tempDir.resolve("test_input.txt");
+            Files.write(testInputFile, "test content".getBytes());
+            this.reflectionModel.set("inputPath", testInputFile);
 
-                this.reflectionModel.getMethod("createTempntermediateFile");
+            // Files.createTempFileでIOExceptionを発生させるモック
+            try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-            }, "Files.createTempFileでIOExceptionが発生した場合は例外が発生すること");
+                mockedFiles.when(() -> Files.createTempFile(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
+                    .thenThrow(new IOException("Test IOException"));
 
-            /* 検証の実施 */
-            Assertions.assertInstanceOf(expectedCauseClass, actualException, "期待した例外が発生すること");
+                /* テスト対象の実行 */
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.reflectionModel.getMethod("createTempntermediateFile");
+
+                }, "Files.createTempFileでIOExceptionが発生した場合は例外が発生すること");
+
+                /* 検証の実施 */
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
 
         }
 
@@ -241,9 +257,9 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
         final Path testResult = (Path) this.reflectionModel.getMethod("createTempntermediateFile");
 
         /* 検証の準備 */
-        final Path actualResult = testResult;
-        final boolean actualExists = Files.exists(actualResult);
-        final String actualFileName = actualResult.getFileName().toString();
+        final Path    actualResult           = testResult;
+        final boolean actualExists           = Files.exists(actualResult);
+        final String  actualFileName         = actualResult.getFileName().toString();
         final boolean actualHasCorrectSuffix = actualFileName.endsWith("Temp.tmp");
 
         /* 検証の実施 */
@@ -421,29 +437,45 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     public void testInitialize_errorCreateTempntermediateFileIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?> expectedCauseClass = IOException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN07006] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN07006;
+        final Class<?>           expectedCauseClass    = IOException.class;
 
-        /* 準備 */
-        final Path testInputFile    = this.tempDir.resolve("test_input.txt");
-        final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
-        final Path testOutputFile   = this.tempDir.resolve("test_output.txt");
-        Files.write(testInputFile, "test content".getBytes());
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        // Files.createTempFileでIOExceptionを発生させるモック
-        try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-            mockedFiles.when(() -> Files.createTempFile(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
-                .thenThrow(new IOException("Test IOException"));
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-            /* テスト対象の実行 */
-            final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+            /* 準備 */
+            final Path testInputFile    = this.tempDir.resolve("test_input.txt");
+            final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
+            final Path testOutputFile   = this.tempDir.resolve("test_output.txt");
+            Files.write(testInputFile, "test content".getBytes());
 
-                this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+            // Files.createTempFileでIOExceptionを発生させるモック
+            try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-            }, "initializeメソッド内でcreateTempntermediateFileでIOExceptionが発生した場合は例外が発生すること");
+                mockedFiles.when(() -> Files.createTempFile(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
+                    .thenThrow(new IOException("Test IOException"));
 
-            /* 検証の実施 */
-            Assertions.assertInstanceOf(expectedCauseClass, actualException, "期待した例外の種類の例外が発生したこと");
+                /* テスト対象の実行 */
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+
+                }, "initializeメソッド内でcreateTempntermediateFileでIOExceptionが発生した場合は例外が発生すること");
+
+                /* 検証の実施 */
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
 
         }
 
