@@ -240,11 +240,14 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
         /* 検証の準備 */
         final Path actualResult = testResult;
+        final boolean actualExists = Files.exists(actualResult);
+        final String actualFileName = actualResult.getFileName().toString();
+        final boolean actualHasCorrectSuffix = actualFileName.endsWith("Temp.tmp");
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualResult, "一時ファイルが作成されること");
-        Assertions.assertTrue(Files.exists(actualResult), "作成されたファイルが存在すること");
-        Assertions.assertTrue(actualResult.toString().endsWith("Temp.tmp"), "ファイル名が正しいサフィックスを持つこと");
+        Assertions.assertTrue(actualExists, "作成されたファイルが存在すること");
+        Assertions.assertTrue(actualHasCorrectSuffix, "ファイル名が正しいサフィックスを持つこと");
 
     }
 
