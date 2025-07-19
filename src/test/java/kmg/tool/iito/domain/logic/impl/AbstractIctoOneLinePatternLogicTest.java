@@ -375,6 +375,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             this.reflectionModel.set("messageSource", this.mockMessageSource);
 
             // IOExceptionを発生させるモックリーダーを作成
+            @SuppressWarnings("resource")
             final BufferedReader mockReader = Mockito.mock(BufferedReader.class);
             Mockito.doThrow(new IOException("Test IOException")).when(mockReader).close();
             this.reflectionModel.set("reader", mockReader);
@@ -422,6 +423,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             this.reflectionModel.set("inputPath", testInputFile);
             this.reflectionModel.set("messageSource", this.mockMessageSource);
 
+            @SuppressWarnings("resource")
             final BufferedReader mockReader = Mockito.mock(BufferedReader.class);
             this.reflectionModel.set("reader", mockReader);
 
@@ -526,6 +528,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             this.reflectionModel.set("messageSource", this.mockMessageSource);
 
             // IOExceptionを発生させるモックライターを作成
+            @SuppressWarnings("resource")
             final BufferedWriter mockWriter = Mockito.mock(BufferedWriter.class);
             Mockito.doThrow(new IOException("Test IOException")).when(mockWriter).close();
             this.reflectionModel.set("writer", mockWriter);
@@ -572,6 +575,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             this.reflectionModel.set("outputPath", testOutputFile);
             this.reflectionModel.set("messageSource", this.mockMessageSource);
 
+            @SuppressWarnings("resource")
             final BufferedWriter mockWriter = Mockito.mock(BufferedWriter.class);
             this.reflectionModel.set("writer", mockWriter);
 
