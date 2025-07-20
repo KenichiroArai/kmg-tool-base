@@ -10,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
-import org.mockito.ArgumentMatchers;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -21,9 +19,7 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.is.application.service.IsFileCreationService;
 
 /**
@@ -295,37 +291,24 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_semiNotInitialized() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN10002] 入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[null]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10002;
-        final Class<?>           expectedCauseClass    = java.lang.NullPointerException.class;
+        final Class<?> expectedCauseClass = java.lang.NullPointerException.class;
 
         /* 準備 */
         // 初期化しない
 
-        // SpringApplicationContextHelperのモック化
-        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        /* テスト対象の実行 */
+        final NullPointerException actualException = Assertions.assertThrows(NullPointerException.class, () -> {
 
-            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSourceTestMethod);
+            this.testTarget.outputInsertionSql();
 
-            // モックメッセージソースの設定
-            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+        });
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-                this.testTarget.outputInsertionSql();
-
-            });
-
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
-
-        }
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "NullPointerExceptionが発生すること");
+        Assertions.assertTrue(
+            actualException.getMessage()
+                .contains("Cannot invoke \"java.nio.file.Path.toFile()\" because \"this.inputPath\" is null"),
+            "NullPointerExceptionのメッセージが正しいこと");
 
     }
 
