@@ -7,12 +7,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
-import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.input.domain.service.PlainContentInputServic;
 
 /**
@@ -20,6 +20,7 @@ import kmg.tool.input.domain.service.PlainContentInputServic;
  *
  * @author KenichiroArai
  */
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings({
     "nls", "static-method"
 })
@@ -104,7 +105,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
 
         if (this.testTarget != null) {
 
-            // クリーンアップ処理は特に必要ない
+            Mockito.reset(this.mockPlainContentInputService);
+
         }
 
     }
@@ -278,23 +280,21 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
         final Path inputPath = Paths.get("test/input.txt");
 
         /* 準備 */
+        Mockito.reset(this.mockPlainContentInputService);
         Mockito.when(this.mockPlainContentInputService.initialize(ArgumentMatchers.any(Path.class))).thenReturn(true);
         Mockito.when(this.mockPlainContentInputService.process()).thenReturn(true);
-        Mockito.when(this.mockPlainContentInputService.getContent())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN09002, new Object[] {
-                "test error"
-            }));
+        Mockito.when(this.mockPlainContentInputService.getContent()).thenThrow(new RuntimeException("test error"));
 
         /* テスト対象の実行 */
 
         /* 検証の準備 */
 
         /* 検証の実施 */
-        Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        Assertions.assertThrows(RuntimeException.class, () -> {
 
             this.testTarget.loadPlainContent(inputPath);
 
-        }, "getContentでKmgToolMsgExceptionが発生する場合、例外が投げられること");
+        }, "getContentでRuntimeExceptionが発生する場合、例外が投げられること");
 
     }
 
@@ -311,21 +311,20 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
         final Path inputPath = Paths.get("test/input.txt");
 
         /* 準備 */
+        Mockito.reset(this.mockPlainContentInputService);
         Mockito.when(this.mockPlainContentInputService.initialize(ArgumentMatchers.any(Path.class)))
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN09002, new Object[] {
-                "test error"
-            }));
+            .thenThrow(new RuntimeException("test error"));
 
         /* テスト対象の実行 */
 
         /* 検証の準備 */
 
         /* 検証の実施 */
-        Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        Assertions.assertThrows(RuntimeException.class, () -> {
 
             this.testTarget.loadPlainContent(inputPath);
 
-        }, "initializeでKmgToolMsgExceptionが発生する場合、例外が投げられること");
+        }, "initializeでRuntimeExceptionが発生する場合、例外が投げられること");
 
     }
 
@@ -342,22 +341,20 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
         final Path inputPath = Paths.get("test/input.txt");
 
         /* 準備 */
+        Mockito.reset(this.mockPlainContentInputService);
         Mockito.when(this.mockPlainContentInputService.initialize(ArgumentMatchers.any(Path.class))).thenReturn(true);
-        Mockito.when(this.mockPlainContentInputService.process())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN09002, new Object[] {
-                "test error"
-            }));
+        Mockito.when(this.mockPlainContentInputService.process()).thenThrow(new RuntimeException("test error"));
 
         /* テスト対象の実行 */
 
         /* 検証の準備 */
 
         /* 検証の実施 */
-        Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        Assertions.assertThrows(RuntimeException.class, () -> {
 
             this.testTarget.loadPlainContent(inputPath);
 
-        }, "processでKmgToolMsgExceptionが発生する場合、例外が投げられること");
+        }, "processでRuntimeExceptionが発生する場合、例外が投げられること");
 
     }
 
@@ -375,6 +372,7 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
         final Path   inputPath       = Paths.get("test/input.txt");
 
         /* 準備 */
+        Mockito.reset(this.mockPlainContentInputService);
         Mockito.when(this.mockPlainContentInputService.initialize(ArgumentMatchers.any(Path.class))).thenReturn(true);
         Mockito.when(this.mockPlainContentInputService.process()).thenReturn(true);
         Mockito.when(this.mockPlainContentInputService.getContent()).thenReturn(expectedContent);
@@ -405,6 +403,7 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
         final Path inputPath = Paths.get("test/input.txt");
 
         /* 準備 */
+        Mockito.reset(this.mockPlainContentInputService);
         Mockito.when(this.mockPlainContentInputService.initialize(ArgumentMatchers.any(Path.class))).thenReturn(false);
 
         /* テスト対象の実行 */
@@ -431,6 +430,7 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
         final Path inputPath = Paths.get("test/input.txt");
 
         /* 準備 */
+        Mockito.reset(this.mockPlainContentInputService);
         Mockito.when(this.mockPlainContentInputService.initialize(ArgumentMatchers.any(Path.class))).thenReturn(true);
         Mockito.when(this.mockPlainContentInputService.process()).thenReturn(false);
 
