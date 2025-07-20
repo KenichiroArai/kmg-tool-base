@@ -210,7 +210,7 @@ public class AbstractInputToolTest extends AbstractKmgTest {
     public void testGetBasePath_normalPrimaryPathNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final Path expected = Paths.get("work/io");
+        final Path expected = Paths.get("src/main/resources/tool/io");
 
         /* 準備 */
         // work/ioディレクトリは作成しない（存在しない状態）
@@ -229,7 +229,7 @@ public class AbstractInputToolTest extends AbstractKmgTest {
             final Path actual = testResult;
 
             /* 検証の実施 */
-            Assertions.assertEquals(expected, actual, "優先パスが存在しない場合でも、優先パスが返されること");
+            Assertions.assertEquals(expected, actual, "優先パスが存在しない場合でも、代替パスが返されること");
 
         } finally {
 
