@@ -67,9 +67,11 @@ public class IsCreationServiceImpl implements IsCreationService {
 
         // 初期化チェック
         if (this.inputPath == null) {
+
             final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
             final Object[]           genMsgArgs  = {};
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs);
+
         }
 
         final IsFileCreationService isFileCreationService = new IsFileCreationServiceImpl();
