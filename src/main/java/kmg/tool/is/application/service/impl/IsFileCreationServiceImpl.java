@@ -103,8 +103,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
             } catch (final EmptyFileException e) {
 
-                // TODO KenichiroArai 2025/07/20 ワークブックが空です。入力ファイルのパス=[{0}]
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10004;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };
@@ -120,8 +119,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
             } catch (final IOException e) {
 
-                // TODO KenichiroArai 2025/07/20 ワークブックの読み込みに失敗しました。入力ファイルのパス=[{0}]
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10005;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };

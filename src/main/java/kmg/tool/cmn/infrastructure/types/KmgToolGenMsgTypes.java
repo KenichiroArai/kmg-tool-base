@@ -351,6 +351,24 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN10003("出力ファイルへの書き込みに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
+     * ワークブックが空です。入力ファイルのパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN10004("ワークブックが空です。入力ファイルのパス=[{0}]"),
+
+    /**
+     * ワークブックの読み込みに失敗しました。入力ファイルのパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN10005("ワークブックの読み込みに失敗しました。入力ファイルのパス=[{0}]"),
+
+    /**
      * ファイルの書き込み中にエラーが発生しました。ファイル=[{0}]
      *
      * @author KenichiroArai

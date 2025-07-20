@@ -157,8 +157,8 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorEmptyFile() {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN08002] テストメッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08002;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN10004] ワークブックが空です。入力ファイルのパス=[input.xlsx]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10004;
         final Class<?>           expectedCauseClass    = EmptyFileException.class;
 
         /* 準備 */
