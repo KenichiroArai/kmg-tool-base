@@ -85,13 +85,11 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
-    public void testInitialize_normalInitialization() throws KmgToolMsgException, KmgReflectionException {
+    public void testInitialize_normalInitialization() throws KmgReflectionException {
 
         /* 期待値の定義 */
         final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
@@ -119,13 +117,11 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 準正常系：nullパラメータでの初期化
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
-    public void testInitialize_semiNullParameters() throws KmgToolMsgException, KmgReflectionException {
+    public void testInitialize_semiNullParameters() throws KmgReflectionException {
 
         /* 期待値の定義 */
         final Path  expectedInputPath  = null;
@@ -211,12 +207,9 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * outputInsertionSql メソッドのテスト - 異常系：IsFileCreationServiceでEncryptedDocumentException発生
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
     @Test
-    public void testOutputInsertionSql_errorEncryptedDocumentException() throws KmgToolMsgException {
+    public void testOutputInsertionSql_errorEncryptedDocumentException() {
 
         /* 期待値の定義 */
         final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
@@ -269,12 +262,9 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * outputInsertionSql メソッドのテスト - 異常系：IsFileCreationServiceでIOException発生
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
     @Test
-    public void testOutputInsertionSql_errorIOException() throws KmgToolMsgException {
+    public void testOutputInsertionSql_errorIOException() {
 
         /* 期待値の定義 */
         final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
@@ -299,16 +289,14 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     /**
      * outputInsertionSql メソッドのテスト - 準正常系：初期化前の実行
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
-    public void testOutputInsertionSql_semiNotInitialized() throws KmgToolMsgException, KmgReflectionException {
+    public void testOutputInsertionSql_semiNotInitialized() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final Class<?> expectedCauseClass = java.lang.NullPointerException.class;
+        final Class<?> expectedCauseClass = NullPointerException.class;
 
         /* 準備 */
         // 初期化しない
