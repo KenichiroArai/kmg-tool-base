@@ -103,7 +103,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
             } catch (final EmptyFileException e) {
 
-                // TODO KenichiroArai 2025/07/20 空ファイルの場合
+                // TODO KenichiroArai 2025/07/20 ワークブックが空です。入力ファイルのパス=[{0}]
                 final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
@@ -112,8 +112,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
             } catch (final EncryptedDocumentException e) {
 
-                // TODO KenichiroArai 2025/07/20 暗号化失敗
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10001;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };
@@ -121,7 +120,8 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
             } catch (final IOException e) {
 
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10001;
+                // TODO KenichiroArai 2025/07/20 ワークブックの読み込みに失敗しました。入力ファイルのパス=[{0}]
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };
