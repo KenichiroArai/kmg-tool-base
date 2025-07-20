@@ -213,14 +213,21 @@ public class AbstractInputToolTest extends AbstractKmgTest {
         final Path expected = Paths.get("src/main/resources/tool/io");
 
         /* 準備 */
-        // work/ioディレクトリは作成しない（存在しない状態）
-
-        // 一時的にカレントディレクトリを変更
-        final Path originalDir = Paths.get("").toAbsolutePath();
+        // work/ioディレクトリを一時的に名前変更して、存在しない状態を作成
+        final Path    workDir        = Paths.get("work");
+        final Path    workBackupDir  = Paths.get("work_backup");
+        final boolean workDirExists  = Files.exists(workDir);
+        boolean       workDirRenamed = false;
 
         try {
 
-            System.setProperty("user.dir", this.tempDir.toString());
+            if (workDirExists) {
+
+                // workディレクトリを一時的に名前変更
+                Files.move(workDir, workBackupDir);
+                workDirRenamed = true;
+
+            }
 
             /* テスト対象の実行 */
             final Path testResult = AbstractInputTool.getBasePath();
@@ -233,7 +240,12 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
         } finally {
 
-            System.setProperty("user.dir", originalDir.toString());
+            if (workDirRenamed) {
+
+                // workディレクトリを元に戻す
+                Files.move(workBackupDir, workDir);
+
+            }
 
         }
 
