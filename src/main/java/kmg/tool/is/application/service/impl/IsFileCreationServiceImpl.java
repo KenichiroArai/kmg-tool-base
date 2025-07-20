@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.poi.EmptyFileException;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -100,7 +101,25 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
                 this.processWorkbook(inputWb);
 
-            } catch (final IOException | EncryptedDocumentException e) {
+            } catch (final EmptyFileException e) {
+
+                // TODO KenichiroArai 2025/07/20 空ファイルの場合
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final Object[]           genMsgArgs  = {
+                    this.inputPath,
+                };
+                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+
+            } catch (final EncryptedDocumentException e) {
+
+                // TODO KenichiroArai 2025/07/20 暗号化失敗
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+                final Object[]           genMsgArgs  = {
+                    this.inputPath,
+                };
+                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+
+            } catch (final IOException e) {
 
                 final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10001;
                 final Object[]           genMsgArgs  = {
