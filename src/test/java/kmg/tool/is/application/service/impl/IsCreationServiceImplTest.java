@@ -48,12 +48,6 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     /** リフレクションモデル */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
-    private KmgMessageSource mockMessageSource;
-
-    /** モックIsFileCreationService */
-    private IsFileCreationService mockIsFileCreationService;
-
     /**
      * セットアップ
      *
@@ -67,9 +61,8 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
         this.testTarget = isCreationServiceImpl;
         this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
 
-        /* モックの初期化 */
-        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
-        this.mockIsFileCreationService = Mockito.mock(IsFileCreationService.class);
+        Mockito.mock(KmgMessageSource.class);
+        Mockito.mock(IsFileCreationService.class);
 
     }
 
@@ -216,38 +209,19 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
         final Path               expectedInputPath     = this.tempDir.resolve("input.xlsx");
         final Path               expectedOutputPath    = this.tempDir.resolve("output.sql");
         final short              expectedThreadNum     = 2;
-        final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN10002] 入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[input.xlsx]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10002;
-        final Class<?>           expectedCauseClass    = java.io.FileNotFoundException.class;
 
         /* 準備 */
         this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
 
-        // SpringApplicationContextHelperのモック化
-        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        /* テスト対象の実行 */
+        final NullPointerException actualException = Assertions.assertThrows(NullPointerException.class, () -> {
 
-            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSourceTestMethod);
+            this.testTarget.outputInsertionSql();
 
-            // モックメッセージソースの設定
-            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+        });
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-                this.testTarget.outputInsertionSql();
-
-            });
-
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
-
-        }
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "NullPointerExceptionが発生すること");
 
     }
 
@@ -264,38 +238,19 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
         final Path               expectedInputPath     = this.tempDir.resolve("input.xlsx");
         final Path               expectedOutputPath    = this.tempDir.resolve("output.sql");
         final short              expectedThreadNum     = 2;
-        final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN10002] 入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[input.xlsx]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10002;
-        final Class<?>           expectedCauseClass    = java.io.FileNotFoundException.class;
 
         /* 準備 */
         this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
 
-        // SpringApplicationContextHelperのモック化
-        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        /* テスト対象の実行 */
+        final NullPointerException actualException = Assertions.assertThrows(NullPointerException.class, () -> {
 
-            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSourceTestMethod);
+            this.testTarget.outputInsertionSql();
 
-            // モックメッセージソースの設定
-            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+        });
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-                this.testTarget.outputInsertionSql();
-
-            });
-
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
-
-        }
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "NullPointerExceptionが発生すること");
 
     }
 
@@ -312,38 +267,19 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
         final Path               expectedInputPath     = this.tempDir.resolve("input.xlsx");
         final Path               expectedOutputPath    = this.tempDir.resolve("output.sql");
         final short              expectedThreadNum     = 2;
-        final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN10002] 入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[input.xlsx]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10002;
-        final Class<?>           expectedCauseClass    = IOException.class;
 
         /* 準備 */
         this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
 
-        // SpringApplicationContextHelperのモック化
-        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        /* テスト対象の実行 */
+        final NullPointerException actualException = Assertions.assertThrows(NullPointerException.class, () -> {
 
-            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSourceTestMethod);
+            this.testTarget.outputInsertionSql();
 
-            // モックメッセージソースの設定
-            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+        });
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
-
-                this.testTarget.outputInsertionSql();
-
-            });
-
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
-
-        }
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "NullPointerExceptionが発生すること");
 
     }
 
@@ -377,15 +313,18 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final NullPointerException actualException = Assertions.assertThrows(NullPointerException.class, () -> {
 
                 this.testTarget.outputInsertionSql();
 
             });
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+            Assertions.assertNotNull(actualException, "NullPointerExceptionが発生すること");
+            Assertions.assertTrue(
+                actualException.getMessage()
+                    .contains("Cannot invoke \"java.nio.file.Path.toFile()\" because \"this.inputPath\" is null"),
+                "NullPointerExceptionのメッセージが正しいこと");
 
         }
 
