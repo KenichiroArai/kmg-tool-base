@@ -3,6 +3,7 @@ package kmg.tool.is.application.service.impl;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import org.apache.poi.EmptyFileException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -187,17 +188,17 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
         }
 
         /* テスト対象の実行 */
-        final org.apache.poi.EmptyFileException actualException
-            = Assertions.assertThrows(org.apache.poi.EmptyFileException.class, () -> {
+        final EmptyFileException actualException = Assertions.assertThrows(EmptyFileException.class, () -> {
 
-                this.testTarget.outputInsertionSql();
+            this.testTarget.outputInsertionSql();
 
-            });
+        });
 
         /* 検証の準備 */
         final boolean actualResult = actualException != null;
 
         /* 検証の実施 */
+        // TODO KenichiroArai 2025/07/20 verifyKmgMsgExceptionを使用できるか
         Assertions.assertTrue(actualResult, "EmptyFileExceptionが発生すること");
 
     }
@@ -376,17 +377,15 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final NullPointerException actualException = Assertions.assertThrows(NullPointerException.class, () -> {
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                 this.testTarget.outputInsertionSql();
 
             });
 
-            /* 検証の準備 */
-            final boolean actualResult = actualException != null;
-
             /* 検証の実施 */
-            Assertions.assertTrue(actualResult, "NullPointerExceptionが発生すること");
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
