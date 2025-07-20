@@ -304,19 +304,24 @@ public class AbstractInputToolTest extends AbstractKmgTest {
     public void testGetInputPath_normalPrimaryInputFileNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final Path expected = Paths.get("work/io/input.txt");
+        final Path expected = Paths.get("src/main/resources/tool/io/input.txt");
 
         /* 準備 */
-        // work/ioディレクトリは作成するが、input.txtファイルは作成しない
-        final Path workIoDir = this.tempDir.resolve("work/io");
-        Files.createDirectories(workIoDir);
-
-        // 一時的にカレントディレクトリを変更
-        final Path originalDir = Paths.get("").toAbsolutePath();
+        // work/ioディレクトリを一時的に名前変更して、存在しない状態を作成
+        final Path    workDir        = Paths.get("work");
+        final Path    workBackupDir  = Paths.get("work_backup");
+        final boolean workDirExists  = Files.exists(workDir);
+        boolean       workDirRenamed = false;
 
         try {
 
-            System.setProperty("user.dir", this.tempDir.toString());
+            if (workDirExists) {
+
+                // workディレクトリを一時的に名前変更
+                Files.move(workDir, workBackupDir);
+                workDirRenamed = true;
+
+            }
 
             /* テスト対象の実行 */
             final Path testResult = AbstractInputTool.getInputPath();
@@ -325,11 +330,16 @@ public class AbstractInputToolTest extends AbstractKmgTest {
             final Path actual = testResult;
 
             /* 検証の実施 */
-            Assertions.assertEquals(expected, actual, "優先パスに入力ファイルが存在しない場合でも、優先パスの入力ファイルが返されること");
+            Assertions.assertEquals(expected, actual, "優先パスに入力ファイルが存在しない場合でも、代替パスの入力ファイルが返されること");
 
         } finally {
 
-            System.setProperty("user.dir", originalDir.toString());
+            if (workDirRenamed) {
+
+                // workディレクトリを元に戻す
+                Files.move(workBackupDir, workDir);
+
+            }
 
         }
 
