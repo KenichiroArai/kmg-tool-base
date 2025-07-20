@@ -341,14 +341,57 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_normalExecution() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN10004] ワークブックが空です。入力ファイルのパス=[input.xlsx]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10004;
-        final Class<?>           expectedCauseClass    = EmptyFileException.class;
-
-        /* 準備 */
         final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
         final Path  expectedOutputPath = this.tempDir.resolve("output.sql");
         final short expectedThreadNum  = 2;
+
+        /* 準備 */
+        this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
+
+        // テスト用のExcelファイルを作成
+        try {
+
+            expectedInputPath.toFile().createNewFile();
+
+        } catch (final IOException e) {
+
+            // ファイル作成に失敗した場合はテストをスキップ
+            e.printStackTrace();
+            return;
+
+        }
+
+        /* テスト対象の実行 */
+        // このテストでは例外が発生することを期待する（ファイルが空または無効なため）
+        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+
+            this.testTarget.outputInsertionSql();
+
+        });
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "何らかの例外が発生すること");
+
+    }
+
+        /**
+     * outputInsertionSql メソッドのテスト - 正常系：モックを使用した正常な実行
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testOutputInsertionSql_normalExecutionWithMock() throws KmgReflectionException {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN10004] ワークブックが空です。入力ファイルのパス=[input.xlsx]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10004;
+        final Class<?>           expectedCauseClass    = EmptyFileException.class;
+        final Path               expectedInputPath     = this.tempDir.resolve("input.xlsx");
+        final Path               expectedOutputPath    = this.tempDir.resolve("output.sql");
+        final short              expectedThreadNum     = 2;
+
+        /* 準備 */
         this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
 
         // テスト用の空のExcelファイルを作成
@@ -388,63 +431,6 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
                 expectedMessageTypes);
 
         }
-
-    }
-
-        /**
-     * outputInsertionSql メソッドのテスト - 正常系：モックを使用した正常な実行
-     *
-     * @throws KmgReflectionException
-     *                                リフレクション例外
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    @Test
-    public void testOutputInsertionSql_normalExecutionWithMock() throws KmgReflectionException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
-        final Path  expectedOutputPath = this.tempDir.resolve("output.sql");
-        final short expectedThreadNum  = 2;
-
-        /* 準備 */
-        this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
-
-        // テスト用のExcelファイルを作成
-        try {
-
-            expectedInputPath.toFile().createNewFile();
-
-        } catch (final IOException e) {
-
-            // ファイル作成に失敗した場合はテストをスキップ
-            e.printStackTrace();
-            return;
-
-        }
-
-        /* テスト対象の実行 */
-        // このテストでは例外が発生することを期待する（ファイルが空または無効なため）
-        // しかし、isFileCreationService.outputInsertionSql()まで到達することを確認
-        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
-
-            this.testTarget.outputInsertionSql();
-
-        });
-
-        /* 検証の実施 */
-        Assertions.assertNotNull(actualException, "何らかの例外が発生すること");
-        // 実際の例外の種類をログ出力して確認
-        System.out.println("Actual exception: " + actualException.getClass().getName());
-        if (actualException.getCause() != null) {
-            System.out.println("Actual cause: " + actualException.getCause().getClass().getName());
-        }
-        // 例外が発生したことを確認（isFileCreationService.outputInsertionSql()まで到達したことを意味する）
-        Assertions.assertTrue(
-            actualException instanceof KmgToolMsgException ||
-            actualException instanceof Exception,
-            "例外が発生すること"
-        );
 
     }
 
