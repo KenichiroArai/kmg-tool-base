@@ -296,24 +296,37 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_semiNotInitialized() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final Class<?> expectedCauseClass = NullPointerException.class;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN08000] 入力ファイルパスがnullです。";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final Class<?>           expectedCauseClass    = null;
 
         /* 準備 */
         // 初期化しない
 
-        /* テスト対象の実行 */
-        final NullPointerException actualException = Assertions.assertThrows(NullPointerException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.testTarget.outputInsertionSql();
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(actualException, "NullPointerExceptionが発生すること");
-        Assertions.assertTrue(
-            actualException.getMessage()
-                .contains("Cannot invoke \"java.nio.file.Path.toFile()\" because \"this.inputPath\" is null"),
-            "NullPointerExceptionのメッセージが正しいこと");
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.outputInsertionSql();
+
+            });
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
 
     }
 

@@ -3,6 +3,7 @@ package kmg.tool.is.application.service.impl;
 import java.nio.file.Path;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.is.application.service.IsCreationService;
 import kmg.tool.is.application.service.IsFileCreationService;
 
@@ -63,6 +64,13 @@ public class IsCreationServiceImpl implements IsCreationService {
      */
     @Override
     public void outputInsertionSql() throws KmgToolMsgException {
+
+        // 初期化チェック
+        if (this.inputPath == null) {
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+            final Object[]           genMsgArgs  = {};
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs);
+        }
 
         final IsFileCreationService isFileCreationService = new IsFileCreationServiceImpl();
         isFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
