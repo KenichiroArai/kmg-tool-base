@@ -154,23 +154,28 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
      * outputInsertionSql メソッドのテスト - 異常系：空のファイルの場合
      *
      * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
      */
     @Test
-    public void testOutputInsertionSql_errorEmptyFile() throws KmgToolMsgException {
+    public void testOutputInsertionSql_errorEmptyFile() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
-        final Path  expectedOutputPath = this.tempDir.resolve("output.sql");
-        final short expectedThreadNum  = 2;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN10002] 入力ファイルのパスの読み込みに失敗しました。入力ファイルのパス=[input.xlsx]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10002;
+        final Class<?>           expectedCauseClass    = org.apache.poi.EmptyFileException.class;
 
         /* 準備 */
-        this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
+        final Path inputPath = this.tempDir.resolve("input.xlsx");
+
+        // リフレクションを使用してinputPathを直接設定
+        this.reflectionModel.set("inputPath", inputPath);
 
         // テスト用の空のExcelファイルを作成
         try {
 
-            expectedInputPath.toFile().createNewFile();
+            inputPath.toFile().createNewFile();
 
         } catch (final IOException e) {
 
@@ -180,19 +185,30 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
 
         }
 
-        /* テスト対象の実行 */
-        final EmptyFileException actualException = Assertions.assertThrows(EmptyFileException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.testTarget.outputInsertionSql();
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の準備 */
-        final boolean actualResult = actualException != null;
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        // TODO KenichiroArai 2025/07/20 verifyKmgMsgExceptionを使用できるか
-        Assertions.assertTrue(actualResult, "EmptyFileExceptionが発生すること");
+                this.testTarget.outputInsertionSql();
+
+            });
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
 
     }
 
@@ -206,9 +222,9 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorEncryptedDocumentException() throws KmgToolMsgException {
 
         /* 期待値の定義 */
-        final Path               expectedInputPath     = this.tempDir.resolve("input.xlsx");
-        final Path               expectedOutputPath    = this.tempDir.resolve("output.sql");
-        final short              expectedThreadNum     = 2;
+        final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
+        final Path  expectedOutputPath = this.tempDir.resolve("output.sql");
+        final short expectedThreadNum  = 2;
 
         /* 準備 */
         this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
@@ -235,9 +251,9 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorFileNotFound() throws KmgToolMsgException {
 
         /* 期待値の定義 */
-        final Path               expectedInputPath     = this.tempDir.resolve("input.xlsx");
-        final Path               expectedOutputPath    = this.tempDir.resolve("output.sql");
-        final short              expectedThreadNum     = 2;
+        final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
+        final Path  expectedOutputPath = this.tempDir.resolve("output.sql");
+        final short expectedThreadNum  = 2;
 
         /* 準備 */
         this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
@@ -264,9 +280,9 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorIOException() throws KmgToolMsgException {
 
         /* 期待値の定義 */
-        final Path               expectedInputPath     = this.tempDir.resolve("input.xlsx");
-        final Path               expectedOutputPath    = this.tempDir.resolve("output.sql");
-        final short              expectedThreadNum     = 2;
+        final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
+        final Path  expectedOutputPath = this.tempDir.resolve("output.sql");
+        final short expectedThreadNum  = 2;
 
         /* 準備 */
         this.testTarget.initialize(expectedInputPath, expectedOutputPath, expectedThreadNum);
@@ -320,6 +336,7 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
+            // TODO KenichiroArai 2025/07/20 verifyKmgMsgExceptionを使用できるか
             Assertions.assertNotNull(actualException, "NullPointerExceptionが発生すること");
             Assertions.assertTrue(
                 actualException.getMessage()
