@@ -28,6 +28,7 @@ import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.is.application.logic.impl.IsDataSheetCreationLogicImpl;
 
@@ -96,12 +97,14 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
             mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
             /* テスト対象の実行 */
-            // 例外がスローされることを確認（詳細な検証は行わない）
-            Assertions.assertThrows(Exception.class, () -> {
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                 testTarget.createOutputFileDirectories();
 
-            }, "IOExceptionが発生した場合、例外がスローされること");
+            });
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
@@ -156,12 +159,14 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
             mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
             /* テスト対象の実行 */
-            // 例外がスローされることを確認（詳細な検証は行わない）
-            Assertions.assertThrows(Exception.class, () -> {
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                 testTarget.createOutputFileDirectories();
 
-            }, "権限不足のIOExceptionが発生した場合、例外がスローされること");
+            });
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
 
             // モックの呼び出し確認
             mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
