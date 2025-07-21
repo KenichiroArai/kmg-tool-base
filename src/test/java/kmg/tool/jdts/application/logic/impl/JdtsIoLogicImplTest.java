@@ -10,9 +10,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.type.KmgString;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 
@@ -25,6 +34,8 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @version 0.1.0
  */
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls", "static-method"
 })
@@ -334,13 +345,11 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     @Test
     public void testLoad_errorNonExistentDirectory() {
 
-        /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
                                                        = "[KMGTOOL_GEN13002] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13002;
 
-        /* 準備 */
         final Path nonExistentPath = Paths.get("non/existent/path");
 
         try {
@@ -353,15 +362,35 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         }
 
-        /* テスト対象の実行・検証の実施 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.testTarget.load();
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
 
-        }, "存在しないディレクトリでKmgToolMsgExceptionがスローされること");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            // Files.walkをstaticモックしてIOExceptionをスローさせる
+            try (MockedStatic<Files> filesMock = Mockito.mockStatic(Files.class)) {
+
+                filesMock.when(() -> Files.walk(nonExistentPath)).thenThrow(new IOException("mocked io error"));
+
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.load();
+
+                }, "存在しないディレクトリでKmgToolMsgExceptionがスローされること");
+
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
+
+        }
 
     }
 
