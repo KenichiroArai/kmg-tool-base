@@ -308,13 +308,11 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     @Test
     public void testLoad_errorDeepNonExistentPath() {
 
-        /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
                                                        = "[KMGTOOL_GEN13002] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[deep\\non\\existent\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13002;
 
-        /* 準備 */
         final Path deepNonExistentPath = Paths.get("deep/non/existent/path");
 
         try {
@@ -327,15 +325,34 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         }
 
-        /* テスト対象の実行・検証の実施 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.testTarget.load();
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
 
-        }, "深い階層の非存在ディレクトリでKmgToolMsgExceptionがスローされること");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            // Files.walkをstaticモックしてIOExceptionをスローさせる
+            try (MockedStatic<Files> filesMock = Mockito.mockStatic(Files.class)) {
+
+                filesMock.when(() -> Files.walk(deepNonExistentPath)).thenThrow(new IOException("mocked io error"));
+
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.load();
+
+                }, "深い階層の非存在ディレクトリでKmgToolMsgExceptionがスローされること");
+
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+
+            }
+
+        }
 
     }
 
