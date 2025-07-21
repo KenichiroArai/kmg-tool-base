@@ -2,6 +2,8 @@ package kmg.tool.is.application.service.impl;
 
 import java.nio.file.Path;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.is.application.service.IsCreationService;
@@ -29,6 +31,10 @@ public class IsCreationServiceImpl implements IsCreationService {
 
     /** スレッド数 */
     private short threadNum;
+
+    /** 挿入SQLファイル作成サービス */
+    @Autowired
+    private IsFileCreationService isFileCreationService;
 
     /**
      * 初期化する<br>
@@ -74,9 +80,8 @@ public class IsCreationServiceImpl implements IsCreationService {
 
         }
 
-        final IsFileCreationService isFileCreationService = new IsFileCreationServiceImpl();
-        isFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
-        isFileCreationService.outputInsertionSql();
+        this.isFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
+        this.isFileCreationService.outputInsertionSql();
 
     }
 
