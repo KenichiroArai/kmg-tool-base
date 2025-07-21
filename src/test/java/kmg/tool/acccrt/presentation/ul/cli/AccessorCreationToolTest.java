@@ -72,13 +72,13 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final AccessorCreationService expectedService = Mockito.mock(AccessorCreationService.class);
 
         /* 準備 */
-        final AccessorCreationTool   testTarget      = new AccessorCreationTool();
-        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(testTarget);
-        reflectionModel.set("accessorCreationService", expectedService);
+        final AccessorCreationTool   localTestTarget      = new AccessorCreationTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("accessorCreationService", expectedService);
 
         /* テスト対象の実行 */
         final AccessorCreationService actualService
-            = (AccessorCreationService) reflectionModel.get("accessorCreationService");
+            = (AccessorCreationService) localReflectionModel.get("accessorCreationService");
 
         /* 検証の準備 */
         final AccessorCreationService actualResult = actualService;
@@ -100,8 +100,8 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final Class<?> expectedFieldType = AccessorCreationService.class;
 
         /* 準備 */
-        final AccessorCreationTool testTarget = new AccessorCreationTool();
-        final Class<?>             testClass  = testTarget.getClass();
+        final AccessorCreationTool localTestTarget = new AccessorCreationTool();
+        final Class<?>             testClass  = localTestTarget.getClass();
 
         /* テスト対象の実行 */
         try {
@@ -136,8 +136,8 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final int expectedModifiers = java.lang.reflect.Modifier.PRIVATE;
 
         /* 準備 */
-        final AccessorCreationTool testTarget = new AccessorCreationTool();
-        final Class<?>             testClass  = testTarget.getClass();
+        final AccessorCreationTool localTestTarget = new AccessorCreationTool();
+        final Class<?>             testClass  = localTestTarget.getClass();
 
         /* テスト対象の実行 */
         try {
@@ -174,14 +174,14 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final String expectedToolName = "アクセサ作成ツール";
 
         /* 準備 */
-        final AccessorCreationTool testTarget = new AccessorCreationTool();
+        final AccessorCreationTool localTestTarget = new AccessorCreationTool();
 
         /* テスト対象の実行 */
         // コンストラクタの実行は準備で完了
 
         /* 検証の準備 */
-        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(testTarget);
-        final String                 actualToolName  = (String) reflectionModel.get("toolName");
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        final String                 actualToolName  = (String) localReflectionModel.get("toolName");
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedToolName, actualToolName, "ツール名が正しく設定されていること");
@@ -203,13 +203,13 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final AccessorCreationService expectedService = Mockito.mock(AccessorCreationService.class);
 
         /* 準備 */
-        final AccessorCreationTool   testTarget      = new AccessorCreationTool();
-        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(testTarget);
-        reflectionModel.set("accessorCreationService", expectedService);
+        final AccessorCreationTool   localTestTarget      = new AccessorCreationTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("accessorCreationService", expectedService);
 
         /* テスト対象の実行 */
         final AccessorCreationService actualService
-            = (AccessorCreationService) reflectionModel.getMethod("getIoService");
+            = (AccessorCreationService) localReflectionModel.getMethod("getIoService");
 
         /* 検証の準備 */
         final AccessorCreationService actualResult = actualService;
@@ -234,13 +234,13 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final AccessorCreationService expectedService = null;
 
         /* 準備 */
-        final AccessorCreationTool   testTarget      = new AccessorCreationTool();
-        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(testTarget);
-        reflectionModel.set("accessorCreationService", expectedService);
+        final AccessorCreationTool   localTestTarget      = new AccessorCreationTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("accessorCreationService", expectedService);
 
         /* テスト対象の実行 */
         final AccessorCreationService actualService
-            = (AccessorCreationService) reflectionModel.getMethod("getIoService");
+            = (AccessorCreationService) localReflectionModel.getMethod("getIoService");
 
         /* 検証の準備 */
         final AccessorCreationService actualResult = actualService;
@@ -262,8 +262,8 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final Class<?> expectedReturnType = AccessorCreationService.class;
 
         /* 準備 */
-        final AccessorCreationTool testTarget = new AccessorCreationTool();
-        final Class<?>             testClass  = testTarget.getClass();
+        final AccessorCreationTool localTestTarget = new AccessorCreationTool();
+        final Class<?>             testClass  = localTestTarget.getClass();
 
         /* テスト対象の実行 */
         try {
@@ -297,8 +297,8 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final int expectedModifiers = java.lang.reflect.Modifier.PROTECTED;
 
         /* 準備 */
-        final AccessorCreationTool testTarget = new AccessorCreationTool();
-        final Class<?>             testClass  = testTarget.getClass();
+        final AccessorCreationTool localTestTarget = new AccessorCreationTool();
+        final Class<?>             testClass  = localTestTarget.getClass();
 
         /* テスト対象の実行 */
         try {
@@ -332,10 +332,10 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final Class<?> expectedSuperClass = kmg.tool.dtc.presentation.ui.cli.AbstractDtcTool.class;
 
         /* 準備 */
-        final AccessorCreationTool testTarget = new AccessorCreationTool();
+        final AccessorCreationTool localTestTarget = new AccessorCreationTool();
 
         /* テスト対象の実行 */
-        final Class<?> actualSuperClass = testTarget.getClass().getSuperclass();
+        final Class<?> actualSuperClass = localTestTarget.getClass().getSuperclass();
 
         /* 検証の準備 */
         final Class<?> actualResult = actualSuperClass;
@@ -466,8 +466,8 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        final AccessorCreationTool testTarget = new AccessorCreationTool();
-        final Class<?>             testClass  = testTarget.getClass();
+        final AccessorCreationTool localTestTarget = new AccessorCreationTool();
+        final Class<?>             testClass  = localTestTarget.getClass();
 
         /* テスト対象の実行 */
         final SpringBootApplication annotation = testClass.getAnnotation(SpringBootApplication.class);
@@ -495,11 +495,11 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final String expectedToolName = "アクセサ作成ツール";
 
         /* 準備 */
-        final AccessorCreationTool   testTarget      = new AccessorCreationTool();
-        final KmgReflectionModelImpl reflectionModel = new KmgReflectionModelImpl(testTarget);
+        final AccessorCreationTool   localTestTarget      = new AccessorCreationTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
 
         /* テスト対象の実行 */
-        final String actualToolName = (String) reflectionModel.get("TOOL_NAME");
+        final String actualToolName = (String) localReflectionModel.get("TOOL_NAME");
 
         /* 検証の準備 */
         final String actualResult = actualToolName;
@@ -521,8 +521,8 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final Class<?> expectedFieldType = String.class;
 
         /* 準備 */
-        final AccessorCreationTool testTarget = new AccessorCreationTool();
-        final Class<?>             testClass  = testTarget.getClass();
+        final AccessorCreationTool localTestTarget = new AccessorCreationTool();
+        final Class<?>             testClass  = localTestTarget.getClass();
 
         /* テスト対象の実行 */
         try {
@@ -557,8 +557,8 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
             = java.lang.reflect.Modifier.PRIVATE | java.lang.reflect.Modifier.STATIC | java.lang.reflect.Modifier.FINAL;
 
         /* 準備 */
-        final AccessorCreationTool testTarget = new AccessorCreationTool();
-        final Class<?>             testClass  = testTarget.getClass();
+        final AccessorCreationTool localTestTarget = new AccessorCreationTool();
+        final Class<?>             testClass  = localTestTarget.getClass();
 
         /* テスト対象の実行 */
         try {
