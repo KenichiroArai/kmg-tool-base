@@ -6,16 +6,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
 
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
@@ -31,10 +31,7 @@ import kmg.tool.is.application.service.IsFileCreationService;
  *
  * @author KenichiroArai
  */
-@SpringBootTest
-@ContextConfiguration(classes = {
-    IsCreationServiceImpl.class
-})
+@ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls",
@@ -53,7 +50,7 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     private KmgReflectionModelImpl reflectionModel;
 
     /** IsFileCreationServiceのモック */
-    @MockBean
+    @Mock
     private IsFileCreationService mockIsFileCreationService;
 
     /**
