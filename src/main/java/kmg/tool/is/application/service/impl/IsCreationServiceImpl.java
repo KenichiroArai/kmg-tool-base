@@ -3,6 +3,7 @@ package kmg.tool.is.application.service.impl;
 import java.nio.file.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
@@ -21,6 +22,7 @@ import kmg.tool.is.application.service.IsFileCreationService;
  *
  * @version 1.0.0
  */
+@Component
 public class IsCreationServiceImpl implements IsCreationService {
 
     /** 入力パス */

@@ -6,16 +6,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
@@ -31,7 +31,10 @@ import kmg.tool.is.application.service.IsFileCreationService;
  *
  * @author KenichiroArai
  */
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@ContextConfiguration(classes = {
+    IsCreationServiceImpl.class
+})
 @MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls",
@@ -50,7 +53,7 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     private KmgReflectionModelImpl reflectionModel;
 
     /** IsFileCreationServiceのモック */
-    @Mock
+    @MockBean
     private IsFileCreationService mockIsFileCreationService;
 
     /**
@@ -214,22 +217,14 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
             ArgumentMatchers.eq(expectedOutputPath), ArgumentMatchers.eq(expectedThreadNum));
         Mockito.doNothing().when(this.mockIsFileCreationService).outputInsertionSql();
 
-        // IsFileCreationServiceImplのモック化
-        try (final MockedStatic<IsFileCreationServiceImpl> mockedStatic
-            = Mockito.mockStatic(IsFileCreationServiceImpl.class)) {
+        /* テスト対象の実行 */
+        this.testTarget.outputInsertionSql();
 
-            mockedStatic.when(IsFileCreationServiceImpl::new).thenReturn(this.mockIsFileCreationService);
-
-            /* テスト対象の実行 */
-            this.testTarget.outputInsertionSql();
-
-            /* 検証の実施 */
-            Mockito.verify(this.mockIsFileCreationService, Mockito.times(1)).initialize(
-                ArgumentMatchers.eq(expectedInputPath), ArgumentMatchers.eq(expectedOutputPath),
-                ArgumentMatchers.eq(expectedThreadNum));
-            Mockito.verify(this.mockIsFileCreationService, Mockito.times(1)).outputInsertionSql();
-
-        }
+        /* 検証の実施 */
+        Mockito.verify(this.mockIsFileCreationService, Mockito.times(1)).initialize(
+            ArgumentMatchers.eq(expectedInputPath), ArgumentMatchers.eq(expectedOutputPath),
+            ArgumentMatchers.eq(expectedThreadNum));
+        Mockito.verify(this.mockIsFileCreationService, Mockito.times(1)).outputInsertionSql();
 
     }
 
