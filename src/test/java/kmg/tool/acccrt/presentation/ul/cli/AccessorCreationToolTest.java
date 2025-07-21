@@ -1,15 +1,16 @@
 package kmg.tool.acccrt.presentation.ul.cli;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
@@ -26,21 +27,34 @@ import kmg.tool.acccrt.application.service.AccessorCreationService;
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-@SpringBootTest(classes = AccessorCreationTool.class)
-@ActiveProfiles("test")
 @SuppressWarnings({
     "nls", "static-method"
 })
 public class AccessorCreationToolTest extends AbstractKmgTest {
 
-    /**
-     * デフォルトコンストラクタ<br>
-     *
-     * @since 1.0.0
-     */
-    public AccessorCreationToolTest() {
+    /** テスト対象 */
+    @InjectMocks
+    private AccessorCreationTool testTarget;
 
-        // 処理なし
+    /** リフレクションモデル */
+    private KmgReflectionModelImpl reflectionModel;
+
+    /** AccessorCreationServiceのモック */
+    @Mock
+    private AccessorCreationService mockAccessorCreationService;
+
+    /**
+     * 各テスト実行前のセットアップ処理。リフレクションモデルの初期化とモックの注入を行う。
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @BeforeEach
+    public void setUp() throws Exception {
+
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+        this.reflectionModel.set("accessorCreationService", this.mockAccessorCreationService);
+
     }
 
     /**
