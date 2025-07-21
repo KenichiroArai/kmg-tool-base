@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
@@ -35,7 +34,6 @@ import kmg.tool.is.application.logic.impl.IsDataSheetCreationLogicImpl;
  *
  * @author KenichiroArai
  */
-@SpringBootTest(classes = kmg.tool.is.presentation.ui.gui.IsCreationTool.class)
 @SuppressWarnings({
     "nls", "static-method"
 })

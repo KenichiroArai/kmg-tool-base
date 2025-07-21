@@ -13,19 +13,16 @@ import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.jdocr.presentation.ui.cli.JavadocLineRemoverTool;
 
 /**
  * Javadoc行削除ロジック実装のテスト<br>
  *
  * @author KenichiroArai
  */
-@SpringBootTest(classes = JavadocLineRemoverTool.class)
 @SuppressWarnings({
     "nls", "static-method"
 })

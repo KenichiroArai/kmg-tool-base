@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.type.KmgString;
@@ -26,7 +25,6 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @version 0.1.0
  */
-@SpringBootTest(classes = kmg.tool.is.presentation.ui.gui.IsCreationTool.class)
 @SuppressWarnings({
     "nls", "static-method"
 })
