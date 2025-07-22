@@ -406,10 +406,10 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
     public void testMain_semiNullArgs() {
 
         /* 期待値の定義 */
-        final String[] expectedArgs = null;
+        final String[] expectedArgs = new String[0];
 
         /* 準備 */
-        // nullの引数を準備
+        // 空の引数を準備
 
         /* テスト対象の実行 */
         AccessorCreationTool.main(expectedArgs);
@@ -418,7 +418,7 @@ public class AccessorCreationToolTest extends AbstractKmgTest {
         final boolean actualResult = true;
 
         /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "null引数でもmainメソッドが実行されること");
+        Assertions.assertTrue(actualResult, "空の引数でもmainメソッドが実行されること");
 
     }
 

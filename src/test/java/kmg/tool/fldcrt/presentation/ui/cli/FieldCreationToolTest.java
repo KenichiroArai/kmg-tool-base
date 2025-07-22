@@ -389,18 +389,19 @@ public class FieldCreationToolTest extends AbstractKmgTest {
     public void testMain_semiNullArgs() {
 
         /* 期待値の定義 */
+        final String[] expectedArgs = new String[0];
 
         /* 準備 */
-        // nullの引数を準備
+        // 空の引数を準備
 
         /* テスト対象の実行 */
-        FieldCreationTool.main(null);
+        FieldCreationTool.main(expectedArgs);
 
         /* 検証の準備 */
         final boolean actualResult = true;
 
         /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "null引数でもmainメソッドが実行されること");
+        Assertions.assertTrue(actualResult, "空の引数でもmainメソッドが実行されること");
 
     }
 

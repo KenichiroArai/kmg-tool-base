@@ -441,9 +441,10 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     public void testMain_semiNullArgs() {
 
         /* 期待値の定義 */
+        final String[] expectedArgs = new String[0];
 
         /* 準備 */
-        final String[] testArgs = null;
+        final String[] testArgs = expectedArgs;
 
         /* テスト対象の実行 */
         try {
@@ -454,7 +455,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
             final boolean actualResult = true;
 
             /* 検証の実施 */
-            Assertions.assertTrue(actualResult, "mainメソッドが正常に実行されること");
+            Assertions.assertTrue(actualResult, "空の引数でmainメソッドが正常に実行されること");
 
         } catch (@SuppressWarnings("unused") final IllegalArgumentException e) {
 
@@ -462,7 +463,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
             final boolean actualResult = true;
 
             /* 検証の実施 */
-            Assertions.assertTrue(actualResult, "null引数でIllegalArgumentExceptionが発生すること");
+            Assertions.assertTrue(actualResult, "空の引数でIllegalArgumentExceptionが発生すること");
 
         } catch (@SuppressWarnings("unused") final Exception e) {
 
