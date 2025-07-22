@@ -67,6 +67,10 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
     @Mock
     private KmgMessageSource mockMessageSource;
 
+    /** Sheetのモック */
+    @Mock
+    private Sheet mockInputSheet;
+
     /**
      * セットアップ
      *
@@ -233,7 +237,7 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final KmgDbTypes          testKmgDbTypes     = KmgDbTypes.POSTGRE_SQL;
-        final Sheet               testInputSheet     = this.createTestSheetWithData();
+        final Sheet               testInputSheet     = this.mockInputSheet;
         final Map<String, String> testSqlIdMap       = new HashMap<>();
         final Path                testOutputPath     = this.tempDir.resolve("output.sql");
         final Path                testOutputFilePath = this.tempDir.resolve("test_insert_test_table.sql");
@@ -252,6 +256,11 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockIsDataSheetCreationLogic.getInsertComment()).thenReturn("-- テスト");
         Mockito.when(this.mockIsDataSheetCreationLogic.getInsertSql(ArgumentMatchers.any(Row.class)))
             .thenReturn("INSERT INTO test VALUES ('test');");
+
+        // inputSheetのモック設定
+        final Row mockRow = Mockito.mock(Row.class);
+        Mockito.when(testInputSheet.getLastRowNum()).thenReturn(4);
+        Mockito.when(testInputSheet.getRow(4)).thenReturn(mockRow);
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -301,7 +310,7 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgDbTypes          expectedKmgDbTypes     = KmgDbTypes.POSTGRE_SQL;
-        final Sheet               expectedInputSheet     = this.createTestSheetWithData();
+        final Sheet               expectedInputSheet     = this.mockInputSheet;
         final Map<String, String> expectedSqlIdMap       = new HashMap<>();
         final Path                expectedOutputPath     = this.tempDir.resolve("output.sql");
         final Path                expectedOutputFilePath = this.tempDir.resolve("test_insert_test_table.sql");
@@ -327,6 +336,11 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockIsDataSheetCreationLogic.getInsertComment()).thenReturn(expectedInsertComment);
         Mockito.when(this.mockIsDataSheetCreationLogic.getInsertSql(ArgumentMatchers.any(Row.class)))
             .thenReturn(expectedInsertSql);
+
+        // inputSheetのモック設定
+        final Row mockRow = Mockito.mock(Row.class);
+        Mockito.when(expectedInputSheet.getLastRowNum()).thenReturn(4);
+        Mockito.when(expectedInputSheet.getRow(4)).thenReturn(mockRow);
 
         /* テスト対象の実行 */
         this.testTarget.outputInsertionSql();
@@ -355,6 +369,80 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * outputInsertionSql メソッドのテスト - 正常系：null行を含むシートでの実行
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     * @throws IOException
+     *                             入出力例外
+     */
+    @Test
+    public void testOutputInsertionSql_normalExecutionWithNullRows() throws KmgToolMsgException, IOException {
+
+        /* 期待値の定義 */
+        final KmgDbTypes          expectedKmgDbTypes     = KmgDbTypes.POSTGRE_SQL;
+        final Sheet               expectedInputSheet     = this.mockInputSheet;
+        final Map<String, String> expectedSqlIdMap       = new HashMap<>();
+        final Path                expectedOutputPath     = this.tempDir.resolve("output.sql");
+        final Path                expectedOutputFilePath = this.tempDir.resolve("test_insert_test_table.sql");
+        final Charset             expectedCharset        = java.nio.charset.StandardCharsets.UTF_8;
+        final String              expectedDeleteComment  = "-- テストシートのレコード削除";
+        final String              expectedDeleteSql      = "DELETE FROM test_table;";
+        final String              expectedInsertComment  = "-- テストシートのレコード挿入";
+        final String              expectedInsertSql
+                                                         = "INSERT INTO test_table (test_column) VALUES ('test_value');";
+
+        /* 準備 */
+        this.testTarget.initialize(expectedKmgDbTypes, expectedInputSheet, expectedSqlIdMap, expectedOutputPath);
+
+        // IsDataSheetCreationLogicのモック設定
+        Mockito.doNothing().when(this.mockIsDataSheetCreationLogic).initialize(ArgumentMatchers.eq(expectedKmgDbTypes),
+            ArgumentMatchers.eq(expectedInputSheet), ArgumentMatchers.eq(expectedSqlIdMap),
+            ArgumentMatchers.eq(expectedOutputPath));
+        Mockito.doNothing().when(this.mockIsDataSheetCreationLogic).createOutputFileDirectories();
+        Mockito.when(this.mockIsDataSheetCreationLogic.getOutputFilePath()).thenReturn(expectedOutputFilePath);
+        Mockito.when(this.mockIsDataSheetCreationLogic.getCharset()).thenReturn(expectedCharset);
+        Mockito.when(this.mockIsDataSheetCreationLogic.getDeleteComment()).thenReturn(expectedDeleteComment);
+        Mockito.when(this.mockIsDataSheetCreationLogic.getDeleteSql()).thenReturn(expectedDeleteSql);
+        Mockito.when(this.mockIsDataSheetCreationLogic.getInsertComment()).thenReturn(expectedInsertComment);
+        Mockito.when(this.mockIsDataSheetCreationLogic.getInsertSql(ArgumentMatchers.any(Row.class)))
+            .thenReturn(expectedInsertSql);
+
+        // inputSheetのモック設定（行5以降でnullを返すように）
+        final Row mockRow4 = Mockito.mock(Row.class);
+        Mockito.when(expectedInputSheet.getLastRowNum()).thenReturn(6);
+        Mockito.when(expectedInputSheet.getRow(4)).thenReturn(mockRow4); // 行4は存在
+        Mockito.when(expectedInputSheet.getRow(5)).thenReturn(null); // 行5はnull
+        Mockito.when(expectedInputSheet.getRow(6)).thenReturn(null); // 行6はnull
+
+        /* テスト対象の実行 */
+        this.testTarget.outputInsertionSql();
+
+        /* 検証の実施 */
+        Mockito.verify(this.mockIsDataSheetCreationLogic, Mockito.times(1)).initialize(
+            ArgumentMatchers.eq(expectedKmgDbTypes), ArgumentMatchers.eq(expectedInputSheet),
+            ArgumentMatchers.eq(expectedSqlIdMap), ArgumentMatchers.eq(expectedOutputPath));
+        Mockito.verify(this.mockIsDataSheetCreationLogic, Mockito.times(1)).createOutputFileDirectories();
+        Mockito.verify(this.mockIsDataSheetCreationLogic, Mockito.times(1)).getOutputFilePath();
+        Mockito.verify(this.mockIsDataSheetCreationLogic, Mockito.times(1)).getCharset();
+        Mockito.verify(this.mockIsDataSheetCreationLogic, Mockito.times(1)).getDeleteComment();
+        Mockito.verify(this.mockIsDataSheetCreationLogic, Mockito.times(1)).getDeleteSql();
+        Mockito.verify(this.mockIsDataSheetCreationLogic, Mockito.times(1)).getInsertComment();
+        // null行をスキップするため、getInsertSqlは1回のみ呼ばれる
+        Mockito.verify(this.mockIsDataSheetCreationLogic, Mockito.times(1))
+            .getInsertSql(ArgumentMatchers.any(Row.class));
+
+        // 出力ファイルの内容を検証
+        Assertions.assertTrue(Files.exists(expectedOutputFilePath), "出力ファイルが作成されること");
+        final String actualContent = Files.readString(expectedOutputFilePath);
+        Assertions.assertTrue(actualContent.contains(expectedDeleteComment), "削除コメントが出力されること");
+        Assertions.assertTrue(actualContent.contains(expectedDeleteSql), "削除SQLが出力されること");
+        Assertions.assertTrue(actualContent.contains(expectedInsertComment), "挿入コメントが出力されること");
+        Assertions.assertTrue(actualContent.contains(expectedInsertSql), "挿入SQLが出力されること");
+
+    }
+
+    /**
      * run メソッドのテスト - 正常系：正常な実行
      *
      * @throws KmgToolMsgException
@@ -367,7 +455,7 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final KmgDbTypes          testKmgDbTypes = KmgDbTypes.POSTGRE_SQL;
-        final Sheet               testInputSheet = this.createTestSheetWithData();
+        final Sheet               testInputSheet = this.mockInputSheet;
         final Map<String, String> testSqlIdMap   = new HashMap<>();
         final Path                testOutputPath = this.tempDir.resolve("output.sql");
 
@@ -386,6 +474,11 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockIsDataSheetCreationLogic.getInsertComment()).thenReturn("-- テスト");
         Mockito.when(this.mockIsDataSheetCreationLogic.getInsertSql(ArgumentMatchers.any(Row.class)))
             .thenReturn("INSERT INTO test VALUES ('test');");
+
+        // inputSheetのモック設定
+        final Row mockRow = Mockito.mock(Row.class);
+        Mockito.when(testInputSheet.getLastRowNum()).thenReturn(4);
+        Mockito.when(testInputSheet.getRow(4)).thenReturn(mockRow);
 
         /* テスト対象の実行 */
         this.testTarget.run();
