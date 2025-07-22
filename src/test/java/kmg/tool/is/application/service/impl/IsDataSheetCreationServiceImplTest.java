@@ -285,20 +285,61 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
                     ArgumentMatchers.any(Charset.class))).thenThrow(new IOException("テスト用のIOException"));
 
                 /* テスト対象の実行 */
-                final Throwable actualException = Assertions.assertThrows(Throwable.class, () -> {
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                     this.testTarget.outputInsertionSql();
 
                 });
 
                 /* 検証の実施 */
-                // ExceptionInInitializerErrorが発生する可能性があるため、より緩い検証を行う
-                Assertions.assertTrue(
-                    (actualException instanceof KmgToolMsgException)
-                        || (actualException instanceof ExceptionInInitializerError),
-                    "KmgToolMsgExceptionまたはExceptionInInitializerErrorが発生すること");
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
 
             }
+
+        }
+
+    }
+
+    /**
+     * outputInsertionSql メソッドのテスト - 異常系：初期化前の実行
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testOutputInsertionSql_errorNotInitialized() throws KmgReflectionException {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN08000] 入力ファイルパスがnullです。";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final Class<?>           expectedCauseClass    = null;
+
+        /* 準備 */
+        // 初期化しない
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.outputInsertionSql();
+
+            });
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
 
         }
 
@@ -513,6 +554,9 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
             // messageSource.getLogMessageが呼ばれることを確認
             Mockito.verify(this.mockMessageSource, Mockito.times(1))
                 .getLogMessage(ArgumentMatchers.eq(expectedLogMsgTypes), ArgumentMatchers.any());
+
+            // outputInsertionSqlメソッドが呼ばれることを確認
+            Mockito.verify(spyTarget, Mockito.times(1)).outputInsertionSql();
 
         }
 
