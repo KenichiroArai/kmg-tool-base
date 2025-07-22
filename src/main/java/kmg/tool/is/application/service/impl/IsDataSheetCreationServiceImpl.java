@@ -128,6 +128,16 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
     @Override
     public void outputInsertionSql() throws KmgToolMsgException {
 
+        /* 初期化チェック */
+        if (this.inputSheet == null) {
+
+            // TODO KenichiroArai 2025/07/22 メッセージの設定
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final Object[]           genMsgArgs  = {};
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs);
+
+        }
+
         this.isDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap, this.outputPath);
 
         /* 出力ファイルのディレクトリの作成 */
