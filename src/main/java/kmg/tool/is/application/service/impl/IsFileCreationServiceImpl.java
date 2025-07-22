@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
@@ -34,6 +35,7 @@ import kmg.tool.is.application.service.IslDataSheetCreationService;
  *
  * @version 1.0.0
  */
+@Service
 public class IsFileCreationServiceImpl implements IsFileCreationService {
 
     /** 挿入SQLデータシート作成サービス */
