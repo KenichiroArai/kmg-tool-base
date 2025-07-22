@@ -311,8 +311,8 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorNotInitialized() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN08000] 入力ファイルパスがnullです。";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN10006] 入力ファイルパスがnullです。";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10006;
         final Class<?>           expectedCauseClass    = null;
 
         /* 準備 */

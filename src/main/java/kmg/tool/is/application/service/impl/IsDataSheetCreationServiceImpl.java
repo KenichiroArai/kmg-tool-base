@@ -131,8 +131,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
         /* 初期化チェック */
         if (this.inputSheet == null) {
 
-            // TODO KenichiroArai 2025/07/22 メッセージの設定
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10006;
             final Object[]           genMsgArgs  = {};
             throw new KmgToolMsgException(genMsgTypes, genMsgArgs);
 
