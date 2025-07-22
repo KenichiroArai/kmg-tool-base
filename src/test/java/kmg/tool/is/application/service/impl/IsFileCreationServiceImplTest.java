@@ -570,31 +570,34 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
         final Path                expectedOutputPath = this.tempDir.resolve("output");
 
         /* 準備 */
-        final Workbook testWorkbook = this.createTestWorkbook();
         this.reflectionModel.set("outputPath", expectedOutputPath);
 
-        // IsBasicInformationLogicのモック設定
-        Mockito.doNothing().when(this.mockIsBasicInformationLogic).initialize(ArgumentMatchers.any(Workbook.class));
-        Mockito.when(this.mockIsBasicInformationLogic.getKmgDbTypes()).thenReturn(expectedKmgDbTypes);
-        Mockito.when(this.mockIsBasicInformationLogic.getSqlIdMap()).thenReturn(expectedSqlIdMap);
+        try (final Workbook testWorkbook = this.createTestWorkbook()) {
 
-        // IslDataSheetCreationServiceのモック設定
-        Mockito.doNothing().when(this.mockIslDataSheetCreationService).initialize(ArgumentMatchers.any(),
-            ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any());
-        Mockito.doNothing().when(this.mockIslDataSheetCreationService).run();
+            // IsBasicInformationLogicのモック設定
+            Mockito.doNothing().when(this.mockIsBasicInformationLogic).initialize(ArgumentMatchers.any(Workbook.class));
+            Mockito.when(this.mockIsBasicInformationLogic.getKmgDbTypes()).thenReturn(expectedKmgDbTypes);
+            Mockito.when(this.mockIsBasicInformationLogic.getSqlIdMap()).thenReturn(expectedSqlIdMap);
 
-        /* テスト対象の実行 */
-        this.reflectionModel.getMethod("processWorkbook", testWorkbook);
+            // IslDataSheetCreationServiceのモック設定
+            Mockito.doNothing().when(this.mockIslDataSheetCreationService).initialize(ArgumentMatchers.any(),
+                ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any());
+            Mockito.doNothing().when(this.mockIslDataSheetCreationService).run();
 
-        /* 検証の実施 */
-        Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1))
-            .initialize(ArgumentMatchers.eq(testWorkbook));
-        Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1)).getKmgDbTypes();
-        Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1)).getSqlIdMap();
-        Mockito.verify(this.mockIslDataSheetCreationService, Mockito.times(1)).initialize(
-            ArgumentMatchers.eq(expectedKmgDbTypes), ArgumentMatchers.any(), ArgumentMatchers.eq(expectedSqlIdMap),
-            ArgumentMatchers.eq(expectedOutputPath));
-        Mockito.verify(this.mockIslDataSheetCreationService, Mockito.times(1)).run();
+            /* テスト対象の実行 */
+            this.reflectionModel.getMethod("processWorkbook", testWorkbook);
+
+            /* 検証の実施 */
+            Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1))
+                .initialize(ArgumentMatchers.eq(testWorkbook));
+            Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1)).getKmgDbTypes();
+            Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1)).getSqlIdMap();
+            Mockito.verify(this.mockIslDataSheetCreationService, Mockito.times(1)).initialize(
+                ArgumentMatchers.eq(expectedKmgDbTypes), ArgumentMatchers.any(), ArgumentMatchers.eq(expectedSqlIdMap),
+                ArgumentMatchers.eq(expectedOutputPath));
+            Mockito.verify(this.mockIslDataSheetCreationService, Mockito.times(1)).run();
+
+        }
 
     }
 
@@ -615,31 +618,34 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
         final Path                expectedOutputPath = this.tempDir.resolve("output");
 
         /* 準備 */
-        final Workbook testWorkbook = this.createTestWorkbookWithSettingAndListSheets();
         this.reflectionModel.set("outputPath", expectedOutputPath);
 
-        // IsBasicInformationLogicのモック設定
-        Mockito.doNothing().when(this.mockIsBasicInformationLogic).initialize(ArgumentMatchers.any(Workbook.class));
-        Mockito.when(this.mockIsBasicInformationLogic.getKmgDbTypes()).thenReturn(expectedKmgDbTypes);
-        Mockito.when(this.mockIsBasicInformationLogic.getSqlIdMap()).thenReturn(expectedSqlIdMap);
+        try (final Workbook testWorkbook = this.createTestWorkbookWithSettingAndListSheets()) {
 
-        // IslDataSheetCreationServiceのモック設定
-        Mockito.doNothing().when(this.mockIslDataSheetCreationService).initialize(ArgumentMatchers.any(),
-            ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any());
-        Mockito.doNothing().when(this.mockIslDataSheetCreationService).run();
+            // IsBasicInformationLogicのモック設定
+            Mockito.doNothing().when(this.mockIsBasicInformationLogic).initialize(ArgumentMatchers.any(Workbook.class));
+            Mockito.when(this.mockIsBasicInformationLogic.getKmgDbTypes()).thenReturn(expectedKmgDbTypes);
+            Mockito.when(this.mockIsBasicInformationLogic.getSqlIdMap()).thenReturn(expectedSqlIdMap);
 
-        /* テスト対象の実行 */
-        this.reflectionModel.getMethod("processWorkbook", testWorkbook);
+            // IslDataSheetCreationServiceのモック設定
+            Mockito.doNothing().when(this.mockIslDataSheetCreationService).initialize(ArgumentMatchers.any(),
+                ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any());
+            Mockito.doNothing().when(this.mockIslDataSheetCreationService).run();
 
-        /* 検証の実施 */
-        Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1))
-            .initialize(ArgumentMatchers.eq(testWorkbook));
-        Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1)).getKmgDbTypes();
-        Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1)).getSqlIdMap();
-        // 設定シートと一覧シートはスキップされるため、データシート作成サービスは呼ばれない
-        Mockito.verify(this.mockIslDataSheetCreationService, Mockito.never()).initialize(ArgumentMatchers.any(),
-            ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any());
-        Mockito.verify(this.mockIslDataSheetCreationService, Mockito.never()).run();
+            /* テスト対象の実行 */
+            this.reflectionModel.getMethod("processWorkbook", testWorkbook);
+
+            /* 検証の実施 */
+            Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1))
+                .initialize(ArgumentMatchers.eq(testWorkbook));
+            Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1)).getKmgDbTypes();
+            Mockito.verify(this.mockIsBasicInformationLogic, Mockito.times(1)).getSqlIdMap();
+            // 設定シートと一覧シートはスキップされるため、データシート作成サービスは呼ばれない
+            Mockito.verify(this.mockIslDataSheetCreationService, Mockito.never()).initialize(ArgumentMatchers.any(),
+                ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any());
+            Mockito.verify(this.mockIslDataSheetCreationService, Mockito.never()).run();
+
+        }
 
     }
 
@@ -681,23 +687,13 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
      */
     private Workbook createTestWorkbook() {
 
-        final Workbook result;
+        final Workbook result = new XSSFWorkbook();
 
-        try (final Workbook workbook = new XSSFWorkbook()) {
-
-            // データシートを作成
-            final Sheet                            dataSheet = workbook.createSheet("テストシート");
-            final org.apache.poi.ss.usermodel.Row  row0      = dataSheet.createRow(0);
-            final org.apache.poi.ss.usermodel.Cell cell0_0   = row0.createCell(0);
-            cell0_0.setCellValue("test_table");
-
-            result = workbook;
-
-        } catch (final Exception e) {
-
-            throw new RuntimeException("テスト用ワークブックの作成に失敗しました", e);
-
-        }
+        // データシートを作成
+        final Sheet                            dataSheet = result.createSheet("テストシート");
+        final org.apache.poi.ss.usermodel.Row  row0      = dataSheet.createRow(0);
+        final org.apache.poi.ss.usermodel.Cell cell0_0   = row0.createCell(0);
+        cell0_0.setCellValue("test_table");
 
         return result;
 
@@ -710,31 +706,21 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
      */
     private Workbook createTestWorkbookWithSettingAndListSheets() {
 
-        final Workbook result;
+        final Workbook result = new XSSFWorkbook();
 
-        try (final Workbook workbook = new XSSFWorkbook()) {
+        // 設定シートを作成
+        final Sheet                            settingSheet = result.createSheet("設定情報");
+        final org.apache.poi.ss.usermodel.Row  settingRow   = settingSheet.createRow(0);
+        final org.apache.poi.ss.usermodel.Cell settingCell  = settingRow.createCell(1);
+        settingCell.setCellValue("PostgreSQL");
 
-            // 設定シートを作成
-            final Sheet                            settingSheet = workbook.createSheet("設定情報");
-            final org.apache.poi.ss.usermodel.Row  settingRow   = settingSheet.createRow(0);
-            final org.apache.poi.ss.usermodel.Cell settingCell  = settingRow.createCell(1);
-            settingCell.setCellValue("PostgreSQL");
-
-            // 一覧シートを作成
-            final Sheet                            listSheet = workbook.createSheet("一覧");
-            final org.apache.poi.ss.usermodel.Row  listRow   = listSheet.createRow(1);
-            final org.apache.poi.ss.usermodel.Cell tableCell = listRow.createCell(2);
-            tableCell.setCellValue("test_table");
-            final org.apache.poi.ss.usermodel.Cell sqlIdCell = listRow.createCell(3);
-            sqlIdCell.setCellValue("SQL001");
-
-            result = workbook;
-
-        } catch (final Exception e) {
-
-            throw new RuntimeException("テスト用ワークブックの作成に失敗しました", e);
-
-        }
+        // 一覧シートを作成
+        final Sheet                            listSheet = result.createSheet("一覧");
+        final org.apache.poi.ss.usermodel.Row  listRow   = listSheet.createRow(1);
+        final org.apache.poi.ss.usermodel.Cell tableCell = listRow.createCell(2);
+        tableCell.setCellValue("test_table");
+        final org.apache.poi.ss.usermodel.Cell sqlIdCell = listRow.createCell(3);
+        sqlIdCell.setCellValue("SQL001");
 
         return result;
 
