@@ -513,6 +513,7 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
+    @SuppressWarnings("resource")
     @Test
     public void testOutputInsertionSql_normalExecution() throws KmgToolMsgException, KmgReflectionException {
 
@@ -561,6 +562,7 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
      * @throws Exception
      *                                例外
      */
+    @SuppressWarnings("resource")
     @Test
     public void testProcessWorkbook_normalProcessing() throws KmgReflectionException, Exception {
 
@@ -609,6 +611,7 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
      * @throws Exception
      *                                例外
      */
+    @SuppressWarnings("resource")
     @Test
     public void testProcessWorkbook_normalSkipSettingAndListSheets() throws KmgReflectionException, Exception {
 
