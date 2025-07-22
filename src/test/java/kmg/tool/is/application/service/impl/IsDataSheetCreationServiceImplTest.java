@@ -31,7 +31,9 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.is.application.logic.IsDataSheetCreationLogic;
 
 /**
@@ -224,7 +226,10 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorIOException() throws KmgToolMsgException {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/22 KmgToolMsgExceptionの検証する
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN10003] 出力ファイルへの書き込みに失敗しました。出力ファイルパス=[test_insert_test_table.sql]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10003;
+        final Class<?>           expectedCauseClass    = IOException.class;
 
         /* 準備 */
         final KmgDbTypes          testKmgDbTypes     = KmgDbTypes.POSTGRE_SQL;
@@ -248,22 +253,36 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockIsDataSheetCreationLogic.getInsertSql(ArgumentMatchers.any(Row.class)))
             .thenReturn("INSERT INTO test VALUES ('test');");
 
-        // ファイル書き込みでIOExceptionを発生させる
-        try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            mockedFiles.when(
-                () -> Files.newBufferedWriter(ArgumentMatchers.any(Path.class), ArgumentMatchers.any(Charset.class)))
-                .thenThrow(new IOException("テスト用のIOException"));
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
 
-            /* テスト対象の実行 */
-            final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-                this.testTarget.outputInsertionSql();
+            // ファイル書き込みでIOExceptionを発生させる
+            try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-            });
+                mockedFiles.when(() -> Files.newBufferedWriter(ArgumentMatchers.any(Path.class),
+                    ArgumentMatchers.any(Charset.class))).thenThrow(new IOException("テスト用のIOException"));
 
-            /* 検証の実施 */
-            Assertions.assertNotNull(actualException, "例外が発生すること");
+                /* テスト対象の実行 */
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.outputInsertionSql();
+
+                });
+
+                /* 検証の実施 */
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
 
         }
 
