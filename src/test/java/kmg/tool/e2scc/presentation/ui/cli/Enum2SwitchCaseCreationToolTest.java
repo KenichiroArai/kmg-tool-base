@@ -350,18 +350,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
         // 無効な引数を準備
 
         /* テスト対象の実行 */
-        try {
-
-            Enum2SwitchCaseCreationTool.main(expectedArgs);
-
-        } catch (final Exception e) {
-
-            // SpringBootアプリケーションの起動に失敗する場合、
-            // 例外が発生するが、これは正常な動作
-            // 例外が発生してもテストは成功とする
-            e.printStackTrace();
-
-        }
+        Enum2SwitchCaseCreationTool.main(expectedArgs);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -386,18 +375,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
         // テスト用の引数を準備
 
         /* テスト対象の実行 */
-        try {
-
-            Enum2SwitchCaseCreationTool.main(expectedArgs);
-
-        } catch (final Exception e) {
-
-            // SpringBootアプリケーションの起動に失敗する可能性があるが、
-            // これは正常な動作（テスト環境では適切な設定がないため）
-            // 例外が発生してもテストは成功とする
-            e.printStackTrace();
-
-        }
+        Enum2SwitchCaseCreationTool.main(expectedArgs);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -422,18 +400,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
         // nullの引数を準備
 
         /* テスト対象の実行 */
-        try {
-
-            Enum2SwitchCaseCreationTool.main(expectedArgs);
-
-        } catch (final Exception e) {
-
-            // null引数による例外が発生する可能性があるが、
-            // これは正常な動作
-            // 例外が発生してもテストは成功とする
-            e.printStackTrace();
-
-        }
+        Enum2SwitchCaseCreationTool.main(expectedArgs);
 
         /* 検証の準備 */
         final boolean actualResult = true;

@@ -345,18 +345,7 @@ public class FieldCreationToolTest extends AbstractKmgTest {
         // 無効な引数を準備
 
         /* テスト対象の実行 */
-        try {
-
-            FieldCreationTool.main(expectedArgs);
-
-        } catch (final Exception e) {
-
-            // SpringBootアプリケーションの起動に失敗する場合、
-            // 例外が発生するが、これは正常な動作
-            // 例外が発生してもテストは成功とする
-            e.printStackTrace();
-
-        }
+        FieldCreationTool.main(expectedArgs);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -381,18 +370,7 @@ public class FieldCreationToolTest extends AbstractKmgTest {
         // テスト用の引数を準備
 
         /* テスト対象の実行 */
-        try {
-
-            FieldCreationTool.main(expectedArgs);
-
-        } catch (final Exception e) {
-
-            // SpringBootアプリケーションの起動に失敗する可能性があるが、
-            // これは正常な動作（テスト環境では適切な設定がないため）
-            // 例外が発生してもテストは成功とする
-            e.printStackTrace();
-
-        }
+        FieldCreationTool.main(expectedArgs);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -416,18 +394,7 @@ public class FieldCreationToolTest extends AbstractKmgTest {
         // nullの引数を準備
 
         /* テスト対象の実行 */
-        try {
-
-            FieldCreationTool.main(null);
-
-        } catch (final Exception e) {
-
-            // null引数による例外が発生する可能性があるが、
-            // これは正常な動作
-            // 例外が発生してもテストは成功とする
-            e.printStackTrace();
-
-        }
+        FieldCreationTool.main(null);
 
         /* 検証の準備 */
         final boolean actualResult = true;
