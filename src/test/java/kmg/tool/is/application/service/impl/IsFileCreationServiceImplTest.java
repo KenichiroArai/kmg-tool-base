@@ -30,6 +30,8 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgDbTypes;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.is.application.logic.IsBasicInformationLogic;
@@ -70,6 +72,9 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
     @Mock
     private Sheet mockSheet;
 
+    /** KmgMessageSourceのモック */
+    private KmgMessageSource mockMessageSource;
+
     /**
      * セットアップ
      *
@@ -86,6 +91,9 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
 
         // insertionSqlFileCreationLogicをリフレクションで設定
         this.reflectionModel.set("insertionSqlFileCreationLogic", this.mockIsBasicInformationLogic);
+
+        // KmgMessageSourceのモックを作成
+        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
     }
 
@@ -273,23 +281,47 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
         final Path testInputPath = this.tempDir.resolve("test.xlsx");
         this.reflectionModel.set("inputPath", testInputPath);
 
-        // WorkbookFactory.createでEmptyFileExceptionを発生させる
-        try (final MockedStatic<org.apache.poi.ss.usermodel.WorkbookFactory> mockedWorkbookFactory
-            = Mockito.mockStatic(org.apache.poi.ss.usermodel.WorkbookFactory.class)) {
+        // 実際のファイルを作成（空のファイル）
+        try {
 
-            mockedWorkbookFactory.when(() -> org.apache.poi.ss.usermodel.WorkbookFactory
-                .create(ArgumentMatchers.any(java.io.InputStream.class))).thenThrow(new EmptyFileException());
+            testInputPath.toFile().createNewFile();
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        } catch (final IOException e) {
 
-                this.testTarget.outputInsertionSql();
+            throw new RuntimeException("テストファイルの作成に失敗しました", e);
 
-            });
+        }
 
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            // WorkbookFactory.createでEmptyFileExceptionを発生させる
+            try (final MockedStatic<org.apache.poi.ss.usermodel.WorkbookFactory> mockedWorkbookFactory
+                = Mockito.mockStatic(org.apache.poi.ss.usermodel.WorkbookFactory.class)) {
+
+                mockedWorkbookFactory.when(() -> org.apache.poi.ss.usermodel.WorkbookFactory
+                    .create(ArgumentMatchers.any(java.io.InputStream.class))).thenThrow(new EmptyFileException());
+
+                /* テスト対象の実行 */
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.outputInsertionSql();
+
+                });
+
+                /* 検証の実施 */
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
 
         }
 
@@ -313,25 +345,49 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
         final Path testInputPath = this.tempDir.resolve("test.xlsx");
         this.reflectionModel.set("inputPath", testInputPath);
 
-        // WorkbookFactory.createでEncryptedDocumentExceptionを発生させる
-        try (final MockedStatic<org.apache.poi.ss.usermodel.WorkbookFactory> mockedWorkbookFactory
-            = Mockito.mockStatic(org.apache.poi.ss.usermodel.WorkbookFactory.class)) {
+        // 実際のファイルを作成（空のファイル）
+        try {
 
-            mockedWorkbookFactory
-                .when(() -> org.apache.poi.ss.usermodel.WorkbookFactory
-                    .create(ArgumentMatchers.any(java.io.InputStream.class)))
-                .thenThrow(new EncryptedDocumentException("テスト用のEncryptedDocumentException"));
+            testInputPath.toFile().createNewFile();
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        } catch (final IOException e) {
 
-                this.testTarget.outputInsertionSql();
+            throw new RuntimeException("テストファイルの作成に失敗しました", e);
 
-            });
+        }
 
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            // WorkbookFactory.createでEncryptedDocumentExceptionを発生させる
+            try (final MockedStatic<org.apache.poi.ss.usermodel.WorkbookFactory> mockedWorkbookFactory
+                = Mockito.mockStatic(org.apache.poi.ss.usermodel.WorkbookFactory.class)) {
+
+                mockedWorkbookFactory
+                    .when(() -> org.apache.poi.ss.usermodel.WorkbookFactory
+                        .create(ArgumentMatchers.any(java.io.InputStream.class)))
+                    .thenThrow(new EncryptedDocumentException("テスト用のEncryptedDocumentException"));
+
+                /* テスト対象の実行 */
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.outputInsertionSql();
+
+                });
+
+                /* 検証の実施 */
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
 
         }
 
@@ -349,18 +405,24 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN10002] 入力ファイルが見つかりません。入力ファイルパス=[test.xlsx]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10002;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>           expectedCauseClass    = java.io.FileNotFoundException.class;
 
         /* 準備 */
         final Path testInputPath = this.tempDir.resolve("test.xlsx");
         this.reflectionModel.set("inputPath", testInputPath);
 
-        // FileInputStream作成時にIOExceptionを発生させる
-        try (final MockedStatic<java.io.FileInputStream> mockedFileInputStream
-            = Mockito.mockStatic(java.io.FileInputStream.class)) {
+        // ファイルは作成しない（存在しない状態にする）
 
-            mockedFileInputStream.when(() -> new java.io.FileInputStream(ArgumentMatchers.any(java.io.File.class)))
-                .thenThrow(new IOException("テスト用のIOException"));
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -395,25 +457,49 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
         final Path testInputPath = this.tempDir.resolve("test.xlsx");
         this.reflectionModel.set("inputPath", testInputPath);
 
-        // WorkbookFactory.createでIOExceptionを発生させる
-        try (final MockedStatic<org.apache.poi.ss.usermodel.WorkbookFactory> mockedWorkbookFactory
-            = Mockito.mockStatic(org.apache.poi.ss.usermodel.WorkbookFactory.class)) {
+        // 実際のファイルを作成（空のファイル）
+        try {
 
-            mockedWorkbookFactory
-                .when(() -> org.apache.poi.ss.usermodel.WorkbookFactory
-                    .create(ArgumentMatchers.any(java.io.InputStream.class)))
-                .thenThrow(new IOException("テスト用のIOException"));
+            testInputPath.toFile().createNewFile();
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        } catch (final IOException e) {
 
-                this.testTarget.outputInsertionSql();
+            throw new RuntimeException("テストファイルの作成に失敗しました", e);
 
-            });
+        }
 
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            // WorkbookFactory.createでIOExceptionを発生させる
+            try (final MockedStatic<org.apache.poi.ss.usermodel.WorkbookFactory> mockedWorkbookFactory
+                = Mockito.mockStatic(org.apache.poi.ss.usermodel.WorkbookFactory.class)) {
+
+                mockedWorkbookFactory
+                    .when(() -> org.apache.poi.ss.usermodel.WorkbookFactory
+                        .create(ArgumentMatchers.any(java.io.InputStream.class)))
+                    .thenThrow(new IOException("テスト用のIOException"));
+
+                /* テスト対象の実行 */
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.outputInsertionSql();
+
+                });
+
+                /* 検証の実施 */
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
 
         }
 
