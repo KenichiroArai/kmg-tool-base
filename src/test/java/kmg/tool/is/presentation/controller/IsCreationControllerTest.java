@@ -27,6 +27,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
@@ -388,12 +389,12 @@ public class IsCreationControllerTest extends AbstractKmgTest {
         // FileChooserのメソッド呼び出しをモック
         Mockito.doNothing().when(mockFileChooser).setTitle(ArgumentMatchers.anyString());
         Mockito.doNothing().when(mockFileChooser).setInitialDirectory(ArgumentMatchers.any(File.class));
-        Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(testSelectedFile);
+        Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any(Window.class))).thenReturn(testSelectedFile);
 
         // FileChooserのコンストラクタをモック化
         try (final MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
 
-            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
+            // mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
 
             /* テスト対象の実行 */
             this.reflectionModel.getMethod("onCalcInputFileOpenClicked", this.mockActionEvent);
