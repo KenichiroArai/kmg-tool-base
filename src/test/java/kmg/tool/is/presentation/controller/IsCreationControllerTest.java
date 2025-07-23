@@ -12,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -25,6 +27,9 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 
 /**
  * IsCreationControllerのテストクラス
@@ -149,7 +154,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     public void testInitialize_normalInitialization() throws Exception {
 
         /* 期待値の定義 */
-        // 期待値なし（NullPointerExceptionの発生確認のみ）
+        final String expectedThreadNum = String.valueOf(Runtime.getRuntime().availableProcessors());
 
         /* 準備 */
         final URL            testLocation  = URI.create("file:///test").toURL();
@@ -180,29 +185,40 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     @Test
     public void testMainProc_errorKmgToolMsgException() throws Exception {
 
-        // TODO KenichiroArai 2025/07/23 KmgToolMsgExceptionの検証を行う
-
         /* 期待値の定義 */
-        // 期待値なし（NullPointerExceptionの発生確認のみ）
+        final String             expectedDomainMessage = "[KMGTOOL_GEN08000] 入力ファイルパスがnullです。";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final Class<?>           expectedCauseClass    = null;
 
         /* 準備 */
         // 存在しないファイルパスを指定してKmgToolMsgExceptionを発生させる
         final Path nonExistentInputPath = this.tempDir.resolve("non_existent.xlsx");
         final Path expectedOutputPath   = this.tempDir.resolve("output.sql");
 
-        /* テスト対象の実行 */
-        // JavaFXコンポーネントが初期化されていないため、NullPointerExceptionが発生することを確認
-        final Exception testException = Assertions.assertThrows(NullPointerException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.testTarget.mainProc(nonExistentInputPath, expectedOutputPath);
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の準備 */
-        // 検証の準備なし
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(testException, "NullPointerExceptionが発生すること");
+                this.testTarget.mainProc(nonExistentInputPath, expectedOutputPath);
+
+            });
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
 
     }
 
@@ -215,8 +231,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     @Test
     public void testMainProc_normalSuccess() throws Exception {
 
-        // TODO KenichiroArai 2025/07/23 KmgToolMsgExceptionの検証を行う
-
         /* 期待値の定義 */
         final Path expectedInputPath  = this.tempDir.resolve("input.xlsx");
         final Path expectedOutputPath = this.tempDir.resolve("output.sql");
@@ -225,19 +239,33 @@ public class IsCreationControllerTest extends AbstractKmgTest {
         // テスト用のダミーファイルを作成
         expectedInputPath.toFile().createNewFile();
 
-        /* テスト対象の実行 */
-        // JavaFXコンポーネントが初期化されていないため、NullPointerExceptionが発生することを確認
-        final Exception testException = Assertions.assertThrows(NullPointerException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.testTarget.mainProc(expectedInputPath, expectedOutputPath);
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
 
-        /* 検証の準備 */
-        // 検証の準備なし
+            /* テスト対象の実行 */
+            // JavaFXコンポーネントが初期化されていないため、NullPointerExceptionが発生することを確認
+            final Exception testException = Assertions.assertThrows(NullPointerException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(testException, "NullPointerExceptionが発生すること");
+                this.testTarget.mainProc(expectedInputPath, expectedOutputPath);
+
+            });
+
+            /* 検証の準備 */
+            // 検証の準備なし
+
+            /* 検証の実施 */
+            Assertions.assertNotNull(testException, "NullPointerExceptionが発生すること");
+
+        }
 
     }
 
