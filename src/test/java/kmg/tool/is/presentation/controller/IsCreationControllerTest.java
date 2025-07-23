@@ -83,9 +83,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     @Mock
     private ApplicationContext mockApplicationContext;
 
-    /** テスト用ステージ */
-    private Stage testStage;
-
     /** テスト用一時ディレクトリ */
     private Path testTempDir;
 
@@ -170,8 +167,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      */
     @Start
     public void start(final Stage stage) throws Exception {
-
-        this.testStage = stage;
 
         /* FXMLの読み込み */
         final URL fxmlUrl = this.getClass().getResource("/fxml/IsCreation.fxml");
