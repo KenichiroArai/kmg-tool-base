@@ -36,7 +36,7 @@ import kmg.tool.is.application.service.impl.IsCreationServiceImpl;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
@@ -129,7 +129,7 @@ public class IsCreationController implements Initializable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -155,7 +155,7 @@ public class IsCreationController implements Initializable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -181,7 +181,7 @@ public class IsCreationController implements Initializable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -221,7 +221,7 @@ public class IsCreationController implements Initializable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -258,7 +258,7 @@ public class IsCreationController implements Initializable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
