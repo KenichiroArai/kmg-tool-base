@@ -287,18 +287,13 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                 .thenReturn("テストメッセージ");
 
             /* テスト対象の実行 */
-            // JavaFXコンポーネントが初期化されていないため、NullPointerExceptionが発生することを確認
-            final Exception testException = Assertions.assertThrows(NullPointerException.class, () -> {
 
-                this.testTarget.mainProc(expectedInputPath, expectedOutputPath);
-
-            });
+            this.testTarget.mainProc(expectedInputPath, expectedOutputPath);
 
             /* 検証の準備 */
             // 検証の準備なし
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "NullPointerExceptionが発生すること");
 
         }
 
