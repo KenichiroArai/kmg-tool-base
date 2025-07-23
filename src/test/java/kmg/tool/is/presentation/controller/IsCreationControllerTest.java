@@ -274,6 +274,16 @@ public class IsCreationControllerTest extends AbstractKmgTest {
         // テスト用のダミーファイルを作成
         expectedInputPath.toFile().createNewFile();
 
+        // txtThreadNumをリフレクションで設定（JavaFXコンポーネントのnull問題を回避）
+        final TextField actualTextField = new TextField();
+        actualTextField.setText("4");
+        this.reflectionModel.set("txtThreadNum", actualTextField);
+
+        // IsCreationServiceのモック設定
+        Mockito.doNothing().when(this.mockIsCreationService).initialize(ArgumentMatchers.any(), ArgumentMatchers.any(),
+            ArgumentMatchers.anyShort());
+        Mockito.doNothing().when(this.mockIsCreationService).outputInsertionSql();
+
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
@@ -287,13 +297,16 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                 .thenReturn("テストメッセージ");
 
             /* テスト対象の実行 */
-
             this.testTarget.mainProc(expectedInputPath, expectedOutputPath);
 
             /* 検証の準備 */
             // 検証の準備なし
 
             /* 検証の実施 */
+            // IsCreationServiceのメソッドが正しく呼ばれることを確認
+            Mockito.verify(this.mockIsCreationService, Mockito.times(1)).initialize(expectedInputPath,
+                expectedOutputPath, (short) 4);
+            Mockito.verify(this.mockIsCreationService, Mockito.times(1)).outputInsertionSql();
 
         }
 
