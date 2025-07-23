@@ -130,14 +130,14 @@ public class IsCreationControllerTest extends AbstractKmgTest {
         this.reflectionModel.set("isCreationService", this.mockIsCreationService);
 
         /* FXMLフィールドのモック化 */
-        final TextField mockTxtInputFile = Mockito.mock(TextField.class);
-        final TextField mockTxtOutputDirectory = Mockito.mock(TextField.class);
-        final TextField mockTxtThreadNum = Mockito.mock(TextField.class);
-        final Button mockBtnInputFileOpen = Mockito.mock(Button.class);
-        final Button mockBtnOutputDirectoryOpen = Mockito.mock(Button.class);
-        final Button mockBtnRun = Mockito.mock(Button.class);
-        final Label mockLblProcTime = Mockito.mock(Label.class);
-        final Label mockLblProcTimeUnit = Mockito.mock(Label.class);
+        final TextField mockTxtInputFile           = Mockito.mock(TextField.class);
+        final TextField mockTxtOutputDirectory     = Mockito.mock(TextField.class);
+        final TextField mockTxtThreadNum           = Mockito.mock(TextField.class);
+        final Button    mockBtnInputFileOpen       = Mockito.mock(Button.class);
+        final Button    mockBtnOutputDirectoryOpen = Mockito.mock(Button.class);
+        final Button    mockBtnRun                 = Mockito.mock(Button.class);
+        final Label     mockLblProcTime            = Mockito.mock(Label.class);
+        final Label     mockLblProcTimeUnit        = Mockito.mock(Label.class);
 
         this.reflectionModel.set("txtInputFile", mockTxtInputFile);
         this.reflectionModel.set("btnInputFileOpen", mockBtnInputFileOpen);
@@ -659,7 +659,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
-    @org.junit.jupiter.api.Disabled("SpringApplicationContextHelperのモック化の問題により一時的に無効化")
     public void testMainProc_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
@@ -686,9 +685,12 @@ public class IsCreationControllerTest extends AbstractKmgTest {
             new Object[] {})).when(this.mockIsCreationService).outputInsertionSql();
 
         /* SpringApplicationContextHelperのモック化 */
-        try (MockedStatic<SpringApplicationContextHelper> mockedSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        try (MockedStatic<SpringApplicationContextHelper> mockedSpringHelper
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
             // 静的フィールドのモック化
-            mockedSpringHelper.when(() -> SpringApplicationContextHelper.getBean(ArgumentMatchers.any(Class.class))).thenReturn(this.mockMessageSource);
+            mockedSpringHelper.when(() -> SpringApplicationContextHelper.getBean(ArgumentMatchers.any(Class.class)))
+                .thenReturn(this.mockMessageSource);
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -702,6 +704,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertNotNull(actualException, "KmgToolMsgExceptionが発生すること");
+
         }
 
     }
@@ -790,7 +793,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * @since 1.0.0
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
     public void testOnCalcInputFileOpenClicked_normalExistingPath() {
 
         /* 期待値の定義 */
@@ -807,7 +809,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                 final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
                 final File        mockFile        = this.testInputFile.toFile();
 
-                mockedFileChooser.when(() -> new FileChooser()).thenReturn(mockFileChooser);
+                mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
                 Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
 
                 /* テスト対象の実行 */
@@ -839,7 +841,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * @since 1.0.0
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
     public void testOnCalcInputFileOpenClicked_normalFileSelected() {
 
         /* 期待値の定義 */
@@ -856,7 +857,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                 final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
                 final File        mockFile        = this.testInputFile.toFile();
 
-                mockedFileChooser.when(() -> new FileChooser()).thenReturn(mockFileChooser);
+                mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
                 Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
 
                 /* テスト対象の実行 */
@@ -888,7 +889,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * @since 1.0.0
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
     public void testOnCalcInputFileOpenClicked_semiNoFileSelected() {
 
         /* 期待値の定義 */
@@ -904,7 +904,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
 
                 final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
 
-                mockedFileChooser.when(() -> new FileChooser()).thenReturn(mockFileChooser);
+                mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
                 Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(null);
 
                 /* テスト対象の実行 */
@@ -936,7 +936,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * @since 1.0.0
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
     public void testOnCalcOutputDirectoryOpenClicked_normalDirectorySelected() {
 
         /* 期待値の定義 */
@@ -953,7 +952,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                 final DirectoryChooser mockDirectoryChooser = Mockito.mock(DirectoryChooser.class);
                 final File             mockDir              = this.testOutputDir.toFile();
 
-                mockedDirectoryChooser.when(() -> new DirectoryChooser()).thenReturn(mockDirectoryChooser);
+                mockedDirectoryChooser.when(DirectoryChooser::new).thenReturn(mockDirectoryChooser);
                 Mockito.when(mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(mockDir);
 
                 /* テスト対象の実行 */
@@ -985,7 +984,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * @since 1.0.0
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
     public void testOnCalcOutputDirectoryOpenClicked_semiNoDirectorySelected() {
 
         /* 期待値の定義 */
@@ -1001,7 +999,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
 
                 final DirectoryChooser mockDirectoryChooser = Mockito.mock(DirectoryChooser.class);
 
-                mockedDirectoryChooser.when(() -> new DirectoryChooser()).thenReturn(mockDirectoryChooser);
+                mockedDirectoryChooser.when(DirectoryChooser::new).thenReturn(mockDirectoryChooser);
                 Mockito.when(mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(null);
 
                 /* テスト対象の実行 */
@@ -1033,7 +1031,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * @since 1.0.0
      */
     @Test
-    @org.junit.jupiter.api.Disabled("SpringApplicationContextHelperのモック化の問題により一時的に無効化")
     public void testOnCalcRunClicked_errorKmgToolMsgException() {
 
         /* 期待値の定義 */
@@ -1063,14 +1060,17 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                 ArgumentMatchers.any(Object[].class))).thenReturn("テストエラーメッセージ");
 
             /* SpringApplicationContextHelperのモック化 */
-            try (MockedStatic<SpringApplicationContextHelper> mockedSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+            try (MockedStatic<SpringApplicationContextHelper> mockedSpringHelper
+                = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
                 // 静的フィールドのモック化
-                mockedSpringHelper.when(() -> SpringApplicationContextHelper.getBean(ArgumentMatchers.any(Class.class))).thenReturn(this.mockMessageSource);
+                mockedSpringHelper.when(() -> SpringApplicationContextHelper.getBean(ArgumentMatchers.any(Class.class)))
+                    .thenReturn(this.mockMessageSource);
 
                 /* テスト対象の実行 */
                 final javafx.event.ActionEvent mockEvent = Mockito.mock(javafx.event.ActionEvent.class);
-                final Method                   method    = this.testTarget.getClass().getDeclaredMethod("onCalcRunClicked",
-                    javafx.event.ActionEvent.class);
+                final Method                   method    = this.testTarget.getClass()
+                    .getDeclaredMethod("onCalcRunClicked", javafx.event.ActionEvent.class);
                 method.setAccessible(true);
                 method.invoke(this.testTarget, mockEvent);
 
@@ -1080,6 +1080,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                 /* 検証の実施 */
                 Mockito.verify(lblProcTime, Mockito.times(1)).setText(ArgumentMatchers.anyString());
                 Mockito.verify(lblProcTimeUnit, Mockito.times(1)).setText(ArgumentMatchers.anyString());
+
             }
 
         } catch (final Exception e) {
@@ -1119,14 +1120,17 @@ public class IsCreationControllerTest extends AbstractKmgTest {
             Mockito.doNothing().when(this.mockIsCreationService).outputInsertionSql();
 
             /* SpringApplicationContextHelperのモック化 */
-            try (MockedStatic<SpringApplicationContextHelper> mockedSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+            try (MockedStatic<SpringApplicationContextHelper> mockedSpringHelper
+                = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
                 // 静的フィールドのモック化
-                mockedSpringHelper.when(() -> SpringApplicationContextHelper.getBean(ArgumentMatchers.any(Class.class))).thenReturn(this.mockMessageSource);
+                mockedSpringHelper.when(() -> SpringApplicationContextHelper.getBean(ArgumentMatchers.any(Class.class)))
+                    .thenReturn(this.mockMessageSource);
 
                 /* テスト対象の実行 */
                 final javafx.event.ActionEvent mockEvent = Mockito.mock(javafx.event.ActionEvent.class);
-                final Method                   method    = this.testTarget.getClass().getDeclaredMethod("onCalcRunClicked",
-                    javafx.event.ActionEvent.class);
+                final Method                   method    = this.testTarget.getClass()
+                    .getDeclaredMethod("onCalcRunClicked", javafx.event.ActionEvent.class);
                 method.setAccessible(true);
                 method.invoke(this.testTarget, mockEvent);
 
@@ -1134,11 +1138,12 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                 // 検証の準備は不要
 
                 /* 検証の実施 */
-                Mockito.verify(this.mockIsCreationService, Mockito.times(1)).initialize(ArgumentMatchers.any(Path.class),
-                    ArgumentMatchers.any(Path.class), ArgumentMatchers.anyShort());
+                Mockito.verify(this.mockIsCreationService, Mockito.times(1)).initialize(
+                    ArgumentMatchers.any(Path.class), ArgumentMatchers.any(Path.class), ArgumentMatchers.anyShort());
                 Mockito.verify(this.mockIsCreationService, Mockito.times(1)).outputInsertionSql();
                 Mockito.verify(lblProcTime, Mockito.times(1)).setText(ArgumentMatchers.anyString());
                 Mockito.verify(lblProcTimeUnit, Mockito.times(1)).setText(ArgumentMatchers.anyString());
+
             }
 
         } catch (final Exception e) {
