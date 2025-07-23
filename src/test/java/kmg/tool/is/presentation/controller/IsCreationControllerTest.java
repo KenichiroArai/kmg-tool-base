@@ -1,6 +1,7 @@
 package kmg.tool.is.presentation.controller;
 
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
@@ -151,7 +152,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
         final String expectedThreadNum = String.valueOf(Runtime.getRuntime().availableProcessors());
 
         /* 準備 */
-        final URL            testLocation  = new URL("file:///test");
+        final URL            testLocation  = URI.create("file:///test").toURL();
         final ResourceBundle testResources = Mockito.mock(ResourceBundle.class);
 
         /* テスト対象の実行 */
