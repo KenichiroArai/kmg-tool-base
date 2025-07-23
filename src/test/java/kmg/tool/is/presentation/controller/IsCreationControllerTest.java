@@ -1,5 +1,6 @@
 package kmg.tool.is.presentation.controller;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
@@ -25,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
@@ -307,6 +309,250 @@ public class IsCreationControllerTest extends AbstractKmgTest {
             Mockito.verify(this.mockIsCreationService, Mockito.times(1)).initialize(expectedInputPath,
                 expectedOutputPath, (short) 4);
             Mockito.verify(this.mockIsCreationService, Mockito.times(1)).outputInsertionSql();
+
+        }
+
+    }
+
+    /**
+     * onCalcInputFileOpenClicked メソッドのテスト - 異常系：ファイル選択がキャンセルされた場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testOnCalcInputFileOpenClicked_errorFileSelectionCancelled() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedFilePath = "/test/path/existing_file.xlsx";
+
+        /* 準備 */
+        final TextField testTextField = new TextField();
+        testTextField.setText(expectedFilePath); // 既存のファイルパス
+
+        // リフレクションでtxtInputFileを設定
+        this.reflectionModel.set("txtInputFile", testTextField);
+
+        // FileChooserのモック化
+        final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
+
+        // FileChooserのメソッド呼び出しをモック
+        Mockito.doNothing().when(mockFileChooser).setTitle(ArgumentMatchers.anyString());
+        Mockito.doNothing().when(mockFileChooser).setInitialDirectory(ArgumentMatchers.any(File.class));
+        Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(null); // キャンセル
+
+        // FileChooserのコンストラクタをモック化
+        try (final MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
+
+            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
+
+            /* テスト対象の実行 */
+            this.reflectionModel.getMethod("onCalcInputFileOpenClicked", this.mockActionEvent);
+
+            /* 検証の準備 */
+            final String actualFilePath = testTextField.getText();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedFilePath, actualFilePath, "ファイル選択がキャンセルされた場合、テキストフィールドの値が変更されないこと");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setTitle("ファイル選択");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setInitialDirectory(ArgumentMatchers.any(File.class));
+            Mockito.verify(mockFileChooser, Mockito.times(1)).showOpenDialog(ArgumentMatchers.any());
+
+        }
+
+    }
+
+    /**
+     * onCalcInputFileOpenClicked メソッドのテスト - 正常系：テキストフィールドにディレクトリパスが設定されている場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testOnCalcInputFileOpenClicked_normalDirectoryPathInTextField() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedFilePath = "/test/path/selected_file.xlsx";
+
+        /* 準備 */
+        final File      testSelectedFile = new File(expectedFilePath);
+        final TextField testTextField    = new TextField();
+        testTextField.setText("/test/directory/"); // ディレクトリパス
+
+        // リフレクションでtxtInputFileを設定
+        this.reflectionModel.set("txtInputFile", testTextField);
+
+        // FileChooserのモック化
+        final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
+
+        // FileChooserのメソッド呼び出しをモック
+        Mockito.doNothing().when(mockFileChooser).setTitle(ArgumentMatchers.anyString());
+        Mockito.doNothing().when(mockFileChooser).setInitialDirectory(ArgumentMatchers.any(File.class));
+        Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(testSelectedFile);
+
+        // FileChooserのコンストラクタをモック化
+        try (final MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
+
+            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
+
+            /* テスト対象の実行 */
+            this.reflectionModel.getMethod("onCalcInputFileOpenClicked", this.mockActionEvent);
+
+            /* 検証の準備 */
+            final String actualFilePath = testTextField.getText();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedFilePath, actualFilePath, "選択されたファイルのパスが正しく設定されること");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setTitle("ファイル選択");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setInitialDirectory(ArgumentMatchers.any(File.class));
+            Mockito.verify(mockFileChooser, Mockito.times(1)).showOpenDialog(ArgumentMatchers.any());
+
+        }
+
+    }
+
+    /**
+     * onCalcInputFileOpenClicked メソッドのテスト - 正常系：テキストフィールドが空の場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testOnCalcInputFileOpenClicked_normalEmptyTextField() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedFilePath = "/test/path/selected_file.xlsx";
+
+        /* 準備 */
+        final File      testSelectedFile = new File(expectedFilePath);
+        final TextField testTextField    = new TextField();
+        testTextField.setText(""); // 空のテキストフィールド
+
+        // リフレクションでtxtInputFileを設定
+        this.reflectionModel.set("txtInputFile", testTextField);
+
+        // FileChooserのモック化
+        final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
+
+        // FileChooserのメソッド呼び出しをモック
+        Mockito.doNothing().when(mockFileChooser).setTitle(ArgumentMatchers.anyString());
+        Mockito.doNothing().when(mockFileChooser).setInitialDirectory(ArgumentMatchers.any(File.class));
+        Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(testSelectedFile);
+
+        // FileChooserのコンストラクタをモック化
+        try (final MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
+
+            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
+
+            /* テスト対象の実行 */
+            this.reflectionModel.getMethod("onCalcInputFileOpenClicked", this.mockActionEvent);
+
+            /* 検証の準備 */
+            final String actualFilePath = testTextField.getText();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedFilePath, actualFilePath, "選択されたファイルのパスが正しく設定されること");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setTitle("ファイル選択");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setInitialDirectory(ArgumentMatchers.any(File.class));
+            Mockito.verify(mockFileChooser, Mockito.times(1)).showOpenDialog(ArgumentMatchers.any());
+
+        }
+
+    }
+
+    /**
+     * onCalcInputFileOpenClicked メソッドのテスト - 正常系：テキストフィールドにファイルパスが設定されている場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testOnCalcInputFileOpenClicked_normalFilePathInTextField() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedFilePath = "/test/path/selected_file.xlsx";
+
+        /* 準備 */
+        final File      testSelectedFile = new File(expectedFilePath);
+        final TextField testTextField    = new TextField();
+        testTextField.setText("/test/path/existing_file.xlsx"); // ファイルパス
+
+        // リフレクションでtxtInputFileを設定
+        this.reflectionModel.set("txtInputFile", testTextField);
+
+        // FileChooserのモック化
+        final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
+
+        // FileChooserのメソッド呼び出しをモック
+        Mockito.doNothing().when(mockFileChooser).setTitle(ArgumentMatchers.anyString());
+        Mockito.doNothing().when(mockFileChooser).setInitialDirectory(ArgumentMatchers.any(File.class));
+        Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(testSelectedFile);
+
+        // FileChooserのコンストラクタをモック化
+        try (final MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
+
+            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
+
+            /* テスト対象の実行 */
+            this.reflectionModel.getMethod("onCalcInputFileOpenClicked", this.mockActionEvent);
+
+            /* 検証の準備 */
+            final String actualFilePath = testTextField.getText();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedFilePath, actualFilePath, "選択されたファイルのパスが正しく設定されること");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setTitle("ファイル選択");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setInitialDirectory(ArgumentMatchers.any(File.class));
+            Mockito.verify(mockFileChooser, Mockito.times(1)).showOpenDialog(ArgumentMatchers.any());
+
+        }
+
+    }
+
+    /**
+     * onCalcInputFileOpenClicked メソッドのテスト - 正常系：ファイルが選択された場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testOnCalcInputFileOpenClicked_normalFileSelected() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedFilePath = "/test/path/selected_file.xlsx";
+
+        /* 準備 */
+        final File      testSelectedFile = new File(expectedFilePath);
+        final TextField testTextField    = new TextField();
+        testTextField.setText("/test/path/input.xlsx");
+
+        // リフレクションでtxtInputFileを設定
+        this.reflectionModel.set("txtInputFile", testTextField);
+
+        // FileChooserのモック化
+        final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
+
+        // FileChooserのメソッド呼び出しをモック
+        Mockito.doNothing().when(mockFileChooser).setTitle(ArgumentMatchers.anyString());
+        Mockito.doNothing().when(mockFileChooser).setInitialDirectory(ArgumentMatchers.any(File.class));
+        Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(testSelectedFile);
+
+        // FileChooserのコンストラクタをモック化
+        try (final MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
+
+            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
+
+            /* テスト対象の実行 */
+            this.reflectionModel.getMethod("onCalcInputFileOpenClicked", this.mockActionEvent);
+
+            /* 検証の準備 */
+            final String actualFilePath = testTextField.getText();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedFilePath, actualFilePath, "選択されたファイルのパスが正しく設定されること");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setTitle("ファイル選択");
+            Mockito.verify(mockFileChooser, Mockito.times(1)).setInitialDirectory(ArgumentMatchers.any(File.class));
+            Mockito.verify(mockFileChooser, Mockito.times(1)).showOpenDialog(ArgumentMatchers.any());
 
         }
 
