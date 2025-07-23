@@ -26,6 +26,7 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.is.application.service.IsCreationService;
+import kmg.tool.is.application.service.impl.IsCreationServiceImpl;
 
 /**
  * 挿入SQL作成画面コントローラ<br>
@@ -62,11 +63,9 @@ public class IsCreationController implements Initializable {
     @Autowired
     private KmgMessageSource messageSource;
 
-    /**
-     * 挿入SQL作成サービス
-     */
+    /** 挿入SQL作成サービス */
     @Autowired
-    private IsCreationService insertSqlCreationService;
+    private IsCreationService isCreationService;
 
     /** 入力ファイルテキストボックス */
     @FXML
@@ -171,9 +170,9 @@ public class IsCreationController implements Initializable {
     protected void mainProc(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
 
         /* 挿入SQL作成サービス */
-        final short threadNum = Short.parseShort(this.txtThreadNum.getText());
-        this.insertSqlCreationService.initialize(inputPath, outputPath, threadNum);
-        this.insertSqlCreationService.outputInsertionSql();
+        final short             threadNum                = Short.parseShort(this.txtThreadNum.getText());
+        this.isCreationService.initialize(inputPath, outputPath, threadNum);
+        this.isCreationService.outputInsertionSql();
 
     }
 

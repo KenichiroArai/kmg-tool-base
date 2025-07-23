@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +23,9 @@ import org.mockito.quality.Strictness;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TextField;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
@@ -65,6 +68,23 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     @Mock
     private ActionEvent mockActionEvent;
 
+    /** モック挿入SQL作成サービス */
+    @Mock
+    private kmg.tool.is.application.service.IsCreationService mockIsCreationService;
+
+    /**
+     * JavaFXの初期化
+     */
+    @BeforeAll
+    public static void initializeJavaFX() {
+
+        Platform.startup(() -> {
+
+            // JavaFXの初期化処理
+        });
+
+    }
+
     /**
      * セットアップ
      *
@@ -79,6 +99,9 @@ public class IsCreationControllerTest extends AbstractKmgTest {
 
         // メッセージソースをリフレクションで設定
         this.reflectionModel.set("messageSource", this.mockMessageSource);
+
+        // 挿入SQL作成サービスをリフレクションで設定
+        this.reflectionModel.set("isCreationService", this.mockIsCreationService);
 
     }
 
@@ -195,6 +218,15 @@ public class IsCreationControllerTest extends AbstractKmgTest {
         final Path nonExistentInputPath = this.tempDir.resolve("non_existent.xlsx");
         final Path expectedOutputPath   = this.tempDir.resolve("output.sql");
 
+        // txtThreadNumをリフレクションで設定（JavaFXコンポーネントのnull問題を回避）
+        final TextField actualTextField = new TextField();
+        actualTextField.setText("4");
+        this.reflectionModel.set("txtThreadNum", actualTextField);
+
+        // IsCreationServiceのモック設定
+        Mockito.doNothing().when(this.mockIsCreationService).initialize(ArgumentMatchers.any(), ArgumentMatchers.any(),
+            ArgumentMatchers.anyShort());
+
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
@@ -206,6 +238,10 @@ public class IsCreationControllerTest extends AbstractKmgTest {
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
+
+            // KmgToolMsgExceptionの作成をMockedStaticのスコープ内で行う
+            final KmgToolMsgException testException = new KmgToolMsgException(expectedMessageTypes, new Object[] {});
+            Mockito.doThrow(testException).when(this.mockIsCreationService).outputInsertionSql();
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
