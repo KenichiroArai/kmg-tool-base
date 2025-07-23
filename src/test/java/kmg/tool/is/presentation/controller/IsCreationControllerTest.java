@@ -149,7 +149,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     public void testInitialize_normalInitialization() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedThreadNum = String.valueOf(Runtime.getRuntime().availableProcessors());
+        // 期待値なし（NullPointerExceptionの発生確認のみ）
 
         /* 準備 */
         final URL            testLocation  = URI.create("file:///test").toURL();
@@ -183,12 +183,12 @@ public class IsCreationControllerTest extends AbstractKmgTest {
         // TODO KenichiroArai 2025/07/23 KmgToolMsgExceptionの検証を行う
 
         /* 期待値の定義 */
-        final Path expectedInputPath  = this.tempDir.resolve("input.xlsx");
-        final Path expectedOutputPath = this.tempDir.resolve("output.sql");
+        // 期待値なし（NullPointerExceptionの発生確認のみ）
 
         /* 準備 */
         // 存在しないファイルパスを指定してKmgToolMsgExceptionを発生させる
         final Path nonExistentInputPath = this.tempDir.resolve("non_existent.xlsx");
+        final Path expectedOutputPath   = this.tempDir.resolve("output.sql");
 
         /* テスト対象の実行 */
         // JavaFXコンポーネントが初期化されていないため、NullPointerExceptionが発生することを確認
