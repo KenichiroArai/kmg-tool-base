@@ -215,10 +215,13 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     /**
      * btnInputFileOpen フィールドのテスト - 正常系：フィールドが正しく設定されている場合
      *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     *
      * @since 1.0.0
      */
     @Test
-    public void testBtnInputFileOpen_normalBasic() {
+    public void testBtnInputFileOpen_normalBasic() throws KmgReflectionException {
 
         /* 期待値の定義 */
         // フィールドが存在することを期待
@@ -227,21 +230,13 @@ public class IsCreationControllerTest extends AbstractKmgTest {
         // 準備は不要
 
         /* テスト対象の実行 */
-        try {
+        final Button actualBtnInputFileOpen = (Button) this.reflectionModel.get("btnInputFileOpen");
 
-            final Button actualBtnInputFileOpen = (Button) this.reflectionModel.get("btnInputFileOpen");
+        /* 検証の準備 */
+        // 検証の準備は不要
 
-            /* 検証の準備 */
-            // 検証の準備は不要
-
-            /* 検証の実施 */
-            Assertions.assertNotNull(actualBtnInputFileOpen, "btnInputFileOpenフィールドが存在すること");
-
-        } catch (final KmgReflectionException e) {
-
-            Assertions.fail("リフレクション例外が発生しました: " + e.getMessage());
-
-        }
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualBtnInputFileOpen, "btnInputFileOpenフィールドが存在すること");
 
     }
 
@@ -662,6 +657,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     public void testMainProc_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
+        // TODO KenichiroArai 2025/07/24 KmgToolMsgExceptionを検証する
 
         /* 準備 */
         final Path inputPath  = this.testInputFile;
@@ -693,8 +689,10 @@ public class IsCreationControllerTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
-            Mockito.doThrow(new KmgToolMsgException(kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN08000,
-                new Object[] {})).when(this.mockIsCreationService).outputInsertionSql();
+            Mockito
+                .doThrow(new KmgToolMsgException(kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN08000,
+                    new Object[] {}))
+                .when(this.mockIsCreationService).outputInsertionSql();
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -1076,14 +1074,14 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                     ArgumentMatchers.any(Object[].class))).thenReturn("テストエラーメッセージ");
 
                 Mockito
-                    .doThrow(new KmgToolMsgException(kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN08000,
-                        new Object[] {}))
+                    .doThrow(new KmgToolMsgException(
+                        kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN08000, new Object[] {}))
                     .when(this.mockIsCreationService).outputInsertionSql();
 
                 /* テスト対象の実行 */
                 final javafx.event.ActionEvent mockEvent = Mockito.mock(javafx.event.ActionEvent.class);
-                final Method                   method    = this.testTarget.getClass().getDeclaredMethod("onCalcRunClicked",
-                    javafx.event.ActionEvent.class);
+                final Method                   method    = this.testTarget.getClass()
+                    .getDeclaredMethod("onCalcRunClicked", javafx.event.ActionEvent.class);
                 method.setAccessible(true);
                 method.invoke(this.testTarget, mockEvent);
 
@@ -1142,8 +1140,8 @@ public class IsCreationControllerTest extends AbstractKmgTest {
 
                 /* テスト対象の実行 */
                 final javafx.event.ActionEvent mockEvent = Mockito.mock(javafx.event.ActionEvent.class);
-                final Method                   method    = this.testTarget.getClass().getDeclaredMethod("onCalcRunClicked",
-                    javafx.event.ActionEvent.class);
+                final Method                   method    = this.testTarget.getClass()
+                    .getDeclaredMethod("onCalcRunClicked", javafx.event.ActionEvent.class);
                 method.setAccessible(true);
                 method.invoke(this.testTarget, mockEvent);
 
@@ -1151,8 +1149,8 @@ public class IsCreationControllerTest extends AbstractKmgTest {
                 // 検証の準備は不要
 
                 /* 検証の実施 */
-                Mockito.verify(this.mockIsCreationService, Mockito.times(1)).initialize(ArgumentMatchers.any(Path.class),
-                    ArgumentMatchers.any(Path.class), ArgumentMatchers.anyShort());
+                Mockito.verify(this.mockIsCreationService, Mockito.times(1)).initialize(
+                    ArgumentMatchers.any(Path.class), ArgumentMatchers.any(Path.class), ArgumentMatchers.anyShort());
                 Mockito.verify(this.mockIsCreationService, Mockito.times(1)).outputInsertionSql();
                 Mockito.verify(lblProcTime, Mockito.times(1)).setText(ArgumentMatchers.anyString());
                 Mockito.verify(lblProcTimeUnit, Mockito.times(1)).setText(ArgumentMatchers.anyString());
