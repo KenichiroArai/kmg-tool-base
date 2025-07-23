@@ -1,6 +1,5 @@
 package kmg.tool.is.presentation.controller;
 
-import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
@@ -183,19 +182,19 @@ public class IsCreationControllerTest extends AbstractKmgTest {
         final URL            testLocation  = URI.create("file:///test").toURL();
         final ResourceBundle testResources = Mockito.mock(ResourceBundle.class);
 
+        // txtThreadNumをリフレクションで設定（JavaFXコンポーネントのnull問題を回避）
+        final TextField actualTextField = new TextField();
+        this.reflectionModel.set("txtThreadNum", actualTextField);
+
         /* テスト対象の実行 */
-        // JavaFXコンポーネントが初期化されていないため、NullPointerExceptionが発生することを確認
-        final Exception testException = Assertions.assertThrows(NullPointerException.class, () -> {
-
-            this.testTarget.initialize(testLocation, testResources);
-
-        });
+        this.testTarget.initialize(testLocation, testResources);
 
         /* 検証の準備 */
         // 検証の準備なし
 
         /* 検証の実施 */
-        Assertions.assertNotNull(testException, "NullPointerExceptionが発生すること");
+        final String actualThreadNum = actualTextField.getText();
+        Assertions.assertEquals(expectedThreadNum, actualThreadNum, "スレッド数が正しく設定されること");
 
     }
 
