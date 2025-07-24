@@ -1,12 +1,12 @@
-package kmg.tool.is.presentation.controller;
+package kmg.tool.cmn.presentation.ui.gui.stage.wrapper;
 
 import java.io.File;
 
-import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 
 /**
- * FileChooserのラッパークラス<br>
+ * DirectoryChooserのラッパークラス<br>
  * テスト時にモック化しやすくするためのラッパークラスです。
  *
  * @author KenichiroArai
@@ -15,19 +15,19 @@ import javafx.stage.Window;
  *
  * @version 1.0.0
  */
-public class FileChooserWrapper {
+public class DirectoryChooserWrapper {
 
-    /** FileChooser */
-    private final FileChooser fileChooser;
+    /** DirectoryChooser */
+    private final DirectoryChooser directoryChooser;
 
     /**
      * デフォルトコンストラクタ<br>
      *
      * @since 1.0.0
      */
-    public FileChooserWrapper() {
+    public DirectoryChooserWrapper() {
 
-        this.fileChooser = new FileChooser();
+        this.directoryChooser = new DirectoryChooser();
 
     }
 
@@ -41,7 +41,7 @@ public class FileChooserWrapper {
      */
     public void setInitialDirectory(final File initialDirectory) {
 
-        this.fileChooser.setInitialDirectory(initialDirectory);
+        this.directoryChooser.setInitialDirectory(initialDirectory);
 
     }
 
@@ -55,23 +55,23 @@ public class FileChooserWrapper {
      */
     public void setTitle(final String title) {
 
-        this.fileChooser.setTitle(title);
+        this.directoryChooser.setTitle(title);
 
     }
 
     /**
-     * ファイル選択ダイアログを表示する<br>
+     * ディレクトリ選択ダイアログを表示する<br>
      *
      * @since 1.0.0
      *
      * @param ownerWindow
      *                    オーナーウィンドウ
      *
-     * @return 選択されたファイル、キャンセルされた場合はnull
+     * @return 選択されたディレクトリ、キャンセルされた場合はnull
      */
-    public File showOpenDialog(final Window ownerWindow) {
+    public File showDialog(final Window ownerWindow) {
 
-        final File result = this.fileChooser.showOpenDialog(ownerWindow);
+        final File result = this.directoryChooser.showDialog(ownerWindow);
         return result;
 
     }

@@ -1,4 +1,4 @@
-package kmg.tool.is.presentation.controller;
+package kmg.tool.is.presentation.ui.gui.controller;
 
 import java.io.File;
 import java.net.URL;
@@ -23,6 +23,8 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.cmn.presentation.ui.gui.stage.wrapper.DirectoryChooserWrapper;
+import kmg.tool.cmn.presentation.ui.gui.stage.wrapper.FileChooserWrapper;
 import kmg.tool.is.application.service.IsCreationService;
 
 /**
@@ -121,7 +123,7 @@ public class IsCreationController implements Initializable {
      * @param logger
      *               ロガー
      */
-    protected IsCreationController(final Logger logger) {
+    public IsCreationController(final Logger logger) {
 
         this.logger = logger;
         this.fileChooserWrapper = new FileChooserWrapper();
@@ -156,6 +158,32 @@ public class IsCreationController implements Initializable {
     }
 
     /**
+     * メイン処理
+     *
+     * @author KenichiroArai
+     *
+     * @since 1.0.0
+     *
+     * @version 1.0.0
+     *
+     * @param inputPath
+     *                   入力パス
+     * @param outputPath
+     *                   出力パス
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    public void mainProc(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
+
+        /* 挿入SQL作成サービス */
+        final short threadNum = Short.parseShort(this.txtThreadNum.getText());
+        this.isCreationService.initialize(inputPath, outputPath, threadNum);
+        this.isCreationService.outputInsertionSql();
+
+    }
+
+    /**
      * ディレクトリ選択ダイアログのラッパーを設定する<br>
      *
      * @since 1.0.0
@@ -180,32 +208,6 @@ public class IsCreationController implements Initializable {
     public void setFileChooserWrapper(final FileChooserWrapper fileChooserWrapper) {
 
         this.fileChooserWrapper = fileChooserWrapper;
-
-    }
-
-    /**
-     * メイン処理
-     *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
-     *
-     * @param inputPath
-     *                   入力パス
-     * @param outputPath
-     *                   出力パス
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
-     */
-    protected void mainProc(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
-
-        /* 挿入SQL作成サービス */
-        final short threadNum = Short.parseShort(this.txtThreadNum.getText());
-        this.isCreationService.initialize(inputPath, outputPath, threadNum);
-        this.isCreationService.outputInsertionSql();
 
     }
 

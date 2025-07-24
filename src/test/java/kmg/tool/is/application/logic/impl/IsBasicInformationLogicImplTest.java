@@ -1,4 +1,4 @@
-package kmg.tool.is.impl;
+package kmg.tool.is.application.logic.impl;
 
 import java.util.Map;
 
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.tool.is.application.logic.IsBasicInformationLogic;
-import kmg.tool.is.application.logic.impl.IsBasicInformationLogicImpl;
 
 /**
  * 挿入SQL基本情報ロジック実装のテスト<br>

@@ -348,7 +348,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
                 }, "深い階層の非存在ディレクトリでKmgToolMsgExceptionがスローされること");
 
-                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
 
             }
 
