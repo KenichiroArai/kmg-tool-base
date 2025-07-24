@@ -419,12 +419,12 @@ public class IsCreationControllerTest extends ApplicationTest {
         final URL            location  = null;
         final ResourceBundle resources = null;
 
-        /* テスト対象の実行 */
-        this.testTarget.initialize(location, resources);
-
         /* 検証の準備 */
         final TextField actualTxtThreadNum = Mockito.mock(TextField.class);
         this.reflectionModel.set("txtThreadNum", actualTxtThreadNum);
+
+        /* テスト対象の実行 */
+        this.testTarget.initialize(location, resources);
 
         /* 検証の実施 */
         Mockito.verify(actualTxtThreadNum, Mockito.times(1)).setText(expectedThreadNum);
