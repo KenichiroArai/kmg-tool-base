@@ -1011,6 +1011,65 @@ public class IsCreationControllerTest extends ApplicationTest {
     }
 
     /**
+     * setDirectoryChooserWrapper メソッドのテスト - 正常系：ディレクトリ選択ダイアログのラッパーが正しく設定される場合
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testSetDirectoryChooserWrapper_normalBasic() throws Exception {
+
+        /* 期待値の定義 */
+        final DirectoryChooserWrapper expectedDirectoryChooserWrapper = Mockito.mock(DirectoryChooserWrapper.class);
+
+        /* 準備 */
+        // 準備は不要
+
+        /* テスト対象の実行 */
+        this.testTarget.setDirectoryChooserWrapper(expectedDirectoryChooserWrapper);
+
+        /* 検証の準備 */
+        final DirectoryChooserWrapper actualDirectoryChooserWrapper
+            = (DirectoryChooserWrapper) this.reflectionModel.get("directoryChooserWrapper");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedDirectoryChooserWrapper, actualDirectoryChooserWrapper,
+            "ディレクトリ選択ダイアログのラッパーが正しく設定されていること");
+
+    }
+
+    /**
+     * setFileChooserWrapper メソッドのテスト - 正常系：ファイル選択ダイアログのラッパーが正しく設定される場合
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testSetFileChooserWrapper_normalBasic() throws Exception {
+
+        /* 期待値の定義 */
+        final FileChooserWrapper expectedFileChooserWrapper = Mockito.mock(FileChooserWrapper.class);
+
+        /* 準備 */
+        // 準備は不要
+
+        /* テスト対象の実行 */
+        this.testTarget.setFileChooserWrapper(expectedFileChooserWrapper);
+
+        /* 検証の準備 */
+        final FileChooserWrapper actualFileChooserWrapper
+            = (FileChooserWrapper) this.reflectionModel.get("fileChooserWrapper");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedFileChooserWrapper, actualFileChooserWrapper, "ファイル選択ダイアログのラッパーが正しく設定されていること");
+
+    }
+
+    /**
      * txtInputFile フィールドのテスト - 正常系：フィールドが正しく設定されている場合
      *
      * @since 1.0.0
