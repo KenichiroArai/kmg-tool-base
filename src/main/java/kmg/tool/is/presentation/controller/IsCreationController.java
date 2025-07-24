@@ -17,8 +17,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import kmg.core.infrastructure.model.KmgPfaMeasModel;
 import kmg.core.infrastructure.model.impl.KmgPfaMeasModelImpl;
 import kmg.core.infrastructure.type.KmgString;
@@ -65,6 +63,12 @@ public class IsCreationController implements Initializable {
     /** 挿入SQL作成サービス */
     @Autowired
     private IsCreationService isCreationService;
+
+    /** ファイル選択ダイアログのラッパー */
+    private FileChooserWrapper fileChooserWrapper;
+
+    /** ディレクトリ選択ダイアログのラッパー */
+    private DirectoryChooserWrapper directoryChooserWrapper;
 
     /** 入力ファイルテキストボックス */
     @FXML
@@ -120,6 +124,8 @@ public class IsCreationController implements Initializable {
     protected IsCreationController(final Logger logger) {
 
         this.logger = logger;
+        this.fileChooserWrapper = new FileChooserWrapper();
+        this.directoryChooserWrapper = new DirectoryChooserWrapper();
 
     }
 
@@ -142,10 +148,38 @@ public class IsCreationController implements Initializable {
 
         /* スレッド数の初期値を設定する */
         // CPUの論理プロセッサ数を取得
-        final Runtime runtime      = Runtime.getRuntime();
+        final Runtime runtime          = Runtime.getRuntime();
         final int     defaultThreadNum = runtime.availableProcessors();
         // テキストボックスに設定
         this.txtThreadNum.setText(String.valueOf(defaultThreadNum));
+
+    }
+
+    /**
+     * ディレクトリ選択ダイアログのラッパーを設定する<br>
+     *
+     * @since 1.0.0
+     *
+     * @param directoryChooserWrapper
+     *                                ディレクトリ選択ダイアログのラッパー
+     */
+    public void setDirectoryChooserWrapper(final DirectoryChooserWrapper directoryChooserWrapper) {
+
+        this.directoryChooserWrapper = directoryChooserWrapper;
+
+    }
+
+    /**
+     * ファイル選択ダイアログのラッパーを設定する<br>
+     *
+     * @since 1.0.0
+     *
+     * @param fileChooserWrapper
+     *                           ファイル選択ダイアログのラッパー
+     */
+    public void setFileChooserWrapper(final FileChooserWrapper fileChooserWrapper) {
+
+        this.fileChooserWrapper = fileChooserWrapper;
 
     }
 
@@ -190,8 +224,7 @@ public class IsCreationController implements Initializable {
     @FXML
     private void onCalcInputFileOpenClicked(final ActionEvent event) {
 
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(IsCreationController.FILE_CHOOSER_TITLE);
+        this.fileChooserWrapper.setTitle(IsCreationController.FILE_CHOOSER_TITLE);
         String defaultFilePath = this.txtInputFile.getText();
 
         if (KmgString.isEmpty(defaultFilePath)) {
@@ -206,8 +239,8 @@ public class IsCreationController implements Initializable {
             defaultFile = defaultFile.getParentFile();
 
         }
-        fileChooser.setInitialDirectory(defaultFile);
-        final File file = fileChooser.showOpenDialog(null);
+        this.fileChooserWrapper.setInitialDirectory(defaultFile);
+        final File file = this.fileChooserWrapper.showOpenDialog(null);
 
         if (file != null) {
 
@@ -232,8 +265,7 @@ public class IsCreationController implements Initializable {
     @FXML
     private void onCalcOutputDirectoryOpenClicked(final ActionEvent event) {
 
-        final DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle(IsCreationController.DIRECTORY_CHOOSER_TITLE);
+        this.directoryChooserWrapper.setTitle(IsCreationController.DIRECTORY_CHOOSER_TITLE);
         String defaultFilePath = this.txtOutputDirectory.getText();
 
         if (KmgString.isEmpty(defaultFilePath)) {
@@ -248,10 +280,13 @@ public class IsCreationController implements Initializable {
             defaultFile = defaultFile.getParentFile();
 
         }
-        directoryChooser.setInitialDirectory(defaultFile);
-        final File file = directoryChooser.showDialog(null);
+        this.directoryChooserWrapper.setInitialDirectory(defaultFile);
+        final File file = this.directoryChooserWrapper.showDialog(null);
+
         if (file != null) {
+
             this.txtOutputDirectory.setText(file.getAbsolutePath());
+
         }
 
     }
