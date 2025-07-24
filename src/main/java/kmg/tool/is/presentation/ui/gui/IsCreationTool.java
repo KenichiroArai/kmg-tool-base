@@ -111,7 +111,6 @@ public class IsCreationTool extends Application {
     @Override
     public void init() {
 
-        // this.springContext = SpringApplication.run(InsertionSqlCreationTool.class);
         this.springContext = new SpringApplicationBuilder(IsCreationTool.class).run();
 
     }
