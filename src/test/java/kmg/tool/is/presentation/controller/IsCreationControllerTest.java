@@ -729,7 +729,7 @@ public class IsCreationControllerTest extends ApplicationTest {
             final File        mockFile        = this.testInputFile.toFile();
 
             mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
-            Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
+            mockedFileChooser.when(() -> mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
 
             /* テスト対象の実行 */
             final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
@@ -772,7 +772,7 @@ public class IsCreationControllerTest extends ApplicationTest {
             final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
 
             mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
-            Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(null);
+            mockedFileChooser.when(() -> mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(null);
 
             /* テスト対象の実行 */
             final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
@@ -816,7 +816,7 @@ public class IsCreationControllerTest extends ApplicationTest {
             final File             mockDir              = this.testOutputDir.toFile();
 
             mockedDirectoryChooser.when(DirectoryChooser::new).thenReturn(mockDirectoryChooser);
-            Mockito.when(mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(mockDir);
+            mockedDirectoryChooser.when(() -> mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(mockDir);
 
             /* テスト対象の実行 */
             final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
@@ -859,7 +859,7 @@ public class IsCreationControllerTest extends ApplicationTest {
             final DirectoryChooser mockDirectoryChooser = Mockito.mock(DirectoryChooser.class);
 
             mockedDirectoryChooser.when(DirectoryChooser::new).thenReturn(mockDirectoryChooser);
-            Mockito.when(mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(null);
+            mockedDirectoryChooser.when(() -> mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(null);
 
             /* テスト対象の実行 */
             final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
