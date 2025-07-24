@@ -423,7 +423,8 @@ public class IsCreationControllerTest extends ApplicationTest {
         this.testTarget.initialize(location, resources);
 
         /* 検証の準備 */
-        final TextField actualTxtThreadNum = (TextField) this.reflectionModel.get("txtThreadNum");
+        final TextField actualTxtThreadNum = Mockito.mock(TextField.class);
+        this.reflectionModel.set("txtThreadNum", actualTxtThreadNum);
 
         /* 検証の実施 */
         Mockito.verify(actualTxtThreadNum, Mockito.times(1)).setText(expectedThreadNum);
@@ -560,8 +561,9 @@ public class IsCreationControllerTest extends ApplicationTest {
         final Path inputPath  = this.testInputFile;
         final Path outputPath = this.testOutputDir;
 
-        final TextField txtThreadNum = (TextField) this.reflectionModel.get("txtThreadNum");
+        final TextField txtThreadNum = Mockito.mock(TextField.class);
         Mockito.when(txtThreadNum.getText()).thenReturn("2");
+        this.reflectionModel.set("txtThreadNum", txtThreadNum);
 
         Mockito.doNothing().when(this.mockIsCreationService).initialize(ArgumentMatchers.any(Path.class),
             ArgumentMatchers.any(Path.class), ArgumentMatchers.anyShort());
@@ -616,8 +618,9 @@ public class IsCreationControllerTest extends ApplicationTest {
         final Path inputPath  = this.testInputFile;
         final Path outputPath = this.testOutputDir;
 
-        final TextField txtThreadNum = (TextField) this.reflectionModel.get("txtThreadNum");
+        final TextField txtThreadNum = Mockito.mock(TextField.class);
         Mockito.when(txtThreadNum.getText()).thenReturn("2");
+        this.reflectionModel.set("txtThreadNum", txtThreadNum);
 
         Mockito.doNothing().when(this.mockIsCreationService).initialize(ArgumentMatchers.any(Path.class),
             ArgumentMatchers.any(Path.class), ArgumentMatchers.anyShort());
@@ -678,8 +681,9 @@ public class IsCreationControllerTest extends ApplicationTest {
         final String expectedFilePath = this.testInputFile.toAbsolutePath().toString();
 
         /* 準備 */
-        final TextField txtInputFile = (TextField) this.reflectionModel.get("txtInputFile");
+        final TextField txtInputFile = Mockito.mock(TextField.class);
         Mockito.when(txtInputFile.getText()).thenReturn(this.testInputFile.toAbsolutePath().toString());
+        this.reflectionModel.set("txtInputFile", txtInputFile);
 
         try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
 
@@ -720,8 +724,9 @@ public class IsCreationControllerTest extends ApplicationTest {
         /* 期待値の定義 */
         final String expectedFilePath = this.testInputFile.toAbsolutePath().toString();
 
-        final TextField txtInputFile = (TextField) this.reflectionModel.get("txtInputFile");
+        final TextField txtInputFile = Mockito.mock(TextField.class);
         Mockito.when(txtInputFile.getText()).thenReturn("");
+        this.reflectionModel.set("txtInputFile", txtInputFile);
 
         try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
 
@@ -763,8 +768,9 @@ public class IsCreationControllerTest extends ApplicationTest {
         final String expectedFilePath = "test_path";
 
         /* 準備 */
-        final TextField txtInputFile = (TextField) this.reflectionModel.get("txtInputFile");
+        final TextField txtInputFile = Mockito.mock(TextField.class);
         Mockito.when(txtInputFile.getText()).thenReturn(expectedFilePath);
+        this.reflectionModel.set("txtInputFile", txtInputFile);
 
         try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
 
@@ -805,8 +811,9 @@ public class IsCreationControllerTest extends ApplicationTest {
         final String expectedDirPath = this.testOutputDir.toAbsolutePath().toString();
 
         /* 準備 */
-        final TextField txtOutputDirectory = (TextField) this.reflectionModel.get("txtOutputDirectory");
+        final TextField txtOutputDirectory = Mockito.mock(TextField.class);
         Mockito.when(txtOutputDirectory.getText()).thenReturn("");
+        this.reflectionModel.set("txtOutputDirectory", txtOutputDirectory);
 
         try (MockedStatic<DirectoryChooser> mockedDirectoryChooser = Mockito.mockStatic(DirectoryChooser.class)) {
 
@@ -848,8 +855,9 @@ public class IsCreationControllerTest extends ApplicationTest {
         final String expectedDirPath = "test_dir_path";
 
         /* 準備 */
-        final TextField txtOutputDirectory = (TextField) this.reflectionModel.get("txtOutputDirectory");
+        final TextField txtOutputDirectory = Mockito.mock(TextField.class);
         Mockito.when(txtOutputDirectory.getText()).thenReturn(expectedDirPath);
+        this.reflectionModel.set("txtOutputDirectory", txtOutputDirectory);
 
         try (MockedStatic<DirectoryChooser> mockedDirectoryChooser = Mockito.mockStatic(DirectoryChooser.class)) {
 
@@ -954,15 +962,21 @@ public class IsCreationControllerTest extends ApplicationTest {
 
         /* 準備 */
 
-        final TextField txtInputFile       = (TextField) this.reflectionModel.get("txtInputFile");
-        final TextField txtOutputDirectory = (TextField) this.reflectionModel.get("txtOutputDirectory");
-        final TextField txtThreadNum       = (TextField) this.reflectionModel.get("txtThreadNum");
-        final Label     lblProcTime        = (Label) this.reflectionModel.get("lblProcTime");
-        final Label     lblProcTimeUnit    = (Label) this.reflectionModel.get("lblProcTimeUnit");
+        final TextField txtInputFile       = Mockito.mock(TextField.class);
+        final TextField txtOutputDirectory = Mockito.mock(TextField.class);
+        final TextField txtThreadNum       = Mockito.mock(TextField.class);
+        final Label     lblProcTime        = Mockito.mock(Label.class);
+        final Label     lblProcTimeUnit    = Mockito.mock(Label.class);
 
         Mockito.when(txtInputFile.getText()).thenReturn(this.testInputFile.toAbsolutePath().toString());
         Mockito.when(txtOutputDirectory.getText()).thenReturn(this.testOutputDir.toAbsolutePath().toString());
         Mockito.when(txtThreadNum.getText()).thenReturn("2");
+
+        this.reflectionModel.set("txtInputFile", txtInputFile);
+        this.reflectionModel.set("txtOutputDirectory", txtOutputDirectory);
+        this.reflectionModel.set("txtThreadNum", txtThreadNum);
+        this.reflectionModel.set("lblProcTime", lblProcTime);
+        this.reflectionModel.set("lblProcTimeUnit", lblProcTimeUnit);
 
         Mockito.doNothing().when(this.mockIsCreationService).initialize(ArgumentMatchers.any(Path.class),
             ArgumentMatchers.any(Path.class), ArgumentMatchers.anyShort());
