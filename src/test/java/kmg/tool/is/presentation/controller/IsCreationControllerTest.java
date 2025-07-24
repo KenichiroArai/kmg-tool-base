@@ -25,21 +25,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.testfx.framework.junit5.ApplicationExtension;
-import org.testfx.framework.junit5.Start;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
-import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
@@ -63,7 +58,7 @@ import kmg.tool.is.application.service.IsCreationService;
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class IsCreationControllerTest extends AbstractKmgTest {
+public class IsCreationControllerTest extends ApplicationTest {
 
     /** テスト対象 */
     private IsCreationController testTarget;
@@ -151,43 +146,6 @@ public class IsCreationControllerTest extends AbstractKmgTest {
 
         // SpringApplicationContextHelperのモック化は各テストメソッド内で行う
         // 静的フィールドのモック化のため、各テストメソッドでMockedStaticを使用する
-
-    }
-
-    /**
-     * アプリケーション開始時の処理<br>
-     *
-     * @since 1.0.0
-     *
-     * @param stage
-     *              ステージ
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Start
-    public void start(final Stage stage) throws Exception {
-
-        /* FXMLの読み込み */
-        final URL fxmlUrl = this.getClass().getResource("/fxml/IsCreation.fxml");
-
-        if (fxmlUrl == null) {
-
-            // FXMLファイルが存在しない場合はダミーのシーンを作成
-            final Parent root  = new javafx.scene.layout.VBox();
-            final Scene  scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            return;
-
-        }
-
-        final FXMLLoader loader = new FXMLLoader(fxmlUrl);
-        loader.setController(this.testTarget);
-        final Parent root  = loader.load();
-        final Scene  scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
 
     }
 
@@ -709,46 +667,40 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * onCalcInputFileOpenClicked メソッドのテスト - 正常系：既存のファイルパスがある場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
-    public void testOnCalcInputFileOpenClicked_normalExistingPath() {
+    public void testOnCalcInputFileOpenClicked_normalExistingPath() throws Exception {
 
         /* 期待値の定義 */
         final String expectedFilePath = this.testInputFile.toAbsolutePath().toString();
 
         /* 準備 */
-        try {
+        final TextField txtInputFile = (TextField) this.reflectionModel.get("txtInputFile");
+        Mockito.when(txtInputFile.getText()).thenReturn(this.testInputFile.toAbsolutePath().toString());
 
-            final TextField txtInputFile = (TextField) this.reflectionModel.get("txtInputFile");
-            Mockito.when(txtInputFile.getText()).thenReturn(this.testInputFile.toAbsolutePath().toString());
+        try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
 
-            try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
+            final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
+            final File        mockFile        = this.testInputFile.toFile();
 
-                final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
-                final File        mockFile        = this.testInputFile.toFile();
+            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
+            Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
 
-                mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
-                Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
+            /* テスト対象の実行 */
+            final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
+            final Method      method    = this.testTarget.getClass().getDeclaredMethod("onCalcInputFileOpenClicked",
+                ActionEvent.class);
+            method.setAccessible(true);
+            method.invoke(this.testTarget, mockEvent);
 
-                /* テスト対象の実行 */
-                final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
-                final Method      method    = this.testTarget.getClass().getDeclaredMethod("onCalcInputFileOpenClicked",
-                    ActionEvent.class);
-                method.setAccessible(true);
-                method.invoke(this.testTarget, mockEvent);
+            /* 検証の準備 */
+            // 検証の準備は不要
 
-                /* 検証の準備 */
-                // 検証の準備は不要
-
-                /* 検証の実施 */
-                Mockito.verify(txtInputFile, Mockito.times(1)).setText(expectedFilePath);
-
-            }
-
-        } catch (final Exception e) {
-
-            Assertions.fail("テストの実行に失敗しました: " + e.getMessage());
+            /* 検証の実施 */
+            Mockito.verify(txtInputFile, Mockito.times(1)).setText(expectedFilePath);
 
         }
 
@@ -758,46 +710,39 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * onCalcInputFileOpenClicked メソッドのテスト - 正常系：ファイルが選択された場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
-    public void testOnCalcInputFileOpenClicked_normalFileSelected() {
+    public void testOnCalcInputFileOpenClicked_normalFileSelected() throws Exception {
 
         /* 期待値の定義 */
         final String expectedFilePath = this.testInputFile.toAbsolutePath().toString();
 
-        /* 準備 */
-        try {
+        final TextField txtInputFile = (TextField) this.reflectionModel.get("txtInputFile");
+        Mockito.when(txtInputFile.getText()).thenReturn("");
 
-            final TextField txtInputFile = (TextField) this.reflectionModel.get("txtInputFile");
-            Mockito.when(txtInputFile.getText()).thenReturn("");
+        try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
 
-            try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
+            final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
+            final File        mockFile        = this.testInputFile.toFile();
 
-                final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
-                final File        mockFile        = this.testInputFile.toFile();
+            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
+            Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
 
-                mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
-                Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
+            /* テスト対象の実行 */
+            final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
+            final Method      method    = this.testTarget.getClass().getDeclaredMethod("onCalcInputFileOpenClicked",
+                ActionEvent.class);
+            method.setAccessible(true);
+            method.invoke(this.testTarget, mockEvent);
 
-                /* テスト対象の実行 */
-                final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
-                final Method      method    = this.testTarget.getClass().getDeclaredMethod("onCalcInputFileOpenClicked",
-                    ActionEvent.class);
-                method.setAccessible(true);
-                method.invoke(this.testTarget, mockEvent);
+            /* 検証の準備 */
+            // 検証の準備は不要
 
-                /* 検証の準備 */
-                // 検証の準備は不要
-
-                /* 検証の実施 */
-                Mockito.verify(txtInputFile, Mockito.times(1)).setText(expectedFilePath);
-
-            }
-
-        } catch (final Exception e) {
-
-            Assertions.fail("テストの実行に失敗しました: " + e.getMessage());
+            /* 検証の実施 */
+            Mockito.verify(txtInputFile, Mockito.times(1)).setText(expectedFilePath);
 
         }
 
@@ -807,45 +752,39 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * onCalcInputFileOpenClicked メソッドのテスト - 準正常系：ファイルが選択されなかった場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
-    public void testOnCalcInputFileOpenClicked_semiNoFileSelected() {
+    public void testOnCalcInputFileOpenClicked_semiNoFileSelected() throws Exception {
 
         /* 期待値の定義 */
         final String expectedFilePath = "test_path";
 
         /* 準備 */
-        try {
+        final TextField txtInputFile = (TextField) this.reflectionModel.get("txtInputFile");
+        Mockito.when(txtInputFile.getText()).thenReturn(expectedFilePath);
 
-            final TextField txtInputFile = (TextField) this.reflectionModel.get("txtInputFile");
-            Mockito.when(txtInputFile.getText()).thenReturn(expectedFilePath);
+        try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
 
-            try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
+            final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
 
-                final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
+            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
+            Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(null);
 
-                mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
-                Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(null);
+            /* テスト対象の実行 */
+            final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
+            final Method      method    = this.testTarget.getClass().getDeclaredMethod("onCalcInputFileOpenClicked",
+                ActionEvent.class);
+            method.setAccessible(true);
+            method.invoke(this.testTarget, mockEvent);
 
-                /* テスト対象の実行 */
-                final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
-                final Method      method    = this.testTarget.getClass().getDeclaredMethod("onCalcInputFileOpenClicked",
-                    ActionEvent.class);
-                method.setAccessible(true);
-                method.invoke(this.testTarget, mockEvent);
+            /* 検証の準備 */
+            // 検証の準備は不要
 
-                /* 検証の準備 */
-                // 検証の準備は不要
-
-                /* 検証の実施 */
-                Mockito.verify(txtInputFile, Mockito.never()).setText(ArgumentMatchers.anyString());
-
-            }
-
-        } catch (final Exception e) {
-
-            Assertions.fail("テストの実行に失敗しました: " + e.getMessage());
+            /* 検証の実施 */
+            Mockito.verify(txtInputFile, Mockito.never()).setText(ArgumentMatchers.anyString());
 
         }
 
@@ -855,46 +794,40 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * onCalcOutputDirectoryOpenClicked メソッドのテスト - 正常系：ディレクトリが選択された場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
-    public void testOnCalcOutputDirectoryOpenClicked_normalDirectorySelected() {
+    public void testOnCalcOutputDirectoryOpenClicked_normalDirectorySelected() throws Exception {
 
         /* 期待値の定義 */
         final String expectedDirPath = this.testOutputDir.toAbsolutePath().toString();
 
         /* 準備 */
-        try {
+        final TextField txtOutputDirectory = (TextField) this.reflectionModel.get("txtOutputDirectory");
+        Mockito.when(txtOutputDirectory.getText()).thenReturn("");
 
-            final TextField txtOutputDirectory = (TextField) this.reflectionModel.get("txtOutputDirectory");
-            Mockito.when(txtOutputDirectory.getText()).thenReturn("");
+        try (MockedStatic<DirectoryChooser> mockedDirectoryChooser = Mockito.mockStatic(DirectoryChooser.class)) {
 
-            try (MockedStatic<DirectoryChooser> mockedDirectoryChooser = Mockito.mockStatic(DirectoryChooser.class)) {
+            final DirectoryChooser mockDirectoryChooser = Mockito.mock(DirectoryChooser.class);
+            final File             mockDir              = this.testOutputDir.toFile();
 
-                final DirectoryChooser mockDirectoryChooser = Mockito.mock(DirectoryChooser.class);
-                final File             mockDir              = this.testOutputDir.toFile();
+            mockedDirectoryChooser.when(DirectoryChooser::new).thenReturn(mockDirectoryChooser);
+            Mockito.when(mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(mockDir);
 
-                mockedDirectoryChooser.when(DirectoryChooser::new).thenReturn(mockDirectoryChooser);
-                Mockito.when(mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(mockDir);
+            /* テスト対象の実行 */
+            final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
+            final Method      method    = this.testTarget.getClass()
+                .getDeclaredMethod("onCalcOutputDirectoryOpenClicked", ActionEvent.class);
+            method.setAccessible(true);
+            method.invoke(this.testTarget, mockEvent);
 
-                /* テスト対象の実行 */
-                final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
-                final Method      method    = this.testTarget.getClass()
-                    .getDeclaredMethod("onCalcOutputDirectoryOpenClicked", ActionEvent.class);
-                method.setAccessible(true);
-                method.invoke(this.testTarget, mockEvent);
+            /* 検証の準備 */
+            // 検証の準備は不要
 
-                /* 検証の準備 */
-                // 検証の準備は不要
-
-                /* 検証の実施 */
-                Mockito.verify(txtOutputDirectory, Mockito.times(1)).setText(expectedDirPath);
-
-            }
-
-        } catch (final Exception e) {
-
-            Assertions.fail("テストの実行に失敗しました: " + e.getMessage());
+            /* 検証の実施 */
+            Mockito.verify(txtOutputDirectory, Mockito.times(1)).setText(expectedDirPath);
 
         }
 
@@ -904,45 +837,39 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      * onCalcOutputDirectoryOpenClicked メソッドのテスト - 準正常系：ディレクトリが選択されなかった場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    @org.junit.jupiter.api.Disabled("MockedStaticの使用方法の問題により一時的に無効化")
-    public void testOnCalcOutputDirectoryOpenClicked_semiNoDirectorySelected() {
+    public void testOnCalcOutputDirectoryOpenClicked_semiNoDirectorySelected() throws Exception {
 
         /* 期待値の定義 */
         final String expectedDirPath = "test_dir_path";
 
         /* 準備 */
-        try {
+        final TextField txtOutputDirectory = (TextField) this.reflectionModel.get("txtOutputDirectory");
+        Mockito.when(txtOutputDirectory.getText()).thenReturn(expectedDirPath);
 
-            final TextField txtOutputDirectory = (TextField) this.reflectionModel.get("txtOutputDirectory");
-            Mockito.when(txtOutputDirectory.getText()).thenReturn(expectedDirPath);
+        try (MockedStatic<DirectoryChooser> mockedDirectoryChooser = Mockito.mockStatic(DirectoryChooser.class)) {
 
-            try (MockedStatic<DirectoryChooser> mockedDirectoryChooser = Mockito.mockStatic(DirectoryChooser.class)) {
+            final DirectoryChooser mockDirectoryChooser = Mockito.mock(DirectoryChooser.class);
 
-                final DirectoryChooser mockDirectoryChooser = Mockito.mock(DirectoryChooser.class);
+            mockedDirectoryChooser.when(DirectoryChooser::new).thenReturn(mockDirectoryChooser);
+            Mockito.when(mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(null);
 
-                mockedDirectoryChooser.when(DirectoryChooser::new).thenReturn(mockDirectoryChooser);
-                Mockito.when(mockDirectoryChooser.showDialog(ArgumentMatchers.any())).thenReturn(null);
+            /* テスト対象の実行 */
+            final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
+            final Method      method    = this.testTarget.getClass()
+                .getDeclaredMethod("onCalcOutputDirectoryOpenClicked", ActionEvent.class);
+            method.setAccessible(true);
+            method.invoke(this.testTarget, mockEvent);
 
-                /* テスト対象の実行 */
-                final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
-                final Method      method    = this.testTarget.getClass()
-                    .getDeclaredMethod("onCalcOutputDirectoryOpenClicked", ActionEvent.class);
-                method.setAccessible(true);
-                method.invoke(this.testTarget, mockEvent);
+            /* 検証の準備 */
+            // 検証の準備は不要
 
-                /* 検証の準備 */
-                // 検証の準備は不要
-
-                /* 検証の実施 */
-                Mockito.verify(txtOutputDirectory, Mockito.never()).setText(ArgumentMatchers.anyString());
-
-            }
-
-        } catch (final Exception e) {
-
-            Assertions.fail("テストの実行に失敗しました: " + e.getMessage());
+            /* 検証の実施 */
+            Mockito.verify(txtOutputDirectory, Mockito.never()).setText(ArgumentMatchers.anyString());
 
         }
 
