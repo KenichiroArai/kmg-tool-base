@@ -685,28 +685,23 @@ public class IsCreationControllerTest extends ApplicationTest {
         Mockito.when(txtInputFile.getText()).thenReturn(this.testInputFile.toAbsolutePath().toString());
         this.reflectionModel.set("txtInputFile", txtInputFile);
 
-        try (MockedStatic<FileChooser> mockedFileChooser = Mockito.mockStatic(FileChooser.class)) {
+        final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
+        final File        mockFile        = this.testInputFile.toFile();
 
-            final FileChooser mockFileChooser = Mockito.mock(FileChooser.class);
-            final File        mockFile        = this.testInputFile.toFile();
+        Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
 
-            mockedFileChooser.when(FileChooser::new).thenReturn(mockFileChooser);
-            Mockito.when(mockFileChooser.showOpenDialog(ArgumentMatchers.any())).thenReturn(mockFile);
+        /* テスト対象の実行 */
+        final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
+        final Method      method    = this.testTarget.getClass().getDeclaredMethod("onCalcInputFileOpenClicked",
+            ActionEvent.class);
+        method.setAccessible(true);
+        method.invoke(this.testTarget, mockEvent);
 
-            /* テスト対象の実行 */
-            final ActionEvent mockEvent = Mockito.mock(ActionEvent.class);
-            final Method      method    = this.testTarget.getClass().getDeclaredMethod("onCalcInputFileOpenClicked",
-                ActionEvent.class);
-            method.setAccessible(true);
-            method.invoke(this.testTarget, mockEvent);
+        /* 検証の準備 */
+        // 検証の準備は不要
 
-            /* 検証の準備 */
-            // 検証の準備は不要
-
-            /* 検証の実施 */
-            Mockito.verify(txtInputFile, Mockito.times(1)).setText(expectedFilePath);
-
-        }
+        /* 検証の実施 */
+        Mockito.verify(txtInputFile, Mockito.times(1)).setText(expectedFilePath);
 
     }
 

@@ -142,10 +142,10 @@ public class IsCreationController implements Initializable {
 
         /* スレッド数の初期値を設定する */
         // CPUの論理プロセッサ数を取得
-        final Runtime runtime   = Runtime.getRuntime();
-        final int     threadNum = runtime.availableProcessors();
+        final Runtime runtime      = Runtime.getRuntime();
+        final int     defaultThreadNum = runtime.availableProcessors();
         // テキストボックスに設定
-        this.txtThreadNum.setText(String.valueOf(threadNum));
+        this.txtThreadNum.setText(String.valueOf(defaultThreadNum));
 
     }
 
