@@ -250,7 +250,9 @@ public class IsCreationController implements Initializable {
         }
         directoryChooser.setInitialDirectory(defaultFile);
         final File file = directoryChooser.showDialog(null);
-        this.txtOutputDirectory.setText(file.getAbsolutePath());
+        if (file != null) {
+            this.txtOutputDirectory.setText(file.getAbsolutePath());
+        }
 
     }
 
