@@ -738,7 +738,7 @@ public class IsCreationToolTest extends ApplicationTest {
     public void testSpringContext_normalInjection() throws Exception {
 
         /* 期待値の定義 */
-        final ConfigurableApplicationContext expectedSpringContext = Mockito.mock(ConfigurableApplicationContext.class);
+        final ConfigurableApplicationContext expectedSpringContext = this.mockSpringContext;
 
         /* 準備 */
         final IsCreationTool         localTestTarget      = new IsCreationTool();
