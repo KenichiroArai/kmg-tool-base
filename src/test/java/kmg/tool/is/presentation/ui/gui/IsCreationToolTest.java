@@ -984,40 +984,16 @@ public class IsCreationToolTest extends ApplicationTest {
         localReflectionModel.set("springContext", this.mockSpringContext);
         localReflectionModel.set("messageSource", this.mockMessageSource);
 
-        /* テスト対象の実行 */
-        localTestTarget.start(mockStage);
+        // FXMLファイルが存在することを確認
+        final URL fxmlUrl
+            = localTestTarget.getClass().getResource("/kmg/tool/application/ui/gui/IsCreationScreenGui.fxml");
+        Assertions.assertNotNull(fxmlUrl, "FXMLファイルが存在すること");
 
-        /* 検証の準備 */
-        // ステージタイトルが設定されることを確認
-        Mockito.verify(mockStage).setTitle(expectedStageTitle);
-
-        final boolean actualResult = true;
-
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "ステージタイトルが正しく設定されること（完全カバレッジ）");
-
-    }
-
-    /**
-     * start メソッドのテスト - 正常系：FXMLLoaderを使用してFXMLファイルの読み込みが成功し、Sceneが正常に作成される場合
-     *
-     * @since 1.0.0
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testStart_normalFxmlLoaderSuccess() throws Exception {
-
-        /* 期待値の定義 */
-        final String expectedStageTitle = "挿入SQL作成画面";
-
-        /* 準備 */
-        final IsCreationTool         localTestTarget      = new IsCreationTool(this.mockLogger);
-        final Stage                  mockStage            = Mockito.mock(Stage.class);
-        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        localReflectionModel.set("springContext", this.mockSpringContext);
-        localReflectionModel.set("messageSource", this.mockMessageSource);
+        // springContextのgetBeanメソッドをモックして、コントローラークラスを返すようにする
+        Mockito
+            .when(this.mockSpringContext
+                .getBean(ArgumentMatchers.eq(kmg.tool.is.presentation.ui.gui.controller.IsCreationController.class)))
+            .thenReturn(Mockito.mock(kmg.tool.is.presentation.ui.gui.controller.IsCreationController.class));
 
         /* テスト対象の実行 */
         localTestTarget.start(mockStage);
@@ -1025,11 +1001,15 @@ public class IsCreationToolTest extends ApplicationTest {
         /* 検証の準備 */
         // ステージタイトルが設定されることを確認
         Mockito.verify(mockStage).setTitle(expectedStageTitle);
+        // Sceneが設定されることを確認
+        Mockito.verify(mockStage).setScene(ArgumentMatchers.any());
+        // ステージが表示されることを確認
+        Mockito.verify(mockStage).show();
 
         final boolean actualResult = true;
 
         /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "ステージタイトルが正しく設定されること（FXMLLoader使用）");
+        Assertions.assertTrue(actualResult, "完全なカバレッジが確保されること");
 
     }
 
@@ -1054,40 +1034,16 @@ public class IsCreationToolTest extends ApplicationTest {
         localReflectionModel.set("springContext", this.mockSpringContext);
         localReflectionModel.set("messageSource", this.mockMessageSource);
 
-        /* テスト対象の実行 */
-        localTestTarget.start(mockStage);
+        // FXMLファイルが存在することを確認
+        final URL fxmlUrl
+            = localTestTarget.getClass().getResource("/kmg/tool/application/ui/gui/IsCreationScreenGui.fxml");
+        Assertions.assertNotNull(fxmlUrl, "FXMLファイルが存在すること");
 
-        /* 検証の準備 */
-        // ステージタイトルが設定されることを確認
-        Mockito.verify(mockStage).setTitle(expectedStageTitle);
-
-        final boolean actualResult = true;
-
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "ステージタイトルが正しく設定されること");
-
-    }
-
-    /**
-     * start メソッドのテスト - 正常系：FXMLファイルの読み込みが成功し、Sceneが正常に作成される場合（モック使用）
-     *
-     * @since 1.0.0
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testStart_normalFxmlLoadSuccessWithMock() throws Exception {
-
-        /* 期待値の定義 */
-        final String expectedStageTitle = "挿入SQL作成画面";
-
-        /* 準備 */
-        final IsCreationTool         localTestTarget      = new IsCreationTool(this.mockLogger);
-        final Stage                  mockStage            = Mockito.mock(Stage.class);
-        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        localReflectionModel.set("springContext", this.mockSpringContext);
-        localReflectionModel.set("messageSource", this.mockMessageSource);
+        // springContextのgetBeanメソッドをモックして、コントローラークラスを返すようにする
+        Mockito
+            .when(this.mockSpringContext
+                .getBean(ArgumentMatchers.eq(kmg.tool.is.presentation.ui.gui.controller.IsCreationController.class)))
+            .thenReturn(Mockito.mock(kmg.tool.is.presentation.ui.gui.controller.IsCreationController.class));
 
         /* テスト対象の実行 */
         localTestTarget.start(mockStage);
@@ -1095,11 +1051,15 @@ public class IsCreationToolTest extends ApplicationTest {
         /* 検証の準備 */
         // ステージタイトルが設定されることを確認
         Mockito.verify(mockStage).setTitle(expectedStageTitle);
+        // Sceneが設定されることを確認
+        Mockito.verify(mockStage).setScene(ArgumentMatchers.any());
+        // ステージが表示されることを確認
+        Mockito.verify(mockStage).show();
 
         final boolean actualResult = true;
 
         /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "ステージタイトルが正しく設定されること（モック使用）");
+        Assertions.assertTrue(actualResult, "FXMLファイルの読み込みが成功し、Sceneが正常に作成されること");
 
     }
 
