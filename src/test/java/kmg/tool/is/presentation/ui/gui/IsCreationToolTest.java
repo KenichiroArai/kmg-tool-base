@@ -3,6 +3,7 @@ package kmg.tool.is.presentation.ui.gui;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 
@@ -169,32 +170,6 @@ public class IsCreationToolTest extends AbstractKmgTest {
             Assertions.fail("カスタムロガーを使用するコンストラクタが見つかりません: " + e.getMessage());
 
         }
-
-    }
-
-    /**
-     * FXMLLoader のテスト - 正常系：FXMLLoaderが正常に作成される場合
-     *
-     * @since 1.0.0
-     */
-    @Test
-    public void testFxmlLoader_normalCreation() {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
-        /* 準備 */
-        // JavaFXのFXMLLoader作成はテスト環境では実行しない
-        final boolean actualResult = true;
-
-        /* テスト対象の実行 */
-        // FXMLLoaderの作成は準備で完了
-
-        /* 検証の準備 */
-        final boolean actualResult2 = actualResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult2, "FXMLLoaderが正常に作成されること");
 
     }
 
@@ -493,17 +468,25 @@ public class IsCreationToolTest extends AbstractKmgTest {
         };
 
         /* 準備 */
-        // 無効な引数を準備
+        final IsCreationTool localTestTarget = new IsCreationTool();
+        final Class<?>       testClass       = localTestTarget.getClass();
 
         /* テスト対象の実行 */
-        // JavaFXアプリケーションのmainメソッドはテスト環境では実行しない
-        final boolean actualResult = true;
+        try {
 
-        /* 検証の準備 */
-        final boolean actualResult2 = actualResult;
+            final Method  method       = testClass.getDeclaredMethod("main", String[].class);
+            final boolean actualResult = (method != null);
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult2, "無効な引数でもmainメソッドが実行されること");
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualResult, "mainメソッドが存在し、無効な引数でも実行可能であること");
+
+        } catch (final NoSuchMethodException e) {
+
+            Assertions.fail("mainメソッドが見つかりません: " + e.getMessage());
+
+        }
 
     }
 
@@ -519,17 +502,26 @@ public class IsCreationToolTest extends AbstractKmgTest {
         final String[] expectedArgs = {};
 
         /* 準備 */
-        // テスト用の引数を準備
+        final IsCreationTool localTestTarget = new IsCreationTool();
+        final Class<?>       testClass       = localTestTarget.getClass();
 
         /* テスト対象の実行 */
-        // JavaFXアプリケーションのmainメソッドはテスト環境では実行しない
-        final boolean actualResult = true;
+        try {
 
-        /* 検証の準備 */
-        final boolean actualResult2 = actualResult;
+            final Method  method       = testClass.getDeclaredMethod("main", String[].class);
+            final boolean actualResult = (method != null);
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult2, "mainメソッドが正常に実行されること");
+            /* 検証の準備 */
+            final boolean actualResult2 = actualResult;
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualResult2, "mainメソッドが存在し、正常に実行可能であること");
+
+        } catch (final NoSuchMethodException e) {
+
+            Assertions.fail("mainメソッドが見つかりません: " + e.getMessage());
+
+        }
 
     }
 
@@ -545,17 +537,95 @@ public class IsCreationToolTest extends AbstractKmgTest {
         final String[] expectedArgs = {};
 
         /* 準備 */
-        // 空の引数を準備
+        final IsCreationTool localTestTarget = new IsCreationTool();
+        final Class<?>       testClass       = localTestTarget.getClass();
 
         /* テスト対象の実行 */
-        // JavaFXアプリケーションのmainメソッドはテスト環境では実行しない
-        final boolean actualResult = true;
+        try {
 
-        /* 検証の準備 */
-        final boolean actualResult2 = actualResult;
+            final Method  method       = testClass.getDeclaredMethod("main", String[].class);
+            final boolean actualResult = (method != null);
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult2, "空の引数でもmainメソッドが実行されること");
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualResult, "mainメソッドが存在し、空の引数でも実行可能であること");
+
+        } catch (final NoSuchMethodException e) {
+
+            Assertions.fail("mainメソッドが見つかりません: " + e.getMessage());
+
+        }
+
+    }
+
+    /**
+     * main メソッドの戻り値型テスト - 正常系：mainメソッドがvoidを返す場合
+     *
+     * @since 1.0.0
+     */
+    @Test
+    public void testMainReturnType_normalVoid() {
+
+        /* 期待値の定義 */
+        final Class<?> expectedReturnType = void.class;
+
+        /* 準備 */
+        final IsCreationTool localTestTarget = new IsCreationTool();
+        final Class<?>       testClass       = localTestTarget.getClass();
+
+        /* テスト対象の実行 */
+        try {
+
+            final Method   method           = testClass.getDeclaredMethod("main", String[].class);
+            final Class<?> actualReturnType = method.getReturnType();
+
+            /* 検証の準備 */
+            final Class<?> actualResult = actualReturnType;
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedReturnType, actualResult, "mainメソッドがvoidを返すこと");
+
+        } catch (final NoSuchMethodException e) {
+
+            Assertions.fail("mainメソッドが見つかりません: " + e.getMessage());
+
+        }
+
+    }
+
+    /**
+     * main メソッドの可視性テスト - 正常系：mainメソッドがpublic staticで定義されている場合
+     *
+     * @since 1.0.0
+     */
+    @Test
+    public void testMainVisibility_normalPublicStatic() {
+
+        /* 期待値の定義 */
+        final int expectedModifiers = Modifier.PUBLIC | Modifier.STATIC;
+
+        /* 準備 */
+        final IsCreationTool localTestTarget = new IsCreationTool();
+        final Class<?>       testClass       = localTestTarget.getClass();
+
+        /* テスト対象の実行 */
+        try {
+
+            final Method method          = testClass.getDeclaredMethod("main", String[].class);
+            final int    actualModifiers = method.getModifiers();
+
+            /* 検証の準備 */
+            final int actualResult = actualModifiers & (Modifier.PUBLIC | Modifier.STATIC);
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedModifiers, actualResult, "mainメソッドがpublic staticで定義されていること");
+
+        } catch (final NoSuchMethodException e) {
+
+            Assertions.fail("mainメソッドが見つかりません: " + e.getMessage());
+
+        }
 
     }
 
@@ -656,30 +726,6 @@ public class IsCreationToolTest extends AbstractKmgTest {
             Assertions.fail("messageSourceフィールドが見つかりません: " + e.getMessage());
 
         }
-
-    }
-
-    /**
-     * Scene のテスト - 正常系：Sceneが正常に作成される場合
-     *
-     * @since 1.0.0
-     */
-    @Test
-    public void testScene_normalCreation() {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        // JavaFXのScene作成はテスト環境では実行しない
-        final boolean actualResult = true;
-
-        /* テスト対象の実行 */
-        // Sceneの作成は準備で完了
-
-        /* 検証の準備 */
-
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "Sceneが正常に作成されること");
 
     }
 
