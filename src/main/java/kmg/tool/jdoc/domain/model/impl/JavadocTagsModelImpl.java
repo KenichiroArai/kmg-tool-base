@@ -52,6 +52,13 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
 
         this.javadocTagModelList = new ArrayList<>();
 
+        /* 引数チェック */
+        if (sourceJavadoc == null) {
+
+            return;
+
+        }
+
         // @タグを抽出する正規表現パターン
         // グループ1: タグ名
         // グループ2: 値

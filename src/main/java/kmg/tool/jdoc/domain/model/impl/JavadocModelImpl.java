@@ -42,7 +42,7 @@ public class JavadocModelImpl implements JavadocModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return Javadocタグ一覧情報
      */
@@ -59,7 +59,7 @@ public class JavadocModelImpl implements JavadocModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 元のJavadoc
      */
