@@ -458,9 +458,12 @@ public class IsCreationToolTest extends AbstractKmgTest {
      * main メソッドのテスト - 正常系：メインメソッドが正常に実行される場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testMain_normalSuccess() {
+    public void testMain_normalSuccess() throws Exception {
 
         /* 期待値の定義 */
         final String[] expectedArgs = {};
@@ -472,14 +475,17 @@ public class IsCreationToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final Method  method       = testClass.getDeclaredMethod("main", String[].class);
-            final boolean actualResult = (method != null);
+            final Method method = testClass.getDeclaredMethod("main", String[].class);
+            method.setAccessible(true);
+
+            // mainメソッドを実際に実行する
+            method.invoke(null, (Object) expectedArgs);
 
             /* 検証の準備 */
-            final boolean actualResult2 = actualResult;
+            final boolean actualResult = true;
 
             /* 検証の実施 */
-            Assertions.assertTrue(actualResult2, "mainメソッドが存在し、正常に実行可能であること");
+            Assertions.assertTrue(actualResult, "mainメソッドが正常に実行されること");
 
         } catch (final NoSuchMethodException e) {
 
