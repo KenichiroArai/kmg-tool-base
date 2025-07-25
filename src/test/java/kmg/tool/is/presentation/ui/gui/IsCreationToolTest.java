@@ -455,42 +455,6 @@ public class IsCreationToolTest extends AbstractKmgTest {
     }
 
     /**
-     * main メソッドのテスト - 異常系：無効な引数が渡される場合
-     *
-     * @since 1.0.0
-     */
-    @Test
-    public void testMain_errorInvalidArgs() {
-
-        /* 期待値の定義 */
-        final String[] expectedArgs = {
-            "invalid", "arguments"
-        };
-
-        /* 準備 */
-        final IsCreationTool localTestTarget = new IsCreationTool();
-        final Class<?>       testClass       = localTestTarget.getClass();
-
-        /* テスト対象の実行 */
-        try {
-
-            final Method  method       = testClass.getDeclaredMethod("main", String[].class);
-            final boolean actualResult = (method != null);
-
-            /* 検証の準備 */
-
-            /* 検証の実施 */
-            Assertions.assertTrue(actualResult, "mainメソッドが存在し、無効な引数でも実行可能であること");
-
-        } catch (final NoSuchMethodException e) {
-
-            Assertions.fail("mainメソッドが見つかりません: " + e.getMessage());
-
-        }
-
-    }
-
-    /**
      * main メソッドのテスト - 正常系：メインメソッドが正常に実行される場合
      *
      * @since 1.0.0
@@ -516,40 +480,6 @@ public class IsCreationToolTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertTrue(actualResult2, "mainメソッドが存在し、正常に実行可能であること");
-
-        } catch (final NoSuchMethodException e) {
-
-            Assertions.fail("mainメソッドが見つかりません: " + e.getMessage());
-
-        }
-
-    }
-
-    /**
-     * main メソッドのテスト - 準正常系：引数がnullの場合
-     *
-     * @since 1.0.0
-     */
-    @Test
-    public void testMain_semiNullArgs() {
-
-        /* 期待値の定義 */
-        final String[] expectedArgs = {};
-
-        /* 準備 */
-        final IsCreationTool localTestTarget = new IsCreationTool();
-        final Class<?>       testClass       = localTestTarget.getClass();
-
-        /* テスト対象の実行 */
-        try {
-
-            final Method  method       = testClass.getDeclaredMethod("main", String[].class);
-            final boolean actualResult = (method != null);
-
-            /* 検証の準備 */
-
-            /* 検証の実施 */
-            Assertions.assertTrue(actualResult, "mainメソッドが存在し、空の引数でも実行可能であること");
 
         } catch (final NoSuchMethodException e) {
 
