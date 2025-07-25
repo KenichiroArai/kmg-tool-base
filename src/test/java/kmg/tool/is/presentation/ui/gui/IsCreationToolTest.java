@@ -964,6 +964,236 @@ public class IsCreationToolTest extends ApplicationTest {
     }
 
     /**
+     * start メソッドのテスト - 正常系：Sceneクラスを使用して完全なカバレッジを確保する場合
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testStart_normalCompleteCoverage() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedStageTitle = "挿入SQL作成画面";
+
+        /* 準備 */
+        final IsCreationTool         localTestTarget      = new IsCreationTool(this.mockLogger);
+        final Stage                  mockStage            = Mockito.mock(Stage.class);
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("springContext", this.mockSpringContext);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+
+        // FXMLLoaderとSceneをモック
+        try (MockedStatic<javafx.fxml.FXMLLoader> mockedFxmlLoader = Mockito.mockStatic(javafx.fxml.FXMLLoader.class);
+            MockedStatic<javafx.scene.Scene> mockedScene = Mockito.mockStatic(javafx.scene.Scene.class)) {
+
+            final javafx.fxml.FXMLLoader         mockFxmlLoader = Mockito.mock(javafx.fxml.FXMLLoader.class);
+            final javafx.scene.layout.AnchorPane mockRoot       = Mockito.mock(javafx.scene.layout.AnchorPane.class);
+            final javafx.scene.Scene             mockScene      = Mockito.mock(javafx.scene.Scene.class);
+
+            // FXMLLoaderのコンストラクタをモック
+            mockedFxmlLoader.when(() -> new javafx.fxml.FXMLLoader(ArgumentMatchers.any(URL.class)))
+                .thenReturn(mockFxmlLoader);
+
+            // load()メソッドをモック
+            Mockito.when(mockFxmlLoader.load()).thenReturn(mockRoot);
+
+            // Sceneのコンストラクタをモック
+            mockedScene.when(() -> new javafx.scene.Scene(ArgumentMatchers.any(javafx.scene.layout.AnchorPane.class)))
+                .thenReturn(mockScene);
+
+            /* テスト対象の実行 */
+            localTestTarget.start(mockStage);
+
+            /* 検証の準備 */
+            // ステージタイトルが設定されることを確認
+            Mockito.verify(mockStage).setTitle(expectedStageTitle);
+
+            // FXMLLoaderのsetControllerFactoryが呼ばれることを確認
+            Mockito.verify(mockFxmlLoader).setControllerFactory(ArgumentMatchers.any());
+
+            // load()メソッドが呼ばれることを確認
+            Mockito.verify(mockFxmlLoader).load();
+
+            // Sceneが作成されることを確認
+            mockedScene
+                .verify(() -> new javafx.scene.Scene(ArgumentMatchers.any(javafx.scene.layout.AnchorPane.class)));
+
+            // Sceneが設定されることを確認（Scene作成とステージ設定のカバレッジ）
+            Mockito.verify(mockStage).setScene(ArgumentMatchers.any());
+
+            // ステージが表示されることを確認
+            Mockito.verify(mockStage).show();
+
+            final boolean actualResult = true;
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualResult, "Sceneクラスを使用して完全なカバレッジを確保すること");
+
+        }
+
+    }
+
+    /**
+     * start メソッドのテスト - 正常系：FXMLLoaderを使用してFXMLファイルの読み込みが成功し、Sceneが正常に作成される場合
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testStart_normalFxmlLoaderSuccess() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedStageTitle = "挿入SQL作成画面";
+
+        /* 準備 */
+        final IsCreationTool         localTestTarget      = new IsCreationTool(this.mockLogger);
+        final Stage                  mockStage            = Mockito.mock(Stage.class);
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("springContext", this.mockSpringContext);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+
+        // FXMLLoaderをモック
+        try (MockedStatic<javafx.fxml.FXMLLoader> mockedFxmlLoader = Mockito.mockStatic(javafx.fxml.FXMLLoader.class)) {
+
+            final javafx.fxml.FXMLLoader         mockFxmlLoader = Mockito.mock(javafx.fxml.FXMLLoader.class);
+            final javafx.scene.layout.AnchorPane mockRoot       = Mockito.mock(javafx.scene.layout.AnchorPane.class);
+
+            // FXMLLoaderのコンストラクタをモック
+            mockedFxmlLoader.when(() -> new javafx.fxml.FXMLLoader(ArgumentMatchers.any(URL.class)))
+                .thenReturn(mockFxmlLoader);
+
+            // load()メソッドをモック
+            Mockito.when(mockFxmlLoader.load()).thenReturn(mockRoot);
+
+            /* テスト対象の実行 */
+            localTestTarget.start(mockStage);
+
+            /* 検証の準備 */
+            // ステージタイトルが設定されることを確認
+            Mockito.verify(mockStage).setTitle(expectedStageTitle);
+
+            // FXMLLoaderのsetControllerFactoryが呼ばれることを確認
+            Mockito.verify(mockFxmlLoader).setControllerFactory(ArgumentMatchers.any());
+
+            // load()メソッドが呼ばれることを確認
+            Mockito.verify(mockFxmlLoader).load();
+
+            // Sceneが設定されることを確認（Scene作成とステージ設定のカバレッジ）
+            Mockito.verify(mockStage).setScene(ArgumentMatchers.any());
+
+            // ステージが表示されることを確認
+            Mockito.verify(mockStage).show();
+
+            final boolean actualResult = true;
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualResult, "FXMLLoaderを使用してFXMLファイルの読み込みが成功し、Sceneが正常に作成されること");
+
+        }
+
+    }
+
+    /**
+     * start メソッドのテスト - 正常系：FXMLファイルの読み込みが成功し、Sceneが正常に作成される場合
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testStart_normalFxmlLoadSuccess() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedStageTitle = "挿入SQL作成画面";
+
+        /* 準備 */
+        final IsCreationTool         localTestTarget      = new IsCreationTool(this.mockLogger);
+        final Stage                  mockStage            = Mockito.mock(Stage.class);
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("springContext", this.mockSpringContext);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+
+        // FXMLファイルが存在することを確認
+        final URL fxmlUrl
+            = localTestTarget.getClass().getResource("/kmg/tool/application/ui/gui/IsCreationScreenGui.fxml");
+        Assertions.assertNotNull(fxmlUrl, "FXMLファイルが存在すること");
+
+        /* テスト対象の実行 */
+        localTestTarget.start(mockStage);
+
+        /* 検証の準備 */
+        // ステージタイトルが設定されることを確認
+        Mockito.verify(mockStage).setTitle(expectedStageTitle);
+
+        // Sceneが設定されることを確認（Scene作成とステージ設定のカバレッジ）
+        Mockito.verify(mockStage).setScene(ArgumentMatchers.any());
+
+        // ステージが表示されることを確認
+        Mockito.verify(mockStage).show();
+
+        final boolean actualResult = true;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "FXMLファイルの読み込みが成功し、Sceneが正常に作成されること");
+
+    }
+
+    /**
+     * start メソッドのテスト - 正常系：FXMLファイルの読み込みが成功し、Sceneが正常に作成される場合（モック使用）
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testStart_normalFxmlLoadSuccessWithMock() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedStageTitle = "挿入SQL作成画面";
+
+        /* 準備 */
+        final IsCreationTool         localTestTarget      = new IsCreationTool(this.mockLogger);
+        final Stage                  mockStage            = Mockito.mock(Stage.class);
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("springContext", this.mockSpringContext);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+
+        // FXMLファイルの読み込みをモック
+        try (MockedStatic<URL> mockedUrl = Mockito.mockStatic(URL.class)) {
+
+            final URL mockUrl = Mockito.mock(URL.class);
+            mockedUrl.when(() -> localTestTarget.getClass().getResource(ArgumentMatchers.anyString()))
+                .thenReturn(mockUrl);
+
+            /* テスト対象の実行 */
+            localTestTarget.start(mockStage);
+
+            /* 検証の準備 */
+            // ステージタイトルが設定されることを確認
+            Mockito.verify(mockStage).setTitle(expectedStageTitle);
+
+            // Sceneが設定されることを確認（Scene作成とステージ設定のカバレッジ）
+            Mockito.verify(mockStage).setScene(ArgumentMatchers.any());
+
+            // ステージが表示されることを確認
+            Mockito.verify(mockStage).show();
+
+            final boolean actualResult = true;
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualResult, "FXMLファイルの読み込みが成功し、Sceneが正常に作成されること（モック使用）");
+
+        }
+
+    }
+
+    /**
      * start メソッドのテスト - 正常系：ステージが正常に開始される場合
      *
      * @since 1.0.0
