@@ -69,9 +69,7 @@ public class IsCreationTool extends Application {
      */
     public static void main(final String[] args) {
 
-        System.out.println("-------main start---------------");
         Application.launch(IsCreationTool.class, args);
-        System.out.println("-------main end---------------");
 
     }
 

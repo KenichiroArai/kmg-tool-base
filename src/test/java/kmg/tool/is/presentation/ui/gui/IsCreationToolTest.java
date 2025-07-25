@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -22,11 +23,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
-import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 
 /**
@@ -38,12 +40,14 @@ import kmg.fund.infrastructure.context.KmgMessageSource;
  *
  * @version 1.0.0
  */
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({
+    MockitoExtension.class, ApplicationExtension.class
+})
 @MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class IsCreationToolTest extends AbstractKmgTest {
+public class IsCreationToolTest extends ApplicationTest {
 
     /** テスト対象 */
     @InjectMocks
@@ -77,6 +81,26 @@ public class IsCreationToolTest extends AbstractKmgTest {
         this.reflectionModel.set("messageSource", this.mockMessageSource);
         this.reflectionModel.set("logger", this.mockLogger);
         this.reflectionModel.set("springContext", this.mockSpringContext);
+
+    }
+
+    /**
+     * TestFXのstartメソッドをオーバーライドして、テスト用のJavaFXアプリケーションを設定する
+     *
+     * @param stage
+     *              テスト用のステージ
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Override
+    public void start(final Stage stage) throws Exception {
+
+        // TestFXのデフォルトのstartメソッドを呼び出し
+        super.start(stage);
+
+        // テスト用の設定を追加
+        stage.setTitle("IsCreationTool Test");
 
     }
 
@@ -478,14 +502,26 @@ public class IsCreationToolTest extends AbstractKmgTest {
             final Method method = testClass.getDeclaredMethod("main", String[].class);
             method.setAccessible(true);
 
-            // mainメソッドを実際に実行する
-            method.invoke(null, (Object) expectedArgs);
+            // Application.launchをモックして実行
+            try (MockedStatic<Application> mockedApplication = Mockito.mockStatic(Application.class)) {
 
-            /* 検証の準備 */
-            final boolean actualResult = true;
+                // Application.launchの呼び出しをモック
+                mockedApplication.when(() -> Application.launch(ArgumentMatchers.eq(IsCreationTool.class),
+                    ArgumentMatchers.eq(expectedArgs))).thenAnswer(invocation -> null);
 
-            /* 検証の実施 */
-            Assertions.assertTrue(actualResult, "mainメソッドが正常に実行されること");
+                // mainメソッドを実際に実行する
+                method.invoke(null, (Object) expectedArgs);
+
+                /* 検証の準備 */
+                // Application.launchが正しく呼び出されたことを確認
+                mockedApplication.verify(() -> Application.launch(ArgumentMatchers.eq(IsCreationTool.class),
+                    ArgumentMatchers.eq(expectedArgs)), Mockito.times(1));
+                final boolean actualResult = true;
+
+                /* 検証の実施 */
+                Assertions.assertTrue(actualResult, "mainメソッドが正常に実行され、Application.launchが正しく呼び出されること");
+
+            }
 
         } catch (final NoSuchMethodException e) {
 
