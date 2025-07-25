@@ -83,7 +83,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return アノテーションリスト
      */
@@ -100,7 +100,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 区分
      */
@@ -117,7 +117,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 要素名
      */
@@ -134,7 +134,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 識別子
      */
@@ -151,7 +151,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return Javadocモデル
      */
@@ -168,7 +168,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return オリジナルブロック
      */
@@ -275,7 +275,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return true：区分が特定できた、false：区分がNONE
      *

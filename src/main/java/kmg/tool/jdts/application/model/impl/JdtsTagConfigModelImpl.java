@@ -151,7 +151,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return タグの説明
      */
@@ -168,7 +168,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return タグ名
      */

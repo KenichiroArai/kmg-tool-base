@@ -26,7 +26,7 @@ import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
@@ -60,7 +60,7 @@ public class IsCreationTool extends Application {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -103,7 +103,7 @@ public class IsCreationTool extends Application {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      */
@@ -120,7 +120,7 @@ public class IsCreationTool extends Application {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -162,7 +162,7 @@ public class IsCreationTool extends Application {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      */

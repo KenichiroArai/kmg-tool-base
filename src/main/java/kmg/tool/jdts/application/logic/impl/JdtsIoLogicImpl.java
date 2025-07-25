@@ -120,7 +120,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 読込んだ内容
      */

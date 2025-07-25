@@ -36,7 +36,7 @@ import kmg.tool.is.application.logic.IsDataSheetCreationLogic;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
@@ -114,7 +114,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -143,7 +143,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -191,7 +191,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -210,7 +210,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -255,7 +255,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -283,7 +283,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -311,7 +311,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -339,7 +339,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -407,7 +407,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -447,7 +447,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -476,7 +476,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -504,7 +504,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -532,7 +532,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -561,7 +561,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -591,7 +591,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *

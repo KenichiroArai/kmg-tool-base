@@ -18,7 +18,7 @@ import kmg.tool.is.application.service.IsFileCreationService;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
@@ -43,7 +43,7 @@ public class IsCreationServiceImpl implements IsCreationService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *

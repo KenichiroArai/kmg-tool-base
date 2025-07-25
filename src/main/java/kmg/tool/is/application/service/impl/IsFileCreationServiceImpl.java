@@ -31,7 +31,7 @@ import kmg.tool.is.application.service.IslDataSheetCreationService;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
@@ -60,7 +60,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -86,7 +86,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -146,7 +146,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @return 執行者サービス
      */
@@ -172,7 +172,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *

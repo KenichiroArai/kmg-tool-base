@@ -225,7 +225,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 設定するタグの内容
      */

@@ -9,7 +9,7 @@ import kmg.tool.dtc.domain.types.DtcTransformTypes;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  */
 public class DtcTransformModelImpl implements DtcTransformModel {
 

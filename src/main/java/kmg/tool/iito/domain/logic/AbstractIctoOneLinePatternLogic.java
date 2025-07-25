@@ -191,7 +191,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 現在の行番号
      */

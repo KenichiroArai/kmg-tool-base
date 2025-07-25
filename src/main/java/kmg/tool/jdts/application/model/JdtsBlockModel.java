@@ -26,7 +26,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return アノテーションリスト
      */
@@ -37,7 +37,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 区分
      */
@@ -48,7 +48,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 要素名
      */
@@ -59,7 +59,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 識別子
      */
@@ -70,7 +70,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return Javadocモデル
      */
@@ -81,7 +81,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return オリジナルブロック
      */

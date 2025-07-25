@@ -30,7 +30,7 @@ import kmg.tool.is.application.service.IslDataSheetCreationService;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
@@ -94,7 +94,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -197,7 +197,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      */
     @Override
     public void run() {

@@ -102,7 +102,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return Javadocタグ設定の構成モデル
      */
@@ -119,7 +119,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 置換後のコード
      */
