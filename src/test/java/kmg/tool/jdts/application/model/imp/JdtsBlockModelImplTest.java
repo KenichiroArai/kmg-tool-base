@@ -207,6 +207,63 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * parse メソッドのテスト - 異常系:Javadocブロックのみでコードブロックがない
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_abnormalJavadocOnly() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        // Javadocブロックのみでコードブロックがない
+        final String testBlock = "/** テストJavadoc */";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertFalse(actualResult, "Javadocブロックのみでは解析が失敗すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:「 \\*\\/ 」が含まれていないブロック
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception*テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_abnormalNoJavadocEndMarker() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        // 「*/」が含まれていないブロック
+        final String testBlock = "/** テストJavadoc\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertFalse(actualResult, "「*/」が含まれていないブロックでは解析が失敗すること");
+
+    }
+
+    /**
      * parse メソッドのテスト - 正常系:クラス定義の解析
      *
      * @throws Exception
