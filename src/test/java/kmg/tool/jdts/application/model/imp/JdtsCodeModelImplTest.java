@@ -128,8 +128,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     public void testConstructor_normalNullCode() {
 
         /* 期待値の定義 */
-        final String expectedOrgCode             = null;
-        final int    expectedJdtsBlockModelsSize = 0;
+        final int expectedJdtsBlockModelsSize = 0;
 
         /* 準備 */
         final String testCode = null;
@@ -142,7 +141,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
         final List<JdtsBlockModel> actualJdtsBlockModels = this.testTarget.getJdtsBlockModels();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedOrgCode, actualOrgCode, "nullのオリジナルコードが正しく設定されること");
+        Assertions.assertNull(actualOrgCode, "nullのオリジナルコードが正しく設定されること");
         Assertions.assertNotNull(actualJdtsBlockModels, "Javadocブロックモデルリストがnullでないこと");
         Assertions.assertEquals(expectedJdtsBlockModelsSize, actualJdtsBlockModels.size(),
             "初期状態では空のJavadocブロックモデルリストが設定されること");
@@ -335,7 +334,6 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     public void testParse_errorJdtsBlockModelImplParseException() throws KmgToolMsgException {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = null;
         final String             expectedDomainMessage = "[NONE] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.NONE;
 
@@ -372,8 +370,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
 
                 /* 検証の準備 */
                 /* 検証の実施 */
-                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                    expectedMessageTypes);
+                this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
             }
 
