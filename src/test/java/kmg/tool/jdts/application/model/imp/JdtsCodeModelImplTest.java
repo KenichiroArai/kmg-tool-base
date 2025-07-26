@@ -5,7 +5,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.MockedConstruction;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -15,7 +14,6 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdts.application.model.JdtsBlockModel;
 import kmg.tool.jdts.application.model.impl.JdtsBlockModelImpl;
 import kmg.tool.jdts.application.model.impl.JdtsCodeModelImpl;
@@ -322,7 +320,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 異常系:parse実行時にJdtsBlockModelImplのparseが例外を投げる場合
+     * parse メソッドのテスト - 異常系:parse実行時にJdtsBlockModelImplのparseがfalseを返す場合
      *
      * @since 0.1.0
      *
@@ -330,11 +328,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testParse_errorJdtsBlockModelImplParseException() throws KmgToolMsgException {
+    public void testParse_errorJdtsBlockModelImplParseReturnsFalse() throws KmgToolMsgException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[NONE] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.NONE;
 
         /* 準備 */
         final String testCode = "/**\n * テストクラス\n */\npublic class TestClass {}";
@@ -347,29 +343,23 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
             mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
                 .thenReturn(this.mockMessageSource);
 
-            // モックメッセージソースの設定
-            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
-
-            // 例外インスタンスを先に作成
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.NONE, new Object[] {});
-
             // JdtsBlockModelImplのコンストラクタをモック化
             try (final MockedConstruction<JdtsBlockModelImpl> mockedConstruction
                 = Mockito.mockConstruction(JdtsBlockModelImpl.class, (mock, context) -> {
 
-                    // parseメソッドが例外を投げるように設定（先に作成した例外を使用）
-                    Mockito.doThrow(testException).when(mock).parse();
+                    // parseメソッドがfalseを返すように設定
+                    Mockito.when(mock.parse()).thenReturn(false);
 
                 })) {
 
                 /* テスト対象の実行 */
-                final KmgToolMsgException actualException
-                    = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.parse());
+                this.testTarget.parse();
 
                 /* 検証の準備 */
+                final List<JdtsBlockModel> actualJdtsBlockModels = this.testTarget.getJdtsBlockModels();
+
                 /* 検証の実施 */
-                this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+                Assertions.assertEquals(1, actualJdtsBlockModels.size(), "parseがfalseを返してもブロックモデルは追加されること");
 
             }
 
