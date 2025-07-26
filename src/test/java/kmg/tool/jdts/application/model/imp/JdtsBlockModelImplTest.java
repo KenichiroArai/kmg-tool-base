@@ -234,11 +234,12 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 異常系:「 \\*\\/ 」が含まれていないブロック
+     * parse メソッドのテスト - 異常系: *&#47; が含まれていないブロック
      *
      * @since 0.1.0
      *
-     * @throws Exception*テスト実行時に発生する可能性のある例外
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
      */
     @Test
     public void testParse_abnormalNoJavadocEndMarker() throws Exception {
