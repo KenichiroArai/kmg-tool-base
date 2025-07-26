@@ -282,7 +282,6 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     public void testConstructor_semiPartialTagConfigValidationError() throws Exception {
 
         /* 期待値の定義 */
-        final int expectedTagConfigCount = 1; // 有効なタグ設定のみが含まれる
 
         /* 準備 */
         final Map<String, Object>       testYamlData = new HashMap<>();
@@ -333,7 +332,6 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     public void testGetJdaTagConfigModels_normalReturnEmptyList() throws Exception {
 
         /* 期待値の定義 */
-        final int expectedSize = 0;
 
         /* 準備 */
         final Map<String, Object>       testYamlData = new HashMap<>();
@@ -362,7 +360,6 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     public void testGetJdaTagConfigModels_normalReturnEmptyTagConfigModels() throws Exception {
 
         /* 期待値の定義 */
-        final int expectedTagConfigCount = 0;
 
         /* 準備 */
         final Map<String, Object>       testYamlData = new HashMap<>();
