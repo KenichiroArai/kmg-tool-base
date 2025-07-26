@@ -535,6 +535,57 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * loadContent メソッドのテスト - 異常系:KmgToolMsgException発生
+     */
+    @Test
+    public void testLoadContent_errorKmgToolMsgException() {
+
+        final Class<?>           expectedCauseClass    = IOException.class;
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN13001] Javadocタグ設定でファイル内容を読み込み中に例外が発生しました。対象ファイルパス=[%s]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13001;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            /* ファイルを削除してエラーを発生させる */
+            Files.delete(this.testJavaFile);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
+
+            // モックメッセージソースの設定
+            final String formattedMessage = String.format(expectedDomainMessage, this.testJavaFile.toString());
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(formattedMessage);
+
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.loadContent();
+
+            }, "ファイル読み込みエラーでKmgToolMsgExceptionがスローされること");
+
+            this.verifyKmgMsgException(actualException, expectedCauseClass, formattedMessage,
+                expectedMessageTypes);
+
+        }
+
+    }
+
+    /**
      * loadContent メソッドのテスト - 正常系:内容あり
      */
     @Test
@@ -811,6 +862,60 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualException, "例外が発生すること");
+
+    }
+
+    /**
+     * writeContent メソッドのテスト - 異常系:KmgToolMsgException発生
+     */
+    @Test
+    public void testWriteContent_errorKmgToolMsgException() {
+
+        final Class<?>           expectedCauseClass    = IOException.class;
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN13000] Javadocタグ設定でファイル内容を書き込み中に例外が発生しました。対象ファイルパス=[%s] 書き込み内容=[%s]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13000;
+        final String             testContent           = "Test content";
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            this.testTarget.setWriteContent(testContent);
+            /* ファイルを削除してディレクトリを作成し、書き込みエラーを発生させる */
+            Files.delete(this.testJavaFile);
+            Files.createDirectory(this.testJavaFile);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
+
+            // モックメッセージソースの設定
+            final String formattedMessage = String.format(expectedDomainMessage, this.testJavaFile.toString(), testContent);
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(formattedMessage);
+
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.writeContent();
+
+            }, "書き込みエラーでKmgToolMsgExceptionがスローされること");
+
+            this.verifyKmgMsgException(actualException, expectedCauseClass, formattedMessage,
+                expectedMessageTypes);
+
+        }
 
     }
 
