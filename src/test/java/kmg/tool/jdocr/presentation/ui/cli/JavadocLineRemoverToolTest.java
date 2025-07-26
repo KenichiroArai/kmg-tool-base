@@ -311,7 +311,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testGetInputService_semiNullService() throws Exception {
 
         /* 期待値の定義 */
-        final SimpleInputService expectedService = Mockito.mock(SimpleInputService.class);
+        final SimpleInputService expectedService = null;
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget      = new JavadocLineRemoverTool();
