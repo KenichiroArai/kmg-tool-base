@@ -5,6 +5,8 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.MockedConstruction;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -14,6 +16,7 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.jdts.application.model.JdtsBlockModel;
 import kmg.tool.jdts.application.model.impl.JdtsBlockModelImpl;
 import kmg.tool.jdts.application.model.impl.JdtsCodeModelImpl;
@@ -326,15 +329,22 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
+     * @throws Exception
+     *                             例外
      */
     @Test
-    public void testParse_errorJdtsBlockModelImplParseReturnsFalse() throws KmgToolMsgException {
+    public void testParse_errorJdtsBlockModelImplParseReturnsFalse() throws KmgToolMsgException, Exception {
 
         /* 期待値の定義 */
+        final String expectedLogMessage = "テストログメッセージ";
 
         /* 準備 */
         final String testCode = "/**\n * テストクラス\n */\npublic class TestClass {}";
         this.testTarget = new JdtsCodeModelImpl(testCode);
+
+        // messageSourceフィールドにモックを設定
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+        this.reflectionModel.set("messageSource", this.mockMessageSource);
 
         // SpringApplicationContextHelperを先にモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -342,6 +352,10 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
 
             mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
                 .thenReturn(this.mockMessageSource);
+
+            // ログメッセージのモック設定
+            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(KmgToolLogMsgTypes.class),
+                ArgumentMatchers.any(Object[].class))).thenReturn(expectedLogMessage);
 
             // JdtsBlockModelImplのコンストラクタをモック化
             try (final MockedConstruction<JdtsBlockModelImpl> mockedConstruction
@@ -360,6 +374,19 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
 
                 /* 検証の実施 */
                 Assertions.assertEquals(1, actualJdtsBlockModels.size(), "parseがfalseを返してもブロックモデルは追加されること");
+
+                // ログメッセージが正しく呼び出されたことを検証
+                final ArgumentCaptor<KmgToolLogMsgTypes> logMsgTypesCaptor = ArgumentCaptor
+                    .forClass(KmgToolLogMsgTypes.class);
+                final ArgumentCaptor<Object[]>           logMsgArgsCaptor  = ArgumentCaptor.forClass(Object[].class);
+
+                Mockito.verify(this.mockMessageSource).getLogMessage(logMsgTypesCaptor.capture(),
+                    logMsgArgsCaptor.capture());
+
+                Assertions.assertEquals(KmgToolLogMsgTypes.KMGTOOL_LOG13000, logMsgTypesCaptor.getValue(),
+                    "正しいログメッセージタイプが使用されること");
+                Assertions.assertNotNull(logMsgArgsCaptor.getValue(), "ログメッセージ引数がnullでないこと");
+                Assertions.assertEquals(2, logMsgArgsCaptor.getValue().length, "ログメッセージ引数が2つの要素を持つこと");
 
             }
 
