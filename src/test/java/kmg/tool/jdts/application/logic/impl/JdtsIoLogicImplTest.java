@@ -578,8 +578,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
             }, "ファイル読み込みエラーでKmgToolMsgExceptionがスローされること");
 
-            this.verifyKmgMsgException(actualException, expectedCauseClass, formattedMessage,
-                expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, formattedMessage, expectedMessageTypes);
 
         }
 
@@ -815,6 +814,99 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * resetFileIndex メソッドのテスト - 正常系:ファイルリストなし
+     */
+    @Test
+    public void testResetFileIndex_normalNoFileList() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testEmptyDir);
+            this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.resetFileIndex();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("resetFileIndex処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final Path actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "リセットが成功すること");
+        Assertions.assertEquals(null, actualCurrentFilePath, "ファイルリストが空の場合カレントファイルがnullに設定されること");
+
+    }
+
+    /**
+     * resetFileIndex メソッドのテスト - 正常系:ファイルリストあり
+     */
+    @Test
+    public void testResetFileIndex_normalWithFileList() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        Path secondJavaFile = null;
+
+        try {
+
+            secondJavaFile = this.testTempDir.resolve("SecondFile.java");
+            Files.writeString(secondJavaFile, "public class SecondFile {}");
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            /* 次のファイルに進んでからリセット */
+            this.testTarget.nextFile();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.resetFileIndex();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("resetFileIndex処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+        final List<Path> filePathList          = this.testTarget.getFilePathList();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "リセットが成功すること");
+        Assertions.assertEquals(filePathList.get(0), actualCurrentFilePath, "先頭のファイルがカレントファイルに設定されること");
+
+    }
+
+    /**
      * setWriteContent メソッドのテスト - 正常系:書き込み内容設定
      */
     @Test
@@ -828,40 +920,6 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         /* 検証は writeContent で間接的に確認 */
         Assertions.assertTrue(true, "setWriteContentメソッドが正常に実行されること");
-
-    }
-
-    /**
-     * writeContent メソッドのテスト - 異常系:書き込みエラー
-     */
-    @Test
-    public void testWriteContent_errorWriteError() {
-
-        /* 準備 */
-        try {
-
-            this.testTarget.initialize(this.testTempDir);
-            this.testTarget.load();
-            this.testTarget.setWriteContent("Test content");
-            /* ファイルを削除してディレクトリを作成し、書き込みエラーを発生させる */
-            Files.delete(this.testJavaFile);
-            Files.createDirectory(this.testJavaFile);
-
-        } catch (final Exception e) {
-
-            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
-
-        }
-
-        /* テスト対象の実行・検証の実施 */
-        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
-
-            this.testTarget.writeContent();
-
-        }, "書き込みエラーで例外がスローされること");
-
-        /* 検証の実施 */
-        Assertions.assertNotNull(actualException, "例外が発生すること");
 
     }
 
@@ -902,7 +960,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
                 .thenReturn(mockMessageSource);
 
             // モックメッセージソースの設定
-            final String formattedMessage = String.format(expectedDomainMessage, this.testJavaFile.toString(), testContent);
+            final String formattedMessage
+                = String.format(expectedDomainMessage, this.testJavaFile.toString(), testContent);
             Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(formattedMessage);
 
@@ -912,10 +971,43 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
             }, "書き込みエラーでKmgToolMsgExceptionがスローされること");
 
-            this.verifyKmgMsgException(actualException, expectedCauseClass, formattedMessage,
-                expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedCauseClass, formattedMessage, expectedMessageTypes);
 
         }
+
+    }
+
+    /**
+     * writeContent メソッドのテスト - 異常系:書き込みエラー
+     */
+    @Test
+    public void testWriteContent_errorWriteError() {
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            this.testTarget.setWriteContent("Test content");
+            /* ファイルを削除してディレクトリを作成し、書き込みエラーを発生させる */
+            Files.delete(this.testJavaFile);
+            Files.createDirectory(this.testJavaFile);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行・検証の実施 */
+        final Exception actualException = Assertions.assertThrows(Exception.class, () -> {
+
+            this.testTarget.writeContent();
+
+        }, "書き込みエラーで例外がスローされること");
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "例外が発生すること");
 
     }
 
@@ -926,8 +1018,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     public void testWriteContent_normalSuccess() {
 
         /* 期待値の定義 */
-        final boolean expectedResult  = true;
-        final String  expectedContent = "Modified Java content";
+        final String expectedContent = "Modified Java content";
 
         /* 準備 */
         try {
@@ -969,7 +1060,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         }
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "書き込みが成功すること");
+        Assertions.assertTrue(actualResult, "書き込みが成功すること");
         Assertions.assertEquals(expectedContent, actualFileContent, "指定された内容でファイルが書き込まれること");
 
     }
