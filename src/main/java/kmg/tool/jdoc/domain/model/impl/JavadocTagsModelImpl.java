@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocTagModel;
 import kmg.tool.jdoc.domain.model.JavadocTagsModel;
 import kmg.tool.jdoc.domain.types.JavadocGroupIndexTypes;
@@ -44,11 +43,8 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
      *
      * @param sourceJavadoc
      *                      Javadoc
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
-    public JavadocTagsModelImpl(final String sourceJavadoc) throws KmgToolMsgException {
+    public JavadocTagsModelImpl(final String sourceJavadoc) {
 
         this.javadocTagModelList = new ArrayList<>();
 

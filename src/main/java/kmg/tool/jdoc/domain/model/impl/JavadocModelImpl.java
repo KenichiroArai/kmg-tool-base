@@ -1,6 +1,5 @@
 package kmg.tool.jdoc.domain.model.impl;
 
-import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 import kmg.tool.jdoc.domain.model.JavadocTagsModel;
 
@@ -26,11 +25,8 @@ public class JavadocModelImpl implements JavadocModel {
      *
      * @param javadoc
      *                Javadoc
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
-    public JavadocModelImpl(final String javadoc) throws KmgToolMsgException {
+    public JavadocModelImpl(final String javadoc) {
 
         this.srcJavadoc = javadoc;
         this.javadocTagsModel = new JavadocTagsModelImpl(javadoc);

@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 import kmg.tool.jdoc.domain.model.impl.JavadocModelImpl;
 import kmg.tool.jdts.application.model.JdtsBlockModel;
@@ -184,12 +183,9 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      * 解析する
      *
      * @return true：成功、false：失敗
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean parse() throws KmgToolMsgException {
+    public boolean parse() {
 
         boolean result = false;
 
@@ -278,11 +274,8 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      * @since 0.1.0
      *
      * @return true：区分が特定できた、false：区分がNONE
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
-    private boolean specifyClassification() throws KmgToolMsgException {
+    private boolean specifyClassification() {
 
         boolean result = false;
 

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 
 /**
@@ -91,10 +90,7 @@ public interface JdtsBlockModel {
      * 解析する
      *
      * @return true：成功、false：失敗
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
-    boolean parse() throws KmgToolMsgException;
+    boolean parse();
 
 }

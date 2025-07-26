@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.jdts.application.model.JdtsBlockModel;
 import kmg.tool.jdts.application.model.JdtsCodeModel;
@@ -133,13 +132,10 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
 
     /**
      * 解析する
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
 
     @Override
-    public void parse() throws KmgToolMsgException {
+    public void parse() {
 
         // 「/**」でブロックに分ける
         final String[] blocks = this.orgCode.split(String.format(JdtsCodeModelImpl.JAVADOC_BLOCK_SPLIT_FORMAT,
