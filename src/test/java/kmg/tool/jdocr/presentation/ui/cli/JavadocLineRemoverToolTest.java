@@ -108,12 +108,12 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         try (final org.mockito.MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            final KmgMessageSource localMockMessageSource = Mockito.mock(KmgMessageSource.class);
             mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSource);
+                .thenReturn(localMockMessageSource);
 
             // モックメッセージソースの設定
-            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            Mockito.when(localMockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
 
             // KmgToolMsgExceptionを作成（モックのスコープ内で）
@@ -123,7 +123,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
 
             localReflectionModel.set("inputService", mockInputService);
             localReflectionModel.set("javadocLineRemoverService", mockService);
-            localReflectionModel.set("messageSource", mockMessageSource);
+            localReflectionModel.set("messageSource", localMockMessageSource);
 
             /* テスト対象の実行 */
             final boolean actualResult = (Boolean) localReflectionModel.getMethod("execute");
@@ -163,13 +163,13 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         Mockito.when(mockService.initialize(ArgumentMatchers.any(Path.class))).thenReturn(true);
         Mockito.when(mockService.process()).thenReturn(false);
 
-        final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
-        Mockito.when(mockMessageSource.getGenMessage(ArgumentMatchers.any(KmgToolGenMsgTypes.class),
+        final KmgMessageSource localMockMessageSource = Mockito.mock(KmgMessageSource.class);
+        Mockito.when(localMockMessageSource.getGenMessage(ArgumentMatchers.any(KmgToolGenMsgTypes.class),
             ArgumentMatchers.any(Object[].class))).thenReturn("テストメッセージ");
 
         localReflectionModel.set("inputService", mockInputService);
         localReflectionModel.set("javadocLineRemoverService", mockService);
-        localReflectionModel.set("messageSource", mockMessageSource);
+        localReflectionModel.set("messageSource", localMockMessageSource);
 
         /* テスト対象の実行 */
         final boolean actualResult = (Boolean) localReflectionModel.getMethod("execute");
@@ -207,13 +207,13 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         Mockito.when(mockService.initialize(ArgumentMatchers.any(Path.class))).thenReturn(true);
         Mockito.when(mockService.process()).thenReturn(true);
 
-        final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
-        Mockito.when(mockMessageSource.getGenMessage(ArgumentMatchers.any(KmgToolGenMsgTypes.class),
+        final KmgMessageSource localMockMessageSource = Mockito.mock(KmgMessageSource.class);
+        Mockito.when(localMockMessageSource.getGenMessage(ArgumentMatchers.any(KmgToolGenMsgTypes.class),
             ArgumentMatchers.any(Object[].class))).thenReturn("テストメッセージ");
 
         localReflectionModel.set("inputService", mockInputService);
         localReflectionModel.set("javadocLineRemoverService", mockService);
-        localReflectionModel.set("messageSource", mockMessageSource);
+        localReflectionModel.set("messageSource", localMockMessageSource);
 
         /* テスト対象の実行 */
         final boolean actualResult = (Boolean) localReflectionModel.getMethod("execute");
@@ -250,13 +250,13 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         final JavadocLineRemoverService mockService = Mockito.mock(JavadocLineRemoverService.class);
         Mockito.when(mockService.initialize(ArgumentMatchers.any(Path.class))).thenReturn(false);
 
-        final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
-        Mockito.when(mockMessageSource.getGenMessage(ArgumentMatchers.any(KmgToolGenMsgTypes.class),
+        final KmgMessageSource localMockMessageSource = Mockito.mock(KmgMessageSource.class);
+        Mockito.when(localMockMessageSource.getGenMessage(ArgumentMatchers.any(KmgToolGenMsgTypes.class),
             ArgumentMatchers.any(Object[].class))).thenReturn("テストメッセージ");
 
         localReflectionModel.set("inputService", mockInputService);
         localReflectionModel.set("javadocLineRemoverService", mockService);
-        localReflectionModel.set("messageSource", mockMessageSource);
+        localReflectionModel.set("messageSource", localMockMessageSource);
 
         /* テスト対象の実行 */
         final boolean actualResult = (Boolean) localReflectionModel.getMethod("execute");
