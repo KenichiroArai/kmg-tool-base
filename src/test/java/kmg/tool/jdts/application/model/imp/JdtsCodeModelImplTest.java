@@ -216,7 +216,6 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     public void testGetOrgCode_normalReturnNullOriginalCode() {
 
         /* 期待値の定義 */
-        final String expectedOrgCode = null;
 
         /* 準備 */
         final String testCode = null;
@@ -229,7 +228,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
         final String actualOrgCode = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedOrgCode, actualOrgCode, "nullのオリジナルコードが正しく返されること");
+        Assertions.assertNull(actualOrgCode, "nullのオリジナルコードが正しく返されること");
 
     }
 
