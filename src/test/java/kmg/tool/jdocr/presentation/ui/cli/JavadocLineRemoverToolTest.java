@@ -1,5 +1,8 @@
 package kmg.tool.jdocr.presentation.ui.cli;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -19,7 +22,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.input.presentation.ui.cli.AbstractInputTool;
 import kmg.tool.jdocr.service.JavadocLineRemoverService;
 import kmg.tool.simple.domain.service.SimpleInputService;
 
@@ -86,8 +92,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testExecute_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
-        final Path    expectedPath   = Paths.get("nonexistent.txt");
+        final Path expectedPath = Paths.get("nonexistent.txt");
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget      = new JavadocLineRemoverTool();
@@ -98,24 +103,38 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
 
         final JavadocLineRemoverService mockService = Mockito.mock(JavadocLineRemoverService.class);
         Mockito.when(mockService.initialize(ArgumentMatchers.any(Path.class))).thenReturn(true);
-        Mockito.when(mockService.process()).thenThrow(new RuntimeException("テスト例外"));
 
-        final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
-        Mockito.when(mockMessageSource.getGenMessage(ArgumentMatchers.any(KmgToolGenMsgTypes.class),
-            ArgumentMatchers.any(Object[].class))).thenReturn("テストメッセージ");
+        // SpringApplicationContextHelperのモック化
+        try (final org.mockito.MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        localReflectionModel.set("inputService", mockInputService);
-        localReflectionModel.set("javadocLineRemoverService", mockService);
-        localReflectionModel.set("messageSource", mockMessageSource);
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
 
-        /* テスト対象の実行 */
-        final boolean actualResult = (Boolean) localReflectionModel.getMethod("execute");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
 
-        /* 検証の準備 */
-        final boolean actualResultForVerify = actualResult;
+            // KmgToolMsgExceptionを作成（モックのスコープ内で）
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001, new Object[] {});
+            Mockito.when(mockService.process()).thenThrow(testException);
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResultForVerify, "例外が発生した場合、falseが返されること");
+            localReflectionModel.set("inputService", mockInputService);
+            localReflectionModel.set("javadocLineRemoverService", mockService);
+            localReflectionModel.set("messageSource", mockMessageSource);
+
+            /* テスト対象の実行 */
+            final boolean actualResult = (Boolean) localReflectionModel.getMethod("execute");
+
+            /* 検証の準備 */
+            final boolean actualResultForVerify = actualResult;
+
+            /* 検証の実施 */
+            Assertions.assertFalse(actualResultForVerify, "例外が発生した場合、falseが返されること");
+
+        }
 
     }
 
@@ -131,8 +150,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testExecute_errorProcessFailure() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
-        final Path    expectedPath   = Paths.get("test.txt");
+        final Path expectedPath = Paths.get("test.txt");
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget      = new JavadocLineRemoverTool();
@@ -160,7 +178,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         final boolean actualResultForVerify = actualResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResultForVerify, "処理に失敗した場合、falseが返されること");
+        Assertions.assertFalse(actualResultForVerify, "処理に失敗した場合、falseが返されること");
 
     }
 
@@ -176,8 +194,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testExecute_normalSuccess() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
-        final Path    expectedPath   = Paths.get("test.txt");
+        final Path expectedPath = Paths.get("test.txt");
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget      = new JavadocLineRemoverTool();
@@ -205,7 +222,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         final boolean actualResultForVerify = actualResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResultForVerify, "正常に処理が完了すること");
+        Assertions.assertTrue(actualResultForVerify, "正常に処理が完了すること");
 
     }
 
@@ -221,8 +238,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testExecute_semiInitializeFailure() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
-        final Path    expectedPath   = Paths.get("test.txt");
+        final Path expectedPath = Paths.get("test.txt");
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget      = new JavadocLineRemoverTool();
@@ -249,7 +265,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         final boolean actualResultForVerify = actualResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResultForVerify, "初期化に失敗した場合、falseが返されること");
+        Assertions.assertFalse(actualResultForVerify, "初期化に失敗した場合、falseが返されること");
 
     }
 
@@ -295,7 +311,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testGetInputService_semiNullService() throws Exception {
 
         /* 期待値の定義 */
-        final SimpleInputService expectedService = null;
+        final SimpleInputService expectedService = Mockito.mock(SimpleInputService.class);
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget      = new JavadocLineRemoverTool();
@@ -309,7 +325,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         final SimpleInputService actualResult = actualService;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedService, actualResult, "nullの入力サービスが正しく返されること");
+        Assertions.assertNull(actualResult, "nullの入力サービスが正しく返されること");
 
     }
 
@@ -331,8 +347,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Method method           = testClass.getDeclaredMethod("getInputService");
-            final Class<?>                 actualReturnType = method.getReturnType();
+            final Method   method           = testClass.getDeclaredMethod("getInputService");
+            final Class<?> actualReturnType = method.getReturnType();
 
             /* 検証の準備 */
             final Class<?> actualResult = actualReturnType;
@@ -357,7 +373,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testGetInputServiceVisibility_normalPublic() {
 
         /* 期待値の定義 */
-        final int expectedModifiers = java.lang.reflect.Modifier.PUBLIC;
+        final int expectedModifiers = Modifier.PUBLIC;
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget = new JavadocLineRemoverTool();
@@ -366,11 +382,11 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Method method          = testClass.getDeclaredMethod("getInputService");
-            final int                      actualModifiers = method.getModifiers();
+            final Method method          = testClass.getDeclaredMethod("getInputService");
+            final int    actualModifiers = method.getModifiers();
 
             /* 検証の準備 */
-            final int actualResult = actualModifiers & java.lang.reflect.Modifier.PUBLIC;
+            final int actualResult = actualModifiers & Modifier.PUBLIC;
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedModifiers, actualResult, "getInputServiceメソッドがpublicで定義されていること");
@@ -392,7 +408,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testInheritance_normalExtendsAbstractInputTool() {
 
         /* 期待値の定義 */
-        final Class<?> expectedSuperClass = kmg.tool.input.presentation.ui.cli.AbstractInputTool.class;
+        final Class<?> expectedSuperClass = AbstractInputTool.class;
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget = new JavadocLineRemoverTool();
@@ -456,8 +472,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Field field           = testClass.getDeclaredField("inputService");
-            final Class<?>                actualFieldType = field.getType();
+            final Field    field           = testClass.getDeclaredField("inputService");
+            final Class<?> actualFieldType = field.getType();
 
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
@@ -482,7 +498,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testInputServiceVisibility_normalPrivate() {
 
         /* 期待値の定義 */
-        final int expectedModifiers = java.lang.reflect.Modifier.PRIVATE;
+        final int expectedModifiers = Modifier.PRIVATE;
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget = new JavadocLineRemoverTool();
@@ -491,11 +507,11 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Field field           = testClass.getDeclaredField("inputService");
-            final int                     actualModifiers = field.getModifiers();
+            final Field field           = testClass.getDeclaredField("inputService");
+            final int   actualModifiers = field.getModifiers();
 
             /* 検証の準備 */
-            final int actualResult = actualModifiers & java.lang.reflect.Modifier.PRIVATE;
+            final int actualResult = actualModifiers & Modifier.PRIVATE;
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedModifiers, actualResult, "inputServiceフィールドがprivateで定義されていること");
@@ -557,8 +573,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Field field           = testClass.getDeclaredField("javadocLineRemoverService");
-            final Class<?>                actualFieldType = field.getType();
+            final Field    field           = testClass.getDeclaredField("javadocLineRemoverService");
+            final Class<?> actualFieldType = field.getType();
 
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
@@ -584,7 +600,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testJavadocLineRemoverServiceVisibility_normalPrivate() {
 
         /* 期待値の定義 */
-        final int expectedModifiers = java.lang.reflect.Modifier.PRIVATE;
+        final int expectedModifiers = Modifier.PRIVATE;
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget = new JavadocLineRemoverTool();
@@ -593,11 +609,11 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Field field           = testClass.getDeclaredField("javadocLineRemoverService");
-            final int                     actualModifiers = field.getModifiers();
+            final Field field           = testClass.getDeclaredField("javadocLineRemoverService");
+            final int   actualModifiers = field.getModifiers();
 
             /* 検証の準備 */
-            final int actualResult = actualModifiers & java.lang.reflect.Modifier.PRIVATE;
+            final int actualResult = actualModifiers & Modifier.PRIVATE;
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedModifiers, actualResult,
@@ -736,8 +752,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Field field           = testClass.getDeclaredField("messageSource");
-            final Class<?>                actualFieldType = field.getType();
+            final Field    field           = testClass.getDeclaredField("messageSource");
+            final Class<?> actualFieldType = field.getType();
 
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
@@ -762,7 +778,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testMessageSourceVisibility_normalPrivate() {
 
         /* 期待値の定義 */
-        final int expectedModifiers = java.lang.reflect.Modifier.PRIVATE;
+        final int expectedModifiers = Modifier.PRIVATE;
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget = new JavadocLineRemoverTool();
@@ -771,11 +787,11 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Field field           = testClass.getDeclaredField("messageSource");
-            final int                     actualModifiers = field.getModifiers();
+            final Field field           = testClass.getDeclaredField("messageSource");
+            final int   actualModifiers = field.getModifiers();
 
             /* 検証の準備 */
-            final int actualResult = actualModifiers & java.lang.reflect.Modifier.PRIVATE;
+            final int actualResult = actualModifiers & Modifier.PRIVATE;
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedModifiers, actualResult, "messageSourceフィールドがprivateで定義されていること");
@@ -860,8 +876,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Field field           = testClass.getDeclaredField("TOOL_NAME");
-            final Class<?>                actualFieldType = field.getType();
+            final Field    field           = testClass.getDeclaredField("TOOL_NAME");
+            final Class<?> actualFieldType = field.getType();
 
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
@@ -886,8 +902,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     public void testToolNameVisibility_normalPrivateStaticFinal() {
 
         /* 期待値の定義 */
-        final int expectedModifiers
-            = java.lang.reflect.Modifier.PRIVATE | java.lang.reflect.Modifier.STATIC | java.lang.reflect.Modifier.FINAL;
+        final int expectedModifiers = Modifier.PRIVATE | Modifier.STATIC | Modifier.FINAL;
 
         /* 準備 */
         final JavadocLineRemoverTool localTestTarget = new JavadocLineRemoverTool();
@@ -896,12 +911,11 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         try {
 
-            final java.lang.reflect.Field field           = testClass.getDeclaredField("TOOL_NAME");
-            final int                     actualModifiers = field.getModifiers();
+            final Field field           = testClass.getDeclaredField("TOOL_NAME");
+            final int   actualModifiers = field.getModifiers();
 
             /* 検証の準備 */
-            final int actualResult = actualModifiers & (java.lang.reflect.Modifier.PRIVATE
-                | java.lang.reflect.Modifier.STATIC | java.lang.reflect.Modifier.FINAL);
+            final int actualResult = actualModifiers & (Modifier.PRIVATE | Modifier.STATIC | Modifier.FINAL);
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedModifiers, actualResult, "TOOL_NAME定数がprivate static finalで定義されていること");
