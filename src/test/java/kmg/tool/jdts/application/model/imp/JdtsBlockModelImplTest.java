@@ -205,6 +205,90 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * parse メソッドのテスト - 異常系:アノテーションと空白のみのブロック
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_abnormalAnnotationsAndWhitespaceOnly() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@Component\n\n@Service\n\n";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "アノテーションと空白のみのブロックでも解析が成功すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:アノテーションのみでコードがないブロック
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_abnormalAnnotationsOnly() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@Component\n@Service";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "アノテーションのみでコードがないブロックでも解析が成功すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:コメントのみのブロック
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_abnormalCommentsOnly() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n// コメント行\n/* ブロックコメント */";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "コメントのみのブロックでも解析が成功すること");
+
+    }
+
+    /**
      * parse メソッドのテスト - 異常系:空のブロック
      *
      * @throws Exception
@@ -233,7 +317,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 異常系:nullブロック
+     * parse メソッドのテスト - 異常系:コードブロックが空のブロック
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -241,36 +325,12 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public void testParse_abnormalNullBlock() throws Exception {
+    public void testParse_abnormalEmptyCodeBlock() throws Exception {
 
         /* 期待値の定義 */
 
         /* 準備 */
-        final String testBlock = null;
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行と検証 */
-        Assertions.assertThrows(NullPointerException.class, () -> {
-            this.testTarget.parse();
-        }, "nullブロックではNullPointerExceptionが発生すること");
-
-    }
-
-    /**
-     * parse メソッドのテスト - 異常系:特殊文字のみのブロック
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testParse_abnormalSpecialCharactersOnly() throws Exception {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        final String testBlock = "!@#$%^&*()";
+        final String testBlock = "/** テストJavadoc */\n";
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
         /* テスト対象の実行 */
@@ -280,12 +340,12 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertFalse(actualResult, "特殊文字のみのブロックでは解析が失敗すること");
+        Assertions.assertTrue(actualResult, "コードブロックが空のブロックでも解析が成功すること");
 
     }
 
     /**
-     * parse メソッドのテスト - 異常系:Javadoc開始記号のみのブロック
+     * parse メソッドのテスト - 異常系:不完全なメソッド定義のブロック
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -293,12 +353,12 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public void testParse_abnormalJavadocStartOnly() throws Exception {
+    public void testParse_abnormalIncompleteMethodDefinition() throws Exception {
 
         /* 期待値の定義 */
 
         /* 準備 */
-        final String testBlock = "/**";
+        final String testBlock = "/** テストJavadoc */\npublic String testMethod() { // 不完全なメソッド定義";
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
         /* テスト対象の実行 */
@@ -308,7 +368,63 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertFalse(actualResult, "Javadoc開始記号のみのブロックでは解析が失敗すること");
+        Assertions.assertTrue(actualResult, "不完全なメソッド定義のブロックでも解析が成功すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:無効なJavaコードのブロック
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_abnormalInvalidJavaCode() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class { // 無効なクラス定義";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "無効なJavaコードのブロックでも解析が成功すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:Javadoc終了記号が先頭にあるブロック
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_abnormalJavadocEndAtBeginning() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String testBlock = "*/ public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "Javadoc終了記号が先頭にあるブロックでも解析が成功すること");
 
     }
 
@@ -370,6 +486,34 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * parse メソッドのテスト - 異常系:Javadoc開始記号のみのブロック
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_abnormalJavadocStartOnly() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String testBlock = "/**";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertFalse(actualResult, "Javadoc開始記号のみのブロックでは解析が失敗すること");
+
+    }
+
+    /**
      * parse メソッドのテスト - 異常系: *&#47; が含まれていないブロック
      *
      * @since 0.1.0
@@ -399,7 +543,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 異常系:Javadoc終了記号が先頭にあるブロック
+     * parse メソッドのテスト - 異常系:nullブロック
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -407,28 +551,25 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public void testParse_abnormalJavadocEndAtBeginning() throws Exception {
+    public void testParse_abnormalNullBlock() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true; // 実際の実装ではtrueを返す
 
         /* 準備 */
-        final String testBlock = "*/ public class TestClass {";
+        final String testBlock = null;
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.parse();
+        /* テスト対象の実行と検証 */
+        Assertions.assertThrows(NullPointerException.class, () -> {
 
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
+            this.testTarget.parse();
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "Javadoc終了記号が先頭にあるブロックでも解析が成功すること");
+        }, "nullブロックではNullPointerExceptionが発生すること");
 
     }
 
     /**
-     * parse メソッドのテスト - 異常系:コードブロックが空のブロック
+     * parse メソッドのテスト - 異常系:特殊文字を含むブロック
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -436,13 +577,12 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public void testParse_abnormalEmptyCodeBlock() throws Exception {
+    public void testParse_abnormalSpecialCharactersInBlock() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true; // 実際の実装ではtrueを返す
 
         /* 準備 */
-        final String testBlock = "/** テストJavadoc */\n";
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {\n\t// タブ文字を含む\n    // スペース文字を含む\n}";
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
         /* テスト対象の実行 */
@@ -452,7 +592,35 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "コードブロックが空のブロックでも解析が成功すること");
+        Assertions.assertTrue(actualResult, "特殊文字を含むブロックでも解析が成功すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:特殊文字のみのブロック
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_abnormalSpecialCharactersOnly() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String testBlock = "!@#$%^&*()";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertFalse(actualResult, "特殊文字のみのブロックでは解析が失敗すること");
 
     }
 
@@ -468,7 +636,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_abnormalWhitespaceOnlyCodeBlock() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true; // 実際の実装ではtrueを返す
 
         /* 準備 */
         final String testBlock = "/** テストJavadoc */\n   \n\t\n";
@@ -481,7 +648,35 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "コードブロックが空白のみのブロックでも解析が成功すること");
+        Assertions.assertTrue(actualResult, "コードブロックが空白のみのブロックでも解析が成功すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:アノテーション使用の区分でも解析は成功する
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalAnnotationUsageButParseSuccess() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@Test";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "アノテーション使用の区分でも解析が成功すること");
 
     }
 
@@ -787,7 +982,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     public void testParse_normalNonJavadocTargetButParseSuccess() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true; // parseメソッドは常にtrueを返す
 
         /* 準備 */
         final String testBlock = "/** テストJavadoc */\n// コメント行";
@@ -800,40 +994,9 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "Javadoc対象外の区分でも解析が成功すること");
+        Assertions.assertTrue(actualResult, "Javadoc対象外の区分でも解析が成功すること");
 
     }
-
-    /**
-     * parse メソッドのテスト - 正常系:アノテーション使用の区分でも解析は成功する
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testParse_normalAnnotationUsageButParseSuccess() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true; // parseメソッドは常にtrueを返す
-
-        /* 準備 */
-        final String testBlock = "/** テストJavadoc */\n@Test";
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.parse();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "アノテーション使用の区分でも解析が成功すること");
-
-    }
-
-
 
     /**
      * specifyClassification メソッドのテスト - 正常系:クラス定義の区分特定
@@ -942,180 +1105,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertFalse(actualResult, "Javadoc対象外の場合はfalseが返されること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がNONEのままであること");
-
-    }
-
-    /**
-     * parse メソッドのテスト - 異常系:アノテーションのみでコードがないブロック
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testParse_abnormalAnnotationsOnly() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true; // 実際の実装ではtrueを返す
-
-        /* 準備 */
-        final String testBlock = "/** テストJavadoc */\n@Component\n@Service";
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.parse();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "アノテーションのみでコードがないブロックでも解析が成功すること");
-
-    }
-
-    /**
-     * parse メソッドのテスト - 異常系:アノテーションと空白のみのブロック
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testParse_abnormalAnnotationsAndWhitespaceOnly() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true; // 実際の実装ではtrueを返す
-
-        /* 準備 */
-        final String testBlock = "/** テストJavadoc */\n@Component\n\n@Service\n\n";
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.parse();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "アノテーションと空白のみのブロックでも解析が成功すること");
-
-    }
-
-    /**
-     * parse メソッドのテスト - 異常系:コメントのみのブロック
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testParse_abnormalCommentsOnly() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true; // 実際の実装ではtrueを返す
-
-        /* 準備 */
-        final String testBlock = "/** テストJavadoc */\n// コメント行\n/* ブロックコメント */";
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.parse();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "コメントのみのブロックでも解析が成功すること");
-
-    }
-
-    /**
-     * parse メソッドのテスト - 異常系:無効なJavaコードのブロック
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testParse_abnormalInvalidJavaCode() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true; // 実際の実装ではtrueを返す
-
-        /* 準備 */
-        final String testBlock = "/** テストJavadoc */\npublic class { // 無効なクラス定義";
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.parse();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "無効なJavaコードのブロックでも解析が成功すること");
-
-    }
-
-    /**
-     * parse メソッドのテスト - 異常系:不完全なメソッド定義のブロック
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testParse_abnormalIncompleteMethodDefinition() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true; // 実際の実装ではtrueを返す
-
-        /* 準備 */
-        final String testBlock = "/** テストJavadoc */\npublic String testMethod() { // 不完全なメソッド定義";
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.parse();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "不完全なメソッド定義のブロックでも解析が成功すること");
-
-    }
-
-    /**
-     * parse メソッドのテスト - 異常系:特殊文字を含むブロック
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testParse_abnormalSpecialCharactersInBlock() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true; // 実際の実装ではtrueを返す
-
-        /* 準備 */
-        final String testBlock = "/** テストJavadoc */\npublic class TestClass {\n\t// タブ文字を含む\n    // スペース文字を含む\n}";
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.parse();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "特殊文字を含むブロックでも解析が成功すること");
 
     }
 
