@@ -583,10 +583,13 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
+            // KmgFundMsgExceptionを作成する前に、SpringApplicationContextHelperのモック設定を完了させる
+            final KmgFundMsgException expectedException = new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
+                "test"
+            });
+
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class)))
-                .thenThrow(new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
-                    "test"
-                }));
+                .thenThrow(expectedException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
