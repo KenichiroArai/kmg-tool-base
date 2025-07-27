@@ -1,4 +1,4 @@
-package kmg.tool.jdts.application.model.imp;
+package kmg.tool.jdts.application.model.impl;
 
 import java.util.List;
 import java.util.UUID;
