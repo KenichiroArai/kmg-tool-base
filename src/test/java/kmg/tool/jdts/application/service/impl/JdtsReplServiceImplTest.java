@@ -138,13 +138,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final JdtsReplServiceImpl testConstructor = new JdtsReplServiceImpl(mockLogger);
 
         /* テスト対象の実行 */
-        final boolean testResult = testConstructor != null;
 
         /* 検証の準備 */
-        final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "カスタムロガーを使用したコンストラクタが正常に初期化されること");
+        Assertions.assertNotNull(testConstructor, "カスタムロガーを使用したコンストラクタが正常に初期化されること");
 
     }
 
@@ -160,13 +158,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final JdtsReplServiceImpl testConstructor = new JdtsReplServiceImpl();
 
         /* テスト対象の実行 */
-        final boolean testResult = testConstructor != null;
 
         /* 検証の準備 */
-        final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "コンストラクタが正常に初期化されること");
+        Assertions.assertNotNull(testConstructor, "コンストラクタが正常に初期化されること");
 
     }
 
