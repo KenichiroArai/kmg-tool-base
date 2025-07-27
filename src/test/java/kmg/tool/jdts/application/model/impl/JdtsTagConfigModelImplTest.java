@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.jdts.application.model.JdtsLocationConfigModel;
 import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
 import kmg.tool.jdts.application.types.JdtsInsertPositionTypes;
 import kmg.tool.jdts.application.types.JdtsOverwriteTypes;
@@ -28,12 +28,15 @@ import kmg.tool.jdts.application.types.JdtsOverwriteTypes;
  * @version 0.1.0
  */
 @SuppressWarnings({
-    "nls",
+    "nls", "static-method"
 })
 public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
 
     /** テスト対象 */
     private JdtsTagConfigModelImpl testTarget;
+
+    /** リフレクションモデル */
+    private KmgReflectionModelImpl reflectionModel;
 
     /**
      * テスト前処理<br>
@@ -45,6 +48,74 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
 
         /* テスト対象のクリア */
         this.testTarget = null;
+
+    }
+
+    /**
+     * コンストラクタ メソッドのテスト - 異常系:タグ名が空
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testConstructor_errorEmptyTagName() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        /* テスト対象の実行と検証 */
+        Assertions.assertThrows(KmgToolValException.class, () -> {
+
+            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        }, "タグ名が空の場合はKmgToolValExceptionが発生すること");
+
+    }
+
+    /**
+     * コンストラクタ メソッドのテスト - 異常系:タグ値が空
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testConstructor_errorEmptyTagValue() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        /* テスト対象の実行と検証 */
+        Assertions.assertThrows(KmgToolValException.class, () -> {
+
+            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        }, "タグ値が空の場合はKmgToolValExceptionが発生すること");
 
     }
 
@@ -64,9 +135,14 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "INVALID");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "INVALID_POSITION");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
         Assertions.assertThrows(KmgToolValException.class, () -> {
@@ -74,6 +150,42 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
         }, "無効な挿入位置の場合はKmgToolValExceptionが発生すること");
+
+    }
+
+    /**
+     * コンストラクタ メソッドのテスト - 異常系:配置場所の設定が無効
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testConstructor_errorInvalidLocationConfig() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        // 無効な配置場所の設定（MANUALモードでTARGET_ELEMENTSが指定されていない）
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "manual");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        // TARGET_ELEMENTSを指定しない
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        /* テスト対象の実行と検証 */
+        Assertions.assertThrows(KmgToolValException.class, () -> {
+
+            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        }, "配置場所の設定が無効な場合はKmgToolValExceptionが発生すること");
 
     }
 
@@ -93,10 +205,14 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "INVALID");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "INVALID_OVERWRITE");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
         Assertions.assertThrows(KmgToolValException.class, () -> {
@@ -122,9 +238,15 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@invalid");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "INVALID_TAG");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
         Assertions.assertThrows(KmgToolValException.class, () -> {
@@ -136,7 +258,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * コンストラクタ メソッドのテスト - 異常系:タグ名が空文字
+     * コンストラクタ メソッドのテスト - 正常系:タグの説明がnull
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -144,152 +266,75 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public void testConstructor_errorTagNameEmpty() throws Exception {
+    public void testConstructor_normalNullTagDescription() throws Exception {
 
         /* 期待値の定義 */
-
-        /* 準備 */
-        final Map<String, Object> testTagConfig = new HashMap<>();
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-
-        /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
-
-            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
-
-        }, "タグ名が空文字の場合はKmgToolValExceptionが発生すること");
-
-    }
-
-    /**
-     * コンストラクタ メソッドのテスト - 異常系:タグ名がnull
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testConstructor_errorTagNameNull() throws Exception {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        final Map<String, Object> testTagConfig = new HashMap<>();
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), null);
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-
-        /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
-
-            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
-
-        }, "タグ名がnullの場合はKmgToolValExceptionが発生すること");
-
-    }
-
-    /**
-     * コンストラクタ メソッドのテスト - 異常系:タグ値が空文字
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testConstructor_errorTagValueEmpty() throws Exception {
-
-        /* 期待値の定義 */
+        final String expectedTagDescription = "";
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), null);
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
-
-            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
-
-        }, "タグ値が空文字の場合はKmgToolValExceptionが発生すること");
-
-    }
-
-    /**
-     * コンストラクタ メソッドのテスト - 異常系:タグ値がnull
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testConstructor_errorTagValueNull() throws Exception {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        final Map<String, Object> testTagConfig = new HashMap<>();
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), null);
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-
-        /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
-
-            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
-
-        }, "タグ値がnullの場合はKmgToolValExceptionが発生すること");
-
-    }
-
-    /**
-     * コンストラクタ メソッドのテスト - 正常系:有効なタグ設定で正常に初期化
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testConstructor_normalValidTagConfig() throws Exception {
-
-        /* 期待値の定義 */
-        final String                  expectedTagName        = "@author";
-        final String                  expectedTagValue       = "TestAuthor";
-        final String                  expectedTagDescription = "TestDescription";
-        final JdtsInsertPositionTypes expectedInsertPosition = JdtsInsertPositionTypes.BEGINNING;
-        final JdtsOverwriteTypes      expectedOverwrite      = JdtsOverwriteTypes.ALWAYS;
-
-        /* 準備 */
-        final Map<String, Object> testTagConfig = new HashMap<>();
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), expectedTagName);
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), expectedTagValue);
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), expectedTagDescription);
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
-
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行 */
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
         /* 検証の実施 */
+        Assertions.assertEquals(expectedTagDescription, this.testTarget.getTagDescription(), "タグの説明が空文字列になること");
+
+    }
+
+    /**
+     * コンストラクタ メソッドのテスト - 正常系:正常に初期化
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testConstructor_normalValidConfig() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgJavadocTagTypes      expectedTag            = KmgJavadocTagTypes.AUTHOR;
+        final String                  expectedTagName        = "@author";
+        final String                  expectedTagValue       = "testValue";
+        final String                  expectedTagDescription = "testDescription";
+        final JdtsInsertPositionTypes expectedInsertPosition = JdtsInsertPositionTypes.BEGINNING;
+        final JdtsOverwriteTypes      expectedOverwrite      = JdtsOverwriteTypes.ALWAYS;
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "testDescription");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        /* テスト対象の実行 */
+        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTag, this.testTarget.getTag(), "タグが正しく設定されること");
         Assertions.assertEquals(expectedTagName, this.testTarget.getTagName(), "タグ名が正しく設定されること");
         Assertions.assertEquals(expectedTagValue, this.testTarget.getTagValue(), "タグ値が正しく設定されること");
-        Assertions.assertEquals(expectedTagDescription, this.testTarget.getTagDescription(), "タグ説明が正しく設定されること");
+        Assertions.assertEquals(expectedTagDescription, this.testTarget.getTagDescription(), "タグの説明が正しく設定されること");
         Assertions.assertEquals(expectedInsertPosition, this.testTarget.getInsertPosition(), "挿入位置が正しく設定されること");
         Assertions.assertEquals(expectedOverwrite, this.testTarget.getOverwrite(), "上書き設定が正しく設定されること");
-        Assertions.assertNotNull(this.testTarget.getLocation(), "配置設定がnullでないこと");
+        Assertions.assertNotNull(this.testTarget.getLocation(), "配置場所の設定が正しく設定されること");
 
     }
 
@@ -310,17 +355,14 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "END");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "end");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -333,7 +375,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * getLocation メソッドのテスト - 正常系:配置設定を返す
+     * getLocation メソッドのテスト - 正常系:配置場所の設定を返す
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -348,25 +390,22 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "false");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
         /* テスト対象の実行 */
-        final JdtsLocationConfigModel testResult = this.testTarget.getLocation();
+        final var testResult = this.testTarget.getLocation();
 
         /* 検証の実施 */
-        Assertions.assertNotNull(testResult, "配置設定がnullでないこと");
+        Assertions.assertNotNull(testResult, "配置場所の設定が正しく返されること");
 
     }
 
@@ -387,17 +426,14 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "NEVER");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "never");
 
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -421,22 +457,19 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testGetTag_normalReturnTag() throws Exception {
 
         /* 期待値の定義 */
-        final KmgJavadocTagTypes expectedTag = KmgJavadocTagTypes.AUTHOR;
+        final KmgJavadocTagTypes expectedTag = KmgJavadocTagTypes.VERSION;
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@version");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -449,7 +482,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * getTagDescription メソッドのテスト - 正常系:タグ説明を返す
+     * getTagDescription メソッドのテスト - 正常系:タグの説明を返す
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -460,22 +493,20 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testGetTagDescription_normalReturnTagDescription() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagDescription = "TestDescription";
+        final String expectedTagDescription = "testDescription";
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), expectedTagDescription);
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "testDescription");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -483,7 +514,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final String testResult = this.testTarget.getTagDescription();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedTagDescription, testResult, "タグ説明が正しく返されること");
+        Assertions.assertEquals(expectedTagDescription, testResult, "タグの説明が正しく返されること");
 
     }
 
@@ -499,22 +530,19 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testGetTagName_normalReturnTagName() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagName = "@author";
+        final String expectedTagName = "@since";
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), expectedTagName);
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@since");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -527,7 +555,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * getTagValue メソッドのテスト - 正常系:タグ値を返す
+     * getTagValue メソッドのテスト - 正常系:タグの指定値を返す
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -538,22 +566,19 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testGetTagValue_normalReturnTagValue() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagValue = "TestValue";
+        final String expectedTagValue = "testValue";
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), expectedTagValue);
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -561,12 +586,12 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final String testResult = this.testTarget.getTagValue();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedTagValue, testResult, "タグ値が正しく返されること");
+        Assertions.assertEquals(expectedTagValue, testResult, "タグの指定値が正しく返されること");
 
     }
 
     /**
-     * isProperlyPlaced メソッドのテスト - 正常系:MANUALモードで適切に配置されていない場合
+     * isProperlyPlaced メソッドのテスト - 正常系:COMPLIANTモードで一致する場合
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -574,27 +599,22 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public void testIsProperlyPlaced_normalManualModeNotProperlyPlaced() throws Exception {
+    public void testIsProperlyPlaced_normalCompliantModeMatch() throws Exception {
 
         /* 期待値の定義 */
+        final boolean expectedResult = true;
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        // 配置設定（MANUALモード）
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "MANUAL");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-
-        final List<String> targetElements = new ArrayList<>();
-        targetElements.add("METHOD");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), targetElements);
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -602,12 +622,12 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
 
         /* 検証の実施 */
-        Assertions.assertFalse(testResult, "MANUALモードで適切に配置されていない場合にfalseが返されること");
+        Assertions.assertEquals(expectedResult, testResult, "COMPLIANTモードで一致する場合はtrueが返されること");
 
     }
 
     /**
-     * isProperlyPlaced メソッドのテスト - 正常系:MANUALモードで適切に配置されている場合
+     * isProperlyPlaced メソッドのテスト - 正常系:COMPLIANTモードで一致しない場合
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -615,27 +635,62 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public void testIsProperlyPlaced_normalManualModeProperlyPlaced() throws Exception {
+    public void testIsProperlyPlaced_normalCompliantModeNoMatch() throws Exception {
 
         /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@param");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, testResult, "COMPLIANTモードで一致しない場合はfalseが返されること");
+
+    }
+
+    /**
+     * isProperlyPlaced メソッドのテスト - 正常系:MANUALモードで一致する場合
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testIsProperlyPlaced_normalManualModeMatch() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        // 配置設定（MANUALモード）
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "MANUAL");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "manual");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
 
         final List<String> targetElements = new ArrayList<>();
         targetElements.add("CLASS");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), targetElements);
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        locationMap.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), targetElements);
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -643,12 +698,52 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
 
         /* 検証の実施 */
-        Assertions.assertTrue(testResult, "MANUALモードで適切に配置されている場合にtrueが返されること");
+        Assertions.assertEquals(expectedResult, testResult, "MANUALモードで一致する場合はtrueが返されること");
 
     }
 
     /**
-     * isProperlyPlaced メソッドのテスト - 正常系:NONEモードの場合
+     * isProperlyPlaced メソッドのテスト - 正常系:MANUALモードで一致しない場合
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testIsProperlyPlaced_normalManualModeNoMatch() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "manual");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+
+        final List<String> targetElements = new ArrayList<>();
+        targetElements.add("METHOD");
+        locationMap.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), targetElements);
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, testResult, "MANUALモードで一致しない場合はfalseが返されること");
+
+    }
+
+    /**
+     * isProperlyPlaced メソッドのテスト - 正常系:NONEモードでfalseを返す
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -659,21 +754,19 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testIsProperlyPlaced_normalNoneMode() throws Exception {
 
         /* 期待値の定義 */
+        final boolean expectedResult = false;
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
 
-        // 配置設定（NONEモード）
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "NONE");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "none");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -681,12 +774,12 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
 
         /* 検証の実施 */
-        Assertions.assertFalse(testResult, "NONEモードの場合はfalseが返されること");
+        Assertions.assertEquals(expectedResult, testResult, "NONEモードの場合はfalseが返されること");
 
     }
 
     /**
-     * isProperlyPlaced メソッドのテスト - 正常系:適切に配置されていない場合
+     * setupBasicItems メソッドのテスト - 異常系:タグ名がnull
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -694,37 +787,32 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public void testIsProperlyPlaced_normalNotProperlyPlaced() throws Exception {
+    public void testSetupBasicItems_errorNullTagName() throws Exception {
 
         /* 期待値の定義 */
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), null);
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "testDescription");
 
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
-        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+        /* テスト対象の実行と検証 */
+        Assertions.assertThrows(NullPointerException.class, () -> {
 
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.NONE);
+            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
-        /* 検証の実施 */
-        Assertions.assertFalse(testResult, "適切に配置されていない場合にfalseが返されること");
+        }, "タグ名がnullの場合はNullPointerExceptionが発生すること");
 
     }
 
     /**
-     * isProperlyPlaced メソッドのテスト - 正常系:適切に配置されている場合
+     * setupBasicItems メソッドのテスト - 異常系:タグ値がnull
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -732,32 +820,248 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public void testIsProperlyPlaced_normalProperlyPlaced() throws Exception {
+    public void testSetupBasicItems_errorNullTagValue() throws Exception {
 
         /* 期待値の定義 */
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
         testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestValue");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "TestDescription");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "BEGINNING");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "ALWAYS");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), null);
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "testDescription");
 
-        // 配置設定
-        final Map<String, Object> locationConfig = new HashMap<>();
-        locationConfig.put(JdtsConfigKeyTypes.MODE.get(), "COMPLIANT");
-        locationConfig.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        locationConfig.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), new ArrayList<>());
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationConfig);
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        /* テスト対象の実行と検証 */
+        Assertions.assertThrows(KmgToolValException.class, () -> {
+
+            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        }, "タグ値がnullの場合はKmgToolValExceptionが発生すること");
+
+    }
+
+    /**
+     * setupBasicItems メソッドのテスト - 正常系:基本項目の設定
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testSetupBasicItems_normalSetupBasicItems() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_DESCRIPTION.get(), "testDescription");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
+        /* リフレクションモデルの初期化 */
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
         /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
+        final var testResult = this.reflectionModel.getMethod("setupBasicItems");
 
         /* 検証の実施 */
-        Assertions.assertTrue(testResult, "適切に配置されている場合にtrueが返されること");
+        Assertions.assertNotNull(testResult, "基本項目の設定が正常に実行されること");
+
+    }
+
+    /**
+     * setupInsertPosition メソッドのテスト - 異常系:挿入位置がnull
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testSetupInsertPosition_errorNullInsertPosition() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), null);
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        /* テスト対象の実行と検証 */
+        Assertions.assertThrows(KmgToolValException.class, () -> {
+
+            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        }, "挿入位置がnullの場合はKmgToolValExceptionが発生すること");
+
+    }
+
+    /**
+     * setupInsertPosition メソッドのテスト - 正常系:挿入位置の設定
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testSetupInsertPosition_normalSetupInsertPosition() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        /* リフレクションモデルの初期化 */
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final var testResult = this.reflectionModel.getMethod("setupInsertPosition");
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(testResult, "挿入位置の設定が正常に実行されること");
+
+    }
+
+    /**
+     * setupLocation メソッドのテスト - 正常系:配置場所の設定
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testSetupLocation_normalSetupLocation() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        /* リフレクションモデルの初期化 */
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final var testResult = this.reflectionModel.getMethod("setupLocation");
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(testResult, "配置場所の設定が正常に実行されること");
+
+    }
+
+    /**
+     * setupOverwrite メソッドのテスト - 異常系:上書き設定がnull
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testSetupOverwrite_errorNullOverwrite() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), null);
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        /* テスト対象の実行と検証 */
+        Assertions.assertThrows(KmgToolValException.class, () -> {
+
+            this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        }, "上書き設定がnullの場合はKmgToolValExceptionが発生すること");
+
+    }
+
+    /**
+     * setupOverwrite メソッドのテスト - 正常系:上書き設定
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testSetupOverwrite_normalSetupOverwrite() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        /* リフレクションモデルの初期化 */
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final var testResult = this.reflectionModel.getMethod("setupOverwrite");
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(testResult, "上書き設定が正常に実行されること");
 
     }
 
