@@ -1,5 +1,6 @@
 package kmg.tool.jdts.application.model.impl;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +35,7 @@ import kmg.tool.jdts.application.types.JdtsOverwriteTypes;
  * @version 0.1.0
  */
 @SuppressWarnings({
-    "nls", "static-method"
+    "nls",
 })
 public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
 
@@ -608,7 +609,6 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testIsProperlyPlaced_normalCompliantModeMatch() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
@@ -628,7 +628,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, testResult, "COMPLIANTモードで一致する場合はtrueが返されること");
+        Assertions.assertTrue(testResult, "COMPLIANTモードで一致する場合はtrueが返されること");
 
     }
 
@@ -644,7 +644,6 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testIsProperlyPlaced_normalCompliantModeNoMatch() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
@@ -664,7 +663,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, testResult, "COMPLIANTモードで一致しない場合はfalseが返されること");
+        Assertions.assertFalse(testResult, "COMPLIANTモードで一致しない場合はfalseが返されること");
 
     }
 
@@ -680,7 +679,6 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testIsProperlyPlaced_normalManualModeMatch() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
@@ -704,42 +702,44 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
             @Override
             protected KmgValsModel setupLocation() {
 
+                final KmgValsModel result = new KmgValsModelImpl();
+
                 // バリデーションエラーを回避するため、空のバリデーションモデルを返す
                 // locationフィールドを適切に設定
                 try {
 
                     final ObjectMapper        mapper      = new ObjectMapper(new YAMLFactory());
+                    @SuppressWarnings("hiding")
                     final Map<String, Object> locationMap = mapper
                         .convertValue(testTagConfig.get(JdtsConfigKeyTypes.LOCATION.get()), Map.class);
                     // リフレクションを使用してlocationフィールドにアクセス
-                    final java.lang.reflect.Field locationField
-                        = JdtsTagConfigModelImpl.class.getDeclaredField("location");
+                    final Field locationField = JdtsTagConfigModelImpl.class.getDeclaredField("location");
                     locationField.setAccessible(true);
                     locationField.set(this, new JdtsLocationConfigModelImpl(locationMap));
 
-                } catch (final Exception e) {
+                } catch (@SuppressWarnings("unused") final Exception e) {
 
                     // エラーが発生した場合はモックのlocationを作成
                     try {
 
-                        final java.lang.reflect.Field locationField
-                            = JdtsTagConfigModelImpl.class.getDeclaredField("location");
+                        final Field locationField = JdtsTagConfigModelImpl.class.getDeclaredField("location");
                         locationField.setAccessible(true);
                         locationField.set(this, new JdtsLocationConfigModelImpl(new HashMap<>()) {
 
                             @Override
                             public JdtsLocationModeTypes getMode() {
 
-                                return JdtsLocationModeTypes.MANUAL;
+                                final JdtsLocationModeTypes resultLocal = JdtsLocationModeTypes.MANUAL;
+                                return resultLocal;
 
                             }
 
                             @Override
                             public List<JavaClassificationTypes> getTargetElements() {
 
-                                final List<JavaClassificationTypes> elements = new ArrayList<>();
-                                elements.add(JavaClassificationTypes.CLASS);
-                                return elements;
+                                final List<JavaClassificationTypes> resultLocal = new ArrayList<>();
+                                resultLocal.add(JavaClassificationTypes.CLASS);
+                                return resultLocal;
 
                             }
                         });
@@ -747,10 +747,12 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
                     } catch (final Exception ex) {
 
                         // リフレクションエラーの場合は何もしない
+                        ex.printStackTrace();
+
                     }
 
                 }
-                return new KmgValsModelImpl();
+                return result;
 
             }
         };
@@ -759,7 +761,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, testResult, "MANUALモードで一致する場合はtrueが返されること");
+        Assertions.assertTrue(testResult, "MANUALモードで一致する場合はtrueが返されること");
 
     }
 
@@ -775,7 +777,6 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testIsProperlyPlaced_normalManualModeNoMatch() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
@@ -799,42 +800,44 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
             @Override
             protected KmgValsModel setupLocation() {
 
+                final KmgValsModel result = new KmgValsModelImpl();
+
                 // バリデーションエラーを回避するため、空のバリデーションモデルを返す
                 // locationフィールドを適切に設定
                 try {
 
                     final ObjectMapper        mapper      = new ObjectMapper(new YAMLFactory());
+                    @SuppressWarnings("hiding")
                     final Map<String, Object> locationMap = mapper
                         .convertValue(testTagConfig.get(JdtsConfigKeyTypes.LOCATION.get()), Map.class);
                     // リフレクションを使用してlocationフィールドにアクセス
-                    final java.lang.reflect.Field locationField
-                        = JdtsTagConfigModelImpl.class.getDeclaredField("location");
+                    final Field locationField = JdtsTagConfigModelImpl.class.getDeclaredField("location");
                     locationField.setAccessible(true);
                     locationField.set(this, new JdtsLocationConfigModelImpl(locationMap));
 
-                } catch (final Exception e) {
+                } catch (@SuppressWarnings("unused") final Exception e) {
 
                     // エラーが発生した場合はモックのlocationを作成
                     try {
 
-                        final java.lang.reflect.Field locationField
-                            = JdtsTagConfigModelImpl.class.getDeclaredField("location");
+                        final Field locationField = JdtsTagConfigModelImpl.class.getDeclaredField("location");
                         locationField.setAccessible(true);
                         locationField.set(this, new JdtsLocationConfigModelImpl(new HashMap<>()) {
 
                             @Override
                             public JdtsLocationModeTypes getMode() {
 
-                                return JdtsLocationModeTypes.MANUAL;
+                                final JdtsLocationModeTypes resultLocal = JdtsLocationModeTypes.MANUAL;
+                                return resultLocal;
 
                             }
 
                             @Override
                             public List<JavaClassificationTypes> getTargetElements() {
 
-                                final List<JavaClassificationTypes> elements = new ArrayList<>();
-                                elements.add(JavaClassificationTypes.METHOD);
-                                return elements;
+                                final List<JavaClassificationTypes> resultLocal = new ArrayList<>();
+                                resultLocal.add(JavaClassificationTypes.METHOD);
+                                return resultLocal;
 
                             }
                         });
@@ -842,10 +845,12 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
                     } catch (final Exception ex) {
 
                         // リフレクションエラーの場合は何もしない
+                        ex.printStackTrace();
+
                     }
 
                 }
-                return new KmgValsModelImpl();
+                return result;
 
             }
         };
@@ -854,7 +859,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, testResult, "MANUALモードで一致しない場合はfalseが返されること");
+        Assertions.assertFalse(testResult, "MANUALモードで一致しない場合はfalseが返されること");
 
     }
 
@@ -870,7 +875,6 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     public void testIsProperlyPlaced_normalNoneMode() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         final Map<String, Object> testTagConfig = new HashMap<>();
@@ -890,7 +894,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.CLASS);
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, testResult, "NONEモードの場合はfalseが返されること");
+        Assertions.assertFalse(testResult, "NONEモードの場合はfalseが返されること");
 
     }
 
