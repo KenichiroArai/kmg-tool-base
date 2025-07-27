@@ -399,12 +399,17 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
+        final KmgJavadocTagTypes mockTagConfigTagType = Mockito.mock(KmgJavadocTagTypes.class);
+
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
-        Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(null);
+        Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(mockTagConfigTagType);
         Mockito.when(this.mockJdtsBlockReplLogic.getCurrentTagConfigModel()).thenReturn(this.mockJdtsTagConfigModel);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn(expectedLogMessage);
+
+        // タグタイプのモック設定
+        Mockito.when(mockTagConfigTagType.getDisplayName()).thenReturn("ConfigTag");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("logAddNewTag", blockModel);
@@ -433,15 +438,20 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
+        final KmgJavadocTagTypes mockJavadocTagType = Mockito.mock(KmgJavadocTagTypes.class);
+
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
-        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(null);
+        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(mockJavadocTagType);
         Mockito.when(this.mockJavadocTagModel.getValue()).thenReturn("test value");
         Mockito.when(this.mockJavadocTagModel.getDescription()).thenReturn("test description");
         Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(this.mockJavadocTagModel);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn(expectedLogMessage);
+
+        // タグタイプのモック設定
+        Mockito.when(mockJavadocTagType.getDisplayName()).thenReturn("TestTag");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("logRemoveTag", blockModel);
@@ -470,20 +480,27 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
+        final KmgJavadocTagTypes mockJavadocTagType = Mockito.mock(KmgJavadocTagTypes.class);
+        final KmgJavadocTagTypes mockTagConfigTagType = Mockito.mock(KmgJavadocTagTypes.class);
+
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
-        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(null);
+        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(mockJavadocTagType);
         Mockito.when(this.mockJavadocTagModel.getValue()).thenReturn("test value");
         Mockito.when(this.mockJavadocTagModel.getDescription()).thenReturn("test description");
         Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(this.mockJavadocTagModel);
         Mockito.when(this.mockJdtsBlockReplLogic.getTagContentToApply()).thenReturn("test content");
-        Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(null);
+        Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(mockTagConfigTagType);
         Mockito.when(this.mockJdtsTagConfigModel.getTagValue()).thenReturn("test tag value");
         Mockito.when(this.mockJdtsTagConfigModel.getTagDescription()).thenReturn("test tag description");
         Mockito.when(this.mockJdtsBlockReplLogic.getCurrentTagConfigModel()).thenReturn(this.mockJdtsTagConfigModel);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn(expectedLogMessage);
+
+        // タグタイプのモック設定
+        Mockito.when(mockJavadocTagType.getDisplayName()).thenReturn("TestTag");
+        Mockito.when(mockTagConfigTagType.getDisplayName()).thenReturn("ConfigTag");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("logReplaceTag", blockModel);
@@ -512,20 +529,27 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
+        final KmgJavadocTagTypes mockJavadocTagType = Mockito.mock(KmgJavadocTagTypes.class);
+        final KmgJavadocTagTypes mockTagConfigTagType = Mockito.mock(KmgJavadocTagTypes.class);
+
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
-        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(null);
+        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(mockJavadocTagType);
         Mockito.when(this.mockJavadocTagModel.getValue()).thenReturn("test value");
         Mockito.when(this.mockJavadocTagModel.getDescription()).thenReturn("test description");
         Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(this.mockJavadocTagModel);
         Mockito.when(this.mockJdtsBlockReplLogic.getTagContentToApply()).thenReturn("test content");
-        Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(null);
+        Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(mockTagConfigTagType);
         Mockito.when(this.mockJdtsTagConfigModel.getTagValue()).thenReturn("test tag value");
         Mockito.when(this.mockJdtsTagConfigModel.getTagDescription()).thenReturn("test tag description");
         Mockito.when(this.mockJdtsBlockReplLogic.getCurrentTagConfigModel()).thenReturn(this.mockJdtsTagConfigModel);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn(expectedLogMessage);
+
+        // タグタイプのモック設定
+        Mockito.when(mockJavadocTagType.getDisplayName()).thenReturn("TestTag");
+        Mockito.when(mockTagConfigTagType.getDisplayName()).thenReturn("ConfigTag");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("logRepositionTag", blockModel);
