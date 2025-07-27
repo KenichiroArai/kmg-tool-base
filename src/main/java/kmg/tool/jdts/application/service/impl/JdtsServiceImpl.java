@@ -296,11 +296,15 @@ public class JdtsServiceImpl implements JdtsService {
      */
     private JdtsCodeModel loadAndCreateCodeModel() throws KmgToolMsgException, KmgToolValException {
 
+        final JdtsCodeModel result;
+
         this.jdtsIoLogic.loadContent();
-        final String        readContent   = this.jdtsIoLogic.getReadContent();
-        final JdtsCodeModel jdtsCodeModel = new JdtsCodeModelImpl(readContent);
-        jdtsCodeModel.parse();
-        return jdtsCodeModel;
+
+        final String readContent = this.jdtsIoLogic.getReadContent();
+        result = new JdtsCodeModelImpl(readContent);
+        result.parse();
+
+        return result;
 
     }
 
