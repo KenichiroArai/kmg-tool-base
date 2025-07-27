@@ -36,6 +36,9 @@ import kmg.tool.jdts.application.types.JdtsOverwriteTypes;
  */
 public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
+    /** タグ設定 */
+    private final Map<String, Object> tagConfig;
+
     /** タグ */
     private KmgJavadocTagTypes tag;
 
@@ -68,22 +71,24 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
      */
     public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) throws KmgToolValException {
 
+        this.tagConfig = tagConfig;
+
         final KmgValsModel valsModel = new KmgValsModelImpl();
 
         /* 基本項目の設定 */
-        final KmgValsModel basicItemsModel = this.setupBasicItems(tagConfig);
+        final KmgValsModel basicItemsModel = this.setupBasicItems();
         valsModel.merge(basicItemsModel);
 
         /* 配置場所の設定 */
-        final KmgValsModel locationModel = this.setupLocation(tagConfig);
+        final KmgValsModel locationModel = this.setupLocation();
         valsModel.merge(locationModel);
 
         /* 挿入位置の設定 */
-        final KmgValsModel insertPositionModel = this.setupInsertPosition(tagConfig);
+        final KmgValsModel insertPositionModel = this.setupInsertPosition();
         valsModel.merge(insertPositionModel);
 
         /* 上書きの設定 */
-        final KmgValsModel overwriteModel = this.setupOverwrite(tagConfig);
+        final KmgValsModel overwriteModel = this.setupOverwrite();
         valsModel.merge(overwriteModel);
 
         if (valsModel.isNotEmpty()) {
@@ -240,18 +245,15 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * 基本項目の設定<br>
      *
-     * @param tagConfig
-     *                  タグ設定
-     *
      * @return バリデーションモデル
      */
-    private KmgValsModel setupBasicItems(final Map<String, Object> tagConfig) {
+    protected KmgValsModel setupBasicItems() {
 
         final KmgValsModel result = new KmgValsModelImpl();
 
         /* タグ名とタグ */
         // タグ名
-        this.tagName = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_NAME.get());
+        this.tagName = (String) this.tagConfig.get(JdtsConfigKeyTypes.TAG_NAME.get());
 
         if (KmgString.isEmpty(this.tagName)) {
 
@@ -279,7 +281,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
         }
 
         /* タグの値 */
-        this.tagValue = (String) tagConfig.get(JdtsConfigKeyTypes.TAG_VALUE.get());
+        this.tagValue = (String) this.tagConfig.get(JdtsConfigKeyTypes.TAG_VALUE.get());
 
         if (KmgString.isEmpty(this.tagValue)) {
 
@@ -293,7 +295,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
         }
 
         /* タグの説明 */
-        this.tagDescription = Optional.ofNullable(tagConfig.get(JdtsConfigKeyTypes.TAG_DESCRIPTION.get()))
+        this.tagDescription = Optional.ofNullable(this.tagConfig.get(JdtsConfigKeyTypes.TAG_DESCRIPTION.get()))
             .map(Object::toString).orElse(KmgString.EMPTY);
 
         return result;
@@ -303,17 +305,14 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * 挿入位置の設定<br>
      *
-     * @param tagConfig
-     *                  タグ設定
-     *
      * @return バリデーションモデル
      */
-    private KmgValsModel setupInsertPosition(final Map<String, Object> tagConfig) {
+    protected KmgValsModel setupInsertPosition() {
 
         final KmgValsModel result = new KmgValsModelImpl();
 
         this.insertPosition
-            = JdtsInsertPositionTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.INSERT_POSITION.get()));
+            = JdtsInsertPositionTypes.getEnum((String) this.tagConfig.get(JdtsConfigKeyTypes.INSERT_POSITION.get()));
 
         if (this.insertPosition == JdtsInsertPositionTypes.NONE) {
 
@@ -333,12 +332,9 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * 配置場所の設定<br>
      *
-     * @param tagConfig
-     *                  タグ設定
-     *
      * @return バリデーションモデル
      */
-    private KmgValsModel setupLocation(final Map<String, Object> tagConfig) {
+    protected KmgValsModel setupLocation() {
 
         final KmgValsModel result = new KmgValsModelImpl();
 
@@ -346,7 +342,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
             final ObjectMapper        mapper      = new ObjectMapper(new YAMLFactory());
             final Map<String, Object> locationMap = mapper
-                .convertValue(tagConfig.get(JdtsConfigKeyTypes.LOCATION.get()), Map.class);
+                .convertValue(this.tagConfig.get(JdtsConfigKeyTypes.LOCATION.get()), Map.class);
 
             // 配置場所の設定の生成
             this.location = new JdtsLocationConfigModelImpl(locationMap);
@@ -364,16 +360,13 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * 上書き設定<br>
      *
-     * @param tagConfig
-     *                  タグ設定
-     *
      * @return バリデーションモデル
      */
-    private KmgValsModel setupOverwrite(final Map<String, Object> tagConfig) {
+    protected KmgValsModel setupOverwrite() {
 
         final KmgValsModel result = new KmgValsModelImpl();
 
-        this.overwrite = JdtsOverwriteTypes.getEnum((String) tagConfig.get(JdtsConfigKeyTypes.OVERWRITE.get()));
+        this.overwrite = JdtsOverwriteTypes.getEnum((String) this.tagConfig.get(JdtsConfigKeyTypes.OVERWRITE.get()));
 
         if (this.overwrite == JdtsOverwriteTypes.NONE) {
 
