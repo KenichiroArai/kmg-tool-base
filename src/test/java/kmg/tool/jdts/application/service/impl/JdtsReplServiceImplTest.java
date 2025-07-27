@@ -23,7 +23,6 @@ import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 import kmg.tool.jdoc.domain.model.JavadocTagModel;
 import kmg.tool.jdts.application.logic.JdtsBlockReplLogic;
@@ -62,9 +61,6 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /** モックJdtsCodeModel */
     private JdtsCodeModel mockJdtsCodeModel;
 
-    /** モックJdtsBlockModel */
-    private JdtsBlockModel mockJdtsBlockModel;
-
     /** モックJavadocModel */
     private JavadocModel mockJavadocModel;
 
@@ -92,7 +88,6 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         this.mockJdtsBlockReplLogic = Mockito.mock(JdtsBlockReplLogic.class);
         this.mockJdtsConfigsModel = Mockito.mock(JdtsConfigsModel.class);
         this.mockJdtsCodeModel = Mockito.mock(JdtsCodeModel.class);
-        this.mockJdtsBlockModel = Mockito.mock(JdtsBlockModel.class);
         this.mockJavadocModel = Mockito.mock(JavadocModel.class);
         this.mockJavadocTagModel = Mockito.mock(JavadocTagModel.class);
         this.mockJdtsTagConfigModel = Mockito.mock(JdtsTagConfigModel.class);
@@ -100,6 +95,17 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         /* モックの設定 */
         this.reflectionModel.set("messageSource", this.mockMessageSource);
         this.reflectionModel.set("jdtsBlockReplLogic", this.mockJdtsBlockReplLogic);
+
+        /* JavadocTagModelのモック設定 */
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
+        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(this.mockJavadocTagModel.getValue()).thenReturn("test value");
+        Mockito.when(this.mockJavadocTagModel.getDescription()).thenReturn("test description");
+
+        /* JdtsTagConfigModelのモック設定 */
+        Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(this.mockJdtsTagConfigModel.getTagValue()).thenReturn("test tag value");
+        Mockito.when(this.mockJdtsTagConfigModel.getTagDescription()).thenReturn("test tag description");
 
     }
 
@@ -370,7 +376,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        Mockito.when(this.mockJdtsCodeModel.getOrgCode()).thenReturn("");
+        // nullパラメータの場合は初期化をスキップするため、モックは不要
 
         /* テスト対象の実行 */
         final boolean testResult = this.testTarget.initialize(null, null);
@@ -398,7 +404,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final String expectedLogMessage = "test log message";
 
         /* 準備 */
-        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
+        final JdtsBlockModel     blockModel           = Mockito.mock(JdtsBlockModel.class);
         final KmgJavadocTagTypes mockTagConfigTagType = Mockito.mock(KmgJavadocTagTypes.class);
 
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
@@ -437,7 +443,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final String expectedLogMessage = "test log message";
 
         /* 準備 */
-        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
+        final JdtsBlockModel     blockModel         = Mockito.mock(JdtsBlockModel.class);
         final KmgJavadocTagTypes mockJavadocTagType = Mockito.mock(KmgJavadocTagTypes.class);
 
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
@@ -479,8 +485,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final String expectedLogMessage = "test log message";
 
         /* 準備 */
-        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
-        final KmgJavadocTagTypes mockJavadocTagType = Mockito.mock(KmgJavadocTagTypes.class);
+        final JdtsBlockModel     blockModel           = Mockito.mock(JdtsBlockModel.class);
+        final KmgJavadocTagTypes mockJavadocTagType   = Mockito.mock(KmgJavadocTagTypes.class);
         final KmgJavadocTagTypes mockTagConfigTagType = Mockito.mock(KmgJavadocTagTypes.class);
 
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
@@ -528,8 +534,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final String expectedLogMessage = "test log message";
 
         /* 準備 */
-        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
-        final KmgJavadocTagTypes mockJavadocTagType = Mockito.mock(KmgJavadocTagTypes.class);
+        final JdtsBlockModel     blockModel           = Mockito.mock(JdtsBlockModel.class);
+        final KmgJavadocTagTypes mockJavadocTagType   = Mockito.mock(KmgJavadocTagTypes.class);
         final KmgJavadocTagTypes mockTagConfigTagType = Mockito.mock(KmgJavadocTagTypes.class);
 
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
@@ -582,10 +588,10 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001, new Object[] {}));
+            .thenThrow(new RuntimeException("Test exception"));
 
         /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        final RuntimeException testException = Assertions.assertThrows(RuntimeException.class, () -> {
 
             this.reflectionModel.getMethod("processBlock", blockModel);
 
@@ -595,7 +601,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testException != null;
 
         /* 検証の実施 */
-        Assertions.assertFalse(actualResult, "KmgToolMsgExceptionが正しく発生すること");
+        Assertions.assertTrue(actualResult, "RuntimeExceptionが正しく発生すること");
 
     }
 
@@ -628,6 +634,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsBlockReplLogic.shouldAddNewTag()).thenReturn(true);
         Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentTagConfigModel()).thenReturn(this.mockJdtsTagConfigModel);
         Mockito.when(blockModel.getId()).thenReturn(blockId);
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
@@ -675,6 +682,9 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsBlockReplLogic.replaceExistingTag()).thenReturn(true);
         Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(this.mockJavadocTagModel);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentTagConfigModel()).thenReturn(this.mockJdtsTagConfigModel);
+        Mockito.when(this.mockJdtsBlockReplLogic.getTagContentToApply()).thenReturn("test content");
         Mockito.when(blockModel.getId()).thenReturn(blockId);
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
@@ -859,6 +869,9 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsBlockReplLogic.repositionTagIfNeeded()).thenReturn(true);
         Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(this.mockJavadocTagModel);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentTagConfigModel()).thenReturn(this.mockJdtsTagConfigModel);
+        Mockito.when(this.mockJdtsBlockReplLogic.getTagContentToApply()).thenReturn("test content");
         Mockito.when(blockModel.getId()).thenReturn(blockId);
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
@@ -903,10 +916,10 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001, new Object[] {}));
+            .thenThrow(new RuntimeException("Test exception"));
 
         /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        final RuntimeException testException = Assertions.assertThrows(RuntimeException.class, () -> {
 
             this.testTarget.replace();
 
@@ -916,7 +929,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testException != null;
 
         /* 検証の実施 */
-        Assertions.assertFalse(actualResult, "KmgToolMsgExceptionが正しく発生すること");
+        Assertions.assertTrue(actualResult, "RuntimeExceptionが正しく発生すること");
 
     }
 
