@@ -23,6 +23,7 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
@@ -179,7 +180,17 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         /* 準備 */
         this.reflectionModel.set("definitionPath", this.testDefinitionPath);
 
-        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
+        // SpringApplicationContextHelperのモック化
+        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
+             final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
 
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class)))
                 .thenThrow(new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
@@ -346,22 +357,35 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        Mockito.when(this.mockJdtsIoLogic.initialize(ArgumentMatchers.any(Path.class)))
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
-                "test"
-            }));
+        // SpringApplicationContextHelperのモック化
+        try (final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-            this.testTarget.initialize(this.testTargetPath, this.testDefinitionPath);
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
 
-        });
+            Mockito.when(this.mockJdtsIoLogic.initialize(ArgumentMatchers.any(Path.class)))
+                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+                    "test"
+                }));
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+                this.testTarget.initialize(this.testTargetPath, this.testDefinitionPath);
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+
+        }
 
     }
 
@@ -413,22 +437,35 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        Mockito.when(this.mockJdtsIoLogic.loadContent())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
-                "test"
-            }));
+        // SpringApplicationContextHelperのモック化
+        try (final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-            this.reflectionModel.getMethod("loadAndCreateCodeModel");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
 
-        });
+            Mockito.when(this.mockJdtsIoLogic.loadContent())
+                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+                    "test"
+                }));
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+                this.reflectionModel.getMethod("loadAndCreateCodeModel");
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+
+        }
 
     }
 
@@ -534,7 +571,17 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
 
-        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
+        // SpringApplicationContextHelperのモック化
+        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
+             final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
 
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class)))
                 .thenThrow(new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
@@ -572,19 +619,48 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         this.reflectionModel.set("definitionPath", this.testDefinitionPath);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
-        Mockito.when(this.mockJdtsIoLogic.load())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13002, new Object[] {
-                "test"
-            }));
 
-        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
+        // SpringApplicationContextHelperのモック化
+        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
+             final var mockSpringHelper = Mockito.mockStatic(kmg.fund.infrastructure.context.SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> kmg.fund.infrastructure.context.SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
+
+            // 例外を事前に作成
+            final KmgToolMsgException expectedException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13002, new Object[] {
+                "test"
+            });
+
+            Mockito.when(this.mockJdtsIoLogic.load())
+                .thenThrow(expectedException);
 
             final Map<String, Object> yamlData = new HashMap<>();
-            yamlData.put("test", "value");
+            final List<Map<String, Object>> configs = new ArrayList<>();
+
+            // 有効なタグ設定を作成
+            final Map<String, Object> tagConfig = new HashMap<>();
+            tagConfig.put("tagName", "@author");
+            tagConfig.put("tagValue", "TestAuthor");
+            tagConfig.put("insertPosition", "beginning");
+            tagConfig.put("overwrite", "always");
+
+            final Map<String, Object> locationMap = new HashMap<>();
+            locationMap.put("mode", "compliant");
+            locationMap.put("removeIfMisplaced", "true");
+            tagConfig.put("location", locationMap);
+
+            configs.add(tagConfig);
+            yamlData.put("JdtsConfigs", configs);
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -593,7 +669,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(actualException, "KmgToolMsgExceptionが正しく発生すること");
 
         }
 
@@ -615,15 +691,41 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
         Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
-        Mockito.when(this.mockJdtsIoLogic.loadContent())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
-                "test"
-            }));
 
-        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
+        // SpringApplicationContextHelperのモック化
+        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
+             final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
+
+            Mockito.when(this.mockJdtsIoLogic.loadContent())
+                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+                    "test"
+                }));
 
             final Map<String, Object> yamlData = new HashMap<>();
-            yamlData.put("test", "value");
+            final List<Map<String, Object>> configs = new ArrayList<>();
+
+            // 有効なタグ設定を作成
+            final Map<String, Object> tagConfig = new HashMap<>();
+            tagConfig.put("tagName", "@author");
+            tagConfig.put("tagValue", "TestAuthor");
+            tagConfig.put("insertPosition", "beginning");
+            tagConfig.put("overwrite", "always");
+
+            final Map<String, Object> locationMap = new HashMap<>();
+            locationMap.put("mode", "compliant");
+            locationMap.put("removeIfMisplaced", "true");
+            tagConfig.put("location", locationMap);
+
+            configs.add(tagConfig);
+            yamlData.put("JdtsConfigs", configs);
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
@@ -671,7 +773,22 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
 
             final Map<String, Object> yamlData = new HashMap<>();
-            yamlData.put("test", "value");
+            final List<Map<String, Object>> configs = new ArrayList<>();
+
+            // 有効なタグ設定を作成
+            final Map<String, Object> tagConfig = new HashMap<>();
+            tagConfig.put("tagName", "@author");
+            tagConfig.put("tagValue", "TestAuthor");
+            tagConfig.put("insertPosition", "beginning");
+            tagConfig.put("overwrite", "always");
+
+            final Map<String, Object> locationMap = new HashMap<>();
+            locationMap.put("mode", "compliant");
+            locationMap.put("removeIfMisplaced", "true");
+            tagConfig.put("location", locationMap);
+
+            configs.add(tagConfig);
+            yamlData.put("JdtsConfigs", configs);
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
@@ -707,7 +824,22 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
 
             final Map<String, Object> yamlData = new HashMap<>();
-            yamlData.put("test", "value");
+            final List<Map<String, Object>> configs = new ArrayList<>();
+
+            // 有効なタグ設定を作成
+            final Map<String, Object> tagConfig = new HashMap<>();
+            tagConfig.put("tagName", "@author");
+            tagConfig.put("tagValue", "TestAuthor");
+            tagConfig.put("insertPosition", "beginning");
+            tagConfig.put("overwrite", "always");
+
+            final Map<String, Object> locationMap = new HashMap<>();
+            locationMap.put("mode", "compliant");
+            locationMap.put("removeIfMisplaced", "true");
+            tagConfig.put("location", locationMap);
+
+            configs.add(tagConfig);
+            yamlData.put("jdtsConfigs", configs);
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
@@ -742,22 +874,36 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
-        Mockito.when(this.mockJdtsIoLogic.loadContent())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
-                "test"
-            }));
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.reflectionModel.getMethod("processFile");
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
 
-        /* 検証の準備 */
+            Mockito.when(this.mockJdtsIoLogic.loadContent())
+                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+                    "test"
+                }));
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            /* テスト対象の実行 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.reflectionModel.getMethod("processFile");
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+
+        }
 
     }
 
@@ -810,22 +956,36 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
-        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
-                "test"
-            }));
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.reflectionModel.getMethod("replaceJavadoc", this.mockJdtsCodeModel);
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
 
-        /* 検証の準備 */
+            Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+                    "test"
+                }));
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            /* テスト対象の実行 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.reflectionModel.getMethod("replaceJavadoc", this.mockJdtsCodeModel);
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+
+        }
 
     }
 
