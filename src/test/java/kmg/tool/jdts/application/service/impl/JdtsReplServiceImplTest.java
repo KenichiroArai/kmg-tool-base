@@ -20,6 +20,7 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
+import kmg.core.infrastructure.types.KmgJavadocTagTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
@@ -30,7 +31,6 @@ import kmg.tool.jdts.application.model.JdtsBlockModel;
 import kmg.tool.jdts.application.model.JdtsCodeModel;
 import kmg.tool.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.jdts.application.model.JdtsTagConfigModel;
-import kmg.tool.jdts.application.model.impl.JdtsBlockModelImpl;
 
 /**
  * JdtsReplServiceImplのテストクラス
@@ -398,7 +398,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final String expectedLogMessage = "test log message";
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(null);
@@ -432,7 +432,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final String expectedLogMessage = "test log message";
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
@@ -469,7 +469,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final String expectedLogMessage = "test log message";
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
@@ -511,7 +511,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final String expectedLogMessage = "test log message";
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
         Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
@@ -552,9 +552,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
 
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001, new Object[] {}));
 
@@ -591,7 +593,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final UUID   blockId              = UUID.randomUUID();
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
         this.reflectionModel.set("replaceCode", "test original code");
         this.reflectionModel.set("totalReplaceCount", 0L);
@@ -603,6 +605,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
         Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("processBlock", blockModel);
@@ -633,7 +637,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final UUID   blockId              = UUID.randomUUID();
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
         this.reflectionModel.set("replaceCode", "test original code");
         this.reflectionModel.set("totalReplaceCount", 0L);
@@ -648,6 +652,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
         Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("processBlock", blockModel);
@@ -678,7 +684,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final UUID   blockId              = UUID.randomUUID();
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
         this.reflectionModel.set("replaceCode", "test original code");
         this.reflectionModel.set("totalReplaceCount", 0L);
@@ -690,6 +696,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
         Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("processBlock", blockModel);
@@ -720,7 +728,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final UUID   blockId              = UUID.randomUUID();
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
         this.reflectionModel.set("replaceCode", "test original code");
         this.reflectionModel.set("totalReplaceCount", 0L);
@@ -733,6 +741,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
         Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("processBlock", blockModel);
@@ -763,7 +773,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final UUID   blockId              = UUID.randomUUID();
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
         this.reflectionModel.set("replaceCode", "test original code");
         this.reflectionModel.set("totalReplaceCount", 0L);
@@ -774,7 +784,14 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsBlockReplLogic.removeCurrentTagOnError()).thenReturn(true);
         Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(this.mockJavadocTagModel);
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
+        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(KmgJavadocTagTypes.AUTHOR);
+        Mockito.when(this.mockJavadocTagModel.getValue()).thenReturn("test value");
+        Mockito.when(this.mockJavadocTagModel.getDescription()).thenReturn("test description");
         Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("processBlock", blockModel);
@@ -805,7 +822,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final UUID   blockId              = UUID.randomUUID();
 
         /* 準備 */
-        final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
         this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
         this.reflectionModel.set("replaceCode", "test original code");
         this.reflectionModel.set("totalReplaceCount", 0L);
@@ -819,6 +836,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
         Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
 
         /* テスト対象の実行 */
         this.reflectionModel.getMethod("processBlock", blockModel);
@@ -846,7 +865,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final List<JdtsBlockModel> blockModels = new ArrayList<>();
-        final JdtsBlockModelImpl   blockModel  = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel       blockModel  = Mockito.mock(JdtsBlockModel.class);
         blockModels.add(blockModel);
 
         this.reflectionModel.set("jdtsCodeModel", this.mockJdtsCodeModel);
@@ -857,6 +876,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJavadocModel.getSrcJavadoc()).thenReturn("/** test javadoc */");
         Mockito.when(blockModel.getJavadocModel()).thenReturn(this.mockJavadocModel);
         Mockito.when(blockModel.getId()).thenReturn(UUID.randomUUID());
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001, new Object[] {}));
 
@@ -894,7 +915,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final List<JdtsBlockModel> blockModels = new ArrayList<>();
-        final JdtsBlockModelImpl   blockModel  = new JdtsBlockModelImpl("test block");
+        final JdtsBlockModel       blockModel  = Mockito.mock(JdtsBlockModel.class);
         blockModels.add(blockModel);
 
         this.reflectionModel.set("jdtsCodeModel", this.mockJdtsCodeModel);
@@ -905,6 +926,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJavadocModel.getSrcJavadoc()).thenReturn(javadocContent);
         Mockito.when(blockModel.getJavadocModel()).thenReturn(this.mockJavadocModel);
         Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
         Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn(true);
         Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
