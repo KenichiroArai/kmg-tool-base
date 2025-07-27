@@ -333,7 +333,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     public void testInitialize_normalInitialization() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String expectedOrgCode = "test original code";
+        final String expectedOrgCode           = "test original code";
+        final long   expectedTotalReplaceCount = 0L;
 
         /* 準備 */
         Mockito.when(this.mockJdtsCodeModel.getOrgCode()).thenReturn(expectedOrgCode);
@@ -354,7 +355,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Assertions.assertEquals(this.mockJdtsConfigsModel, actualConfigsModel, "構成モデルが正しく設定されること");
         Assertions.assertEquals(this.mockJdtsCodeModel, actualCodeModel, "コードモデルが正しく設定されること");
         Assertions.assertEquals(expectedOrgCode, actualReplaceCode, "置換後のコードが正しく設定されること");
-        Assertions.assertEquals(0L, actualTotalReplaceCount, "合計置換数がゼロに初期化されること");
+        Assertions.assertEquals(expectedTotalReplaceCount, actualTotalReplaceCount, "合計置換数がゼロに初期化されること");
 
     }
 
