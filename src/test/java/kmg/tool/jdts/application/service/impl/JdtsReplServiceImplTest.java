@@ -394,9 +394,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testLogAddNewTag_normalLogOutput() throws KmgReflectionException {
+    public void testLogAddNewTag_normalLogOutput() throws KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String expectedLogMessage = "test log message";
@@ -411,7 +413,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
             .thenReturn(expectedLogMessage);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("logAddNewTag", blockModel);
+        this.reflectionModel.getMethod("logAddNewTag", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -426,9 +428,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testLogRemoveTag_normalLogOutput() throws KmgReflectionException {
+    public void testLogRemoveTag_normalLogOutput() throws KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String expectedLogMessage = "test log message";
@@ -446,7 +450,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
             .thenReturn(expectedLogMessage);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("logRemoveTag", blockModel);
+        this.reflectionModel.getMethod("logRemoveTag", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -461,9 +465,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testLogReplaceTag_normalLogOutput() throws KmgReflectionException {
+    public void testLogReplaceTag_normalLogOutput() throws KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String expectedLogMessage = "test log message";
@@ -486,7 +492,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
             .thenReturn(expectedLogMessage);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("logReplaceTag", blockModel);
+        this.reflectionModel.getMethod("logReplaceTag", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -501,9 +507,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testLogRepositionTag_normalLogOutput() throws KmgReflectionException {
+    public void testLogRepositionTag_normalLogOutput() throws KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String expectedLogMessage = "test log message";
@@ -526,7 +534,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
             .thenReturn(expectedLogMessage);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("logRepositionTag", blockModel);
+        this.reflectionModel.getMethod("logRepositionTag", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -558,7 +566,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-            this.reflectionModel.invoke("processBlock", blockModel);
+            this.reflectionModel.getMethod("processBlock", blockModel);
 
         });
 
@@ -577,9 +585,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testProcessBlock_normalProcessBlock() throws KmgToolMsgException, KmgReflectionException {
+    public void testProcessBlock_normalProcessBlock() throws KmgToolMsgException, KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String replacedJavadocBlock = "/** replaced javadoc */";
@@ -600,7 +610,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(blockModel.getId()).thenReturn(blockId);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("processBlock", blockModel);
+        this.reflectionModel.getMethod("processBlock", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -617,9 +627,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testProcessBlock_semiExistingTag() throws KmgToolMsgException, KmgReflectionException {
+    public void testProcessBlock_semiExistingTag() throws KmgToolMsgException, KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String replacedJavadocBlock = "/** replaced javadoc */";
@@ -643,7 +655,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(blockModel.getId()).thenReturn(blockId);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("processBlock", blockModel);
+        this.reflectionModel.getMethod("processBlock", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -660,9 +672,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testProcessBlock_semiNoAddNewTag() throws KmgToolMsgException, KmgReflectionException {
+    public void testProcessBlock_semiNoAddNewTag() throws KmgToolMsgException, KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String replacedJavadocBlock = "/** replaced javadoc */";
@@ -683,7 +697,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(blockModel.getId()).thenReturn(blockId);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("processBlock", blockModel);
+        this.reflectionModel.getMethod("processBlock", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -700,9 +714,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testProcessBlock_semiNoOverwrite() throws KmgToolMsgException, KmgReflectionException {
+    public void testProcessBlock_semiNoOverwrite() throws KmgToolMsgException, KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String replacedJavadocBlock = "/** replaced javadoc */";
@@ -724,7 +740,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(blockModel.getId()).thenReturn(blockId);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("processBlock", blockModel);
+        this.reflectionModel.getMethod("processBlock", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -741,9 +757,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testProcessBlock_semiTagRemoval() throws KmgToolMsgException, KmgReflectionException {
+    public void testProcessBlock_semiTagRemoval() throws KmgToolMsgException, KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String replacedJavadocBlock = "/** replaced javadoc */";
@@ -764,7 +782,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(blockModel.getId()).thenReturn(blockId);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("processBlock", blockModel);
+        this.reflectionModel.getMethod("processBlock", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
@@ -781,9 +799,11 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
      */
     @Test
-    public void testProcessBlock_semiTagReposition() throws KmgToolMsgException, KmgReflectionException {
+    public void testProcessBlock_semiTagReposition() throws KmgToolMsgException, KmgReflectionException, Exception {
 
         /* 期待値の定義 */
         final String replacedJavadocBlock = "/** replaced javadoc */";
@@ -806,7 +826,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(blockModel.getId()).thenReturn(blockId);
 
         /* テスト対象の実行 */
-        this.reflectionModel.invoke("processBlock", blockModel);
+        this.reflectionModel.getMethod("processBlock", blockModel);
 
         /* 検証の準備 */
         final boolean actualResult = true;
