@@ -33,6 +33,7 @@ import kmg.tool.jdts.application.logic.JdtsIoLogic;
 import kmg.tool.jdts.application.model.JdtsCodeModel;
 import kmg.tool.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.jdts.application.service.JdtsReplService;
+import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
 
 /**
  * JdtsServiceImplのテストクラス
@@ -72,6 +73,76 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /** テスト用定義パス */
     private Path testDefinitionPath;
+
+    /**
+     * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用した初期化
+     */
+    @Test
+    public static void testConstructor_normalCustomLogger() {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Logger          mockLogger      = Mockito.mock(Logger.class);
+        final JdtsServiceImpl testConstructor = new JdtsServiceImpl(mockLogger);
+
+        /* テスト対象の実行 */
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(testConstructor, "カスタムロガーを使用したコンストラクタが正常に初期化されること");
+
+    }
+
+    /**
+     * コンストラクタ メソッドのテスト - 正常系：標準ロガーを使用した初期化
+     */
+    @Test
+    public static void testConstructor_normalStandardLogger() {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JdtsServiceImpl testConstructor = new JdtsServiceImpl();
+
+        /* テスト対象の実行 */
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(testConstructor, "コンストラクタが正常に初期化されること");
+
+    }
+
+    /**
+     * 有効なYAMLデータを作成する
+     *
+     * @return 有効なYAMLデータ
+     */
+    private static Map<String, Object> createValidYamlData() {
+
+        final Map<String, Object>       result  = new HashMap<>();
+        final List<Map<String, Object>> configs = new ArrayList<>();
+
+        // 有効なタグ設定を作成
+        final Map<String, Object> tagConfig = new HashMap<>();
+        tagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@author");
+        tagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "TestAuthor");
+        tagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        tagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        tagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        configs.add(tagConfig);
+        result.put(JdtsConfigKeyTypes.JDTS_CONFIGS.get(), configs);
+
+        return result;
+
+    }
 
     /**
      * セットアップ
@@ -121,47 +192,6 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     }
 
     /**
-     * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用した初期化
-     */
-    @Test
-    public void testConstructor_normalCustomLogger() {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        final Logger          mockLogger      = Mockito.mock(Logger.class);
-        final JdtsServiceImpl testConstructor = new JdtsServiceImpl(mockLogger);
-
-        /* テスト対象の実行 */
-
-        /* 検証の準備 */
-
-        /* 検証の実施 */
-        Assertions.assertNotNull(testConstructor, "カスタムロガーを使用したコンストラクタが正常に初期化されること");
-
-    }
-
-    /**
-     * コンストラクタ メソッドのテスト - 正常系：標準ロガーを使用した初期化
-     */
-    @Test
-    public void testConstructor_normalStandardLogger() {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        final JdtsServiceImpl testConstructor = new JdtsServiceImpl();
-
-        /* テスト対象の実行 */
-
-        /* 検証の準備 */
-
-        /* 検証の実施 */
-        Assertions.assertNotNull(testConstructor, "コンストラクタが正常に初期化されること");
-
-    }
-
-    /**
      * createJdtsConfigsModel メソッドのテスト - 異常系：YAMLファイル読み込みで例外が発生する場合
      *
      * @throws KmgToolMsgException
@@ -182,7 +212,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
         // SpringApplicationContextHelperのモック化
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
-             final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+            final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
             final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
             mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
@@ -192,10 +222,13 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
-            mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class)))
-                .thenThrow(new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
+            // 例外を事前に作成
+            final KmgFundMsgException expectedException
+                = new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
                     "test"
-                }));
+                });
+
+            mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenThrow(expectedException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -223,8 +256,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     public void testCreateJdtsConfigsModel_normalCreateConfigsModel() throws Exception {
 
         /* 期待値の定義 */
-        final Map<String, Object> yamlData = new HashMap<>();
-        yamlData.put("test", "value");
+        final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
 
         /* 準備 */
         this.reflectionModel.set("definitionPath", this.testDefinitionPath);
@@ -368,10 +400,14 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
-            Mockito.when(this.mockJdtsIoLogic.initialize(ArgumentMatchers.any(Path.class)))
-                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            // 例外を事前に作成
+            final KmgToolMsgException expectedException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
                     "test"
-                }));
+                });
+
+            Mockito.when(this.mockJdtsIoLogic.initialize(ArgumentMatchers.any(Path.class)))
+                .thenThrow(expectedException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -399,7 +435,6 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     public void testInitialize_normalInitialization() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         Mockito.when(this.mockJdtsIoLogic.initialize(ArgumentMatchers.any(Path.class))).thenReturn(true);
@@ -413,7 +448,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         final Path    actualDefinitionPath = (Path) this.reflectionModel.get("definitionPath");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "初期化が正常に完了すること");
+        Assertions.assertTrue(actualResult, "初期化が正常に完了すること");
         Assertions.assertEquals(this.testTargetPath, actualTargetPath, "対象ファイルパスが正しく設定されること");
         Assertions.assertEquals(this.testDefinitionPath, actualDefinitionPath, "定義ファイルパスが正しく設定されること");
         Mockito.verify(this.mockJdtsIoLogic).initialize(this.testTargetPath);
@@ -448,10 +483,13 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
-            Mockito.when(this.mockJdtsIoLogic.loadContent())
-                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            // 例外を事前に作成
+            final KmgToolMsgException expectedException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
                     "test"
-                }));
+                });
+
+            Mockito.when(this.mockJdtsIoLogic.loadContent()).thenThrow(expectedException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -573,7 +611,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
         // SpringApplicationContextHelperのモック化
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
-             final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+            final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
             final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
             mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
@@ -583,13 +621,13 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
-            // KmgFundMsgExceptionを作成する前に、SpringApplicationContextHelperのモック設定を完了させる
-            final KmgFundMsgException expectedException = new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
-                "test"
-            });
+            // 例外を事前に作成
+            final KmgFundMsgException expectedException
+                = new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
+                    "test"
+                });
 
-            mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class)))
-                .thenThrow(expectedException);
+            mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenThrow(expectedException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -625,10 +663,10 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
         // SpringApplicationContextHelperのモック化
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
-             final var mockSpringHelper = Mockito.mockStatic(kmg.fund.infrastructure.context.SpringApplicationContextHelper.class)) {
+            final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
             final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
-            mockSpringHelper.when(() -> kmg.fund.infrastructure.context.SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
                 .thenReturn(mockMessageSourceForException);
 
             // モックメッセージソースの設定
@@ -636,30 +674,14 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgToolMsgException expectedException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13002, new Object[] {
-                "test"
-            });
+            final KmgToolMsgException expectedException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13002, new Object[] {
+                    "test"
+                });
 
-            Mockito.when(this.mockJdtsIoLogic.load())
-                .thenThrow(expectedException);
+            Mockito.when(this.mockJdtsIoLogic.load()).thenThrow(expectedException);
 
-            final Map<String, Object> yamlData = new HashMap<>();
-            final List<Map<String, Object>> configs = new ArrayList<>();
-
-            // 有効なタグ設定を作成
-            final Map<String, Object> tagConfig = new HashMap<>();
-            tagConfig.put("tagName", "@author");
-            tagConfig.put("tagValue", "TestAuthor");
-            tagConfig.put("insertPosition", "beginning");
-            tagConfig.put("overwrite", "always");
-
-            final Map<String, Object> locationMap = new HashMap<>();
-            locationMap.put("mode", "compliant");
-            locationMap.put("removeIfMisplaced", "true");
-            tagConfig.put("location", locationMap);
-
-            configs.add(tagConfig);
-            yamlData.put("JdtsConfigs", configs);
+            final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
@@ -697,7 +719,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
         // SpringApplicationContextHelperのモック化
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
-             final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+            final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
             final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
             mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
@@ -707,28 +729,15 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
-            Mockito.when(this.mockJdtsIoLogic.loadContent())
-                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            // 例外を事前に作成
+            final KmgToolMsgException expectedException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
                     "test"
-                }));
+                });
 
-            final Map<String, Object> yamlData = new HashMap<>();
-            final List<Map<String, Object>> configs = new ArrayList<>();
+            Mockito.when(this.mockJdtsIoLogic.loadContent()).thenThrow(expectedException);
 
-            // 有効なタグ設定を作成
-            final Map<String, Object> tagConfig = new HashMap<>();
-            tagConfig.put("tagName", "@author");
-            tagConfig.put("tagValue", "TestAuthor");
-            tagConfig.put("insertPosition", "beginning");
-            tagConfig.put("overwrite", "always");
-
-            final Map<String, Object> locationMap = new HashMap<>();
-            locationMap.put("mode", "compliant");
-            locationMap.put("removeIfMisplaced", "true");
-            tagConfig.put("location", locationMap);
-
-            configs.add(tagConfig);
-            yamlData.put("JdtsConfigs", configs);
+            final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
@@ -757,8 +766,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     public void testProcess_normalProcess() throws Exception {
 
         /* 期待値の定義 */
-        final boolean    expectedResult = true;
-        final List<Path> filePathList   = new ArrayList<>();
+        final List<Path> filePathList = new ArrayList<>();
         filePathList.add(this.testTargetPath);
 
         /* 準備 */
@@ -775,23 +783,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
 
-            final Map<String, Object> yamlData = new HashMap<>();
-            final List<Map<String, Object>> configs = new ArrayList<>();
-
-            // 有効なタグ設定を作成
-            final Map<String, Object> tagConfig = new HashMap<>();
-            tagConfig.put("tagName", "@author");
-            tagConfig.put("tagValue", "TestAuthor");
-            tagConfig.put("insertPosition", "beginning");
-            tagConfig.put("overwrite", "always");
-
-            final Map<String, Object> locationMap = new HashMap<>();
-            locationMap.put("mode", "compliant");
-            locationMap.put("removeIfMisplaced", "true");
-            tagConfig.put("location", locationMap);
-
-            configs.add(tagConfig);
-            yamlData.put("JdtsConfigs", configs);
+            final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
@@ -800,7 +792,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedResult, testResult, "処理が正常に完了すること");
+            Assertions.assertTrue(testResult, "処理が正常に完了すること");
 
         }
 
@@ -823,26 +815,11 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
         Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(emptyFilePathList);
+        Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
 
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
 
-            final Map<String, Object> yamlData = new HashMap<>();
-            final List<Map<String, Object>> configs = new ArrayList<>();
-
-            // 有効なタグ設定を作成
-            final Map<String, Object> tagConfig = new HashMap<>();
-            tagConfig.put("tagName", "@author");
-            tagConfig.put("tagValue", "TestAuthor");
-            tagConfig.put("insertPosition", "beginning");
-            tagConfig.put("overwrite", "always");
-
-            final Map<String, Object> locationMap = new HashMap<>();
-            locationMap.put("mode", "compliant");
-            locationMap.put("removeIfMisplaced", "true");
-            tagConfig.put("location", locationMap);
-
-            configs.add(tagConfig);
-            yamlData.put("jdtsConfigs", configs);
+            final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
@@ -889,10 +866,13 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
-            Mockito.when(this.mockJdtsIoLogic.loadContent())
-                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            // 例外を事前に作成
+            final KmgToolMsgException expectedException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
                     "test"
-                }));
+                });
+
+            Mockito.when(this.mockJdtsIoLogic.loadContent()).thenThrow(expectedException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -971,10 +951,14 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
-            Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            // 例外を事前に作成
+            final KmgToolMsgException expectedException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
                     "test"
-                }));
+                });
+
+            Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenThrow(expectedException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
