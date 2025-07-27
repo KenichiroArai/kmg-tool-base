@@ -426,6 +426,37 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * logAddNewTag メソッドのテスト - 準正常系：CurrentTagConfigModelがnullの場合
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
+     */
+    @Test
+    public void testLogAddNewTag_semiNullCurrentTagConfigModel() throws KmgReflectionException, Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
+
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentTagConfigModel()).thenReturn(null);
+
+        /* テスト対象の実行 */
+        this.reflectionModel.getMethod("logAddNewTag", blockModel);
+
+        /* 検証の準備 */
+        final boolean actualResult = true;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "CurrentTagConfigModelがnullの場合でも例外が発生しないこと");
+
+    }
+
+    /**
      * logRemoveTag メソッドのテスト - 正常系：タグ削除時のログ出力
      *
      * @throws KmgReflectionException
@@ -517,6 +548,37 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * logReplaceTag メソッドのテスト - 準正常系：CurrentSrcJavadocTagがnullの場合
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
+     */
+    @Test
+    public void testLogReplaceTag_semiNullCurrentSrcJavadocTag() throws KmgReflectionException, Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
+
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(null);
+
+        /* テスト対象の実行 */
+        this.reflectionModel.getMethod("logReplaceTag", blockModel);
+
+        /* 検証の準備 */
+        final boolean actualResult = true;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "CurrentSrcJavadocTagがnullの場合でも例外が発生しないこと");
+
+    }
+
+    /**
      * logRepositionTag メソッドのテスト - 正常系：タグ位置変更時のログ出力
      *
      * @throws KmgReflectionException
@@ -562,6 +624,37 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "タグ位置変更時のログが正常に出力されること");
+
+    }
+
+    /**
+     * logRepositionTag メソッドのテスト - 準正常系：CurrentSrcJavadocTagがnullの場合
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
+     */
+    @Test
+    public void testLogRepositionTag_semiNullCurrentSrcJavadocTag() throws KmgReflectionException, Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JdtsBlockModel blockModel = Mockito.mock(JdtsBlockModel.class);
+
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(null);
+
+        /* テスト対象の実行 */
+        this.reflectionModel.getMethod("logRepositionTag", blockModel);
+
+        /* 検証の準備 */
+        final boolean actualResult = true;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "CurrentSrcJavadocTagがnullの場合でも例外が発生しないこと");
 
     }
 
