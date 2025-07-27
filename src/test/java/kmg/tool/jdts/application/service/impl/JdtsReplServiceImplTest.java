@@ -22,7 +22,7 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 import kmg.tool.jdoc.domain.model.JavadocTagModel;
 import kmg.tool.jdts.application.logic.JdtsBlockReplLogic;
@@ -80,7 +80,6 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
-    @SuppressWarnings("resource")
     @BeforeEach
     public void setUp() throws KmgReflectionException {
 
@@ -127,7 +126,6 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     public void testConstructor_normalCustomLogger() {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final Logger              mockLogger      = Mockito.mock(Logger.class);
@@ -140,7 +138,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "カスタムロガーを使用したコンストラクタが正常に初期化されること");
+        Assertions.assertTrue(actualResult, "カスタムロガーを使用したコンストラクタが正常に初期化されること");
 
     }
 
@@ -151,7 +149,6 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     public void testConstructor_normalStandardLogger() {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final JdtsReplServiceImpl testConstructor = new JdtsReplServiceImpl();
@@ -163,7 +160,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "コンストラクタが正常に初期化されること");
+        Assertions.assertTrue(actualResult, "コンストラクタが正常に初期化されること");
 
     }
 
@@ -203,7 +200,6 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     public void testGetJdtsConfigsModel_semiNullConfigsModel() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final JdtsConfigsModel expectedResult = null;
 
         /* 準備 */
         this.reflectionModel.set("jdtsConfigsModel", null);
@@ -215,7 +211,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final JdtsConfigsModel actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "nullの構成モデルが正しく取得されること");
+        Assertions.assertNull(actualResult, "nullの構成モデルが正しく取得されること");
 
     }
 
@@ -335,8 +331,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     public void testInitialize_normalInitialization() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final boolean expectedResult  = true;
-        final String  expectedOrgCode = "test original code";
+        final String expectedOrgCode = "test original code";
 
         /* 準備 */
         Mockito.when(this.mockJdtsCodeModel.getOrgCode()).thenReturn(expectedOrgCode);
@@ -353,7 +348,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final Long             actualTotalReplaceCount = (Long) this.reflectionModel.get("totalReplaceCount");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "初期化が正常に完了すること");
+        Assertions.assertTrue(actualResult, "初期化が正常に完了すること");
         Assertions.assertEquals(this.mockJdtsConfigsModel, actualConfigsModel, "構成モデルが正しく設定されること");
         Assertions.assertEquals(this.mockJdtsCodeModel, actualCodeModel, "コードモデルが正しく設定されること");
         Assertions.assertEquals(expectedOrgCode, actualReplaceCode, "置換後のコードが正しく設定されること");
@@ -373,7 +368,6 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     public void testInitialize_semiNullParameters() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         Mockito.when(this.mockJdtsCodeModel.getOrgCode()).thenReturn("");
@@ -385,7 +379,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "nullパラメータでも初期化が正常に完了すること");
+        Assertions.assertTrue(actualResult, "nullパラメータでも初期化が正常に完了すること");
 
     }
 
@@ -549,19 +543,20 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
      */
     @Test
-    public void testProcessBlock_errorKmgToolMsgException() throws KmgReflectionException {
+    public void testProcessBlock_errorKmgToolMsgException() throws KmgReflectionException, KmgToolMsgException {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         final JdtsBlockModelImpl blockModel = new JdtsBlockModelImpl("test block");
         this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
 
         Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenThrow(new KmgToolMsgException(KmgToolLogMsgTypes.KMGTOOL_LOG13001, new Object[] {}));
+            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001, new Object[] {}));
 
         /* テスト対象の実行 */
         final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -574,7 +569,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testException != null;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "KmgToolMsgExceptionが正しく発生すること");
+        Assertions.assertFalse(actualResult, "KmgToolMsgExceptionが正しく発生すること");
 
     }
 
@@ -841,12 +836,13 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
      */
     @Test
-    public void testReplace_errorKmgToolMsgException() throws KmgReflectionException {
+    public void testReplace_errorKmgToolMsgException() throws KmgReflectionException, KmgToolMsgException {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         final List<JdtsBlockModel> blockModels = new ArrayList<>();
@@ -862,7 +858,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         Mockito.when(blockModel.getJavadocModel()).thenReturn(this.mockJavadocModel);
         Mockito.when(blockModel.getId()).thenReturn(UUID.randomUUID());
         Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenThrow(new KmgToolMsgException(KmgToolLogMsgTypes.KMGTOOL_LOG13001, new Object[] {}));
+            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001, new Object[] {}));
 
         /* テスト対象の実行 */
         final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -875,7 +871,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testException != null;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "KmgToolMsgExceptionが正しく発生すること");
+        Assertions.assertFalse(actualResult, "KmgToolMsgExceptionが正しく発生すること");
 
     }
 
@@ -891,11 +887,10 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     public void testReplace_normalReplace() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final boolean expectedResult       = true;
-        final String  originalCode         = "test original code";
-        final String  javadocContent       = "/** test javadoc */";
-        final UUID    blockId              = UUID.randomUUID();
-        final String  replacedJavadocBlock = "/** replaced javadoc */";
+        final String originalCode         = "test original code";
+        final String javadocContent       = "/** test javadoc */";
+        final UUID   blockId              = UUID.randomUUID();
+        final String replacedJavadocBlock = "/** replaced javadoc */";
 
         /* 準備 */
         final List<JdtsBlockModel> blockModels = new ArrayList<>();
@@ -921,7 +916,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "置換処理が正常に完了すること");
+        Assertions.assertTrue(actualResult, "置換処理が正常に完了すること");
 
     }
 
@@ -937,8 +932,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     public void testReplace_semiEmptyBlockModels() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
-        final String  originalCode   = "test original code";
+        final String originalCode = "test original code";
 
         /* 準備 */
         final List<JdtsBlockModel> blockModels = new ArrayList<>();
@@ -956,7 +950,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "空のブロックモデルリストでも置換処理が正常に完了すること");
+        Assertions.assertTrue(actualResult, "空のブロックモデルリストでも置換処理が正常に完了すること");
 
     }
 
