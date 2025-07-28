@@ -18,8 +18,6 @@ import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.jdts.application.model.JdtsBlockModel;
-import kmg.tool.jdts.application.model.impl.JdtsBlockModelImpl;
-import kmg.tool.jdts.application.model.impl.JdtsCodeModelImpl;
 
 /**
  * Javadocタグ設定のコードモデル実装のテスト<br>

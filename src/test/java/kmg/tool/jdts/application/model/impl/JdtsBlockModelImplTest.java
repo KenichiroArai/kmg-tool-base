@@ -11,7 +11,6 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.tool.jdoc.domain.model.JavadocModel;
-import kmg.tool.jdts.application.model.impl.JdtsBlockModelImpl;
 
 /**
  * Javadocタグ設定のブロックモデル実装のテスト<br>
