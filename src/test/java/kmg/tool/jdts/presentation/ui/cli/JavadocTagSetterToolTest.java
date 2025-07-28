@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
-import kmg.core.infrastructure.model.val.KmgValsModel;
+import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
@@ -465,7 +465,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgToolValException testException = new KmgToolValException(Mockito.mock(KmgValsModel.class));
+            final KmgToolValException testException = new KmgToolValException(new KmgValsModelImpl());
             Mockito.when(this.mockJdtsService.process()).thenThrow(testException);
             Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テストメッセージ");
