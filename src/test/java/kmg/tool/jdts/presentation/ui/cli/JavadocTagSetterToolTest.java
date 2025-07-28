@@ -194,20 +194,20 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     public void testConstructor_normalCustom() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedToolName = "カスタムツール名";
+        final String expectedToolName = "Javadocタグ設定ツール";
 
         /* 準備 */
         final Logger logger = LoggerFactory.getLogger(JavadocTagSetterTool.class);
 
         /* テスト対象の実行 */
-        final JavadocTagSetterTool localTestTarget = new JavadocTagSetterTool(logger, expectedToolName);
+        final JavadocTagSetterTool localTestTarget = new JavadocTagSetterTool(logger, "カスタムツール名");
 
         /* 検証の準備 */
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
         final String                 actualToolName       = (String) localReflectionModel.get("TOOL_NAME");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedToolName, actualToolName, "カスタムツール名が正しく設定されていること");
+        Assertions.assertEquals(expectedToolName, actualToolName, "カスタムコンストラクタでもTOOL_NAME定数は変更されないこと");
 
     }
 
