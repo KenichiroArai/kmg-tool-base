@@ -20,7 +20,9 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
@@ -1086,29 +1088,38 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        // mainメソッドの代わりにexecuteメソッドをテスト
-        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
-        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        localReflectionModel.set("messageSource", this.mockMessageSource);
-        localReflectionModel.set("inputService", this.mockInputService);
-        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        // SpringApplicationをモック化
+        try (final MockedStatic<SpringApplication> mockedSpringApplication = Mockito.mockStatic(SpringApplication.class)) {
 
-        // モックの設定
-        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.mockInputService.process()).thenReturn(true);
-        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
-        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
-        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn("テストメッセージ");
+            // ConfigurableApplicationContextをモック化
+            final ConfigurableApplicationContext mockContext = Mockito.mock(ConfigurableApplicationContext.class);
+            final JavadocTagSetterTool mockTool = Mockito.mock(JavadocTagSetterTool.class);
 
-        /* テスト対象の実行 */
-        final boolean actualResult = localTestTarget.execute();
+            // SpringApplication.runの戻り値をモック化
+            mockedSpringApplication.when(() -> SpringApplication.run(JavadocTagSetterTool.class, new String[] {}))
+                .thenReturn(mockContext);
 
-        /* 検証の準備 */
+            // ctx.getBeanの戻り値をモック化
+            Mockito.when(mockContext.getBean(JavadocTagSetterTool.class)).thenReturn(mockTool);
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "mainメソッドが正常に実行されること");
+            // executeメソッドの戻り値をモック化
+            Mockito.when(mockTool.execute()).thenReturn(true);
+
+            /* テスト対象の実行 */
+            // mainメソッドを実際に呼び出し
+            JavadocTagSetterTool.main(new String[] {});
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            // mainメソッドが例外を投げずに正常に実行されることを確認
+            Assertions.assertTrue(true, "mainメソッドが正常に実行されること");
+
+            // モックが正しく呼び出されたことを検証
+            Mockito.verify(mockContext).getBean(JavadocTagSetterTool.class);
+            Mockito.verify(mockTool).execute();
+            Mockito.verify(mockContext).close();
+        }
 
     }
 
@@ -1126,29 +1137,38 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        // mainメソッドの代わりにexecuteメソッドをテスト
-        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
-        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        localReflectionModel.set("messageSource", this.mockMessageSource);
-        localReflectionModel.set("inputService", this.mockInputService);
-        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        // SpringApplicationをモック化
+        try (final MockedStatic<SpringApplication> mockedSpringApplication = Mockito.mockStatic(SpringApplication.class)) {
 
-        // モックの設定
-        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.mockInputService.process()).thenReturn(true);
-        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
-        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
-        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn("テストメッセージ");
+            // ConfigurableApplicationContextをモック化
+            final ConfigurableApplicationContext mockContext = Mockito.mock(ConfigurableApplicationContext.class);
+            final JavadocTagSetterTool mockTool = Mockito.mock(JavadocTagSetterTool.class);
 
-        /* テスト対象の実行 */
-        final boolean actualResult = localTestTarget.execute();
+            // SpringApplication.runの戻り値をモック化（null引数）
+            mockedSpringApplication.when(() -> SpringApplication.run(JavadocTagSetterTool.class, null))
+                .thenReturn(mockContext);
 
-        /* 検証の準備 */
+            // ctx.getBeanの戻り値をモック化
+            Mockito.when(mockContext.getBean(JavadocTagSetterTool.class)).thenReturn(mockTool);
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "空の引数でもmainメソッドが実行されること");
+            // executeメソッドの戻り値をモック化
+            Mockito.when(mockTool.execute()).thenReturn(true);
+
+            /* テスト対象の実行 */
+            // mainメソッドを実際に呼び出し（null引数）
+            JavadocTagSetterTool.main(null);
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            // mainメソッドが例外を投げずに正常に実行されることを確認
+            Assertions.assertTrue(true, "null引数でもmainメソッドが実行されること");
+
+            // モックが正しく呼び出されたことを検証
+            Mockito.verify(mockContext).getBean(JavadocTagSetterTool.class);
+            Mockito.verify(mockTool).execute();
+            Mockito.verify(mockContext).close();
+        }
 
     }
 
