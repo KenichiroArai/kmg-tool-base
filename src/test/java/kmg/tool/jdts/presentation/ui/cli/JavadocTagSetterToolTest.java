@@ -1084,7 +1084,6 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     public void testMain_normalSuccess() throws Exception {
 
         /* 期待値の定義 */
-        final String[] expectedArgs = {};
 
         /* 準備 */
         // mainメソッドの代わりにexecuteメソッドをテスト
@@ -1125,7 +1124,6 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     public void testMain_semiNullArgs() throws Exception {
 
         /* 期待値の定義 */
-        final String[] expectedArgs = {};
 
         /* 準備 */
         // mainメソッドの代わりにexecuteメソッドをテスト
