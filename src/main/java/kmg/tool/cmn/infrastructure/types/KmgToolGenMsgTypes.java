@@ -504,6 +504,15 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN13007("バリデーションエラーが発生しました。"),
 
     /**
+     * 実行時例外が発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN13008("実行時例外が発生しました。"),
+
+    /**
      * 項目名がnullです。
      *
      * @author KenichiroArai

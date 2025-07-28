@@ -180,8 +180,7 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
             /* 例外 */
 
-            // TODO KenichiroArai 2025/07/28 例外メッセージ。実行時例外が発生しました。
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN13008;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
             measService.error(msg, e);
