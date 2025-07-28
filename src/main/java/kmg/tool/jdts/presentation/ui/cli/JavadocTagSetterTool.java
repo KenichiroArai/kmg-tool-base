@@ -271,7 +271,8 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
         if (content == null) {
 
-            return false;
+            result = false;
+            return result;
 
         }
 
