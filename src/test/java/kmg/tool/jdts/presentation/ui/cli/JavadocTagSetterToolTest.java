@@ -22,8 +22,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
+import kmg.core.infrastructure.model.val.KmgValsModel;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
 import kmg.tool.input.domain.service.PlainContentInputServic;
 import kmg.tool.input.presentation.ui.cli.AbstractPlainContentInputTool;
 import kmg.tool.jdts.application.service.JdtsService;
@@ -390,9 +393,8 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         Mockito.when(this.mockInputService.process()).thenReturn(true);
         Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
         Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.mockJdtsService.process())
-            .thenThrow(new kmg.tool.cmn.infrastructure.exception.KmgToolMsgException(
-                kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {}));
+        Mockito.when(this.mockJdtsService.process()).thenThrow(new KmgToolMsgException(
+            kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {}));
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 
@@ -430,8 +432,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
         Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
         Mockito.when(this.mockJdtsService.process())
-            .thenThrow(new kmg.tool.cmn.infrastructure.exception.KmgToolValException(
-                Mockito.mock(kmg.core.infrastructure.model.val.KmgValsModel.class)));
+            .thenThrow(new KmgToolValException(Mockito.mock(KmgValsModel.class)));
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 
