@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +37,8 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.input.domain.service.PlainContentInputServic;
 import kmg.tool.input.presentation.ui.cli.AbstractPlainContentInputTool;
 import kmg.tool.jdts.application.service.JdtsService;
+import kmg.core.infrastructure.model.val.KmgValsModel;
+import kmg.core.infrastructure.model.val.KmgValDataModel;
 
 /**
  * Javadocタグ設定ツールのテスト<br>
@@ -482,6 +486,54 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
 
         }
 
+    }
+
+    /**
+     * execute メソッドのテスト - 異常系：KmgToolValExceptionのバリデーションリストが1件以上の場合
+     *
+     * @since 1.0.1
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testExecute_errorKmgToolValException_withValidationData() throws Exception {
+        // 準備
+        final JavadocTagSetterTool localTestTarget = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+
+        // バリデーションデータのモック
+        KmgValDataModel mockValData = Mockito.mock(KmgValDataModel.class);
+        Mockito.when(mockValData.getMessage()).thenReturn("バリデーションエラー1");
+        List<KmgValDataModel> valDataList = new ArrayList<>();
+        valDataList.add(mockValData);
+        KmgValsModel validationsModel = Mockito.mock(KmgValsModel.class);
+        Mockito.when(validationsModel.getDatas()).thenReturn(valDataList);
+
+        // 例外を事前に作成
+        KmgToolValException testException = Mockito.mock(KmgToolValException.class);
+        Mockito.when(testException.getValidationsModel()).thenReturn(validationsModel);
+        Mockito.when(this.mockJdtsService.process()).thenThrow(testException);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        // measService.errorの呼び出しを検証するためにKmgPfaMeasServiceImplをスパイ化
+        // ただし、execute()内でnewされるため、ここでは副作用のないことのみ確認
+
+        // テスト対象の実行
+        final boolean actualResult = localTestTarget.execute();
+
+        // 検証
+        Assertions.assertFalse(actualResult, "KmgToolValExceptionでバリデーションデータが1件以上の場合もfalseが返されること");
+        Mockito.verify(mockValData, Mockito.times(1)).getMessage();
+        Mockito.verify(validationsModel, Mockito.times(1)).getDatas();
     }
 
     /**
