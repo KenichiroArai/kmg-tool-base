@@ -148,7 +148,10 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
-        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenThrow(new RuntimeException("テスト例外"));
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenThrow(new RuntimeException("テスト例外"));
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 
@@ -217,7 +220,8 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
-        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(false);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(false);
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 

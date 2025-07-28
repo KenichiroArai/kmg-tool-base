@@ -176,6 +176,18 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
             result = false;
 
+        } catch (final RuntimeException e) {
+
+            /* 例外 */
+
+            // TODO KenichiroArai 2025/07/28 例外メッセージ。実行時例外が発生しました。
+            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.NONE;
+            final Object[]           messageArgs = {};
+            final String             msg         = this.messageSource.getGenMessage(msgType, messageArgs);
+            measService.error(msg, e);
+
+            result = false;
+
         } finally {
 
             /* 終了 */
@@ -250,7 +262,19 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
         result &= this.loadPlainContent(AbstractInputTool.getInputPath());
 
+        if (!result) {
+
+            return result;
+
+        }
+
         final String content = this.getContent();
+
+        if (content == null) {
+
+            return false;
+
+        }
 
         this.targetPath = Paths.get(content);
 
