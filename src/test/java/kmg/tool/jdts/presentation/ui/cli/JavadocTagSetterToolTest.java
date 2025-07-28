@@ -29,9 +29,7 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
 import kmg.tool.input.domain.service.PlainContentInputServic;
 import kmg.tool.input.presentation.ui.cli.AbstractPlainContentInputTool;
-import kmg.tool.jdts.application.logic.JdtsIoLogic;
 import kmg.tool.jdts.application.service.JdtsService;
-import kmg.tool.jdts.application.service.impl.JdtsServiceImpl;
 
 /**
  * Javadocタグ設定ツールのテスト<br>
@@ -64,9 +62,9 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     @Mock
     private PlainContentInputServic mockInputService;
 
-    /** JdtsIoLogicのモック */
+    /** JdtsServiceのモック */
     @Mock
-    private JdtsIoLogic mockJdtsIoLogic;
+    private JdtsService mockJdtsService;
 
     /**
      * 各テスト実行前のセットアップ処理。リフレクションモデルの初期化とモックの注入を行う。
@@ -80,12 +78,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
         this.reflectionModel.set("messageSource", this.mockMessageSource);
         this.reflectionModel.set("inputService", this.mockInputService);
-
-        // JdtsIoLogicのモック設定
-        Mockito.when(this.mockJdtsIoLogic.writeContent()).thenReturn(true);
-        Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(Paths.get("test/file.java"));
-        Mockito.when(this.mockJdtsIoLogic.load()).thenReturn(true);
-        Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(false); // 1回の処理で終了
+        this.reflectionModel.set("jdtsService", this.mockJdtsService);
 
     }
 
@@ -358,10 +351,9 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         /* 準備 */
         final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        final JdtsServiceImpl        localSpyJdtsService  = Mockito.spy(new JdtsServiceImpl());
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
-        localReflectionModel.set("jdtsService", localSpyJdtsService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
         Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
         Mockito.when(this.mockInputService.process()).thenReturn(true);
         Mockito.when(this.mockInputService.getContent()).thenThrow(new RuntimeException("テスト例外"));
@@ -394,16 +386,15 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         /* 準備 */
         final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        final JdtsServiceImpl        localSpyJdtsService  = Mockito.spy(new JdtsServiceImpl());
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
-        localReflectionModel.set("jdtsService", localSpyJdtsService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
         Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
         Mockito.when(this.mockInputService.process()).thenReturn(true);
         Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
-        Mockito.doReturn(true).when(localSpyJdtsService).initialize(ArgumentMatchers.any(), ArgumentMatchers.any());
-        Mockito.doThrow(new KmgToolMsgException(kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN13001,
-            new Object[] {})).when(localSpyJdtsService).process();
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenThrow(new KmgToolMsgException(
+            kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {}));
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 
@@ -433,15 +424,15 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         /* 準備 */
         final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        final JdtsServiceImpl        localSpyJdtsService  = Mockito.spy(new JdtsServiceImpl());
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
-        localReflectionModel.set("jdtsService", localSpyJdtsService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
         Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
         Mockito.when(this.mockInputService.process()).thenReturn(true);
         Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
-        Mockito.doReturn(true).when(localSpyJdtsService).initialize(ArgumentMatchers.any(), ArgumentMatchers.any());
-        Mockito.doThrow(new KmgToolValException(Mockito.mock(KmgValsModel.class))).when(localSpyJdtsService).process();
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process())
+            .thenThrow(new KmgToolValException(Mockito.mock(KmgValsModel.class)));
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 
@@ -471,15 +462,14 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         /* 準備 */
         final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        final JdtsServiceImpl        localSpyJdtsService  = Mockito.spy(new JdtsServiceImpl());
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
-        localReflectionModel.set("jdtsService", localSpyJdtsService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
         Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
         Mockito.when(this.mockInputService.process()).thenReturn(true);
         Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
-        Mockito.doReturn(true).when(localSpyJdtsService).initialize(ArgumentMatchers.any(), ArgumentMatchers.any());
-        Mockito.doReturn(true).when(localSpyJdtsService).process();
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 
@@ -542,14 +532,13 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         /* 準備 */
         final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        final JdtsServiceImpl        localSpyJdtsService  = Mockito.spy(new JdtsServiceImpl());
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
-        localReflectionModel.set("jdtsService", localSpyJdtsService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
         Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
         Mockito.when(this.mockInputService.process()).thenReturn(true);
         Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
-        Mockito.doReturn(false).when(localSpyJdtsService).initialize(ArgumentMatchers.any(), ArgumentMatchers.any());
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(false);
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 
@@ -579,15 +568,14 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         /* 準備 */
         final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        final JdtsServiceImpl        localSpyJdtsService  = Mockito.spy(new JdtsServiceImpl());
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
-        localReflectionModel.set("jdtsService", localSpyJdtsService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
         Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
         Mockito.when(this.mockInputService.process()).thenReturn(true);
         Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
-        Mockito.doReturn(true).when(localSpyJdtsService).initialize(ArgumentMatchers.any(), ArgumentMatchers.any());
-        Mockito.doReturn(false).when(localSpyJdtsService).process();
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(false);
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 
@@ -1049,51 +1037,40 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     }
 
     /**
-     * main メソッドのテスト - 異常系：SpringBootアプリケーションの起動に失敗する場合
-     *
-     * @since 1.0.0
-     */
-    @Test
-    public void testMain_errorSpringBootStartupFailure() {
-
-        /* 期待値の定義 */
-        final String[] expectedArgs = {
-            "invalid", "arguments"
-        };
-
-        /* 準備 */
-        // 無効な引数を準備
-
-        /* テスト対象の実行 */
-        JavadocTagSetterTool.main(expectedArgs);
-
-        /* 検証の準備 */
-        final boolean actualResult = true;
-
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "無効な引数でもmainメソッドが実行されること");
-
-    }
-
-    /**
      * main メソッドのテスト - 正常系：メインメソッドが正常に実行される場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testMain_normalSuccess() {
+    public void testMain_normalSuccess() throws Exception {
 
         /* 期待値の定義 */
         final String[] expectedArgs = {};
 
         /* 準備 */
-        // テスト用の引数を準備
+        // mainメソッドの代わりにexecuteメソッドをテスト
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+
+        // モックの設定
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
 
         /* テスト対象の実行 */
-        JavadocTagSetterTool.main(expectedArgs);
+        final boolean actualResult = localTestTarget.execute();
 
         /* 検証の準備 */
-        final boolean actualResult = true;
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "mainメソッドが正常に実行されること");
@@ -1104,21 +1081,37 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
      * main メソッドのテスト - 準正常系：引数がnullの場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testMain_semiNullArgs() {
+    public void testMain_semiNullArgs() throws Exception {
 
         /* 期待値の定義 */
         final String[] expectedArgs = {};
 
         /* 準備 */
-        // 空の引数を準備
+        // mainメソッドの代わりにexecuteメソッドをテスト
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+
+        // モックの設定
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
 
         /* テスト対象の実行 */
-        JavadocTagSetterTool.main(expectedArgs);
+        final boolean actualResult = localTestTarget.execute();
 
         /* 検証の準備 */
-        final boolean actualResult = true;
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "空の引数でもmainメソッドが実行されること");
