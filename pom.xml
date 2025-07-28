@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
@@ -49,7 +49,7 @@
             <version>0.2.0</version>
             <scope>system</scope>
             <!-- TODO KenichiroArai 2025/05/19 kmg-coreのv0.2.0がリリースするまで仮で直接指定 -->
-            <systemPath>${basedir}/../kmg-core/target/kmg-core-0.2.0.jar</systemPath>
+            <systemPath>${project.basedir}/../kmg-core/target/kmg-core-0.2.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>kmg.fund</groupId>
@@ -57,7 +57,7 @@
             <version>0.1.0</version>
             <scope>system</scope>
             <!-- TODO KenichiroArai 2025/05/19 kmg-cundのv0.2.0がリリースするまで仮で直接指定 -->
-            <systemPath>${basedir}/../kmg-fund/target/kmg-fund-0.1.0.jar</systemPath>
+            <systemPath>${project.basedir}/../kmg-fund/target/kmg-fund-0.1.0.jar</systemPath>
         </dependency>
 
         <!-- Spring -->
