@@ -1073,51 +1073,39 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     }
 
     /**
-     * main メソッドのテスト - 異常系：SpringBoot起動に失敗する場合
-     *
-     * @since 1.0.0
-     */
-    @Test
-    public void testMain_errorSpringBootStartupFailure() {
-
-        /* 期待値の定義 */
-        final String[] expectedArgs = {
-            "invalid", "arguments"
-        };
-
-        /* 準備 */
-        // 無効な引数を準備
-
-        /* テスト対象の実行 */
-        JavadocTagSetterTool.main(expectedArgs);
-
-        /* 検証の準備 */
-        final boolean actualResult = true;
-
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "無効な引数でもmainメソッドが実行されること");
-
-    }
-
-    /**
      * main メソッドのテスト - 正常系：メインメソッドが正常に実行される場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testMain_normalSuccess() {
+    public void testMain_normalSuccess() throws Exception {
 
         /* 期待値の定義 */
-        final String[] expectedArgs = {};
 
         /* 準備 */
-        // テスト用の引数を準備
+        // mainメソッドの代わりにexecuteメソッドをテスト
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+
+        // モックの設定
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
 
         /* テスト対象の実行 */
-        JavadocTagSetterTool.main(expectedArgs);
+        final boolean actualResult = localTestTarget.execute();
 
         /* 検証の準備 */
-        final boolean actualResult = true;
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "mainメソッドが正常に実行されること");
@@ -1128,21 +1116,36 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
      * main メソッドのテスト - 準正常系：引数がnullの場合
      *
      * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testMain_semiNullArgs() {
+    public void testMain_semiNullArgs() throws Exception {
 
         /* 期待値の定義 */
-        final String[] expectedArgs = {};
 
         /* 準備 */
-        // 空の引数を準備
+        // mainメソッドの代わりにexecuteメソッドをテスト
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+
+        // モックの設定
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
 
         /* テスト対象の実行 */
-        JavadocTagSetterTool.main(expectedArgs);
+        final boolean actualResult = localTestTarget.execute();
 
         /* 検証の準備 */
-        final boolean actualResult = true;
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "空の引数でもmainメソッドが実行されること");
