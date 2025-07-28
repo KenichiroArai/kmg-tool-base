@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -19,10 +19,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.input.domain.service.PlainContentInputServic;
+import kmg.tool.input.presentation.ui.cli.AbstractPlainContentInputTool;
 import kmg.tool.jdts.application.service.JdtsService;
 
 /**
@@ -98,10 +96,9 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         final Path actualBasePath = (Path) localReflectionModel.get("BASE_PATH");
 
         /* 検証の準備 */
-        final Path actualResult = actualBasePath;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedBasePath, actualResult, "BASE_PATH定数が正しく定義されていること");
+        Assertions.assertEquals(expectedBasePath, actualBasePath, "BASE_PATH定数が正しく定義されていること");
 
     }
 
@@ -127,15 +124,14 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         final String actualFormat = (String) localReflectionModel.get("DEFINITION_FILE_PATH_FORMAT");
 
         /* 検証の準備 */
-        final String actualResult = actualFormat;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedFormat, actualResult, "DEFINITION_FILE_PATH_FORMAT定数が正しく定義されていること");
+        Assertions.assertEquals(expectedFormat, actualFormat, "DEFINITION_FILE_PATH_FORMAT定数が正しく定義されていること");
 
     }
 
     /**
-     * TOOL_NAME 定数のテスト - 正常系：ツール名が正しく定義されている場合
+     * execute メソッドのテスト - 異常系：例外が発生する場合
      *
      * @since 1.0.0
      *
@@ -143,23 +139,95 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
-    public void testToolName_normalCorrectValue() throws Exception {
+    public void testExecute_errorException() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedToolName = "Javadocタグ設定ツール";
 
         /* 準備 */
         final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenThrow(new RuntimeException("テスト例外"));
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
 
         /* テスト対象の実行 */
-        final String actualToolName = (String) localReflectionModel.get("TOOL_NAME");
+        final boolean actualResult = localTestTarget.execute();
 
         /* 検証の準備 */
-        final String actualResult = actualToolName;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedToolName, actualResult, "TOOL_NAME定数が正しく定義されていること");
+        Assertions.assertFalse(actualResult, "例外が発生した場合、falseが返されること");
+
+    }
+
+    /**
+     * execute メソッドのテスト - 正常系：正常に処理が完了する場合
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testExecute_normalSuccess() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        final boolean actualResult = localTestTarget.execute();
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "正常に処理が完了すること");
+
+    }
+
+    /**
+     * execute メソッドのテスト - 準正常系：入力ファイルの読み込みに失敗する場合
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testExecute_semiInputLoadFailure() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(false);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        final boolean actualResult = localTestTarget.execute();
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        Assertions.assertFalse(actualResult, "入力ファイルの読み込みに失敗した場合、falseが返されること");
 
     }
 
@@ -184,10 +252,9 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         final Path actualDefinitionPath = localTestTarget.getDefinitionPath();
 
         /* 検証の準備 */
-        final Path actualResult = actualDefinitionPath;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedDefinitionPath, actualResult, "定義ファイルのパスが正しく返されること");
+        Assertions.assertEquals(expectedDefinitionPath, actualDefinitionPath, "定義ファイルのパスが正しく返されること");
 
     }
 
@@ -214,114 +281,9 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         final PlainContentInputServic actualInputService = localTestTarget.getInputService();
 
         /* 検証の準備 */
-        final PlainContentInputServic actualResult = actualInputService;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedInputService, actualResult, "プレーンコンテンツ入力サービスが正しく返されること");
-
-    }
-
-    /**
-     * execute メソッドのテスト - 正常系：正常に処理が完了する場合
-     *
-     * @since 1.0.0
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testExecute_normalSuccess() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
-        /* 準備 */
-        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
-        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        localReflectionModel.set("messageSource", this.mockMessageSource);
-        localReflectionModel.set("inputService", this.mockInputService);
-        localReflectionModel.set("jdtsService", this.mockJdtsService);
-        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.mockInputService.process()).thenReturn(true);
-        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
-        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
-        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn("テストメッセージ");
-
-        /* テスト対象の実行 */
-        final boolean actualResult = localTestTarget.execute();
-
-        /* 検証の準備 */
-        final boolean actualResultValue = actualResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResultValue, "正常に処理が完了すること");
-
-    }
-
-    /**
-     * execute メソッドのテスト - 準正常系：入力ファイルの読み込みに失敗する場合
-     *
-     * @since 1.0.0
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testExecute_semiInputLoadFailure() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
-        /* 準備 */
-        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
-        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        localReflectionModel.set("messageSource", this.mockMessageSource);
-        localReflectionModel.set("inputService", this.mockInputService);
-        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(false);
-        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn("テストメッセージ");
-
-        /* テスト対象の実行 */
-        final boolean actualResult = localTestTarget.execute();
-
-        /* 検証の準備 */
-        final boolean actualResultValue = actualResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResultValue, "入力ファイルの読み込みに失敗した場合、falseが返されること");
-
-    }
-
-    /**
-     * execute メソッドのテスト - 異常系：例外が発生する場合
-     *
-     * @since 1.0.0
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testExecute_errorException() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
-        /* 準備 */
-        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
-        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
-        localReflectionModel.set("messageSource", this.mockMessageSource);
-        localReflectionModel.set("inputService", this.mockInputService);
-        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenThrow(new RuntimeException("テスト例外"));
-        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn("テストメッセージ");
-
-        /* テスト対象の実行 */
-        final boolean actualResult = localTestTarget.execute();
-
-        /* 検証の準備 */
-        final boolean actualResultValue = actualResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResultValue, "例外が発生した場合、falseが返されること");
+        Assertions.assertEquals(expectedInputService, actualInputService, "プレーンコンテンツ入力サービスが正しく返されること");
 
     }
 
@@ -334,7 +296,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     public void testInheritance_normalExtendsAbstractPlainContentInputTool() {
 
         /* 期待値の定義 */
-        final Class<?> expectedSuperClass = kmg.tool.input.presentation.ui.cli.AbstractPlainContentInputTool.class;
+        final Class<?> expectedSuperClass = AbstractPlainContentInputTool.class;
 
         /* 準備 */
         final JavadocTagSetterTool localTestTarget = new JavadocTagSetterTool();
@@ -343,10 +305,9 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         final Class<?> actualSuperClass = localTestTarget.getClass().getSuperclass();
 
         /* 検証の準備 */
-        final Class<?> actualResult = actualSuperClass;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedSuperClass, actualResult, "AbstractPlainContentInputToolを正しく継承していること");
+        Assertions.assertEquals(expectedSuperClass, actualSuperClass, "AbstractPlainContentInputToolを正しく継承していること");
 
     }
 
@@ -372,6 +333,34 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "SpringBootApplicationアノテーションが正しく設定されていること");
+
+    }
+
+    /**
+     * TOOL_NAME 定数のテスト - 正常系：ツール名が正しく定義されている場合
+     *
+     * @since 1.0.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testToolName_normalCorrectValue() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedToolName = "Javadocタグ設定ツール";
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+
+        /* テスト対象の実行 */
+        final String actualToolName = (String) localReflectionModel.get("TOOL_NAME");
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedToolName, actualToolName, "TOOL_NAME定数が正しく定義されていること");
 
     }
 
