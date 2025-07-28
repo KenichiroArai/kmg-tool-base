@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -25,8 +26,10 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.model.val.KmgValsModel;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.input.domain.service.PlainContentInputServic;
 import kmg.tool.input.presentation.ui.cli.AbstractPlainContentInputTool;
 import kmg.tool.jdts.application.service.JdtsService;
@@ -393,18 +396,35 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         Mockito.when(this.mockInputService.process()).thenReturn(true);
         Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
         Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.mockJdtsService.process()).thenThrow(new KmgToolMsgException(
-            kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {}));
-        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn("テストメッセージ");
 
-        /* テスト対象の実行 */
-        final boolean actualResult = localTestTarget.execute();
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の準備 */
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-        /* 検証の実施 */
-        Assertions.assertFalse(actualResult, "KmgToolMsgExceptionが発生した場合、falseが返されること");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
+
+            // 例外を事前に作成
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {});
+            Mockito.when(this.mockJdtsService.process()).thenThrow(testException);
+            Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
+
+            /* テスト対象の実行 */
+            final boolean actualResult = localTestTarget.execute();
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertFalse(actualResult, "KmgToolMsgExceptionが発生した場合、falseが返されること");
+
+        }
 
     }
 
@@ -431,18 +451,34 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         Mockito.when(this.mockInputService.process()).thenReturn(true);
         Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
         Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.mockJdtsService.process())
-            .thenThrow(new KmgToolValException(Mockito.mock(KmgValsModel.class)));
-        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn("テストメッセージ");
 
-        /* テスト対象の実行 */
-        final boolean actualResult = localTestTarget.execute();
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の準備 */
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-        /* 検証の実施 */
-        Assertions.assertFalse(actualResult, "KmgToolValExceptionが発生した場合、falseが返されること");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
+
+            // 例外を事前に作成
+            final KmgToolValException testException = new KmgToolValException(Mockito.mock(KmgValsModel.class));
+            Mockito.when(this.mockJdtsService.process()).thenThrow(testException);
+            Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
+
+            /* テスト対象の実行 */
+            final boolean actualResult = localTestTarget.execute();
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertFalse(actualResult, "KmgToolValExceptionが発生した場合、falseが返されること");
+
+        }
 
     }
 
