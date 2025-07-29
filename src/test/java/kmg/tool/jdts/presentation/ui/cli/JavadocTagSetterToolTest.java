@@ -1204,7 +1204,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             final JavadocTagSetterTool           mockTool    = Mockito.mock(JavadocTagSetterTool.class);
 
             // SpringApplication.runの戻り値をモック化（null引数）
-            mockedSpringApplication.when(() -> SpringApplication.run(JavadocTagSetterTool.class, null))
+            mockedSpringApplication.when(() -> SpringApplication.run(JavadocTagSetterTool.class, (String[]) null))
                 .thenReturn(mockContext);
 
             // ctx.getBeanの戻り値をモック化
