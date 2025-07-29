@@ -136,24 +136,43 @@ public class MapTransformToolTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        final MapTransformTool       localTestTarget      = new MapTransformTool();
+        final MapTransformTool       localTestTarget      = Mockito.spy(new MapTransformTool());
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
         localReflectionModel.set("mapTransformService", this.mockMapTransformService);
         Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
         Mockito.when(this.mockInputService.process()).thenReturn(true);
-        Mockito.when(this.mockInputService.getContent()).thenThrow(new RuntimeException("テスト例外"));
+        // KmgToolMsgExceptionの作成はMockedStaticのスコープ内で行う
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("テストメッセージ");
 
-        /* テスト対象の実行 */
-        final boolean actualResult = localTestTarget.execute();
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* 検証の準備 */
+            final KmgMessageSource localMockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(localMockMessageSource);
 
-        /* 検証の実施 */
-        Assertions.assertFalse(actualResult, "例外が発生した場合、falseが返されること");
+            // モックメッセージソースの設定
+            Mockito.when(localMockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("[KMGTOOL_GEN19002] テストメッセージ");
+
+            // KmgToolMsgExceptionを作成（モックのスコープ内で）
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19002, new Object[] {});
+            Mockito.when(localTestTarget.getInputService().getContent()).thenThrow(testException);
+
+            /* テスト対象の実行 */
+            final boolean actualResult = localTestTarget.execute();
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertFalse(actualResult, "例外が発生した場合、falseが返されること");
+
+        }
 
     }
 
