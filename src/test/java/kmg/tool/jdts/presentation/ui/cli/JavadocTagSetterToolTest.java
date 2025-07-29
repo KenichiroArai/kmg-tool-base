@@ -27,6 +27,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
+import kmg.core.infrastructure.model.val.KmgValDataModel;
+import kmg.core.infrastructure.model.val.KmgValsModel;
 import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
@@ -37,8 +39,6 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.input.domain.service.PlainContentInputServic;
 import kmg.tool.input.presentation.ui.cli.AbstractPlainContentInputTool;
 import kmg.tool.jdts.application.service.JdtsService;
-import kmg.core.infrastructure.model.val.KmgValsModel;
-import kmg.core.infrastructure.model.val.KmgValDataModel;
 
 /**
  * Javadocタグ設定ツールのテスト<br>
@@ -498,8 +498,9 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
      */
     @Test
     public void testExecute_errorKmgToolValException_withValidationData() throws Exception {
+
         // 準備
-        final JavadocTagSetterTool localTestTarget = new JavadocTagSetterTool();
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
         final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
         localReflectionModel.set("messageSource", this.mockMessageSource);
         localReflectionModel.set("inputService", this.mockInputService);
@@ -510,15 +511,15 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
 
         // バリデーションデータのモック
-        KmgValDataModel mockValData = Mockito.mock(KmgValDataModel.class);
+        final KmgValDataModel mockValData = Mockito.mock(KmgValDataModel.class);
         Mockito.when(mockValData.getMessage()).thenReturn("バリデーションエラー1");
-        List<KmgValDataModel> valDataList = new ArrayList<>();
+        final List<KmgValDataModel> valDataList = new ArrayList<>();
         valDataList.add(mockValData);
-        KmgValsModel validationsModel = Mockito.mock(KmgValsModel.class);
+        final KmgValsModel validationsModel = Mockito.mock(KmgValsModel.class);
         Mockito.when(validationsModel.getDatas()).thenReturn(valDataList);
 
         // 例外を事前に作成
-        KmgToolValException testException = Mockito.mock(KmgToolValException.class);
+        final KmgToolValException testException = Mockito.mock(KmgToolValException.class);
         Mockito.when(testException.getValidationsModel()).thenReturn(validationsModel);
         Mockito.when(this.mockJdtsService.process()).thenThrow(testException);
         Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
@@ -534,6 +535,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         Assertions.assertFalse(actualResult, "KmgToolValExceptionでバリデーションデータが1件以上の場合もfalseが返されること");
         Mockito.verify(mockValData, Mockito.times(1)).getMessage();
         Mockito.verify(validationsModel, Mockito.times(1)).getDatas();
+
     }
 
     /**
@@ -1134,6 +1136,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
      * @throws Exception
      *                   例外
      */
+    @SuppressWarnings("resource")
     @Test
     public void testMain_normalSuccess() throws Exception {
 
@@ -1141,14 +1144,15 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
 
         /* 準備 */
         // SpringApplicationをモック化
-        try (final MockedStatic<SpringApplication> mockedSpringApplication = Mockito.mockStatic(SpringApplication.class)) {
+        try (final MockedStatic<SpringApplication> mockedSpringApplication
+            = Mockito.mockStatic(SpringApplication.class)) {
 
             // ConfigurableApplicationContextをモック化
             final ConfigurableApplicationContext mockContext = Mockito.mock(ConfigurableApplicationContext.class);
-            final JavadocTagSetterTool mockTool = Mockito.mock(JavadocTagSetterTool.class);
+            final JavadocTagSetterTool           mockTool    = Mockito.mock(JavadocTagSetterTool.class);
 
             // SpringApplication.runの戻り値をモック化
-            mockedSpringApplication.when(() -> SpringApplication.run(JavadocTagSetterTool.class, new String[] {}))
+            mockedSpringApplication.when(() -> SpringApplication.run(JavadocTagSetterTool.class))
                 .thenReturn(mockContext);
 
             // ctx.getBeanの戻り値をモック化
@@ -1171,6 +1175,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             Mockito.verify(mockContext).getBean(JavadocTagSetterTool.class);
             Mockito.verify(mockTool).execute();
             Mockito.verify(mockContext).close();
+
         }
 
     }
@@ -1183,6 +1188,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
      * @throws Exception
      *                   例外
      */
+    @SuppressWarnings("resource")
     @Test
     public void testMain_semiNullArgs() throws Exception {
 
@@ -1190,11 +1196,12 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
 
         /* 準備 */
         // SpringApplicationをモック化
-        try (final MockedStatic<SpringApplication> mockedSpringApplication = Mockito.mockStatic(SpringApplication.class)) {
+        try (final MockedStatic<SpringApplication> mockedSpringApplication
+            = Mockito.mockStatic(SpringApplication.class)) {
 
             // ConfigurableApplicationContextをモック化
             final ConfigurableApplicationContext mockContext = Mockito.mock(ConfigurableApplicationContext.class);
-            final JavadocTagSetterTool mockTool = Mockito.mock(JavadocTagSetterTool.class);
+            final JavadocTagSetterTool           mockTool    = Mockito.mock(JavadocTagSetterTool.class);
 
             // SpringApplication.runの戻り値をモック化（null引数）
             mockedSpringApplication.when(() -> SpringApplication.run(JavadocTagSetterTool.class, null))
@@ -1220,6 +1227,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             Mockito.verify(mockContext).getBean(JavadocTagSetterTool.class);
             Mockito.verify(mockTool).execute();
             Mockito.verify(mockContext).close();
+
         }
 
     }
