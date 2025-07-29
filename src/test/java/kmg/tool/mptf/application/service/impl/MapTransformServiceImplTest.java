@@ -61,7 +61,6 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
      * @throws Exception
      *                   例外
      */
-    @SuppressWarnings("resource")
     @BeforeEach
     public void setUp() throws Exception {
 
@@ -226,23 +225,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-            try {
-
-                this.testTarget.initialize(expectedPath, expectedMapping);
-
-            } catch (final KmgReflectionException e) {
-
-                // KmgReflectionExceptionの原因となった例外を再投げする
-                final Throwable cause = e.getCause();
-
-                if (cause instanceof KmgToolMsgException) {
-
-                    throw (KmgToolMsgException) cause;
-
-                }
-                throw e;
-
-            }
+            this.testTarget.initialize(expectedPath, expectedMapping);
 
         });
 
@@ -307,23 +290,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-            try {
-
-                this.testTarget.process();
-
-            } catch (final KmgReflectionException e) {
-
-                // KmgReflectionExceptionの原因となった例外を再投げする
-                final Throwable cause = e.getCause();
-
-                if (cause instanceof KmgToolMsgException) {
-
-                    throw (KmgToolMsgException) cause;
-
-                }
-                throw e;
-
-            }
+            this.testTarget.process();
 
         });
 
@@ -363,23 +330,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-            try {
-
-                this.testTarget.process();
-
-            } catch (final KmgReflectionException e) {
-
-                // KmgReflectionExceptionの原因となった例外を再投げする
-                final Throwable cause = e.getCause();
-
-                if (cause instanceof KmgToolMsgException) {
-
-                    throw (KmgToolMsgException) cause;
-
-                }
-                throw e;
-
-            }
+            this.testTarget.process();
 
         });
 
@@ -420,23 +371,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-            try {
-
-                this.testTarget.process();
-
-            } catch (final KmgReflectionException e) {
-
-                // KmgReflectionExceptionの原因となった例外を再投げする
-                final Throwable cause = e.getCause();
-
-                if (cause instanceof KmgToolMsgException) {
-
-                    throw (KmgToolMsgException) cause;
-
-                }
-                throw e;
-
-            }
+            this.testTarget.process();
 
         });
 
@@ -484,23 +419,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         /* テスト対象の実行 */
         final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-            try {
-
-                this.testTarget.process();
-
-            } catch (final KmgReflectionException e) {
-
-                // KmgReflectionExceptionの原因となった例外を再投げする
-                final Throwable cause = e.getCause();
-
-                if (cause instanceof KmgToolMsgException) {
-
-                    throw (KmgToolMsgException) cause;
-
-                }
-                throw e;
-
-            }
+            this.testTarget.process();
 
         });
 
