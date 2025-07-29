@@ -541,16 +541,22 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
             Mockito.when(this.mockJdtsIoLogic.load()).thenReturn(true);
             Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
-            Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(true, true, false, true, true, false);
+            Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(true, false, true, false);
             Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
-            Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("test content");
+            Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("oldValue test content", "test-uuid-1 test content");
             Mockito.when(this.mockJdtsIoLogic.writeContent()).thenReturn(true);
+            Mockito.doNothing().when(this.mockJdtsIoLogic).setWriteContent(ArgumentMatchers.anyString());
             Mockito.when(this.mockJdtsIoLogic.resetFileIndex()).thenReturn(true);
 
             // マッピングを設定
             final Map<String, String> mapping = new HashMap<>();
             mapping.put("oldValue", "newValue");
             this.reflectionModel.set("targetValueToReplacementValueMapping", mapping);
+
+            // UUIDマッピングも事前に設定（replaceTargetValuesWithUuidで設定されるはずだが、テストでは事前に設定）
+            final Map<String, String> uuidMapping = new HashMap<>();
+            uuidMapping.put("test-uuid-1", "newValue");
+            this.reflectionModel.set("uuidToReplacementValueMapping", uuidMapping);
 
             /* テスト対象の実行 */
             final boolean testResult = this.testTarget.process();

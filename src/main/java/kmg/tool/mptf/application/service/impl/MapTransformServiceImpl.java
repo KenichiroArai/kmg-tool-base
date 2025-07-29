@@ -290,7 +290,7 @@ public class MapTransformServiceImpl implements MapTransformService {
      */
     private long replaceUuidWithReplacementValues() throws KmgToolMsgException {
 
-        final long result = 0;
+        long result = 0;
 
         // ファイルの内容を読み込む
         if (!this.jdtsIoLogic.loadContent()) {
@@ -308,7 +308,13 @@ public class MapTransformServiceImpl implements MapTransformService {
             final String replacementValue = entry.getValue();
 
             // UUIDを置換値に置換
+            final String originalContent = content;
             content = content.replace(uuid, replacementValue);
+
+            // 置換が発生した場合のみカウント
+            if (!originalContent.equals(content)) {
+                result++;
+            }
 
         }
 
