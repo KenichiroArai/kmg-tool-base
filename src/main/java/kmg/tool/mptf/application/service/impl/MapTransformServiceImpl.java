@@ -135,7 +135,7 @@ public class MapTransformServiceImpl implements MapTransformService {
     public boolean initialize(final Path targetPath, final Map<String, String> targetValueToReplacementValueMapping)
         throws KmgToolMsgException {
 
-        boolean result = false;
+        boolean result;
 
         this.targetPath = targetPath;
         this.targetValueToReplacementValueMapping.putAll(targetValueToReplacementValueMapping);
@@ -165,7 +165,7 @@ public class MapTransformServiceImpl implements MapTransformService {
     @Override
     public boolean process() throws KmgToolMsgException, KmgToolValException {
 
-        boolean result = false;
+        boolean result;
 
         final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG19000;
         final Object[]           startLogMsgArgs  = {};
