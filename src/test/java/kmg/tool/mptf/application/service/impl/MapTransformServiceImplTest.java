@@ -526,29 +526,42 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         filePathList.add(this.tempDir.resolve("Test2.java"));
 
         /* 準備 */
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn("テストメッセージ");
-        Mockito.when(this.mockJdtsIoLogic.load()).thenReturn(true);
-        Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
-        Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(true, true, false, true, true, false);
-        Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
-        Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("test content");
-        Mockito.when(this.mockJdtsIoLogic.writeContent()).thenReturn(true);
-        Mockito.when(this.mockJdtsIoLogic.resetFileIndex()).thenReturn(true);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        // マッピングを設定
-        final Map<String, String> mapping = new HashMap<>();
-        mapping.put("oldValue", "newValue");
-        this.reflectionModel.set("targetValueToReplacementValueMapping", mapping);
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.process();
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
+            Mockito.when(this.mockJdtsIoLogic.load()).thenReturn(true);
+            Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
+            Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(true, true, false, true, true, false);
+            Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
+            Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("test content");
+            Mockito.when(this.mockJdtsIoLogic.writeContent()).thenReturn(true);
+            Mockito.when(this.mockJdtsIoLogic.resetFileIndex()).thenReturn(true);
 
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
+            // マッピングを設定
+            final Map<String, String> mapping = new HashMap<>();
+            mapping.put("oldValue", "newValue");
+            this.reflectionModel.set("targetValueToReplacementValueMapping", mapping);
 
-        /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+            /* テスト対象の実行 */
+            final boolean testResult = this.testTarget.process();
+
+            /* 検証の準備 */
+            final boolean actualResult = testResult;
+
+            /* 検証の実施 */
+            Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+
+        }
 
     }
 
