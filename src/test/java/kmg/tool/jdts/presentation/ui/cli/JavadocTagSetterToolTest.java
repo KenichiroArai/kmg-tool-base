@@ -143,7 +143,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedFieldType, actualFieldType, "BASE_PATH定数がPath型であること");
+            Assertions.assertSame(expectedFieldType, actualFieldType, "BASE_PATH定数がPath型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -298,7 +298,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedFieldType, actualFieldType, "DEFINITION_FILE_PATH_FORMAT定数がString型であること");
+            Assertions.assertSame(expectedFieldType, actualFieldType, "DEFINITION_FILE_PATH_FORMAT定数がString型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -760,7 +760,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedReturnType, actualReturnType, "getDefinitionPathメソッドがPathを返すこと");
+            Assertions.assertSame(expectedReturnType, actualReturnType, "getDefinitionPathメソッドがPathを返すこと");
 
         } catch (final NoSuchMethodException e) {
 
@@ -858,7 +858,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedReturnType, actualReturnType,
+            Assertions.assertSame(expectedReturnType, actualReturnType,
                 "getInputServiceメソッドがPlainContentInputServicを返すこと");
 
         } catch (final NoSuchMethodException e) {
@@ -924,7 +924,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
         /* 検証の準備 */
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedSuperClass, actualSuperClass, "AbstractPlainContentInputToolを正しく継承していること");
+        Assertions.assertSame(expectedSuperClass, actualSuperClass, "AbstractPlainContentInputToolを正しく継承していること");
 
     }
 
@@ -982,7 +982,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedFieldType, actualFieldType,
+            Assertions.assertSame(expectedFieldType, actualFieldType,
                 "inputServiceフィールドがPlainContentInputServic型であること");
 
         } catch (final NoSuchFieldException e) {
@@ -1083,7 +1083,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             final Class<?> actualResult = actualFieldType;
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedFieldType, actualResult, "jdtsServiceフィールドがJdtsService型であること");
+            Assertions.assertSame(expectedFieldType, actualResult, "jdtsServiceフィールドがJdtsService型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -1287,7 +1287,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             final Class<?> actualResult = actualFieldType;
 
             /* 検証の実施 */
-            Assertions.assertEquals(expectedFieldType, actualResult, "messageSourceフィールドがKmgMessageSource型であること");
+            Assertions.assertSame(expectedFieldType, actualResult, "messageSourceフィールドがKmgMessageSource型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -1507,8 +1507,8 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-            /* 検証の実施 */
-            Assertions.assertEquals(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
+                    /* 検証の実施 */
+        Assertions.assertSame(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
 
         } catch (final NoSuchFieldException e) {
 
