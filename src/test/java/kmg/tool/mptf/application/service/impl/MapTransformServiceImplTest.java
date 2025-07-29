@@ -423,11 +423,15 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
+
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
+
             Mockito.when(this.mockJdtsIoLogic.load()).thenReturn(true);
             Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
             Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(false);
             Mockito.when(this.mockJdtsIoLogic.resetFileIndex())
-                .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000));
+                .thenThrow(testException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
