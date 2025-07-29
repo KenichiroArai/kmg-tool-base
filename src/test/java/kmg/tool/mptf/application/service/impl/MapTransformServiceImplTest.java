@@ -549,36 +549,53 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
 
         /* 準備 */
-        Mockito.when(this.mockJdtsIoLogic.loadContent())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000));
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-            try {
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-                this.reflectionModel.getMethod("replaceTargetValuesWithUuid");
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
 
-            } catch (final KmgReflectionException e) {
+            Mockito.when(this.mockJdtsIoLogic.loadContent())
+                .thenThrow(testException);
 
-                // KmgReflectionExceptionの原因となった例外を再投げする
-                final Throwable cause = e.getCause();
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                if (cause instanceof KmgToolMsgException) {
+                try {
 
-                    throw (KmgToolMsgException) cause;
+                    this.reflectionModel.getMethod("replaceTargetValuesWithUuid");
+
+                } catch (final KmgReflectionException e) {
+
+                    // KmgReflectionExceptionの原因となった例外を再投げする
+                    final Throwable cause = e.getCause();
+
+                    if (cause instanceof KmgToolMsgException) {
+
+                        throw (KmgToolMsgException) cause;
+
+                    }
+                    throw e;
 
                 }
-                throw e;
 
-            }
+            });
 
-        });
+            /* 検証の準備 */
 
-        /* 検証の準備 */
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+        }
 
     }
 
@@ -596,43 +613,60 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
 
         /* 準備 */
-        Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
-        Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("oldValue");
-        Mockito.when(this.mockJdtsIoLogic.writeContent())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000));
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        // マッピングを設定
-        final Map<String, String> mapping = new HashMap<>();
-        mapping.put("oldValue", "newValue");
-        this.reflectionModel.set("targetValueToReplacementValueMapping", mapping);
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-            try {
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
 
-                this.reflectionModel.getMethod("replaceTargetValuesWithUuid");
+            Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
+            Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("oldValue");
+            Mockito.when(this.mockJdtsIoLogic.writeContent())
+                .thenThrow(testException);
 
-            } catch (final KmgReflectionException e) {
+            // マッピングを設定
+            final Map<String, String> mapping = new HashMap<>();
+            mapping.put("oldValue", "newValue");
+            this.reflectionModel.set("targetValueToReplacementValueMapping", mapping);
 
-                // KmgReflectionExceptionの原因となった例外を再投げする
-                final Throwable cause = e.getCause();
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                if (cause instanceof KmgToolMsgException) {
+                try {
 
-                    throw (KmgToolMsgException) cause;
+                    this.reflectionModel.getMethod("replaceTargetValuesWithUuid");
+
+                } catch (final KmgReflectionException e) {
+
+                    // KmgReflectionExceptionの原因となった例外を再投げする
+                    final Throwable cause = e.getCause();
+
+                    if (cause instanceof KmgToolMsgException) {
+
+                        throw (KmgToolMsgException) cause;
+
+                    }
+                    throw e;
 
                 }
-                throw e;
 
-            }
+            });
 
-        });
+            /* 検証の準備 */
 
-        /* 検証の準備 */
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+        }
 
     }
 
@@ -710,36 +744,53 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
 
         /* 準備 */
-        Mockito.when(this.mockJdtsIoLogic.loadContent())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000));
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-            try {
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-                this.reflectionModel.getMethod("replaceUuidWithReplacementValues");
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
 
-            } catch (final KmgReflectionException e) {
+            Mockito.when(this.mockJdtsIoLogic.loadContent())
+                .thenThrow(testException);
 
-                // KmgReflectionExceptionの原因となった例外を再投げする
-                final Throwable cause = e.getCause();
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                if (cause instanceof KmgToolMsgException) {
+                try {
 
-                    throw (KmgToolMsgException) cause;
+                    this.reflectionModel.getMethod("replaceUuidWithReplacementValues");
+
+                } catch (final KmgReflectionException e) {
+
+                    // KmgReflectionExceptionの原因となった例外を再投げする
+                    final Throwable cause = e.getCause();
+
+                    if (cause instanceof KmgToolMsgException) {
+
+                        throw (KmgToolMsgException) cause;
+
+                    }
+                    throw e;
 
                 }
-                throw e;
 
-            }
+            });
 
-        });
+            /* 検証の準備 */
 
-        /* 検証の準備 */
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+        }
 
     }
 
@@ -757,43 +808,60 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
 
         /* 準備 */
-        Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
-        Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("uuid1");
-        Mockito.when(this.mockJdtsIoLogic.writeContent())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000));
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        // UUIDマッピングを設定
-        final Map<String, String> uuidMapping = new HashMap<>();
-        uuidMapping.put("uuid1", "newValue1");
-        this.reflectionModel.set("uuidToReplacementValueMapping", uuidMapping);
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-            try {
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
 
-                this.reflectionModel.getMethod("replaceUuidWithReplacementValues");
+            Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
+            Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("uuid1");
+            Mockito.when(this.mockJdtsIoLogic.writeContent())
+                .thenThrow(testException);
 
-            } catch (final KmgReflectionException e) {
+            // UUIDマッピングを設定
+            final Map<String, String> uuidMapping = new HashMap<>();
+            uuidMapping.put("uuid1", "newValue1");
+            this.reflectionModel.set("uuidToReplacementValueMapping", uuidMapping);
 
-                // KmgReflectionExceptionの原因となった例外を再投げする
-                final Throwable cause = e.getCause();
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                if (cause instanceof KmgToolMsgException) {
+                try {
 
-                    throw (KmgToolMsgException) cause;
+                    this.reflectionModel.getMethod("replaceUuidWithReplacementValues");
+
+                } catch (final KmgReflectionException e) {
+
+                    // KmgReflectionExceptionの原因となった例外を再投げする
+                    final Throwable cause = e.getCause();
+
+                    if (cause instanceof KmgToolMsgException) {
+
+                        throw (KmgToolMsgException) cause;
+
+                    }
+                    throw e;
 
                 }
-                throw e;
 
-            }
+            });
 
-        });
+            /* 検証の準備 */
 
-        /* 検証の準備 */
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+        }
 
     }
 
