@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -23,6 +24,7 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdts.application.logic.JdtsIoLogic;
@@ -219,20 +221,36 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         expectedMapping.put("oldValue", "newValue");
 
         /* 準備 */
-        Mockito.when(this.mockJdtsIoLogic.initialize(ArgumentMatchers.any()))
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000));
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-            this.testTarget.initialize(expectedPath, expectedMapping);
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
 
-        });
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
 
-        /* 検証の準備 */
+            Mockito.when(this.mockJdtsIoLogic.initialize(ArgumentMatchers.any())).thenThrow(testException);
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(actualException, "例外が発生すること");
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.initialize(expectedPath, expectedMapping);
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertNotNull(actualException, "例外が発生すること");
+
+        }
 
     }
 
@@ -280,24 +298,40 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
 
         /* 準備 */
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn("テストメッセージ");
-        Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn(expectedDomainMessage);
-        Mockito.when(this.mockJdtsIoLogic.load())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000));
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-            this.testTarget.process();
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        });
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
 
-        /* 検証の準備 */
+            Mockito.when(this.mockJdtsIoLogic.load()).thenThrow(testException);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.process();
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -318,26 +352,42 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         final List<Path> filePathList = new ArrayList<>();
         filePathList.add(this.tempDir.resolve("Test1.java"));
 
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn("テストメッセージ");
-        Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn(expectedDomainMessage);
-        Mockito.when(this.mockJdtsIoLogic.load()).thenReturn(true);
-        Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
-        Mockito.when(this.mockJdtsIoLogic.nextFile())
-            .thenThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000));
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-            this.testTarget.process();
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        });
+            // 例外を事前に作成して、モック設定を完了させる
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
 
-        /* 検証の準備 */
+            Mockito.when(this.mockJdtsIoLogic.load()).thenReturn(true);
+            Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
+            Mockito.when(this.mockJdtsIoLogic.nextFile()).thenThrow(testException);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.process();
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -416,17 +466,31 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
         mapping.put("test", "replacement");
         this.reflectionModel.set("targetValueToReplacementValueMapping", mapping);
 
-        /* テスト対象の実行 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.testTarget.process();
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
 
-        });
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+                this.testTarget.process();
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
+
+        }
 
     }
 
