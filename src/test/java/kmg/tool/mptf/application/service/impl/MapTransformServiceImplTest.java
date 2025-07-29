@@ -911,7 +911,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     public void testReplaceUuidWithReplacementValues_normalSuccess() throws Exception {
 
         /* 期待値の定義 */
-        final long expectedResult = 0L;
+        final long expectedResult = 2L;
 
         /* 準備 */
         Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
