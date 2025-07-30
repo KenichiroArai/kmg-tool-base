@@ -261,6 +261,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorInputFileNoReadPermission() throws Exception {
 
         /* 期待値の定義 */
+        final KmgToolCmnExcMsg expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
+        final Object[] expectedMessageArgs = new Object[0];
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化（より確実に例外を発生させる）
@@ -291,9 +293,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
-            // TODO KenichiroArai 2025/07/30 期待値の定義して、検証する
-            Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN15000, actualMsgType, "正しいメッセージタイプが設定されること");
-            Assertions.assertEquals(0, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
+            Assertions.assertEquals(expectedMsgType, actualMsgType, "正しいメッセージタイプが設定されること");
+            Assertions.assertEquals(expectedMessageArgs.length, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
 
         }
 
@@ -309,6 +310,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorInputFileNotExists() throws Exception {
 
         /* 期待値の定義 */
+        final KmgToolCmnExcMsg expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
+        final Object[] expectedMessageArgs = new Object[0];
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化
@@ -339,9 +342,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
-            // TODO KenichiroArai 2025/07/30 期待値の定義して、検証する
-            Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN15000, actualMsgType, "正しいメッセージタイプが設定されること");
-            Assertions.assertEquals(0, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
+            Assertions.assertEquals(expectedMsgType, actualMsgType, "正しいメッセージタイプが設定されること");
+            Assertions.assertEquals(expectedMessageArgs.length, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
 
         }
 
@@ -357,6 +359,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorOutputDirectoryNotExists() throws Exception {
 
         /* 期待値の定義 */
+        final KmgToolCmnExcMsg expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
+        final Object[] expectedMessageArgs = new Object[0];
 
         /* 準備 */
         // テスト用入力ファイルを作成
@@ -390,9 +394,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
-            // TODO KenichiroArai 2025/07/30 期待値の定義して、検証する
-            Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN15000, actualMsgType, "正しいメッセージタイプが設定されること");
-            Assertions.assertEquals(0, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
+            Assertions.assertEquals(expectedMsgType, actualMsgType, "正しいメッセージタイプが設定されること");
+            Assertions.assertEquals(expectedMessageArgs.length, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
 
         }
 
@@ -408,6 +411,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorOutputFileNoWritePermission() throws Exception {
 
         /* 期待値の定義 */
+        final KmgToolCmnExcMsg expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
+        final Object[] expectedMessageArgs = new Object[0];
 
         /* 準備 */
         // テスト用入力ファイルを作成
@@ -441,9 +446,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
-            // TODO KenichiroArai 2025/07/30 期待値の定義して、検証する
-            Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN15000, actualMsgType, "正しいメッセージタイプが設定されること");
-            Assertions.assertEquals(0, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
+            Assertions.assertEquals(expectedMsgType, actualMsgType, "正しいメッセージタイプが設定されること");
+            Assertions.assertEquals(expectedMessageArgs.length, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
 
         }
 
