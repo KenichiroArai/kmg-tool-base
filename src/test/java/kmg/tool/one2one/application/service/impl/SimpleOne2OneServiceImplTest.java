@@ -22,7 +22,6 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.cmn.infrastructure.msg.KmgToolCmnExcMsg;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 
 /**
@@ -261,8 +260,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorInputFileNoReadPermission() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
-        final Object[] expectedMessageArgs = new Object[0];
+        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化（より確実に例外を発生させる）
@@ -287,14 +285,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             });
 
-            /* 検証の準備 */
-            final KmgToolCmnExcMsg actualMsgType     = (KmgToolCmnExcMsg) testException.getMessageTypes();
-            final Object[]         actualMessageArgs = testException.getMessageArgs();
-
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
-            Assertions.assertEquals(expectedMsgType, actualMsgType, "正しいメッセージタイプが設定されること");
-            Assertions.assertEquals(expectedMessageArgs.length, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
+            this.verifyKmgMsgException(testException, null, "テスト用の例外メッセージ", expectedMsgType);
 
         }
 
@@ -310,8 +302,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorInputFileNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
-        final Object[] expectedMessageArgs = new Object[0];
+        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化
@@ -336,14 +327,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             });
 
-            /* 検証の準備 */
-            final KmgToolCmnExcMsg actualMsgType     = (KmgToolCmnExcMsg) testException.getMessageTypes();
-            final Object[]         actualMessageArgs = testException.getMessageArgs();
-
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
-            Assertions.assertEquals(expectedMsgType, actualMsgType, "正しいメッセージタイプが設定されること");
-            Assertions.assertEquals(expectedMessageArgs.length, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
+            this.verifyKmgMsgException(testException, null, "テスト用の例外メッセージ", expectedMsgType);
 
         }
 
@@ -359,8 +344,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorOutputDirectoryNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
-        final Object[] expectedMessageArgs = new Object[0];
+        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
 
         /* 準備 */
         // テスト用入力ファイルを作成
@@ -388,14 +372,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             });
 
-            /* 検証の準備 */
-            final KmgToolCmnExcMsg actualMsgType     = (KmgToolCmnExcMsg) testException.getMessageTypes();
-            final Object[]         actualMessageArgs = testException.getMessageArgs();
-
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
-            Assertions.assertEquals(expectedMsgType, actualMsgType, "正しいメッセージタイプが設定されること");
-            Assertions.assertEquals(expectedMessageArgs.length, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
+            this.verifyKmgMsgException(testException, null, "テスト用の例外メッセージ", expectedMsgType);
 
         }
 
@@ -411,8 +389,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorOutputFileNoWritePermission() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
-        final Object[] expectedMessageArgs = new Object[0];
+        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
 
         /* 準備 */
         // テスト用入力ファイルを作成
@@ -440,14 +417,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             });
 
-            /* 検証の準備 */
-            final KmgToolCmnExcMsg actualMsgType     = (KmgToolCmnExcMsg) testException.getMessageTypes();
-            final Object[]         actualMessageArgs = testException.getMessageArgs();
-
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
-            Assertions.assertEquals(expectedMsgType, actualMsgType, "正しいメッセージタイプが設定されること");
-            Assertions.assertEquals(expectedMessageArgs.length, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
+            this.verifyKmgMsgException(testException, null, "テスト用の例外メッセージ", expectedMsgType);
 
         }
 
