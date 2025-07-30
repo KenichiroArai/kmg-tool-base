@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -264,13 +263,9 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        // テスト用入力ファイルを作成（読み取り専用に設定）
-        Files.createDirectories(this.testInputPath.getParent());
-        Files.write(this.testInputPath, this.testInputContent.getBytes());
-        this.testInputPath.toFile().setReadOnly();
-
-        // 初期化
-        this.testTarget.initialize(this.testInputPath, this.testOutputPath);
+        // 存在しない入力ファイルパスで初期化（より確実に例外を発生させる）
+        final Path nonExistentInputPath = Paths.get("non/existent/input.txt");
+        this.testTarget.initialize(nonExistentInputPath, this.testOutputPath);
 
         // SpringApplicationContextHelperのモック化
         try (final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
@@ -417,11 +412,9 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
         // テスト用入力ファイルを作成
         Files.write(this.testInputPath, this.testInputContent.getBytes());
 
-        // 出力ディレクトリを作成（読み取り専用に設定）
-        this.testOutputPath.getParent().toFile().setReadOnly();
-
-        // 初期化
-        this.testTarget.initialize(this.testInputPath, this.testOutputPath);
+        // 存在しない出力ディレクトリのパスで初期化（より確実に例外を発生させる）
+        final Path nonExistentOutputPath = Paths.get("non/existent/output.txt");
+        this.testTarget.initialize(this.testInputPath, nonExistentOutputPath);
 
         // SpringApplicationContextHelperのモック化
         try (final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
