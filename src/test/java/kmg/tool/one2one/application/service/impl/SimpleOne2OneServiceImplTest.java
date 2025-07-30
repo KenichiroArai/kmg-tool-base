@@ -291,6 +291,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            // TODO KenichiroArai 2025/07/30 期待値の定義して、検証する
             Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN15000, actualMsgType, "正しいメッセージタイプが設定されること");
             Assertions.assertEquals(0, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
 
@@ -338,8 +339,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            // TODO KenichiroArai 2025/07/30 期待値の定義して、検証する
             Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN15000, actualMsgType, "正しいメッセージタイプが設定されること");
-            // TODO KenichiroArai 2025/07/30 ハードコードのため、期待値を定義する
             Assertions.assertEquals(0, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
 
         }
@@ -389,8 +390,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            // TODO KenichiroArai 2025/07/30 期待値の定義して、検証する
             Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN15000, actualMsgType, "正しいメッセージタイプが設定されること");
-            // TODO KenichiroArai 2025/07/30 ハードコードのため、期待値を定義する
             Assertions.assertEquals(0, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
 
         }
@@ -440,8 +441,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            // TODO KenichiroArai 2025/07/30 期待値の定義して、検証する
             Assertions.assertEquals(KmgToolGenMsgTypes.KMGTOOL_GEN15000, actualMsgType, "正しいメッセージタイプが設定されること");
-            // TODO KenichiroArai 2025/07/30 ハードコードのため、期待値を定義する
             Assertions.assertEquals(0, actualMessageArgs.length, "メッセージ引数が正しく設定されること");
 
         }
@@ -531,7 +532,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         // 大量の行を含むテスト用入力ファイルを作成
-        final StringBuilder largeContent = new StringBuilder();
+        final StringBuilder largeContent          = new StringBuilder();
         final StringBuilder expectedOutputContent = new StringBuilder();
 
         for (int i = 1; i <= 1000; i++) {
