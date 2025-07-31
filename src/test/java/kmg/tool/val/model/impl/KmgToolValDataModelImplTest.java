@@ -85,7 +85,6 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     public void testConstructor_normalValidArgs() {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolValMsgTypesの検証
         final KmgToolValMsgTypes expectedMessageTypes = KmgToolValMsgTypes.KMGTOOL_VAL13000;
         final Object[]           expectedMessageArgs  = {
             "test"
@@ -127,7 +126,6 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     public void testCreateMessage_normalEmptyMessage() {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolValMsgTypesの検証
         final String             expectedMessage = "";
         final KmgToolValMsgTypes messageTypes    = KmgToolValMsgTypes.KMGTOOL_VAL13000;
         final Object[]           messageArgs     = {
@@ -169,7 +167,6 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     public void testCreateMessage_normalNullMessage() {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolValMsgTypesの検証
         final KmgToolValMsgTypes messageTypes = KmgToolValMsgTypes.KMGTOOL_VAL13000;
         final Object[]           messageArgs  = {
             "test"
@@ -211,7 +208,6 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     public void testCreateMessage_normalValidMessage() {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolValMsgTypesの検証
         final String             expectedMessage = "テストメッセージ";
         final KmgToolValMsgTypes messageTypes    = KmgToolValMsgTypes.KMGTOOL_VAL13000;
         final Object[]           messageArgs     = {
@@ -253,7 +249,6 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     public void testCreateMessageSource_normalCreateMessageSource() {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolValMsgTypesの検証
         final KmgToolValMsgTypes messageTypes = KmgToolValMsgTypes.KMGTOOL_VAL13000;
         final Object[]           messageArgs  = {
             "test"
@@ -297,7 +292,6 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     public void testGetMessage_normalGetMessage() {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolValMsgTypesの検証
         final String             expectedMessage = "テストメッセージ";
         final KmgToolValMsgTypes messageTypes    = KmgToolValMsgTypes.KMGTOOL_VAL13000;
         final Object[]           messageArgs     = {
@@ -339,7 +333,6 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     public void testGetMessageArgs_normalGetMessageArgs() {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolValMsgTypesの検証
         final Object[]           expectedMessageArgs = {
             "test", "arg2"
         };
@@ -381,7 +374,6 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     public void testGetMessageTypes_normalGetMessageTypes() {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolValMsgTypesの検証
         final KmgToolValMsgTypes expectedMessageTypes = KmgToolValMsgTypes.KMGTOOL_VAL13001;
         final Object[]           messageArgs          = {
             "test"
