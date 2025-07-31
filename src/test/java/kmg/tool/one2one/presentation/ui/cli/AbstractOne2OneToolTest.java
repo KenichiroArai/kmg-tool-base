@@ -12,10 +12,12 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 
+import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.one2one.domain.service.One2OneService;
 
@@ -272,14 +274,16 @@ public class AbstractOne2OneToolTest extends AbstractKmgTest {
                 .thenReturn("例外メッセージ");
 
             // リフレクションを使用してメッセージソースを設定
-            final var reflectionModel = new kmg.core.infrastructure.model.impl.KmgReflectionModelImpl(this.testTarget);
+            final var reflectionModel = new KmgReflectionModelImpl(this.testTarget);
             reflectionModel.set("messageSource", this.mockMessageSource);
 
-            // モックの設定（例外を投げる前にモック設定を完了）
+            // 例外を事前に作成（モック設定完了後に作成）
+            final KmgToolMsgException exception = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001);
+
+            // モックの設定（事前に作成した例外を使用）
             Mockito.when(
                 this.mockOne2OneService.initialize(ArgumentMatchers.any(Path.class), ArgumentMatchers.any(Path.class)))
-                .thenThrow(
-                    new KmgToolMsgException(kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN01001));
+                .thenThrow(exception);
 
             /* テスト対象の実行 */
             final boolean testResult = this.testTarget.initialize();
@@ -315,7 +319,7 @@ public class AbstractOne2OneToolTest extends AbstractKmgTest {
             ArgumentMatchers.any())).thenReturn("成功");
 
         // リフレクションを使用してメッセージソースを設定
-        final var reflectionModel = new kmg.core.infrastructure.model.impl.KmgReflectionModelImpl(this.testTarget);
+        final var reflectionModel = new KmgReflectionModelImpl(this.testTarget);
         reflectionModel.set("messageSource", this.mockMessageSource);
 
         /* テスト対象の実行 */
@@ -350,7 +354,7 @@ public class AbstractOne2OneToolTest extends AbstractKmgTest {
             ArgumentMatchers.any())).thenReturn("失敗");
 
         // リフレクションを使用してメッセージソースを設定
-        final var reflectionModel = new kmg.core.infrastructure.model.impl.KmgReflectionModelImpl(this.testTarget);
+        final var reflectionModel = new KmgReflectionModelImpl(this.testTarget);
         reflectionModel.set("messageSource", this.mockMessageSource);
 
         /* テスト対象の実行 */
