@@ -710,11 +710,11 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String expectedOutputContent
-            = "Hello test input content, welcome!\nHow are you?\nHello line2, welcome!\nHow are you?\nHello line3, welcome!\nHow are you?\n";
+            = "Hello test input content, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator() + "Hello line2, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator() + "Hello line3, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
 
         /* 準備 */
         // 複数行のテンプレートファイルを作成
-        final String multiLineTemplate = "Hello { name }, welcome!\nHow are you?\n";
+        final String multiLineTemplate = "Hello { name }, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
         Files.write(this.testInputPath, this.testInputContent.getBytes());
         Files.write(this.testTemplatePath, multiLineTemplate.getBytes());
 
