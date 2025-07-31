@@ -286,7 +286,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(testException, null, "テスト用の例外メッセージ", expectedMsgType);
+            this.verifyKmgMsgException(testException, IOException.class, "テスト用の例外メッセージ", expectedMsgType);
 
         }
 
@@ -328,7 +328,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(testException, null, "テスト用の例外メッセージ", expectedMsgType);
+            this.verifyKmgMsgException(testException, IOException.class, "テスト用の例外メッセージ", expectedMsgType);
 
         }
 
@@ -373,7 +373,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(testException, null, "テスト用の例外メッセージ", expectedMsgType);
+            this.verifyKmgMsgException(testException, IOException.class, "テスト用の例外メッセージ", expectedMsgType);
 
         }
 
@@ -418,7 +418,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(testException, null, "テスト用の例外メッセージ", expectedMsgType);
+            this.verifyKmgMsgException(testException, IOException.class, "テスト用の例外メッセージ", expectedMsgType);
 
         }
 
