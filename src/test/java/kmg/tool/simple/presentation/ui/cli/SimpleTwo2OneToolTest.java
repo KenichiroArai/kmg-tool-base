@@ -371,4 +371,29 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
     }
 
+    /**
+     * main メソッドのテスト - 正常系：mainメソッドが正常に実行される場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testMain_normalSuccess() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String[] args = {};
+
+        /* テスト対象の実行 */
+        SimpleTwo2OneTool.main(args);
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        // mainメソッドは正常に実行されることを確認（例外が発生しない）
+        Assertions.assertTrue(true, "mainメソッドが正常に実行されること");
+
+    }
+
 }
