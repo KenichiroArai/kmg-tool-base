@@ -261,6 +261,7 @@ public class AbstractOne2OneToolTest extends AbstractKmgTest {
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
+            // メッセージソースのモック設定
             mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
                 .thenReturn(this.mockMessageSource);
 
@@ -271,6 +272,8 @@ public class AbstractOne2OneToolTest extends AbstractKmgTest {
                     new KmgToolMsgException(kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN01001));
             Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(KmgToolLogMsgTypes.class),
                 ArgumentMatchers.any())).thenReturn("例外発生");
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("例外メッセージ");
 
             // リフレクションを使用してメッセージソースを設定
             final var reflectionModel = new kmg.core.infrastructure.model.impl.KmgReflectionModelImpl(this.testTarget);
