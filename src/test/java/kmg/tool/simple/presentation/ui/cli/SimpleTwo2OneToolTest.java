@@ -320,4 +320,72 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
     }
 
+    /**
+     * getDefaultTemplatePath メソッドのテスト - 正常系：優先パスが実際に存在する場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetDefaultTemplatePath_normalPrimaryPathActuallyExists() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTemplateFileName = "template\\SimpleTwo2OneTool.yml";
+
+        /* 準備 */
+        // リフレクションを使用してprivateメソッドを呼び出し
+        final var reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final Path testResult = (Path) reflectionModel.getMethod("getDefaultTemplatePath");
+
+        /* 検証の準備 */
+        final Path actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actual, "テンプレートパスが返されること");
+        // 優先パスが実際に存在する場合、そのパスが返されることを確認
+        final String actualPath = actual.toString();
+        if (actualPath.contains("work\\io")) {
+            // 優先パスが存在する場合
+            Assertions.assertTrue(actualPath.contains("work\\io"), "優先パスが使用されること");
+        } else {
+            // 優先パスが存在しない場合、代替パスが使用される
+            Assertions.assertTrue(actualPath.contains("src\\main\\resources\\tool\\io"), "代替パスが使用されること");
+        }
+        Assertions.assertTrue(actualPath.endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
+
+    }
+
+    /**
+     * getDefaultTemplatePath メソッドのテスト - 準正常系：優先パスが実際に存在しない場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetDefaultTemplatePath_semiPrimaryPathActuallyNotExists() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTemplateFileName = "template\\SimpleTwo2OneTool.yml";
+
+        /* 準備 */
+        // リフレクションを使用してprivateメソッドを呼び出し
+        final var reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final Path testResult = (Path) reflectionModel.getMethod("getDefaultTemplatePath");
+
+        /* 検証の準備 */
+        final Path actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actual, "テンプレートパスが返されること");
+        // 優先パスが存在しない場合、代替パスが使用されることを確認
+        final String actualPath = actual.toString();
+        Assertions.assertTrue(actualPath.contains("src\\main\\resources\\tool\\io"), "代替パスが使用されること");
+        Assertions.assertTrue(actualPath.endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
+
+    }
+
 }
