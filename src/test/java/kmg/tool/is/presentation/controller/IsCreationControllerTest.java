@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.testfx.framework.junit5.ApplicationExtension;
-import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -35,6 +34,7 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
+import kmg.fund.infrastructure.test.AbstractKmgJunitTest;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
@@ -59,7 +59,7 @@ import kmg.tool.is.presentation.ui.gui.controller.IsCreationController;
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class IsCreationControllerTest extends ApplicationTest {
+public class IsCreationControllerTest extends AbstractKmgJunitTest {
 
     /** テスト対象 */
     private IsCreationController testTarget;
