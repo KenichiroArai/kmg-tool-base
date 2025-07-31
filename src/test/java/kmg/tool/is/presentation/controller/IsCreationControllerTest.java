@@ -31,6 +31,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import kmg.core.infrastructure.exception.KmgReflectionException;
+import kmg.core.infrastructure.exception.KmgMsgException;
+import kmg.core.infrastructure.cmn.msg.KmgCmnGenMsgTypes;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
@@ -566,7 +568,8 @@ public class IsCreationControllerTest extends AbstractKmgJunitTest {
     public void testMainProc_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/24 KmgToolMsgExceptionを検証する
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final String expectedDomainMessage = "テスト用の例外メッセージ";
 
         /* 準備 */
         final Path inputPath  = this.testInputFile;
@@ -589,9 +592,9 @@ public class IsCreationControllerTest extends AbstractKmgJunitTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト用の例外メッセージ");
+                .thenReturn(expectedDomainMessage);
 
-            Mockito.doThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN08000, new Object[] {}))
+            Mockito.doThrow(new KmgToolMsgException(expectedMessageTypes, new Object[] {}))
                 .when(this.mockIsCreationService).outputInsertionSql();
 
             /* テスト対象の実行 */
@@ -605,7 +608,7 @@ public class IsCreationControllerTest extends AbstractKmgJunitTest {
             // 検証の準備は不要
 
             /* 検証の実施 */
-            Assertions.assertNotNull(actualException, "KmgToolMsgExceptionが発生すること");
+            this.verifyKmgMsgException((KmgMsgException) actualException, expectedDomainMessage, (KmgCmnGenMsgTypes) expectedMessageTypes);
 
         }
 
@@ -1064,6 +1067,8 @@ public class IsCreationControllerTest extends AbstractKmgJunitTest {
     public void testOnCalcRunClicked_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final String expectedDomainMessage = "テスト用の例外メッセージ";
         // 例外が発生しても処理が完了することを期待
 
         /* 準備 */
@@ -1090,11 +1095,11 @@ public class IsCreationControllerTest extends AbstractKmgJunitTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト用の例外メッセージ");
+                .thenReturn(expectedDomainMessage);
             Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(KmgToolLogMsgTypes.class),
                 ArgumentMatchers.any(Object[].class))).thenReturn("テストエラーメッセージ");
 
-            Mockito.doThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN08000, new Object[] {}))
+            Mockito.doThrow(new KmgToolMsgException(expectedMessageTypes, new Object[] {}))
                 .when(this.mockIsCreationService).outputInsertionSql();
 
             /* テスト対象の実行 */
