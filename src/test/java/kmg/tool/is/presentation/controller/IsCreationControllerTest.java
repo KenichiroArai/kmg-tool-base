@@ -32,9 +32,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
+import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.fund.infrastructure.test.AbstractKmgJunitTest;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
@@ -59,7 +59,7 @@ import kmg.tool.is.presentation.ui.gui.controller.IsCreationController;
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class IsCreationControllerTest extends AbstractKmgJunitTest {
+public class IsCreationControllerTest extends AbstractKmgTest {
 
     /** テスト対象 */
     private IsCreationController testTarget;
