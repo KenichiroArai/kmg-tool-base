@@ -113,7 +113,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         // リフレクションでフィールドを設定
         this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
         this.reflectionModel.set("replacedJavadocBlock", new StringBuilder("/** Test javadoc */"));
-        this.reflectionModel.set("headTagPosOffset", -1); // 無効な値
+        this.reflectionModel.set("headTagPosOffset", -1); // headTagPosOffset <= -1 の条件を満たす
 
         /* テスト対象の実行 */
         this.testTarget.addNewTagByPosition();
@@ -152,7 +152,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
         this.reflectionModel.set("replacedJavadocBlock",
             new StringBuilder("/**\n * Test javadoc\n * @author KenichiroArai\n */"));
-        this.reflectionModel.set("headTagPosOffset", 20);
+        this.reflectionModel.set("headTagPosOffset", 20); // headTagPosOffset > -1 の条件を満たす
 
         /* テスト対象の実行 */
         this.testTarget.addNewTagByPosition();
@@ -167,6 +167,88 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
         Assertions.assertEquals(20 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+
+    }
+
+    /**
+     * addNewTagByPosition メソッドのテスト - 正常系:BEGINNING位置でheadTagPosOffsetが有効（独立テスト）
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testAddNewTagByPosition_normalBeginningWithValidOffsetIndependent() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTagContent = "* @since 2.0.0";
+
+        /* 準備 */
+        // モックの設定
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.BEGINNING);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.SINCE);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("2.0.0");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("");
+
+        // リフレクションでフィールドを設定
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock",
+            new StringBuilder("/**\n * Test javadoc\n * @version 1.0.0\n */"));
+        this.reflectionModel.set("headTagPosOffset", 15);
+
+        /* テスト対象の実行 */
+        this.testTarget.addNewTagByPosition();
+
+        /* 検証の準備 */
+        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent       = (String) this.reflectionModel.get("tagContentToApply");
+        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
+            "Javadocブロックに新しいタグが先頭に挿入されること");
+        Assertions.assertEquals(15 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+
+    }
+
+    /**
+     * addNewTagByPosition メソッドのテスト - 正常系:BEGINNING位置でheadTagPosOffsetが有効（追加テスト）
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testAddNewTagByPosition_normalBeginningWithValidOffsetAdditional() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTagContent = "* @param testParam テストパラメータ";
+
+        /* 準備 */
+        // モックの設定
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.BEGINNING);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.PARAM);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("testParam");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("テストパラメータ");
+
+        // リフレクションでフィールドを設定
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock",
+            new StringBuilder("/**\n * Test javadoc\n * @author KenichiroArai\n */"));
+        this.reflectionModel.set("headTagPosOffset", 25); // headTagPosOffset > -1 の条件を満たす
+
+        /* テスト対象の実行 */
+        this.testTarget.addNewTagByPosition();
+
+        /* 検証の準備 */
+        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent       = (String) this.reflectionModel.get("tagContentToApply");
+        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
+            "Javadocブロックに新しいタグが先頭に挿入されること");
+        Assertions.assertEquals(25 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
@@ -564,6 +646,88 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent4, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock4.toString().endsWith(expectedTagContent),
             "PRESERVEケースでタグが末尾に追加されること");
+
+    }
+
+    /**
+     * addNewTagByPosition メソッドのテスト - 正常系:switch文のBEGINNINGケースの条件分岐を確実にカバー
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testAddNewTagByPosition_beginningCaseCoverage() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTagContent = "* @return 戻り値";
+
+        /* 準備 */
+        // モックの設定
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.BEGINNING);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.RETURN);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("戻り値");
+
+        // リフレクションでフィールドを設定
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock",
+            new StringBuilder("/**\n * Test javadoc\n * @author KenichiroArai\n */"));
+        this.reflectionModel.set("headTagPosOffset", 10); // headTagPosOffset > -1 の条件を満たす
+
+        /* テスト対象の実行 */
+        this.testTarget.addNewTagByPosition();
+
+        /* 検証の準備 */
+        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent       = (String) this.reflectionModel.get("tagContentToApply");
+        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
+            "Javadocブロックに新しいタグが先頭に挿入されること");
+        Assertions.assertEquals(10 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+
+    }
+
+    /**
+     * addNewTagByPosition メソッドのテスト - 正常系:switch文のBEGINNINGケースの条件分岐を確実にカバー（追加テスト）
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testAddNewTagByPosition_beginningCaseCoverageAdditional() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTagContent = "* @param param パラメータ";
+
+        /* 準備 */
+        // モックの設定
+        Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.BEGINNING);
+        Mockito.when(this.mockTagConfigModel.getTag()).thenReturn(KmgJavadocTagTypes.PARAM);
+        Mockito.when(this.mockTagConfigModel.getTagValue()).thenReturn("param");
+        Mockito.when(this.mockTagConfigModel.getTagDescription()).thenReturn("パラメータ");
+
+        // リフレクションでフィールドを設定
+        this.reflectionModel.set("currentTagConfigModel", this.mockTagConfigModel);
+        this.reflectionModel.set("replacedJavadocBlock",
+            new StringBuilder("/**\n * Test javadoc\n * @version 1.0.0\n */"));
+        this.reflectionModel.set("headTagPosOffset", 5); // headTagPosOffset > -1 の条件を満たす
+
+        /* テスト対象の実行 */
+        this.testTarget.addNewTagByPosition();
+
+        /* 検証の準備 */
+        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent       = (String) this.reflectionModel.get("tagContentToApply");
+        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
+        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
+            "Javadocブロックに新しいタグが先頭に挿入されること");
+        Assertions.assertEquals(5 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
