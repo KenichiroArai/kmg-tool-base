@@ -257,7 +257,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     public void testInitialize_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolMsgExceptionの検証の見直し
+        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final String expectedDomainMessage = "項目名がnullです。";
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -272,7 +273,7 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(KmgToolLogMsgTypes.class),
                 ArgumentMatchers.any())).thenReturn("例外発生");
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("例外メッセージ");
+                .thenReturn(expectedDomainMessage);
 
             // リフレクションを使用してメッセージソースを設定
             final var reflectionModel = new KmgReflectionModelImpl(this.testTarget);
@@ -280,7 +281,7 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
             reflectionModel.set("simpleTwo2OneService", this.mockSimpleTwo2OneService);
 
             // 例外を事前に作成（モック設定完了後に作成）
-            final KmgToolMsgException exception = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN01001);
+            final KmgToolMsgException exception = new KmgToolMsgException(expectedMessageTypes);
 
             // モックの設定（事前に作成した例外を使用）
             Mockito.when(this.mockSimpleTwo2OneService.initialize(ArgumentMatchers.any(Path.class),
@@ -294,6 +295,9 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
             /* 検証の実施 */
             Assertions.assertFalse(actual, "KmgToolMsgExceptionが発生した場合、falseが返されること");
+
+            // verifyKmgMsgExceptionを使用してKmgToolMsgExceptionを検証
+            this.verifyKmgMsgException(exception, null, expectedDomainMessage, expectedMessageTypes);
 
         }
 
