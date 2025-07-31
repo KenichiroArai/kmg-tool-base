@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import kmg.core.infrastructure.cmn.msg.KmgCmnValMsgTypes;
 import kmg.core.infrastructure.model.val.KmgValDataModel;
 import kmg.tool.cmn.infrastructure.types.KmgToolValMsgTypes;
 
@@ -31,9 +32,35 @@ public class KmgToolValsModelImplTest {
 
         /* 準備 */
         final KmgToolValsModelImpl testTarget = new KmgToolValsModelImpl();
-        final KmgValDataModel      testData   = new KmgToolValDataModelImpl(KmgToolValMsgTypes.NONE, new Object[] {
-            "テストデータ"
-        });
+        // Springに依存しないテスト用のデータモデルを作成
+        final KmgValDataModel testData = new KmgValDataModel() {
+
+            @Override
+            public String getMessage() {
+
+                final String result = "テストメッセージ";
+                return result;
+
+            }
+
+            @Override
+            public Object[] getMessageArgs() {
+
+                final Object[] result = {
+                    "テストデータ"
+                };
+                return result;
+
+            }
+
+            @Override
+            public KmgCmnValMsgTypes getMessageTypes() {
+
+                final KmgToolValMsgTypes result = KmgToolValMsgTypes.NONE;
+                return result;
+
+            }
+        };
 
         /* テスト対象の実行 */
         testTarget.addData(testData);
