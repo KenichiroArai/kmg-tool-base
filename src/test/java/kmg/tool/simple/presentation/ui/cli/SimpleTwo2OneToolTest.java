@@ -264,4 +264,60 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
     }
 
+    /**
+     * getDefaultTemplatePath メソッドのテスト - 正常系：優先パスが存在する場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetDefaultTemplatePath_normalPrimaryPathExists() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTemplateFileName = "template\\SimpleTwo2OneTool.yml";
+
+        /* 準備 */
+        // リフレクションを使用してprivateメソッドを呼び出し
+        final var reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final Path testResult = (Path) reflectionModel.getMethod("getDefaultTemplatePath");
+
+        /* 検証の準備 */
+        final Path actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actual, "テンプレートパスが返されること");
+        Assertions.assertTrue(actual.toString().endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
+
+    }
+
+    /**
+     * getDefaultTemplatePath メソッドのテスト - 準正常系：優先パスが存在しない場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetDefaultTemplatePath_semiPrimaryPathNotExists() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedTemplateFileName = "template\\SimpleTwo2OneTool.yml";
+
+        /* 準備 */
+        // リフレクションを使用してprivateメソッドを呼び出し
+        final var reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final Path testResult = (Path) reflectionModel.getMethod("getDefaultTemplatePath");
+
+        /* 検証の準備 */
+        final Path actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actual, "テンプレートパスが返されること");
+        Assertions.assertTrue(actual.toString().endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
+
+    }
+
 }
