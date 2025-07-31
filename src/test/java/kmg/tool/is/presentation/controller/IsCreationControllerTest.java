@@ -31,8 +31,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import kmg.core.infrastructure.exception.KmgReflectionException;
-import kmg.core.infrastructure.exception.KmgMsgException;
-import kmg.core.infrastructure.cmn.msg.KmgCmnGenMsgTypes;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
@@ -568,8 +566,8 @@ public class IsCreationControllerTest extends AbstractKmgJunitTest {
     public void testMainProc_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
-        final String expectedDomainMessage = "テスト用の例外メッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final String             expectedDomainMessage = "テスト用の例外メッセージ";
 
         /* 準備 */
         final Path inputPath  = this.testInputFile;
@@ -608,7 +606,7 @@ public class IsCreationControllerTest extends AbstractKmgJunitTest {
             // 検証の準備は不要
 
             /* 検証の実施 */
-            this.verifyKmgMsgException((KmgMsgException) actualException, expectedDomainMessage, (KmgCmnGenMsgTypes) expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -1067,8 +1065,8 @@ public class IsCreationControllerTest extends AbstractKmgJunitTest {
     public void testOnCalcRunClicked_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
-        final String expectedDomainMessage = "テスト用の例外メッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final String             expectedDomainMessage = "テスト用の例外メッセージ";
         // 例外が発生しても処理が完了することを期待
 
         /* 準備 */
