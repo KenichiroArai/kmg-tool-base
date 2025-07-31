@@ -261,6 +261,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
+        final String expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化（より確実に例外を発生させる）
@@ -276,7 +277,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト用の例外メッセージ");
+                .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -286,7 +287,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(testException, IOException.class, "テスト用の例外メッセージ", expectedMsgType);
+            this.verifyKmgMsgException(testException, IOException.class, expectedMessage, expectedMsgType);
 
         }
 
@@ -303,6 +304,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
+        final String expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化
@@ -318,7 +320,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト用の例外メッセージ");
+                .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -328,7 +330,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(testException, IOException.class, "テスト用の例外メッセージ", expectedMsgType);
+            this.verifyKmgMsgException(testException, IOException.class, expectedMessage, expectedMsgType);
 
         }
 
@@ -345,6 +347,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
+        final String expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用入力ファイルを作成
@@ -363,7 +366,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト用の例外メッセージ");
+                .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -373,7 +376,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(testException, IOException.class, "テスト用の例外メッセージ", expectedMsgType);
+            this.verifyKmgMsgException(testException, IOException.class, expectedMessage, expectedMsgType);
 
         }
 
@@ -390,6 +393,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
+        final String expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用入力ファイルを作成
@@ -408,7 +412,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト用の例外メッセージ");
+                .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
             final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -418,7 +422,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
             });
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(testException, IOException.class, "テスト用の例外メッセージ", expectedMsgType);
+            this.verifyKmgMsgException(testException, IOException.class, expectedMessage, expectedMsgType);
 
         }
 
