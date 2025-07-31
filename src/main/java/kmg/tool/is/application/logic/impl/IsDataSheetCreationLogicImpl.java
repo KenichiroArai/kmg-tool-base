@@ -176,9 +176,6 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
                 result = KmgCharsetTypes.MS932.toCharset();
                 break;
 
-            default:
-                break;
-
         }
 
         this.charset = result;
