@@ -177,6 +177,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
         /* 準備 */
         this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+        final String testMessage = null;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -186,7 +187,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
                 .thenReturn(this.mockMessageSource);
 
             // モックメッセージソースの設定
-            Mockito.when(this.mockMessageSource.getExcMessage(messageTypes, messageArgs)).thenReturn(expectedMessage);
+            Mockito.when(this.mockMessageSource.getExcMessage(messageTypes, messageArgs)).thenReturn(testMessage);
 
             this.target = new KmgToolValDataModelImpl(messageTypes, messageArgs);
 
