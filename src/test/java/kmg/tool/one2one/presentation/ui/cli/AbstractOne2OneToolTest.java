@@ -265,11 +265,7 @@ public class AbstractOne2OneToolTest extends AbstractKmgTest {
             mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
                 .thenReturn(this.mockMessageSource);
 
-            // モックの設定
-            Mockito.when(
-                this.mockOne2OneService.initialize(ArgumentMatchers.any(Path.class), ArgumentMatchers.any(Path.class)))
-                .thenThrow(
-                    new KmgToolMsgException(kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN01001));
+            // メッセージソースのメソッドのモック設定
             Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(KmgToolLogMsgTypes.class),
                 ArgumentMatchers.any())).thenReturn("例外発生");
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
@@ -278,6 +274,12 @@ public class AbstractOne2OneToolTest extends AbstractKmgTest {
             // リフレクションを使用してメッセージソースを設定
             final var reflectionModel = new kmg.core.infrastructure.model.impl.KmgReflectionModelImpl(this.testTarget);
             reflectionModel.set("messageSource", this.mockMessageSource);
+
+            // モックの設定（例外を投げる前にモック設定を完了）
+            Mockito.when(
+                this.mockOne2OneService.initialize(ArgumentMatchers.any(Path.class), ArgumentMatchers.any(Path.class)))
+                .thenThrow(
+                    new KmgToolMsgException(kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes.KMGTOOL_GEN01001));
 
             /* テスト対象の実行 */
             final boolean testResult = this.testTarget.initialize();
