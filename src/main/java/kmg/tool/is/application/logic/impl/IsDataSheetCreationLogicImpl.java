@@ -161,24 +161,15 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         }
 
-        switch (this.kmgDbTypes) {
+        this.charset = switch (this.kmgDbTypes) {
 
-            case NONE:
-                break;
+            case NONE                      -> null;
+            case MYSQL, ORACLE, SQL_SERVER -> KmgCharsetTypes.UTF8.toCharset();
+            case POSTGRE_SQL               -> KmgCharsetTypes.MS932.toCharset();
 
-            case MYSQL:
-            case ORACLE:
-            case SQL_SERVER:
-                result = KmgCharsetTypes.UTF8.toCharset();
-                break;
+        };
 
-            case POSTGRE_SQL:
-                result = KmgCharsetTypes.MS932.toCharset();
-                break;
-
-        }
-
-        this.charset = result;
+        result = this.charset;
         return result;
 
     }
