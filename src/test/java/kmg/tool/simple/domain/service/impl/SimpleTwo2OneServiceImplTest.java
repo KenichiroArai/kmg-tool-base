@@ -592,7 +592,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String expectedOutputContent
-            = "Hello test input content, welcome!Hello line2, welcome!Hello line3, welcome!";
+            = "Hello test input content, welcome!" + System.lineSeparator() + "Hello line2, welcome!" + System.lineSeparator() + "Hello line3, welcome!" + System.lineSeparator();
 
         /* 準備 */
         // テスト用ファイルを作成
@@ -673,7 +673,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
         for (int i = 1; i <= 100; i++) {
 
             largeContent.append("line ").append(i).append(System.lineSeparator());
-            expectedOutputContent.append("Hello line ").append(i).append(", welcome!");
+            expectedOutputContent.append("Hello line ").append(i).append(", welcome!").append(System.lineSeparator());
 
         }
 
@@ -747,7 +747,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_semiSingleLineInputFile() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedOutputContent = "Hello single line content, welcome!";
+        final String expectedOutputContent = "Hello single line content, welcome!" + System.lineSeparator();
 
         /* 準備 */
         // 1行のみのテスト用入力ファイルを作成
@@ -783,7 +783,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_semiTemplateWithoutPlaceholder() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedOutputContent = "Hello world!Hello world!Hello world!";
+        final String expectedOutputContent = "Hello world!" + System.lineSeparator() + "Hello world!" + System.lineSeparator() + "Hello world!" + System.lineSeparator();
 
         /* 準備 */
         // プレースホルダーが含まれないテンプレートファイルを作成
