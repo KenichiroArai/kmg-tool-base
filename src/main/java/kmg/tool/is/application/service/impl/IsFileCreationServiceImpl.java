@@ -7,11 +7,13 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.poi.EmptyFileException;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
@@ -29,10 +31,11 @@ import kmg.tool.is.application.service.IslDataSheetCreationService;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
+@Service
 public class IsFileCreationServiceImpl implements IsFileCreationService {
 
     /** 挿入SQLデータシート作成サービス */
@@ -57,7 +60,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -83,7 +86,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -100,9 +103,25 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
                 this.processWorkbook(inputWb);
 
-            } catch (final IOException | EncryptedDocumentException e) {
+            } catch (final EmptyFileException e) {
+
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10004;
+                final Object[]           genMsgArgs  = {
+                    this.inputPath,
+                };
+                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+
+            } catch (final EncryptedDocumentException e) {
 
                 final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10001;
+                final Object[]           genMsgArgs  = {
+                    this.inputPath,
+                };
+                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+
+            } catch (final IOException e) {
+
+                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10005;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };
@@ -127,7 +146,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @return 執行者サービス
      */
@@ -153,7 +172,7 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *

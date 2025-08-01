@@ -79,7 +79,7 @@ public abstract class AbstractInputTool extends AbstractTool {
      */
     public static Path getBasePath() {
 
-        Path result = null;
+        Path result;
 
         if (AbstractInputTool.PRIMARY_BASE_PATH.toFile().exists()) {
 
@@ -106,7 +106,7 @@ public abstract class AbstractInputTool extends AbstractTool {
      */
     public static Path getInputPath() {
 
-        Path result = null;
+        Path result;
 
         final Path primaryPath
             = Paths.get(AbstractInputTool.PRIMARY_BASE_PATH.toString(), AbstractInputTool.INPUT_FILE_NAME.toString());

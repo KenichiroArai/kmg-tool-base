@@ -85,7 +85,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -104,7 +104,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -122,7 +122,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -141,7 +141,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *

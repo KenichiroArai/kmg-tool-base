@@ -102,7 +102,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return Javadocタグ設定の構成モデル
      */
@@ -119,7 +119,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 置換後のコード
      */
@@ -163,6 +163,14 @@ public class JdtsReplServiceImpl implements JdtsReplService {
         throws KmgToolMsgException {
 
         boolean result = false;
+
+        /* 早期リターン：nullパラメータの場合 */
+        if ((jdtsConfigsModel == null) || (jdtsCodeModel == null)) {
+
+            result = true;
+            return result;
+
+        }
 
         this.jdtsConfigsModel = jdtsConfigsModel;
         this.jdtsCodeModel = jdtsCodeModel;
@@ -229,6 +237,13 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      */
     private void logAddNewTag(final JdtsBlockModel targetBlockModel) {
 
+        /* 早期リターン：必要なオブジェクトがnullの場合 */
+        if (this.jdtsBlockReplLogic.getCurrentTagConfigModel() == null) {
+
+            return;
+
+        }
+
         final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13001;
         final Object[]           logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
@@ -268,6 +283,13 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      */
     private void logReplaceTag(final JdtsBlockModel targetBlockModel) {
 
+        /* 早期リターン：必要なオブジェクトがnullの場合 */
+        if (this.jdtsBlockReplLogic.getCurrentSrcJavadocTag() == null) {
+
+            return;
+
+        }
+
         final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13004;
         final Object[]           logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
@@ -292,6 +314,13 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *                         対象のブロックモデル
      */
     private void logRepositionTag(final JdtsBlockModel targetBlockModel) {
+
+        /* 早期リターン：必要なオブジェクトがnullの場合 */
+        if (this.jdtsBlockReplLogic.getCurrentSrcJavadocTag() == null) {
+
+            return;
+
+        }
 
         final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13003;
         final Object[]           logMsgArgs  = {

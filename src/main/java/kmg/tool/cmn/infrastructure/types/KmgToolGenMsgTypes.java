@@ -81,13 +81,13 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN03000("テンプレートファイルをYAML形式で読み込むことに失敗しました。テンプレートパス=[{0}]"),
 
     /**
-     * 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}
+     * 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0}]
      *
      * @author KenichiroArai
      *
      * @since 0.1.0
      */
-    KMGTOOL_GEN03001("入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0]}"),
+    KMGTOOL_GEN03001("入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス：[{0}]"),
 
     /**
      * 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス：[{0}]、 テンプレートパス：[{1}]、 出力ファイルパス=[{2}]
@@ -351,6 +351,33 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN10003("出力ファイルへの書き込みに失敗しました。出力ファイルパス=[{0}]"),
 
     /**
+     * ワークブックが空です。入力ファイルのパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN10004("ワークブックが空です。入力ファイルのパス=[{0}]"),
+
+    /**
+     * ワークブックの読み込みに失敗しました。入力ファイルのパス=[{0}]
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN10005("ワークブックの読み込みに失敗しました。入力ファイルのパス=[{0}]"),
+
+    /**
+     * 入力シートはnullです。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN10006("入力シートはnullです。"),
+
+    /**
      * ファイルの書き込み中にエラーが発生しました。ファイル=[{0}]
      *
      * @author KenichiroArai
@@ -475,6 +502,15 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      * @since 0.1.0
      */
     KMGTOOL_GEN13007("バリデーションエラーが発生しました。"),
+
+    /**
+     * 実行時例外が発生しました。
+     *
+     * @author KenichiroArai
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN13008("実行時例外が発生しました。"),
 
     /**
      * 項目名がnullです。

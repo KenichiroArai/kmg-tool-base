@@ -36,7 +36,7 @@ public interface JdtsIoLogic {
      *
      * @version 0.1.0
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return ファイルのパス
      */
@@ -47,7 +47,7 @@ public interface JdtsIoLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 読込んだ内容
      */

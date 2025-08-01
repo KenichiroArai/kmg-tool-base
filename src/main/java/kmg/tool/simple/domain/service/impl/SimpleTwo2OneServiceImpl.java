@@ -37,7 +37,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -56,7 +56,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -75,7 +75,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -159,6 +159,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
                 final String wk = template.replace(SimpleTwo2OneServiceImpl.TEMPLATE_NAME_PLACEHOLDER, line);
                 output.append(wk);
+                output.append(KmgDelimiterTypes.LINE_SEPARATOR.get());
 
             }
 

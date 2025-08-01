@@ -98,12 +98,9 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * 書き込み対象に行を追加する。
      *
      * @return true：成功、false：失敗
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addOneLineOfDataToRows() throws KmgToolMsgException {
+    public boolean addOneLineOfDataToRows() {
 
         boolean result = false;
 
@@ -194,7 +191,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 現在の行番号
      */
@@ -414,6 +411,12 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
         }
 
         if (replacement == null) {
+
+            return result;
+
+        }
+
+        if (this.convertedLine == null) {
 
             return result;
 

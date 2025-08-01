@@ -23,7 +23,7 @@ public interface JdtsCodeModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return Javadocタグ設定のブロックモデルリスト
      */
@@ -34,7 +34,7 @@ public interface JdtsCodeModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return オリジナルコード
      */

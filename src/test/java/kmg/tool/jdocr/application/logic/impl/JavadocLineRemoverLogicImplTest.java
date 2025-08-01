@@ -12,25 +12,35 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.jdocr.presentation.ui.cli.JavadocLineRemoverTool;
 
 /**
  * Javadoc行削除ロジック実装のテスト<br>
  *
  * @author KenichiroArai
  */
-@SpringBootTest(classes = JavadocLineRemoverTool.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls", "static-method"
 })
 public class JavadocLineRemoverLogicImplTest {
+
+    /** モックKMGメッセージソース */
+    private KmgMessageSource mockMessageSource;
 
     /**
      * デフォルトコンストラクタ<br>
@@ -46,11 +56,11 @@ public class JavadocLineRemoverLogicImplTest {
      * ドライブ文字の置換処理が正しく動作することを確認します。
      * </p>
      *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_normalDriveLetterReplacement() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_normalDriveLetterReplacement() throws Exception {
 
         /* 期待値の定義 */
         final Path expectedPath       = Paths.get("D:\\eclipse\\workspace\\Sample.java");
@@ -81,12 +91,10 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 正常なJavaファイルの行文字列から、パスと行番号のエントリが正しく作成されることを確認します。
      * </p>
-     *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * * @throws Exception 例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_normalValidJavaFileLine() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_normalValidJavaFileLine() throws Exception {
 
         /* 期待値の定義 */
         final Path expectedPath       = Paths.get("D:\\test\\Sample.java");
@@ -117,12 +125,10 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * コロンで区切られた部分が2つ未満の場合に、nullが返されることを確認します。
      * </p>
-     *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * * @throws Exception 例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_semiInsufficientColonReturnsNull() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_semiInsufficientColonReturnsNull() throws Exception {
 
         /* 期待値の定義 */
         final SimpleEntry<Path, Integer> expectedResult = null;
@@ -150,12 +156,10 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 行番号部分が数値でない場合に、nullが返されることを確認します。
      * </p>
-     *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * * @throws Exception 例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_semiInvalidLineNumberReturnsNull() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_semiInvalidLineNumberReturnsNull() throws Exception {
 
         /* 期待値の定義 */
         final SimpleEntry<Path, Integer> expectedResult = null;
@@ -185,11 +189,11 @@ public class JavadocLineRemoverLogicImplTest {
      * @マークが含まれない行の場合に、nullが返されることを確認します。
      *                                    </p>
      *
-     * @throws KmgReflectionException
-     *                                KMGリフレクション例外
+     * @throws Exception
+     *                   例外
      */
     @Test
-    public void testConvertLineToPathLineEntry_semiNoAtMarkReturnsNull() throws KmgReflectionException {
+    public void testConvertLineToPathLineEntry_semiNoAtMarkReturnsNull() throws Exception {
 
         /* 期待値の定義 */
         final SimpleEntry<Path, Integer> expectedResult = null;
@@ -483,25 +487,39 @@ public class JavadocLineRemoverLogicImplTest {
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12001;
 
         /* 準備 */
-        final Map<Path, Set<Integer>> testInputMap    = new LinkedHashMap<>();
-        final Set<Integer>            testLineNumbers = new LinkedHashSet<>();
-        testLineNumbers.add(1);
-        testInputMap.put(nonExistentFile, testLineNumbers);
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
+            this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        /* テスト対象の実行と検証の実施 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
 
-            testTarget.deleteJavadocLines(testInputMap);
+            final Map<Path, Set<Integer>> testInputMap    = new LinkedHashMap<>();
+            final Set<Integer>            testLineNumbers = new LinkedHashSet<>();
+            testLineNumbers.add(1);
+            testInputMap.put(nonExistentFile, testLineNumbers);
 
-        }, "存在しないファイルの場合は例外が発生すること");
+            final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
 
-        /* 検証の準備 */
-        final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+            /* テスト対象の実行と検証の実施 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");
+                testTarget.deleteJavadocLines(testInputMap);
+
+            }, "存在しないファイルの場合は例外が発生すること");
+
+            /* 検証の準備 */
+            final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");
+
+        }
 
     }
 
@@ -525,34 +543,48 @@ public class JavadocLineRemoverLogicImplTest {
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
 
         /* 準備 */
-        final Path     testJavaFile  = tempDir.resolve("ReadOnlyTest.java");
-        final String[] originalLines = {
-            "package test;", "public class Test {", "}",
-        };
-        Files.write(testJavaFile, java.util.Arrays.asList(originalLines));
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        // ファイルを読み込み専用に設定
-        testJavaFile.toFile().setReadOnly();
+            this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-        final Map<Path, Set<Integer>> testInputMap    = new LinkedHashMap<>();
-        final Set<Integer>            testLineNumbers = new LinkedHashSet<>();
-        testLineNumbers.add(2);
-        testInputMap.put(testJavaFile, testLineNumbers);
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
 
-        final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
+            final Path     testJavaFile  = tempDir.resolve("ReadOnlyTest.java");
+            final String[] originalLines = {
+                "package test;", "public class Test {", "}",
+            };
+            Files.write(testJavaFile, java.util.Arrays.asList(originalLines));
 
-        /* テスト対象の実行と検証の実施 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            // ファイルを読み込み専用に設定
+            testJavaFile.toFile().setReadOnly();
 
-            testTarget.deleteJavadocLines(testInputMap);
+            final Map<Path, Set<Integer>> testInputMap    = new LinkedHashMap<>();
+            final Set<Integer>            testLineNumbers = new LinkedHashSet<>();
+            testLineNumbers.add(2);
+            testInputMap.put(testJavaFile, testLineNumbers);
 
-        }, "読み込み専用ファイルの書き込み時は例外が発生すること");
+            final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
 
-        /* 検証の準備 */
-        final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+            /* テスト対象の実行と検証の実施 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");
+                testTarget.deleteJavadocLines(testInputMap);
+
+            }, "読み込み専用ファイルの書き込み時は例外が発生すること");
+
+            /* 検証の準備 */
+            final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");
+
+        }
 
     }
 
@@ -808,20 +840,34 @@ public class JavadocLineRemoverLogicImplTest {
         final KmgToolGenMsgTypes expectedMsgType      = KmgToolGenMsgTypes.KMGTOOL_GEN12002;
 
         /* 準備 */
-        final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行と検証の実施 */
-        final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-            testTarget.getInputMap(nonExistentInputFile);
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テストメッセージ");
 
-        }, "存在しない入力ファイルの場合は例外が発生すること");
+            final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
 
-        /* 検証の準備 */
-        final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+            /* テスト対象の実行と検証の実施 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");
+                testTarget.getInputMap(nonExistentInputFile);
+
+            }, "存在しない入力ファイルの場合は例外が発生すること");
+
+            /* 検証の準備 */
+            final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");
+
+        }
 
     }
 

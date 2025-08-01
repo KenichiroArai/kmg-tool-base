@@ -14,7 +14,7 @@ import kmg.core.infrastructure.types.KmgDbTypes;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
@@ -31,7 +31,7 @@ public interface IsBasicInformationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -44,7 +44,7 @@ public interface IsBasicInformationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -57,7 +57,7 @@ public interface IsBasicInformationLogic {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *

@@ -5,7 +5,7 @@ package kmg.tool.dtc.domain.model;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  */
 public interface DtcTransformModel {
 

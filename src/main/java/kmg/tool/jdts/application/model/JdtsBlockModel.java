@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 
 /**
@@ -26,7 +25,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return アノテーションリスト
      */
@@ -37,7 +36,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 区分
      */
@@ -48,7 +47,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 要素名
      */
@@ -59,7 +58,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 識別子
      */
@@ -70,7 +69,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return Javadocモデル
      */
@@ -81,7 +80,7 @@ public interface JdtsBlockModel {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return オリジナルブロック
      */
@@ -91,10 +90,7 @@ public interface JdtsBlockModel {
      * 解析する
      *
      * @return true：成功、false：失敗
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
-    boolean parse() throws KmgToolMsgException;
+    boolean parse();
 
 }

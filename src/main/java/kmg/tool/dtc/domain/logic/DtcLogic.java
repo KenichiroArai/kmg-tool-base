@@ -32,7 +32,7 @@ public interface DtcLogic extends Closeable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @throws KmgToolMsgException
      *                             入出力処理に失敗した場合
@@ -71,7 +71,7 @@ public interface DtcLogic extends Closeable {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 1件分の内容
      */
@@ -82,7 +82,7 @@ public interface DtcLogic extends Closeable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -95,7 +95,7 @@ public interface DtcLogic extends Closeable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -108,7 +108,7 @@ public interface DtcLogic extends Closeable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -158,7 +158,7 @@ public interface DtcLogic extends Closeable {
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @return true：成功、false：失敗
      *

@@ -100,15 +100,11 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
-    public void testaddItemToRows_errorItemNull() throws Exception {
+    public void testAddItemToRows_abnormalItemNull() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = null;
         final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
-
-        /* 準備 */
-        this.reflectionModel.set("item", null);
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -121,13 +117,19 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
 
+            /* 準備 */
+            this.reflectionModel.set("item", null);
+            this.testTarget.addOneLineOfDataToRows();
+
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToRows());
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.addItemToRows();
+
+            }, "項目名がnullの場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -143,7 +145,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddItemToRows_normalItemSet() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final int    expectedRowSize    = 1;
+        final int    expectedColumnSize = 1;
+        final String expectedItem       = "testItem";
 
         /* 準備 */
         this.reflectionModel.set("item", "testItem");
@@ -157,10 +161,10 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final List<List<String>> actualRows   = this.testTarget.getRows();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualRows.size(), "中間の行数が正しいこと");
-        Assertions.assertEquals(1, actualRows.get(0).size(), "中間の列数が正しいこと");
-        Assertions.assertEquals("testItem", actualRows.get(0).get(0), "項目名が正しく追加されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedRowSize, actualRows.size(), "中間の行数が正しいこと");
+        Assertions.assertEquals(expectedColumnSize, actualRows.get(0).size(), "中間の列数が正しいこと");
+        Assertions.assertEquals(expectedItem, actualRows.get(0).get(0), "項目名が正しく追加されていること");
 
     }
 
@@ -171,15 +175,11 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
-    public void testAddJavadocCommentToRows_errorJavadocNull() throws Exception {
+    public void testAddJavadocCommentToRows_abnormalJavadocNull() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = null;
         final String             expectedDomainMessage = "[KMGTOOL_GEN01002] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
-
-        /* 準備 */
-        this.reflectionModel.set("javadocComment", null);
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -192,13 +192,19 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
 
+            /* 準備 */
+            this.reflectionModel.set("javadocComment", null);
+            this.testTarget.addOneLineOfDataToRows();
+
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addJavadocCommentToRows());
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.addJavadocCommentToRows();
+
+            }, "Javadocコメントがnullの場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -214,7 +220,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddJavadocCommentToRows_normalJavadocSet() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final int    expectedRowSize    = 1;
+        final int    expectedColumnSize = 1;
+        final String expectedComment    = "テストコメント";
 
         /* 準備 */
         this.reflectionModel.set("javadocComment", "テストコメント");
@@ -228,10 +236,10 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final List<List<String>> actualRows   = this.testTarget.getRows();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualRows.size(), "中間の行数が正しいこと");
-        Assertions.assertEquals(1, actualRows.get(0).size(), "中間の列数が正しいこと");
-        Assertions.assertEquals("テストコメント", actualRows.get(0).get(0), "Javadocコメントが正しく追加されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedRowSize, actualRows.size(), "中間の行数が正しいこと");
+        Assertions.assertEquals(expectedColumnSize, actualRows.get(0).size(), "中間の列数が正しいこと");
+        Assertions.assertEquals(expectedComment, actualRows.get(0).get(0), "Javadocコメントが正しく追加されていること");
 
     }
 
@@ -245,7 +253,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddOneLineOfDataToRows_normalAddNewRow() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final int expectedRowSize    = 1;
+        final int expectedColumnSize = 0;
 
         /* 準備 */
 
@@ -257,9 +266,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final List<List<String>> actualRows   = this.testTarget.getRows();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualRows.size(), "新しい行が追加されていること");
-        Assertions.assertEquals(0, actualRows.get(0).size(), "新しい行は空であること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedRowSize, actualRows.size(), "新しい行が追加されていること");
+        Assertions.assertEquals(expectedColumnSize, actualRows.get(0).size(), "新しい行は空であること");
 
     }
 
@@ -270,15 +279,11 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
-    public void testAddTypeToRows_errorTypeNull() throws Exception {
+    public void testAddTypeToRows_abnormalTypeNull() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = null;
         final String             expectedDomainMessage = "[KMGTOOL_GEN01003] ";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
-
-        /* 準備 */
-        this.reflectionModel.set("type", null);
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -291,13 +296,19 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
 
+            /* 準備 */
+            this.reflectionModel.set("type", null);
+            this.testTarget.addOneLineOfDataToRows();
+
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addTypeToRows());
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.addTypeToRows();
+
+            }, "型がnullの場合は例外が発生すること");
 
             /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
@@ -313,7 +324,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddTypeToRows_normalTypeSet() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final int    expectedRowSize    = 1;
+        final int    expectedColumnSize = 1;
+        final String expectedType       = "String";
 
         /* 準備 */
         this.reflectionModel.set("type", "String");
@@ -327,10 +340,10 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final List<List<String>> actualRows   = this.testTarget.getRows();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(1, actualRows.size(), "中間の行数が正しいこと");
-        Assertions.assertEquals(1, actualRows.get(0).size(), "中間の列数が正しいこと");
-        Assertions.assertEquals("String", actualRows.get(0).get(0), "型が正しく追加されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedRowSize, actualRows.size(), "中間の行数が正しいこと");
+        Assertions.assertEquals(expectedColumnSize, actualRows.get(0).size(), "中間の列数が正しいこと");
+        Assertions.assertEquals(expectedType, actualRows.get(0).get(0), "型が正しく追加されていること");
 
     }
 
@@ -344,7 +357,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testClearProcessingData_normalClearData() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedJavadocComment = null;
+        final String expectedType           = null;
+        final String expectedItem           = null;
 
         /* 準備 */
         this.reflectionModel.set("javadocComment", "テストコメント");
@@ -361,10 +376,10 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String  actualItem           = this.testTarget.getItem();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertNull(actualJavadocComment, "Javadocコメントがクリアされていること");
-        Assertions.assertNull(actualType, "型がクリアされていること");
-        Assertions.assertNull(actualItem, "項目名がクリアされていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedJavadocComment, actualJavadocComment, "Javadocコメントがクリアされていること");
+        Assertions.assertEquals(expectedType, actualType, "型がクリアされていること");
+        Assertions.assertEquals(expectedItem, actualItem, "項目名がクリアされていること");
 
     }
 
@@ -378,7 +393,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testClearRows_normalClearRows() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final int expectedRowSize = 0;
 
         /* 準備 */
         this.testTarget.addOneLineOfDataToRows();
@@ -393,8 +408,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final List<List<String>> actualRows   = this.testTarget.getRows();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals(0, actualRows.size(), "行データがクリアされていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedRowSize, actualRows.size(), "行データがクリアされていること");
 
     }
 
@@ -436,7 +451,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalPrivateArrayField() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedType = "String[]";
+        final String expectedItem = "testArrayField";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String[] testArrayField;");
@@ -450,9 +466,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String  actualItem   = this.testTarget.getItem();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("String[]", actualType, "配列型が正しく抽出されていること");
-        Assertions.assertEquals("testArrayField", actualItem, "項目名が正しく抽出されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedType, actualType, "配列型が正しく抽出されていること");
+        Assertions.assertEquals(expectedItem, actualItem, "項目名が正しく抽出されていること");
 
     }
 
@@ -466,7 +482,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalPrivateField() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedType = "String";
+        final String expectedItem = "testField";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -480,9 +497,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String  actualItem   = this.testTarget.getItem();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("String", actualType, "型が正しく抽出されていること");
-        Assertions.assertEquals("testField", actualItem, "項目名が正しく抽出されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedType, actualType, "型が正しく抽出されていること");
+        Assertions.assertEquals(expectedItem, actualItem, "項目名が正しく抽出されていること");
 
     }
 
@@ -496,7 +513,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_normalPrivateGenericField() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedType = "List<String>";
+        final String expectedItem = "testGenericField";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private List<String> testGenericField;");
@@ -510,9 +528,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String  actualItem   = this.testTarget.getItem();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("List<String>", actualType, "ジェネリクス型が正しく抽出されていること");
-        Assertions.assertEquals("testGenericField", actualItem, "項目名が正しく抽出されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedType, actualType, "ジェネリクス型が正しく抽出されていること");
+        Assertions.assertEquals(expectedItem, actualItem, "項目名が正しく抽出されていること");
 
     }
 
@@ -526,7 +544,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertFields_semiNotPrivateField() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "public void testMethod() {");
@@ -538,7 +555,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -552,7 +569,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_normalInJavadocParsingWithStart() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedJavadocComment = "テストコメント";
 
         /* 準備 */
         this.reflectionModel.set("inJavadocParsing", true);
@@ -566,8 +583,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String  actualJavadocComment = this.testTarget.getJavadocComment();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("テストコメント", actualJavadocComment, "Javadocコメントが正しく抽出されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedJavadocComment, actualJavadocComment, "Javadocコメントが正しく抽出されていること");
 
     }
 
@@ -581,7 +598,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_normalMultiLineJavadocStart() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedJavadocComment = "テストコメント";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "/**テストコメント");
@@ -595,9 +612,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualInJavadocParsing = this.testTarget.isInJavadocParsing();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("テストコメント", actualJavadocComment, "Javadocコメントが正しく抽出されていること");
-        Assertions.assertEquals(false, actualInJavadocParsing, "Javadoc解析が終了していること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedJavadocComment, actualJavadocComment, "Javadocコメントが正しく抽出されていること");
+        Assertions.assertFalse(actualInJavadocParsing, "Javadoc解析が終了していること");
 
     }
 
@@ -611,7 +628,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_normalSingleLineJavadoc() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedJavadocComment = "テストコメント";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "/** テストコメント */");
@@ -625,9 +642,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualInJavadocParsing = this.testTarget.isInJavadocParsing();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("テストコメント", actualJavadocComment, "Javadocコメントが正しく抽出されていること");
-        Assertions.assertEquals(false, actualInJavadocParsing, "Javadoc解析が終了していること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedJavadocComment, actualJavadocComment, "Javadocコメントが正しく抽出されていること");
+        Assertions.assertFalse(actualInJavadocParsing, "Javadoc解析が終了していること");
 
     }
 
@@ -641,7 +658,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_semiInJavadocParsingNotMultiLinePattern() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("inJavadocParsing", true);
@@ -654,7 +670,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -668,7 +684,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertJavadoc_semiNotJavadocStart() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "// 通常のコメント");
@@ -680,7 +695,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 
@@ -832,6 +847,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testGetRows_normalGetRows() throws Exception {
 
         /* 期待値の定義 */
+        final int    expectedRowSize    = 1;
+        final int    expectedColumnSize = 1;
+        final String expectedItem       = "testItem";
 
         /* 準備 */
         this.testTarget.addOneLineOfDataToRows();
@@ -846,9 +864,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualRows, "中間データが取得できること");
-        Assertions.assertEquals(1, actualRows.size(), "中間の行数が正しいこと");
-        Assertions.assertEquals(1, actualRows.get(0).size(), "中間の列数が正しいこと");
-        Assertions.assertEquals("testItem", actualRows.get(0).get(0), "データが正しく取得できること");
+        Assertions.assertEquals(expectedRowSize, actualRows.size(), "中間の行数が正しいこと");
+        Assertions.assertEquals(expectedColumnSize, actualRows.get(0).size(), "中間の列数が正しいこと");
+        Assertions.assertEquals(expectedItem, actualRows.get(0).get(0), "データが正しく取得できること");
 
     }
 
@@ -888,7 +906,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testInitialize_normalInitialization() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
@@ -902,7 +919,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "初期化が成功すること");
+        Assertions.assertTrue(actualResult, "初期化が成功すること");
 
     }
 
@@ -928,7 +945,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualInJavadocParsing = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedInJavadocParsing, actualInJavadocParsing, "Javadoc解析中フラグが正しく取得できること");
+        Assertions.assertFalse(actualInJavadocParsing, "Javadoc解析中フラグが正しく取得できること");
 
     }
 
@@ -954,7 +971,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualInJavadocParsing = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedInJavadocParsing, actualInJavadocParsing, "Javadoc解析中フラグが正しく取得できること");
+        Assertions.assertTrue(actualInJavadocParsing, "Javadoc解析中フラグが正しく取得できること");
 
     }
 
@@ -968,7 +985,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReadOneLineOfData_normalReadData() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedLineOfDataRead = "test line 1";
+        final int    expectedNowLineNumber  = 1;
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
@@ -985,9 +1003,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final int     actualNowLineNumber  = this.testTarget.getNowLineNumber();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "データが読み込めること");
-        Assertions.assertEquals("test line 1", actualLineOfDataRead, "読み込んだデータが正しいこと");
-        Assertions.assertEquals(1, actualNowLineNumber, "行番号が正しいこと");
+        Assertions.assertTrue(actualResult, "データが読み込めること");
+        Assertions.assertEquals(expectedLineOfDataRead, actualLineOfDataRead, "読み込んだデータが正しいこと");
+        Assertions.assertEquals(expectedNowLineNumber, actualNowLineNumber, "行番号が正しいこと");
 
     }
 
@@ -1001,7 +1019,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReadOneLineOfData_semiEndOfFile() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
@@ -1016,7 +1033,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "ファイル終端で正しく判定されること");
+        Assertions.assertFalse(actualResult, "ファイル終端で正しく判定されること");
 
     }
 
@@ -1028,6 +1045,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
      */
     @Test
     public void testRemoveModifier_normalNoModifierToRemove() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedConvertedLine = "private String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -1041,7 +1061,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertFalse(actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("private String testField;", actualConvertedLine, "元の文字列のまま変化がないこと");
+        Assertions.assertEquals(expectedConvertedLine, actualConvertedLine, "元の文字列のまま変化がないこと");
 
     }
 
@@ -1055,7 +1075,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalRemoveFinalAndStatic() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedConvertedLine = "private   String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private static final String testField;");
@@ -1068,8 +1088,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String  actualConvertedLine = this.testTarget.getConvertedLine();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("private   String testField;", actualConvertedLine, "finalとstaticが削除されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedConvertedLine, actualConvertedLine, "finalとstaticが削除されていること");
 
     }
 
@@ -1081,6 +1101,9 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
      */
     @Test
     public void testRemoveModifier_normalRemoveFinalOnly() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedConvertedLine = "private  String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private final String testField;");
@@ -1094,7 +1117,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("private  String testField;", actualConvertedLine, "finalが削除されていること");
+        Assertions.assertEquals(expectedConvertedLine, actualConvertedLine, "finalが削除されていること");
 
     }
 
@@ -1108,7 +1131,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testRemoveModifier_normalRemoveStaticOnly() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedConvertedLine = "private  String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private static String testField;");
@@ -1121,8 +1144,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String  actualConvertedLine = this.testTarget.getConvertedLine();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
-        Assertions.assertEquals("private  String testField;", actualConvertedLine, "staticが削除されていること");
+        Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+        Assertions.assertEquals(expectedConvertedLine, actualConvertedLine, "staticが削除されていること");
 
     }
 
@@ -1136,7 +1159,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReplaceInLine_normalReplaceString() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final String expectedConvertedLine = "private  static String testField;";
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private final static String testField;");
@@ -1149,8 +1172,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final String  actualConvertedLine = this.testTarget.getConvertedLine();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "置換が成功していること");
-        Assertions.assertEquals("private  static String testField;", actualConvertedLine, "文字列が置換されていること");
+        Assertions.assertTrue(actualResult, "置換が成功していること");
+        Assertions.assertEquals(expectedConvertedLine, actualConvertedLine, "文字列が置換されていること");
 
     }
 
@@ -1164,7 +1187,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReplaceInLine_semiReplacementNull() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -1176,7 +1198,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "nullの場合は置換されないこと");
+        Assertions.assertFalse(actualResult, "nullの場合は置換されないこと");
 
     }
 
@@ -1190,7 +1212,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReplaceInLine_semiTargetNotFound() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -1202,7 +1223,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "対象文字列が見つからない場合は置換されないこと");
+        Assertions.assertFalse(actualResult, "対象文字列が見つからない場合は置換されないこと");
 
     }
 
@@ -1216,7 +1237,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testReplaceInLine_semiTargetNull() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("convertedLine", "private String testField;");
@@ -1228,7 +1248,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "nullの場合は置換されないこと");
+        Assertions.assertFalse(actualResult, "nullの場合は置換されないこと");
 
     }
 
@@ -1242,7 +1262,6 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void writeIntermediateFile_normalWriteIntermediateFile() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final Path testInputFile  = this.tempDir.resolve("test_input.txt");
@@ -1270,7 +1289,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "中間ファイルへの書き込みが成功すること");
+        Assertions.assertTrue(actualResult, "中間ファイルへの書き込みが成功すること");
         Assertions.assertTrue(Files.exists(testOutputFile), "出力ファイルが作成されていること");
 
     }

@@ -15,11 +15,8 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * 書き込み対象に行を追加する。
      *
      * @return true：成功、false：失敗
-     *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
      */
-    boolean addOneLineOfDataToRows() throws KmgToolMsgException;
+    boolean addOneLineOfDataToRows();
 
     /**
      * 処理中のデータをクリアする。
@@ -54,7 +51,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      *
      * @author KenichiroArai
      *
-     * @sine 0.1.0
+     * @since 0.1.0
      *
      * @return 現在の行番号
      */

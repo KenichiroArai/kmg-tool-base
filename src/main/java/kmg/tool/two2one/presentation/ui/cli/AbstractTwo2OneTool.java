@@ -125,7 +125,7 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      */
     private Path getDefaultTemplatePath() {
 
-        Path         result           = null;
+        Path         result;
         final String className        = KmgPathUtils.getSimpleClassName(this.getClass());
         final String templateFileName = String.format(AbstractTwo2OneTool.TEMPLATE_FILE_PATH_FORMAT, className);
 

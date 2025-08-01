@@ -135,7 +135,7 @@ public class MapTransformServiceImpl implements MapTransformService {
     public boolean initialize(final Path targetPath, final Map<String, String> targetValueToReplacementValueMapping)
         throws KmgToolMsgException {
 
-        boolean result = false;
+        boolean result;
 
         this.targetPath = targetPath;
         this.targetValueToReplacementValueMapping.putAll(targetValueToReplacementValueMapping);
@@ -165,7 +165,7 @@ public class MapTransformServiceImpl implements MapTransformService {
     @Override
     public boolean process() throws KmgToolMsgException, KmgToolValException {
 
-        boolean result = false;
+        boolean result;
 
         final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG19000;
         final Object[]           startLogMsgArgs  = {};
@@ -290,7 +290,7 @@ public class MapTransformServiceImpl implements MapTransformService {
      */
     private long replaceUuidWithReplacementValues() throws KmgToolMsgException {
 
-        final long result = 0;
+        long result = 0;
 
         // ファイルの内容を読み込む
         if (!this.jdtsIoLogic.loadContent()) {
@@ -308,7 +308,13 @@ public class MapTransformServiceImpl implements MapTransformService {
             final String replacementValue = entry.getValue();
 
             // UUIDを置換値に置換
+            final String originalContent = content;
             content = content.replace(uuid, replacementValue);
+
+            // 置換が発生した場合のみカウント
+            if (!originalContent.equals(content)) {
+                result++;
+            }
 
         }
 

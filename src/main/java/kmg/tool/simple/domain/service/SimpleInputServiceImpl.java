@@ -10,7 +10,7 @@ import kmg.tool.input.domain.service.AbstractInputService;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */

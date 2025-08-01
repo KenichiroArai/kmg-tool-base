@@ -10,10 +10,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.type.KmgString;
+import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 
@@ -26,7 +34,8 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @version 0.1.0
  */
-@SpringBootTest(classes = kmg.tool.is.presentation.ui.gui.IsCreationTool.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls", "static-method"
 })
@@ -299,13 +308,11 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     @Test
     public void testLoad_errorDeepNonExistentPath() {
 
-        /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
                                                        = "[KMGTOOL_GEN13002] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[deep\\non\\existent\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13002;
 
-        /* 準備 */
         final Path deepNonExistentPath = Paths.get("deep/non/existent/path");
 
         try {
@@ -318,15 +325,35 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         }
 
-        /* テスト対象の実行・検証の実施 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.testTarget.load();
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
 
-        }, "深い階層の非存在ディレクトリでKmgToolMsgExceptionがスローされること");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            // Files.walkをstaticモックしてIOExceptionをスローさせる
+            try (MockedStatic<Files> filesMock = Mockito.mockStatic(Files.class)) {
+
+                filesMock.when(() -> Files.walk(deepNonExistentPath)).thenThrow(new IOException("mocked io error"));
+
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.load();
+
+                }, "深い階層の非存在ディレクトリでKmgToolMsgExceptionがスローされること");
+
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
+
+        }
 
     }
 
@@ -336,13 +363,11 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     @Test
     public void testLoad_errorNonExistentDirectory() {
 
-        /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
                                                        = "[KMGTOOL_GEN13002] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13002;
 
-        /* 準備 */
         final Path nonExistentPath = Paths.get("non/existent/path");
 
         try {
@@ -355,15 +380,35 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         }
 
-        /* テスト対象の実行・検証の実施 */
-        final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            this.testTarget.load();
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
 
-        }, "存在しないディレクトリでKmgToolMsgExceptionがスローされること");
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        /* 検証の実施 */
-        this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage, expectedMessageTypes);
+            // Files.walkをstaticモックしてIOExceptionをスローさせる
+            try (MockedStatic<Files> filesMock = Mockito.mockStatic(Files.class)) {
+
+                filesMock.when(() -> Files.walk(nonExistentPath)).thenThrow(new IOException("mocked io error"));
+
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.load();
+
+                }, "存在しないディレクトリでKmgToolMsgExceptionがスローされること");
+
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
+
+        }
 
     }
 
@@ -486,6 +531,56 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualException, "例外が発生すること");
+
+    }
+
+    /**
+     * loadContent メソッドのテスト - 異常系:KmgToolMsgException発生
+     */
+    @Test
+    public void testLoadContent_errorKmgToolMsgException() {
+
+        final Class<?>           expectedCauseClass    = IOException.class;
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN13001] Javadocタグ設定でファイル内容を読み込み中に例外が発生しました。対象ファイルパス=[%s]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13001;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            /* ファイルを削除してエラーを発生させる */
+            Files.delete(this.testJavaFile);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
+
+            // モックメッセージソースの設定
+            final String formattedMessage = String.format(expectedDomainMessage, this.testJavaFile.toString());
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(formattedMessage);
+
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.loadContent();
+
+            }, "ファイル読み込みエラーでKmgToolMsgExceptionがスローされること");
+
+            this.verifyKmgMsgException(actualException, expectedCauseClass, formattedMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -719,6 +814,99 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * resetFileIndex メソッドのテスト - 正常系:ファイルリストなし
+     */
+    @Test
+    public void testResetFileIndex_normalNoFileList() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testEmptyDir);
+            this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.resetFileIndex();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("resetFileIndex処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final Path actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "リセットが成功すること");
+        Assertions.assertEquals(null, actualCurrentFilePath, "ファイルリストが空の場合カレントファイルがnullに設定されること");
+
+    }
+
+    /**
+     * resetFileIndex メソッドのテスト - 正常系:ファイルリストあり
+     */
+    @Test
+    public void testResetFileIndex_normalWithFileList() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        Path secondJavaFile = null;
+
+        try {
+
+            secondJavaFile = this.testTempDir.resolve("SecondFile.java");
+            Files.writeString(secondJavaFile, "public class SecondFile {}");
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            /* 次のファイルに進んでからリセット */
+            this.testTarget.nextFile();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.resetFileIndex();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("resetFileIndex処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+        final List<Path> filePathList          = this.testTarget.getFilePathList();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "リセットが成功すること");
+        Assertions.assertEquals(filePathList.get(0), actualCurrentFilePath, "先頭のファイルがカレントファイルに設定されること");
+
+    }
+
+    /**
      * setWriteContent メソッドのテスト - 正常系:書き込み内容設定
      */
     @Test
@@ -732,6 +920,60 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         /* 検証は writeContent で間接的に確認 */
         Assertions.assertTrue(true, "setWriteContentメソッドが正常に実行されること");
+
+    }
+
+    /**
+     * writeContent メソッドのテスト - 異常系:KmgToolMsgException発生
+     */
+    @Test
+    public void testWriteContent_errorKmgToolMsgException() {
+
+        final Class<?>           expectedCauseClass    = IOException.class;
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN13000] Javadocタグ設定でファイル内容を書き込み中に例外が発生しました。対象ファイルパス=[%s] 書き込み内容=[%s]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13000;
+        final String             testContent           = "Test content";
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir);
+            this.testTarget.load();
+            this.testTarget.setWriteContent(testContent);
+            /* ファイルを削除してディレクトリを作成し、書き込みエラーを発生させる */
+            Files.delete(this.testJavaFile);
+            Files.createDirectory(this.testJavaFile);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
+
+            // モックメッセージソースの設定
+            final String formattedMessage
+                = String.format(expectedDomainMessage, this.testJavaFile.toString(), testContent);
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(formattedMessage);
+
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.writeContent();
+
+            }, "書き込みエラーでKmgToolMsgExceptionがスローされること");
+
+            this.verifyKmgMsgException(actualException, expectedCauseClass, formattedMessage, expectedMessageTypes);
+
+        }
 
     }
 
@@ -776,8 +1018,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     public void testWriteContent_normalSuccess() {
 
         /* 期待値の定義 */
-        final boolean expectedResult  = true;
-        final String  expectedContent = "Modified Java content";
+        final String expectedContent = "Modified Java content";
 
         /* 準備 */
         try {
@@ -819,7 +1060,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         }
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "書き込みが成功すること");
+        Assertions.assertTrue(actualResult, "書き込みが成功すること");
         Assertions.assertEquals(expectedContent, actualFileContent, "指定された内容でファイルが書き込まれること");
 
     }

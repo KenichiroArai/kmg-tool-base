@@ -2,7 +2,11 @@ package kmg.tool.is.application.service.impl;
 
 import java.nio.file.Path;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.is.application.service.IsCreationService;
 import kmg.tool.is.application.service.IsFileCreationService;
 
@@ -14,10 +18,11 @@ import kmg.tool.is.application.service.IsFileCreationService;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
+@Component
 public class IsCreationServiceImpl implements IsCreationService {
 
     /** 入力パス */
@@ -29,12 +34,16 @@ public class IsCreationServiceImpl implements IsCreationService {
     /** スレッド数 */
     private short threadNum;
 
+    /** 挿入SQLファイル作成サービス */
+    @Autowired
+    private IsFileCreationService isFileCreationService;
+
     /**
      * 初期化する<br>
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -64,9 +73,17 @@ public class IsCreationServiceImpl implements IsCreationService {
     @Override
     public void outputInsertionSql() throws KmgToolMsgException {
 
-        final IsFileCreationService isFileCreationService = new IsFileCreationServiceImpl();
-        isFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
-        isFileCreationService.outputInsertionSql();
+        // 初期化チェック
+        if (this.inputPath == null) {
+
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+            final Object[]           genMsgArgs  = {};
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs);
+
+        }
+
+        this.isFileCreationService.initialize(this.inputPath, this.outputPath, this.threadNum);
+        this.isFileCreationService.outputInsertionSql();
 
     }
 

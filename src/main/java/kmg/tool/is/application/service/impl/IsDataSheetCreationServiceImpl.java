@@ -30,7 +30,7 @@ import kmg.tool.is.application.service.IslDataSheetCreationService;
  *
  * @author KenichiroArai
  *
- * @sine 1.0.0
+ * @since 1.0.0
  *
  * @version 1.0.0
  */
@@ -94,7 +94,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      *
      * @version 1.0.0
      *
@@ -127,6 +127,15 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
      */
     @Override
     public void outputInsertionSql() throws KmgToolMsgException {
+
+        /* 初期化チェック */
+        if (this.inputSheet == null) {
+
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10006;
+            final Object[]           genMsgArgs  = {};
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs);
+
+        }
 
         this.isDataSheetCreationLogic.initialize(this.kmgDbTypes, this.inputSheet, this.sqlIdMap, this.outputPath);
 
@@ -188,7 +197,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
      *
      * @author KenichiroArai
      *
-     * @sine 1.0.0
+     * @since 1.0.0
      */
     @Override
     public void run() {
