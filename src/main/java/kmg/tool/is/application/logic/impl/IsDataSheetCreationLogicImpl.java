@@ -110,36 +110,6 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     private String insertComment;
 
     /**
-     * 行の最初のセルの番号を返す。
-     *
-     * @param row
-     *            行
-     *
-     * @return 行の最初のセルの番号
-     */
-    private static short getFirstCellNum(final Row row) {
-
-        final short result = row.getFirstCellNum();
-        return result;
-
-    }
-
-    /**
-     * 行の最後のセルの番号を返す。
-     *
-     * @param row
-     *            行
-     *
-     * @return 行の最後のセルの番号
-     */
-    private static short getLastCellNum(final Row row) {
-
-        final short result = row.getLastCellNum();
-        return result;
-
-    }
-
-    /**
      * 出力ファイルのディレクトリを作成する<br>
      *
      * @author KenichiroArai
@@ -249,8 +219,8 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         final Row physicsNameRow = this.inputSheet.getRow(2);
 
-        final short firstCellNum = IsDataSheetCreationLogicImpl.getFirstCellNum(physicsNameRow);
-        final short lastCellNum  = IsDataSheetCreationLogicImpl.getLastCellNum(physicsNameRow);
+        final short firstCellNum = this.getFirstCellNum(physicsNameRow);
+        final short lastCellNum  = this.getLastCellNum(physicsNameRow);
 
         for (short i = firstCellNum; i <= lastCellNum; i++) {
 
@@ -604,6 +574,38 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
         this.inputSheet = inputSheet;
         this.sqlIdMap = sqlIdMap;
         this.outputPath = outputPath;
+
+    }
+
+    /**
+     * 行の最初のセルの番号を返す。
+     *
+     * @param row
+     *            行
+     *
+     * @return 行の最初のセルの番号
+     */
+    @SuppressWarnings("static-method")
+    protected short getFirstCellNum(final Row row) {
+
+        final short result = row.getFirstCellNum();
+        return result;
+
+    }
+
+    /**
+     * 行の最後のセルの番号を返す。
+     *
+     * @param row
+     *            行
+     *
+     * @return 行の最後のセルの番号
+     */
+    @SuppressWarnings("static-method")
+    protected short getLastCellNum(final Row row) {
+
+        final short result = row.getLastCellNum();
+        return result;
 
     }
 

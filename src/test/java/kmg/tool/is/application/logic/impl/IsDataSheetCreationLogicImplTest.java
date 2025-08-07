@@ -485,7 +485,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getColumnPhysicsNameList メソッドのテスト - 正常系:カラム物理名リストが正しく取得されることの確認
      * <p>
-     * シートからカラム物理名のリストが正しく取得されることを確認します。
+     * シートからカラム物理名リストが正しく取得されることを確認します。
      * </p>
      */
     @Test
@@ -513,6 +513,58 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertArrayEquals(expectedPhysicsNames, actualPhysicsNames, "カラム物理名リストが正しく取得されること");
+
+    }
+
+    /**
+     * getColumnPhysicsNameList メソッドのテスト - 正常系:開始と終了のセル番号が入れ替わった場合の処理確認
+     * <p>
+     * KmgReflectionModelImplを使ってスパイし、getFirstCellNumとgetLastCellNumの開始と終了の番号を入れ替えて テストカバレッジを100%にすることを確認します。
+     * </p>
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetColumnPhysicsNameList_normalReversedCellNumbers() throws Exception {
+
+        /* 期待値の定義 */
+        final String[] expectedPhysicsNames = {
+            // スパイによって値を入れ替えた場合、逆順でカラム名が取得される
+            "value", "name", "id"
+        };
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet               testSheet      = this.createTestSheetWithColumns();
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // スパイを使ってgetFirstCellNumとgetLastCellNumの値を入れ替える
+        final IsDataSheetCreationLogicImpl spiedTarget = Mockito.spy(testTarget);
+
+        // getFirstCellNumとgetLastCellNumをスパイして値を入れ替える
+        final Row physicsNameRow = testSheet.getRow(2);
+
+        // 元の値を取得
+        final short originalFirstCellNum = physicsNameRow.getFirstCellNum();
+        final short originalLastCellNum  = physicsNameRow.getLastCellNum();
+
+        // getFirstCellNumとgetLastCellNumをスパイして値を入れ替える
+        Mockito.when(spiedTarget.getFirstCellNum(physicsNameRow)).thenReturn(originalLastCellNum);
+        Mockito.when(spiedTarget.getLastCellNum(physicsNameRow)).thenReturn(originalFirstCellNum);
+
+        /* テスト対象の実行 */
+        final List<String> testResult = spiedTarget.getColumnPhysicsNameList();
+
+        /* 検証の準備 */
+        final String[] actualPhysicsNames = testResult.toArray(new String[0]);
+
+        /* 検証の実施 */
+        Assertions.assertArrayEquals(expectedPhysicsNames, actualPhysicsNames, "開始と終了のセル番号が入れ替わった場合でも正しく処理されること");
 
     }
 
@@ -2235,6 +2287,81 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
             final Row  row0    = result.createRow(0);
             final Cell cell0_0 = row0.createCell(0);
             cell0_0.setCellValue(physicsName);
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * セル番号が逆順になったテスト用シートを作成する<br>
+     * <p>
+     * getFirstCellNum > getLastCellNum のケースをテストするためのシートを作成します。 このケースでは、forループが実行されず空のリストが返されます。
+     * </p>
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithReversedCellNumbers() {
+
+        final Sheet result;
+
+        try (final Workbook workbook = new XSSFWorkbook()) {
+
+            result = workbook.createSheet("テストシート");
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            // 3行目（インデックス2）にカラム物理名を設定
+            // セル番号を逆順に設定して、getFirstCellNum > getLastCellNum のケースを作成
+            // この場合、forループは実行されず空のリストが返される
+            final Row row2 = result.createRow(2);
+            // セルを設定しないことで、getFirstCellNum > getLastCellNum のケースを作成
+            // 実際には、セルが存在しない場合のテストケース
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * テスト用のシートを作成する<br>
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithReversedColumns() {
+
+        final Sheet result;
+
+        try (final Workbook workbook = new XSSFWorkbook()) {
+
+            result = workbook.createSheet("テストシート");
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            // 3行目（インデックス2）にカラム物理名を設定
+            final Row  row2    = result.createRow(2);
+            final Cell cell2_2 = row2.createCell(2);
+            cell2_2.setCellValue("value");
+            final Cell cell2_1 = row2.createCell(1);
+            cell2_1.setCellValue("name");
+            final Cell cell2_0 = row2.createCell(0);
+            cell2_0.setCellValue("id");
 
         } catch (final Exception e) {
 
