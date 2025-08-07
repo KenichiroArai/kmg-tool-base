@@ -632,81 +632,87 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         String outputData = null;
 
-        switch (kmgDbDataType) {
+        outputData = switch (kmgDbDataType) {
 
-            case NONE:
+            case NONE -> {
+
                 // 指定無し
-                outputData = KmgPoiUtils.getStringValue(dataCell);
-                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
-                break;
+                final String tmp = KmgPoiUtils.getStringValue(dataCell);
+                yield String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, tmp);
 
-            case INTEGER:
-                // 4バイト整数
-            case LONG:
-                // 8バイト整数
-            case SMALLSERIAL:
-                // 自動4バイト
-            case SERIAL:
-                // 自動8バイト
-                outputData = String.valueOf((int) dataCell.getNumericCellValue());
-                break;
+            }
 
-            case FLOAT:
-                // 4バイト実数
-            case DOUBLE:
-                // 8バイト実数
-            case BIG_DECIMAL:
-                // 8バイト実数
-                outputData = String.valueOf(dataCell.getNumericCellValue());
-                break;
+            case INTEGER, LONG, SMALLSERIAL, SERIAL -> {
 
-            case DATE:
+                // 4バイト整数、8バイト整数、自動4バイト、自動8バイト
+                yield String.valueOf((int) dataCell.getNumericCellValue());
+
+            }
+
+            case FLOAT, DOUBLE, BIG_DECIMAL -> {
+
+                // 4バイト実数、8バイト実数、8バイト実数
+                yield String.valueOf(dataCell.getNumericCellValue());
+
+            }
+
+            case DATE -> {
+
                 // 日付型
                 final String dateStrTmp = KmgPoiUtils.getStringValue(dataCell);
+                String       tmp;
+
                 if (KmgString.equals(IsDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateStrTmp)) {
 
-                    outputData = dateStrTmp;
+                    tmp = dateStrTmp;
 
                 } else if (KmgString.equals(IsDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateStrTmp)) {
 
-                    outputData = dateStrTmp;
+                    tmp = dateStrTmp;
 
                 } else {
 
                     final Date date = dataCell.getDateCellValue();
-                    outputData = KmgLocalDateUtils.formatYyyyMmDd(date);
+                    tmp = KmgLocalDateUtils.formatYyyyMmDd(date);
 
                 }
-                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
-                break;
+                yield String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, tmp);
 
-            case TIME:
+            }
+
+            case TIME -> {
+
                 // 日時型
                 final String dateTimeStrTmp = KmgPoiUtils.getStringValue(dataCell);
+                String       tmp;
+
                 if (KmgString.equals(IsDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateTimeStrTmp)) {
 
-                    outputData = dateTimeStrTmp;
+                    tmp = dateTimeStrTmp;
 
                 } else if (KmgString.equals(IsDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateTimeStrTmp)) {
 
-                    outputData = dateTimeStrTmp;
+                    tmp = dateTimeStrTmp;
 
                 } else {
 
                     final Date date = dataCell.getDateCellValue();
-                    outputData = KmgLocalDateTimeUtils.formatYyyyMmDdHhMmSsSss(date);
+                    tmp = KmgLocalDateTimeUtils.formatYyyyMmDdHhMmSsSss(date);
 
                 }
-                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
-                break;
+                yield String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, tmp);
 
-            case STRING:
+            }
+
+            case STRING -> {
+
                 // 文字列型
-                outputData = KmgPoiUtils.getStringValue(dataCell);
-                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
-                break;
+                final String tmp = KmgPoiUtils.getStringValue(dataCell);
+                yield String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, tmp);
 
-        }
+            }
+
+        };
 
         result = outputData;
         return result;
