@@ -110,6 +110,36 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     private String insertComment;
 
     /**
+     * 行の最初のセルの番号を返す。
+     *
+     * @param row
+     *            行
+     *
+     * @return 行の最初のセルの番号
+     */
+    private static short getFirstCellNum(final Row row) {
+
+        final short result = row.getFirstCellNum();
+        return result;
+
+    }
+
+    /**
+     * 行の最後のセルの番号を返す。
+     *
+     * @param row
+     *            行
+     *
+     * @return 行の最後のセルの番号
+     */
+    private static short getLastCellNum(final Row row) {
+
+        final short result = row.getLastCellNum();
+        return result;
+
+    }
+
+    /**
      * 出力ファイルのディレクトリを作成する<br>
      *
      * @author KenichiroArai
@@ -219,8 +249,8 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         final Row physicsNameRow = this.inputSheet.getRow(2);
 
-        final short firstCellNum = physicsNameRow.getFirstCellNum();
-        final short lastCellNum  = physicsNameRow.getLastCellNum();
+        final short firstCellNum = IsDataSheetCreationLogicImpl.getFirstCellNum(physicsNameRow);
+        final short lastCellNum  = IsDataSheetCreationLogicImpl.getLastCellNum(physicsNameRow);
 
         for (short i = firstCellNum; i <= lastCellNum; i++) {
 
