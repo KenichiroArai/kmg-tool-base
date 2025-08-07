@@ -219,7 +219,10 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         final Row physicsNameRow = this.inputSheet.getRow(2);
 
-        for (short i = physicsNameRow.getFirstCellNum(); i <= physicsNameRow.getLastCellNum(); i++) {
+        final short firstCellNum = physicsNameRow.getFirstCellNum();
+        final short lastCellNum  = physicsNameRow.getLastCellNum();
+
+        for (short i = firstCellNum; i <= lastCellNum; i++) {
 
             final Cell physicsNameCell = physicsNameRow.getCell(i);
 
