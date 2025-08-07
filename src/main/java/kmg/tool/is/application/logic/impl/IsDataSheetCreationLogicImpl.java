@@ -219,9 +219,9 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         final Row physicsNameRow = this.inputSheet.getRow(2);
 
-        for (short j = physicsNameRow.getFirstCellNum(); j <= physicsNameRow.getLastCellNum(); j++) {
+        for (short i = physicsNameRow.getFirstCellNum(); i <= physicsNameRow.getLastCellNum(); i++) {
 
-            final Cell physicsNameCell = physicsNameRow.getCell(j);
+            final Cell physicsNameCell = physicsNameRow.getCell(i);
 
             if (KmgPoiUtils.isEmptyCell(physicsNameCell)) {
 
