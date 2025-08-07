@@ -530,8 +530,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String[] expectedPhysicsNames = {
-            // スパイによって値を入れ替えた場合、逆順でカラム名が取得される
-            "value", "name", "id"
+            // 開始と終了のセル番号が入れ替わった場合、forループが実行されず空のリストが返される
         };
 
         /* 準備 */
