@@ -546,30 +546,18 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     @Override
     public boolean shouldOverwriteTag() {
 
-        boolean result = false;
+        boolean result;
 
         /* 上書き設定 */
-        switch (this.currentTagConfigModel.getOverwrite()) {
+        result = switch (this.currentTagConfigModel.getOverwrite()) {
 
-            case NONE:
-                /* 指定無し */
-            case NEVER:
-                /* 上書きしない */
-                return result;
+            case NONE, NEVER -> false;
 
-            case ALWAYS:
-                /* 常に上書き */
-                result = true;
-                break;
+            case ALWAYS -> true;
 
-            case IF_LOWER:
-                /* 既存バージョン>上書きするバージョン場合のみ上書き */
+            case IF_LOWER -> this.shouldOverwriteBasedOnVersion();
 
-                result = this.shouldOverwriteBasedOnVersion();
-
-                break;
-
-        }
+        };
 
         return result;
 
