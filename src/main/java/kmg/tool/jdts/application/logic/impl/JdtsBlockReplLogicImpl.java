@@ -103,7 +103,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         this.tagContentToApply = this.createTagContent();
 
         /* タグの挿入位置に基づく処理 */
-        switch (this.currentTagConfigModel.getInsertPosition()) {
+        final JdtsInsertPositionTypes insertPosition = this.currentTagConfigModel.getInsertPosition();
+        switch (insertPosition) {
 
             case BEGINNING -> {
                 /* Javadocタグの先頭 */
