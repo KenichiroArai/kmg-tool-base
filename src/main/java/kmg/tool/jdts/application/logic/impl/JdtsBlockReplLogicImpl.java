@@ -105,7 +105,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* タグの挿入位置に基づく処理 */
         switch (this.currentTagConfigModel.getInsertPosition()) {
 
-            case BEGINNING:
+            case BEGINNING -> {
                 /* Javadocタグの先頭 */
 
                 // 先頭タグの位置が特定されているか確認
@@ -122,16 +122,12 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                         .append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
 
                 }
-                break;
+            }
 
-            case NONE:
-                /* 指定無し */
-            case END:
-                /* Javadocタグの末尾 */
-            case PRESERVE:
-                /* 現在の位置を維持（末尾に追加） */
+            case NONE, END, PRESERVE -> {
+                /* 指定無し、Javadocタグの末尾、現在の位置を維持（末尾に追加） */
                 this.replacedJavadocBlock.append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
-                break;
+            }
 
         }
 
