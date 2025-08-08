@@ -95,16 +95,20 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * @author KenichiroArai
      *
      * @since 0.1.0
+     *
+     * @return true：成功、false：失敗
      */
     @Override
-    public void addNewTagByPosition() {
+    public boolean addNewTagByPosition() {
+
+        boolean result;
 
         /* 新しいタグの生成 */
         this.tagContentToApply = this.createTagContent();
 
         /* タグの挿入位置に基づく処理 */
         final JdtsInsertPositionTypes insertPosition = this.currentTagConfigModel.getInsertPosition();
-        switch (insertPosition) {
+        result = switch (insertPosition) {
 
             case BEGINNING -> {
                 /* Javadocタグの先頭 */
@@ -123,17 +127,24 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                         .append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
 
                 }
+                yield true;
+
             }
 
             case NONE, END, PRESERVE -> {
+
                 /* 指定無し、Javadocタグの末尾、現在の位置を維持（末尾に追加） */
                 this.replacedJavadocBlock.append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
+                yield true;
+
             }
 
-        }
+        };
 
         /* 先頭タグの位置オフセットを更新 */
         this.headTagPosOffset += this.tagContentToApply.length();
+
+        return result;
 
     }
 

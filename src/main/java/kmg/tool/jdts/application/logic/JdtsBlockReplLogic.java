@@ -55,8 +55,10 @@ public interface JdtsBlockReplLogic {
      * @author KenichiroArai
      *
      * @since 0.1.0
+     *
+     * @return true：成功、false：失敗
      */
-    void addNewTagByPosition();
+    boolean addNewTagByPosition();
 
     /**
      * 構成モデルを返す<br>
