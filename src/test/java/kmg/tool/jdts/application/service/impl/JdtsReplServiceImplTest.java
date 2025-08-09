@@ -768,6 +768,167 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * processBlock メソッドのテスト - 正常系：既存タグの置換が発生する場合の処理（replaceExistingTag()がtrueを返すケース）
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
+     */
+    @Test
+    public void testProcessBlock_normalReplaceExistingTag()
+        throws KmgToolMsgException, KmgReflectionException, Exception {
+
+        /* 期待値の定義 */
+        final String replacedJavadocBlock      = "/** replaced javadoc */";
+        final UUID   blockId                   = UUID.randomUUID();
+        final long   expectedTotalReplaceCount = 1L;
+
+        /* 準備 */
+        final JdtsBlockModel     blockModel           = Mockito.mock(JdtsBlockModel.class);
+        final KmgJavadocTagTypes mockJavadocTagType   = Mockito.mock(KmgJavadocTagTypes.class);
+        final KmgJavadocTagTypes mockTagConfigTagType = Mockito.mock(KmgJavadocTagTypes.class);
+
+        this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
+        this.reflectionModel.set("replaceCode", "test original code");
+        this.reflectionModel.set("totalReplaceCount", 0L);
+
+        // モックの設定 - replaceExistingTag()がtrueを返すように設定
+        Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn(true);
+        Mockito.when(this.mockJdtsBlockReplLogic.hasExistingTag()).thenReturn(true);
+        Mockito.when(this.mockJdtsBlockReplLogic.removeCurrentTagOnError()).thenReturn(false);
+        Mockito.when(this.mockJdtsBlockReplLogic.shouldOverwriteTag()).thenReturn(true);
+        Mockito.when(this.mockJdtsBlockReplLogic.repositionTagIfNeeded()).thenReturn(false);
+        Mockito.when(this.mockJdtsBlockReplLogic.replaceExistingTag()).thenReturn(true);
+        Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
+        Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(this.mockJavadocTagModel);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentTagConfigModel()).thenReturn(this.mockJdtsTagConfigModel);
+        Mockito.when(this.mockJdtsBlockReplLogic.getTagContentToApply()).thenReturn("test content");
+        Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
+
+        // logReplaceTagメソッドで使用されるモック設定
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
+        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(mockJavadocTagType);
+        Mockito.when(this.mockJavadocTagModel.getValue()).thenReturn("test value");
+        Mockito.when(this.mockJavadocTagModel.getDescription()).thenReturn("test description");
+        Mockito.when(mockJavadocTagType.getDisplayName()).thenReturn("TestTag");
+        Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(mockTagConfigTagType);
+        Mockito.when(this.mockJdtsTagConfigModel.getTagValue()).thenReturn("test tag value");
+        Mockito.when(this.mockJdtsTagConfigModel.getTagDescription()).thenReturn("test tag description");
+        Mockito.when(mockTagConfigTagType.getDisplayName()).thenReturn("ConfigTag");
+
+        /* テスト対象の実行 */
+        this.reflectionModel.getMethod("processBlock", blockModel);
+
+        /* 検証の準備 */
+        final long actualTotalReplaceCount = (Long) this.reflectionModel.get("totalReplaceCount");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTotalReplaceCount, actualTotalReplaceCount,
+            "既存タグの置換時にtotalReplaceCountが正しくインクリメントされること");
+
+        // replaceExistingTag()が呼び出されたことを確認
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(1)).replaceExistingTag();
+
+        // logReplaceTagが呼び出されたことを検証（logReplaceTagメソッド内で使用されるメソッドが呼び出されることを確認）
+        // logReplaceTagメソッド内でgetCurrentSrcJavadocTag()が5回呼び出される（早期リターンチェック1回 + ログ出力用4回）
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(5)).getCurrentSrcJavadocTag();
+        // logReplaceTagメソッド内でgetCurrentTagConfigModel()が3回呼び出される（ログ出力用3回）
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(3)).getCurrentTagConfigModel();
+        // logReplaceTagメソッド内でgetTagContentToApply()が1回呼び出される（ログ出力用1回）
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(1)).getTagContentToApply();
+
+        // continue文が実行された後、do-whileループの条件チェックでnextTag()が呼び出されることを確認
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(1)).nextTag();
+
+    }
+
+    /**
+     * processBlock メソッドのテスト - 正常系：既存タグの置換が発生しない場合の処理（replaceExistingTag()がfalseを返すケース）
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     * @throws Exception
+     *                                メソッド実行例外
+     */
+    @Test
+    public void testProcessBlock_normalReplaceExistingTagFalse()
+        throws KmgToolMsgException, KmgReflectionException, Exception {
+
+        /* 期待値の定義 */
+        final String replacedJavadocBlock      = "/** replaced javadoc */";
+        final UUID   blockId                   = UUID.randomUUID();
+        final long   expectedTotalReplaceCount = 0L;
+
+        /* 準備 */
+        final JdtsBlockModel     blockModel           = Mockito.mock(JdtsBlockModel.class);
+        final KmgJavadocTagTypes mockJavadocTagType   = Mockito.mock(KmgJavadocTagTypes.class);
+        final KmgJavadocTagTypes mockTagConfigTagType = Mockito.mock(KmgJavadocTagTypes.class);
+
+        this.reflectionModel.set("jdtsConfigsModel", this.mockJdtsConfigsModel);
+        this.reflectionModel.set("replaceCode", "test original code");
+        this.reflectionModel.set("totalReplaceCount", 0L);
+
+        // モックの設定 - replaceExistingTag()がfalseを返すように設定
+        Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn(true);
+        Mockito.when(this.mockJdtsBlockReplLogic.hasExistingTag()).thenReturn(true);
+        Mockito.when(this.mockJdtsBlockReplLogic.removeCurrentTagOnError()).thenReturn(false);
+        Mockito.when(this.mockJdtsBlockReplLogic.shouldOverwriteTag()).thenReturn(true);
+        Mockito.when(this.mockJdtsBlockReplLogic.repositionTagIfNeeded()).thenReturn(false);
+        Mockito.when(this.mockJdtsBlockReplLogic.replaceExistingTag()).thenReturn(false);
+        Mockito.when(this.mockJdtsBlockReplLogic.nextTag()).thenReturn(false);
+        Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentSrcJavadocTag()).thenReturn(this.mockJavadocTagModel);
+        Mockito.when(this.mockJdtsBlockReplLogic.getCurrentTagConfigModel()).thenReturn(this.mockJdtsTagConfigModel);
+        Mockito.when(this.mockJdtsBlockReplLogic.getTagContentToApply()).thenReturn("test content");
+        Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
+
+        // logReplaceTagメソッドで使用されるモック設定（replaceExistingTag()がfalseの場合は呼び出されないが、念のため設定）
+        Mockito.when(this.mockJavadocTagModel.getTargetStr()).thenReturn("test target");
+        Mockito.when(this.mockJavadocTagModel.getTag()).thenReturn(mockJavadocTagType);
+        Mockito.when(this.mockJavadocTagModel.getValue()).thenReturn("test value");
+        Mockito.when(this.mockJavadocTagModel.getDescription()).thenReturn("test description");
+        Mockito.when(mockJavadocTagType.getDisplayName()).thenReturn("TestTag");
+        Mockito.when(this.mockJdtsTagConfigModel.getTag()).thenReturn(mockTagConfigTagType);
+        Mockito.when(this.mockJdtsTagConfigModel.getTagValue()).thenReturn("test tag value");
+        Mockito.when(this.mockJdtsTagConfigModel.getTagDescription()).thenReturn("test tag description");
+        Mockito.when(mockTagConfigTagType.getDisplayName()).thenReturn("ConfigTag");
+
+        /* テスト対象の実行 */
+        this.reflectionModel.getMethod("processBlock", blockModel);
+
+        /* 検証の準備 */
+        final long actualTotalReplaceCount = (Long) this.reflectionModel.get("totalReplaceCount");
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedTotalReplaceCount, actualTotalReplaceCount,
+            "既存タグの置換が発生しない場合、totalReplaceCountがインクリメントされないこと");
+
+        // replaceExistingTag()が呼び出されたことを確認
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(1)).replaceExistingTag();
+
+        // logReplaceTagが呼び出されないことを検証（replaceExistingTag()がfalseを返すため）
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(0)).getCurrentSrcJavadocTag();
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(0)).getCurrentTagConfigModel();
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(0)).getTagContentToApply();
+
+        // continue文が実行されないため、do-whileループの条件チェックでnextTag()が呼び出されることを確認
+        Mockito.verify(this.mockJdtsBlockReplLogic, Mockito.times(1)).nextTag();
+
+    }
+
+    /**
      * processBlock メソッドのテスト - 準正常系：既存タグがある場合の処理
      *
      * @throws KmgToolMsgException
