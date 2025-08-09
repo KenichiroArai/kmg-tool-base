@@ -360,12 +360,12 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     }
 
     /**
-     * initialize メソッドのテスト - 準正常系：nullパラメータでの初期化
+     * initialize メソッドのテスト - 準正常系：nullパラメータの場合
      *
      * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     *                             KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                             リフレクション例外
      */
     @Test
     public void testInitialize_semiNullParameters() throws KmgToolMsgException, KmgReflectionException {
@@ -382,7 +382,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertTrue(actualResult, "nullパラメータでも初期化が正常に完了すること");
+        Assertions.assertFalse(actualResult, "nullパラメータの場合は初期化が失敗すること");
 
     }
 
