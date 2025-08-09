@@ -360,12 +360,39 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * initialize メソッドのテスト - 準正常系：jdtsCodeModelがnullの場合
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testInitialize_semiNullJdtsCodeModel() throws KmgToolMsgException, KmgReflectionException {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        // jdtsCodeModelがnullの場合は初期化をスキップするため、モックは不要
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.initialize(this.mockJdtsConfigsModel, null);
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertFalse(actualResult, "jdtsCodeModelがnullの場合は初期化が失敗すること");
+
+    }
+
+    /**
      * initialize メソッドのテスト - 準正常系：nullパラメータの場合
      *
      * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                             リフレクション例外
+     *                                リフレクション例外
      */
     @Test
     public void testInitialize_semiNullParameters() throws KmgToolMsgException, KmgReflectionException {
