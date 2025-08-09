@@ -701,6 +701,71 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * process メソッドのテスト - 異常系：nextFileで例外が発生する場合
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testProcess_errorNextFileException() throws Exception {
+
+        /* 期待値の定義 */
+        final List<Path> filePathList = new ArrayList<>();
+        filePathList.add(this.testTargetPath);
+
+        /* 準備 */
+        this.reflectionModel.set("definitionPath", this.testDefinitionPath);
+        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("test log message");
+        Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
+        Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
+        Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockJdtsReplService.getTotalReplaceCount()).thenReturn(1L);
+        Mockito.when(this.mockJdtsReplService.getReplaceCode()).thenReturn("replaced code");
+        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn(true);
+
+        // SpringApplicationContextHelperのモック化
+        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
+            final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
+
+            // 例外を事前に作成
+            final KmgToolMsgException expectedException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+                    "test"
+                });
+
+            // nextFile()で例外を発生させる
+            Mockito.when(this.mockJdtsIoLogic.nextFile()).thenThrow(expectedException);
+
+            final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
+            mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.process();
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+
+        }
+
+    }
+
+    /**
      * process メソッドのテスト - 異常系：processFileで例外が発生する場合
      *
      * @throws Exception
@@ -757,17 +822,19 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     }
 
     /**
-     * process メソッドのテスト - 正常系：正常な処理
+     * process メソッドのテスト - 正常系：複数ファイルの処理（do-whileループ）
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testProcess_normalProcess() throws Exception {
+    public void testProcess_normalMultipleFiles() throws Exception {
 
         /* 期待値の定義 */
         final List<Path> filePathList = new ArrayList<>();
         filePathList.add(this.testTargetPath);
+        filePathList.add(Paths.get("test/target2"));
+        filePathList.add(Paths.get("test/target3"));
 
         /* 準備 */
         this.reflectionModel.set("definitionPath", this.testDefinitionPath);
@@ -781,6 +848,18 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn(true);
 
+        // nextFile()の呼び出し回数を制御するためのカウンター
+        final int[] nextFileCallCount = {
+            0
+        };
+        Mockito.when(this.mockJdtsIoLogic.nextFile()).thenAnswer(invocation -> {
+
+            nextFileCallCount[0]++;
+            // 2回目までtrueを返し、3回目でfalseを返す（3つのファイルを処理）
+            return nextFileCallCount[0] < 3;
+
+        });
+
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
 
             final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
@@ -792,7 +871,60 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertTrue(testResult, "処理が正常に完了すること");
+            Assertions.assertTrue(testResult, "複数ファイルの処理が正常に完了すること");
+            // nextFile()が3回呼ばれることを確認（3つのファイルを処理するため）
+            Mockito.verify(this.mockJdtsIoLogic, Mockito.times(3)).nextFile();
+            // processFile()が3回呼ばれることを確認（3つのファイルを処理するため）
+            Mockito.verify(this.mockJdtsIoLogic, Mockito.times(3)).loadContent();
+
+        }
+
+    }
+
+    /**
+     * process メソッドのテスト - 正常系：単一ファイルの処理（do-whileループ）
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testProcess_normalSingleFile() throws Exception {
+
+        /* 期待値の定義 */
+        final List<Path> filePathList = new ArrayList<>();
+        filePathList.add(this.testTargetPath);
+
+        /* 準備 */
+        this.reflectionModel.set("definitionPath", this.testDefinitionPath);
+        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("test log message");
+        Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
+        Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
+        Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockJdtsReplService.getTotalReplaceCount()).thenReturn(1L);
+        Mockito.when(this.mockJdtsReplService.getReplaceCode()).thenReturn("replaced code");
+        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn(true);
+
+        // nextFile()は1回目でfalseを返す（単一ファイルのため）
+        Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(false);
+
+        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
+
+            final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
+            mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
+
+            /* テスト対象の実行 */
+            final boolean testResult = this.testTarget.process();
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertTrue(testResult, "単一ファイルの処理が正常に完了すること");
+            // nextFile()が1回呼ばれることを確認
+            Mockito.verify(this.mockJdtsIoLogic, Mockito.times(1)).nextFile();
+            // processFile()が1回呼ばれることを確認
+            Mockito.verify(this.mockJdtsIoLogic, Mockito.times(1)).loadContent();
 
         }
 
