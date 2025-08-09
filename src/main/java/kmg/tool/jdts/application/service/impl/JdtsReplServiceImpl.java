@@ -164,10 +164,15 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         boolean result = false;
 
-        /* 早期リターン：nullパラメータの場合 */
-        if ((jdtsConfigsModel == null) || (jdtsCodeModel == null)) {
+        /* パラメータがnullか */
+        if (jdtsConfigsModel == null) {
 
-            result = true;
+            return result;
+
+        }
+
+        if (jdtsCodeModel == null) {
+
             return result;
 
         }
