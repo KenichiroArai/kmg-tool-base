@@ -211,6 +211,12 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         /* アノテーションを設定する */
 
+        // アノテーションの設定値が複数行か
+        boolean isAnnotationValueMultiline = false;
+
+        // アノテーション複数行
+        final StringBuilder annotationMultiline = new StringBuilder();
+
         // コードセクションの開始
         int codeSectionStartIdx = 0;
 
@@ -226,11 +232,48 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
             final String trimmedLine = line.trim();
 
+            // アノテーション開始文字か
             if (!trimmedLine.startsWith(JdtsBlockModelImpl.ANNOTATION_START)) {
+                // 開始文字ではない場合
+
+                // アノテーションの設定値が複数行か
+                if (isAnnotationValueMultiline) {
+                    // 複数行の場合
+
+                    annotationMultiline.append(KmgString.LINE_SEPARATOR);
+                    annotationMultiline.append(trimmedLine);
+
+                    // TODO KenichiroArai 2025/08/14 ハードコード
+                    // アノテーションの設定値が複数行の終了か
+                    if (trimmedLine.endsWith("})")) {
+
+                        annotationMultiline.append(KmgString.LINE_SEPARATOR);
+                        annotationMultiline.append(trimmedLine);
+
+                        isAnnotationValueMultiline = false;
+
+                    }
+
+                    continue;
+
+                }
 
                 codeSectionStartIdx = i;
 
                 break;
+
+            }
+
+            // TODO KenichiroArai 2025/08/14 ハードコード
+            // アノテーションの設定値が複数行の開始か
+            if (trimmedLine.endsWith("({")) {
+                // 開始の場合
+
+                isAnnotationValueMultiline = true;
+
+                annotationMultiline.append(trimmedLine);
+
+                continue;
 
             }
 
