@@ -128,7 +128,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(10 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(10 + expectedTagContent.length() + System.lineSeparator().length(),
+            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
@@ -169,7 +170,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(5 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(5 + expectedTagContent.length() + System.lineSeparator().length(),
+            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
@@ -210,7 +212,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(20 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(20 + expectedTagContent.length() + System.lineSeparator().length(),
+            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
@@ -251,7 +254,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(25 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(25 + expectedTagContent.length() + System.lineSeparator().length(),
+            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
@@ -292,7 +296,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(15 + expectedTagContent.length(), actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(15 + expectedTagContent.length() + System.lineSeparator().length(),
+            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
