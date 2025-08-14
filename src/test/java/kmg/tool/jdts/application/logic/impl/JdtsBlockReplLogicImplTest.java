@@ -101,7 +101,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testAddNewTagByPosition_beginningCaseCoverage() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagContent = "* @return 戻り値";
+        final String expectedTagContent       = "* @return 戻り値";
+        final int    expectedHeadTagPosOffset = 10 + expectedTagContent.length() + System.lineSeparator().length();
 
         /* 準備 */
         // モックの設定
@@ -128,8 +129,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(10 + expectedTagContent.length() + System.lineSeparator().length(),
-            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
@@ -143,7 +143,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testAddNewTagByPosition_beginningCaseCoverageAdditional() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagContent = "* @param param パラメータ";
+        final String expectedTagContent       = "* @param param パラメータ";
+        final int    expectedHeadTagPosOffset = 5 + expectedTagContent.length() + System.lineSeparator().length();
 
         /* 準備 */
         // モックの設定
@@ -170,8 +171,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(5 + expectedTagContent.length() + System.lineSeparator().length(),
-            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
@@ -185,7 +185,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testAddNewTagByPosition_normalBeginningWithValidOffset() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagContent = "* @author Test Author";
+        final String expectedTagContent       = "* @author Test Author";
+        final int    expectedHeadTagPosOffset = 20 + expectedTagContent.length() + System.lineSeparator().length();
 
         /* 準備 */
         // モックの設定
@@ -212,8 +213,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(20 + expectedTagContent.length() + System.lineSeparator().length(),
-            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
@@ -227,7 +227,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testAddNewTagByPosition_normalBeginningWithValidOffsetAdditional() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagContent = "* @param testParam テストパラメータ";
+        final String expectedTagContent       = "* @param testParam テストパラメータ";
+        final int    expectedHeadTagPosOffset = 25 + expectedTagContent.length() + System.lineSeparator().length();
 
         /* 準備 */
         // モックの設定
@@ -254,8 +255,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(25 + expectedTagContent.length() + System.lineSeparator().length(),
-            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
@@ -269,7 +269,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testAddNewTagByPosition_normalBeginningWithValidOffsetIndependent() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTagContent = "* @since 2.0.0";
+        final String expectedTagContent       = "* @since 2.0.0";
+        final int    expectedHeadTagPosOffset = 15 + expectedTagContent.length() + System.lineSeparator().length();
 
         /* 準備 */
         // モックの設定
@@ -296,8 +297,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
         Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
             "Javadocブロックに新しいタグが先頭に挿入されること");
-        Assertions.assertEquals(15 + expectedTagContent.length() + System.lineSeparator().length(),
-            actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
+        Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
 
