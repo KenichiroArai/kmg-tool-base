@@ -38,6 +38,12 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
     private static final String JAVADOC_BLOCK_SPLIT_REGEX
         = String.format("%s\\s+", Pattern.quote(JdtsBlockModelImpl.JAVADOC_END)); //$NON-NLS-1$
 
+    /** アノテーション複数行開始文字列 */
+    private static final String ANNOTATION_MULTILINE_START = "({"; //$NON-NLS-1$
+
+    /** アノテーション複数行終了文字列 */
+    private static final String ANNOTATION_MULTILINE_END = "})"; //$NON-NLS-1$
+
     /** 識別子 */
     private final UUID id;
 
@@ -243,9 +249,8 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
                     annotationMultiline.append(KmgString.LINE_SEPARATOR);
                     annotationMultiline.append(trimmedLine);
 
-                    // TODO KenichiroArai 2025/08/14 ハードコード
                     // アノテーションの設定値が複数行の終了か
-                    if (trimmedLine.endsWith("})")) {
+                    if (trimmedLine.endsWith(JdtsBlockModelImpl.ANNOTATION_MULTILINE_END)) {
 
                         annotationMultiline.append(KmgString.LINE_SEPARATOR);
                         annotationMultiline.append(trimmedLine);
@@ -264,9 +269,8 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
             }
 
-            // TODO KenichiroArai 2025/08/14 ハードコード
             // アノテーションの設定値が複数行の開始か
-            if (trimmedLine.endsWith("({")) {
+            if (trimmedLine.endsWith(JdtsBlockModelImpl.ANNOTATION_MULTILINE_START)) {
                 // 開始の場合
 
                 isAnnotationValueMultiline = true;
