@@ -101,14 +101,15 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     @Override
     public boolean addNewTagByPosition() {
 
-        boolean result;
+        final boolean result;
 
         /* 新しいタグの生成 */
         this.tagContentToApply = this.createTagContent();
 
         /* タグの挿入位置に基づく処理 */
         final JdtsInsertPositionTypes insertPosition = this.currentTagConfigModel.getInsertPosition();
-        result = switch (insertPosition) {
+
+        final int insertLength = switch (insertPosition) {
 
             case BEGINNING -> {
                 /* Javadocタグの先頭 */
@@ -117,33 +118,37 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 if (this.headTagPosOffset > -1) {
 
                     // 特定されている場合は指定位置に挿入
-                    this.replacedJavadocBlock.insert(this.headTagPosOffset,
-                        KmgString.concat(this.tagContentToApply, KmgString.LINE_SEPARATOR));
-
-                } else {
-
-                    // 特定されていない場合は末尾に追加
-                    this.replacedJavadocBlock
-                        .append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
+                    final String insertContent = KmgString.concat(this.tagContentToApply, KmgString.LINE_SEPARATOR);
+                    this.replacedJavadocBlock.insert(this.headTagPosOffset, insertContent);
+                    final int insertContentLength = insertContent.length();
+                    yield insertContentLength;
 
                 }
-                yield true;
+
+                // 特定されていない場合は末尾に追加
+                final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
+                this.replacedJavadocBlock.append(insertContent);
+                final int insertContentLength = insertContent.length();
+                yield insertContentLength;
 
             }
 
             case NONE, END, PRESERVE -> {
+                /* 指定無し 、 Javadocタグの末尾 、 現在の位置を維持 （ 末尾に追加） */
 
-                /* 指定無し、Javadocタグの末尾、現在の位置を維持（末尾に追加） */
-                this.replacedJavadocBlock.append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
-                yield true;
+                final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
+                this.replacedJavadocBlock.append(insertContent);
+                final int insertContentLength = insertContent.length();
+                yield insertContentLength;
 
             }
 
         };
 
         /* 先頭タグの位置オフセットを更新 */
-        this.headTagPosOffset += this.tagContentToApply.length();
+        this.headTagPosOffset += insertLength;
 
+        result = true;
         return result;
 
     }
