@@ -205,11 +205,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInserted       = actualReplacedBlock.toString().contains(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
-            "BEGINNINGケース（無効なオフセット）でタグが追加されること");
+        Assertions.assertTrue(isTagInserted, "BEGINNINGケース（無効なオフセット）でタグが追加されること");
 
     }
 
@@ -243,10 +243,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInserted       = actualReplacedBlock.toString().contains(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent), "BEGINNINGケースでタグが追加されること");
+        Assertions.assertTrue(isTagInserted, "BEGINNINGケースでタグが追加されること");
 
     }
 
@@ -280,10 +281,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInserted       = actualReplacedBlock.toString().contains(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent), "BEGINNINGケースでタグが追加されること");
+        Assertions.assertTrue(isTagInserted, "BEGINNINGケースでタグが追加されること");
 
     }
 
@@ -519,10 +521,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent), "ENDケースでタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "ENDケースでタグが末尾に追加されること");
 
     }
 
@@ -556,10 +559,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent), "ENDケースでタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "ENDケースでタグが末尾に追加されること");
 
     }
 
@@ -669,10 +673,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent), "NONEケースでタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "NONEケースでタグが末尾に追加されること");
 
     }
 
@@ -706,10 +711,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent), "NONEケースでタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "NONEケースでタグが末尾に追加されること");
 
     }
 
@@ -819,10 +825,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent), "PRESERVEケースでタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "PRESERVEケースでタグが末尾に追加されること");
 
     }
 
@@ -856,10 +863,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent), "PRESERVEケースでタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "PRESERVEケースでタグが末尾に追加されること");
 
     }
 
@@ -1033,7 +1041,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testHasExistingTag_normalTagExists() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         this.reflectionModel.set("currentSrcJavadocTag", this.mockJavadocTagModel);
@@ -1045,7 +1052,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "既存タグが存在する場合はtrueが返されること");
+        Assertions.assertTrue(actualResult, "既存タグが存在する場合はtrueが返されること");
 
     }
 
@@ -1059,7 +1066,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testHasExistingTag_normalTagNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("currentSrcJavadocTag", null);
@@ -1071,7 +1077,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "既存タグが存在しない場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "既存タグが存在しない場合はfalseが返されること");
 
     }
 
@@ -1121,6 +1127,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testNextTag_normalHasNextTag() throws Exception {
 
         /* 期待値の定義 */
+        final JdtsTagConfigModel expectedCurrentTagConfig  = this.mockTagConfigModel;
+        final JavadocTagModel    expectedCurrentJavadocTag = this.mockJavadocTagModel;
 
         /* 準備 */
         final Iterator<JdtsTagConfigModel> testIterator = Mockito.mock(Iterator.class);
@@ -1147,8 +1155,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "次のタグが存在する場合はtrueが返されること");
-        Assertions.assertEquals(this.mockTagConfigModel, actualCurrentTagConfig, "現在のタグ構成モデルが設定されること");
-        Assertions.assertEquals(this.mockJavadocTagModel, actualCurrentJavadocTag, "現在のJavadocタグが設定されること");
+        Assertions.assertEquals(expectedCurrentTagConfig, actualCurrentTagConfig, "現在のタグ構成モデルが設定されること");
+        Assertions.assertEquals(expectedCurrentJavadocTag, actualCurrentJavadocTag, "現在のJavadocタグが設定されること");
 
     }
 
