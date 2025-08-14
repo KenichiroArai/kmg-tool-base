@@ -937,6 +937,308 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * parse メソッドのテスト - 正常系:アノテーションの複数行処理
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalMultilineAnnotation() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 2;
+        final String                  expectedAnnotation1     = "@Component";
+        final String                  expectedAnnotation2     = "@Service";
+
+        /* 準備 */
+        final String testBlock
+            = "/** テストJavadoc */\n@Component\n@RequestMapping({\n    \"/api\",\n    \"/v1\"\n})\n@Service\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation1, actualAnnotations.get(0), "1番目のアノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation2, actualAnnotations.get(1), "複数行終了後のアノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの処理でcontinue文のカバレッジ
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationContinueCoverage() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 1;
+        final String                  expectedAnnotation      = "@Component";
+
+        /* 準備 */
+        // 複数行アノテーションの開始後、終了前に通常のアノテーションが来るケース
+        final String testBlock
+            = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\"\n@Component\n})\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation, actualAnnotations.get(0), "通常のアノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの終了記号が行の途中にある場合
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationEndInMiddleOfLine() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.ANNOTATION_USAGE;
+        final int                     expectedAnnotationCount = 0;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\"\n}) @Service";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がANNOTATION_USAGEであること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの後に通常のアノテーションが続く場合
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationFollowedByNormalAnnotation() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 1;
+        final String                  expectedAnnotation      = "@Service";
+
+        /* 準備 */
+        final String testBlock
+            = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\"\n})\n@Service\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation, actualAnnotations.get(0), "複数行終了後の通常アノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの途中で終了する場合
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationIncomplete() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.ANNOTATION_USAGE;
+        final int                     expectedAnnotationCount = 0;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\"\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がANNOTATION_USAGEであること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションのみでコードがない場合
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationOnly() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.ANNOTATION_USAGE;
+        final int                     expectedAnnotationCount = 0;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\",\n    \"/v1\"\n})";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がANNOTATION_USAGEであること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの処理でannotationMultilineに追加されるがannotationsには追加されない
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationProcessing() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 0;
+
+        /* 準備 */
+        // 複数行アノテーションのみで、コードブロックに到達しないケース
+        final String testBlock
+            = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\",\n    \"/v1\"\n})\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "複数行アノテーションはannotationsに追加されないこと");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーション内に空行が含まれる場合
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationWithBlankLines() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 0;
+
+        /* 準備 */
+        final String testBlock
+            = "/** テストJavadoc */\n@RequestMapping({\n\n    \"/api\",\n\n    \"/v1\"\n\n})\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+
+    }
+
+    /**
      * parse メソッドのテスト - 正常系:Javadoc対象外の区分
      *
      * @throws Exception
