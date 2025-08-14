@@ -163,14 +163,14 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         this.testTarget.addNewTagByPosition();
 
         /* 検証の準備 */
-        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
-        final String        actualTagContent       = (String) this.reflectionModel.get("tagContentToApply");
-        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
+        final StringBuilder actualReplacedBlock      = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent         = (String) this.reflectionModel.get("tagContentToApply");
+        final int           actualHeadTagPosOffset   = (Integer) this.reflectionModel.get("headTagPosOffset");
+        final boolean       isTagInsertedAtBeginning = actualReplacedBlock.toString().contains(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
-            "Javadocブロックに新しいタグが先頭に挿入されること");
+        Assertions.assertTrue(isTagInsertedAtBeginning, "Javadocブロックに新しいタグが先頭に挿入されること");
         Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
@@ -205,14 +205,14 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         this.testTarget.addNewTagByPosition();
 
         /* 検証の準備 */
-        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
-        final String        actualTagContent       = (String) this.reflectionModel.get("tagContentToApply");
-        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
+        final StringBuilder actualReplacedBlock      = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent         = (String) this.reflectionModel.get("tagContentToApply");
+        final int           actualHeadTagPosOffset   = (Integer) this.reflectionModel.get("headTagPosOffset");
+        final boolean       isTagInsertedAtBeginning = actualReplacedBlock.toString().contains(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
-            "Javadocブロックに新しいタグが先頭に挿入されること");
+        Assertions.assertTrue(isTagInsertedAtBeginning, "Javadocブロックに新しいタグが先頭に挿入されること");
         Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
@@ -247,14 +247,14 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         this.testTarget.addNewTagByPosition();
 
         /* 検証の準備 */
-        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
-        final String        actualTagContent       = (String) this.reflectionModel.get("tagContentToApply");
-        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
+        final StringBuilder actualReplacedBlock      = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent         = (String) this.reflectionModel.get("tagContentToApply");
+        final int           actualHeadTagPosOffset   = (Integer) this.reflectionModel.get("headTagPosOffset");
+        final boolean       isTagInsertedAtBeginning = actualReplacedBlock.toString().contains(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
-            "Javadocブロックに新しいタグが先頭に挿入されること");
+        Assertions.assertTrue(isTagInsertedAtBeginning, "Javadocブロックに新しいタグが先頭に挿入されること");
         Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
@@ -289,14 +289,14 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         this.testTarget.addNewTagByPosition();
 
         /* 検証の準備 */
-        final StringBuilder actualReplacedBlock    = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
-        final String        actualTagContent       = (String) this.reflectionModel.get("tagContentToApply");
-        final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
+        final StringBuilder actualReplacedBlock      = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final String        actualTagContent         = (String) this.reflectionModel.get("tagContentToApply");
+        final int           actualHeadTagPosOffset   = (Integer) this.reflectionModel.get("headTagPosOffset");
+        final boolean       isTagInsertedAtBeginning = actualReplacedBlock.toString().contains(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().contains(expectedTagContent),
-            "Javadocブロックに新しいタグが先頭に挿入されること");
+        Assertions.assertTrue(isTagInsertedAtBeginning, "Javadocブロックに新しいタグが先頭に挿入されること");
         Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが更新されること");
 
     }
@@ -331,11 +331,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent),
-            "Javadocブロックに新しいタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "Javadocブロックに新しいタグが末尾に追加されること");
 
     }
 
@@ -369,11 +369,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent),
-            "Javadocブロックに新しいタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "Javadocブロックに新しいタグが末尾に追加されること");
 
     }
 
@@ -407,11 +407,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent),
-            "Javadocブロックに新しいタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "Javadocブロックに新しいタグが末尾に追加されること");
 
     }
 
@@ -445,11 +445,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent),
-            "Javadocブロックに新しいタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "Javadocブロックに新しいタグが末尾に追加されること");
 
     }
 
@@ -483,11 +483,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent),
-            "Javadocブロックに新しいタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "Javadocブロックに新しいタグが末尾に追加されること");
 
     }
 
@@ -521,11 +521,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
         final String        actualTagContent    = (String) this.reflectionModel.get("tagContentToApply");
+        final boolean       isTagInsertedAtEnd  = actualReplacedBlock.toString().endsWith(expectedTagContent);
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedTagContent, actualTagContent, "タグ内容が正しく生成されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().endsWith(expectedTagContent),
-            "Javadocブロックに新しいタグが末尾に追加されること");
+        Assertions.assertTrue(isTagInsertedAtEnd, "Javadocブロックに新しいタグが末尾に追加されること");
 
     }
 
@@ -920,7 +920,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testInitialize_normalSuccessful() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
+        final int expectedHeadTagPosOffset = -1;
 
         /* 準備 */
         final List<JdtsTagConfigModel> testTagConfigModels = new ArrayList<>();
@@ -940,9 +940,9 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final int           actualHeadTagPosOffset = (Integer) this.reflectionModel.get("headTagPosOffset");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "初期化が成功すること");
+        Assertions.assertTrue(actualResult, "初期化が成功すること");
         Assertions.assertNotNull(actualReplacedBlock, "置換用Javadocブロックが初期化されること");
-        Assertions.assertEquals(-1, actualHeadTagPosOffset, "先頭タグの位置オフセットが設定されること");
+        Assertions.assertEquals(expectedHeadTagPosOffset, actualHeadTagPosOffset, "先頭タグの位置オフセットが設定されること");
 
     }
 
@@ -956,7 +956,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testNextTag_normalHasNextTag() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final Iterator<JdtsTagConfigModel> testIterator = Mockito.mock(Iterator.class);
@@ -982,7 +981,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
             .get("currentSrcJavadocTag");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "次のタグが存在する場合はtrueが返されること");
+        Assertions.assertTrue(actualResult, "次のタグが存在する場合はtrueが返されること");
         Assertions.assertEquals(this.mockTagConfigModel, actualCurrentTagConfig, "現在のタグ構成モデルが設定されること");
         Assertions.assertEquals(this.mockJavadocTagModel, actualCurrentJavadocTag, "現在のJavadocタグが設定されること");
 
@@ -998,7 +997,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testNextTag_normalNoNextTag() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         final Iterator<JdtsTagConfigModel> testIterator = Mockito.mock(Iterator.class);
@@ -1017,7 +1015,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
             .get("currentSrcJavadocTag");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "次のタグが存在しない場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "次のタグが存在しない場合はfalseが返されること");
         Assertions.assertNull(actualCurrentTagConfig, "現在のタグ構成モデルがクリアされること");
         Assertions.assertNull(actualCurrentJavadocTag, "現在のJavadocタグがクリアされること");
 
@@ -1033,7 +1031,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRemoveCurrentTag_normalTagExists() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final String testTargetStr = "* @author TestAuthor";
@@ -1049,10 +1046,11 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final boolean       actualResult        = testResult;
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final boolean       isTagRemoved        = !actualReplacedBlock.toString().contains(testTargetStr);
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "タグの削除が成功すること");
-        Assertions.assertFalse(actualReplacedBlock.toString().contains(testTargetStr), "指定されたタグが削除されること");
+        Assertions.assertTrue(actualResult, "タグの削除が成功すること");
+        Assertions.assertFalse(!isTagRemoved, "指定されたタグが削除されること");
 
     }
 
@@ -1066,7 +1064,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRemoveCurrentTag_semiTagNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         this.reflectionModel.set("currentSrcJavadocTag", null);
@@ -1078,7 +1075,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "タグが存在しない場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "タグが存在しない場合はfalseが返されること");
 
     }
 
@@ -1092,7 +1089,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRemoveCurrentTagOnError_normalRemoveIfMisplaced() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final String testTargetStr = "* @author TestAuthor";
@@ -1114,7 +1110,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "誤配置時削除が設定されており配置が不適切な場合はタグが削除されること");
+        Assertions.assertTrue(actualResult, "誤配置時削除が設定されており配置が不適切な場合はタグが削除されること");
 
     }
 
@@ -1128,7 +1124,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRemoveCurrentTagOnError_semiProperlyPlacedTrue() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockLocationConfigModel.isRemoveIfMisplaced()).thenReturn(true);
@@ -1146,7 +1141,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "配置が適切な場合はタグが削除されないこと");
+        Assertions.assertFalse(actualResult, "配置が適切な場合はタグが削除されないこと");
 
     }
 
@@ -1160,7 +1155,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRemoveCurrentTagOnError_semiRemoveIfMisplacedFalse() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockLocationConfigModel.isRemoveIfMisplaced()).thenReturn(false);
@@ -1175,7 +1169,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "誤配置時削除が設定されていない場合はタグが削除されないこと");
+        Assertions.assertFalse(actualResult, "誤配置時削除が設定されていない場合はタグが削除されないこと");
 
     }
 
@@ -1189,7 +1183,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testReplaceExistingTag_normalSuccessful() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final String testTargetStr = "* @author OldAuthor";
@@ -1209,11 +1202,13 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         /* 検証の準備 */
         final boolean       actualResult        = testResult;
         final StringBuilder actualReplacedBlock = (StringBuilder) this.reflectionModel.get("replacedJavadocBlock");
+        final boolean       isOldTagRemoved     = !actualReplacedBlock.toString().contains(testTargetStr);
+        final boolean       isNewTagSet         = actualReplacedBlock.toString().contains("NewAuthor");
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "既存タグの置換が成功すること");
-        Assertions.assertFalse(actualReplacedBlock.toString().contains(testTargetStr), "古いタグ内容が削除されること");
-        Assertions.assertTrue(actualReplacedBlock.toString().contains("NewAuthor"), "新しいタグ内容が設定されること");
+        Assertions.assertTrue(actualResult, "既存タグの置換が成功すること");
+        Assertions.assertTrue(isOldTagRemoved, "古いタグ内容が削除されること");
+        Assertions.assertTrue(isNewTagSet, "新しいタグ内容が設定されること");
 
     }
 
@@ -1227,7 +1222,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testReplaceExistingTag_semiTagNotFound() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         final String testTargetStr = "* @author NotFound";
@@ -1243,7 +1237,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "既存タグが見つからない場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "既存タグが見つからない場合はfalseが返されること");
 
     }
 
@@ -1257,7 +1251,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRepositionTagIfNeeded_normalBeginningReposition() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final String testTargetStr = "* @author TestAuthor";
@@ -1279,7 +1272,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "BEGINNING位置への再配置が成功すること");
+        Assertions.assertTrue(actualResult, "BEGINNING位置への再配置が成功すること");
 
     }
 
@@ -1293,7 +1286,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRepositionTagIfNeeded_normalEndReposition() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         final String testTargetStr = "* @author TestAuthor";
@@ -1315,7 +1307,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "END位置への再配置が成功すること");
+        Assertions.assertTrue(actualResult, "END位置への再配置が成功すること");
 
     }
 
@@ -1329,7 +1321,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRepositionTagIfNeeded_semiNoneNoReposition() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.NONE);
@@ -1342,7 +1333,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "NONE位置の場合は再配置不要でfalseが返されること");
+        Assertions.assertFalse(actualResult, "NONE位置の場合は再配置不要でfalseが返されること");
 
     }
 
@@ -1356,7 +1347,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRepositionTagIfNeeded_semiPreserveNoReposition() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.PRESERVE);
@@ -1369,7 +1359,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "PRESERVE位置の場合は再配置不要でfalseが返されること");
+        Assertions.assertFalse(actualResult, "PRESERVE位置の場合は再配置不要でfalseが返されること");
 
     }
 
@@ -1383,7 +1373,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testRepositionTagIfNeeded_semiRemoveCurrentTagFailed() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.getInsertPosition()).thenReturn(JdtsInsertPositionTypes.BEGINNING);
@@ -1398,7 +1387,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "現在のタグ削除が失敗した場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "現在のタグ削除が失敗した場合はfalseが返されること");
 
     }
 
@@ -1412,7 +1401,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testShouldAddNewTag_normalShouldAdd() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.isProperlyPlaced(JavaClassificationTypes.CLASS)).thenReturn(true);
@@ -1428,7 +1416,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "適切な配置の場合は新しいタグを追加すべきでtrueが返されること");
+        Assertions.assertTrue(actualResult, "適切な配置の場合は新しいタグを追加すべきでtrueが返されること");
 
     }
 
@@ -1442,7 +1430,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testShouldOverwriteTag_normalAlways() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.ALWAYS);
@@ -1455,7 +1442,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がALWAYSの場合はtrueが返されること");
+        Assertions.assertTrue(actualResult, "上書き設定がALWAYSの場合はtrueが返されること");
 
     }
 
@@ -1469,7 +1456,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testShouldOverwriteTag_normalIfLower() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
@@ -1483,7 +1469,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がIF_LOWERでバージョンタグでない場合はtrueが返されること");
+        Assertions.assertTrue(actualResult, "上書き設定がIF_LOWERでバージョンタグでない場合はtrueが返されること");
 
     }
 
@@ -1497,7 +1483,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testShouldOverwriteTag_normalIfLowerVersionHigher() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = true;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
@@ -1514,7 +1499,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がIF_LOWERでバージョンタグ（既存バージョンが高い）の場合はtrueが返されること");
+        Assertions.assertTrue(actualResult, "上書き設定がIF_LOWERでバージョンタグ（既存バージョンが高い）の場合はtrueが返されること");
 
     }
 
@@ -1528,7 +1513,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testShouldOverwriteTag_semiIfLowerVersionLowerOrEqual() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.IF_LOWER);
@@ -1545,8 +1529,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult,
-            "上書き設定がIF_LOWERでバージョンタグ（既存バージョンが低いまたは同じ）の場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "上書き設定がIF_LOWERでバージョンタグ（既存バージョンが低いまたは同じ）の場合はfalseが返されること");
 
     }
 
@@ -1560,7 +1543,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testShouldOverwriteTag_semiNever() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.NEVER);
@@ -1573,7 +1555,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がNEVERの場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "上書き設定がNEVERの場合はfalseが返されること");
 
     }
 
@@ -1587,7 +1569,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testShouldOverwriteTag_semiNone() throws Exception {
 
         /* 期待値の定義 */
-        final boolean expectedResult = false;
 
         /* 準備 */
         Mockito.when(this.mockTagConfigModel.getOverwrite()).thenReturn(JdtsOverwriteTypes.NONE);
@@ -1600,7 +1581,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
         final boolean actualResult = testResult;
 
         /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "上書き設定がNONEの場合はfalseが返されること");
+        Assertions.assertFalse(actualResult, "上書き設定がNONEの場合はfalseが返されること");
 
     }
 
