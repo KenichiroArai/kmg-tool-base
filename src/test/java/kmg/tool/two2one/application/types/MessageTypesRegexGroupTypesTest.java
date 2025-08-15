@@ -560,7 +560,8 @@ public class MessageTypesRegexGroupTypesTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualResult, "マップから取得した値がnullでないこと");
-        Assertions.assertEquals(MessageTypesRegexGroupTypes.MESSAGE_TYPE_FULL_MATCH, actualResult, "マップから正しい列挙型が取得されること");
+        Assertions.assertEquals(MessageTypesRegexGroupTypes.MESSAGE_TYPE_FULL_MATCH, actualResult,
+            "マップから正しい列挙型が取得されること");
 
     }
 

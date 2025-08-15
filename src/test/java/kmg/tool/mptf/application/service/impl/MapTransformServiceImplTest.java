@@ -430,8 +430,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
             Mockito.when(this.mockJdtsIoLogic.load()).thenReturn(true);
             Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
             Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(false);
-            Mockito.when(this.mockJdtsIoLogic.resetFileIndex())
-                .thenThrow(testException);
+            Mockito.when(this.mockJdtsIoLogic.resetFileIndex()).thenThrow(testException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -543,7 +542,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
             Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
             Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(true, false, true, false);
             Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
-            Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("oldValue test content", "test-uuid-1 test content");
+            Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("oldValue test content",
+                "test-uuid-1 test content");
             Mockito.when(this.mockJdtsIoLogic.writeContent()).thenReturn(true);
             Mockito.doNothing().when(this.mockJdtsIoLogic).setWriteContent(ArgumentMatchers.anyString());
             Mockito.when(this.mockJdtsIoLogic.resetFileIndex()).thenReturn(true);
@@ -600,8 +600,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
             // 例外を事前に作成して、モック設定を完了させる
             final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
 
-            Mockito.when(this.mockJdtsIoLogic.loadContent())
-                .thenThrow(testException);
+            Mockito.when(this.mockJdtsIoLogic.loadContent()).thenThrow(testException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -666,8 +665,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
             Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
             Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("oldValue");
-            Mockito.when(this.mockJdtsIoLogic.writeContent())
-                .thenThrow(testException);
+            Mockito.when(this.mockJdtsIoLogic.writeContent()).thenThrow(testException);
 
             // マッピングを設定
             final Map<String, String> mapping = new HashMap<>();
@@ -795,8 +793,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
             // 例外を事前に作成して、モック設定を完了させる
             final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
 
-            Mockito.when(this.mockJdtsIoLogic.loadContent())
-                .thenThrow(testException);
+            Mockito.when(this.mockJdtsIoLogic.loadContent()).thenThrow(testException);
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
@@ -861,8 +858,7 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
             Mockito.when(this.mockJdtsIoLogic.loadContent()).thenReturn(true);
             Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("uuid1");
-            Mockito.when(this.mockJdtsIoLogic.writeContent())
-                .thenThrow(testException);
+            Mockito.when(this.mockJdtsIoLogic.writeContent()).thenThrow(testException);
 
             // UUIDマッピングを設定
             final Map<String, String> uuidMapping = new HashMap<>();

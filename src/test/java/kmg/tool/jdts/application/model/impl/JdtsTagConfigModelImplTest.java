@@ -668,6 +668,41 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * isProperlyPlaced メソッドのテスト - 正常系:COMPLIANTモードでJavaClassificationTypes.NONEを含むタグ（SUMMARY）の場合
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testIsProperlyPlaced_normalCompliantModeWithSummaryTag() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@summary");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.METHOD);
+
+        /* 検証の実施 */
+        Assertions.assertTrue(testResult, "COMPLIANTモードでJavaClassificationTypes.NONEを含むタグの場合はtrueが返されること");
+
+    }
+
+    /**
      * isProperlyPlaced メソッドのテスト - 正常系:MANUALモードで一致する場合
      *
      * @throws Exception
@@ -895,41 +930,6 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertFalse(testResult, "NONEモードの場合はfalseが返されること");
-
-    }
-
-    /**
-     * isProperlyPlaced メソッドのテスト - 正常系:COMPLIANTモードでJavaClassificationTypes.NONEを含むタグ（SUMMARY）の場合
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testIsProperlyPlaced_normalCompliantModeWithSummaryTag() throws Exception {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        final Map<String, Object> testTagConfig = new HashMap<>();
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@summary");
-        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
-        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
-        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
-
-        final Map<String, Object> locationMap = new HashMap<>();
-        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
-        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
-        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
-
-        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.METHOD);
-
-        /* 検証の実施 */
-        Assertions.assertTrue(testResult, "COMPLIANTモードでJavaClassificationTypes.NONEを含むタグの場合はtrueが返されること");
 
     }
 

@@ -388,8 +388,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & Modifier.PUBLIC;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult, "getInputServiceメソッドがpublicで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "getInputServiceメソッドがpublicで定義されていること");
 
         } catch (final NoSuchMethodException e) {
 
@@ -478,8 +478,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult, "inputServiceフィールドがSimpleInputService型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult, "inputServiceフィールドがSimpleInputService型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -513,8 +513,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & Modifier.PRIVATE;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult, "inputServiceフィールドがprivateで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "inputServiceフィールドがprivateで定義されていること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -579,9 +579,9 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult,
-            "javadocLineRemoverServiceフィールドがJavadocLineRemoverService型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult,
+                "javadocLineRemoverServiceフィールドがJavadocLineRemoverService型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -615,9 +615,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & Modifier.PRIVATE;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult,
-            "javadocLineRemoverServiceフィールドがprivateで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "javadocLineRemoverServiceフィールドがprivateで定義されていること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -758,8 +757,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult, "messageSourceフィールドがKmgMessageSource型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult, "messageSourceフィールドがKmgMessageSource型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -793,8 +792,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & Modifier.PRIVATE;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult, "messageSourceフィールドがprivateで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "messageSourceフィールドがprivateで定義されていること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -882,8 +881,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -917,8 +916,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & (Modifier.PRIVATE | Modifier.STATIC | Modifier.FINAL);
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult, "TOOL_NAME定数がprivate static finalで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "TOOL_NAME定数がprivate static finalで定義されていること");
 
         } catch (final NoSuchFieldException e) {
 

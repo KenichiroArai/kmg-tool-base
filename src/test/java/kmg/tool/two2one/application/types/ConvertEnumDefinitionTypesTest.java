@@ -28,8 +28,9 @@ public class ConvertEnumDefinitionTypesTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final ConvertEnumDefinitionTypes[] expectedValues = {
             ConvertEnumDefinitionTypes.NONE, ConvertEnumDefinitionTypes.ENUM_DEFINITION_FULL_MATCH,
-            ConvertEnumDefinitionTypes.ENUM_DEFINITION_CONSTANT_NAME, ConvertEnumDefinitionTypes.ENUM_DEFINITION_DISPLAY_NAME,
-            ConvertEnumDefinitionTypes.ENUM_DEFINITION_KEY, ConvertEnumDefinitionTypes.ENUM_DEFINITION_DETAIL
+            ConvertEnumDefinitionTypes.ENUM_DEFINITION_CONSTANT_NAME,
+            ConvertEnumDefinitionTypes.ENUM_DEFINITION_DISPLAY_NAME, ConvertEnumDefinitionTypes.ENUM_DEFINITION_KEY,
+            ConvertEnumDefinitionTypes.ENUM_DEFINITION_DETAIL
         };
 
         /* 準備 */
@@ -573,7 +574,8 @@ public class ConvertEnumDefinitionTypesTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualResult, "マップから取得した値がnullでないこと");
-        Assertions.assertEquals(ConvertEnumDefinitionTypes.ENUM_DEFINITION_FULL_MATCH, actualResult, "マップから正しい列挙型が取得されること");
+        Assertions.assertEquals(ConvertEnumDefinitionTypes.ENUM_DEFINITION_FULL_MATCH, actualResult,
+            "マップから正しい列挙型が取得されること");
 
     }
 

@@ -313,7 +313,9 @@ public class MapTransformServiceImpl implements MapTransformService {
 
             // 置換が発生した場合のみカウント
             if (!originalContent.equals(content)) {
+
                 result++;
+
             }
 
         }

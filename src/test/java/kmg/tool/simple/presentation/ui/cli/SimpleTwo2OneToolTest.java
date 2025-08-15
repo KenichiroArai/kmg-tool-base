@@ -257,8 +257,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     public void testInitialize_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
-        final String expectedDomainMessage = "項目名がnullです。";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final String             expectedDomainMessage = "項目名がnullです。";
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化

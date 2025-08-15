@@ -591,8 +591,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_normalProcess() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedOutputContent
-            = "Hello test input content, welcome!" + System.lineSeparator() + "Hello line2, welcome!" + System.lineSeparator() + "Hello line3, welcome!" + System.lineSeparator();
+        final String expectedOutputContent = "Hello test input content, welcome!" + System.lineSeparator()
+            + "Hello line2, welcome!" + System.lineSeparator() + "Hello line3, welcome!" + System.lineSeparator();
 
         /* 準備 */
         // テスト用ファイルを作成
@@ -710,11 +710,14 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String expectedOutputContent
-            = "Hello test input content, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator() + "Hello line2, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator() + "Hello line3, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
+            = "Hello test input content, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator()
+                + "Hello line2, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator()
+                + "Hello line3, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
 
         /* 準備 */
         // 複数行のテンプレートファイルを作成
-        final String multiLineTemplate = "Hello { name }, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
+        final String multiLineTemplate
+            = "Hello { name }, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
         Files.write(this.testInputPath, this.testInputContent.getBytes());
         Files.write(this.testTemplatePath, multiLineTemplate.getBytes());
 
@@ -783,7 +786,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_semiTemplateWithoutPlaceholder() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedOutputContent = "Hello world!" + System.lineSeparator() + "Hello world!" + System.lineSeparator() + "Hello world!" + System.lineSeparator();
+        final String expectedOutputContent = "Hello world!" + System.lineSeparator() + "Hello world!"
+            + System.lineSeparator() + "Hello world!" + System.lineSeparator();
 
         /* 準備 */
         // プレースホルダーが含まれないテンプレートファイルを作成

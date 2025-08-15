@@ -394,7 +394,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     public void testMain_semiNullArgs() {
 
         /* 期待値の定義 */
-        final String[] expectedArgs = new String[0];
+        final String[] expectedArgs = {};
 
         /* 準備 */
         // 空の引数を準備

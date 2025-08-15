@@ -1507,8 +1507,8 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
 
         } catch (final NoSuchFieldException e) {
 
