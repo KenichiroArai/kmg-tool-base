@@ -1,5 +1,5 @@
 /**
- * Javadocタグ設定の入出力のパッケージ<br>
+ * Javadocタグ設定のパッケージ<br>
  * <p>
  * 「jdts」は、「JavadocTagSetter」の略。<br>
  * </p>
