@@ -17,36 +17,74 @@ import kmg.tool.iito.domain.logic.AbstractIctoOneLinePatternLogic;
  * アクセサ作成ロジック<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic implements AccessorCreationLogic {
 
-    /** Javadocコメントの開始の正規表現パターン */
+    /**
+     * Javadocコメントの開始の正規表現パターン
+     *
+     * @since 0.1.0
+     */
     private static final String JAVADOC_COMMENT_START_PATTERN = "/\\*\\*"; //$NON-NLS-1$
 
-    /** 1行Javadocコメントの正規表現パターン */
+    /**
+     * 1行Javadocコメントの正規表現パターン
+     *
+     * @since 0.1.0
+     */
     private static final String SINGLE_LINE_JAVADOC_PATTERN = "/\\*\\*\\s+(\\S+)\\s+\\*/"; //$NON-NLS-1$
 
-    /** 複数行Javadocコメント開始の正規表現パターン */
+    /**
+     * 複数行Javadocコメント開始の正規表現パターン
+     *
+     * @since 0.1.0
+     */
     private static final String MULTI_LINE_JAVADOC_START_PATTERN = "/\\*\\*(\\S+)"; //$NON-NLS-1$
 
-    /** privateフィールド宣言の正規表現パターン */
+    /**
+     * privateフィールド宣言の正規表現パターン
+     *
+     * @since 0.1.0
+     */
     private static final String PRIVATE_FIELD_PATTERN = "private\\s+((\\w|\\[\\]|<|>)+)\\s+(\\w+);"; //$NON-NLS-1$
 
-    /** Javadocの解析中かを管理する */
+    /**
+     * Javadocの解析中かを管理する
+     *
+     * @since 0.1.0
+     */
     private boolean inJavadocParsing;
 
-    /** Javadocコメント */
+    /**
+     * Javadocコメント
+     *
+     * @since 0.1.0
+     */
     private String javadocComment;
 
-    /** 型 */
+    /**
+     * 型
+     *
+     * @since 0.1.0
+     */
     private String type;
 
-    /** 項目名 */
+    /**
+     * 項目名
+     *
+     * @since 0.1.0
+     */
     private String item;
 
     /**
      * 項目名を書き込み対象に追加する。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -76,6 +114,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     /**
      * Javadocコメントを書き込み対象に追加する。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -103,6 +143,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
     /**
      * 型情報を書き込み対象に追加する。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -132,6 +174,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     /**
      * 処理中のデータをクリアする。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      */
     @Override
@@ -150,6 +194,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
     /**
      * フィールド宣言から型、項目名、先頭大文字項目に変換する。
+     *
+     * @since 0.1.0
      *
      * @return true：変換あり、false：変換なし
      *
@@ -184,6 +230,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
     /**
      * Javadocコメントに変換する。
+     *
+     * @since 0.1.0
      *
      * @return true：変換あり、false：変換なし
      */
@@ -271,6 +319,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     /**
      * 項目名返す。
      *
+     * @since 0.1.0
+     *
      * @return 項目名
      */
     @Override
@@ -283,6 +333,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
     /**
      * Javadocコメントを返す。
+     *
+     * @since 0.1.0
      *
      * @return Javadocコメント。取得できない場合は、null
      */
@@ -297,6 +349,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     /**
      * 型を返す。
      *
+     * @since 0.1.0
+     *
      * @return 型
      */
     @Override
@@ -310,6 +364,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     /**
      * Javadocの解析中かを返す。
      *
+     * @since 0.1.0
+     *
      * @return true：Javadoc解析中、false：Javadoc解析外
      */
     @Override
@@ -322,6 +378,8 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
 
     /**
      * 不要な修飾子を削除する。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
