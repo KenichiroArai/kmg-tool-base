@@ -30,6 +30,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * アクセサ作成サービス実装テスト
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -38,24 +42,46 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private AccessorCreationServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
-    /** モックアクセサ作成ロジック */
+    /**
+     * モックアクセサ作成ロジック
+     *
+     * @since 0.1.0
+     */
     private AccessorCreationLogic mockAccessorCreationLogic;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -85,6 +111,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -110,6 +138,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * addNameColumn メソッドのテスト - 正常系：Javadoc変換が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -134,6 +164,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * addNameColumn メソッドのテスト - 準正常系：Javadoc変換が失敗する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -156,6 +188,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * addRemainingColumns メソッドのテスト - 正常系：フィールド変換が成功する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -183,6 +217,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * addRemainingColumns メソッドのテスト - 準正常系：フィールド変換が失敗する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -206,6 +242,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * clearAndPrepareNextLine メソッドのテスト - 正常系：正常にクリア処理が完了する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -234,6 +272,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * closeAccessorCreationLogic メソッドのテスト - 異常系：IOExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -296,6 +336,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * closeAccessorCreationLogic メソッドのテスト - 正常系：正常にクローズ処理が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -322,6 +364,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用するコンストラクタ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -346,6 +390,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -368,6 +414,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * processColumns メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -434,6 +482,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 正常系：正常に処理が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -463,6 +513,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 準正常系：残りのカラム追加が失敗する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -490,6 +542,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 準正常系：Javadocコメントがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -514,6 +568,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * readOneLineData メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -577,6 +633,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * readOneLineData メソッドのテスト - 正常系：正常に読み込みが完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -599,6 +657,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：アクセサ作成ロジックのクローズでIOExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -647,6 +707,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 正常系：正常に処理が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -677,7 +739,10 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(this.mockAccessorCreationLogic.convertFields()).thenReturn(true);
             Mockito.when(this.mockAccessorCreationLogic.getItem()).thenReturn("testField");
 
-            /* テスト対象の実行 */
+            /*
+             * テスト対象の実行
+             * @since 0.1.0
+             */
             final boolean testResult = this.testTarget.writeIntermediateFile();
 
             /* 検証の準備 */
@@ -692,6 +757,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 準正常系：addRemainingColumnsがfalseを返す場合（continue文のカバレッジ）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -726,7 +793,10 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(this.mockAccessorCreationLogic.addJavadocCommentToRows()).thenReturn(true);
             Mockito.when(this.mockAccessorCreationLogic.getJavadocComment()).thenReturn(null);
 
-            /* テスト対象の実行 */
+            /*
+             * テスト対象の実行
+             * @since 0.1.0
+             */
             final boolean testResult = this.testTarget.writeIntermediateFile();
 
             /* 検証の準備 */
@@ -741,6 +811,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 準正常系：convertFieldsがfalseを返す場合（continue文のカバレッジ）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -777,7 +849,10 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(this.mockAccessorCreationLogic.removeModifier()).thenReturn(true);
             Mockito.when(this.mockAccessorCreationLogic.convertFields()).thenReturn(false);
 
-            /* テスト対象の実行 */
+            /*
+             * テスト対象の実行
+             * @since 0.1.0
+             */
             final boolean testResult = this.testTarget.writeIntermediateFile();
 
             /* 検証の準備 */
@@ -792,6 +867,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 準正常系：processColumnsがfalseを返す場合（continue文のカバレッジ）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -824,7 +901,10 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             // convertJavadocをfalseに設定することで、addNameColumnがfalseを返す
             Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(false);
 
-            /* テスト対象の実行 */
+            /*
+             * テスト対象の実行
+             * @since 0.1.0
+             */
             final boolean testResult = this.testTarget.writeIntermediateFile();
 
             /* 検証の準備 */
@@ -839,6 +919,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFileLine メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -902,6 +984,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFileLine メソッドのテスト - 正常系：正常に書き込みが完了する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
