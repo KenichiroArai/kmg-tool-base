@@ -39,7 +39,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         = String.format("%s\\s+", Pattern.quote(JdtsBlockModelImpl.JAVADOC_END)); //$NON-NLS-1$
 
     /** アノテーション複数行開始文字列 */
-    private static final String ANNOTATION_MULTILINE_START = "({"; //$NON-NLS-1$
+    private static final String ANNOTATION_MULTILINE_START = "{"; //$NON-NLS-1$
 
     /** アノテーション複数行終了文字列 */
     private static final String ANNOTATION_MULTILINE_END = "})"; //$NON-NLS-1$
@@ -251,9 +251,9 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
                     // アノテーションの設定値が複数行の終了か
                     if (trimmedLine.endsWith(JdtsBlockModelImpl.ANNOTATION_MULTILINE_END)) {
+                        // 終了の場合
 
-                        annotationMultiline.append(KmgString.LINE_SEPARATOR);
-                        annotationMultiline.append(trimmedLine);
+                        this.annotations.add(annotationMultiline.toString());
 
                         isAnnotationValueMultiline = false;
 
