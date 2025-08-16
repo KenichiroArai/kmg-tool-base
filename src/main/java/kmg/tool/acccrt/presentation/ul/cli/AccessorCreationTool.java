@@ -39,6 +39,8 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <p>
      * このツールの表示名を定義します。
      * </p>
+     *
+     * @since 0.1.0
      */
     private static final String TOOL_NAME = "アクセサ作成ツール"; //$NON-NLS-1$
 
@@ -47,6 +49,8 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <p>
      * フィールド定義からアクセサメソッドを生成するためのサービスです。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Autowired
     private AccessorCreationService accessorCreationService;
@@ -72,6 +76,8 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <li>メイン処理の実行</li>
      * <li>コンテキストのクローズ</li>
      * </ol>
+     *
+     * @since 0.1.0
      *
      * @param args
      *             コマンドライン引数。入力ファイルパス、テンプレートファイルパス、出力ファイルパスなどを指定できます。 <br>
@@ -102,6 +108,8 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <p>
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
+     *
+     * @since 0.1.0
      */
     public AccessorCreationTool() {
 
@@ -117,6 +125,8 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <p>
      * このメソッドは親クラスの処理から呼び出され、実際のアクセサ生成処理を担当する サービスを提供します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return アクセサ作成サービス このツールが使用するアクセサ作成サービスのインスタンス
      */
