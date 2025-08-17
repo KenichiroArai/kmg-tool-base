@@ -11,19 +11,23 @@ import javafx.stage.Window;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 public class FileChooserWrapper {
 
-    /** FileChooser */
+    /**
+     * FileChooser
+     *
+     * @since 0.1.0
+     */
     private final FileChooser fileChooser;
 
     /**
      * デフォルトコンストラクタ<br>
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     public FileChooserWrapper() {
 
@@ -34,7 +38,7 @@ public class FileChooserWrapper {
     /**
      * 初期ディレクトリを設定する<br>
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param initialDirectory
      *                         初期ディレクトリ
@@ -48,7 +52,7 @@ public class FileChooserWrapper {
     /**
      * タイトルを設定する<br>
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param title
      *              タイトル
@@ -62,7 +66,7 @@ public class FileChooserWrapper {
     /**
      * ファイル選択ダイアログを表示する<br>
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param ownerWindow
      *                    オーナーウィンドウ
