@@ -14,11 +14,17 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
  * </p>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public interface DtcLogic extends Closeable {
 
     /**
      * 出力バッファに追加する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -30,9 +36,7 @@ public interface DtcLogic extends Closeable {
     /**
      * 入力ファイルからテンプレートに基づいて変換する。
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             入出力処理に失敗した場合
@@ -42,6 +46,8 @@ public interface DtcLogic extends Closeable {
     /**
      * 出力バッファコンテンツをクリアする
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
@@ -49,6 +55,8 @@ public interface DtcLogic extends Closeable {
 
     /**
      * 読み込み中のデータをクリアする。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -60,6 +68,8 @@ public interface DtcLogic extends Closeable {
     /**
      * リソースをクローズする。
      *
+     * @since 0.1.0
+     *
      * @throws IOException
      *                     入出力例外
      */
@@ -68,8 +78,6 @@ public interface DtcLogic extends Closeable {
 
     /**
      * 1件分の内容を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -80,11 +88,7 @@ public interface DtcLogic extends Closeable {
     /**
      * 入力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 入力ファイルパス
      */
@@ -93,11 +97,7 @@ public interface DtcLogic extends Closeable {
     /**
      * 出力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 出力ファイルパス
      */
@@ -106,11 +106,7 @@ public interface DtcLogic extends Closeable {
     /**
      * テンプレートファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return テンプレートファイルパス
      */
@@ -118,6 +114,8 @@ public interface DtcLogic extends Closeable {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @param inputPath
      *                     入力ファイルパス
@@ -135,6 +133,8 @@ public interface DtcLogic extends Closeable {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @param inputPath
      *                              入力ファイルパス
@@ -156,9 +156,7 @@ public interface DtcLogic extends Closeable {
     /**
      * テンプレートファイルを読み込む<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -170,6 +168,8 @@ public interface DtcLogic extends Closeable {
     /**
      * 1行データを読み込む。
      *
+     * @since 0.1.0
+     *
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolMsgException
@@ -179,6 +179,8 @@ public interface DtcLogic extends Closeable {
 
     /**
      * 出力バッファを書き込む
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

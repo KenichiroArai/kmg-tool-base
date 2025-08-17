@@ -22,6 +22,10 @@ import kmg.tool.dtc.domain.service.DtcService;
  * </p>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class DtcServiceImpl implements DtcService {
@@ -41,17 +45,33 @@ public class DtcServiceImpl implements DtcService {
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** テンプレートの動的変換ロジック */
+    /**
+     * テンプレートの動的変換ロジック
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private DtcLogic dtcLogic;
 
-    /** 入力ファイルパス */
+    /**
+     * 入力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path inputPath;
 
-    /** テンプレートファイルパス */
+    /**
+     * テンプレートファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path templatePath;
 
-    /** 出力ファイルパス */
+    /**
+     * 出力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path outputPath;
 
     /**
@@ -82,11 +102,7 @@ public class DtcServiceImpl implements DtcService {
     /**
      * 入力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 入力ファイルパス
      */
@@ -101,11 +117,7 @@ public class DtcServiceImpl implements DtcService {
     /**
      * 出力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 出力ファイルパス
      */
@@ -120,11 +132,7 @@ public class DtcServiceImpl implements DtcService {
     /**
      * テンプレートファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return テンプレートファイルパス
      */
@@ -139,11 +147,7 @@ public class DtcServiceImpl implements DtcService {
     /**
      * 初期化する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param inputPath
      *                     入力ファイルパス
@@ -174,6 +178,8 @@ public class DtcServiceImpl implements DtcService {
 
     /**
      * 処理する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -252,6 +258,8 @@ public class DtcServiceImpl implements DtcService {
 
     /**
      * テンプレートの動的変換ロジックをクローズする。
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

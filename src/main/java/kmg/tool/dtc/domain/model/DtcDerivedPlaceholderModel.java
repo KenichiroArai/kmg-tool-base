@@ -13,12 +13,16 @@ public interface DtcDerivedPlaceholderModel {
     /**
      * 表示名を返す
      *
+     * @since 0.1.0
+     *
      * @return 表示名
      */
     String getDisplayName();
 
     /**
      * 置換パターンを返す
+     *
+     * @since 0.1.0
      *
      * @return 置換パターン
      */
@@ -27,12 +31,16 @@ public interface DtcDerivedPlaceholderModel {
     /**
      * ソースキーを返す
      *
+     * @since 0.1.0
+     *
      * @return ソースキー
      */
     String getSourceKey();
 
     /**
      * 変換処理の種類を返す
+     *
+     * @since 0.1.0
      *
      * @return 換処理の種類
      */
