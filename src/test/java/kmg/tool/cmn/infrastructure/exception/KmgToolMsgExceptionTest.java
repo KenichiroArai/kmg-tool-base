@@ -21,6 +21,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * KMGツールメッセージ例外テスト
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -29,17 +33,31 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private KmgToolMsgException testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * createMessage メソッドのテスト - 正常系：メッセージが作成される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -81,6 +99,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
     /**
      * createMessageSource メソッドのテスト - 正常系：メッセージソースが作成される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -126,6 +146,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * getCause メソッドのテスト - 正常系：原因がnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -166,6 +188,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
     /**
      * getCause メソッドのテスト - 正常系：原因が取得される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -208,6 +232,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
     /**
      * getMessageArgs メソッドのテスト - 正常系：メッセージ引数が取得される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -253,6 +279,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * getMessageArgs メソッドのテスト - 正常系：メッセージ引数がnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -294,6 +322,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * getMessageTypes メソッドのテスト - 正常系：メッセージタイプが取得される場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -334,6 +364,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：メッセージタイプとメッセージ引数の場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -378,6 +410,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：メッセージタイプとメッセージ引数と原因の場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -426,6 +460,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：メッセージタイプと原因の場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -467,6 +503,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：メッセージタイプのみの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
