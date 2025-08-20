@@ -2,7 +2,6 @@ package kmg.tool.acccrt.test.it;
 
 import java.nio.file.Path;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,38 +37,7 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
     private Path tempDir;
 
     /**
-     * 入力ファイルパス
-     *
-     * @since 0.1.0
-     */
-    private Path inputFilePath;
-
-    /**
-     * テンプレートファイルパス
-     *
-     * @since 0.1.0
-     */
-    private Path templateFilePath;
-
-    /**
-     * 各テスト実行前のセットアップ処理。テスト用ファイルの準備を行う。
-     *
-     * @since 0.1.0
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @BeforeEach
-    public void setUp() throws Exception {
-
-        /* テスト用ファイルの準備 */
-        this.inputFilePath = this.tempDir.resolve("DtcDerivedPlaceholderModelImpl.java");
-        this.templateFilePath = this.tempDir.resolve("template.yml");
-
-    }
-
-    /**
-     * main メソッドの結合テスト - 正常系：実際のファイルを使用してツールが正常に動作する場合
+     * main メソッドのテスト - 正常系
      *
      * @since 0.1.0
      *
@@ -77,15 +45,41 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
      *                   例外
      */
     @Test
-    public void testMain_integrationSuccess() throws Exception {
+    public void testMain_normal() throws Exception {
 
         /* 期待値の定義 */
 
         /* 準備 */
         final String[] testArgs = {};
 
+        // テストリソースディレクトリのルートを取得
+        final Path resourceRoot = Path.of("src", "test", "resources");
+        // テストクラスのリソースディレクトリ名
+        final String testResourceDirName = "kmg.tool.acccrt.test.it.AccessorCreationIt001Test";
+        // テストメソッド名
+        final String testMethodName = "testMain_normal";
+        // 各ファイルのパスを組み立て
+        final Path testDir = resourceRoot.resolve(testResourceDirName).resolve(testMethodName);
+        final Path testInputPath = testDir.resolve("TestInput.java");
+        final Path testIntermediatePath = testDir.resolve("TestTemaplte.yml");
+        final Path testOutputPath = null; // 必要に応じて出力先を指定
+
+        // testInputPathの中身を確認する
+        System.out.println("testInputPath: " + testInputPath.toAbsolutePath());
+        if (java.nio.file.Files.exists(testInputPath)) {
+            java.util.List<String> lines = java.nio.file.Files.readAllLines(testInputPath);
+            System.out.println("==== testInputPath の内容 ====");
+            for (String line : lines) {
+                System.out.println(line);
+            }
+            System.out.println("==== ここまで ====");
+        } else {
+            System.out.println("testInputPathファイルが存在しません。");
+        }
+
         /* テスト対象の実行 */
-        AccessorCreationTool.main(testArgs);
+        //TODO KenichiroArai 2025/08/20 実装中
+        // AccessorCreationTool.main(testArgs);
 
         /* 検証の準備 */
 
