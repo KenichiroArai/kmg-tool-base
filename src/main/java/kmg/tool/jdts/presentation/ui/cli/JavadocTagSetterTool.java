@@ -77,8 +77,7 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
         final JavadocTagSetterTool tool = ctx.getBean(JavadocTagSetterTool.class);
 
-        /* 実行 */
-        tool.execute();
+        tool.run(args);
 
         ctx.close();
 
@@ -227,6 +226,24 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
         final PlainContentInputServic result = this.inputService;
         return result;
+
+    }
+
+    /**
+     * <h3>ツール実行メソッド</h3>
+     * <p>
+     * ツールの初期化と実行を行います。
+     * </p>
+     *
+     * @since 0.1.0
+     *
+     * @param args
+     *             コマンドライン引数
+     */
+    public void run(final String[] args) {
+
+        /* 実行 */
+        this.execute();
 
     }
 

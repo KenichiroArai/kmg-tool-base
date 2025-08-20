@@ -1,4 +1,4 @@
-package kmg.tool.acccrt.test.it;
+package kmg.tool.jdts.test.it;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
-import kmg.tool.acccrt.presentation.ul.cli.AccessorCreationTool;
 import kmg.tool.io.presentation.ui.cli.AbstractIoTool;
+import kmg.tool.jdts.presentation.ui.cli.JavadocTagSetterTool;
 
 /**
  * アクセサ作成ツールの結合テスト001のテスト<br>
@@ -25,21 +25,21 @@ import kmg.tool.io.presentation.ui.cli.AbstractIoTool;
  *
  * @version 0.1.0
  */
-@SpringBootTest(classes = AccessorCreationTool.class)
+@SpringBootTest(classes = JavadocTagSetterIt001lTest.class)
 @TestPropertySource(properties = {
     "spring.main.web-application-type=none"
 })
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class AccessorCreationIt001Test extends AbstractKmgTest {
+public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     /** テストリソースディレクトリのルート */
     private static final Path TEST_RESOURCE_ROOT = Path.of("src", "test", "resources");
 
     /** テストクラスのリソースディレクトリ */
     private static final Path TEST_RESOURCE_DIR
-        = AccessorCreationIt001Test.TEST_RESOURCE_ROOT.resolve(AccessorCreationIt001Test.class.getName());
+        = JavadocTagSetterIt001lTest.TEST_RESOURCE_ROOT.resolve(JavadocTagSetterIt001lTest.class.getName());
 
     /**
      * テスト対象
@@ -47,7 +47,7 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Autowired
-    private AccessorCreationTool testTarget;
+    private JavadocTagSetterTool testTarget;
 
     /**
      * テスト用の一時ディレクトリ
@@ -74,10 +74,10 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
         final String[] testArgs = {};
 
         // 各ファイルのパスを組み立て
-        final Path testDir          = AccessorCreationIt001Test.TEST_RESOURCE_DIR.resolve("testMain_normal");
-        final Path testInputPath    = testDir.resolve("TestInput.java");
-        final Path testTemplatePath = testDir.resolve("TestTemplate.yml");
-        final Path testOutputPath   = this.tempDir.resolve("TestOutput.java");
+        final Path testDir            = JavadocTagSetterIt001lTest.TEST_RESOURCE_DIR.resolve("testMain_normal");
+        final Path testInputPath      = testDir.resolve("TestInput.java");
+        final Path testDefinitionPath = testDir.resolve("TestDefinition.yml");
+        final Path testOutputPath     = this.tempDir.resolve("TestOutput.java");
 
         // 実際の出力パスを保存
         Path actualOutputPath = null;
@@ -89,9 +89,9 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
             mockedStatic.when(AbstractIoTool::getInputPath).thenReturn(testInputPath);
             mockedStatic.when(AbstractIoTool::getOutputPath).thenReturn(testOutputPath);
 
-            // テンプレートパスを設定するために、AbstractTwo2OneToolのgetTemplatePathメソッドをモック
-            final AccessorCreationTool spyTool = Mockito.spy(this.testTarget);
-            Mockito.doReturn(testTemplatePath).when(spyTool).getTemplatePath();
+            // 定義パスを設定するために、AbstractTwo2OneToolのgetDefinitionPathメソッドをモック
+            final JavadocTagSetterTool spyTool = Mockito.spy(this.testTarget);
+            Mockito.doReturn(testDefinitionPath).when(spyTool).getDefinitionPath();
 
             /* テスト対象の実行 */
             spyTool.run(testArgs);
