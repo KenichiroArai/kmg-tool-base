@@ -4,8 +4,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
@@ -38,12 +40,32 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
         = AccessorCreationIt001Test.TEST_RESOURCE_ROOT.resolve(AccessorCreationIt001Test.class.getName());
 
     /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
+    private AccessorCreationTool testTarget;
+
+    /**
      * テスト用の一時ディレクトリ
      *
      * @since 0.1.0
      */
     @TempDir
     private Path tempDir;
+
+    /**
+     * 各テストメソッドの実行前に呼び出される初期化処理
+     *
+     * @since 0.1.0
+     */
+    @BeforeEach
+    public void setUp() {
+
+        // テスト対象のインスタンスを作成
+        this.testTarget = new AccessorCreationTool();
+
+    }
 
     /**
      * main メソッドのテスト - 正常系
@@ -61,17 +83,11 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
         /* 準備 */
         final String[] testArgs = {};
 
-        // テストメソッド名
-        final String testMethodName = "testMain_normal";
-        // 各ファイルのパスを組み立て
-        final Path testDir = AccessorCreationIt001Test.TEST_RESOURCE_DIR.resolve(testMethodName);
-
-        // テスト対象のファイルを設定
-        final Path testInputPath        = testDir.resolve("TestInput.java");
-        final Path testIntermediatePath = testDir.resolve("TestTemplate.yml");
-        final Path testOutputPath = tempDir.resolve("TestOutput.java");
+        // テスト用のパスを設定
+        final AccessorCreationTool spyTool = this.setupTestPaths("testMain_normal");
 
         // TODO KenichiroArai 2025/08/20 testInputPathの中身を確認する
+        final Path testInputPath = spyTool.getTestInputPath();
         System.out.println("testInputPath: " + testInputPath.toAbsolutePath());
 
         if (Files.exists(testInputPath)) {
@@ -92,13 +108,14 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
 
         }
 
-        // TODO KenichiroArai 2025/08/20 testIntermediatePathの中身を確認する
-        System.out.println("testIntermediatePath: " + testIntermediatePath.toAbsolutePath());
+        // TODO KenichiroArai 2025/08/20 testTemplatePathの中身を確認する
+        final Path testTemplatePath = spyTool.getTestTemplatePath();
+        System.out.println("testTemplatePath: " + testTemplatePath.toAbsolutePath());
 
-        if (Files.exists(testIntermediatePath)) {
+        if (Files.exists(testTemplatePath)) {
 
-            final List<String> lines = Files.readAllLines(testIntermediatePath);
-            System.out.println("==== testIntermediatePath の内容 ====");
+            final List<String> lines = Files.readAllLines(testTemplatePath);
+            System.out.println("==== testTemplatePath の内容 ====");
 
             for (final String line : lines) {
 
@@ -109,7 +126,7 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
 
         } else {
 
-            System.out.println("testIntermediatePathファイルが存在しません。");
+            System.out.println("testTemplatePathファイルが存在しません。");
 
         }
 
@@ -120,6 +137,42 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
         /* 検証の準備 */
 
         /* 検証の実施 */
+
+    }
+
+    /**
+     * テスト用のパスを設定する
+     *
+     * @param testMethodName
+     *                       テストメソッド名
+     *
+     * @return 設定されたテスト対象のインスタンス
+     */
+    private AccessorCreationTool setupTestPaths(final String testMethodName) {
+
+        final AccessorCreationTool result;
+
+        // 各ファイルのパスを組み立て
+        final Path testDir = AccessorCreationIt001Test.TEST_RESOURCE_DIR.resolve(testMethodName);
+
+        // テスト対象のファイルを設定
+        final Path testInputPath    = testDir.resolve("TestInput.java");
+        final Path testTemplatePath = testDir.resolve("TestTemplate.yml");
+        final Path testOutputPath   = this.tempDir.resolve("TestOutput.java");
+
+        // AccessorCreationToolをスパイしてテスト用のパスを設定
+        result = Mockito.spy(this.testTarget);
+
+        // getTestInputPathメソッドをスパイしてテスト用の入力パスを返すように設定
+        Mockito.doReturn(testInputPath).when(result).getTestInputPath();
+
+        // getTestOutputPathメソッドをスパイしてテスト用の出力パスを返すように設定
+        Mockito.doReturn(testOutputPath).when(result).getTestOutputPath();
+
+        // getTestTemplatePathメソッドをスパイしてテスト用のテンプレートパスを返すように設定
+        Mockito.doReturn(testTemplatePath).when(result).getTestTemplatePath();
+
+        return result;
 
     }
 
