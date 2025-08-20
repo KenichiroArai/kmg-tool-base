@@ -4,26 +4,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
-import org.mockito.ArgumentMatchers;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
+import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.test.AbstractKmgTest;
-import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.input.domain.service.PlainContentInputServic;
-import kmg.tool.io.presentation.ui.cli.AbstractIoTool;
-import kmg.tool.jdts.application.service.JdtsService;
-import kmg.tool.jdts.presentation.ui.cli.JavadocTagSetterTool;
+import kmg.tool.jdts.application.service.impl.JdtsServiceImpl;
 
 /**
- * アクセサ作成ツールの結合テスト001のテスト<br>
+ * Javadocタグ設定ツールの結合テスト001のテスト<br>
  *
  * @author KenichiroArai
  *
@@ -31,12 +26,10 @@ import kmg.tool.jdts.presentation.ui.cli.JavadocTagSetterTool;
  *
  * @version 0.1.0
  */
-@SpringBootTest(classes = {JavadocTagSetterTool.class})
-@TestPropertySource(properties = {
-    "spring.main.web-application-type=none"
-})
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
-    "nls", "static-method"
+    "nls",
 })
 public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
@@ -52,20 +45,13 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      *
      * @since 0.1.0
      */
-    @Autowired
-    private JavadocTagSetterTool testTarget;
+    private JdtsServiceImpl testTarget;
 
-    /** メッセージソースのモック */
-    @MockBean
-    private KmgMessageSource messageSource;
-
-    /** プレーンコンテンツ入力サービスのモック */
-    @MockBean
-    private PlainContentInputServic inputService;
-
-    /** Javadocタグ設定サービスのモック */
-    @MockBean
-    private JdtsService jdtsService;
+    // /** リフレクションモデル */
+    // private KmgReflectionModelImpl reflectionModel;
+    //
+    // /** モックKMGメッセージソース */
+    // private KmgMessageSource mockMessageSource;
 
     /**
      * テスト用の一時ディレクトリ
@@ -74,6 +60,43 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      */
     @TempDir
     private Path tempDir;
+
+    /**
+     * セットアップ
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @BeforeEach
+    public void setUp() throws KmgReflectionException {
+
+        final JdtsServiceImpl jdtsServiceImpl = new JdtsServiceImpl();
+        this.testTarget = jdtsServiceImpl;
+        // this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+        //
+        // /* モックの初期化 */
+        // this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+        //
+        // /* モックの設定 */
+        // this.reflectionModel.set("messageSource", this.mockMessageSource);
+
+    }
+
+    /**
+     * クリーンアップ
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @AfterEach
+    public void tearDown() throws Exception {
+
+        if (this.testTarget != null) {
+
+            // クリーンアップ処理
+        }
+
+    }
 
     /**
      * main メソッドのテスト - 正常系
@@ -89,52 +112,23 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        final String[] testArgs = {};
-
-        // モックの動作を設定
-        Mockito.when(this.messageSource.getGenMessage(ArgumentMatchers.any(KmgToolGenMsgTypes.class), ArgumentMatchers.any(Object[].class)))
-            .thenReturn("テストメッセージ");
-        Mockito.when(this.jdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
-        Mockito.when(this.jdtsService.process()).thenReturn(true);
 
         // 各ファイルのパスを組み立て
         final Path testDir            = JavadocTagSetterIt001lTest.TEST_RESOURCE_DIR.resolve("testMain_normal");
         final Path testInputPath      = testDir.resolve("TestInput.java");
         final Path testDefinitionPath = testDir.resolve("TestDefinition.yml");
-        final Path testOutputPath     = this.tempDir.resolve("TestOutput.java");
 
-        // 実際の出力パスを保存
-        Path actualOutputPath = null;
-
-        // MockedStaticを使用してstaticメソッドをモック
-        try (MockedStatic<AbstractIoTool> mockedStatic = Mockito.mockStatic(AbstractIoTool.class)) {
-
-            // staticメソッドのモック設定
-            mockedStatic.when(AbstractIoTool::getInputPath).thenReturn(testInputPath);
-            mockedStatic.when(AbstractIoTool::getOutputPath).thenReturn(testOutputPath);
-
-            // 定義パスを設定するために、AbstractTwo2OneToolのgetDefinitionPathメソッドをモック
-            final JavadocTagSetterTool spyTool = Mockito.spy(this.testTarget);
-            Mockito.doReturn(testDefinitionPath).when(spyTool).getDefinitionPath();
-
-            // loadPlainContentメソッドをモック化
-            Mockito.doReturn(true).when(spyTool).loadPlainContent(ArgumentMatchers.any());
-
-            // getContentメソッドをモック化
-            Mockito.doReturn("test/path").when(spyTool).getContent();
-
-            /* テスト対象の実行 */
-            spyTool.run(testArgs);
-
-            // モックされた出力パスを保存
-            actualOutputPath = AbstractIoTool.getOutputPath();
-
-        }
+        /* テスト対象の実行 */
+        this.testTarget.initialize(testInputPath, testDefinitionPath);
+        this.testTarget.process();
 
         /* 検証の準備 */
 
+        /* 検証の実施 */
+
         // 実際のファイル出力を確認
-        System.out.println("testOutputPath: " + testOutputPath);
+        final Path testOutputPath = testInputPath;
+        System.out.println("OutputPath: " + testOutputPath.toAbsolutePath());
 
         if (Files.exists(testOutputPath)) {
 
@@ -168,8 +162,6 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
             }
 
         }
-
-        /* 検証の実施 */
 
     }
 
