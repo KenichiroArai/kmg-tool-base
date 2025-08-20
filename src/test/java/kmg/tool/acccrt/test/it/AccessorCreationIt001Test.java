@@ -90,50 +90,6 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
             final AccessorCreationTool spyTool = Mockito.spy(this.testTarget);
             Mockito.doReturn(testTemplatePath).when(spyTool).getTemplatePath();
 
-            // TODO KenichiroArai 2025/08/20 testInputPathの中身を確認する
-            final Path actualInputPath = AbstractIoTool.getInputPath();
-            System.out.println("testInputPath: " + actualInputPath.toAbsolutePath());
-
-            if (Files.exists(actualInputPath)) {
-
-                final List<String> lines = Files.readAllLines(actualInputPath);
-                System.out.println("==== testInputPath の内容 ====");
-
-                for (final String line : lines) {
-
-                    System.out.println(line);
-
-                }
-                System.out.println("==== ここまで ====");
-
-            } else {
-
-                System.out.println("testInputPathファイルが存在しません。");
-
-            }
-
-            // TODO KenichiroArai 2025/08/20 testTemplatePathの中身を確認する
-            final Path actualTemplatePath = spyTool.getTemplatePath();
-            System.out.println("testTemplatePath: " + actualTemplatePath.toAbsolutePath());
-
-            if (Files.exists(actualTemplatePath)) {
-
-                final List<String> lines = Files.readAllLines(actualTemplatePath);
-                System.out.println("==== testTemplatePath の内容 ====");
-
-                for (final String line : lines) {
-
-                    System.out.println(line);
-
-                }
-                System.out.println("==== ここまで ====");
-
-            } else {
-
-                System.out.println("testTemplatePathファイルが存在しません。");
-
-            }
-
             /* テスト対象の実行 */
             // TODO KenichiroArai 2025/08/20 実装中
             spyTool.run(testArgs);
@@ -141,6 +97,21 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
         }
 
         /* 検証の準備 */
+
+        // TODO KenichiroArai 2025/08/20 testInputPathの中身を確認する
+        final Path actualOutputPath = AbstractIoTool.getOutputPath();
+        System.out.println("testOutputPath: " + actualOutputPath.toAbsolutePath());
+
+        if (Files.exists(actualOutputPath)) {
+            final List<String> lines = Files.readAllLines(actualOutputPath);
+            System.out.println("==== testOutputPath の内容 ====");
+            for (final String line : lines) {
+                System.out.println(line);
+            }
+            System.out.println("==== ここまで ====");
+        } else {
+            System.out.println("testOutputPathファイルが存在しません。");
+        }
 
         /* 検証の実施 */
 
