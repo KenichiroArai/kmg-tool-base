@@ -66,9 +66,10 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
         // 各ファイルのパスを組み立て
         final Path testDir = AccessorCreationIt001Test.TEST_RESOURCE_DIR.resolve(testMethodName);
 
+        // テスト対象のファイルを設定
         final Path testInputPath        = testDir.resolve("TestInput.java");
         final Path testIntermediatePath = testDir.resolve("TestTemplate.yml");
-        final Path testOutputPath       = null;
+        final Path testOutputPath = tempDir.resolve("TestOutput.java");
 
         // TODO KenichiroArai 2025/08/20 testInputPathの中身を確認する
         System.out.println("testInputPath: " + testInputPath.toAbsolutePath());
