@@ -79,6 +79,9 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
         final Path testTemplatePath = testDir.resolve("TestTemplate.yml");
         final Path testOutputPath   = this.tempDir.resolve("TestOutput.java");
 
+        // 実際の出力パスを保存
+        Path actualOutputPath = null;
+
         // MockedStaticを使用してstaticメソッドをモック
         try (MockedStatic<AbstractIoTool> mockedStatic = Mockito.mockStatic(AbstractIoTool.class)) {
 
@@ -91,26 +94,49 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
             Mockito.doReturn(testTemplatePath).when(spyTool).getTemplatePath();
 
             /* テスト対象の実行 */
-            // TODO KenichiroArai 2025/08/20 実装中
             spyTool.run(testArgs);
+
+            // モックされた出力パスを保存
+            actualOutputPath = AbstractIoTool.getOutputPath();
 
         }
 
         /* 検証の準備 */
 
-        // TODO KenichiroArai 2025/08/20 testInputPathの中身を確認する
-        final Path actualOutputPath = AbstractIoTool.getOutputPath();
-        System.out.println("testOutputPath: " + actualOutputPath.toAbsolutePath());
+        // 実際のファイル出力を確認
+        System.out.println("testOutputPath: " + testOutputPath);
 
-        if (Files.exists(actualOutputPath)) {
-            final List<String> lines = Files.readAllLines(actualOutputPath);
+        if (Files.exists(testOutputPath)) {
+
+            final List<String> lines = Files.readAllLines(testOutputPath);
             System.out.println("==== testOutputPath の内容 ====");
+
             for (final String line : lines) {
+
                 System.out.println(line);
+
             }
             System.out.println("==== ここまで ====");
+
         } else {
+
             System.out.println("testOutputPathファイルが存在しません。");
+
+            // デバッグ情報を出力
+            System.out.println("tempDir: " + this.tempDir.toAbsolutePath());
+            System.out.println("tempDir exists: " + Files.exists(this.tempDir));
+            System.out.println("tempDir contents:");
+
+            try {
+
+                Files.list(this.tempDir).forEach(file -> System.out.println("  " + file.getFileName()));
+
+            } catch (final Exception e) {
+
+                System.out.println("tempDir listing failed: " + e.getMessage());
+
+            }
+
         }
 
         /* 検証の実施 */
