@@ -31,11 +31,11 @@ import kmg.tool.acccrt.presentation.ul.cli.AccessorCreationTool;
 public class AccessorCreationIt001Test extends AbstractKmgTest {
 
     /** テストリソースディレクトリのルート */
-    private static final Path RESOURCE_ROOT = Path.of("src", "test", "resources");
+    private static final Path TEST_RESOURCE_ROOT = Path.of("src", "test", "resources");
 
     /** テストクラスのリソースディレクトリ */
     private static final Path TEST_RESOURCE_DIR
-        = AccessorCreationIt001Test.RESOURCE_ROOT.resolve(AccessorCreationIt001Test.class.getName());
+        = AccessorCreationIt001Test.TEST_RESOURCE_ROOT.resolve(AccessorCreationIt001Test.class.getName());
 
     /**
      * テスト用の一時ディレクトリ
