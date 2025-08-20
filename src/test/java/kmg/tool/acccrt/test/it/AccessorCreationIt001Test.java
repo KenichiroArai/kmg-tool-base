@@ -4,11 +4,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
@@ -46,6 +46,7 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
      *
      * @since 0.1.0
      */
+    @Autowired
     private AccessorCreationTool testTarget;
 
     /**
@@ -55,19 +56,6 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
      */
     @TempDir
     private Path tempDir;
-
-    /**
-     * 各テストメソッドの実行前に呼び出される初期化処理
-     *
-     * @since 0.1.0
-     */
-    @BeforeEach
-    public void setUp() {
-
-        // テスト対象のインスタンスを作成
-        this.testTarget = new AccessorCreationTool();
-
-    }
 
     /**
      * main メソッドのテスト - 正常系
@@ -98,7 +86,7 @@ public class AccessorCreationIt001Test extends AbstractKmgTest {
             mockedStatic.when(AbstractIoTool::getInputPath).thenReturn(testInputPath);
             mockedStatic.when(AbstractIoTool::getOutputPath).thenReturn(testOutputPath);
 
-            // AccessorCreationToolをスパイしてテンプレートパスを設定
+            // テンプレートパスを設定するために、AbstractTwo2OneToolのgetTemplatePathメソッドをモック
             final AccessorCreationTool spyTool = Mockito.spy(this.testTarget);
             Mockito.doReturn(testTemplatePath).when(spyTool).getTemplatePath();
 
