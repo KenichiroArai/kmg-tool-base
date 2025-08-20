@@ -90,11 +90,7 @@ public class AccessorCreationTool extends AbstractDtcTool {
 
         final AccessorCreationTool tool = ctx.getBean(AccessorCreationTool.class);
 
-        /* 初期化 */
-        tool.initialize();
-
-        /* 実行 */
-        tool.execute();
+        tool.run(args);
 
         ctx.close();
 
@@ -114,6 +110,27 @@ public class AccessorCreationTool extends AbstractDtcTool {
     public AccessorCreationTool() {
 
         super(AccessorCreationTool.TOOL_NAME);
+
+    }
+
+    /**
+     * <h3>ツール実行メソッド</h3>
+     * <p>
+     * ツールの初期化と実行を行います。
+     * </p>
+     *
+     * @since 0.1.0
+     *
+     * @param args
+     *             コマンドライン引数
+     */
+    public void run(final String[] args) {
+
+        /* 初期化 */
+        this.initialize();
+
+        /* 実行 */
+        this.execute();
 
     }
 
