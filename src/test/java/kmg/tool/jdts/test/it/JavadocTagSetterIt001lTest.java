@@ -4,18 +4,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.tool.jdts.application.service.impl.JdtsServiceImpl;
+import kmg.tool.jdts.presentation.ui.cli.JavadocTagSetterTool;
 
 /**
  * Javadocタグ設定ツールの結合テスト001のテスト<br>
@@ -26,32 +26,21 @@ import kmg.tool.jdts.application.service.impl.JdtsServiceImpl;
  *
  * @version 0.1.0
  */
-@ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = JavadocTagSetterTool.class)
+@ActiveProfiles("test")
 @SuppressWarnings({
     "nls",
 })
 public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
-
-    /** テストリソースディレクトリのルート */
-    private static final Path TEST_RESOURCE_ROOT = Path.of("src", "test", "resources");
-
-    /** テストクラスのリソースディレクトリ */
-    private static final Path TEST_RESOURCE_DIR
-        = JavadocTagSetterIt001lTest.TEST_RESOURCE_ROOT.resolve(JavadocTagSetterIt001lTest.class.getName());
 
     /**
      * テスト対象
      *
      * @since 0.1.0
      */
+    @Autowired
     private JdtsServiceImpl testTarget;
-
-    // /** リフレクションモデル */
-    // private KmgReflectionModelImpl reflectionModel;
-    //
-    // /** モックKMGメッセージソース */
-    // private KmgMessageSource mockMessageSource;
 
     /**
      * テスト用の一時ディレクトリ
@@ -60,43 +49,6 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      */
     @TempDir
     private Path tempDir;
-
-    /**
-     * セットアップ
-     *
-     * @throws KmgReflectionException
-     *                                リフレクション例外
-     */
-    @BeforeEach
-    public void setUp() throws KmgReflectionException {
-
-        final JdtsServiceImpl jdtsServiceImpl = new JdtsServiceImpl();
-        this.testTarget = jdtsServiceImpl;
-        // this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
-        //
-        // /* モックの初期化 */
-        // this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
-        //
-        // /* モックの設定 */
-        // this.reflectionModel.set("messageSource", this.mockMessageSource);
-
-    }
-
-    /**
-     * クリーンアップ
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @AfterEach
-    public void tearDown() throws Exception {
-
-        if (this.testTarget != null) {
-
-            // クリーンアップ処理
-        }
-
-    }
 
     /**
      * main メソッドのテスト - 正常系
@@ -113,10 +65,10 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
         /* 準備 */
 
-        // 各ファイルのパスを組み立て
-        final Path testDir            = JavadocTagSetterIt001lTest.TEST_RESOURCE_DIR.resolve("testMain_normal");
-        final Path testInputPath      = testDir.resolve("TestInput.java");
-        final Path testDefinitionPath = testDir.resolve("TestDefinition.yml");
+        final Path testInputPath      = KmgPathUtils.getClassFullPath(JavadocTagSetterIt001lTest.class,
+            "test_main_normal/TestInput.java");
+        final Path testDefinitionPath = KmgPathUtils.getClassFullPath(JavadocTagSetterIt001lTest.class,
+            "test_main_normal/TestTemplate.yml");
 
         /* テスト対象の実行 */
         this.testTarget.initialize(testInputPath, testDefinitionPath);
