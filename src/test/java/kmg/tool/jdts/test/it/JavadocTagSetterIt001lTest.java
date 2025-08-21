@@ -1,5 +1,6 @@
 package kmg.tool.jdts.test.it;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -51,6 +52,66 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     private Path tempDir;
 
     /**
+     * ファイル出力の確認とデバッグ情報の出力を行う
+     *
+     * @param testOutputPath
+     *                       確認対象の出力ファイルパス
+     * @param tempDir
+     *                       一時ディレクトリのパス
+     *
+     * @since 0.1.0
+     */
+    private static void verifyFileOutput(final Path testOutputPath, final Path tempDir) {
+
+        System.out.println("OutputPath: " + testOutputPath.toAbsolutePath());
+
+        if (Files.exists(testOutputPath)) {
+
+            List<String> lines;
+
+            try {
+
+                lines = Files.readAllLines(testOutputPath);
+
+            } catch (final IOException e) {
+
+                e.printStackTrace();
+                return;
+
+            }
+            System.out.println("==== testOutputPath の内容 ====");
+
+            for (final String line : lines) {
+
+                System.out.println(line);
+
+            }
+            System.out.println("==== ここまで ====");
+
+        } else {
+
+            System.out.println("testOutputPathファイルが存在しません。");
+
+            // デバッグ情報を出力
+            System.out.println("tempDir: " + tempDir.toAbsolutePath());
+            System.out.println("tempDir exists: " + Files.exists(tempDir));
+            System.out.println("tempDir contents:");
+
+            try {
+
+                Files.list(tempDir).forEach(file -> System.out.println("  " + file.getFileName()));
+
+            } catch (final Exception e) {
+
+                System.out.println("tempDir listing failed: " + e.getMessage());
+
+            }
+
+        }
+
+    }
+
+    /**
      * main メソッドのテスト - 正常系
      *
      * @since 0.1.0
@@ -80,40 +141,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
         // 実際のファイル出力を確認
         final Path testOutputPath = testInputPath;
-        System.out.println("OutputPath: " + testOutputPath.toAbsolutePath());
-
-        if (Files.exists(testOutputPath)) {
-
-            final List<String> lines = Files.readAllLines(testOutputPath);
-            System.out.println("==== testOutputPath の内容 ====");
-
-            for (final String line : lines) {
-
-                System.out.println(line);
-
-            }
-            System.out.println("==== ここまで ====");
-
-        } else {
-
-            System.out.println("testOutputPathファイルが存在しません。");
-
-            // デバッグ情報を出力
-            System.out.println("tempDir: " + this.tempDir.toAbsolutePath());
-            System.out.println("tempDir exists: " + Files.exists(this.tempDir));
-            System.out.println("tempDir contents:");
-
-            try {
-
-                Files.list(this.tempDir).forEach(file -> System.out.println("  " + file.getFileName()));
-
-            } catch (final Exception e) {
-
-                System.out.println("tempDir listing failed: " + e.getMessage());
-
-            }
-
-        }
+        JavadocTagSetterIt001lTest.verifyFileOutput(testOutputPath, this.tempDir);
 
     }
 
