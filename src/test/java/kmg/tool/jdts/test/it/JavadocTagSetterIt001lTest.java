@@ -52,62 +52,44 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     private Path tempDir;
 
     /**
-     * ファイル出力の確認とデバッグ情報の出力を行う
+     * ファイルの内容を確認し、デバッグ情報を出力する
      *
-     * @param testOutputPath
-     *                       確認対象の出力ファイルパス
-     * @param tempDir
-     *                       一時ディレクトリのパス
+     * @param filePath
+     *                 確認対象のファイルパス
      *
      * @since 0.1.0
      */
-    private static void verifyFileOutput(final Path testOutputPath, final Path tempDir) {
+    private static void verifyFileContent(final Path filePath) {
 
-        System.out.println("OutputPath: " + testOutputPath.toAbsolutePath());
+        System.out.println(String.format("FilePath: %s", filePath.toAbsolutePath()));
 
-        if (Files.exists(testOutputPath)) {
+        if (!Files.exists(filePath)) {
 
-            List<String> lines;
-
-            try {
-
-                lines = Files.readAllLines(testOutputPath);
-
-            } catch (final IOException e) {
-
-                e.printStackTrace();
-                return;
-
-            }
-            System.out.println("==== testOutputPath の内容 ====");
-
-            for (final String line : lines) {
-
-                System.out.println(line);
-
-            }
-            System.out.println("==== ここまで ====");
-
-        } else {
-
-            System.out.println("testOutputPathファイルが存在しません。");
-
-            // デバッグ情報を出力
-            System.out.println("tempDir: " + tempDir.toAbsolutePath());
-            System.out.println("tempDir exists: " + Files.exists(tempDir));
-            System.out.println("tempDir contents:");
-
-            try {
-
-                Files.list(tempDir).forEach(file -> System.out.println("  " + file.getFileName()));
-
-            } catch (final Exception e) {
-
-                System.out.println("tempDir listing failed: " + e.getMessage());
-
-            }
+            System.out.println("ファイルが存在しません。");
+            return;
 
         }
+
+        List<String> lines;
+
+        try {
+
+            lines = Files.readAllLines(filePath);
+
+        } catch (final IOException e) {
+
+            e.printStackTrace();
+            return;
+
+        }
+        System.out.println("==== ファイルの内容 ====");
+
+        for (final String line : lines) {
+
+            System.out.println(line);
+
+        }
+        System.out.println("==== ここまで ====");
 
     }
 
@@ -139,9 +121,9 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
         /* 検証の実施 */
 
-        // 実際のファイル出力を確認
+        // 実際のファイル内容を確認
         final Path testOutputPath = testInputPath;
-        JavadocTagSetterIt001lTest.verifyFileOutput(testOutputPath, this.tempDir);
+        JavadocTagSetterIt001lTest.verifyFileContent(testOutputPath);
 
     }
 
