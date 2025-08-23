@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.tool.jdts.application.service.impl.JdtsServiceImpl;
 import kmg.tool.jdts.presentation.ui.cli.JavadocTagSetterTool;
@@ -62,8 +63,9 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
         final Path fqcnPath = KmgPathUtils.getFqcnPath(JavadocTagSetterIt001lTest.class);
         final Path testPath = AbstractKmgTest.TEST_RESOURCES.resolve(fqcnPath);
 
-        final String testMethodName = "test_main_normal";
-        final Path   testMethodPath = testPath.resolve(testMethodName);
+        final String testMethodName     = "testMain_normal";
+        final Path   testMethodNamePath = Path.of(KmgString.snakeCase(testMethodName));
+        final Path   testMethodPath     = testPath.resolve(testMethodNamePath);
 
         final Path testInputPath      = testMethodPath.resolve("TestInput.java");
         final Path testDefinitionPath = testMethodPath.resolve("TestTemplate.yml");
