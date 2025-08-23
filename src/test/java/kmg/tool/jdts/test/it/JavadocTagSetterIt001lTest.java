@@ -59,18 +59,14 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-
-        final Path testResources = Path.of("src/test/resources");
-        System.out.println("===== パス：開始 =====");
-        System.out.println(testResources.toAbsolutePath().toString());
         final Path fqcnPath = KmgPathUtils.getFqcnPath(JavadocTagSetterIt001lTest.class);
-        System.out.println(fqcnPath.toString());
-        final Path testPath = testResources.resolve(fqcnPath);
-        System.out.println(testPath.toAbsolutePath().toString());
-        System.out.println("===== パス：終了 =====");
+        final Path testPath = AbstractKmgTest.TEST_RESOURCES.resolve(fqcnPath);
 
-        final Path testInputPath      = testPath.resolve("test_main_normal/TestInput.java");
-        final Path testDefinitionPath = testPath.resolve("test_main_normal/TestTemplate.yml");
+        final String testMethodName = "test_main_normal";
+        final Path   testMethodPath = testPath.resolve(testMethodName);
+
+        final Path testInputPath      = testMethodPath.resolve("TestInput.java");
+        final Path testDefinitionPath = testMethodPath.resolve("TestTemplate.yml");
 
         /* テスト対象の実行 */
         this.testTarget.initialize(testInputPath, testDefinitionPath);
