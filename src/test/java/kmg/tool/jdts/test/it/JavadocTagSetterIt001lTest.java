@@ -6,12 +6,10 @@ import java.nio.file.Path;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.utils.KmgPathUtils;
@@ -27,7 +25,6 @@ import kmg.tool.jdts.presentation.ui.cli.JavadocTagSetterTool;
  *
  * @version 0.1.0
  */
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JavadocTagSetterTool.class)
 @ActiveProfiles("test")
 @SuppressWarnings({
