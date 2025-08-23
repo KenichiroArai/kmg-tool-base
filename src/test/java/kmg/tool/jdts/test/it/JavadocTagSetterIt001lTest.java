@@ -89,7 +89,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
         /* 検証の準備 */
 
-        // 実際の対象ファイルパス
+        // 実際の対象ファイル
         final Path   actualTargetPath = this.testTarget.getTargetPath();
         final String actualContent    = Files.readString(actualTargetPath);
 
