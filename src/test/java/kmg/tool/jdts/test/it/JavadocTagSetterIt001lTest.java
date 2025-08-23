@@ -1,6 +1,8 @@
 package kmg.tool.jdts.test.it;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -72,8 +74,12 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
         // テスト定義ファイルパス
         final Path testDefinitionPath = testMethodPath.resolve("TestTemplate.yml");
 
+        // テスト作業用入力ファイルパス（tempDirにコピーして使用）
+        final Path testWorkInputPath = this.tempDir.resolve(testInputPath.getFileName());
+        Files.copy(testInputPath, testWorkInputPath, StandardCopyOption.REPLACE_EXISTING);
+
         /* テスト対象の実行 */
-        this.testTarget.initialize(testInputPath, testDefinitionPath);
+        this.testTarget.initialize(testWorkInputPath, testDefinitionPath);
         this.testTarget.process();
 
         /* 検証の準備 */
@@ -81,7 +87,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
         /* 検証の実施 */
 
         // 実際のファイル内容を確認
-        final Path testOutputPath = testInputPath;
+        final Path testOutputPath = this.testTarget.getTargetPath();
         AbstractKmgTest.verifyFileContent(testOutputPath);
 
     }
