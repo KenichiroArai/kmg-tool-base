@@ -111,9 +111,9 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
         final Path testResources = Path.of("src/test/resources");
         System.out.println("===== パス：開始 =====");
         System.out.println(testResources.toAbsolutePath().toString());
-        final Path packageAndClassNamePath = KmgPathUtils.getPackageAndClassNamePath(JavadocTagSetterIt001lTest.class);
-        System.out.println(packageAndClassNamePath.toString());
-        final Path testPath = testResources.resolve(packageAndClassNamePath);
+        final Path fqcnPath = KmgPathUtils.getFqcnPath(JavadocTagSetterIt001lTest.class);
+        System.out.println(fqcnPath.toString());
+        final Path testPath = testResources.resolve(fqcnPath);
         System.out.println(testPath.toAbsolutePath().toString());
         System.out.println("===== パス：終了 =====");
 
