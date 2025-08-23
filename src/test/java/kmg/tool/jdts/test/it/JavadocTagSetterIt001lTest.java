@@ -1,9 +1,6 @@
 package kmg.tool.jdts.test.it;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -49,48 +46,6 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     private Path tempDir;
 
     /**
-     * ファイルの内容を確認し、デバッグ情報を出力する
-     *
-     * @param filePath
-     *                 確認対象のファイルパス
-     *
-     * @since 0.1.0
-     */
-    private static void verifyFileContent(final Path filePath) {
-
-        System.out.println(String.format("FilePath: %s", filePath.toAbsolutePath()));
-
-        if (!Files.exists(filePath)) {
-
-            System.out.println("ファイルが存在しません。");
-            return;
-
-        }
-
-        List<String> lines;
-
-        try {
-
-            lines = Files.readAllLines(filePath);
-
-        } catch (final IOException e) {
-
-            e.printStackTrace();
-            return;
-
-        }
-        System.out.println("==== ファイルの内容 ====");
-
-        for (final String line : lines) {
-
-            System.out.println(line);
-
-        }
-        System.out.println("==== ここまで ====");
-
-    }
-
-    /**
      * main メソッドのテスト - 正常系
      *
      * @since 0.1.0
@@ -127,7 +82,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
         // 実際のファイル内容を確認
         final Path testOutputPath = testInputPath;
-        JavadocTagSetterIt001lTest.verifyFileContent(testOutputPath);
+        AbstractKmgTest.verifyFileContent(testOutputPath);
 
     }
 
