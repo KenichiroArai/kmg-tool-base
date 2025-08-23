@@ -63,10 +63,14 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
 
-        /* 準備 */
-
         // テストメソッドパス
         final Path testMethodPath = this.getCurrentTestMethodPath(testInfo);
+
+        // 期待値対象ファイルパス
+        final Path expectedTargetPath = testMethodPath.resolve("ExpectedTarget.java");
+        AbstractKmgTest.verifyFileContent(expectedTargetPath);
+
+        /* 準備 */
 
         // テスト入力ファイルパス
         final Path testInputPath = testMethodPath.resolve("TestInput.java");
