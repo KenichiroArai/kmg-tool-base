@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.io.TempDir;
@@ -66,8 +67,9 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
         // テストメソッドパス
         final Path testMethodPath = this.getCurrentTestMethodPath(testInfo);
 
-        // 期待値対象ファイルパス
-        final Path expectedTargetPath = testMethodPath.resolve("ExpectedTarget.java");
+        // 期待値対象
+        final Path   expectedTargetPath = testMethodPath.resolve("ExpectedTarget.java");
+        final String expectedContent    = Files.readString(expectedTargetPath);
 
         /* 準備 */
 
@@ -88,9 +90,13 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
         /* 検証の準備 */
 
         // 実際の対象ファイルパス
-        final Path actualTargetPath = this.testTarget.getTargetPath();
+        final Path   actualTargetPath = this.testTarget.getTargetPath();
+        final String actualContent    = Files.readString(actualTargetPath);
 
         /* 検証の実施 */
+
+        // 期待値ファイルと実際のファイルの内容を比較
+        Assertions.assertEquals(expectedContent, actualContent, "ファイル内容が一致すること");
 
     }
 
