@@ -1071,7 +1071,6 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     public void testInitialize_normalSuccessful() throws Exception {
 
         /* 期待値の定義 */
-        final int expectedHeadTagPosOffset = -1;
 
         /* 準備 */
         final List<JdtsTagConfigModel> testTagConfigModels = new ArrayList<>();

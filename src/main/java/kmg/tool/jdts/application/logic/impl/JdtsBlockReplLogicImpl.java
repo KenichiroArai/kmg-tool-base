@@ -47,9 +47,6 @@ import kmg.tool.jdts.application.types.JdtsInsertPositionTypes;
 @Service
 public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
-    /** Javadocタグの開始文字列 */
-    private static final String JAVADOC_TAG_START = "* @"; //$NON-NLS-1$
-
     /** タグのフォーマット */
     private static final String TAG_FORMAT = "* %s %s %s"; //$NON-NLS-1$
 
@@ -106,7 +103,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* タグの挿入位置に基づく処理 */
         final JdtsInsertPositionTypes insertPosition = this.currentTagConfigModel.getInsertPosition();
 
-        switch (insertPosition) {
+        result = switch (insertPosition) {
 
             case BEGINNING -> {
                 /* Javadocタグの先頭 */
@@ -115,6 +112,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 final String insertContent
                     = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply, KmgString.LINE_SEPARATOR);
                 this.replacedJavadocBlock.append(insertContent);
+                yield true;
 
             }
 
@@ -123,12 +121,12 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
                 final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
                 this.replacedJavadocBlock.append(insertContent);
+                yield true;
 
             }
 
-        }
+        };
 
-        result = true;
         return result;
 
     }
