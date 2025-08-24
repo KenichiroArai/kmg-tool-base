@@ -47,6 +47,9 @@ import kmg.tool.jdts.application.types.JdtsInsertPositionTypes;
 @Service
 public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
+    /** Javadocタグの開始文字列 */
+    private static final String JAVADOC_TAG_START = "* @"; //$NON-NLS-1$
+
     /** タグのフォーマット */
     private static final String TAG_FORMAT = "* %s %s %s"; //$NON-NLS-1$
 
@@ -55,6 +58,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
     /** 元のブロックモデル */
     private JdtsBlockModel srcBlockModel;
+
+    /** 先頭タグの位置オフセット */
+    private int headTagPosOffset;
 
     /** タグ構成のイテレータ */
     private Iterator<JdtsTagConfigModel> tagConfigIterator;
@@ -103,30 +109,48 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* タグの挿入位置に基づく処理 */
         final JdtsInsertPositionTypes insertPosition = this.currentTagConfigModel.getInsertPosition();
 
-        result = switch (insertPosition) {
+        final int insertLength = switch (insertPosition) {
 
             case BEGINNING -> {
                 /* Javadocタグの先頭 */
 
-                // 末尾に追加
-                final String insertContent
-                    = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply, KmgString.LINE_SEPARATOR);
-                this.replacedJavadocBlock.append(insertContent);
-                yield true;
+                // 先頭タグの位置が特定されていないか確認
+                if (this.headTagPosOffset == -1) {
+
+                    // 特定されていない場合
+
+                    // 末尾に追加
+                    final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
+                    this.replacedJavadocBlock.append(insertContent);
+                    final int insertContentLength = insertContent.length();
+                    yield insertContentLength;
+
+                }
+
+                // 特定されている場合は指定位置に挿入
+                final String insertContent = KmgString.concat(this.tagContentToApply, KmgString.LINE_SEPARATOR);
+                this.replacedJavadocBlock.insert(this.headTagPosOffset, insertContent);
+                final int insertContentLength = insertContent.length();
+                yield insertContentLength;
 
             }
 
             case NONE, END, PRESERVE -> {
-                /* 指定無し 、 Javadocタグの末尾 、 現在の位置を維持 （末尾に追加） */
+                /* 指定無し 、 Javadocタグの末尾 、 現在の位置を維持 （ 末尾に追加） */
 
                 final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
                 this.replacedJavadocBlock.append(insertContent);
-                yield true;
+                final int insertContentLength = insertContent.length();
+                yield insertContentLength;
 
             }
 
         };
 
+        /* 先頭タグの位置オフセットを更新 */
+        this.headTagPosOffset += insertLength;
+
+        result = true;
         return result;
 
     }
@@ -282,6 +306,9 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* Javadocブロックの初期化 */
         // 元のJavadocを置換用バッファにコピー
         this.replacedJavadocBlock = new StringBuilder(this.srcBlockModel.getJavadocModel().getSrcJavadoc());
+
+        /* 先頭タグの位置を特定 */
+        this.headTagPosOffset = this.replacedJavadocBlock.indexOf(JdtsBlockReplLogicImpl.JAVADOC_TAG_START);
 
         result = true;
         return result;
