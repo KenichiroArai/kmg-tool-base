@@ -1006,8 +1006,12 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
         final String                  expectedElementName     = "TestClass";
-        final int                     expectedAnnotationCount = 1;
-        final String                  expectedAnnotation      = "@Component";
+        final int                     expectedAnnotationCount = 2;
+        final String                  expectedAnnotation1     = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api"
+            })""");
+        final String                  expectedAnnotation2     = "@Component";
 
         /* 準備 */
         // 複数行アノテーションの開始後、終了前に通常のアノテーションが来るケース
@@ -1029,7 +1033,8 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
         Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
-        Assertions.assertEquals(expectedAnnotation, actualAnnotations.get(0), "通常のアノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation1, actualAnnotations.get(0), "複数行アノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation2, actualAnnotations.get(1), "通常のアノテーションが正しく取得されること");
 
     }
 
@@ -1164,7 +1169,12 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.ANNOTATION_USAGE;
-        final int                     expectedAnnotationCount = 0;
+        final int                     expectedAnnotationCount = 1;
+        final String                  expectedAnnotation      = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api",
+            "/v1"
+            })""");
 
         /* 準備 */
         final String testBlock = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\",\n    \"/v1\"\n})";
@@ -1182,6 +1192,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がANNOTATION_USAGEであること");
         Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation, actualAnnotations.get(0), "複数行アノテーションが正しく取得されること");
 
     }
 
@@ -1199,7 +1210,12 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
         final String                  expectedElementName     = "TestClass";
-        final int                     expectedAnnotationCount = 0;
+        final int                     expectedAnnotationCount = 1;
+        final String                  expectedAnnotation      = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api",
+            "/v1"
+            })""");
 
         /* 準備 */
         // 複数行アノテーションのみで、コードブロックに到達しないケース
@@ -1220,7 +1236,8 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         Assertions.assertTrue(actualResult, "解析が成功すること");
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
-        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "複数行アノテーションはannotationsに追加されないこと");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation, actualAnnotations.get(0), "複数行アノテーションが正しく取得されること");
 
     }
 
@@ -1238,7 +1255,12 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
         final String                  expectedElementName     = "TestClass";
-        final int                     expectedAnnotationCount = 0;
+        final int                     expectedAnnotationCount = 1;
+        final String                  expectedAnnotation      = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api",
+            "/v1"
+            })""");
 
         /* 準備 */
         final String testBlock
@@ -1259,6 +1281,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
         Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation, actualAnnotations.get(0), "複数行アノテーションが正しく取得されること");
 
     }
 
