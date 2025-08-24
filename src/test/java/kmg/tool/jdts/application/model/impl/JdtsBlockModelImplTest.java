@@ -1015,8 +1015,13 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
         /* 準備 */
         // 複数行アノテーションの開始後、終了前に通常のアノテーションが来るケース
-        final String testBlock
-            = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\"\n@Component\n})\npublic class TestClass {";
+        final String testBlock = """
+            /** テストJavadoc */
+            @RequestMapping({
+                "/api"
+            })
+            @Component
+            public class TestClass {""";
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
         /* テスト対象の実行 */
