@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
-import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 
 /**
@@ -954,11 +952,11 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final String                  expectedElementName     = "TestClass";
         final int                     expectedAnnotationCount = 3;
         final String                  expectedAnnotation1     = "@Component";
-        final String                  expectedAnnotation2     = """
+        final String                  expectedAnnotation2     = AbstractKmgTest.normalizeLineSeparators("""
             @RequestMapping({
             "/api\",
             "/v1\"
-            })""".replaceAll(KmgDelimiterTypes.REGEX_LINE_SEPARATOR.get(), KmgString.LINE_SEPARATOR);
+            })""");
         final String                  expectedAnnotation3     = "@Service";
 
         /* 準備 */
