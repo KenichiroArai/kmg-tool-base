@@ -119,10 +119,15 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
                     // 特定されていない場合
 
-                    // 末尾に追加
-                    final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
+                    // 挿入内容
+                    final String insertContent
+                        = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply, KmgString.LINE_SEPARATOR);
+
+                    // 先頭タグの位置オフセットの-1分の+1+置換後のJavadocブロックの長さ+挿入内容の長さ
+                    final int insertContentLength
+                        = 1 + this.replacedJavadocBlock.toString().length() + insertContent.length();
+
                     this.replacedJavadocBlock.append(insertContent);
-                    final int insertContentLength = insertContent.length();
                     yield insertContentLength;
 
                 }
