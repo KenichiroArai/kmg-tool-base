@@ -102,8 +102,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String expectedTagContent       = "* @return 戻り値";
-        final int    expectedHeadTagPosOffset = 10 + expectedTagContent.length()
-            + System.lineSeparator().length();
+        final int    expectedHeadTagPosOffset = 10 + expectedTagContent.length() + System.lineSeparator().length();
 
         /* 準備 */
         // モックの設定
@@ -301,8 +300,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String expectedTagContent       = "* @author Test Author";
-        final int    expectedHeadTagPosOffset = 20 + expectedTagContent.length()
-            + System.lineSeparator().length();
+        final int    expectedHeadTagPosOffset = 20 + expectedTagContent.length() + System.lineSeparator().length();
 
         /* 準備 */
         // モックの設定
@@ -344,8 +342,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String expectedTagContent       = "* @param testParam テストパラメータ";
-        final int    expectedHeadTagPosOffset = 25 + expectedTagContent.length()
-            + System.lineSeparator().length();
+        final int    expectedHeadTagPosOffset = 25 + expectedTagContent.length() + System.lineSeparator().length();
 
         /* 準備 */
         // モックの設定
@@ -387,8 +384,7 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String expectedTagContent       = "* @since 2.0.0";
-        final int    expectedHeadTagPosOffset = 15 + expectedTagContent.length()
-            + System.lineSeparator().length();
+        final int    expectedHeadTagPosOffset = 15 + expectedTagContent.length() + System.lineSeparator().length();
 
         /* 準備 */
         // モックの設定
