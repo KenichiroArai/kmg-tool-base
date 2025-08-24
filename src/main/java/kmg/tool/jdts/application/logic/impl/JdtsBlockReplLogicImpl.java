@@ -59,9 +59,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
     /** 元のブロックモデル */
     private JdtsBlockModel srcBlockModel;
 
-    /** 先頭タグの位置オフセット */
-    private int headTagPosOffset;
-
     /** タグ構成のイテレータ */
     private Iterator<JdtsTagConfigModel> tagConfigIterator;
 
@@ -109,7 +106,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* タグの挿入位置に基づく処理 */
         final JdtsInsertPositionTypes insertPosition = this.currentTagConfigModel.getInsertPosition();
 
-        final int insertLength = switch (insertPosition) {
+        switch (insertPosition) {
 
             case BEGINNING -> {
                 /* Javadocタグの先頭 */
@@ -118,8 +115,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
                 final String insertContent
                     = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply, KmgString.LINE_SEPARATOR);
                 this.replacedJavadocBlock.append(insertContent);
-                final int insertContentLength = insertContent.length();
-                yield insertContentLength;
 
             }
 
@@ -128,15 +123,10 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
                 final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
                 this.replacedJavadocBlock.append(insertContent);
-                final int insertContentLength = insertContent.length();
-                yield insertContentLength;
 
             }
 
-        };
-
-        /* 先頭タグの位置オフセットを更新 */
-        this.headTagPosOffset += insertLength;
+        }
 
         result = true;
         return result;
@@ -294,9 +284,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
         /* Javadocブロックの初期化 */
         // 元のJavadocを置換用バッファにコピー
         this.replacedJavadocBlock = new StringBuilder(this.srcBlockModel.getJavadocModel().getSrcJavadoc());
-
-        /* 先頭タグの位置を特定 */
-        this.headTagPosOffset = this.replacedJavadocBlock.indexOf(JdtsBlockReplLogicImpl.JAVADOC_TAG_START);
 
         result = true;
         return result;
