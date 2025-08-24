@@ -1158,8 +1158,8 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             // ctx.getBeanの戻り値をモック化
             Mockito.when(mockContext.getBean(JavadocTagSetterTool.class)).thenReturn(mockTool);
 
-            // executeメソッドの戻り値をモック化
-            Mockito.when(mockTool.execute()).thenReturn(true);
+            // runメソッドの戻り値をモック化
+            Mockito.doNothing().when(mockTool).run(new String[] {});
 
             /* テスト対象の実行 */
             // mainメソッドを実際に呼び出し
@@ -1173,7 +1173,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
 
             // モックが正しく呼び出されたことを検証
             Mockito.verify(mockContext).getBean(JavadocTagSetterTool.class);
-            Mockito.verify(mockTool).execute();
+            Mockito.verify(mockTool).run(new String[] {});
             Mockito.verify(mockContext).close();
 
         }
@@ -1210,8 +1210,8 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             // ctx.getBeanの戻り値をモック化
             Mockito.when(mockContext.getBean(JavadocTagSetterTool.class)).thenReturn(mockTool);
 
-            // executeメソッドの戻り値をモック化
-            Mockito.when(mockTool.execute()).thenReturn(true);
+            // runメソッドの戻り値をモック化
+            Mockito.doNothing().when(mockTool).run(null);
 
             /* テスト対象の実行 */
             // mainメソッドを実際に呼び出し（null引数）
@@ -1225,7 +1225,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
 
             // モックが正しく呼び出されたことを検証
             Mockito.verify(mockContext).getBean(JavadocTagSetterTool.class);
-            Mockito.verify(mockTool).execute();
+            Mockito.verify(mockTool).run(null);
             Mockito.verify(mockContext).close();
 
         }
