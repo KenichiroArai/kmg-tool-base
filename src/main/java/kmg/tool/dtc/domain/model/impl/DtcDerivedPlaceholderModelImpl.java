@@ -8,6 +8,12 @@ import kmg.tool.dtc.domain.types.DtcTransformTypes;
  * <p>
  * 「Dtc」→「DynamicTemplateConversion」の略。
  * </p>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderModel {
 
@@ -42,8 +48,6 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * コンストラクタ
      *
-     * @since 0.1.0
-     *
      * @param displayName
      *                           表示名
      * @param replacementPattern
@@ -52,6 +56,8 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
      *                           ソースキー
      * @param transformTypes
      *                           変換処理の種類
+     *
+     * @since 0.1.0
      */
     public DtcDerivedPlaceholderModelImpl(final String displayName, final String replacementPattern,
         final String sourceKey, final DtcTransformTypes transformTypes) {
@@ -66,9 +72,9 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * 表示名を返す
      *
-     * @since 0.1.0
-     *
      * @return 表示名
+     *
+     * @since 0.1.0
      */
     @Override
     public String getDisplayName() {
@@ -81,9 +87,9 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * 置換パターンを返す
      *
-     * @since 0.1.0
-     *
      * @return 置換パターン
+     *
+     * @since 0.1.0
      */
     @Override
     public String getReplacementPattern() {
@@ -96,9 +102,9 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * ソースキーを返す
      *
-     * @since 0.1.0
-     *
      * @return ソースキー
+     *
+     * @since 0.1.0
      */
     @Override
     public String getSourceKey() {
@@ -111,9 +117,9 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * 変換処理の種類を返す
      *
-     * @since 0.1.0
-     *
      * @return 変換処理の種類
+     *
+     * @since 0.1.0
      */
     @Override
     public DtcTransformTypes getTransformationTypes() {
