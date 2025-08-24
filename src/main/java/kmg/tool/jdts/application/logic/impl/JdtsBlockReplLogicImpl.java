@@ -114,29 +114,17 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
             case BEGINNING -> {
                 /* Javadocタグの先頭 */
 
-                // 先頭タグの位置が特定されていないか確認
-                if (this.headTagPosOffset == -1) {
-
-                    // 特定されていない場合
-
-                    // 末尾に追加
-                    final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
-                    this.replacedJavadocBlock.append(insertContent);
-                    final int insertContentLength = insertContent.length();
-                    yield insertContentLength;
-
-                }
-
-                // 特定されている場合は指定位置に挿入
-                final String insertContent = KmgString.concat(this.tagContentToApply, KmgString.LINE_SEPARATOR);
-                this.replacedJavadocBlock.insert(this.headTagPosOffset, insertContent);
+                // 末尾に追加
+                final String insertContent
+                    = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply, KmgString.LINE_SEPARATOR);
+                this.replacedJavadocBlock.append(insertContent);
                 final int insertContentLength = insertContent.length();
                 yield insertContentLength;
 
             }
 
             case NONE, END, PRESERVE -> {
-                /* 指定無し 、 Javadocタグの末尾 、 現在の位置を維持 （ 末尾に追加） */
+                /* 指定無し 、 Javadocタグの末尾 、 現在の位置を維持 （末尾に追加） */
 
                 final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
                 this.replacedJavadocBlock.append(insertContent);
