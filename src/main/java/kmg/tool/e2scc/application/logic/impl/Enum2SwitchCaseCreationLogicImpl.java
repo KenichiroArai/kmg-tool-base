@@ -19,25 +19,39 @@ import kmg.tool.two2one.application.types.ConvertEnumDefinitionTypes;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @Service
 public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePatternLogic
     implements Enum2SwitchCaseCreationLogic {
 
-    /** 列挙型定義の正規表現パターン */
+    /**
+     * 列挙型定義の正規表現パターン
+     *
+     * @since 0.1.0
+     */
     private static final String ENUM_DEFINITION_PATTERN = "(\\w+)\\(\"(\\S+)\","; //$NON-NLS-1$
 
-    /** 項目 */
+    /**
+     * 項目
+     *
+     * @since 0.1.0
+     */
     private String item;
 
-    /** 項目名 */
+    /**
+     * 項目名
+     *
+     * @since 0.1.0
+     */
     private String itemName;
 
     /**
      * 項目名を書き込み対象に追加する。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -67,6 +81,8 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
     /**
      * 項目を書き込み対象に追加する。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -94,6 +110,8 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
     /**
      * 列挙型定義から項目と項目名に変換する。
+     *
+     * @since 0.1.0
      *
      * @return true：変換あり、false：変換なし
      *
@@ -129,6 +147,8 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
     /**
      * 項目を返す。
      *
+     * @since 0.1.0
+     *
      * @return 項目
      */
     @Override
@@ -141,6 +161,8 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
 
     /**
      * 項目名を返す。
+     *
+     * @since 0.1.0
      *
      * @return 項目名
      */
