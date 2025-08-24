@@ -8,6 +8,12 @@ import kmg.tool.two2one.presentation.ui.cli.AbstractTwo2OneTool;
  * <p>
  * 「Dtc」→「DynamicTemplateConversion」の略。
  * </p>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public abstract class AbstractDtcTool extends AbstractTwo2OneTool {
 

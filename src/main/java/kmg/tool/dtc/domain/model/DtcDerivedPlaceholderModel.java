@@ -7,6 +7,12 @@ import kmg.tool.dtc.domain.types.DtcTransformTypes;
  * <p>
  * 「Dtc」→「DynamicTemplateConversion」の略。
  * </p>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public interface DtcDerivedPlaceholderModel {
 

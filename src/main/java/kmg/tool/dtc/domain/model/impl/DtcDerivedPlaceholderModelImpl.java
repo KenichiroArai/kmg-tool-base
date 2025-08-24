@@ -48,6 +48,8 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * コンストラクタ
      *
+     * @since 0.1.0
+     *
      * @param displayName
      *                           表示名
      * @param replacementPattern
@@ -56,8 +58,6 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
      *                           ソースキー
      * @param transformTypes
      *                           変換処理の種類
-     *
-     * @since 0.1.0
      */
     public DtcDerivedPlaceholderModelImpl(final String displayName, final String replacementPattern,
         final String sourceKey, final DtcTransformTypes transformTypes) {
@@ -72,9 +72,9 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * 表示名を返す
      *
-     * @return 表示名
-     *
      * @since 0.1.0
+     *
+     * @return 表示名
      */
     @Override
     public String getDisplayName() {
@@ -87,9 +87,9 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * 置換パターンを返す
      *
-     * @return 置換パターン
-     *
      * @since 0.1.0
+     *
+     * @return 置換パターン
      */
     @Override
     public String getReplacementPattern() {
@@ -102,9 +102,9 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * ソースキーを返す
      *
-     * @return ソースキー
-     *
      * @since 0.1.0
+     *
+     * @return ソースキー
      */
     @Override
     public String getSourceKey() {
@@ -117,9 +117,9 @@ public class DtcDerivedPlaceholderModelImpl implements DtcDerivedPlaceholderMode
     /**
      * 変換処理の種類を返す
      *
-     * @return 変換処理の種類
-     *
      * @since 0.1.0
+     *
+     * @return 変換処理の種類
      */
     @Override
     public DtcTransformTypes getTransformationTypes() {
