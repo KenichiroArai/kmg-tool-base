@@ -3,12 +3,12 @@
  * <p>
  * 「Dtc」→「DynamicTemplateConversion」の略。
  * </p>
- *
- * @author KenichiroArai
- *
- * @since 0.1.0
- *
- * @version 0.1.0
- */
+ 
+* @author KenichiroArai
+
+* @since 0.1.0
+
+* @version 0.1.0
+*/
 public class DtcDerivedPlaceholderModelImpl
 }
