@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.jdoc.domain.model.JavadocModel;
 
 /**
@@ -950,13 +952,26 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
         final String                  expectedElementName     = "TestClass";
-        final int                     expectedAnnotationCount = 2;
+        final int                     expectedAnnotationCount = 3;
         final String                  expectedAnnotation1     = "@Component";
-        final String                  expectedAnnotation2     = "@Service";
+        final String                  expectedAnnotation2     = """
+            @RequestMapping({
+            "/api\",
+            "/v1\"
+            })""".replaceAll(KmgDelimiterTypes.REGEX_LINE_SEPARATOR.get(), KmgString.LINE_SEPARATOR);
+        final String                  expectedAnnotation3     = "@Service";
 
         /* 準備 */
-        final String testBlock
-            = "/** テストJavadoc */\n@Component\n@RequestMapping({\n    \"/api\",\n    \"/v1\"\n})\n@Service\npublic class TestClass {";
+        final String testBlock = """
+            /** テストJavadoc */
+            @Component\n@RequestMapping({
+                \"/api\",
+                \"/v1\"
+            })
+            @Service
+            public class TestClass {
+                            """;
+
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
         /* テスト対象の実行 */
@@ -974,7 +989,8 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
         Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
         Assertions.assertEquals(expectedAnnotation1, actualAnnotations.get(0), "1番目のアノテーションが正しく取得されること");
-        Assertions.assertEquals(expectedAnnotation2, actualAnnotations.get(1), "複数行終了後のアノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation2, actualAnnotations.get(1), "複数行のアノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation3, actualAnnotations.get(2), "複数行終了後のアノテーションが正しく取得されること");
 
     }
 
