@@ -10,11 +10,17 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
  * Javadoc行削除ロジックインタフェース<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public interface JavadocLineRemoverLogic {
 
     /**
      * Javadoc行を削除する
+     *
+     * @since 0.1.0
      *
      * @param inputMap
      *                 パスと行番号のマップ
