@@ -24,16 +24,30 @@ import kmg.tool.jdts.application.service.JdtsService;
 
 /**
  * Javadocタグ設定ツール<br>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
 public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
-    /** 基準パス */
+    /**
+     * 基準パス
+     *
+     * @since 0.1.0
+     */
     private static final Path BASE_PATH = Paths.get(String.format("src/main/resources/tool/io")); //$NON-NLS-1$
 
-    /** 定義ファイルのパスのフォーマット */
+    /**
+     * 定義ファイルのパスのフォーマット
+     *
+     * @since 0.1.0
+     */
     private static final String DEFINITION_FILE_PATH_FORMAT = "template/%s.yml"; //$NON-NLS-1$
 
     /**
@@ -41,31 +55,53 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
      * <p>
      * このツールの表示名を定義します。
      * </p>
+     *
+     * @since 0.1.0
      */
     private static final String TOOL_NAME = "Javadocタグ設定ツール"; //$NON-NLS-1$
 
-    /** メッセージソース */
+    /**
+     * メッセージソース
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** プレーンコンテンツ入力サービス */
+    /**
+     * プレーンコンテンツ入力サービス
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private PlainContentInputServic inputService;
 
     /**
      * Javadocタグ設定サービス
+     *
+     * @since 0.1.0
      */
     @Autowired
     private JdtsService jdtsService;
 
-    /** 対象ファイルのパス */
+    /**
+     * 対象ファイルのパス
+     *
+     * @since 0.1.0
+     */
     private Path targetPath;
 
-    /** 定義ファイルのパス */
+    /**
+     * 定義ファイルのパス
+     *
+     * @since 0.1.0
+     */
     private final Path definitionPath;
 
     /**
      * メインメソッド
+     *
+     * @since 0.1.0
      *
      * @param args
      *             引数
@@ -85,6 +121,8 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
     /**
      * デフォルトコンストラクタ
+     *
+     * @since 0.1.0
      */
     public JavadocTagSetterTool() {
 
@@ -110,6 +148,8 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
     /**
      * 実行する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
@@ -201,11 +241,7 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
     /**
      * 定義ファイルのパスを返す。
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      *
      * @return 定義ファイルのパス
      */
@@ -218,6 +254,8 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
     /**
      * プレーンコンテンツ入力サービスを返す。
+     *
+     * @since 0.1.0
      *
      * @return プレーンコンテンツ入力サービス
      */
@@ -250,6 +288,8 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
     /**
      * デフォルト定義ファイルのパスを返す。
      *
+     * @since 0.1.0
+     *
      * @return デフォルト定義パス
      */
     private Path getDefaultDefinitionPath() {
@@ -266,6 +306,8 @@ public class JavadocTagSetterTool extends AbstractPlainContentInputTool {
 
     /**
      * 入力ファイルから対象パスを設定する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

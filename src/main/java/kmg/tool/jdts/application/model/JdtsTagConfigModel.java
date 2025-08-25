@@ -22,12 +22,16 @@ public interface JdtsTagConfigModel {
     /**
      * タグの挿入位置を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return タグの挿入位置
      */
     JdtsInsertPositionTypes getInsertPosition();
 
     /**
      * 配置場所の設定を返す<br>
+     *
+     * @since 0.1.0
      *
      * @return 配置場所の設定
      */
@@ -36,12 +40,16 @@ public interface JdtsTagConfigModel {
     /**
      * 上書き設定を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return 上書き設定
      */
     JdtsOverwriteTypes getOverwrite();
 
     /**
      * タグを返す<br>
+     *
+     * @since 0.1.0
      *
      * @return タグ
      */
@@ -50,12 +58,16 @@ public interface JdtsTagConfigModel {
     /**
      * タグの説明を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return タグの説明
      */
     String getTagDescription();
 
     /**
      * タグ名を返す<br>
+     *
+     * @since 0.1.0
      *
      * @return タグ名
      */
@@ -64,12 +76,16 @@ public interface JdtsTagConfigModel {
     /**
      * タグの指定値を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return タグの指定値
      */
     String getTagValue();
 
     /**
      * タグの配置がJava区分に一致するか<br>
+     *
+     * @since 0.1.0
      *
      * @param javaClassification
      *                           Java区分

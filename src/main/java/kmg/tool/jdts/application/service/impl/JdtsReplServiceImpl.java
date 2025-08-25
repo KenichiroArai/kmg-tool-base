@@ -36,8 +36,6 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * ロガー
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     private final Logger logger;
@@ -45,31 +43,51 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * KMGメッセージリソース
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** Javadocタグ設定のブロック置換ロジック */
+    /**
+     * Javadocタグ設定のブロック置換ロジック
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private JdtsBlockReplLogic jdtsBlockReplLogic;
 
-    /** Javadocタグ設定の構成モデル */
+    /**
+     * Javadocタグ設定の構成モデル
+     *
+     * @since 0.1.0
+     */
     private JdtsConfigsModel jdtsConfigsModel;
 
-    /** Javadocタグ設定のコードモデル */
+    /**
+     * Javadocタグ設定のコードモデル
+     *
+     * @since 0.1.0
+     */
     private JdtsCodeModel jdtsCodeModel;
 
-    /** 置換後のコード */
+    /**
+     * 置換後のコード
+     *
+     * @since 0.1.0
+     */
     private String replaceCode;
 
-    /** 合計置換数 */
+    /**
+     * 合計置換数
+     *
+     * @since 0.1.0
+     */
     private long totalReplaceCount;
 
     /**
      * デフォルトコンストラクタ
+     *
+     * @since 0.1.0
      */
     public JdtsReplServiceImpl() {
 
@@ -80,11 +98,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      *
      * @param logger
      *               ロガー
@@ -99,8 +113,6 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
     /**
      * Javadocタグ設定の構成モデルを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -117,8 +129,6 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * 置換後のコードを返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 置換後のコード
@@ -134,6 +144,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * 合計置換数を返す。
      *
+     * @since 0.1.0
+     *
      * @return 合計置換数
      */
     @Override
@@ -146,6 +158,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @param jdtsConfigsModel
      *                         Javadocタグ設定の構成モデル
@@ -192,11 +206,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * Javadocを置換する。<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -237,6 +247,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * 新しいタグ追加時のログを出力する
      *
+     * @since 0.1.0
+     *
      * @param targetBlockModel
      *                         対象のブロックモデル
      */
@@ -262,6 +274,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * タグ削除時のログを出力する
      *
+     * @since 0.1.0
+     *
      * @param targetBlockModel
      *                         対象のブロックモデル
      */
@@ -282,6 +296,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
     /**
      * タグ置換時のログを出力する
+     *
+     * @since 0.1.0
      *
      * @param targetBlockModel
      *                         対象のブロックモデル
@@ -315,6 +331,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * タグ位置変更時のログを出力する
      *
+     * @since 0.1.0
+     *
      * @param targetBlockModel
      *                         対象のブロックモデル
      */
@@ -346,6 +364,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
     /**
      * ブロックごとのJavadoc置換処理を行う
+     *
+     * @since 0.1.0
      *
      * @param targetBlockModel
      *                         対象のブロックモデル

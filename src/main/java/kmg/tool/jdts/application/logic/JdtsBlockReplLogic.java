@@ -52,8 +52,6 @@ public interface JdtsBlockReplLogic {
      * このメソッドは、新しいタグの作成と追加を一度の操作で行います。 タグの内容は現在のタグ構成モデルから取得されます。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return true：成功、false：失敗
@@ -65,8 +63,6 @@ public interface JdtsBlockReplLogic {
      * <p>
      * 現在の設定で使用されている構成モデルを返します。 構成モデルには、タグの設定情報やその他の設定が含まれています。
      * </p>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -80,8 +76,6 @@ public interface JdtsBlockReplLogic {
      * 現在処理中の元のJavadocタグを返します。 このタグは、置換や更新の対象となるタグです。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 現在の元のJavadocタグ - 処理対象の元のJavadocタグ
@@ -93,8 +87,6 @@ public interface JdtsBlockReplLogic {
      * <p>
      * 現在処理中のタグ構成モデルを返します。 このモデルには、タグの設定情報や配置ルールが含まれています。
      * </p>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -108,8 +100,6 @@ public interface JdtsBlockReplLogic {
      * タグの追加、更新、削除などの操作が適用された後の Javadocブロックの内容を返します。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 置換後のJavadocブロック - 更新された完全なJavadocブロックの文字列
@@ -118,8 +108,6 @@ public interface JdtsBlockReplLogic {
 
     /**
      * 設定するタグの内容を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -133,8 +121,6 @@ public interface JdtsBlockReplLogic {
      * 現在のタグ構成モデルで指定されているタグが、 元のJavadocブロック内に存在するかどうかを確認します。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return true：存在する場合、false：存在しない場合
@@ -146,6 +132,8 @@ public interface JdtsBlockReplLogic {
      * <p>
      * ブロック置換ロジックの初期状態を設定します。 構成モデルと元のブロックモデルを設定し、 内部状態を初期化します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param configsModel
      *                      構成モデル - タグの設定情報を含むモデル
@@ -166,8 +154,6 @@ public interface JdtsBlockReplLogic {
      * タグ構成モデルの次のタグに移動し、 対応する元のJavadocタグを設定します。 すべてのタグを処理し終えた場合はfalseを返します。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return true：次のタグがある場合、false：次のタグがない場合
@@ -179,8 +165,6 @@ public interface JdtsBlockReplLogic {
      * <p>
      * 現在処理中のJavadocタグを元のブロックから削除します。 タグが存在しない場合は何も行わずfalseを返します。
      * </p>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -201,6 +185,8 @@ public interface JdtsBlockReplLogic {
      * このメソッドは、タグの配置ルールに従って不適切な位置にあるタグを 自動的に削除するために使用されます。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @return true：タグを削除した場合、false：タグを削除しなかった場合
      */
     boolean removeCurrentTagOnError();
@@ -219,8 +205,6 @@ public interface JdtsBlockReplLogic {
      * 置換は、タグの値とタグの説明を含む完全な置換となります。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return true：置換成功、false：置換失敗
@@ -233,8 +217,6 @@ public interface JdtsBlockReplLogic {
      * タグの位置が指定されている場合（BEGINNING、END）、 タグを削除して指定位置に再配置します。 位置指定がない場合（NONE、PRESERVE）は何も行いません。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return true：再配置成功、false：再配置不要または失敗
@@ -246,6 +228,8 @@ public interface JdtsBlockReplLogic {
      * <p>
      * 現在のタグ構成モデルと元のブロックモデルの状態に基づいて、 新しいタグを追加すべきかどうかを判断します。 この判断は、タグの配置ルールやJavaの区分に基づいて行われます。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：追加する、false：追加しない
      */
@@ -260,6 +244,8 @@ public interface JdtsBlockReplLogic {
      * <li>上書き設定（NONE, NEVER, ALWAYS, IF_LOWER）</li>
      * <li>バージョン比較（IF_LOWERの場合）</li>
      * </ul>
+     *
+     * @since 0.1.0
      *
      * @return true：上書きする、false：上書きしない
      */

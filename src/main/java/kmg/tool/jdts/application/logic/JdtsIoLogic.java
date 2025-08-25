@@ -23,6 +23,8 @@ public interface JdtsIoLogic {
     /**
      * 現在のファイルパスを返す。
      *
+     * @since 0.1.0
+     *
      * @return 現在のファイルパス
      */
     Path getCurrentFilePath();
@@ -30,12 +32,7 @@ public interface JdtsIoLogic {
     /**
      * ファイルパスのリストを返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
-     *
      * @since 0.1.0
      *
      * @return ファイルのパス
@@ -44,8 +41,6 @@ public interface JdtsIoLogic {
 
     /**
      * 読込んだ内容を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -56,12 +51,16 @@ public interface JdtsIoLogic {
     /**
      * 対象ファイルパス
      *
+     * @since 0.1.0
+     *
      * @return 対象ファイルパス
      */
     Path getTargetPath();
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @param targetPath
      *                   対象ファイルパス
@@ -79,6 +78,8 @@ public interface JdtsIoLogic {
      * 対象ファイルパスから対象となるJavaファイルをリストにロードする。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -90,6 +91,8 @@ public interface JdtsIoLogic {
      * 内容を読み込む。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolMsgException
@@ -99,6 +102,8 @@ public interface JdtsIoLogic {
 
     /**
      * 次のファイルに進む。
+     *
+     * @since 0.1.0
      *
      * @return true：ファイルあり、false:ファイルなし
      *
@@ -110,6 +115,8 @@ public interface JdtsIoLogic {
     /**
      * ファイルインデックスを初期化する。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -120,6 +127,8 @@ public interface JdtsIoLogic {
     /**
      * 書き込む内容を設定する。
      *
+     * @since 0.1.0
+     *
      * @param content
      *                内容
      */
@@ -127,6 +136,8 @@ public interface JdtsIoLogic {
 
     /**
      * 内容を書き込む
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

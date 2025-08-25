@@ -20,6 +20,8 @@ public interface JdtsConfigsModel {
     /**
      * Javadocタグ設定のタグ構成モデルのリストを返す<br>
      *
+     * @since 0.1.0
+     *
      * @return Javadoc追加のタグ設定モデルのリスト
      */
     List<JdtsTagConfigModel> getJdaTagConfigModels();

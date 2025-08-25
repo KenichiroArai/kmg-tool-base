@@ -22,16 +22,12 @@ public enum JdtsConfigKeyTypes implements KmgCmnTypes<String> {
     /**
      * 指定無し
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     NONE("指定無し", "None", "指定無し"),
 
     /**
      * Javadocタグ設定の構成
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -40,16 +36,12 @@ public enum JdtsConfigKeyTypes implements KmgCmnTypes<String> {
     /**
      * タグ名
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     TAG_NAME("タグ名", "tagName", "タグ名"),
 
     /**
      * タグ値
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -58,16 +50,12 @@ public enum JdtsConfigKeyTypes implements KmgCmnTypes<String> {
     /**
      * タグの説明
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     TAG_DESCRIPTION("タグの説明", "tagDescription", "タグの説明"),
 
     /**
      * 配置設定
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -76,16 +64,12 @@ public enum JdtsConfigKeyTypes implements KmgCmnTypes<String> {
     /**
      * 配置方法
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     MODE("配置方法", "mode", "配置方法"),
 
     /**
      * 誤配置時に削除するかどうか
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -94,8 +78,6 @@ public enum JdtsConfigKeyTypes implements KmgCmnTypes<String> {
     /**
      * 対象要素
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     TARGET_ELEMENTS("対象要素", "targetElements", "手動モードの場合の対象要素"),
@@ -103,16 +85,12 @@ public enum JdtsConfigKeyTypes implements KmgCmnTypes<String> {
     /**
      * 挿入位置
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     INSERT_POSITION("挿入位置", "insertPosition", "挿入位置"),
 
     /**
      * 上書き設定
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */

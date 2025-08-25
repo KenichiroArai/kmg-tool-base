@@ -22,8 +22,6 @@ public interface JdtsReplService {
     /**
      * Javadocタグ設定の構成モデルを返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return Javadocタグ設定の構成モデル
@@ -32,8 +30,6 @@ public interface JdtsReplService {
 
     /**
      * 置換後のコードを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -44,12 +40,16 @@ public interface JdtsReplService {
     /**
      * 合計置換数を返す。
      *
+     * @since 0.1.0
+     *
      * @return 合計置換数
      */
     long getTotalReplaceCount();
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @param jdtsConfigsModel
      *                         Javadocタグ設定の構成モデル
@@ -66,11 +66,7 @@ public interface JdtsReplService {
     /**
      * Javadocを置換する。<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      *
      * @return true：成功、false：失敗
      *

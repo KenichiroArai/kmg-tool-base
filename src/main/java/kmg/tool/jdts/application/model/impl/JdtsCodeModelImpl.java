@@ -27,16 +27,22 @@ import kmg.tool.jdts.application.model.JdtsCodeModel;
  */
 public class JdtsCodeModelImpl implements JdtsCodeModel {
 
-    /** Javadocコメント開始文字列 */
+    /**
+     * Javadocコメント開始文字列
+     *
+     * @since 0.1.0
+     */
     private static final String JAVADOC_START = "/**"; //$NON-NLS-1$
 
-    /** Javadocブロック分割用の正規表現フォーマット */
+    /**
+     * Javadocブロック分割用の正規表現フォーマット
+     *
+     * @since 0.1.0
+     */
     private static final String JAVADOC_BLOCK_SPLIT_FORMAT = "%s\\s+"; //$NON-NLS-1$
 
     /**
      * ロガー
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -45,21 +51,29 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
     /**
      * KMGメッセージリソース
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** オリジナルコード */
+    /**
+     * オリジナルコード
+     *
+     * @since 0.1.0
+     */
     private final String orgCode;
 
-    /** Javadocタグ設定のブロックモデルリスト */
+    /**
+     * Javadocタグ設定のブロックモデルリスト
+     *
+     * @since 0.1.0
+     */
     private final List<JdtsBlockModel> jdtsBlockModels;
 
     /**
      * コンストラクタ
+     *
+     * @since 0.1.0
      *
      * @param code
      *             コード
@@ -73,13 +87,10 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @param code
-     *             コード
-     *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
+     * @param code
+     *               コード
      * @param logger
      *               ロガー
      */
@@ -97,11 +108,11 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
      * Javadocタグ設定のブロックモデルリストを返す<br>
      * *
      *
+     * @since 0.1.0
+     *
      * @Override
      *
      * @author KenichiroArai
-     *
-     * @since 0.1.0
      *
      * @return Javadocタグ設定のブロックモデルリスト
      */
@@ -115,8 +126,6 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
 
     /**
      * オリジナルコードを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -132,6 +141,8 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
 
     /**
      * 解析する
+     *
+     * @since 0.1.0
      */
 
     @Override

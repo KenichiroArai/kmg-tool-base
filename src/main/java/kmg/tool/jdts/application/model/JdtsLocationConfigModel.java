@@ -22,6 +22,8 @@ public interface JdtsLocationConfigModel {
     /**
      * 配置方法を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return 配置方法
      */
     JdtsLocationModeTypes getMode();
@@ -29,12 +31,16 @@ public interface JdtsLocationConfigModel {
     /**
      * 対象要素の種類を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return 対象要素の種類
      */
     List<JavaClassificationTypes> getTargetElements();
 
     /**
      * 誤配置時に削除するかどうかを返す<br>
+     *
+     * @since 0.1.0
      *
      * @return true：削除する、false：削除しない
      */

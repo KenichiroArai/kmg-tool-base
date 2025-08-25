@@ -32,17 +32,31 @@ import kmg.tool.jdts.application.types.JdtsLocationModeTypes;
  */
 public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
-    /** 配置方法 */
+    /**
+     * 配置方法
+     *
+     * @since 0.1.0
+     */
     private final JdtsLocationModeTypes mode;
 
-    /** 誤配置時に削除するかどうか */
+    /**
+     * 誤配置時に削除するかどうか
+     *
+     * @since 0.1.0
+     */
     private final boolean removeIfMisplaced;
 
-    /** 対象要素の種類（手動モード時のみ使用） */
+    /**
+     * 対象要素の種類（手動モード時のみ使用）
+     *
+     * @since 0.1.0
+     */
     private final List<JavaClassificationTypes> targetElements;
 
     /**
      * コンストラクタ<br>
+     *
+     * @since 0.1.0
      *
      * @param locationMap
      *                    配置場所の設定マップ
@@ -123,6 +137,8 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
     /**
      * 配置方法を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return 配置方法
      */
     @Override
@@ -136,6 +152,8 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
     /**
      * 対象要素の種類を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return 対象要素の種類
      */
     @Override
@@ -148,8 +166,6 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
     /**
      * 誤配置時に削除するかどうかを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
