@@ -7,14 +7,26 @@ import kmg.tool.input.domain.service.PlainContentInputServic;
 
 /**
  * プレーンコンテンツ入力処理ツール抽象クラス
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public abstract class AbstractPlainContentInputTool extends AbstractInputTool {
 
-    /** 内容 */
+    /**
+     * 内容
+     *
+     * @since 0.1.0
+     */
     private String content;
 
     /**
      * 内容を返す。
+     *
+     * @since 0.1.0
      *
      * @return 内容
      */
@@ -28,6 +40,8 @@ public abstract class AbstractPlainContentInputTool extends AbstractInputTool {
     /**
      * プレーンコンテンツ入力サービスを返す。
      *
+     * @since 0.1.0
+     *
      * @return プレーンコンテンツ入力サービス
      */
     @Override
@@ -36,10 +50,12 @@ public abstract class AbstractPlainContentInputTool extends AbstractInputTool {
     /**
      * 入力ファイルからプレーンコンテンツを読み込む
      *
-     * @return true：成功、false：失敗
+     * @since 0.1.0
      *
      * @param inputPath
      *                  入力ファイルパス
+     *
+     * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

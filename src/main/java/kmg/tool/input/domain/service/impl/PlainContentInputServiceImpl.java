@@ -18,18 +18,24 @@ import kmg.tool.input.domain.service.PlainContentInputServic;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 @Service
 public class PlainContentInputServiceImpl extends AbstractInputService implements PlainContentInputServic {
 
-    /** 入力内容 */
+    /**
+     * 入力内容
+     *
+     * @since 0.1.0
+     */
     private String content;
 
     /**
      * 入力内容を返す<br>
+     *
+     * @since 0.1.0
      *
      * @return 入力内容
      *
@@ -46,6 +52,8 @@ public class PlainContentInputServiceImpl extends AbstractInputService implement
 
     /**
      * 処理する<br>
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

@@ -54,17 +54,29 @@ import kmg.tool.input.domain.service.InputService;
  *
  * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 public abstract class AbstractInputTool extends AbstractTool {
 
-    /** 優先的に使用する基準パス */
+    /**
+     * 優先的に使用する基準パス
+     *
+     * @since 0.1.0
+     */
     private static final Path PRIMARY_BASE_PATH = Paths.get("work/io"); //$NON-NLS-1$
 
-    /** 代替の基準パス */
+    /**
+     * 代替の基準パス
+     *
+     * @since 0.1.0
+     */
     private static final Path SECONDARY_BASE_PATH = Paths.get("src/main/resources/tool/io"); //$NON-NLS-1$
 
-    /** 入力ファイル名 */
+    /**
+     * 入力ファイル名
+     *
+     * @since 0.1.0
+     */
     private static final Path INPUT_FILE_NAME = Paths.get("input.txt"); //$NON-NLS-1$
 
     /**
@@ -73,9 +85,9 @@ public abstract class AbstractInputTool extends AbstractTool {
      * 優先パス（work/io）が存在する場合はそちらを返し、 存在しない場合は代替パス（src/main/resources/tool/io）を返します。
      * </p>
      *
-     * @return 基準パス
-     *
      * @since 0.1.0
+     *
+     * @return 基準パス
      */
     public static Path getBasePath() {
 
@@ -100,9 +112,9 @@ public abstract class AbstractInputTool extends AbstractTool {
      * 優先パス（work/io/input.txt）に入力ファイルが存在すればそちらを使用し、 存在しない場合は代替パス（src/main/resources/tool/io/input.txt）を使用します。
      * </p>
      *
-     * @return 入力ファイルパス
-     *
      * @since 0.1.0
+     *
+     * @return 入力ファイルパス
      */
     public static Path getInputPath() {
 
@@ -132,9 +144,9 @@ public abstract class AbstractInputTool extends AbstractTool {
      * このメソッドは常にwork/ioディレクトリのパスを返します。
      * </p>
      *
-     * @return 優先的に使用する基準パス
-     *
      * @since 0.1.0
+     *
+     * @return 優先的に使用する基準パス
      */
     public static Path getPrimaryBasePath() {
 
@@ -149,9 +161,9 @@ public abstract class AbstractInputTool extends AbstractTool {
      * このメソッドは常にsrc/main/resources/tool/ioディレクトリのパスを返します。
      * </p>
      *
-     * @return 代替の基準パス
-     *
      * @since 0.1.0
+     *
+     * @return 代替の基準パス
      */
     public static Path getSecondaryBasePath() {
 
@@ -166,9 +178,9 @@ public abstract class AbstractInputTool extends AbstractTool {
      * このメソッドは継承クラスで実装する必要があります。 入力処理の具体的な実装を提供するサービスを返してください。
      * </p>
      *
-     * @return 入力サービス
-     *
      * @since 0.1.0
+     *
+     * @return 入力サービス
      */
     public abstract InputService getInputService();
 

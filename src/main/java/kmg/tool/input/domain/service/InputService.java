@@ -6,17 +6,19 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 入力サービスインタフェース
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public interface InputService {
 
     /**
      * 入力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 入力ファイルパス
      */
@@ -24,6 +26,8 @@ public interface InputService {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -37,6 +41,8 @@ public interface InputService {
 
     /**
      * 処理する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
