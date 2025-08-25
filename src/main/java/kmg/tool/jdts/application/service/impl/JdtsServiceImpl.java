@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
@@ -75,6 +76,14 @@ public class JdtsServiceImpl implements JdtsService {
      */
     @Autowired
     private JdtsReplService jdtsReplService;
+
+    /**
+     * Springアプリケーションコンテキスト
+     *
+     * @since 0.1.0
+     */
+    @Autowired
+    private ApplicationContext applicationContext;
 
     /**
      * 対象ファイルパス
@@ -288,12 +297,12 @@ public class JdtsServiceImpl implements JdtsService {
      */
     private JdtsCodeModel loadAndCreateCodeModel() throws KmgToolMsgException, KmgToolValException {
 
-        final JdtsCodeModel result;
+        JdtsCodeModel result;
 
         this.jdtsIoLogic.loadContent();
 
         final String readContent = this.jdtsIoLogic.getReadContent();
-        result = new JdtsCodeModelImpl(readContent);
+        result = this.applicationContext.getBean(JdtsCodeModelImpl.class, readContent);
         result.parse();
 
         return result;
