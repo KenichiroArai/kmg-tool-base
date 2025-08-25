@@ -25,9 +25,9 @@ import kmg.tool.dtc.presentation.ui.cli.AbstractDtcTool;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -38,23 +38,31 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
 
     /**
      * アクセサ作成サービスのモック
+     *
+     * @since 0.1.0
      */
     @Mock
     private AccessorCreationService mockAccessorCreationService;
 
     /**
      * テスト対象のインスタンス
+     *
+     * @since 0.1.0
      */
     @InjectMocks
     private InterfaceAccessorCreationTool testTarget;
 
     /**
      * リフレクションモデル
+     *
+     * @since 0.1.0
      */
     private KmgReflectionModelImpl reflectionModel;
 
     /**
      * 各テスト前のセットアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -69,6 +77,8 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * 各テスト後のクリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -81,7 +91,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * accessorCreationService フィールドのテスト - 正常系：アクセサ作成サービスが正しく注入される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -110,7 +120,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * フィールドの型テスト - 正常系：accessorCreationServiceフィールドがAccessorCreationService型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testAccessorCreationServiceType_normalAccessorCreationService() {
@@ -145,7 +155,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * フィールドの可視性テスト - 正常系：accessorCreationServiceフィールドがprivateで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testAccessorCreationServiceVisibility_normalPrivate() {
@@ -179,7 +189,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタが正常に動作する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -207,7 +217,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * getIoService メソッドのテスト - 正常系：アクセサ作成サービスが正常に返される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -238,7 +248,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * getIoService メソッドのテスト - 準正常系：アクセサ作成サービスがnullの場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -268,7 +278,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * メソッドの戻り値型テスト - 正常系：getIoServiceメソッドがAccessorCreationServiceを返す場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetIoServiceReturnType_normalAccessorCreationService() {
@@ -302,7 +312,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * メソッドの可視性テスト - 正常系：getIoServiceメソッドがprotectedで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetIoServiceVisibility_normalProtected() {
@@ -336,7 +346,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * 継承関係テスト - 正常系：AbstractDtcToolを継承している場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testInheritance_normalExtendsAbstractDtcTool() {
@@ -361,7 +371,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 異常系：SpringBoot起動に失敗する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMain_errorSpringBootStartupFailure() {
@@ -399,7 +409,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 正常系：正常に起動する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMain_normalSuccess() {
@@ -435,7 +445,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 準正常系：引数がnullの場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMain_semiNullArgs() {
@@ -480,7 +490,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * TOOL_NAME フィールドのテスト - 正常系：正しい値が設定されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -510,7 +520,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * TOOL_NAME フィールドの型テスト - 正常系：TOOL_NAMEフィールドがString型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameType_normalString() {
@@ -544,7 +554,7 @@ public class InterfaceAccessorCreationToolTest extends AbstractKmgTest {
     /**
      * TOOL_NAME フィールドの可視性テスト - 正常系：TOOL_NAMEフィールドがprivate static finalで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameVisibility_normalPrivateStaticFinal() {
