@@ -30,6 +30,10 @@ import kmg.tool.jdocr.application.logic.JavadocLineRemoverLogic;
  * Javadoc行削除サービス実装テスト<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -38,23 +42,45 @@ import kmg.tool.jdocr.application.logic.JavadocLineRemoverLogic;
 })
 public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JavadocLineRemoverServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
-    /** モックJavadoc行削除ロジック */
+    /**
+     * モックJavadoc行削除ロジック
+     *
+     * @since 0.1.0
+     */
     private JavadocLineRemoverLogic mockJavadocLineRemoverLogic;
 
-    /** モックロガー */
+    /**
+     * モックロガー
+     *
+     * @since 0.1.0
+     */
     private Logger mockLogger;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -79,6 +105,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -105,6 +133,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用するコンストラクタ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -129,6 +159,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -151,6 +183,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系：正常に初期化が完了する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -179,6 +213,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 準正常系：nullパスが渡される場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -204,6 +240,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
 
     /**
      * inputPath フィールドのテスト - 正常系：入力パスが正しく設定される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -232,6 +270,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
 
     /**
      * javadocLineRemoverLogic フィールドのテスト - 正常系：Javadoc行削除ロジックが正しく注入される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -262,6 +302,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
     /**
      * logger フィールドのテスト - 正常系：ロガーが正しく設定される場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -288,6 +330,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
 
     /**
      * messageSource フィールドのテスト - 正常系：メッセージソースが正しく注入される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -316,6 +360,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 正常系：正常に処理が完了する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -367,6 +413,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 準正常系：空の入力マップが返される場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -412,6 +460,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 準正常系：inputPathがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -455,6 +505,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 準正常系：削除行数が0の場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
