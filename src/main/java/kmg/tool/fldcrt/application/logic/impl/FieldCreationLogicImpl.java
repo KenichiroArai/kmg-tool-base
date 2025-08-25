@@ -16,39 +16,73 @@ import kmg.tool.iito.domain.logic.AbstractIctoOneLinePatternLogic;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @Service
 public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic implements FieldCreationLogic {
 
-    /** フィールド定義の最小要素数（コメント、フィールド名、データ型の3要素） */
+    /**
+     * フィールド定義の最小要素数（コメント、フィールド名、データ型の3要素）
+     *
+     * @since 0.1.0
+     */
     private static final int FIELD_DEFINITION_MIN_LENGTH = 3;
 
-    /** コメントのインデックス（フィールド定義の1番目の要素） */
+    /**
+     * コメントのインデックス（フィールド定義の1番目の要素）
+     *
+     * @since 0.1.0
+     */
     private static final int COMMENT_INDEX = 0;
 
-    /** フィールド名のインデックス（フィールド定義の2番目の要素） */
+    /**
+     * フィールド名のインデックス（フィールド定義の2番目の要素）
+     *
+     * @since 0.1.0
+     */
     private static final int FIELD_NAME_INDEX = 1;
 
-    /** データ型のインデックス（フィールド定義の3番目の要素） */
+    /**
+     * データ型のインデックス（フィールド定義の3番目の要素）
+     *
+     * @since 0.1.0
+     */
     private static final int DATA_TYPE_INDEX = 2;
 
-    /** 完全修飾名を削除する正規表現パターン（例：java.lang.String → String） */
+    /**
+     * 完全修飾名を削除する正規表現パターン（例：java.lang.String → String）
+     *
+     * @since 0.1.0
+     */
     private static final String REMOVE_PACKAGE_NAME_PATTERN = "(\\w+\\.)+"; //$NON-NLS-1$
 
-    /** フィールドのコメント */
+    /**
+     * フィールドのコメント
+     *
+     * @since 0.1.0
+     */
     private String comment;
 
-    /** フィールド名 */
+    /**
+     * フィールド名
+     *
+     * @since 0.1.0
+     */
     private String field;
 
-    /** フィールドの型 */
+    /**
+     * フィールドの型
+     *
+     * @since 0.1.0
+     */
     private String type;
 
     /**
      * コメントを書き込み対象に追加する。 保持しているコメントを書き込み対象の中間の行に追加します。 コメントが設定されていない場合は例外をスローします。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -80,6 +114,8 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     /**
      * フィールドを書き込み対象に追加する。 保持しているフィールド名を書き込み対象の中間の行に追加します。 フィールド名が設定されていない場合は例外をスローします。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -109,6 +145,8 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
     /**
      * 型を書き込み対象に追加する。 保持している型情報を書き込み対象の中間の行に追加します。 型情報が設定されていない場合は例外をスローします。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -142,6 +180,8 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * <p>
      * 入力された行データをコメント、フィールド名、型情報に分解して保持します。 フィールド名はキャメルケースに変換され、型情報はパッケージ名が除去されます。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：変換成功、false：変換失敗（入力データが不正な場合）
      *
@@ -198,6 +238,8 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     /**
      * コメントを返す。 保持しているフィールドのコメントを返します。
      *
+     * @since 0.1.0
+     *
      * @return コメント。取得できない場合は、null
      */
     @Override
@@ -211,6 +253,8 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     /**
      * フィールドを返す。 保持しているフィールド名を返します。
      *
+     * @since 0.1.0
+     *
      * @return フィールド名。取得できない場合は、null
      */
     @Override
@@ -223,6 +267,8 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
 
     /**
      * 型を返す。 保持しているフィールドの型情報を返します。
+     *
+     * @since 0.1.0
      *
      * @return 型情報。取得できない場合は、null
      */

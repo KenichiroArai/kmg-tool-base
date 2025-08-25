@@ -20,30 +20,40 @@ import kmg.tool.iito.domain.service.AbstractIitoProcessorService;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @Service
 public class FieldCreationServiceImpl extends AbstractIitoProcessorService implements FieldCreationService {
 
     /**
      * ロガー
+     *
+     * @since 0.1.0
      */
     private final Logger logger;
 
     /**
      * KMGメッセージリソース
+     *
+     * @since 0.1.0
      */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** フィールド作成ロジック */
+    /**
+     * フィールド作成ロジック
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private FieldCreationLogic fieldCreationLogic;
 
     /**
      * デフォルトコンストラクタ
+     *
+     * @since 0.1.0
      */
     public FieldCreationServiceImpl() {
 
@@ -53,6 +63,8 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
     /**
      * カスタムロガーを使用して初期化するコンストラクタ
+     *
+     * @since 0.1.0
      *
      * @param logger
      *               ロガー
@@ -65,6 +77,8 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
     /**
      * {@inheritDoc}
+     *
+     * @since 0.1.0
      */
     @Override
     protected boolean writeIntermediateFile() throws KmgToolMsgException {
@@ -122,6 +136,8 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
     /**
      * データをクリアして次の行の準備をする
+     *
+     * @since 0.1.0
      */
     private void clearAndPrepareNextLine() {
 
@@ -138,6 +154,8 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
     /**
      * フィールド作成ロジックをクローズする
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -160,6 +178,8 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
     /**
      * カラムを処理する
+     *
+     * @since 0.1.0
      *
      * @return true：処理成功、false：処理スキップ
      *
@@ -205,6 +225,8 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
     /**
      * 1行データを読み込む
      *
+     * @since 0.1.0
+     *
      * @return true：読み込み成功、false：読み込み終了
      *
      * @throws KmgToolMsgException
@@ -235,6 +257,8 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
     /**
      * 中間ファイルに行を書き込む
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

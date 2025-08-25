@@ -19,24 +19,34 @@ import kmg.tool.fldcrt.application.service.FieldCreationService;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
 public class FieldCreationTool extends AbstractDtcTool {
 
-    /** ツール名 */
+    /**
+     * ツール名
+     *
+     * @since 0.1.0
+     */
     private static final String TOOL_NAME = "フィールド作成ツール"; //$NON-NLS-1$
 
-    /** フィールド作成サービス */
+    /**
+     * フィールド作成サービス
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private FieldCreationService fieldCreationService;
 
     /**
      * エントリポイント
+     *
+     * @since 0.1.0
      *
      * @param args
      *             コマンドライン引数
@@ -60,6 +70,8 @@ public class FieldCreationTool extends AbstractDtcTool {
 
     /**
      * コンストラクタ
+     *
+     * @since 0.1.0
      */
     public FieldCreationTool() {
 
@@ -69,6 +81,8 @@ public class FieldCreationTool extends AbstractDtcTool {
 
     /**
      * フィールド作成サービスを返す
+     *
+     * @since 0.1.0
      *
      * @return フィールド作成サービス
      */
