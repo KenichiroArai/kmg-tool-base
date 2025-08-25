@@ -16,10 +16,18 @@ import kmg.core.infrastructure.types.KmgJavadocTagTypes;
  */
 public interface JavadocTagsModel {
 
-    /** 行頭のアスタリスクのみの行を検出する正規表現パターン */
+    /**
+     * 行頭のアスタリスクのみの行を検出する正規表現パターン
+     *
+     * @since 0.1.0
+     */
     String PATTERN_LINE_START_ASTERISK_ONLY = "^\\*$"; //$NON-NLS-1$
 
-    /** 行頭のアスタリスクを検出する正規表現パターン */
+    /**
+     * 行頭のアスタリスクを検出する正規表現パターン
+     *
+     * @since 0.1.0
+     */
     String PATTERN_LINE_START_ASTERISK = "^\\*"; //$NON-NLS-1$
 
     /**
@@ -39,8 +47,6 @@ public interface JavadocTagsModel {
     /**
      * 指定されたタグに対応する既存のJavadocタグを検索する<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @param tag
@@ -52,8 +58,6 @@ public interface JavadocTagsModel {
 
     /**
      * Javadocタグモデルのリストを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *

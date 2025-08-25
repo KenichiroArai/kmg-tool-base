@@ -14,8 +14,6 @@ public interface JavadocModel {
     /**
      * Javadocタグ一覧情報を返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return Javadocタグ一覧情報
@@ -24,8 +22,6 @@ public interface JavadocModel {
 
     /**
      * 元のJavadocを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *

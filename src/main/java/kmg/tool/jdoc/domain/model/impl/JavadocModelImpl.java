@@ -14,14 +14,24 @@ import kmg.tool.jdoc.domain.model.JavadocTagsModel;
  */
 public class JavadocModelImpl implements JavadocModel {
 
-    /** 元のJavadoc */
+    /**
+     * 元のJavadoc
+     *
+     * @since 0.1.0
+     */
     private final String srcJavadoc;
 
-    /** Javadocタグ一覧情報 */
+    /**
+     * Javadocタグ一覧情報
+     *
+     * @since 0.1.0
+     */
     private final JavadocTagsModel javadocTagsModel;
 
     /**
      * コンストラクタ<br>
+     *
+     * @since 0.1.0
      *
      * @param javadoc
      *                Javadoc
@@ -35,8 +45,6 @@ public class JavadocModelImpl implements JavadocModel {
 
     /**
      * Javadocタグ一覧情報を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -52,8 +60,6 @@ public class JavadocModelImpl implements JavadocModel {
 
     /**
      * 元のJavadocを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *

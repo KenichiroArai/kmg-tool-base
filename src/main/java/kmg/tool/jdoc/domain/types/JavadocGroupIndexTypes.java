@@ -19,22 +19,42 @@ public enum JavadocGroupIndexTypes implements KmgCmnTypes<Integer> {
 
     /* 定義：開始 */
 
-    /** タグ全体のグループインデックス */
+    /**
+     * タグ全体のグループインデックス
+     *
+     * @since 0.1.0
+     */
     WHOLE("タグ全体", 0, "タグ全体のグループインデックス"),
 
-    /** タグ名のグループインデックス */
+    /**
+     * タグ名のグループインデックス
+     *
+     * @since 0.1.0
+     */
     TAG_NAME("タグ名", 1, "タグ名のグループインデックス"),
 
-    /** タグ値のグループインデックス */
+    /**
+     * タグ値のグループインデックス
+     *
+     * @since 0.1.0
+     */
     VALUE("タグ値", 2, "タグ値のグループインデックス"),
 
-    /** タグ説明のグループインデックス */
+    /**
+     * タグ説明のグループインデックス
+     *
+     * @since 0.1.0
+     */
     DESCRIPTION("タグ説明", 3, "タグ説明のグループインデックス"),
 
     /* 定義：終了 */
     ;
 
-    /** 種類のマップ */
+    /**
+     * 種類のマップ
+     *
+     * @since 0.1.0
+     */
     private static final Map<Integer, JavadocGroupIndexTypes> VALUES_MAP = new HashMap<>();
 
     static {
@@ -48,17 +68,31 @@ public enum JavadocGroupIndexTypes implements KmgCmnTypes<Integer> {
 
     }
 
-    /** 表示名 */
+    /**
+     * 表示名
+     *
+     * @since 0.1.0
+     */
     private final String displayName;
 
-    /** キー */
+    /**
+     * キー
+     *
+     * @since 0.1.0
+     */
     private final Integer key;
 
-    /** 詳細情報 */
+    /**
+     * 詳細情報
+     *
+     * @since 0.1.0
+     */
     private final String detail;
 
     /**
      * コンストラクタ<br>
+     *
+     * @since 0.1.0
      *
      * @param displayName
      *                    表示名
@@ -78,6 +112,8 @@ public enum JavadocGroupIndexTypes implements KmgCmnTypes<Integer> {
     /**
      * キーを返す。<br>
      *
+     * @since 0.1.0
+     *
      * @return キー
      *
      * @see #getKey()
@@ -93,6 +129,8 @@ public enum JavadocGroupIndexTypes implements KmgCmnTypes<Integer> {
     /**
      * 詳細情報を返す。<br>
      *
+     * @since 0.1.0
+     *
      * @return 詳細情報
      */
     @Override
@@ -105,6 +143,8 @@ public enum JavadocGroupIndexTypes implements KmgCmnTypes<Integer> {
 
     /**
      * 表示名を返す。<br>
+     *
+     * @since 0.1.0
      *
      * @return 表示名
      */
@@ -119,6 +159,8 @@ public enum JavadocGroupIndexTypes implements KmgCmnTypes<Integer> {
     /**
      * キーを返す。<br>
      *
+     * @since 0.1.0
+     *
      * @return キー
      */
     @Override
@@ -131,6 +173,8 @@ public enum JavadocGroupIndexTypes implements KmgCmnTypes<Integer> {
 
     /**
      * キーを返す。<br>
+     *
+     * @since 0.1.0
      *
      * @return キー
      *

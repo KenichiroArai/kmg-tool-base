@@ -26,11 +26,17 @@ import kmg.tool.jdoc.domain.types.JavadocGroupIndexTypes;
  */
 public class JavadocTagsModelImpl implements JavadocTagsModel {
 
-    /** Javadocタグモデルのリスト */
+    /**
+     * Javadocタグモデルのリスト
+     *
+     * @since 0.1.0
+     */
     private final List<JavadocTagModel> javadocTagModelList;
 
     /**
      * デフォルトコンストラクタ<br>
+     *
+     * @since 0.1.0
      */
     public JavadocTagsModelImpl() {
 
@@ -40,6 +46,8 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
 
     /**
      * コンストラクタ<br>
+     *
+     * @since 0.1.0
      *
      * @param sourceJavadoc
      *                      Javadoc
@@ -94,8 +102,6 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
     /**
      * 指定されたタグに対応する既存のJavadocタグを検索する<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @param tag
@@ -124,6 +130,8 @@ public class JavadocTagsModelImpl implements JavadocTagsModel {
 
     /**
      * Javadocタグモデルのリストを返す<br>
+     *
+     * @since 0.1.0
      *
      * @return Javadocタグモデルのリスト
      */
