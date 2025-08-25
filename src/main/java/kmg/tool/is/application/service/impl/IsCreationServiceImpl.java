@@ -18,34 +18,46 @@ import kmg.tool.is.application.service.IsFileCreationService;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 @Component
 public class IsCreationServiceImpl implements IsCreationService {
 
-    /** 入力パス */
+    /**
+     * 入力パス
+     *
+     * @since 0.1.0
+     */
     private Path inputPath;
 
-    /** 出力パス */
+    /**
+     * 出力パス
+     *
+     * @since 0.1.0
+     */
     private Path outputPath;
 
-    /** スレッド数 */
+    /**
+     * スレッド数
+     *
+     * @since 0.1.0
+     */
     private short threadNum;
 
-    /** 挿入SQLファイル作成サービス */
+    /**
+     * 挿入SQLファイル作成サービス
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private IsFileCreationService isFileCreationService;
 
     /**
      * 初期化する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param inputPath
      *                   入力パス
@@ -66,6 +78,8 @@ public class IsCreationServiceImpl implements IsCreationService {
 
     /**
      * 挿入SQLを出力する<br>
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

@@ -20,24 +20,24 @@ import kmg.tool.is.application.logic.IsBasicInformationLogic;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 @Service
 public class IsBasicInformationLogicImpl implements IsBasicInformationLogic {
 
-    /** 入力ワークブック */
+    /**
+     * 入力ワークブック
+     *
+     * @since 0.1.0
+     */
     private Workbook inputWk;
 
     /**
      * KMG DBの種類を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return KMG DBの種類
      */
@@ -57,12 +57,6 @@ public class IsBasicInformationLogicImpl implements IsBasicInformationLogic {
 
     /**
      * SQLIDマップ返す<br>
-     *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
      *
      * @return SQLIdマップ
      */
@@ -95,11 +89,7 @@ public class IsBasicInformationLogicImpl implements IsBasicInformationLogic {
     /**
      * 初期化する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param inputWk
      *                入力ワークブック
