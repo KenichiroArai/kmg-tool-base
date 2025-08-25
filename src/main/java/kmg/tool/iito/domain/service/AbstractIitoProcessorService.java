@@ -18,10 +18,20 @@ import kmg.tool.dtc.domain.service.DtcService;
 /**
  * 入力、中間、テンプレート、出力の処理サービス抽象クラス<br>
  * 「Iito」→「InputIntermediateTemplateOutput」の略。
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public abstract class AbstractIitoProcessorService implements IitoProcessorService {
 
-    /** 一時中間ファイルのサフィックスと拡張子 */
+    /**
+     * 一時中間ファイルのサフィックスと拡張子
+     *
+     * @since 0.1.0
+     */
     private static final String TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION = "Temp.tmp"; //$NON-NLS-1$
 
     /**
@@ -39,19 +49,39 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** 入力ファイルパス */
+    /**
+     * 入力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path inputPath;
 
-    /** テンプレートファイルパス */
+    /**
+     * テンプレートファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path templatePath;
 
-    /** 出力ファイルパス */
+    /**
+     * 出力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path outputPath;
 
-    /** 中間ファイルパス */
+    /**
+     * 中間ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path intermediatePath;
 
-    /** テンプレートの動的変換サービス */
+    /**
+     * テンプレートの動的変換サービス
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private DtcService dtcService;
 
@@ -83,11 +113,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 入力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 入力ファイルパス
      */
@@ -102,11 +128,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 中間ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 中間ファイルパス
      */
@@ -120,11 +142,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 出力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 出力ファイルパス
      */
@@ -139,11 +157,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * テンプレートファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return テンプレートファイルパス
      */
@@ -157,6 +171,8 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -191,6 +207,8 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
     /**
      * 処理する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -234,6 +252,8 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 一時的な中間ファイルを作成する。
      *
+     * @since 0.1.0
+     *
      * @return 中間ファイルパス
      *
      * @throws KmgToolMsgException
@@ -267,6 +287,8 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
     /**
      * 中間ファイルに書き込む。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

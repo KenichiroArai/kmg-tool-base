@@ -8,11 +8,19 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
  * 入力、中間、テンプレート、出力の1行パターンインタフェース
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public interface IctoOneLinePatternLogic extends Closeable {
 
     /**
      * 書き込み対象に行を追加する。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
@@ -21,12 +29,16 @@ public interface IctoOneLinePatternLogic extends Closeable {
     /**
      * 処理中のデータをクリアする。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      */
     boolean clearProcessingData();
 
     /**
      * 書き込み対象の行データのリストをクリアする。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
@@ -35,6 +47,8 @@ public interface IctoOneLinePatternLogic extends Closeable {
     /**
      * 変換後の1行データを返す。
      *
+     * @since 0.1.0
+     *
      * @return 変換後の1行データ
      */
     String getConvertedLine();
@@ -42,14 +56,14 @@ public interface IctoOneLinePatternLogic extends Closeable {
     /**
      * 読み込んだ１行データを返す。
      *
+     * @since 0.1.0
+     *
      * @return 読み込んだ１行データ
      */
     String getLineOfDataRead();
 
     /**
      * 現在の行番号を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -60,12 +74,16 @@ public interface IctoOneLinePatternLogic extends Closeable {
     /**
      * 書き込み対象の行データのリストを返す。
      *
+     * @since 0.1.0
+     *
      * @return 書き込み対象の行データのリスト
      */
     List<List<String>> getRows();
 
     /**
      * 初期化する。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -82,6 +100,8 @@ public interface IctoOneLinePatternLogic extends Closeable {
     /**
      * 1行データを読み込む。
      *
+     * @since 0.1.0
+     *
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolMsgException
@@ -94,6 +114,8 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * <p>
      * 入力ファイルから指定の形式に変換して中間ファイルに出力する。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
