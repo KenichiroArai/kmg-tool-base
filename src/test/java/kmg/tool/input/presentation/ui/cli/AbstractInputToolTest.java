@@ -18,6 +18,10 @@ import kmg.tool.input.domain.service.InputService;
  * AbstractInputToolのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -27,11 +31,17 @@ public class AbstractInputToolTest extends AbstractKmgTest {
     /** テスト用のAbstractInputTool実装クラス */
     private static class TestAbstractInputTool extends AbstractInputTool {
 
-        /** 入力サービス */
+        /**
+         * 入力サービス
+         *
+         * @since 0.1.0
+         */
         private final InputService inputService;
 
         /**
          * デフォルトコンストラクタ
+         *
+         * @since 0.1.0
          */
         public TestAbstractInputTool() {
 
@@ -41,6 +51,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
         /**
          * カスタム入力サービスを使用するコンストラクタ
+         *
+         * @since 0.1.0
          *
          * @param inputService
          *                     入力サービス
@@ -53,6 +65,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
         /**
          * 実行します。
+         *
+         * @since 0.1.0
          *
          * @return true：成功、false：失敗
          */
@@ -67,6 +81,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
         /**
          * 入力サービスを取得します。
          *
+         * @since 0.1.0
+         *
          * @return 入力サービス
          */
         @Override
@@ -78,18 +94,32 @@ public class AbstractInputToolTest extends AbstractKmgTest {
         }
     }
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private TestAbstractInputTool testTarget;
 
-    /** モック入力サービス */
+    /**
+     * モック入力サービス
+     *
+     * @since 0.1.0
+     */
     private InputService mockInputService;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      */
     @BeforeEach
     public void setUp() {
@@ -101,6 +131,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      */
     @AfterEach
     public void tearDown() {
@@ -114,6 +146,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：カスタム入力サービスを使用するコンストラクタで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -139,6 +173,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
     /**
      * コンストラクタのテスト - 正常系：デフォルトコンストラクタで初期化する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -161,6 +197,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
     /**
      * getBasePath メソッドのテスト - 正常系：優先パスが存在する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -202,6 +240,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
     /**
      * getBasePath メソッドのテスト - 正常系：優先パスが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -254,6 +294,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 正常系：優先パスに入力ファイルが存在する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -296,6 +338,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
     /**
      * getInputPath メソッドのテスト - 正常系：優先パスに入力ファイルが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -348,6 +392,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
     /**
      * getInputService メソッドのテスト - 正常系：デフォルトコンストラクタで初期化した場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -372,6 +418,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
     /**
      * getInputService メソッドのテスト - 正常系：入力サービスが正常に取得される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -398,6 +446,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
     /**
      * getPrimaryBasePath メソッドのテスト - 正常系：優先的に使用する基準パスを取得する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -422,6 +472,8 @@ public class AbstractInputToolTest extends AbstractKmgTest {
 
     /**
      * getSecondaryBasePath メソッドのテスト - 正常系：代替の基準パスを取得する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

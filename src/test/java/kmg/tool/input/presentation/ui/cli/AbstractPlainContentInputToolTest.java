@@ -19,6 +19,10 @@ import kmg.tool.input.domain.service.PlainContentInputServic;
  * AbstractPlainContentInputToolのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings({
@@ -29,11 +33,17 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
     /** テスト用のAbstractPlainContentInputTool実装クラス */
     private static class TestAbstractPlainContentInputTool extends AbstractPlainContentInputTool {
 
-        /** プレーンコンテンツ入力サービス */
+        /**
+         * プレーンコンテンツ入力サービス
+         *
+         * @since 0.1.0
+         */
         private final PlainContentInputServic plainContentInputService;
 
         /**
          * デフォルトコンストラクタ
+         *
+         * @since 0.1.0
          */
         public TestAbstractPlainContentInputTool() {
 
@@ -43,6 +53,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
 
         /**
          * カスタムプレーンコンテンツ入力サービスを使用するコンストラクタ
+         *
+         * @since 0.1.0
          *
          * @param plainContentInputService
          *                                 プレーンコンテンツ入力サービス
@@ -55,6 +67,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
 
         /**
          * 実行します。
+         *
+         * @since 0.1.0
          *
          * @return true：成功、false：失敗
          */
@@ -69,6 +83,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
         /**
          * プレーンコンテンツ入力サービスを取得します。
          *
+         * @since 0.1.0
+         *
          * @return プレーンコンテンツ入力サービス
          */
         @Override
@@ -80,14 +96,24 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
         }
     }
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private TestAbstractPlainContentInputTool testTarget;
 
-    /** モックプレーンコンテンツ入力サービス */
+    /**
+     * モックプレーンコンテンツ入力サービス
+     *
+     * @since 0.1.0
+     */
     private PlainContentInputServic mockPlainContentInputService;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      */
     @BeforeEach
     public void setUp() {
@@ -99,6 +125,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      */
     @AfterEach
     public void tearDown() {
@@ -113,6 +141,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：カスタムプレーンコンテンツ入力サービスを使用するコンストラクタで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -139,6 +169,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
     /**
      * コンストラクタのテスト - 正常系：デフォルトコンストラクタで初期化する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -161,6 +193,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
 
     /**
      * getContent メソッドのテスト - 正常系：内容が正常に取得される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -191,6 +225,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
     /**
      * getContent メソッドのテスト - 正常系：内容がnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -220,6 +256,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
     /**
      * getInputService メソッドのテスト - 正常系：デフォルトコンストラクタで初期化した場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -245,6 +283,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
     /**
      * getInputService メソッドのテスト - 正常系：プレーンコンテンツ入力サービスが正常に取得される場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -269,6 +309,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
 
     /**
      * loadPlainContent メソッドのテスト - 異常系：getContentでKmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -301,6 +343,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
     /**
      * loadPlainContent メソッドのテスト - 異常系：initializeでKmgToolMsgExceptionが発生する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -331,6 +375,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
     /**
      * loadPlainContent メソッドのテスト - 異常系：processでKmgToolMsgExceptionが発生する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -360,6 +406,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
 
     /**
      * loadPlainContent メソッドのテスト - 正常系：プレーンコンテンツが正常に読み込まれる場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -393,6 +441,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
     /**
      * loadPlainContent メソッドのテスト - 準正常系：initializeがfalseを返す場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -419,6 +469,8 @@ public class AbstractPlainContentInputToolTest extends AbstractKmgTest {
 
     /**
      * loadPlainContent メソッドのテスト - 準正常系：processがfalseを返す場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
