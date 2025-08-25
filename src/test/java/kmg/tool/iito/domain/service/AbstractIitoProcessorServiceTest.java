@@ -31,6 +31,10 @@ import kmg.tool.dtc.domain.service.DtcService;
  * AbstractIitoProcessorServiceのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -46,6 +50,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
         /**
          * デフォルトコンストラクタ
+         *
+         * @since 0.1.0
          */
         public TestAbstractIitoProcessorService() {
 
@@ -53,6 +59,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
         /**
          * カスタムロガーを使用するコンストラクタ
+         *
+         * @since 0.1.0
          *
          * @param logger
          *               ロガー
@@ -65,6 +73,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
         /**
          * writeIntermediateFileメソッドをpublicでオーバーライド
+         *
+         * @since 0.1.0
          *
          * @return true：成功、false：失敗
          *
@@ -81,24 +91,46 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
     }
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private TestAbstractIitoProcessorService testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
-    /** モックDTCサービス */
+    /**
+     * モックDTCサービス
+     *
+     * @since 0.1.0
+     */
     private DtcService mockDtcService;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -123,6 +155,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -139,6 +173,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：カスタムロガーを使用するコンストラクタで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -164,6 +200,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * コンストラクタのテスト - 正常系：デフォルトコンストラクタで初期化する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -186,6 +224,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
     /**
      * createTempntermediateFile メソッドのテスト - 異常系：Files.createTempFileでIOExceptionが発生する場合（protectedメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -240,6 +280,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * createTempntermediateFile メソッドのテスト - 正常系：一時ファイルが正常に作成される場合（protectedメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -272,6 +314,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 正常系：入力ファイルパスを取得する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -297,6 +341,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
     /**
      * getIntermediatePath メソッドのテスト - 正常系：中間ファイルパスを取得する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -324,6 +370,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * getOutputPath メソッドのテスト - 正常系：出力ファイルパスを取得する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -350,6 +398,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * getTemplatePath メソッドのテスト - 正常系：テンプレートファイルパスを取得する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -375,6 +425,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 異常系：createTempntermediateFileでIOExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -430,6 +482,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * createTempntermediateFile メソッドのテスト - 異常系：initializeメソッド内でcreateTempntermediateFileでIOExceptionが発生する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -484,6 +538,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：初期化が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -519,6 +575,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：dtcService.initializeでfalseが返される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -559,6 +617,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：dtcService.processでfalseが返される場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -598,6 +658,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：writeIntermediateFileでKmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -649,6 +711,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：処理が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -688,6 +752,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 正常系：抽象メソッドが正常に実行される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
