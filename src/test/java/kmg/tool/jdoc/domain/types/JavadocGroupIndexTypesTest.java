@@ -21,6 +21,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：全ての列挙型の値が正しく設定される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalAllEnumValuesCorrectlySet() {
@@ -52,6 +54,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のget メソッドのテスト - 正常系：全ての列挙型のgetが正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGet_normalAllEnumGetsCorrect() {
@@ -92,6 +96,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * get メソッドのテスト - 正常系：キーが返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGet_normalKeyReturned() {
@@ -115,6 +121,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のgetDetail メソッドのテスト - 正常系：全ての列挙型の詳細情報が正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDetail_normalAllEnumDetailsCorrect() {
@@ -155,6 +163,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * getDetail メソッドのテスト - 正常系：詳細情報が返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDetail_normalDetailReturned() {
@@ -178,6 +188,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のgetDisplayName メソッドのテスト - 正常系：全ての列挙型の表示名が正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDisplayName_normalAllEnumDisplayNamesCorrect() {
@@ -218,6 +230,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * getDisplayName メソッドのテスト - 正常系：表示名が返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDisplayName_normalDisplayNameReturned() {
@@ -241,6 +255,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のgetKey メソッドのテスト - 正常系：全ての列挙型のキーが正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetKey_normalAllEnumKeysCorrect() {
@@ -281,6 +297,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * getKey メソッドのテスト - 正常系：キーが返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetKey_normalKeyReturned() {
@@ -304,6 +322,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のtoString メソッドのテスト - 正常系：全ての列挙型のtoStringが正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testToString_normalAllEnumToStringsCorrect() {
@@ -344,6 +364,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * toString メソッドのテスト - 正常系：キーが返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testToString_normalKeyReturned() {
@@ -367,6 +389,8 @@ public class JavadocGroupIndexTypesTest extends AbstractKmgTest {
 
     /**
      * VALUES_MAP のテスト - 正常系：マップに全ての列挙型が格納される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testValuesMap_normalAllEnumValuesInMap() {

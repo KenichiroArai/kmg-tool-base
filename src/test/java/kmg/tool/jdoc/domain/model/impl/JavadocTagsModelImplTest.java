@@ -25,7 +25,11 @@ import kmg.tool.jdoc.domain.model.JavadocTagModel;
 })
 public class JavadocTagsModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JavadocTagsModelImpl testTarget;
 
     /**
