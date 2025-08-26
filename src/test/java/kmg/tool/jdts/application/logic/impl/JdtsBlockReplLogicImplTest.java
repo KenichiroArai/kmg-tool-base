@@ -44,38 +44,74 @@ import kmg.tool.jdts.application.types.JdtsOverwriteTypes;
 })
 public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsBlockReplLogicImpl testTarget;
 
-    /** モック: 構成モデル */
+    /**
+     * モック: 構成モデル
+     *
+     * @since 0.1.0
+     */
     @Mock
     private JdtsConfigsModel mockConfigsModel;
 
-    /** モック: ブロックモデル */
+    /**
+     * モック: ブロックモデル
+     *
+     * @since 0.1.0
+     */
     @Mock
     private JdtsBlockModel mockSrcBlockModel;
 
-    /** モック: タグ構成モデル */
+    /**
+     * モック: タグ構成モデル
+     *
+     * @since 0.1.0
+     */
     @Mock
     private JdtsTagConfigModel mockTagConfigModel;
 
-    /** モック: Javadocモデル */
+    /**
+     * モック: Javadocモデル
+     *
+     * @since 0.1.0
+     */
     @Mock
     private JavadocModel mockJavadocModel;
 
-    /** モック: Javadocタグ集合モデル */
+    /**
+     * モック: Javadocタグ集合モデル
+     *
+     * @since 0.1.0
+     */
     @Mock
     private JavadocTagsModel mockJavadocTagsModel;
 
-    /** モック: Javadocタグモデル */
+    /**
+     * モック: Javadocタグモデル
+     *
+     * @since 0.1.0
+     */
     @Mock
     private JavadocTagModel mockJavadocTagModel;
 
-    /** モック: 配置設定モデル */
+    /**
+     * モック: 配置設定モデル
+     *
+     * @since 0.1.0
+     */
     @Mock
     private JdtsLocationConfigModel mockLocationConfigModel;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
     /**
@@ -93,6 +129,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:switch文のBEGINNINGケースの条件分岐を確実にカバー
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -136,6 +174,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:switch文のBEGINNINGケースの条件分岐を確実にカバー（追加テスト）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -178,6 +218,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:BEGINNINGケース（無効なオフセット）（分割後）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -215,6 +257,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:BEGINNINGケース（THROWSタグ）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -254,6 +298,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:BEGINNINGケース（有効なオフセット）（分割後）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -291,6 +337,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:BEGINNING位置でheadTagPosOffsetが有効
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -334,6 +382,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:BEGINNING位置でheadTagPosOffsetが有効（追加テスト）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -375,6 +425,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:BEGINNING位置でheadTagPosOffsetが有効（独立テスト）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -418,6 +470,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:END位置
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -455,6 +509,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:ENDケースの独立テスト
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -494,6 +550,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:ENDケース（分割後）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -531,6 +589,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:ENDケース（THROWSタグ）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -570,6 +630,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:NONE位置
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -607,6 +669,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:NONEケースの独立テスト
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -646,6 +710,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:NONEケース（分割後）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -683,6 +749,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:NONEケース（THROWSタグ）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -722,6 +790,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:PRESERVE位置
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -759,6 +829,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:PRESERVEケースの独立テスト
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -798,6 +870,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:PRESERVEケース（分割後）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -835,6 +909,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * addNewTagByPosition メソッドのテスト - 正常系:PRESERVEケース（THROWSタグ）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -874,6 +950,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * createTagContent メソッドのテスト - 正常系:タグ内容の生成
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -904,6 +982,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * getConfigsModel メソッドのテスト - 正常系:構成モデルを返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -929,6 +1009,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * getCurrentSrcJavadocTag メソッドのテスト - 正常系:現在のJavadocタグを返す
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -956,6 +1038,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * getCurrentTagConfigModel メソッドのテスト - 正常系:現在のタグ構成モデルを返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -981,6 +1065,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * getReplacedJavadocBlock メソッドのテスト - 正常系:置換後のJavadocブロックを返す
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1008,6 +1094,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * getTagContentToApply メソッドのテスト - 正常系:設定するタグの内容を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1034,6 +1122,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * hasExistingTag メソッドのテスト - 正常系:既存タグが存在する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1059,6 +1149,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * hasExistingTag メソッドのテスト - 正常系:既存タグが存在しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1083,6 +1175,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系:初期化が成功する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1119,6 +1213,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * nextTag メソッドのテスト - 正常系:次のタグが存在する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1163,6 +1259,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * nextTag メソッドのテスト - 正常系:次のタグが存在しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1197,6 +1295,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * removeCurrentTag メソッドのテスト - 正常系:現在のタグが存在する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1230,6 +1330,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * removeCurrentTag メソッドのテスト - 準正常系:現在のタグが存在しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1254,6 +1356,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * removeCurrentTagOnError メソッドのテスト - 正常系:誤配置時削除が設定されており配置が不適切
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1290,6 +1394,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * removeCurrentTagOnError メソッドのテスト - 準正常系:配置が適切な場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1321,6 +1427,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * removeCurrentTagOnError メソッドのテスト - 準正常系:誤配置時削除が設定されていない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1348,6 +1456,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * replaceExistingTag メソッドのテスト - 正常系:既存タグの置換が成功
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1388,6 +1498,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * replaceExistingTag メソッドのテスト - 準正常系:既存タグが見つからない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1416,6 +1528,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * repositionTagIfNeeded メソッドのテスト - 正常系:BEGINNING位置への再配置
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1452,6 +1566,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * repositionTagIfNeeded メソッドのテスト - 正常系:END位置への再配置
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1487,6 +1603,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * repositionTagIfNeeded メソッドのテスト - 準正常系:NONE位置で再配置不要
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1513,6 +1631,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * repositionTagIfNeeded メソッドのテスト - 準正常系:PRESERVE位置で再配置不要
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1538,6 +1658,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * repositionTagIfNeeded メソッドのテスト - 準正常系:現在のタグ削除が失敗
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1566,6 +1688,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * shouldAddNewTag メソッドのテスト - 正常系:新しいタグを追加すべき場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1596,6 +1720,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がALWAYS
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1621,6 +1747,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がIF_LOWER
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1648,6 +1776,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * shouldOverwriteTag メソッドのテスト - 正常系:上書き設定がIF_LOWERでバージョンタグ（既存バージョンが高い）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -1679,6 +1809,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がIF_LOWERでバージョンタグ（既存バージョンが低いまたは同じ）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1709,6 +1841,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
     /**
      * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がNEVER
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
      */
@@ -1734,6 +1868,8 @@ public class JdtsBlockReplLogicImplTest extends AbstractKmgTest {
 
     /**
      * shouldOverwriteTag メソッドのテスト - 準正常系:上書き設定がNONE
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
