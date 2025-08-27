@@ -103,4 +103,59 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
+    /**
+     * main メソッドのテスト - 正常系：パターン02<br>
+     * <p>
+     * クラスのJavadocで、タグが一つもない場合に、タグを追加する。
+     * </p>
+     *
+     * @since 0.1.0
+     *
+     * @param testInfo
+     *                 テスト情報
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testMain_normalPt02(final TestInfo testInfo) throws Exception {
+
+        /* 期待値の定義 */
+
+        // テストメソッドパス
+        final Path testMethodPath = this.getCurrentTestMethodPath(testInfo);
+
+        // 期待値対象
+        final Path   expectedTargetPath = testMethodPath.resolve("ExpectedTarget.java");
+        final String expectedContent    = Files.readString(expectedTargetPath);
+
+        /* 準備 */
+
+        // テスト入力ファイルパス
+        final Path testInputPath = testMethodPath.resolve("TestInput.java");
+
+        // テスト定義ファイルパス
+        final Path testDefinitionPath = testMethodPath.resolve("TestTemplate.yml");
+
+        // テスト作業用入力ファイルパス（tempDirにコピーして使用）
+        final Path testWorkInputPath = this.tempDir.resolve(testInputPath.getFileName());
+        Files.copy(testInputPath, testWorkInputPath, StandardCopyOption.REPLACE_EXISTING);
+
+        /* テスト対象の実行 */
+        this.testTarget.initialize(testWorkInputPath, testDefinitionPath);
+        this.testTarget.process();
+
+        /* 検証の準備 */
+
+        // 実際の対象ファイル
+        final Path   actualTargetPath = this.testTarget.getTargetPath();
+        final String actualContent    = Files.readString(actualTargetPath);
+
+        /* 検証の実施 */
+
+        // 期待値ファイルと実際のファイルの内容を比較
+        Assertions.assertEquals(expectedContent, actualContent, "ファイル内容が一致すること");
+
+    }
+
 }
