@@ -49,7 +49,10 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     private Path tempDir;
 
     /**
-     * main メソッドのテスト - 正常系
+     * main メソッドのテスト - 正常系：パターン01<br>
+     * <p>
+     * クラスのJavadocで、タグが一つもない場合に、タグを追加する。
+     * </p>
      *
      * @since 0.1.0
      *
@@ -60,7 +63,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
-    public void testMain_normal(final TestInfo testInfo) throws Exception {
+    public void testMain_normalPt01(final TestInfo testInfo) throws Exception {
 
         /* 期待値の定義 */
 
