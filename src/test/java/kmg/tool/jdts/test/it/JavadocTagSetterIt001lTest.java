@@ -70,7 +70,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     }
 
     /**
-     * /** main メソッドのテスト - 正常系：パターン02<br>
+     * main メソッドのテスト - 正常系：パターン02<br>
      * <p>
      * テストメソッド内で文字列として「\/** XXXXX *\/」がある場合に、タグを追加しないことを確認する。
      * </p>
