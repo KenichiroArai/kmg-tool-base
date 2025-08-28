@@ -26,10 +26,18 @@ import kmg.tool.jdoc.domain.model.JavadocModel;
 })
 public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsBlockModelImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
     /**
@@ -48,6 +56,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * getAnnotations メソッドのテスト - 正常系:初期状態での空リスト取得
      *
      * @since 0.1.0
+
      */
     @Test
     public void testGetAnnotations_normalEmptyList() {
@@ -63,7 +72,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final List<String> testResult = this.testTarget.getAnnotations();
 
         /* 検証の準備 */
-        final List<String> actualAnnotations = testResult;
+        final List<String> actualAnnotations = this.testResult;
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualAnnotations, "アノテーションリストがnullでないこと");
@@ -75,6 +84,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * getClassification メソッドのテスト - 正常系:初期状態でのNONE取得
      *
      * @since 0.1.0
+
      */
     @Test
     public void testGetClassification_normalInitialNone() {
@@ -90,7 +100,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final JavaClassificationTypes testResult = this.testTarget.getClassification();
 
         /* 検証の準備 */
-        final JavaClassificationTypes actualClassification = testResult;
+        final JavaClassificationTypes actualClassification = this.testResult;
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedClassification, actualClassification, "初期状態では区分がNONEであること");
@@ -101,6 +111,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * getElementName メソッドのテスト - 正常系:初期状態でのnull取得
      *
      * @since 0.1.0
+
      */
     @Test
     public void testGetElementName_normalInitialNull() {
@@ -115,7 +126,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final String testResult = this.testTarget.getElementName();
 
         /* 検証の準備 */
-        final String actualElementName = testResult;
+        final String actualElementName = this.testResult;
 
         /* 検証の実施 */
         Assertions.assertNull(actualElementName, "初期状態では要素名がnullであること");
@@ -206,10 +217,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:アノテーションと空白のみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalAnnotationsAndWhitespaceOnly() throws Exception {
@@ -234,10 +245,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:アノテーションのみでコードがないブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalAnnotationsOnly() throws Exception {
@@ -262,10 +273,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:コメントのみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalCommentsOnly() throws Exception {
@@ -290,10 +301,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:空のブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalEmptyBlock() throws Exception {
@@ -318,10 +329,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:コードブロックが空のブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalEmptyCodeBlock() throws Exception {
@@ -346,10 +357,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:不完全なメソッド定義のブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalIncompleteMethodDefinition() throws Exception {
@@ -374,10 +385,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:無効なJavaコードのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalInvalidJavaCode() throws Exception {
@@ -402,10 +413,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadoc終了記号が先頭にあるブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalJavadocEndAtBeginning() throws Exception {
@@ -430,10 +441,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadoc終了記号のみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalJavadocEndOnly() throws Exception {
@@ -458,10 +469,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadocブロックのみでコードブロックがない
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalJavadocOnly() throws Exception {
@@ -487,10 +498,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadoc開始記号のみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalJavadocStartOnly() throws Exception {
@@ -544,10 +555,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:nullブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalNullBlock() throws Exception {
@@ -570,10 +581,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:特殊文字を含むブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalSpecialCharactersInBlock() throws Exception {
@@ -598,10 +609,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:特殊文字のみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalSpecialCharactersOnly() throws Exception {
@@ -626,10 +637,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:コードブロックが空白のみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalWhitespaceOnlyCodeBlock() throws Exception {
@@ -654,10 +665,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:アノテーション使用の区分でも解析は成功する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalAnnotationUsageButParseSuccess() throws Exception {
@@ -682,10 +693,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:クラス定義の解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalClassDefinition() throws Exception {
@@ -718,10 +729,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:空行を含むコードブロックのクラス定義解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalClassDefinitionWithBlankLines() throws Exception {
@@ -754,10 +765,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:アノテーション付きクラス定義の解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalClassWithAnnotations() throws Exception {
@@ -795,10 +806,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:空行を含むアノテーション付きクラス定義の解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalClassWithAnnotationsAndBlankLines() throws Exception {
@@ -836,10 +847,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:無効なクラス定義でもJavadoc対象外として正常処理される
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalInvalidClassDefinition() throws Exception {
@@ -870,10 +881,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:メソッド定義の解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMethodDefinition() throws Exception {
@@ -904,10 +915,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:メソッド定義で空行を含む解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMethodDefinitionWithBlankLines() throws Exception {
@@ -939,10 +950,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:アノテーションの複数行処理
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMultilineAnnotation() throws Exception {
@@ -995,10 +1006,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの処理でcontinue文のカバレッジ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMultilineAnnotationContinueCoverage() throws Exception {
@@ -1046,10 +1057,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの終了記号が行の途中にある場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMultilineAnnotationEndInMiddleOfLine() throws Exception {
@@ -1080,10 +1091,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの後に通常のアノテーションが続く場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMultilineAnnotationFollowedByNormalAnnotation() throws Exception {
@@ -1130,10 +1141,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの途中で終了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMultilineAnnotationIncomplete() throws Exception {
@@ -1164,10 +1175,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションのみでコードがない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMultilineAnnotationOnly() throws Exception {
@@ -1204,10 +1215,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの処理でannotationMultilineに追加されるがannotationsには追加されない
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMultilineAnnotationProcessing() throws Exception {
@@ -1249,10 +1260,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーション内に空行が含まれる場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMultilineAnnotationWithBlankLines() throws Exception {
@@ -1293,10 +1304,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:Javadoc対象外の区分
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalNonJavadocTarget() throws Exception {
@@ -1326,10 +1337,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:Javadoc対象外の区分（NONE）でも解析は成功する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalNonJavadocTargetButParseSuccess() throws Exception {
