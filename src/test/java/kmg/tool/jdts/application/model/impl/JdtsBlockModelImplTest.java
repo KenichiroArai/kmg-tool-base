@@ -56,7 +56,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * getAnnotations メソッドのテスト - 正常系:初期状態での空リスト取得
      *
      * @since 0.1.0
-
      */
     @Test
     public void testGetAnnotations_normalEmptyList() {
@@ -72,7 +71,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final List<String> testResult = this.testTarget.getAnnotations();
 
         /* 検証の準備 */
-        final List<String> actualAnnotations = this.testResult;
+        final List<String> actualAnnotations = testResult;
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualAnnotations, "アノテーションリストがnullでないこと");
@@ -84,7 +83,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * getClassification メソッドのテスト - 正常系:初期状態でのNONE取得
      *
      * @since 0.1.0
-
      */
     @Test
     public void testGetClassification_normalInitialNone() {
@@ -100,7 +98,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final JavaClassificationTypes testResult = this.testTarget.getClassification();
 
         /* 検証の準備 */
-        final JavaClassificationTypes actualClassification = this.testResult;
+        final JavaClassificationTypes actualClassification = testResult;
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedClassification, actualClassification, "初期状態では区分がNONEであること");
@@ -111,7 +109,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
      * getElementName メソッドのテスト - 正常系:初期状態でのnull取得
      *
      * @since 0.1.0
-
      */
     @Test
     public void testGetElementName_normalInitialNull() {
@@ -126,7 +123,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final String testResult = this.testTarget.getElementName();
 
         /* 検証の準備 */
-        final String actualElementName = this.testResult;
+        final String actualElementName = testResult;
 
         /* 検証の実施 */
         Assertions.assertNull(actualElementName, "初期状態では要素名がnullであること");
