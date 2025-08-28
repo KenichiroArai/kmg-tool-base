@@ -64,12 +64,13 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      */
     @Test
     public void testMain_normalPt01(final TestInfo testInfo) throws Exception {
+
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
+
     }
 
     /**
-    /**
-     * main メソッドのテスト - 正常系：パターン02<br>
+     * /** main メソッドのテスト - 正常系：パターン02<br>
      * <p>
      * テストメソッド内で文字列として「\/** XXXXX *\/」がある場合に、タグを追加しないことを確認する。
      * </p>
@@ -84,22 +85,9 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      */
     @Test
     public void testMain_normalPt02(final TestInfo testInfo) throws Exception {
-        this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
-    }
 
-    /**
-     * Javadocタグ設定ツールのテスト実行共通処理（デフォルトファイル使用）<br>
-     *
-     * @since 0.1.0
-     *
-     * @param testInfo
-     *                 テスト情報
-     *
-     * @throws Exception
-     *                   例外
-     */
-    private void executeJavadocTagSetterTestWithDefaultFiles(final TestInfo testInfo) throws Exception {
-        this.executeJavadocTagSetterTest(testInfo, "TestInput.java", "TestTemplate.yml", "ExpectedTarget.java");
+        this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
+
     }
 
     /**
@@ -108,18 +96,19 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      * @since 0.1.0
      *
      * @param testInfo
-     *                 テスト情報
+     *                         テスト情報
      * @param inputFileName
-     *                 入力ファイル名
+     *                         入力ファイル名
      * @param templateFileName
-     *                 テンプレートファイル名
+     *                         テンプレートファイル名
      * @param expectedFileName
-     *                 期待値ファイル名
+     *                         期待値ファイル名
      *
      * @throws Exception
      *                   例外
      */
-    private void executeJavadocTagSetterTest(final TestInfo testInfo, final String inputFileName, final String templateFileName, final String expectedFileName) throws Exception {
+    private void executeJavadocTagSetterTest(final TestInfo testInfo, final String inputFileName,
+        final String templateFileName, final String expectedFileName) throws Exception {
 
         /* 期待値の定義 */
 
@@ -156,6 +145,23 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
         // 期待値ファイルと実際のファイルの内容を比較
         Assertions.assertEquals(expectedContent, actualContent, "ファイル内容が一致すること");
+
+    }
+
+    /**
+     * Javadocタグ設定ツールのテスト実行共通処理（デフォルトファイル使用）<br>
+     *
+     * @since 0.1.0
+     *
+     * @param testInfo
+     *                 テスト情報
+     *
+     * @throws Exception
+     *                   例外
+     */
+    private void executeJavadocTagSetterTestWithDefaultFiles(final TestInfo testInfo) throws Exception {
+
+        this.executeJavadocTagSetterTest(testInfo, "TestInput.java", "TestTemplate.yml", "ExpectedTarget.java");
 
     }
 
