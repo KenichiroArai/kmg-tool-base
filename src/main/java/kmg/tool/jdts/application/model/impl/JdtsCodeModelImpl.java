@@ -43,7 +43,7 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
      *
      * @since 0.1.0
      */
-    private static final String JAVADOC_BLOCK_SPLIT_FORMAT = "^(\\s*)%s\\s+"; //$NON-NLS-1$
+    private static final String JAVADOC_BLOCK_SPLIT_FORMAT = "(^|\\s+)%s\\s+"; //$NON-NLS-1$
 
     /**
      * ロガー
