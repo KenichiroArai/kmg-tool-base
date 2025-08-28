@@ -29,7 +29,11 @@ import kmg.tool.jdts.application.types.JdtsLocationModeTypes;
 })
 public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsLocationConfigModelImpl testTarget;
 
     /**
@@ -48,10 +52,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:COMPLIANTモードでtargetElementsが指定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorCompliantModeWithTargetElements() throws Exception {
@@ -78,10 +82,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:無効なtargetElementsが指定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorInvalidTargetElements() throws Exception {
@@ -108,10 +112,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:MANUALモードでtargetElementsが指定されていない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorManualModeWithoutTargetElements() throws Exception {
@@ -135,10 +139,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:locationMapがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorNullLocationMap() throws Exception {
@@ -160,10 +164,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系:COMPLIANTモードで正常に初期化
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalCompliantMode() throws Exception {
@@ -195,10 +199,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系:MANUALモードで正常に初期化
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalManualMode() throws Exception {
@@ -236,10 +240,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系:NONEモードで正常に初期化
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalNoneMode() throws Exception {
@@ -271,10 +275,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 準正常系:locationMapが空の場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_semiEmptyLocationMap() throws Exception {
@@ -304,10 +308,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 準正常系:無効なモードが指定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_semiInvalidMode() throws Exception {
@@ -339,10 +343,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 準正常系:removeIfMisplacedが無効な値の場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_semiInvalidRemoveIfMisplaced() throws Exception {
@@ -374,10 +378,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * getMode メソッドのテスト - 正常系:配置方法を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetMode_normalReturnMode() throws Exception {
@@ -402,10 +406,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * getTargetElements メソッドのテスト - 正常系:空の対象要素の種類を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetTargetElements_normalReturnEmptyTargetElements() throws Exception {
@@ -430,10 +434,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * getTargetElements メソッドのテスト - 正常系:対象要素の種類を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetTargetElements_normalReturnTargetElements() throws Exception {
@@ -464,10 +468,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * isRemoveIfMisplaced メソッドのテスト - 正常系:誤配置時に削除しない場合を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testIsRemoveIfMisplaced_normalReturnFalse() throws Exception {
@@ -491,10 +495,10 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
     /**
      * isRemoveIfMisplaced メソッドのテスト - 正常系:誤配置時に削除するかどうかを返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testIsRemoveIfMisplaced_normalReturnRemoveIfMisplaced() throws Exception {

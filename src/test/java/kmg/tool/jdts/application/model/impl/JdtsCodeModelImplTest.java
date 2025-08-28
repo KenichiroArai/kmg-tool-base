@@ -33,13 +33,25 @@ import kmg.tool.jdts.application.model.JdtsBlockModel;
 })
 public class JdtsCodeModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsCodeModelImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**

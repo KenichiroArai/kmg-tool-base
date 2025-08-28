@@ -28,7 +28,11 @@ import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
 })
 public class JdtsConfigsModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsConfigsModelImpl testTarget;
 
     /**
@@ -47,10 +51,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:全てのタグ設定でバリデーションエラーが発生
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorAllTagConfigValidationError() throws Exception {
@@ -101,10 +105,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:JdtsConfigsセクションが空
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorEmptyJdtsConfigs() throws Exception {
@@ -128,10 +132,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:YAMLデータが空
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorEmptyYamlData() throws Exception {
@@ -153,10 +157,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:JdtsConfigsセクションがnull
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorNullJdtsConfigs() throws Exception {
@@ -179,10 +183,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:YAMLデータがnull
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorNullYamlData() throws Exception {
@@ -204,10 +208,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:タグ設定でバリデーションエラーが発生
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorTagConfigValidationError() throws Exception {
@@ -245,10 +249,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系:複数の有効なタグ設定で正常に初期化
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalMultipleValidConfigs() throws Exception {
@@ -318,10 +322,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系:正常に初期化
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalValidConfig() throws Exception {
@@ -377,10 +381,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * getJdaTagConfigModels メソッドのテスト - 正常系:複数のタグ設定モデルのリストを返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetJdaTagConfigModels_normalReturnMultipleTagConfigModels() throws Exception {
@@ -452,10 +456,10 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
     /**
      * getJdaTagConfigModels メソッドのテスト - 正常系:タグ設定モデルのリストを返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetJdaTagConfigModels_normalReturnTagConfigModels() throws Exception {

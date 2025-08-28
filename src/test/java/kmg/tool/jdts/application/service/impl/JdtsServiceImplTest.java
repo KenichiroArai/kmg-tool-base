@@ -39,6 +39,10 @@ import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
  * JdtsServiceImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -47,35 +51,73 @@ import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
 })
 public class JdtsServiceImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
-    /** モックJdtsIoLogic */
+    /**
+     * モックJdtsIoLogic
+     *
+     * @since 0.1.0
+     */
     private JdtsIoLogic mockJdtsIoLogic;
 
-    /** モックJdtsReplService */
+    /**
+     * モックJdtsReplService
+     *
+     * @since 0.1.0
+     */
     private JdtsReplService mockJdtsReplService;
 
-    /** モックJdtsCodeModel */
+    /**
+     * モックJdtsCodeModel
+     *
+     * @since 0.1.0
+     */
     private JdtsCodeModel mockJdtsCodeModel;
 
-    /** モックJdtsConfigsModel */
+    /**
+     * モックJdtsConfigsModel
+     *
+     * @since 0.1.0
+     */
     private JdtsConfigsModel mockJdtsConfigsModel;
 
-    /** テスト用対象パス */
+    /**
+     * テスト用対象パス
+     *
+     * @since 0.1.0
+     */
     private Path testTargetPath;
 
-    /** テスト用定義パス */
+    /**
+     * テスト用定義パス
+     *
+     * @since 0.1.0
+     */
     private Path testDefinitionPath;
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用した初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public static void testConstructor_normalCustomLogger() {
@@ -97,6 +139,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：標準ロガーを使用した初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public static void testConstructor_normalStandardLogger() {
@@ -147,6 +191,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * セットアップ
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -178,6 +224,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -193,6 +241,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * createJdtsConfigsModel メソッドのテスト - 異常系：YAMLファイル読み込みで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -249,6 +299,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * createJdtsConfigsModel メソッドのテスト - 正常系：正常な構成モデル作成
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -282,6 +334,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * getDefinitionPath メソッドのテスト - 正常系：定義ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -307,6 +361,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * getDefinitionPath メソッドのテスト - 準正常系：nullの定義ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -330,6 +386,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * getTargetPath メソッドのテスト - 正常系：対象ファイルパスの取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -356,6 +414,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * getTargetPath メソッドのテスト - 準正常系：nullの対象ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -379,6 +439,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 異常系：JdtsIoLogicの初期化で例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -428,6 +490,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -457,6 +521,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * loadAndCreateCodeModel メソッドのテスト - 異常系：loadContentで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -510,6 +576,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * loadAndCreateCodeModel メソッドのテスト - 正常系：正常なコードモデル作成
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -535,6 +603,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * logFileEnd メソッドのテスト - 正常系：正常なファイル処理終了ログ出力
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -566,6 +636,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * logFileStart メソッドのテスト - 正常系：正常なファイル処理開始ログ出力
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      * @throws Exception
@@ -595,6 +667,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：createJdtsConfigsModelで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -647,6 +721,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：loadで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -702,6 +778,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：nextFileで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -768,6 +846,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：processFileで例外が発生する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -823,6 +903,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 正常系：複数ファイルの処理（do-whileループ）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -884,6 +966,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：単一ファイルの処理（do-whileループ）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -933,6 +1017,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 準正常系：ファイルが存在しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -968,6 +1054,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * processFile メソッドのテスト - 異常系：loadAndCreateCodeModelで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -1025,6 +1113,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * processFile メソッドのテスト - 正常系：正常なファイル処理
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1055,6 +1145,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * replaceJavadoc メソッドのテスト - 異常系：initializeで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -1110,6 +1202,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * replaceJavadoc メソッドのテスト - 正常系：正常なJavadoc置換
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

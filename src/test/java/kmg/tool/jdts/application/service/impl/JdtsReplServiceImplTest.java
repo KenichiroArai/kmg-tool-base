@@ -35,6 +35,10 @@ import kmg.tool.jdts.application.model.JdtsTagConfigModel;
  * JdtsReplServiceImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -43,35 +47,73 @@ import kmg.tool.jdts.application.model.JdtsTagConfigModel;
 })
 public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsReplServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
-    /** モックJdtsBlockReplLogic */
+    /**
+     * モックJdtsBlockReplLogic
+     *
+     * @since 0.1.0
+     */
     private JdtsBlockReplLogic mockJdtsBlockReplLogic;
 
-    /** モックJdtsConfigsModel */
+    /**
+     * モックJdtsConfigsModel
+     *
+     * @since 0.1.0
+     */
     private JdtsConfigsModel mockJdtsConfigsModel;
 
-    /** モックJdtsCodeModel */
+    /**
+     * モックJdtsCodeModel
+     *
+     * @since 0.1.0
+     */
     private JdtsCodeModel mockJdtsCodeModel;
 
-    /** モックJavadocModel */
+    /**
+     * モックJavadocModel
+     *
+     * @since 0.1.0
+     */
     private JavadocModel mockJavadocModel;
 
-    /** モックJavadocTagModel */
+    /**
+     * モックJavadocTagModel
+     *
+     * @since 0.1.0
+     */
     private JavadocTagModel mockJavadocTagModel;
 
-    /** モックJdtsTagConfigModel */
+    /**
+     * モックJdtsTagConfigModel
+     *
+     * @since 0.1.0
+     */
     private JdtsTagConfigModel mockJdtsTagConfigModel;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -112,6 +154,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -127,6 +171,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用した初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalCustomLogger() {
@@ -148,6 +194,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：標準ロガーを使用した初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalStandardLogger() {
@@ -168,6 +216,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * getJdtsConfigsModel メソッドのテスト - 正常系：構成モデルの取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -195,6 +245,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * getJdtsConfigsModel メソッドのテスト - 準正常系：nullの構成モデルの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -219,6 +271,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * getReplaceCode メソッドのテスト - 正常系：置換後のコードの取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -246,6 +300,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * getReplaceCode メソッドのテスト - 準正常系：空文字の置換後のコードの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -271,6 +327,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * getTotalReplaceCount メソッドのテスト - 正常系：合計置換数の取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -298,6 +356,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * getTotalReplaceCount メソッドのテスト - 準正常系：ゼロの合計置換数の取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -323,6 +383,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -362,6 +424,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 準正常系：jdtsCodeModelがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
@@ -389,6 +453,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 準正常系：nullパラメータの場合
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
@@ -415,6 +481,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * logAddNewTag メソッドのテスト - 正常系：新しいタグ追加時のログ出力
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -455,6 +523,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * logAddNewTag メソッドのテスト - 準正常系：CurrentTagConfigModelがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      * @throws Exception
@@ -485,6 +555,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * logRemoveTag メソッドのテスト - 正常系：タグ削除時のログ出力
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -527,6 +599,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * logReplaceTag メソッドのテスト - 正常系：タグ置換時のログ出力
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -577,6 +651,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * logReplaceTag メソッドのテスト - 準正常系：CurrentSrcJavadocTagがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      * @throws Exception
@@ -607,6 +683,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * logRepositionTag メソッドのテスト - 正常系：タグ位置変更時のログ出力
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -657,6 +735,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * logRepositionTag メソッドのテスト - 準正常系：CurrentSrcJavadocTagがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      * @throws Exception
@@ -687,6 +767,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * processBlock メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -724,6 +806,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * processBlock メソッドのテスト - 正常系：nextTag()がfalseを返す場合の処理（do-whileループが終了するケース）
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -798,6 +882,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * processBlock メソッドのテスト - 正常系：nextTag()がtrueを返す場合の処理（do-whileループが継続するケース）
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
@@ -868,6 +954,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * processBlock メソッドのテスト - 正常系：正常なブロック処理
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
@@ -912,6 +1000,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * processBlock メソッドのテスト - 正常系：既存タグの置換が発生する場合の処理（replaceExistingTag()がtrueを返すケース）
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -995,6 +1085,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * processBlock メソッドのテスト - 正常系：既存タグの置換が発生しない場合の処理（replaceExistingTag()がfalseを返すケース）
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
@@ -1074,6 +1166,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * processBlock メソッドのテスト - 準正常系：既存タグがある場合の処理
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
@@ -1124,6 +1218,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * processBlock メソッドのテスト - 準正常系：新しいタグを追加しない場合の処理
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
@@ -1167,6 +1263,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * processBlock メソッドのテスト - 準正常系：上書きしない場合の処理
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -1212,6 +1310,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * processBlock メソッドのテスト - 準正常系：タグ削除が発生する場合の処理
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -1262,6 +1362,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * processBlock メソッドのテスト - 準正常系：タグ位置変更が発生する場合の処理
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
@@ -1311,6 +1413,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * replace メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      * @throws KmgToolMsgException
@@ -1356,6 +1460,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * replace メソッドのテスト - 正常系：正常な置換処理
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -1403,6 +1509,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
     /**
      * replace メソッドのテスト - 準正常系：空のブロックモデルリストでの置換処理
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外

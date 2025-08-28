@@ -21,6 +21,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：全ての列挙型の値が正しく設定される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalAllEnumValuesCorrectlySet() {
@@ -51,6 +53,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のget メソッドのテスト - 正常系：全ての列挙型のgetが正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGet_normalAllEnumGetsCorrect() {
@@ -91,6 +95,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * get メソッドのテスト - 正常系：キーが返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGet_normalKeyReturned() {
@@ -114,6 +120,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * getDefault メソッドのテスト - 正常系：デフォルト値が返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDefault_normalDefaultValueReturned() {
@@ -136,6 +144,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のgetDetail メソッドのテスト - 正常系：全ての列挙型の詳細情報が正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDetail_normalAllEnumDetailsCorrect() {
@@ -176,6 +186,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * getDetail メソッドのテスト - 正常系：詳細情報が返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDetail_normalDetailReturned() {
@@ -199,6 +211,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のgetDisplayName メソッドのテスト - 正常系：全ての列挙型の表示名が正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDisplayName_normalAllEnumDisplayNamesCorrect() {
@@ -239,6 +253,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * getDisplayName メソッドのテスト - 正常系：表示名が返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDisplayName_normalDisplayNameReturned() {
@@ -262,6 +278,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * getEnum メソッドのテスト - 正常系：存在するキーが指定された場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetEnum_normalExistingKeySpecified() {
@@ -285,6 +303,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * getEnum メソッドのテスト - 準正常系：存在しないキーが指定された場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetEnum_semiNonExistingKeySpecified() {
@@ -308,6 +328,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * getEnum メソッドのテスト - 準正常系：nullキーが指定された場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetEnum_semiNullKeySpecified() {
@@ -331,6 +353,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * getInitValue メソッドのテスト - 正常系：初期値が返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetInitValue_normalInitValueReturned() {
@@ -353,6 +377,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のgetKey メソッドのテスト - 正常系：全ての列挙型のキーが正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetKey_normalAllEnumKeysCorrect() {
@@ -393,6 +419,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * getKey メソッドのテスト - 正常系：キーが返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetKey_normalKeyReturned() {
@@ -416,6 +444,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * 各列挙型のtoString メソッドのテスト - 正常系：全ての列挙型のtoStringが正しい場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testToString_normalAllEnumToStringsCorrect() {
@@ -456,6 +486,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * toString メソッドのテスト - 正常系：キーが返される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testToString_normalKeyReturned() {
@@ -479,6 +511,8 @@ public class JdtsOverwriteTypesTest extends AbstractKmgTest {
 
     /**
      * VALUES_MAP のテスト - 正常系：マップに全ての列挙型が格納される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testValuesMap_normalAllEnumValuesInMap() {
