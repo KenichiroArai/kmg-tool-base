@@ -253,6 +253,17 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         }
 
+        // Javadocが文字列中か
+        final Pattern pattern = Pattern.compile("\"+;");
+
+        if (pattern.matcher(javadocCodeBlock[1]).find()) {
+            // 文字列中の場合
+
+            // 対象外とする
+            return result;
+
+        }
+
         /* Javadoc部分をJavadocモデルに変換する */
         this.javadocModel = new JavadocModelImpl(javadocCodeBlock[0]);
 

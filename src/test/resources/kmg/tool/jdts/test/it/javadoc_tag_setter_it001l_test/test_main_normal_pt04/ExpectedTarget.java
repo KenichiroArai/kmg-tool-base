@@ -59,4 +59,5 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedSize, actualAnnotations.size(), "初期状態では空のアノテーションリストが返されること");
 
     }
+
 }
