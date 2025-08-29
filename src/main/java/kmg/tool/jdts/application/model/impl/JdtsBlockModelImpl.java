@@ -3,7 +3,6 @@ package kmg.tool.jdts.application.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kmg.core.infrastructure.type.KmgString;
@@ -70,21 +69,6 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
     private static final String ANNOTATION_MULTILINE_END = "})"; //$NON-NLS-1$
 
     /**
-     * Javadocが文字列中かを判定する正規表現パターン
-     *
-     * @since 0.1.0
-     */
-    private static final String JAVADOC_IN_STRING_PATTERN = "\"+;"; //$NON-NLS-1$
-
-    /**
-     * Javadocが文字列中かを判定する正規表現パターンオブジェクト
-     *
-     * @since 0.1.0
-     */
-    private static final Pattern JAVADOC_IN_STRING_PATTERN_OBJECT
-        = Pattern.compile(JdtsBlockModelImpl.JAVADOC_IN_STRING_PATTERN);
-
-    /**
      * 識別子
      *
      * @since 0.1.0
@@ -132,6 +116,65 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      * @since 0.1.0
      */
     private String elementName;
+
+    /**
+     * Javadocが文字列中かを段階的にチェックする<br>
+     *
+     * @since 0.1.0
+     *
+     * @param codeBlock
+     *                  コードブロック
+     *
+     * @return true：文字列中、false：文字列外
+     */
+    private static boolean isJavadocInString(final String codeBlock) {
+
+        boolean result = false;
+
+        // TODO KenichiroArai 2025/08/30 ハードコード対応
+
+        // 1. 「"」があるかチェックし、splitで分割
+        final String[] parts = codeBlock.split("\"", 2);
+
+        // 「"」がない場合は文字列外
+        if (parts.length <= 1) {
+
+            return result;
+
+        }
+
+        // 2. 分割後の部分をチェック
+        for (int i = 1; i < parts.length; i++) {
+
+            final String part = parts[i];
+
+            // セミコロンで終わるか
+            final Pattern semicolonPattern = Pattern.compile("^;");
+
+            if (semicolonPattern.matcher(part).find()) {
+                // セミコロンで終わる場合
+
+                result = true;
+                return result;
+
+            }
+
+            // テキストブロック対応：複数のダブルクォートで終わるか
+            final Pattern textBlockPattern = Pattern.compile("^\"+\\s*;");
+
+            if (textBlockPattern.matcher(part).find()) {
+                // 終わる場合
+
+                result = true;
+                return result;
+
+            }
+
+        }
+
+        return result;
+
+    }
 
     /**
      * コンストラクタ
@@ -269,10 +312,8 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         }
 
-        // Javadocが文字列中か
-        final Matcher javadocInStringMatcher = JdtsBlockModelImpl.JAVADOC_IN_STRING_PATTERN_OBJECT
-            .matcher(javadocCodeBlock[1]);
-        final boolean isJavadocInString      = javadocInStringMatcher.find();
+        // Javadocが文字列中か（段階的にチェック）
+        final boolean isJavadocInString = JdtsBlockModelImpl.isJavadocInString(javadocCodeBlock[1]);
 
         if (isJavadocInString) {
             // 文字列中の場合
