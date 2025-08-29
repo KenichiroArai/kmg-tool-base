@@ -3,6 +3,7 @@ package kmg.tool.jdts.application.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kmg.core.infrastructure.type.KmgString;
@@ -67,6 +68,21 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      * @since 0.1.0
      */
     private static final String ANNOTATION_MULTILINE_END = "})"; //$NON-NLS-1$
+
+    /**
+     * Javadocが文字列中かを判定する正規表現パターン
+     *
+     * @since 0.1.0
+     */
+    private static final String JAVADOC_IN_STRING_PATTERN = "\"+;"; //$NON-NLS-1$
+
+    /**
+     * Javadocが文字列中かを判定する正規表現パターンオブジェクト
+     *
+     * @since 0.1.0
+     */
+    private static final Pattern JAVADOC_IN_STRING_PATTERN_OBJECT
+        = Pattern.compile(JdtsBlockModelImpl.JAVADOC_IN_STRING_PATTERN);
 
     /**
      * 識別子
@@ -254,9 +270,11 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         }
 
         // Javadocが文字列中か
-        final Pattern pattern = Pattern.compile("\"+;");
+        final Matcher javadocInStringMatcher = JdtsBlockModelImpl.JAVADOC_IN_STRING_PATTERN_OBJECT
+            .matcher(javadocCodeBlock[1]);
+        final boolean isJavadocInString      = javadocInStringMatcher.find();
 
-        if (pattern.matcher(javadocCodeBlock[1]).find()) {
+        if (isJavadocInString) {
             // 文字列中の場合
 
             // 対象外とする
