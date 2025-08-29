@@ -46,6 +46,14 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
     private static final String JAVADOC_BLOCK_SPLIT_FORMAT = "(^|\\s+)%s\\s+"; //$NON-NLS-1$
 
     /**
+     * Javadocブロック分割用の正規表現パターン
+     *
+     * @since 0.1.0
+     */
+    private static final String JAVADOC_BLOCK_SPLIT_PATTERN
+        = String.format(JdtsCodeModelImpl.JAVADOC_BLOCK_SPLIT_FORMAT, Pattern.quote(JdtsCodeModelImpl.JAVADOC_START));
+
+    /**
      * ロガー
      *
      * @since 0.1.0
@@ -153,8 +161,7 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
     public void parse() {
 
         // 「/**」でブロックに分ける
-        final String[] blocks = this.orgCode.split(String.format(JdtsCodeModelImpl.JAVADOC_BLOCK_SPLIT_FORMAT,
-            Pattern.quote(JdtsCodeModelImpl.JAVADOC_START)));
+        final String[] blocks = this.orgCode.split(JdtsCodeModelImpl.JAVADOC_BLOCK_SPLIT_PATTERN);
 
         // ブロックの0番目はJavadocではないので、1番目から進める
         for (int i = 1; i < blocks.length; i++) {
