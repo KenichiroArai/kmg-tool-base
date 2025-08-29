@@ -79,7 +79,7 @@ public interface JdtsBlockModel {
      *
      * @since 0.1.0
      *
-     * @return true：成功、false：失敗
+     * @return true：Javadocタグ設定のブロックモデルの対象である、false：Javadocタグ設定のブロックモデルの対象外である
      */
     boolean parse();
 

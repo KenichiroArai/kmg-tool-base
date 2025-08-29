@@ -171,11 +171,12 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
             // ブロックモデルを解析する
             final boolean blockParseResult = jdtsBlockModel.parse();
 
-            // 解析に失敗したか
+            // 解析が対象外か
             if (!blockParseResult) {
-                // 解析に失敗した場合
+                // 対象外の場合
 
                 /* ログの出力 */
+                // TODO KenichiroArai 2025/08/29 対象外のメッセージに変更する
                 final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13000;
                 final Object[]           logMsgArgs  = {
                     jdtsBlockModel.getId(), jdtsBlockModel.getOrgBlock(),

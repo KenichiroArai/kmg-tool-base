@@ -232,7 +232,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      *
      * @since 0.1.0
      *
-     * @return true：成功、false：失敗
+     * @return true：Javadocタグ設定のブロックモデルの対象である、false：Javadocタグ設定のブロックモデルの対象外である
      */
     @Override
     public boolean parse() {
@@ -248,7 +248,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         if (javadocCodeBlock.length < 2) {
             // ない場合
 
-            // 失敗とする
+            // 対象外とする
             return result;
 
         }
