@@ -93,7 +93,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 正常系：パターン03<br>
      * <p>
-     * テストメソッド内で文字列として「\/** XXXXX *\/\\n～」がある場合に、タグを追加しないことを確認する。<br>
+     * 文字列として「\/** XXXXX *\/\\n～」がある場合に、タグを追加しないことを確認する。<br>
      * 「*\/」の後に改行がり続きの処理がある。
      * </p>
      *
@@ -107,6 +107,30 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      */
     @Test
     public void testMain_normalPt03(final TestInfo testInfo) throws Exception {
+
+        this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
+
+    }
+
+    /**
+     * main メソッドのテスト - 正常系：パターン04<br>
+     * <p>
+     * 文字列がテキストブロックで「"""<br>
+     * \/** XXXXX *\/\<br>
+     * ～<br>
+     * """」がある場合に、タグを追加しないことを確認する。<br>
+     * </p>
+     *
+     * @since 0.1.0
+     *
+     * @param testInfo
+     *                 テスト情報
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testMain_normalPt04(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
 
