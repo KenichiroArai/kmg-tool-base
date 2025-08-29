@@ -167,7 +167,6 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
         for (int i = 1; i < blocks.length; i++) {
 
             final JdtsBlockModel jdtsBlockModel = new JdtsBlockModelImpl(blocks[i]);
-            this.jdtsBlockModels.add(jdtsBlockModel);
 
             // ブロックモデルを解析する
             final boolean blockParseResult = jdtsBlockModel.parse();
@@ -184,7 +183,11 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
                 final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
                 this.logger.warn(logMsg);
 
+                continue;
+
             }
+
+            this.jdtsBlockModels.add(jdtsBlockModel);
 
         }
 
