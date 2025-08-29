@@ -20,8 +20,6 @@ templateContent: |
     /**
      * {itemName}
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     {item}("{itemName}"),
