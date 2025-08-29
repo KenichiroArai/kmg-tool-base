@@ -176,7 +176,6 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
                 // 対象外の場合
 
                 /* ログの出力 */
-                // TODO KenichiroArai 2025/08/29 対象外のメッセージに変更する
                 final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13000;
                 final Object[]           logMsgArgs  = {
                     jdtsBlockModel.getId(), jdtsBlockModel.getOrgBlock(),
