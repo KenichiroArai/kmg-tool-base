@@ -244,7 +244,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         // 「*/」でJavadocとCodeのブロックに分ける
         final String[] javadocCodeBlock = this.orgBlock.split(JdtsBlockModelImpl.JAVADOC_BLOCK_SPLIT_REGEX, 2);
 
-        // 「*/がないか
+        // 「*/」がないか
         if (javadocCodeBlock.length < 2) {
             // ない場合
 
