@@ -38,10 +38,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         final int expectedSize = 0;
 
         /* 準備 */
-        final String testBlock = """            
-            /** テストJavadoc */
-            public class TestClass {
-        """;
+        final String testBlock = """
+                /** テストJavadoc */
+                public class TestClass {
+            """;
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
         /* テスト対象の実行 */
