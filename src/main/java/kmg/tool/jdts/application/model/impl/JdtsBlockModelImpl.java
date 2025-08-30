@@ -3,6 +3,7 @@ package kmg.tool.jdts.application.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kmg.core.infrastructure.type.KmgString;
@@ -69,6 +70,36 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
     private static final String ANNOTATION_MULTILINE_END = "})"; //$NON-NLS-1$
 
     /**
+     * ダブルクォート文字
+     *
+     * @since 0.1.0
+     */
+    private static final String DOUBLE_QUOTE = "\""; //$NON-NLS-1$
+
+    /**
+     * セミコロン文字
+     *
+     * @since 0.1.0
+     */
+    private static final String SEMICOLON = ";"; //$NON-NLS-1$
+
+    /**
+     * セミコロンで終わるパターン
+     *
+     * @since 0.1.0
+     */
+    private static final Pattern SEMICOLON_END_PATTERN
+        = Pattern.compile("^" + Pattern.quote(JdtsBlockModelImpl.SEMICOLON)); //$NON-NLS-1$
+
+    /**
+     * テキストブロック対応：複数のダブルクォートで終わるパターン
+     *
+     * @since 0.1.0
+     */
+    private static final Pattern TEXT_BLOCK_END_PATTERN = Pattern.compile(String.format("^%s+\\s*%s", //$NON-NLS-1$
+        Pattern.quote(JdtsBlockModelImpl.DOUBLE_QUOTE), Pattern.quote(JdtsBlockModelImpl.SEMICOLON)));
+
+    /**
      * 識別子
      *
      * @since 0.1.0
@@ -131,12 +162,10 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         boolean result = false;
 
-        // TODO KenichiroArai 2025/08/30 ハードコード対応
+        // 1. ダブルクォートがあるかチェックし、splitで分割
+        final String[] parts = codeBlock.split(JdtsBlockModelImpl.DOUBLE_QUOTE, 2);
 
-        // 1. 「"」があるかチェックし、splitで分割
-        final String[] parts = codeBlock.split("\"", 2);
-
-        // 「"」がない場合は文字列外
+        // ダブルクォートがない場合は文字列外
         if (parts.length <= 1) {
 
             return result;
@@ -149,10 +178,11 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
             final String part = parts[i];
 
             // セミコロンで終わるか
-            final Pattern semicolonPattern = Pattern.compile("^;");
+            final Matcher semicolonMatcher = JdtsBlockModelImpl.SEMICOLON_END_PATTERN.matcher(part);
+            final boolean isSemicolonEnd   = semicolonMatcher.find();
 
-            if (semicolonPattern.matcher(part).find()) {
-                // セミコロンで終わる場合
+            if (isSemicolonEnd) {
+                // 終わる場合
 
                 result = true;
                 return result;
@@ -160,9 +190,10 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
             }
 
             // テキストブロック対応：複数のダブルクォートで終わるか
-            final Pattern textBlockPattern = Pattern.compile("^\"+\\s*;");
+            final Matcher textBlockMatcher = JdtsBlockModelImpl.TEXT_BLOCK_END_PATTERN.matcher(part);
+            final boolean isTextBlockEnd   = textBlockMatcher.find();
 
-            if (textBlockPattern.matcher(part).find()) {
+            if (isTextBlockEnd) {
                 // 終わる場合
 
                 result = true;
