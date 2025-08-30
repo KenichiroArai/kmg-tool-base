@@ -940,16 +940,19 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         filePathList.add(Paths.get("test/target3"));
 
         /* 準備 */
+        final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
         this.reflectionModel.set("definitionPath", this.testDefinitionPath);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
         Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
         Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
         Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+            ArgumentMatchers.eq("public class TestClass {\n}"))).thenReturn(mockJdtsCodeModelImpl);
         Mockito.when(this.mockJdtsReplService.getTotalReplaceCount()).thenReturn(2L);
         Mockito.when(this.mockJdtsReplService.getReplaceCode()).thenReturn("replaced code");
-        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn(true);
+        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.eq(this.mockJdtsConfigsModel),
+            ArgumentMatchers.eq(mockJdtsCodeModelImpl))).thenReturn(true);
 
         // nextFile()の呼び出し回数を制御するためのカウンター
         final int[] nextFileCallCount = {
@@ -1062,11 +1065,14 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         final List<Path> emptyFilePathList = new ArrayList<>();
 
         /* 準備 */
+        final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
         this.reflectionModel.set("definitionPath", this.testDefinitionPath);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
         Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(emptyFilePathList);
         Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+            ArgumentMatchers.eq("public class TestClass {\n}"))).thenReturn(mockJdtsCodeModelImpl);
 
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
 
@@ -1158,12 +1164,17 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         final long expectedResult = 5L;
 
         /* 準備 */
+        final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
         Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
         Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+            ArgumentMatchers.eq("public class TestClass {\n}"))).thenReturn(mockJdtsCodeModelImpl);
         Mockito.when(this.mockJdtsReplService.getTotalReplaceCount()).thenReturn(expectedResult);
         Mockito.when(this.mockJdtsReplService.getReplaceCode()).thenReturn("replaced code");
+        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.eq(this.mockJdtsConfigsModel),
+            ArgumentMatchers.eq(mockJdtsCodeModelImpl))).thenReturn(true);
 
         /* テスト対象の実行 */
         final long testResult = (Long) this.reflectionModel.getMethod("processFile");
