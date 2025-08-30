@@ -827,6 +827,11 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
 
+            // JdtsCodeModelのモック設定
+            final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
+            Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+                ArgumentMatchers.any())).thenReturn(mockJdtsCodeModelImpl);
+
             // 例外を事前に作成
             final KmgToolMsgException expectedException
                 = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
