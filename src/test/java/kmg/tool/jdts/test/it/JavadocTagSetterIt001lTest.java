@@ -137,6 +137,28 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     }
 
     /**
+     * main メソッドのテスト - 正常系：パターン05<br>
+     * <p>
+     * 文字列中にJavadocがある場合で、通常の文字列、テキストブロック（2パターン）による確認をする。<br>
+     * 文字列中のJavadocにはタグは追加されないことを確認する。
+     * </p>
+     *
+     * @since 0.1.0
+     *
+     * @param testInfo
+     *                 テスト情報
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testMain_normalPt05(final TestInfo testInfo) throws Exception {
+
+        this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
+
+    }
+
+    /**
      * Javadocタグ設定ツールのテスト実行共通処理<br>
      *
      * @since 0.1.0
