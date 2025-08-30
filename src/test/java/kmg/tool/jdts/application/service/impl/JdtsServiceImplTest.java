@@ -600,7 +600,10 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         final String expectedContent = "public class TestClass {\n}";
 
         /* 準備 */
+        final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
         Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn(expectedContent);
+        Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+            ArgumentMatchers.eq(expectedContent))).thenReturn(mockJdtsCodeModelImpl);
 
         /* テスト対象の実行 */
         final JdtsCodeModel testResult = (JdtsCodeModel) this.reflectionModel.getMethod("loadAndCreateCodeModel");
@@ -610,6 +613,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertNotNull(testResult, "コードモデルが正しく作成されること");
         Mockito.verify(this.mockJdtsIoLogic).loadContent();
+        Mockito.verify(mockJdtsCodeModelImpl).parse();
 
     }
 
