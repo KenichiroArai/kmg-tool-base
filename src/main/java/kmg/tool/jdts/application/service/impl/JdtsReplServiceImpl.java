@@ -220,13 +220,32 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         /* 事前処理 */
 
-        // オリジナルコードのJavadocブロック部分を識別子に置換する
-        // 同じJavadocがある場合に異なる置換をさせないため、事前に一意となる識別子に置き換える
+        // オリジナルコード内のJavadocブロック部分を一意の識別子に一時的に置換する
+        // 同一内容のJavadocが複数存在する場合でも、異なる置換が行われないようにするため
+        // 置換は前回の置換位置以降から検索して実施する
+
+        int searchStartIdx = 0; // 次回検索開始位置
+
         for (final JdtsBlockModel jdtsBlockModel : this.jdtsCodeModel.getJdtsBlockModels()) {
 
-            // 複数該当する場合もあるため、最初の部分のみを置換する
-            this.replaceCode = this.replaceCode.replaceFirst(
-                Pattern.quote(jdtsBlockModel.getJavadocModel().getSrcJavadoc()), jdtsBlockModel.getId().toString());
+            final String target     = jdtsBlockModel.getJavadocModel().getSrcJavadoc();
+            final int    replaceIdx = this.replaceCode.indexOf(target, searchStartIdx);
+
+            if (replaceIdx == -1) {
+
+                continue;
+
+            }
+
+            // 置換対象の前後で分割し、Javadoc部分を識別子に置換
+            final String before = this.replaceCode.substring(0, replaceIdx);
+            final String after  = this.replaceCode.substring(replaceIdx).replaceFirst(Pattern.quote(target),
+                jdtsBlockModel.getId().toString());
+
+            this.replaceCode = KmgString.concat(before, after);
+
+            // 次回は今回置換した識別子の直後から検索を再開
+            searchStartIdx = replaceIdx + jdtsBlockModel.getId().toString().length();
 
         }
 
