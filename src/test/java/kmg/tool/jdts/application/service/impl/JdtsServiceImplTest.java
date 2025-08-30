@@ -13,11 +13,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.slf4j.Logger;
+import org.springframework.context.ApplicationContext;
 
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
@@ -32,6 +34,7 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdts.application.logic.JdtsIoLogic;
 import kmg.tool.jdts.application.model.JdtsCodeModel;
 import kmg.tool.jdts.application.model.JdtsConfigsModel;
+import kmg.tool.jdts.application.model.impl.JdtsCodeModelImpl;
 import kmg.tool.jdts.application.service.JdtsReplService;
 import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
 
@@ -99,6 +102,13 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     private JdtsConfigsModel mockJdtsConfigsModel;
+
+    /**
+     * モックApplicationContext
+     *
+     * @since 0.1.0
+     */
+    private ApplicationContext mockApplicationContext;
 
     /**
      * テスト用対象パス
@@ -209,11 +219,13 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         this.mockJdtsReplService = Mockito.mock(JdtsReplService.class);
         this.mockJdtsCodeModel = Mockito.mock(JdtsCodeModel.class);
         this.mockJdtsConfigsModel = Mockito.mock(JdtsConfigsModel.class);
+        this.mockApplicationContext = Mockito.mock(ApplicationContext.class);
 
         /* モックの設定 */
         this.reflectionModel.set("messageSource", this.mockMessageSource);
         this.reflectionModel.set("jdtsIoLogic", this.mockJdtsIoLogic);
         this.reflectionModel.set("jdtsReplService", this.mockJdtsReplService);
+        this.reflectionModel.set("applicationContext", this.mockApplicationContext);
 
         /* テスト用パスの設定 */
         this.testTargetPath = Paths.get("test/target");
@@ -993,10 +1005,22 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         // nextFile()は1回目でfalseを返す（単一ファイルのため）
         Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(false);
 
-        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
+        try (final MockedStatic<KmgYamlUtils> mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
+            final MockedStatic<SpringApplicationContextHelper> mockSpringHelper
+                = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
             final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
+
+            // SpringApplicationContextHelperのモック化
+            final KmgMessageSource mockMessageSourceForSpring = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForSpring);
+
+            // ApplicationContextのモック設定
+            final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
+            Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+                ArgumentMatchers.any(String.class))).thenReturn(mockJdtsCodeModelImpl);
 
             /* テスト対象の実行 */
             final boolean testResult = this.testTarget.process();
