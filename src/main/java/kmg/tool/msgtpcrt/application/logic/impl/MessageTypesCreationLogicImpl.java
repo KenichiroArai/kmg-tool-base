@@ -17,25 +17,39 @@ import kmg.tool.two2one.application.types.MessageTypesRegexGroupTypes;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @Service
 public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLogic
     implements MessageTypesCreationLogic {
 
-    /** メッセージの種類の分割数 */
+    /**
+     * メッセージの種類の分割数
+     *
+     * @since 0.1.0
+     */
     private static final int MESSAGE_TYPE_SPLIT_COUNT = 2;
 
-    /** 項目 */
+    /**
+     * 項目
+     *
+     * @since 0.1.0
+     */
     private String item;
 
-    /** 項目名 */
+    /**
+     * 項目名
+     *
+     * @since 0.1.0
+     */
     private String itemName;
 
     /**
      * 項目名を書き込み対象に追加する。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -65,6 +79,8 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
     /**
      * 項目を書き込み対象に追加する。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -92,6 +108,8 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
     /**
      * メッセージの種類定義から項目と項目名に変換する。
+     *
+     * @since 0.1.0
      *
      * @return true：変換あり、false：変換なし
      *
@@ -131,6 +149,8 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
     /**
      * 項目を返す。
      *
+     * @since 0.1.0
+     *
      * @return 項目
      */
     @Override
@@ -143,6 +163,8 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
 
     /**
      * 項目名を返す。
+     *
+     * @since 0.1.0
      *
      * @return 項目名
      */
