@@ -3,9 +3,11 @@ package kmg.tool.cmn.presentation.ui.cli;
 /**
  * ツール抽象クラス
  *
+ * @author KenichiroArai
+ *
  * @since 0.1.0
  *
- * @version 0.1.0 KenichiroArai
+ * @version 0.1.0
  */
 public abstract class AbstractTool {
 
