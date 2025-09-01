@@ -201,6 +201,25 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
             }
 
+            // セミコロンがあるかチェックし、splitで分割
+            final String[] parts2 = part.split(";", 2);
+
+            // セミコロンがない場合は文字列外
+            if (parts2.length <= 1) {
+
+                return result;
+
+            }
+
+            final boolean flag = parts2[0].endsWith("\"\"");
+
+            if (flag) {
+
+                result = true;
+                return result;
+
+            }
+
         }
 
         return result;
