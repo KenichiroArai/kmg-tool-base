@@ -172,8 +172,9 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         /* ダブルクォートがあるかチェックし、splitで分割 */
         final String[] doubleQuoteParts = codeBlock.split(JdtsBlockModelImpl.DOUBLE_QUOTE, 2);
 
-        // ダブルクォートがない場合は文字列外
+        // ダブルクォートがない場合は文字列外か
         if (doubleQuoteParts.length <= 1) {
+            // 文字列外の場合
 
             return result;
 
@@ -182,53 +183,36 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         /* 分割後の部分をチェック */
         for (int i = 1; i < doubleQuoteParts.length; i++) {
 
-            /* 準備 */
-
             final String currentPart = doubleQuoteParts[i];
 
-            /* 通常の文字列対応 */
+            // 通常の文字列が終了しているか
+            final boolean isNormalStringEnd = JdtsBlockModelImpl.isNormalStringEnd(currentPart);
 
-            // セミコロンで終わるか
-            final Matcher semicolonMatcher = JdtsBlockModelImpl.SEMICOLON_END_PATTERN.matcher(currentPart);
-            final boolean isSemicolonEnd   = semicolonMatcher.find();
+            if (isNormalStringEnd) {
 
-            if (isSemicolonEnd) {
-                // 終わる場合
-
+                // 通常の文字列が終了している場合
                 result = true;
                 return result;
 
             }
 
-            /* テキストブロック対応 */
-
-            // 複数のダブルクォートで終わるか
-            final Matcher textBlockMatcher = JdtsBlockModelImpl.TEXT_BLOCK_END_PATTERN.matcher(currentPart);
-            final boolean isTextBlockEnd   = textBlockMatcher.find();
+            // テキストブロックが終了しているか
+            final boolean isTextBlockEnd = JdtsBlockModelImpl.isTextBlockEnd(currentPart);
 
             if (isTextBlockEnd) {
-                // 終わる場合
 
+                // テキストブロックが終了している場合
                 result = true;
                 return result;
 
             }
 
-            // セミコロンがあるかチェックし、splitで分割
-            final String[] semicolonParts = currentPart.split(JdtsBlockModelImpl.SEMICOLON, 2);
-
-            if (semicolonParts.length <= 1) {
-                // セミコロンがない場合
-
-                return result;
-
-            }
-
-            // テキストブロックで終わるか
-            final boolean isTextBlockEndWithSemicolon = semicolonParts[0].endsWith(JdtsBlockModelImpl.TEXT_BLOCK_END);
+            // セミコロン後にテキストブロックが終了しているか
+            final boolean isTextBlockEndWithSemicolon = JdtsBlockModelImpl.isTextBlockEndWithSemicolon(currentPart);
 
             if (isTextBlockEndWithSemicolon) {
 
+                // セミコロン後にテキストブロックが終了している場合
                 result = true;
                 return result;
 
@@ -236,6 +220,70 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
         }
 
+        return result;
+
+    }
+
+    /**
+     * 通常の文字列が終了しているかをチェックする<br>
+     *
+     * @since 0.1.0
+     *
+     * @param currentPart
+     *                    現在の部分文字列
+     *
+     * @return true：文字列終了、false：文字列継続
+     */
+    private static boolean isNormalStringEnd(final String currentPart) {
+
+        final Matcher semicolonMatcher = JdtsBlockModelImpl.SEMICOLON_END_PATTERN.matcher(currentPart);
+        final boolean result           = semicolonMatcher.find();
+        return result;
+
+    }
+
+    /**
+     * テキストブロックが終了しているかをチェックする<br>
+     *
+     * @since 0.1.0
+     *
+     * @param currentPart
+     *                    現在の部分文字列
+     *
+     * @return true：テキストブロック終了、false：テキストブロック継続
+     */
+    private static boolean isTextBlockEnd(final String currentPart) {
+
+        final Matcher textBlockMatcher = JdtsBlockModelImpl.TEXT_BLOCK_END_PATTERN.matcher(currentPart);
+        final boolean result           = textBlockMatcher.find();
+        return result;
+
+    }
+
+    /**
+     * セミコロン後にテキストブロックが終了しているかをチェックする<br>
+     *
+     * @since 0.1.0
+     *
+     * @param currentPart
+     *                    現在の部分文字列
+     *
+     * @return true：テキストブロック終了、false：テキストブロック継続
+     */
+    private static boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+        // セミコロンがあるかチェックし、splitで分割
+        final String[] semicolonParts = currentPart.split(JdtsBlockModelImpl.SEMICOLON, 2);
+
+        if (semicolonParts.length <= 1) {
+            // セミコロンがない場合
+
+            return false;
+
+        }
+
+        // テキストブロックで終わるか
+        final boolean result = semicolonParts[0].endsWith(JdtsBlockModelImpl.TEXT_BLOCK_END);
         return result;
 
     }
