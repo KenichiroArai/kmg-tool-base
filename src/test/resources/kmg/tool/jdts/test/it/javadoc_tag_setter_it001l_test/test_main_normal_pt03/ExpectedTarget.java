@@ -1005,11 +1005,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final String testBlock = """
-            /** テストJavadoc 
-* @author KenichiroArai
-* @since 0.1.0
-* @version 0.1.0
-*/
+            /** テストJavadoc */
             @Component\n@RequestMapping({
                 \"/api\",
                 \"/v1\"
@@ -1065,11 +1061,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         /* 準備 */
         // 複数行アノテーションの開始後、終了前に通常のアノテーションが来るケース
         final String testBlock = """
-            /** テストJavadoc 
-* @author KenichiroArai
-* @since 0.1.0
-* @version 0.1.0
-*/
+            /** テストJavadoc */
             @RequestMapping({
                 "/api"
             })
@@ -1155,11 +1147,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
         /* 準備 */
         final String testBlock = """
-            /** テストJavadoc 
-* @author KenichiroArai
-* @since 0.1.0
-* @version 0.1.0
-*/
+            /** テストJavadoc */
             @RequestMapping({
                 "/api"
             })
