@@ -3,7 +3,7 @@ package kmg.tool.cmn.presentation.ui.cli;
 /**
  * ツール抽象クラス
  *
- * @author * @since 0.1.0
+ * @since 0.1.0
  *
  * @version 0.1.0 KenichiroArai
  */
