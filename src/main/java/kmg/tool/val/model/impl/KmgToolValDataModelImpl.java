@@ -29,8 +29,6 @@ public class KmgToolValDataModelImpl extends KmgValDataModelImpl {
     /**
      * コンストラクタ<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @param messageTypes
@@ -61,6 +59,8 @@ public class KmgToolValDataModelImpl extends KmgValDataModelImpl {
 
     /**
      * メッセージソースを作成する。
+     *
+     * @since 0.1.0
      */
     @Override
     protected void createMessageSource() {

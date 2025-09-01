@@ -21,9 +21,9 @@ import kmg.tool.cmn.infrastructure.types.KmgToolValMsgTypes;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -32,14 +32,24 @@ import kmg.tool.cmn.infrastructure.types.KmgToolValMsgTypes;
 })
 public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象クラス */
+    /**
+     * テスト対象クラス
+     *
+     * @since 0.1.0
+     */
     private KmgToolValDataModelImpl target;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：null引数でインスタンス作成
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalNullArgs() {
@@ -80,6 +90,8 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：正常な引数でインスタンス作成
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalValidArgs() {
@@ -162,6 +174,8 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
     /**
      * createMessage メソッドのテスト - 正常系：nullメッセージ作成
+     *
+     * @since 0.1.0
      */
     @Test
     public void testCreateMessage_normalNullMessage() {
@@ -203,6 +217,8 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
     /**
      * createMessage メソッドのテスト - 正常系：正常なメッセージ作成
+     *
+     * @since 0.1.0
      */
     @Test
     public void testCreateMessage_normalValidMessage() {
@@ -244,6 +260,8 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
     /**
      * createMessageSource メソッドのテスト - 正常系：メッセージソース作成
+     *
+     * @since 0.1.0
      */
     @Test
     public void testCreateMessageSource_normalCreateMessageSource() {
@@ -287,6 +305,8 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
     /**
      * getMessage メソッドのテスト - 正常系：メッセージ取得
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetMessage_normalGetMessage() {
@@ -328,6 +348,8 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
     /**
      * getMessageArgs メソッドのテスト - 正常系：メッセージ引数取得
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetMessageArgs_normalGetMessageArgs() {
@@ -369,6 +391,8 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
     /**
      * getMessageTypes メソッドのテスト - 正常系：メッセージタイプ取得
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetMessageTypes_normalGetMessageTypes() {

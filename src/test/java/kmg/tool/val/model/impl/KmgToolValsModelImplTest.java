@@ -15,6 +15,8 @@ import kmg.tool.cmn.infrastructure.types.KmgToolValMsgTypes;
  * @author KenichiroArai
  *
  * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -23,6 +25,8 @@ public class KmgToolValsModelImplTest {
 
     /**
      * 基本的な動作確認のテスト - 正常系：データの追加と取得が正常に動作する場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testBasicOperation_normalAddAndGetData() {
@@ -77,6 +81,8 @@ public class KmgToolValsModelImplTest {
 
     /**
      * コンストラクタのテスト - 正常系：正常にインスタンスが作成される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normal() {
