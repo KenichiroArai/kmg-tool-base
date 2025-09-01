@@ -32,6 +32,10 @@ import kmg.tool.msgtpcrt.application.logic.MessageTypesCreationLogic;
  * メッセージの種類作成サービス実装テスト
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -40,24 +44,46 @@ import kmg.tool.msgtpcrt.application.logic.MessageTypesCreationLogic;
 })
 public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private MessageTypesCreationServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
-    /** モックメッセージの種類作成ロジック */
+    /**
+     * モックメッセージの種類作成ロジック
+     *
+     * @since 0.1.0
+     */
     private MessageTypesCreationLogic mockMessageTypesCreationLogic;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -87,6 +113,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -111,6 +139,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * clearAndPrepareNextLine メソッドのテスト - 正常系：正常にクリア処理が完了する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -139,6 +169,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * closeMessageTypesCreationLogic メソッドのテスト - 異常系：IOExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -201,6 +233,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * closeMessageTypesCreationLogic メソッドのテスト - 正常系：正常にクローズ処理が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -227,6 +261,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用するコンストラクタ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -251,6 +287,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -273,6 +311,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * processColumns メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -341,6 +381,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 正常系：正常に処理が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -366,6 +408,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 準正常系：convertMessageTypesDefinitionがfalseを返す場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -388,6 +432,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * readOneLineData メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -458,6 +504,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * readOneLineData メソッドのテスト - 正常系：正常に読み込みが完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -480,6 +528,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：メッセージの種類作成ロジックのクローズでIOExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -528,6 +578,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 正常系：正常に処理が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -574,6 +626,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 準正常系：processColumnsがfalseを返す場合（continue文のカバレッジ）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -619,6 +673,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFileLine メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -684,6 +740,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFileLine メソッドのテスト - 正常系：正常に書き込みが完了する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
