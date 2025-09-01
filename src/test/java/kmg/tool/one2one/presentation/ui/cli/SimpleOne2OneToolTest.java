@@ -24,27 +24,49 @@ import kmg.tool.one2one.application.service.SimpleOne2OneService;
  * SimpleOne2OneToolのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls", "static-method"
 })
 public class SimpleOne2OneToolTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private SimpleOne2OneTool testTarget;
 
-    /** モックシンプル1入力ファイルから1出力ファイルへの変換サービス */
+    /**
+     * モックシンプル1入力ファイルから1出力ファイルへの変換サービス
+     *
+     * @since 0.1.0
+     */
     private SimpleOne2OneService mockSimpleOne2OneService;
 
-    /** モックメッセージソース */
+    /**
+     * モックメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      */
     @BeforeEach
     public void setUp() {
@@ -57,6 +79,8 @@ public class SimpleOne2OneToolTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      */
     @AfterEach
     public void tearDown() {
@@ -70,6 +94,8 @@ public class SimpleOne2OneToolTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -93,6 +119,8 @@ public class SimpleOne2OneToolTest extends AbstractKmgTest {
 
     /**
      * getIoService メソッドのテスト - 正常系：シンプル1入力ファイルから1出力ファイルへの変換サービスを取得する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -120,6 +148,8 @@ public class SimpleOne2OneToolTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -172,6 +202,8 @@ public class SimpleOne2OneToolTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：初期化が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -206,6 +238,8 @@ public class SimpleOne2OneToolTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 準正常系：初期化が失敗する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -239,6 +273,8 @@ public class SimpleOne2OneToolTest extends AbstractKmgTest {
 
     /**
      * main メソッドのテスト - 正常系：mainメソッドが正常に実行される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
