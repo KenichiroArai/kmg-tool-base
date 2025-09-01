@@ -93,8 +93,6 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
 
     /**
      * テキストブロック対応：複数のダブルクォートで終わるパターン
-     *
-     * @since 0.1.0
      */
     private static final Pattern TEXT_BLOCK_END_PATTERN = Pattern.compile(String.format("^%s+\\s*%s", //$NON-NLS-1$
         Pattern.quote(JdtsBlockModelImpl.DOUBLE_QUOTE), Pattern.quote(JdtsBlockModelImpl.SEMICOLON)));
