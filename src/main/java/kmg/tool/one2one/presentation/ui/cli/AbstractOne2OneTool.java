@@ -12,6 +12,12 @@ import kmg.tool.one2one.domain.service.One2OneService;
 
 /**
  * 1入力ファイルから1出力ファイルへの変換ツールサービス抽象クラス
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public abstract class AbstractOne2OneTool extends AbstractIoTool {
 
@@ -22,17 +28,21 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
      */
     private final Logger logger;
 
-    /** メッセージソース */
+    /**
+     * メッセージソース
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private KmgMessageSource messageSource;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
+     * @since 0.1.0
+     *
      * @param toolName
      *                 ツール名
-     *
-     * @since 0.1.0
      */
     public AbstractOne2OneTool(final String toolName) {
 
@@ -59,6 +69,8 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
@@ -99,6 +111,8 @@ public abstract class AbstractOne2OneTool extends AbstractIoTool {
 
     /**
      * 1入力ファイルから1出力ファイルへの変換ツールサービスを返す。
+     *
+     * @since 0.1.0
      *
      * @return 1入力ファイルから1出力ファイルへの変換ツールサービス
      */

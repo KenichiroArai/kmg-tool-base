@@ -14,24 +14,34 @@ import kmg.tool.one2one.application.service.SimpleOne2OneService;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツールサービス<br>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
 
-    /** 入力ファイルパス */
+    /**
+     * 入力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path inputPath;
 
-    /** 出力ファイルパス */
+    /**
+     * 出力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path outputPath;
 
     /**
      * 入力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 入力ファイルパス
      */
@@ -46,11 +56,7 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
     /**
      * 出力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 出力ファイルパス
      */
@@ -64,6 +70,8 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -90,6 +98,8 @@ public class SimpleOne2OneServiceImpl implements SimpleOne2OneService {
 
     /**
      * 処理する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
