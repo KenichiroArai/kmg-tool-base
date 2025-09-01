@@ -16,30 +16,48 @@ import kmg.tool.simple.application.service.SimpleTwo2OneService;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス<br>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
-    /** テンプレート置換用プレースホルダー */
+    /**
+     * テンプレート置換用プレースホルダー
+     *
+     * @since 0.1.0
+     */
     private static final String TEMPLATE_NAME_PLACEHOLDER = "{ name }"; //$NON-NLS-1$
 
-    /** 入力ファイルパス */
+    /**
+     * 入力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path inputPath;
 
-    /** テンプレートファイルパス */
+    /**
+     * テンプレートファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path templatePath;
 
-    /** 出力ファイルパス */
+    /**
+     * 出力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path outputPath;
 
     /**
      * 入力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 入力ファイルパス
      */
@@ -54,11 +72,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
     /**
      * 出力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 出力ファイルパス
      */
@@ -73,11 +87,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
     /**
      * テンプレートファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return テンプレートファイルパス
      */
@@ -91,6 +101,8 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -117,6 +129,8 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
     /**
      * 処理する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
