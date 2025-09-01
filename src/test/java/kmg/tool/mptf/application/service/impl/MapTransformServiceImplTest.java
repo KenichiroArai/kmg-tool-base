@@ -33,6 +33,10 @@ import kmg.tool.jdts.application.logic.JdtsIoLogic;
  * マッピング変換サービス実装テスト
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -41,24 +45,46 @@ import kmg.tool.jdts.application.logic.JdtsIoLogic;
 })
 public class MapTransformServiceImplTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private MapTransformServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
-    /** モックJdtsIoLogic */
+    /**
+     * モックJdtsIoLogic
+     *
+     * @since 0.1.0
+     */
     private JdtsIoLogic mockJdtsIoLogic;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -85,6 +111,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -110,6 +138,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用するコンストラクタ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -134,6 +164,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -156,6 +188,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * getTargetPath メソッドのテスト - 正常系：対象ファイルパスが設定されている場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -183,6 +217,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * getTargetPath メソッドのテスト - 準正常系：対象ファイルパスがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -208,6 +244,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 異常系：JdtsIoLogicの初期化で例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -257,6 +295,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：正常に初期化が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -286,6 +326,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：JdtsIoLogicのloadで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -337,6 +379,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：JdtsIoLogicのnextFileで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -394,6 +438,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：JdtsIoLogicのresetFileIndexで例外が発生する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -450,6 +496,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：置換数が一致しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -513,6 +561,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：正常に処理が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -573,6 +623,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * replaceTargetValuesWithUuid メソッドのテスト - 異常系：loadContentで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -636,6 +688,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * replaceTargetValuesWithUuid メソッドのテスト - 異常系：writeContentで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -707,6 +761,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * replaceTargetValuesWithUuid メソッドのテスト - 正常系：正常に置換が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -741,6 +797,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * replaceTargetValuesWithUuid メソッドのテスト - 準正常系：loadContentがfalseを返す場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -766,6 +824,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * replaceUuidWithReplacementValues メソッドのテスト - 異常系：loadContentで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -829,6 +889,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * replaceUuidWithReplacementValues メソッドのテスト - 異常系：writeContentで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -900,6 +962,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     /**
      * replaceUuidWithReplacementValues メソッドのテスト - 正常系：正常に置換が完了する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -933,6 +997,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
 
     /**
      * replaceUuidWithReplacementValues メソッドのテスト - 準正常系：loadContentがfalseを返す場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
