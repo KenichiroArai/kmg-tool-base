@@ -28,6 +28,10 @@ import kmg.tool.two2one.domain.service.Two2OneService;
  * AbstractTwo2OneToolのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -37,11 +41,17 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
     /** テスト用のAbstractTwo2OneTool実装クラス */
     private static class TestAbstractTwo2OneTool extends AbstractTwo2OneTool {
 
-        /** 2入力ファイルから1出力ファイルへの変換ツールサービス */
+        /**
+         * 2入力ファイルから1出力ファイルへの変換ツールサービス
+         *
+         * @since 0.1.0
+         */
         private final Two2OneService two2OneService;
 
         /**
          * デフォルトコンストラクタ
+         *
+         * @since 0.1.0
          */
         public TestAbstractTwo2OneTool() {
 
@@ -52,6 +62,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
 
         /**
          * カスタムロガーを使用するコンストラクタ
+         *
+         * @since 0.1.0
          *
          * @param logger
          *                 ロガー
@@ -68,6 +80,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
         /**
          * カスタム2入力ファイルから1出力ファイルへの変換ツールサービスを使用するコンストラクタ
          *
+         * @since 0.1.0
+         *
          * @param two2OneService
          *                       2入力ファイルから1出力ファイルへの変換ツールサービス
          */
@@ -81,6 +95,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
         /**
          * 2入力ファイルから1出力ファイルへの変換ツールサービスを取得します。
          *
+         * @since 0.1.0
+         *
          * @return 2入力ファイルから1出力ファイルへの変換ツールサービス
          */
         @Override
@@ -92,21 +108,39 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
         }
     }
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private TestAbstractTwo2OneTool testTarget;
 
-    /** モック2入力ファイルから1出力ファイルへの変換ツールサービス */
+    /**
+     * モック2入力ファイルから1出力ファイルへの変換ツールサービス
+     *
+     * @since 0.1.0
+     */
     private Two2OneService mockTwo2OneService;
 
-    /** モックメッセージソース */
+    /**
+     * モックメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      */
     @BeforeEach
     public void setUp() {
@@ -119,6 +153,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      */
     @AfterEach
     public void tearDown() {
@@ -132,6 +168,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：カスタムロガーを使用するコンストラクタで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -157,6 +195,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
     /**
      * コンストラクタのテスト - 正常系：カスタム2入力ファイルから1出力ファイルへの変換ツールサービスを使用するコンストラクタで初期化する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -181,6 +221,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
     /**
      * コンストラクタのテスト - 正常系：デフォルトコンストラクタで初期化する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -203,6 +245,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * getDefaultTemplatePath メソッドのテスト - 正常系：優先パスが存在する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -247,6 +291,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * getDefaultTemplatePath メソッドのテスト - 準正常系：優先パスが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -302,6 +348,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
     /**
      * getIoService メソッドのテスト - 正常系：デフォルトコンストラクタの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -325,6 +373,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * getIoService メソッドのテスト - 正常系：カスタム2入力ファイルから1出力ファイルへの変換ツールサービスを設定した場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -351,6 +401,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
     /**
      * getTemplatePath メソッドのテスト - 正常系：テンプレートパスが取得できる場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -374,6 +426,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -426,6 +480,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：初期化が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -458,6 +514,8 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 準正常系：初期化が失敗する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
