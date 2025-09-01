@@ -21,14 +21,16 @@ import kmg.tool.mptf.application.service.MapTransformService;
  * マッピング変換サービス<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class MapTransformServiceImpl implements MapTransformService {
 
     /**
      * ロガー
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -37,8 +39,6 @@ public class MapTransformServiceImpl implements MapTransformService {
     /**
      * KMGメッセージリソース
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     @Autowired
@@ -46,6 +46,8 @@ public class MapTransformServiceImpl implements MapTransformService {
 
     /**
      * Javadocタグ設定の入出力ロジック
+     *
+     * @since 0.1.0
      */
     @Autowired
     private JdtsIoLogic jdtsIoLogic;
@@ -53,22 +55,26 @@ public class MapTransformServiceImpl implements MapTransformService {
     /**
      * 対象ファイルパス
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     private Path targetPath;
 
-    /** 対象値と置換値のマッピング */
+    /**
+     * 対象値と置換値のマッピング
+     *
+     * @since 0.1.0
+     */
     private final Map<String, String> targetValueToReplacementValueMapping;
 
-    /** UUIDと置換値のマッピング */
+    /**
+     * UUIDと置換値のマッピング
+     *
+     * @since 0.1.0
+     */
     private final Map<String, String> uuidToReplacementValueMapping;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -80,8 +86,6 @@ public class MapTransformServiceImpl implements MapTransformService {
 
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -99,8 +103,6 @@ public class MapTransformServiceImpl implements MapTransformService {
     /**
      * 対象ファイルパスを返す。
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 対象ファイルパス
@@ -115,8 +117,6 @@ public class MapTransformServiceImpl implements MapTransformService {
 
     /**
      * 初期化する
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -150,8 +150,6 @@ public class MapTransformServiceImpl implements MapTransformService {
 
     /**
      * 処理する
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -228,8 +226,6 @@ public class MapTransformServiceImpl implements MapTransformService {
     /**
      * 対象値をUUIDに一時置換する
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 置換数
@@ -278,8 +274,6 @@ public class MapTransformServiceImpl implements MapTransformService {
 
     /**
      * UUIDを置換値に置換する
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *

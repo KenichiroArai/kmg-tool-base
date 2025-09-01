@@ -24,6 +24,12 @@ import kmg.tool.mptf.application.service.MapTransformService;
 
 /**
  * マッピング変換ツール<br>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SpringBootApplication(scanBasePackages = {
     "kmg"
@@ -35,31 +41,53 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
      * <p>
      * このツールの表示名を定義します。
      * </p>
+     *
+     * @since 0.1.0
      */
     private static final String TOOL_NAME = "マッピング変換ツール"; //$NON-NLS-1$
 
-    /** メッセージソース */
+    /**
+     * メッセージソース
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** プレーンコンテンツ入力サービス */
+    /**
+     * プレーンコンテンツ入力サービス
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private PlainContentInputServic inputService;
 
     /**
      * マッピング変換サービス
+     *
+     * @since 0.1.0
      */
     @Autowired
     private MapTransformService mapTransformService;
 
-    /** 対象ファイルのパス */
+    /**
+     * 対象ファイルのパス
+     *
+     * @since 0.1.0
+     */
     private Path targetPath;
 
-    /** マッピング */
+    /**
+     * マッピング
+     *
+     * @since 0.1.0
+     */
     private final Map<String, String> mapping;
 
     /**
      * メインメソッド
+     *
+     * @since 0.1.0
      *
      * @param args
      *             引数
@@ -80,6 +108,8 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
 
     /**
      * コンストラクタ
+     *
+     * @since 0.1.0
      */
     public MapTransformTool() {
 
@@ -89,6 +119,8 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
 
     /**
      * 実行する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
@@ -169,6 +201,8 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
     /**
      * プレーンコンテンツ入力サービスを返す。
      *
+     * @since 0.1.0
+     *
      * @return プレーンコンテンツ入力サービス
      */
     @Override
@@ -181,6 +215,8 @@ public class MapTransformTool extends AbstractPlainContentInputTool {
 
     /**
      * 入力ファイルから設定する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
