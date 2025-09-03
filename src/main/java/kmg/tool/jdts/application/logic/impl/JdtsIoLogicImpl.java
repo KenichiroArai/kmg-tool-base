@@ -2,6 +2,7 @@ package kmg.tool.jdts.application.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -211,6 +212,16 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
             fileList = streamPath.filter(Files::isRegularFile)
                 .filter(path -> path.toString().endsWith(JdtsIoLogicImpl.TARGET_FILE_EXTENSION))
                 .collect(Collectors.toList());
+
+        } catch (final NoSuchFileException e) {
+
+            // TODO KenichiroArai 2025/09/03 例外のメッセージ設定する。
+
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final Object[]           genMsgArgs  = {
+                this.targetPath.toString(),
+            };
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         } catch (final IOException e) {
 
