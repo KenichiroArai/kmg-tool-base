@@ -270,18 +270,20 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
      */
     private static boolean isTextBlockEndWithSemicolon(final String currentPart) {
 
+        boolean result = false;
+
         // セミコロンがあるかチェックし、splitで分割
         final String[] semicolonParts = currentPart.split(JdtsBlockModelImpl.SEMICOLON, 2);
 
         if (semicolonParts.length <= 1) {
             // セミコロンがない場合
 
-            return false;
+            return result;
 
         }
 
         // テキストブロックで終わるか
-        final boolean result = semicolonParts[0].endsWith(JdtsBlockModelImpl.TEXT_BLOCK_END);
+        result = semicolonParts[0].endsWith(JdtsBlockModelImpl.TEXT_BLOCK_END);
         return result;
 
     }
