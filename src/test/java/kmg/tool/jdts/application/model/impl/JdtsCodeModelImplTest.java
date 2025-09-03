@@ -5,11 +5,9 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
-import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.jdts.application.model.JdtsBlockModel;
 
@@ -42,22 +40,12 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     private KmgReflectionModelImpl reflectionModel;
 
     /**
-     * モックKMGメッセージソース
-     *
-     * @since 0.1.0
-     */
-    private KmgMessageSource mockMessageSource;
-
-    /**
      * テスト前処理<br>
      *
      * @since 0.1.0
      */
     @BeforeEach
     public void setUp() {
-
-        /* モックの初期化 */
-        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
         /* テスト対象のクリア */
         this.testTarget = null;
