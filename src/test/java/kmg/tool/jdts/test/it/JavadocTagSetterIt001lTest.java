@@ -185,6 +185,27 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     }
 
     /**
+     * main メソッドのテスト - 正常系：パターン07<br>
+     * <p>
+     * 内部クラスのJavadocに「author」、「since」、「version」が設定された状態で、「author」は削除し、「since」と「version」はそのままであること。
+     * </p>
+     *
+     * @since 0.1.0
+     *
+     * @param testInfo
+     *                 テスト情報
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testMain_normalPt07(final TestInfo testInfo) throws Exception {
+
+        this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
+
+    }
+
+    /**
      * Javadocタグ設定ツールのテスト実行共通処理<br>
      *
      * @since 0.1.0
