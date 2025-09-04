@@ -112,7 +112,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         this(LoggerFactory.getLogger(AbstractIctoOneLinePatternLogic.class));
 
-        // TODO KenichiroArai 2025/07/09 設定が選べるようにする。書き込みとそれの書き込みを一緒の設定が反映されるようにする。
+        // TODO KenichiroArai 2025/09/04 v0.1.1対応予定。設定が選べるようにする。書き込みとそれの書き込みを一緒の設定が反映されるようにする。
         this.outputDelimiter = KmgDelimiterTypes.COMMA;
 
     }
