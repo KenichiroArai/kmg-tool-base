@@ -16,6 +16,11 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.tool.jdts.application.service.impl.JdtsServiceImpl;
 import kmg.tool.jdts.presentation.ui.cli.JavadocTagSetterTool;
 
+/*
+ * TODO KenichiroArai 2025/09/04
+ * 結合テスト001の役割を明確にする。テンプレートごとにクラスを分ける。001は、パターン01～06のテンプレートは同じにする。002は、パターン06のテンプレートに関連したテストにする。
+ */
+
 /**
  * Javadocタグ設定ツールの結合テスト001のテスト<br>
  *
@@ -47,6 +52,8 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      */
     @TempDir
     private Path tempDir;
+
+    // TODO KenichiroArai 2025/09/04 テンプレートはクラスの共通にする。
 
     /**
      * main メソッドのテスト - 正常系：パターン01<br>
@@ -160,6 +167,8 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
+    // TODO KenichiroArai 2025/09/04 executeJavadocTagSetterTestメソッドを共通化する。
+
     /**
      * main メソッドのテスト - 正常系：パターン06<br>
      * <p>
@@ -205,6 +214,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
+    // TODO KenichiroArai 2025/09/04 executeJavadocTagSetterTestメソッドを共通化する。
     /**
      * Javadocタグ設定ツールのテスト実行共通処理<br>
      *
@@ -263,6 +273,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
+    // TODO KenichiroArai 2025/09/04 executeJavadocTagSetterTestWithDefaultFilesメソッドを共通化する。
     /**
      * Javadocタグ設定ツールのテスト実行共通処理（デフォルトファイル使用）<br>
      *
