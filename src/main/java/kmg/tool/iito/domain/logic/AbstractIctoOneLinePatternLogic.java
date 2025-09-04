@@ -22,7 +22,7 @@ import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 /**
  * 入力、中間、テンプレート、出力の1行パターンの抽象クラス
  */
-// TODO KenichiroArai 2025/07/06 中間の名称を考え直す
+// TODO KenichiroArai 2025/09/04 v0.1.1対応予定。中間の名称を考え直す
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
     /**
