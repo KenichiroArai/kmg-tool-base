@@ -436,7 +436,7 @@ public class AbstractTwo2OneToolTest extends AbstractKmgTest {
     public void testInitialize_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/31 KmgToolMsgExceptionの検証
+        // TODO KenichiroArai 2025/09/04 #85 KmgToolMsgExceptionの検証
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
