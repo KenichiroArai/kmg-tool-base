@@ -606,7 +606,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     public void testMainProc_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/07/24 KmgToolMsgExceptionを検証する
+        // TODO KenichiroArai 2025/09/04 #84 KmgToolMsgExceptionを検証する
 
         /* 準備 */
         final Path inputPath  = this.testInputFile;
