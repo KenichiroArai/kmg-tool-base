@@ -215,9 +215,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         } catch (final NoSuchFileException e) {
 
-            // TODO KenichiroArai 2025/09/04 #86 例外のメッセージ設定する。
-
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.NONE;
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
             final Object[]           genMsgArgs  = {
                 this.targetPath.toString(),
             };

@@ -403,6 +403,13 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN13008("実行時例外が発生しました。"),
 
     /**
+     * Javadocタグ設定で対象ファイルが見つかりません。対象ファイルパス=[{0}]
+     *
+     * @since 0.1.0
+     */
+    KMGTOOL_GEN13009("Javadocタグ設定で対象ファイルが見つかりません。対象ファイルパス=[{0}]"),
+
+    /**
      * 項目名がnullです。
      *
      * @since 0.1.0
