@@ -606,7 +606,8 @@ public class IsCreationControllerTest extends AbstractKmgTest {
     public void testMainProc_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        // TODO KenichiroArai 2025/09/04 #84 KmgToolMsgExceptionを検証する
+        final String             expectedDomainMessage = "[KMGTOOL_GEN08000] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
 
         /* 準備 */
         final Path inputPath  = this.testInputFile;
@@ -629,7 +630,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("テスト用の例外メッセージ");
+                .thenReturn(expectedDomainMessage);
 
             Mockito.doThrow(new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN08000, new Object[] {}))
                 .when(this.mockIsCreationService).outputInsertionSql();
@@ -639,13 +640,13 @@ public class IsCreationControllerTest extends AbstractKmgTest {
 
                 this.testTarget.mainProc(inputPath, outputPath);
 
-            });
+            }, "KmgToolMsgExceptionが発生すること");
 
             /* 検証の準備 */
             // 検証の準備は不要
 
             /* 検証の実施 */
-            Assertions.assertNotNull(actualException, "KmgToolMsgExceptionが発生すること");
+            this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
 
         }
 
