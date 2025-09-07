@@ -2,6 +2,7 @@ package kmg.tool.jdts.application.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -439,6 +440,68 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
                 }, "存在しないディレクトリでKmgToolMsgExceptionがスローされること");
 
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
+
+        }
+
+    }
+
+    /**
+     * load メソッドのテスト - 異常系:NoSuchFileException発生
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testLoad_errorNoSuchFileException() {
+
+        /* 期待値の定義 */
+        final Class<?>           expectedCauseClass    = NoSuchFileException.class;
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN13009] Javadocタグ設定で対象ファイルが見つかりません。対象ファイルパス=[nosuchfile\\path]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
+
+        /* 準備 */
+        final Path testNoSuchFilePath = Paths.get("nosuchfile/path");
+
+        try {
+
+            this.testTarget.initialize(testNoSuchFilePath);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行・検証の実施 */
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            // Files.walkをstaticモックしてNoSuchFileExceptionをスローさせる
+            try (MockedStatic<Files> filesMock = Mockito.mockStatic(Files.class)) {
+
+                filesMock.when(() -> Files.walk(testNoSuchFilePath))
+                    .thenThrow(new java.nio.file.NoSuchFileException("mocked no such file error"));
+
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.load();
+
+                }, "NoSuchFileExceptionでKmgToolMsgExceptionがスローされること");
+
+                /* 検証の実施 */
                 this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
                     expectedMessageTypes);
 
