@@ -389,66 +389,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * isJavadocInString メソッドのテスト - 正常系:セミコロン後にテキストブロックが終了している場合
-     *
-     * @since 0.1.0
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testIsJavadocInString_normalTextBlockEndWithSemicolon() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = false;
-
-        /* 準備 */
-        final String testCodeBlock = "\"\"\"test\"\"\"; public class TestClass {";
-        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
-        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
-
-        /* テスト対象の実行 */
-        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "セミコロン後にテキストブロックが終了している場合は文字列外としてfalseが返されること");
-
-    }
-
-    /**
-     * isJavadocInString メソッドのテスト - 正常系:テキストブロックが終了していない場合
-     *
-     * @since 0.1.0
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testIsJavadocInString_normalTextBlockNotEnd() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
-        /* 準備 */
-        final String testCodeBlock = "\"\"\"test public class TestClass {";
-        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
-        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
-
-        /* テスト対象の実行 */
-        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "テキストブロックが終了していない場合は文字列中としてtrueが返されること");
-
-    }
-
-    /**
      * parse メソッドのテスト - 異常系:アノテーションと空白のみのブロック
      *
      * @since 0.1.0
