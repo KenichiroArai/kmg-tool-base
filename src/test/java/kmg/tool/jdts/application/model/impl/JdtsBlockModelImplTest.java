@@ -212,6 +212,273 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * isJavadocInString メソッドのテスト - 異常系:nullのコードブロック
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_errorNullCodeBlock() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final String testCodeBlock = null;
+        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\npublic class TestClass {");
+        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
+
+        /* テスト対象の実行と検証 */
+        Assertions.assertThrows(NullPointerException.class, () -> {
+
+            this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
+
+        }, "nullのコードブロックではNullPointerExceptionが発生すること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:空のコードブロック
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalEmptyCodeBlock() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testCodeBlock = "";
+        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "空のコードブロックの場合は文字列外としてfalseが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:複数のダブルクォートがある場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalMultipleDoubleQuotes() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testCodeBlock = "\"test\"; \"another\"; public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "複数のダブルクォートがある場合でも最初の文字列終了でfalseが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:ダブルクォートがない場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalNoDoubleQuote() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testCodeBlock = "public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ダブルクォートがない場合は文字列外としてfalseが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:通常の文字列が終了している場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalNormalStringEnd() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testCodeBlock = "\"test\"; public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "通常の文字列が終了している場合は文字列外としてfalseが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:文字列が終了していない場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalStringNotEnd() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testCodeBlock = "\"test public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "文字列が終了していない場合は文字列中としてtrueが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:テキストブロックが終了している場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalTextBlockEnd() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testCodeBlock = "\"\"\"test\"\"\" public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "テキストブロックが終了している場合は文字列外としてfalseが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:セミコロン後にテキストブロックが終了している場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalTextBlockEndWithSemicolon() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testCodeBlock = "\"\"\"test\"\"\"; public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "セミコロン後にテキストブロックが終了している場合は文字列外としてfalseが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:テキストブロックが終了していない場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalTextBlockNotEnd() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testCodeBlock = "\"\"\"test public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "テキストブロックが終了していない場合は文字列中としてtrueが返されること");
+
+    }
+
+    /**
      * parse メソッドのテスト - 異常系:アノテーションと空白のみのブロック
      *
      * @since 0.1.0
