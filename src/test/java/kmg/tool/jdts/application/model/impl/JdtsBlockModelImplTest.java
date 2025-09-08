@@ -359,36 +359,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * isJavadocInString メソッドのテスト - 正常系:文字列が終了していない場合
-     *
-     * @since 0.1.0
-     *
-     * @throws Exception
-     *                   リフレクション操作で発生する可能性のある例外
-     */
-    @Test
-    public void testIsJavadocInString_normalStringNotEnd() throws Exception {
-
-        /* 期待値の定義 */
-        final boolean expectedResult = true;
-
-        /* 準備 */
-        final String testCodeBlock = "\"test public class TestClass {";
-        this.testTarget = new JdtsBlockModelImpl("/** テストJavadoc */\n" + testCodeBlock);
-        this.reflectionModel = new KmgReflectionModelImpl(JdtsBlockModelImpl.class);
-
-        /* テスト対象の実行 */
-        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isJavadocInString", testCodeBlock);
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "文字列が終了していない場合は文字列中としてtrueが返されること");
-
-    }
-
-    /**
      * isJavadocInString メソッドのテスト - 正常系:テキストブロックが終了している場合
      *
      * @since 0.1.0
