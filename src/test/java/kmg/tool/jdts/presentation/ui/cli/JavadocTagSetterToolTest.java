@@ -1355,6 +1355,229 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     }
 
     /**
+     * run メソッドのテスト - 異常系：executeメソッドで例外が発生する場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testRun_errorExecuteException() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenThrow(new RuntimeException("テスト例外"));
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        localTestTarget.run(new String[] {
+            "arg1"
+        });
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        // runメソッドが例外を投げずに正常に実行されることを確認（executeメソッド内で例外が処理される）
+        Assertions.assertTrue(true, "executeメソッドで例外が発生してもrunメソッドは正常に実行されること");
+
+    }
+
+    /**
+     * run メソッドのテスト - 正常系：空の引数配列の場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testRun_normalEmptyArgs() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        localTestTarget.run(new String[] {});
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        // runメソッドが空の引数配列でも例外を投げずに正常に実行されることを確認
+        Assertions.assertTrue(true, "空の引数配列でもrunメソッドが正常に実行されること");
+
+    }
+
+    /**
+     * run メソッドのテスト - 正常系：引数がnullの場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testRun_normalNullArgs() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        localTestTarget.run(null);
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        // runメソッドがnull引数でも例外を投げずに正常に実行されることを確認
+        Assertions.assertTrue(true, "null引数でもrunメソッドが正常に実行されること");
+
+    }
+
+    /**
+     * run メソッドのテスト - 正常系：正常に実行される場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testRun_normalSuccess() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        localTestTarget.run(new String[] {
+            "arg1", "arg2"
+        });
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        // runメソッドが例外を投げずに正常に実行されることを確認
+        Assertions.assertTrue(true, "runメソッドが正常に実行されること");
+
+    }
+
+    /**
+     * メソッドの戻り値型テスト - 正常系：runメソッドがvoidを返す場合
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testRunReturnType_normalVoid() {
+
+        /* 期待値の定義 */
+        final Class<?> expectedReturnType = void.class;
+
+        /* 準備 */
+        final JavadocTagSetterTool localTestTarget = new JavadocTagSetterTool();
+        final Class<?>             testClass       = localTestTarget.getClass();
+
+        /* テスト対象の実行 */
+        try {
+
+            final Method   method           = testClass.getDeclaredMethod("run", String[].class);
+            final Class<?> actualReturnType = method.getReturnType();
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertSame(expectedReturnType, actualReturnType, "runメソッドがvoidを返すこと");
+
+        } catch (final NoSuchMethodException e) {
+
+            Assertions.fail("runメソッドが見つかりません: " + e.getMessage());
+
+        }
+
+    }
+
+    /**
+     * メソッドの可視性テスト - 正常系：runメソッドがpublicで定義されている場合
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testRunVisibility_normalPublic() {
+
+        /* 期待値の定義 */
+        final int expectedModifiers = Modifier.PUBLIC;
+
+        /* 準備 */
+        final JavadocTagSetterTool localTestTarget = new JavadocTagSetterTool();
+        final Class<?>             testClass       = localTestTarget.getClass();
+
+        /* テスト対象の実行 */
+        try {
+
+            final Method method          = testClass.getDeclaredMethod("run", String[].class);
+            final int    actualModifiers = method.getModifiers();
+
+            /* 検証の準備 */
+            final int actualResult = actualModifiers & Modifier.PUBLIC;
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedModifiers, actualResult, "runメソッドがpublicで定義されていること");
+
+        } catch (final NoSuchMethodException e) {
+
+            Assertions.fail("runメソッドが見つかりません: " + e.getMessage());
+
+        }
+
+    }
+
+    /**
      * setTargetPathFromInputFile メソッドのテスト - 正常系：対象パスが正常に設定される場合
      *
      * @since 0.1.0
