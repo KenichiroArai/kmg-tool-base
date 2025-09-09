@@ -212,6 +212,265 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * isJavadocInString メソッドのテスト - 正常系:ダブルクォートがあるがすべてのチェックがfalseの場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalAllChecksFalse() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        // モック用のサブクラスを作成
+        final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
+
+            @Override
+            protected boolean isNormalStringEnd(final String currentPart) {
+
+                return false;
+
+            }
+
+            @Override
+            protected boolean isTextBlockEnd(final String currentPart) {
+
+                return false;
+
+            }
+
+            @Override
+            protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+                return false;
+
+            }
+        };
+
+        final KmgReflectionModelImpl mockReflectionModel = new KmgReflectionModelImpl(mockTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) mockReflectionModel.getMethod("isJavadocInString", "\"test\"");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "すべてのチェックがfalseの場合はfalseが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:isNormalStringEndがtrueを返す場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalIsNormalStringEndTrue() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        // モック用のサブクラスを作成
+        final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
+
+            @Override
+            protected boolean isNormalStringEnd(final String currentPart) {
+
+                return true;
+
+            }
+
+            @Override
+            protected boolean isTextBlockEnd(final String currentPart) {
+
+                return false;
+
+            }
+
+            @Override
+            protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+                return false;
+
+            }
+        };
+
+        final KmgReflectionModelImpl mockReflectionModel = new KmgReflectionModelImpl(mockTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) mockReflectionModel.getMethod("isJavadocInString", "\"test\"");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "isNormalStringEndがtrueの場合はtrueが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:isTextBlockEndがtrueを返す場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalIsTextBlockEndTrue() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        // モック用のサブクラスを作成
+        final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
+
+            @Override
+            protected boolean isNormalStringEnd(final String currentPart) {
+
+                return false;
+
+            }
+
+            @Override
+            protected boolean isTextBlockEnd(final String currentPart) {
+
+                return true;
+
+            }
+
+            @Override
+            protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+                return false;
+
+            }
+        };
+
+        final KmgReflectionModelImpl mockReflectionModel = new KmgReflectionModelImpl(mockTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) mockReflectionModel.getMethod("isJavadocInString", "\"test\"");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "isTextBlockEndがtrueの場合はtrueが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:isTextBlockEndWithSemicolonがtrueを返す場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalIsTextBlockEndWithSemicolonTrue() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        // モック用のサブクラスを作成
+        final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
+
+            @Override
+            protected boolean isNormalStringEnd(final String currentPart) {
+
+                return false;
+
+            }
+
+            @Override
+            protected boolean isTextBlockEnd(final String currentPart) {
+
+                return false;
+
+            }
+
+            @Override
+            protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+                return true;
+
+            }
+        };
+
+        final KmgReflectionModelImpl mockReflectionModel = new KmgReflectionModelImpl(mockTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) mockReflectionModel.getMethod("isJavadocInString", "\"test\"");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "isTextBlockEndWithSemicolonがtrueの場合はtrueが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:ダブルクォートがない場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalNoDoubleQuote() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult
+            = (Boolean) this.reflectionModel.getMethod("isJavadocInString", "public class TestClass {");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ダブルクォートがない場合はfalseが返されること");
+
+    }
+
+    /**
      * parse メソッドのテスト - 異常系:アノテーションと空白のみのブロック
      *
      * @since 0.1.0
