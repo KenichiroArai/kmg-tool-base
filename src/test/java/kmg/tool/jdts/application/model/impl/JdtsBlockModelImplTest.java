@@ -233,24 +233,51 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         // モック用のサブクラスを作成
         final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
 
+            /**
+             * 通常の文字列が終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
             @Override
             protected boolean isNormalStringEnd(final String currentPart) {
 
-                return false;
+                final boolean result = false;
+                return result;
 
             }
 
+            /**
+             * テキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
             @Override
             protected boolean isTextBlockEnd(final String currentPart) {
 
-                return false;
+                final boolean result = false;
+                return result;
 
             }
 
+            /**
+             * セミコロン後にテキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
             @Override
             protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
 
-                return false;
+                final boolean result = false;
+                return result;
 
             }
         };
@@ -290,24 +317,51 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         // モック用のサブクラスを作成
         final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
 
+            /**
+             * 通常の文字列が終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return true
+             */
             @Override
             protected boolean isNormalStringEnd(final String currentPart) {
 
-                return true;
+                final boolean result = true;
+                return result;
 
             }
 
+            /**
+             * テキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
             @Override
             protected boolean isTextBlockEnd(final String currentPart) {
 
-                return false;
+                final boolean result = false;
+                return result;
 
             }
 
+            /**
+             * セミコロン後にテキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
             @Override
             protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
 
-                return false;
+                final boolean result = false;
+                return result;
 
             }
         };
@@ -347,24 +401,51 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         // モック用のサブクラスを作成
         final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
 
+            /**
+             * 通常の文字列が終了しているかを判定する。
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false 常にfalseを返す
+             */
             @Override
             protected boolean isNormalStringEnd(final String currentPart) {
 
-                return false;
+                final boolean result = false;
+                return result;
 
             }
 
+            /**
+             * テキストブロックが終了しているかを判定する。
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return true 常にtrueを返す
+             */
             @Override
             protected boolean isTextBlockEnd(final String currentPart) {
 
-                return true;
+                final boolean result = true;
+                return result;
 
             }
 
+            /**
+             * セミコロンでテキストブロックが終了しているかを判定する。
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false 常にfalseを返す
+             */
             @Override
             protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
 
-                return false;
+                final boolean result = false;
+                return result;
 
             }
         };
@@ -404,24 +485,51 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         // モック用のサブクラスを作成
         final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
 
+            /**
+             * 通常の文字列が終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false 常にfalseを返す
+             */
             @Override
             protected boolean isNormalStringEnd(final String currentPart) {
 
-                return false;
+                final boolean result = false;
+                return result;
 
             }
 
+            /**
+             * テキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false 常にfalseを返す
+             */
             @Override
             protected boolean isTextBlockEnd(final String currentPart) {
 
-                return false;
+                final boolean result = false;
+                return result;
 
             }
 
+            /**
+             * セミコロン後にテキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return true 常にtrueを返す
+             */
             @Override
             protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
 
-                return true;
+                final boolean result = true;
+                return result;
 
             }
         };
