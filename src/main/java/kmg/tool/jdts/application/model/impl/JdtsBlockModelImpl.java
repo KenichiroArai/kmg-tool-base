@@ -154,141 +154,6 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
     private String elementName;
 
     /**
-     * Javadocが文字列中かを段階的にチェックする<br>
-     *
-     * @since 0.1.0
-     *
-     * @param codeBlock
-     *                  コードブロック
-     *
-     * @return true：文字列中、false：文字列外
-     */
-    private static boolean isJavadocInString(final String codeBlock) {
-
-        boolean result = false;
-
-        /* ダブルクォートがあるかチェックし、splitで分割 */
-        final String[] doubleQuoteParts = codeBlock.split(JdtsBlockModelImpl.DOUBLE_QUOTE, 2);
-
-        // ダブルクォートがない場合は文字列外か
-        if (doubleQuoteParts.length <= 1) {
-            // 文字列外の場合
-
-            return result;
-
-        }
-
-        /* 分割後の部分をチェック */
-        for (int i = 1; i < doubleQuoteParts.length; i++) {
-
-            final String currentPart = doubleQuoteParts[i];
-
-            // 通常の文字列が終了しているか
-            final boolean isNormalStringEnd = JdtsBlockModelImpl.isNormalStringEnd(currentPart);
-
-            if (isNormalStringEnd) {
-
-                // 通常の文字列が終了している場合
-                result = true;
-                return result;
-
-            }
-
-            // テキストブロックが終了しているか
-            final boolean isTextBlockEnd = JdtsBlockModelImpl.isTextBlockEnd(currentPart);
-
-            if (isTextBlockEnd) {
-
-                // テキストブロックが終了している場合
-                result = true;
-                return result;
-
-            }
-
-            // セミコロン後にテキストブロックが終了しているか
-            final boolean isTextBlockEndWithSemicolon = JdtsBlockModelImpl.isTextBlockEndWithSemicolon(currentPart);
-
-            if (isTextBlockEndWithSemicolon) {
-
-                // セミコロン後にテキストブロックが終了している場合
-                result = true;
-                return result;
-
-            }
-
-        }
-
-        return result;
-
-    }
-
-    /**
-     * 通常の文字列が終了しているかをチェックする<br>
-     *
-     * @since 0.1.0
-     *
-     * @param currentPart
-     *                    現在の部分文字列
-     *
-     * @return true：文字列終了、false：文字列継続
-     */
-    private static boolean isNormalStringEnd(final String currentPart) {
-
-        final Matcher semicolonMatcher = JdtsBlockModelImpl.SEMICOLON_END_PATTERN.matcher(currentPart);
-        final boolean result           = semicolonMatcher.find();
-        return result;
-
-    }
-
-    /**
-     * テキストブロックが終了しているかをチェックする<br>
-     *
-     * @since 0.1.0
-     *
-     * @param currentPart
-     *                    現在の部分文字列
-     *
-     * @return true：テキストブロック終了、false：テキストブロック継続
-     */
-    private static boolean isTextBlockEnd(final String currentPart) {
-
-        final Matcher textBlockMatcher = JdtsBlockModelImpl.TEXT_BLOCK_END_PATTERN.matcher(currentPart);
-        final boolean result           = textBlockMatcher.find();
-        return result;
-
-    }
-
-    /**
-     * セミコロン後にテキストブロックが終了しているかをチェックする<br>
-     *
-     * @since 0.1.0
-     *
-     * @param currentPart
-     *                    現在の部分文字列
-     *
-     * @return true：テキストブロック終了、false：テキストブロック継続
-     */
-    private static boolean isTextBlockEndWithSemicolon(final String currentPart) {
-
-        boolean result = false;
-
-        // セミコロンがあるかチェックし、splitで分割
-        final String[] semicolonParts = currentPart.split(JdtsBlockModelImpl.SEMICOLON, 2);
-
-        if (semicolonParts.length <= 1) {
-            // セミコロンがない場合
-
-            return result;
-
-        }
-
-        // テキストブロックで終わるか
-        result = semicolonParts[0].endsWith(JdtsBlockModelImpl.TEXT_BLOCK_END);
-        return result;
-
-    }
-
-    /**
      * コンストラクタ
      *
      * @since 0.1.0
@@ -425,7 +290,7 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         }
 
         // Javadocが文字列中か（段階的にチェック）
-        final boolean isJavadocInString = JdtsBlockModelImpl.isJavadocInString(javadocCodeBlock[1]);
+        final boolean isJavadocInString = this.isJavadocInString(javadocCodeBlock[1]);
 
         if (isJavadocInString) {
             // 文字列中の場合
@@ -535,6 +400,151 @@ public class JdtsBlockModelImpl implements JdtsBlockModel {
         this.specifyClassification();
 
         result = true;
+        return result;
+
+    }
+
+    /**
+     * Javadocが文字列中かを段階的にチェックする<br>
+     *
+     * @since 0.1.0
+     *
+     * @param codeBlock
+     *                  コードブロック
+     *
+     * @return true：文字列中、false：文字列外
+     */
+    @SuppressWarnings("hiding")
+    protected boolean isJavadocInString(final String codeBlock) {
+
+        boolean result = false;
+
+        /* ダブルクォートがあるかチェックし、splitで分割 */
+        final String[] doubleQuoteParts = codeBlock.split(JdtsBlockModelImpl.DOUBLE_QUOTE, 2);
+
+        // ダブルクォートがない場合は文字列外か
+        if (doubleQuoteParts.length <= 1) {
+            // 文字列外の場合
+
+            return result;
+
+        }
+
+        /* 分割後の部分をチェック */
+        for (int i = 1; i < doubleQuoteParts.length; i++) {
+
+            final String currentPart = doubleQuoteParts[i];
+
+            // 通常の文字列が終了しているか
+            final boolean isNormalStringEnd = this.isNormalStringEnd(currentPart);
+
+            if (isNormalStringEnd) {
+
+                // 通常の文字列が終了している場合
+                result = true;
+                return result;
+
+            }
+
+            // テキストブロックが終了しているか
+            final boolean isTextBlockEnd = this.isTextBlockEnd(currentPart);
+
+            if (isTextBlockEnd) {
+
+                // テキストブロックが終了している場合
+                result = true;
+                return result;
+
+            }
+
+            // セミコロン後にテキストブロックが終了しているか
+            final boolean isTextBlockEndWithSemicolon = this.isTextBlockEndWithSemicolon(currentPart);
+
+            if (isTextBlockEndWithSemicolon) {
+
+                // セミコロン後にテキストブロックが終了している場合
+                result = true;
+                return result;
+
+            }
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 通常の文字列が終了しているかをチェックする<br>
+     *
+     * @since 0.1.0
+     *
+     * @param currentPart
+     *                    現在の部分文字列
+     *
+     * @return true：文字列終了、false：文字列継続
+     */
+    @SuppressWarnings("static-method")
+    protected boolean isNormalStringEnd(final String currentPart) {
+
+        final boolean result;
+
+        final Matcher semicolonMatcher = JdtsBlockModelImpl.SEMICOLON_END_PATTERN.matcher(currentPart);
+        result = semicolonMatcher.find();
+
+        return result;
+
+    }
+
+    /**
+     * テキストブロックが終了しているかをチェックする<br>
+     *
+     * @since 0.1.0
+     *
+     * @param currentPart
+     *                    現在の部分文字列
+     *
+     * @return true：テキストブロック終了、false：テキストブロック継続
+     */
+    @SuppressWarnings("static-method")
+    protected boolean isTextBlockEnd(final String currentPart) {
+
+        final boolean result;
+
+        final Matcher textBlockMatcher = JdtsBlockModelImpl.TEXT_BLOCK_END_PATTERN.matcher(currentPart);
+        result = textBlockMatcher.find();
+
+        return result;
+
+    }
+
+    /**
+     * セミコロン後にテキストブロックが終了しているかをチェックする<br>
+     *
+     * @since 0.1.0
+     *
+     * @param currentPart
+     *                    現在の部分文字列
+     *
+     * @return true：テキストブロック終了、false：テキストブロック継続
+     */
+    @SuppressWarnings("static-method")
+    protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+        boolean result = false;
+
+        // セミコロンがあるかチェックし、splitで分割
+        final String[] semicolonParts = currentPart.split(JdtsBlockModelImpl.SEMICOLON, 2);
+
+        if (semicolonParts.length <= 1) {
+            // セミコロンがない場合
+
+            return result;
+
+        }
+
+        // テキストブロックで終わるか
+        result = semicolonParts[0].endsWith(JdtsBlockModelImpl.TEXT_BLOCK_END);
         return result;
 
     }
