@@ -10,17 +10,27 @@ import kmg.tool.dtc.domain.types.DtcTransformTypes;
  * DtcDerivedPlaceholderModelImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls",
 })
 public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private DtcDerivedPlaceholderModelImpl testTarget;
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：正常にインスタンスが作成される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalCreateInstance() {
@@ -48,6 +58,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getDisplayName メソッドのテスト - 正常系：空文字の表示名が正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDisplayName_normalEmptyDisplayName() {
@@ -75,6 +87,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getDisplayName メソッドのテスト - 正常系：表示名が正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDisplayName_normalGetDisplayName() {
@@ -102,6 +116,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getDisplayName メソッドのテスト - 正常系：nullの表示名が正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDisplayName_normalNullDisplayName() {
@@ -129,6 +145,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getReplacementPattern メソッドのテスト - 正常系：空文字の置換パターンが正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetReplacementPattern_normalEmptyReplacementPattern() {
@@ -156,6 +174,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getReplacementPattern メソッドのテスト - 正常系：置換パターンが正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetReplacementPattern_normalGetReplacementPattern() {
@@ -183,6 +203,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getReplacementPattern メソッドのテスト - 正常系：nullの置換パターンが正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetReplacementPattern_normalNullReplacementPattern() {
@@ -210,6 +232,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getSourceKey メソッドのテスト - 正常系：空文字のソースキーが正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetSourceKey_normalEmptySourceKey() {
@@ -237,6 +261,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getSourceKey メソッドのテスト - 正常系：ソースキーが正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetSourceKey_normalGetSourceKey() {
@@ -264,6 +290,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getSourceKey メソッドのテスト - 正常系：nullのソースキーが正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetSourceKey_normalNullSourceKey() {
@@ -291,6 +319,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getTransformationTypes メソッドのテスト - 正常系：CAPITALIZEの変換処理の種類が正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTransformationTypes_normalCapitalizeTransformationTypes() {
@@ -318,6 +348,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getTransformationTypes メソッドのテスト - 正常系：変換処理の種類が正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTransformationTypes_normalGetTransformationTypes() {
@@ -345,6 +377,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getTransformationTypes メソッドのテスト - 正常系：NONEの変換処理の種類が正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTransformationTypes_normalNoneTransformationTypes() {
@@ -372,6 +406,8 @@ public class DtcDerivedPlaceholderModelImplTest extends AbstractKmgTest {
 
     /**
      * getTransformationTypes メソッドのテスト - 正常系：TO_LOWER_CASEの変換処理の種類が正しく取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTransformationTypes_normalToLowerCaseTransformationTypes() {

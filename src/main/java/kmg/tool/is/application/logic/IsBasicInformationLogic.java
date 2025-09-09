@@ -14,26 +14,30 @@ import kmg.core.infrastructure.types.KmgDbTypes;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 public interface IsBasicInformationLogic {
 
-    /** 設定シート名 */
+    /**
+     * 設定シート名
+     *
+     * @since 0.1.0
+     */
     String SETTING_SHEET_NAME = "設定情報"; //$NON-NLS-1$
 
-    /** 一覧シート名 */
+    /**
+     * 一覧シート名
+     *
+     * @since 0.1.0
+     */
     String LIST_NAME = "一覧"; //$NON-NLS-1$
 
     /**
      * KMG DBの種類を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return KMG DBの種類
      */
@@ -42,12 +46,6 @@ public interface IsBasicInformationLogic {
     /**
      * SQLIDマップ返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
-     *
      * @return SQLIdマップ
      */
     Map<String, String> getSqlIdMap();
@@ -55,11 +53,7 @@ public interface IsBasicInformationLogic {
     /**
      * 初期化する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param inputWk
      *                入力ワークブック

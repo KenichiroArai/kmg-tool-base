@@ -26,20 +26,40 @@ import kmg.tool.jdocr.application.logic.JavadocLineRemoverLogic;
  * Javadoc行削除ロジック<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
-    /** アットマーク */
+    /**
+     * アットマーク
+     *
+     * @since 0.1.0
+     */
     private static final String AT_MARK = "@"; //$NON-NLS-1$
 
-    /** ドライブ文字列 */
+    /**
+     * ドライブ文字列
+     *
+     * @since 0.1.0
+     */
     private static final String DRIVE_LETTER = "D:"; //$NON-NLS-1$
 
-    /** ドライブ文字列（エスケープ） */
+    /**
+     * ドライブ文字列（エスケープ）
+     *
+     * @since 0.1.0
+     */
     private static final String DRIVE_LETTER_ESCAPED = "D\\"; //$NON-NLS-1$
 
-    /** Javaファイル拡張子 */
+    /**
+     * Javaファイル拡張子
+     *
+     * @since 0.1.0
+     */
     private static final String JAVA_FILE_EXTENSION = ".java:"; //$NON-NLS-1$
 
     /**
@@ -102,6 +122,8 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
     /**
      * Javadoc行を削除する
+     *
+     * @since 0.1.0
      *
      * @param inputMap
      *                 パスと行番号のマップ

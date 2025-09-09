@@ -13,18 +13,24 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 @Service
 public abstract class AbstractInputService implements InputService {
 
-    /** 入力ファイルパス */
+    /**
+     * 入力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path inputPath;
 
     /**
      * 入力ファイルパスを返す<br>
+     *
+     * @since 0.1.0
      *
      * @return 入力ファイルパス
      */
@@ -38,6 +44,8 @@ public abstract class AbstractInputService implements InputService {
 
     /**
      * 初期化する<br>
+     *
+     * @since 0.1.0
      *
      * @param inputPath
      *                  入力ファイルパス
@@ -84,6 +92,8 @@ public abstract class AbstractInputService implements InputService {
 
     /**
      * 処理する<br>
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

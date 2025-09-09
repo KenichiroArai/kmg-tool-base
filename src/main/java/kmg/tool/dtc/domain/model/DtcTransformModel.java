@@ -5,17 +5,23 @@ package kmg.tool.dtc.domain.model;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public interface DtcTransformModel {
 
     /**
      * 指定された変換処理を適用する<br>
+     *
+     * @since 0.1.0
      */
     void apply();
 
     /**
      * 元の値を返す<br>
+     *
+     * @since 0.1.0
      *
      * @return 元の値
      */
@@ -23,6 +29,8 @@ public interface DtcTransformModel {
 
     /**
      * 変換後の値を返す<br>
+     *
+     * @since 0.1.0
      *
      * @return 変換後の値
      */

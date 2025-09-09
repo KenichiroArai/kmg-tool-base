@@ -2,6 +2,7 @@ package kmg.tool.jdts.application.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -41,16 +42,32 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsIoLogicImpl testTarget;
 
-    /** テスト用一時ディレクトリ */
+    /**
+     * テスト用一時ディレクトリ
+     *
+     * @since 0.1.0
+     */
     private Path testTempDir;
 
-    /** テスト用Javaファイル */
+    /**
+     * テスト用Javaファイル
+     *
+     * @since 0.1.0
+     */
     private Path testJavaFile;
 
-    /** テスト用空のディレクトリ */
+    /**
+     * テスト用空のディレクトリ
+     *
+     * @since 0.1.0
+     */
     private Path testEmptyDir;
 
     /**
@@ -99,6 +116,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * getCurrentFilePath メソッドのテスト - 正常系:初期化後
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetCurrentFilePath_normalAfterInitialize() {
@@ -116,6 +135,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * getCurrentFilePath メソッドのテスト - 正常系:ロード後
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetCurrentFilePath_normalAfterLoad() {
@@ -145,6 +166,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * getFilePathList メソッドのテスト - 正常系:初期化後
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetFilePathList_normalAfterInitialize() {
@@ -162,6 +185,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * getFilePathList メソッドのテスト - 正常系:ロード後
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetFilePathList_normalAfterLoad() {
@@ -192,6 +217,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * getReadContent メソッドのテスト - 正常系:初期化後
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetReadContent_normalAfterInitialize() {
@@ -209,6 +236,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * getReadContent メソッドのテスト - 正常系:コンテンツロード後
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetReadContent_normalAfterLoadContent() {
@@ -239,6 +268,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * getTargetPath メソッドのテスト - 正常系:初期化後
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTargetPath_normalAfterInitialize() {
@@ -267,6 +298,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系:初期化成功
+     *
+     * @since 0.1.0
      */
     @Test
     public void testInitialize_normalSuccess() {
@@ -304,6 +337,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * load メソッドのテスト - 異常系:深いディレクトリ階層の非存在パス
+     *
+     * @since 0.1.0
      */
     @Test
     public void testLoad_errorDeepNonExistentPath() {
@@ -359,6 +394,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * load メソッドのテスト - 異常系:存在しないディレクトリ
+     *
+     * @since 0.1.0
      */
     @Test
     public void testLoad_errorNonExistentDirectory() {
@@ -413,7 +450,71 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * load メソッドのテスト - 異常系:NoSuchFileException発生
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testLoad_errorNoSuchFileException() {
+
+        /* 期待値の定義 */
+        final Class<?>           expectedCauseClass    = NoSuchFileException.class;
+        final String             expectedDomainMessage
+                                                       = "[KMGTOOL_GEN13009] Javadocタグ設定で対象ファイルが見つかりません。対象ファイルパス=[nosuchfile\\path]";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
+
+        /* 準備 */
+        final Path testNoSuchFilePath = Paths.get("nosuchfile/path");
+
+        try {
+
+            this.testTarget.initialize(testNoSuchFilePath);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行・検証の実施 */
+        // SpringApplicationContextHelperのモック化
+        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            // Files.walkをstaticモックしてNoSuchFileExceptionをスローさせる
+            try (MockedStatic<Files> filesMock = Mockito.mockStatic(Files.class)) {
+
+                filesMock.when(() -> Files.walk(testNoSuchFilePath))
+                    .thenThrow(new java.nio.file.NoSuchFileException("mocked no such file error"));
+
+                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                    this.testTarget.load();
+
+                }, "NoSuchFileExceptionでKmgToolMsgExceptionがスローされること");
+
+                /* 検証の実施 */
+                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                    expectedMessageTypes);
+
+            }
+
+        }
+
+    }
+
+    /**
      * load メソッドのテスト - 正常系:Javaファイルなし
+     *
+     * @since 0.1.0
      */
     @Test
     public void testLoad_normalNoJavaFiles() {
@@ -459,6 +560,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * load メソッドのテスト - 正常系:Javaファイルあり
+     *
+     * @since 0.1.0
      */
     @Test
     public void testLoad_normalWithJavaFiles() {
@@ -504,6 +607,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * loadContent メソッドのテスト - 異常系:ファイル読み込みエラー
+     *
+     * @since 0.1.0
      */
     @Test
     public void testLoadContent_errorFileReadError() {
@@ -536,6 +641,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * loadContent メソッドのテスト - 異常系:KmgToolMsgException発生
+     *
+     * @since 0.1.0
      */
     @Test
     public void testLoadContent_errorKmgToolMsgException() {
@@ -586,6 +693,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * loadContent メソッドのテスト - 正常系:内容あり
+     *
+     * @since 0.1.0
      */
     @Test
     public void testLoadContent_normalWithContent() {
@@ -630,6 +739,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * loadContent メソッドのテスト - 準正常系:内容がブランク
+     *
+     * @since 0.1.0
      */
     @Test
     public void testLoadContent_semiBlankContent() {
@@ -679,6 +790,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * loadContent メソッドのテスト - 準正常系:内容が空
+     *
+     * @since 0.1.0
      */
     @Test
     public void testLoadContent_semiEmptyContent() {
@@ -728,6 +841,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * nextFile メソッドのテスト - 正常系:次のファイルあり
+     *
+     * @since 0.1.0
      */
     @Test
     public void testNextFile_normalHasNextFile() {
@@ -776,6 +891,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * nextFile メソッドのテスト - 準正常系:次のファイルなし
+     *
+     * @since 0.1.0
      */
     @Test
     public void testNextFile_semiNoNextFile() {
@@ -815,6 +932,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * resetFileIndex メソッドのテスト - 正常系:ファイルリストなし
+     *
+     * @since 0.1.0
      */
     @Test
     public void testResetFileIndex_normalNoFileList() {
@@ -858,6 +977,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * resetFileIndex メソッドのテスト - 正常系:ファイルリストあり
+     *
+     * @since 0.1.0
      */
     @Test
     public void testResetFileIndex_normalWithFileList() {
@@ -908,6 +1029,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * setWriteContent メソッドのテスト - 正常系:書き込み内容設定
+     *
+     * @since 0.1.0
      */
     @Test
     public void testSetWriteContent_normalSetContent() {
@@ -925,6 +1048,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * writeContent メソッドのテスト - 異常系:KmgToolMsgException発生
+     *
+     * @since 0.1.0
      */
     @Test
     public void testWriteContent_errorKmgToolMsgException() {
@@ -979,6 +1104,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * writeContent メソッドのテスト - 異常系:書き込みエラー
+     *
+     * @since 0.1.0
      */
     @Test
     public void testWriteContent_errorWriteError() {
@@ -1013,6 +1140,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * writeContent メソッドのテスト - 正常系:書き込み成功
+     *
+     * @since 0.1.0
      */
     @Test
     public void testWriteContent_normalSuccess() {
@@ -1067,6 +1196,8 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
     /**
      * ディレクトリを再帰的に削除する<br>
+     *
+     * @since 0.1.0
      *
      * @param directory
      *                  削除するディレクトリ

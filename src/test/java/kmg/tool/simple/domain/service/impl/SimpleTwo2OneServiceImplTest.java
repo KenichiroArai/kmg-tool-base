@@ -28,6 +28,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * SimpleTwo2OneServiceImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -36,29 +40,59 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private SimpleTwo2OneServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** テスト用入力ファイルパス */
+    /**
+     * テスト用入力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path testInputPath;
 
-    /** テスト用テンプレートファイルパス */
+    /**
+     * テスト用テンプレートファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path testTemplatePath;
 
-    /** テスト用出力ファイルパス */
+    /**
+     * テスト用出力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path testOutputPath;
 
-    /** テスト用入力ファイル内容 */
+    /**
+     * テスト用入力ファイル内容
+     *
+     * @since 0.1.0
+     */
     private String testInputContent;
 
-    /** テスト用テンプレートファイル内容 */
+    /**
+     * テスト用テンプレートファイル内容
+     *
+     * @since 0.1.0
+     */
     private String testTemplateContent;
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：標準コンストラクタでの初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public static void testConstructor_normalStandardConstructor() {
@@ -79,6 +113,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -104,6 +140,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -134,6 +172,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 正常系：入力ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -159,6 +199,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 準正常系：nullの入力ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -182,6 +224,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * getOutputPath メソッドのテスト - 正常系：出力ファイルパスの取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -208,6 +252,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * getOutputPath メソッドのテスト - 準正常系：nullの出力ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -231,6 +277,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * getTemplatePath メソッドのテスト - 正常系：テンプレートファイルパスの取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -257,6 +305,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * getTemplatePath メソッドのテスト - 準正常系：nullのテンプレートファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -280,6 +330,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -311,6 +363,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：入力ファイルの読み込み権限がない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -358,6 +412,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：入力ファイルが存在しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -403,6 +459,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：出力ディレクトリが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -451,6 +509,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：出力ファイルの書き込み権限がない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -498,6 +558,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：テンプレートファイルの読み込み権限がない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -540,6 +602,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：テンプレートファイルが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -584,6 +648,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：正常な処理
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -591,8 +657,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_normalProcess() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedOutputContent
-            = "Hello test input content, welcome!" + System.lineSeparator() + "Hello line2, welcome!" + System.lineSeparator() + "Hello line3, welcome!" + System.lineSeparator();
+        final String expectedOutputContent = "Hello test input content, welcome!" + System.lineSeparator()
+            + "Hello line2, welcome!" + System.lineSeparator() + "Hello line3, welcome!" + System.lineSeparator();
 
         /* 準備 */
         // テスト用ファイルを作成
@@ -657,6 +723,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 準正常系：大量の行を含む入力ファイルの処理
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -702,6 +770,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 準正常系：複数行のテンプレートファイルの処理
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -710,11 +780,14 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String expectedOutputContent
-            = "Hello test input content, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator() + "Hello line2, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator() + "Hello line3, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
+            = "Hello test input content, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator()
+                + "Hello line2, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator()
+                + "Hello line3, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
 
         /* 準備 */
         // 複数行のテンプレートファイルを作成
-        final String multiLineTemplate = "Hello { name }, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
+        final String multiLineTemplate
+            = "Hello { name }, welcome!" + System.lineSeparator() + "How are you?" + System.lineSeparator();
         Files.write(this.testInputPath, this.testInputContent.getBytes());
         Files.write(this.testTemplatePath, multiLineTemplate.getBytes());
 
@@ -739,6 +812,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 準正常系：1行のみの入力ファイルの処理
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -776,6 +851,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 準正常系：プレースホルダーが含まれないテンプレートの処理
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -783,7 +860,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_semiTemplateWithoutPlaceholder() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedOutputContent = "Hello world!" + System.lineSeparator() + "Hello world!" + System.lineSeparator() + "Hello world!" + System.lineSeparator();
+        final String expectedOutputContent = "Hello world!" + System.lineSeparator() + "Hello world!"
+            + System.lineSeparator() + "Hello world!" + System.lineSeparator();
 
         /* 準備 */
         // プレースホルダーが含まれないテンプレートファイルを作成

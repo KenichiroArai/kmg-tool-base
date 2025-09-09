@@ -23,9 +23,9 @@ import kmg.tool.iito.domain.service.AbstractIitoProcessorService;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @Service
 public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorService
@@ -34,26 +34,30 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
     /**
      * ロガー
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     private final Logger logger;
 
     /**
      * KMGメッセージリソース
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** 列挙型からcase文作成ロジック */
+    /**
+     * 列挙型からcase文作成ロジック
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private Enum2SwitchCaseCreationLogic enum2SwitchCaseMakingLogic;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     public Enum2SwitchCaseCreationServiceImpl() {
 
@@ -64,7 +68,7 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param logger
      *               ロガー
@@ -80,6 +84,8 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
      * <p>
      * 入力ファイルから中間形式に変換して中間ファイルに出力する。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -142,6 +148,8 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
 
     /**
      * データをクリアして次の行の準備をする。
+     *
+     * @since 0.1.0
      */
     private void clearAndPrepareNextLine() {
 
@@ -158,6 +166,8 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
 
     /**
      * 列挙型からcase文作成ロジックをクローズする。
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -180,6 +190,8 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
 
     /**
      * カラムを処理する。
+     *
+     * @since 0.1.0
      *
      * @return true：処理成功、false：処理スキップ
      *
@@ -226,6 +238,8 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
     /**
      * 1行データを読み込む。
      *
+     * @since 0.1.0
+     *
      * @return true：読み込み成功、false：読み込み終了
      *
      * @throws KmgToolMsgException
@@ -256,6 +270,8 @@ public class Enum2SwitchCaseCreationServiceImpl extends AbstractIitoProcessorSer
 
     /**
      * 中間ファイルに行を書き込む。
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

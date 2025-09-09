@@ -8,14 +8,16 @@ import kmg.tool.iito.domain.logic.IctoOneLinePatternLogic;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 public interface FieldCreationLogic extends IctoOneLinePatternLogic {
 
     /**
      * コメントを書き込み対象に追加する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -27,6 +29,8 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
     /**
      * フィールドを書き込み対象に追加する
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -36,6 +40,8 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
 
     /**
      * 型を書き込み対象に追加する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -47,6 +53,8 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
     /**
      * フィールドデータを変換する
      *
+     * @since 0.1.0
+     *
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolMsgException
@@ -57,6 +65,8 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
     /**
      * コメントを返す
      *
+     * @since 0.1.0
+     *
      * @return コメント
      */
     String getComment();
@@ -64,12 +74,16 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
     /**
      * フィールドを返す
      *
+     * @since 0.1.0
+     *
      * @return フィールド
      */
     String getField();
 
     /**
      * 型を返す
+     *
+     * @since 0.1.0
      *
      * @return 型
      */

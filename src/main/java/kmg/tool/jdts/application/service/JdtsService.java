@@ -12,17 +12,17 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
  * </p>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public interface JdtsService {
 
     /**
      * 定義ファイルのパスを返す。
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      *
      * @return 定義ファイルのパス
      */
@@ -31,12 +31,16 @@ public interface JdtsService {
     /**
      * 対象ファイルパス
      *
+     * @since 0.1.0
+     *
      * @return 対象ファイルパス
      */
     Path getTargetPath();
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -52,6 +56,8 @@ public interface JdtsService {
 
     /**
      * 処理する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

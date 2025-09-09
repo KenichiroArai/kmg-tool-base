@@ -37,6 +37,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * AbstractIctoOneLinePatternLogicのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -52,6 +56,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
         /**
          * デフォルトコンストラクタ
+         *
+         * @since 0.1.0
          */
         public TestAbstractIctoOneLinePatternLogic() {
 
@@ -59,6 +65,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
         /**
          * カスタムロガーを使用するコンストラクタ
+         *
+         * @since 0.1.0
          *
          * @param logger
          *               ロガー
@@ -71,6 +79,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
         /**
          * replaceInLineメソッドをpublicでオーバーライド
+         *
+         * @since 0.1.0
          *
          * @param target
          *                    対象
@@ -89,21 +99,39 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     }
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private TestAbstractIctoOneLinePatternLogic testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -124,6 +152,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -149,6 +179,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * addOneLineOfDataToRows メソッドのテスト - 正常系：行を追加する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -179,6 +211,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * addRow メソッドのテスト - 異常系：行リストが空の場合（protectedメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -223,6 +257,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * addRow メソッドのテスト - 正常系：行にデータを追加する場合（protectedメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -252,6 +288,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * clearProcessingData メソッドのテスト - 正常系：処理中のデータをクリアする場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -286,6 +324,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * clearRows メソッドのテスト - 正常系：行リストをクリアする場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -319,6 +359,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * close メソッドのテスト - 正常系：リソースをクローズする場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -346,6 +388,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * closeReader メソッドのテスト - 異常系：IOExceptionが発生した場合（privateメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -395,6 +439,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * closeReader メソッドのテスト - 異常系：IOException発生時にログメッセージが生成される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -447,6 +493,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * closeReader メソッドのテスト - 正常系：リーダーをクローズする場合（privateメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -475,6 +523,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * closeReader メソッドのテスト - 正常系：リーダーがnullの場合（privateメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -499,6 +549,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * closeWriter メソッドのテスト - 異常系：IOExceptionが発生した場合（privateメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -548,6 +600,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * closeWriter メソッドのテスト - 異常系：IOException発生時にログメッセージが生成される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -599,6 +653,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * closeWriter メソッドのテスト - 正常系：ライターをクローズする場合（privateメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -627,6 +683,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * closeWriter メソッドのテスト - 正常系：ライターがnullの場合（privateメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -651,6 +709,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：カスタムロガーを使用するコンストラクタで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -679,6 +739,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * コンストラクタのテスト - 正常系：デフォルトコンストラクタで初期化する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -703,6 +765,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：デフォルトコンストラクタでoutputDelimiterが正しく初期化される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -733,6 +797,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * getConvertedLine メソッドのテスト - 正常系：変換後の1行データを取得する場合
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -758,6 +824,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * getLineOfDataRead メソッドのテスト - 正常系：読み込んだ1行データを取得する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -785,6 +853,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * getNowLineNumber メソッドのテスト - 正常系：現在の行番号を取得する場合
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -810,6 +880,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * getRows メソッドのテスト - 正常系：書き込み対象の行データのリストを取得する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -839,6 +911,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：初期化が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -865,6 +939,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 異常系：nullパラメータで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -896,6 +972,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * openInputFile メソッドのテスト - 異常系：入力ファイルが存在しない場合（privateメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -941,6 +1019,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * openInputFile メソッドのテスト - 正常系：入力ファイルを開く場合（privateメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -967,6 +1047,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * openOutputFile メソッドのテスト - 異常系：出力ファイルが作成できない場合（privateメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1013,6 +1095,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * openOutputFile メソッドのテスト - 正常系：出力ファイルを開く場合（privateメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1038,6 +1122,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * readOneLineOfData メソッドのテスト - 異常系：IOExceptionが発生した場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1093,6 +1179,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * readOneLineOfData メソッドのテスト - 正常系：データが読み込める場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1123,6 +1211,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * readOneLineOfData メソッドのテスト - 正常系：空行を読み込む場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1163,6 +1253,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * readOneLineOfData メソッドのテスト - 準正常系：ファイル終端に達した場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1191,6 +1283,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * replaceInLine メソッドのテスト - 異常系：convertedLineがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1215,6 +1309,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * replaceInLine メソッドのテスト - 正常系：置換が発生しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1244,6 +1340,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * replaceInLine メソッドのテスト - 正常系：置換が行われる場合（protectedメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1271,6 +1369,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * replaceInLine メソッドのテスト - 正常系：置換が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1300,6 +1400,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * replaceInLine メソッドのテスト - 準正常系：置換が行われない場合（protectedメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1328,6 +1430,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * replaceInLine メソッドのテスト - 準正常系：replacementがnullの場合（protectedメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1353,6 +1457,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * replaceInLine メソッドのテスト - 準正常系：targetがnullの場合（protectedメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1377,6 +1483,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：flushでIOExceptionが発生した場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1439,6 +1547,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：IOExceptionが発生した場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1503,6 +1613,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 正常系：中間ファイルに書き込みが成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1539,6 +1651,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 正常系：空の行リストで書き込む場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1571,6 +1685,8 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 正常系：複数行のデータで書き込む場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

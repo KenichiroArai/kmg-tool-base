@@ -31,6 +31,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * Javadoc行削除ロジック実装のテスト<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -39,11 +43,17 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class JavadocLineRemoverLogicImplTest {
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * デフォルトコンストラクタ<br>
+     *
+     * @since 0.1.0
      */
     public JavadocLineRemoverLogicImplTest() {
 
@@ -55,6 +65,8 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * ドライブ文字の置換処理が正しく動作することを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -91,7 +103,10 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 正常なJavaファイルの行文字列から、パスと行番号のエントリが正しく作成されることを確認します。
      * </p>
-     * * @throws Exception 例外
+     * * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
     public void testConvertLineToPathLineEntry_normalValidJavaFileLine() throws Exception {
@@ -125,7 +140,10 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * コロンで区切られた部分が2つ未満の場合に、nullが返されることを確認します。
      * </p>
-     * * @throws Exception 例外
+     * * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
     public void testConvertLineToPathLineEntry_semiInsufficientColonReturnsNull() throws Exception {
@@ -156,7 +174,10 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 行番号部分が数値でない場合に、nullが返されることを確認します。
      * </p>
-     * * @throws Exception 例外
+     * * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
      */
     @Test
     public void testConvertLineToPathLineEntry_semiInvalidLineNumberReturnsNull() throws Exception {
@@ -185,6 +206,8 @@ public class JavadocLineRemoverLogicImplTest {
     /**
      * convertLineToPathLineEntry メソッドのテスト - 準正常系:@マークが含まれない行でnullが返されることの確認
      * <p>
+     *
+     * @since 0.1.0
      *
      * @マークが含まれない行の場合に、nullが返されることを確認します。
      *                                    </p>
@@ -221,6 +244,8 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 存在するJavaファイルから指定した行番号の行が正しく削除されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param tempDir
      *                一時ディレクトリ
@@ -275,6 +300,8 @@ public class JavadocLineRemoverLogicImplTest {
      * 空のマップが渡された場合に、削除された行数として0が返されることを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
@@ -305,6 +332,8 @@ public class JavadocLineRemoverLogicImplTest {
      * このテストは、deleteJavadocLinesメソッド内のcontainsKeyチェックが機能することを確認します。 通常の使用では発生しない状況ですが、コードカバレッジのためにテストします。
      * カスタムMapを使用してcontainsKeyが常にfalseを返すケースをシミュレートします。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param tempDir
      *                一時ディレクトリ
@@ -372,6 +401,8 @@ public class JavadocLineRemoverLogicImplTest {
      * 0以下や範囲外の行番号が指定された場合に、その行番号がスキップされることを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @param tempDir
      *                一時ディレクトリ
      *
@@ -424,6 +455,8 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 降順でない行番号のセットが渡された場合でも、正しく行が削除されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param tempDir
      *                一時ディレクトリ
@@ -478,6 +511,8 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 存在しないファイルが指定された場合に、適切な例外が発生することを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testDeleteJavadocLines_semiNonExistentFileThrowsException() {
@@ -528,6 +563,8 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 読み込み専用ファイルへの書き込み時にIOExceptionが発生し、適切な例外が投げられることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param tempDir
      *                一時ディレクトリ
@@ -594,6 +631,8 @@ public class JavadocLineRemoverLogicImplTest {
      * 空の入力ファイルが指定された場合に、空のマップが返されることを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @param tempDir
      *                一時ディレクトリ
      *
@@ -631,6 +670,8 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 同一ファイルの行番号が降順でソートされることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param tempDir
      *                一時ディレクトリ
@@ -677,6 +718,8 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * convertLineToPathLineEntryがnullを返す行と有効なエントリを返す行が混在する場合に、 nullエントリが正しくフィルタリングされ、有効なエントリのみが処理されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param tempDir
      *                一時ディレクトリ
@@ -732,6 +775,8 @@ public class JavadocLineRemoverLogicImplTest {
      * Javaファイル拡張子を含まない行が適切にフィルタされることを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @param tempDir
      *                一時ディレクトリ
      *
@@ -776,6 +821,8 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * Javaファイルの行を含む入力ファイルから、正しくパスと行番号のマップが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param tempDir
      *                一時ディレクトリ
@@ -831,6 +878,8 @@ public class JavadocLineRemoverLogicImplTest {
      * <p>
      * 存在しない入力ファイルが指定された場合に、適切な例外が発生することを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetInputMap_semiNonExistentInputFileThrowsException() {

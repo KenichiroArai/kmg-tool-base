@@ -32,9 +32,9 @@ import kmg.tool.msgtpcrt.service.MessageTypesCreationService;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -43,19 +43,33 @@ import kmg.tool.msgtpcrt.service.MessageTypesCreationService;
 })
 public class MessageTypesCreationToolTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     @InjectMocks
     private MessageTypesCreationTool testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** MessageTypesCreationServiceのモック */
+    /**
+     * MessageTypesCreationServiceのモック
+     *
+     * @since 0.1.0
+     */
     @Mock
     private MessageTypesCreationService mockMessageTypesCreationService;
 
     /**
      * 各テスト実行前のセットアップ処理。リフレクションモデルの初期化とモックの注入を行う。
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -71,7 +85,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタが正常に動作する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -100,7 +114,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * getIoService メソッドのテスト - 正常系：メッセージの種類作成サービスが正常に返される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -131,7 +145,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * メソッドの戻り値型テスト - 正常系：getIoServiceメソッドがMessageTypesCreationServiceを返す場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetIoServiceReturnType_normalMessageTypesCreationService() {
@@ -166,7 +180,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * メソッドの可視性テスト - 正常系：getIoServiceメソッドがprotectedで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetIoServiceVisibility_normalProtected() {
@@ -201,7 +215,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * 継承関係のテスト - 正常系：AbstractDtcToolを正しく継承している場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testInheritance_normalExtendsAbstractDtcTool() {
@@ -225,7 +239,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 正常系：メインメソッドが正常に実行される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -279,7 +293,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 準正常系：引数がnullの場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -333,7 +347,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * messageTypesCreationService フィールドのテスト - 正常系：メッセージの種類作成サービスが正しく注入される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -365,7 +379,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * フィールドの型テスト - 正常系：messageTypesCreationServiceフィールドがMessageTypesCreationService型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMessageTypesCreationServiceType_normalMessageTypesCreationService() {
@@ -401,7 +415,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * フィールドの可視性テスト - 正常系：messageTypesCreationServiceフィールドがprivateで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMessageTypesCreationServiceVisibility_normalPrivate() {
@@ -437,7 +451,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * SpringBootApplication アノテーションのテスト - 正常系：アノテーションが正しく設定されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testSpringBootApplicationAnnotation_normalCorrect() {
@@ -462,7 +476,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * TOOL_NAME 定数のテスト - 正常系：ツール名が正しく定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -490,7 +504,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * 定数の型テスト - 正常系：TOOL_NAME定数がString型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameType_normalString() {
@@ -524,7 +538,7 @@ public class MessageTypesCreationToolTest extends AbstractKmgTest {
     /**
      * 定数の可視性テスト - 正常系：TOOL_NAME定数がprivate static finalで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameVisibility_normalPrivateStaticFinal() {

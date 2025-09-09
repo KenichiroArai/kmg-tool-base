@@ -45,9 +45,9 @@ import kmg.tool.jdts.application.service.JdtsService;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -56,27 +56,49 @@ import kmg.tool.jdts.application.service.JdtsService;
 })
 public class JavadocTagSetterToolTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     @InjectMocks
     private JavadocTagSetterTool testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** KmgMessageSourceのモック */
+    /**
+     * KmgMessageSourceのモック
+     *
+     * @since 0.1.0
+     */
     @Mock
     private KmgMessageSource mockMessageSource;
 
-    /** PlainContentInputServicのモック */
+    /**
+     * PlainContentInputServicのモック
+     *
+     * @since 0.1.0
+     */
     @Mock
     private PlainContentInputServic mockInputService;
 
-    /** JdtsServiceのモック */
+    /**
+     * JdtsServiceのモック
+     *
+     * @since 0.1.0
+     */
     @Mock
     private JdtsService mockJdtsService;
 
     /**
      * 各テスト実行前のセットアップ処理。リフレクションモデルの初期化とモックの注入を行う。
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -94,7 +116,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * BASE_PATH 定数のテスト - 正常系：基準パスが正しく定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -122,7 +144,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * 定数の型テスト - 正常系：BASE_PATH定数がPath型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testBasePathType_normalPath() {
@@ -156,7 +178,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * 定数の可視性テスト - 正常系：BASE_PATH定数がprivate static finalで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testBasePathVisibility_normalPrivateStaticFinal() {
@@ -191,7 +213,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：カスタムコンストラクタが正常に動作する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -220,7 +242,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタが正常に動作する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -249,7 +271,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * DEFINITION_FILE_PATH_FORMAT 定数のテスト - 正常系：定義ファイルのパスフォーマットが正しく定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -277,7 +299,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * 定数の型テスト - 正常系：DEFINITION_FILE_PATH_FORMAT定数がString型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testDefinitionFilePathFormatType_normalString() {
@@ -311,7 +333,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * 定数の可視性テスト - 正常系：DEFINITION_FILE_PATH_FORMAT定数がprivate static finalで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testDefinitionFilePathFormatVisibility_normalPrivateStaticFinal() {
@@ -347,7 +369,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 異常系：例外が発生する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -382,7 +404,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -437,7 +459,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 異常系：KmgToolValExceptionが発生する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -491,7 +513,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 異常系：KmgToolValExceptionのバリデーションリストが1件以上の場合
      *
-     * @since 1.0.1
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -541,7 +563,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 正常系：正常に処理が完了する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -578,7 +600,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 準正常系：入力ファイルの読み込みに失敗する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -611,7 +633,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 準正常系：JdtsServiceの初期化に失敗する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -647,7 +669,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 準正常系：JdtsServiceの処理に失敗する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -684,7 +706,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * getDefaultDefinitionPath メソッドのテスト - 正常系：デフォルト定義パスが正常に返される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -712,7 +734,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * getDefinitionPath メソッドのテスト - 正常系：定義ファイルのパスが正常に返される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -739,7 +761,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * メソッドの戻り値型テスト - 正常系：getDefinitionPathメソッドがPathを返す場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetDefinitionPathReturnType_normalPath() {
@@ -773,7 +795,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * メソッドの可視性テスト - 正常系：getDefinitionPathメソッドがpublicで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetDefinitionPathVisibility_normalPublic() {
@@ -808,7 +830,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * getInputService メソッドのテスト - 正常系：プレーンコンテンツ入力サービスが正常に返される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -837,7 +859,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * メソッドの戻り値型テスト - 正常系：getInputServiceメソッドがPlainContentInputServicを返す場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetInputServiceReturnType_normalPlainContentInputServic() {
@@ -872,7 +894,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * メソッドの可視性テスト - 正常系：getInputServiceメソッドがpublicで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetInputServiceVisibility_normalPublic() {
@@ -907,7 +929,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * 継承関係のテスト - 正常系：AbstractPlainContentInputToolを正しく継承している場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testInheritance_normalExtendsAbstractPlainContentInputTool() {
@@ -931,7 +953,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * inputService フィールドのテスト - 正常系：プレーンコンテンツ入力サービスが正しく注入される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -961,7 +983,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * フィールドの型テスト - 正常系：inputServiceフィールドがPlainContentInputServic型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testInputServiceType_normalPlainContentInputServic() {
@@ -996,7 +1018,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * フィールドの可視性テスト - 正常系：inputServiceフィールドがprivateで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testInputServiceVisibility_normalPrivate() {
@@ -1031,7 +1053,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * jdtsService フィールドのテスト - 正常系：Javadocタグ設定サービスが正しく注入される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1061,7 +1083,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * フィールドの型テスト - 正常系：jdtsServiceフィールドがJdtsService型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testJdtsServiceType_normalJdtsService() {
@@ -1096,7 +1118,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * フィールドの可視性テスト - 正常系：jdtsServiceフィールドがprivateで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testJdtsServiceVisibility_normalPrivate() {
@@ -1131,7 +1153,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 正常系：メインメソッドが正常に実行される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1158,8 +1180,8 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             // ctx.getBeanの戻り値をモック化
             Mockito.when(mockContext.getBean(JavadocTagSetterTool.class)).thenReturn(mockTool);
 
-            // executeメソッドの戻り値をモック化
-            Mockito.when(mockTool.execute()).thenReturn(true);
+            // runメソッドの戻り値をモック化
+            Mockito.doNothing().when(mockTool).run(new String[] {});
 
             /* テスト対象の実行 */
             // mainメソッドを実際に呼び出し
@@ -1173,7 +1195,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
 
             // モックが正しく呼び出されたことを検証
             Mockito.verify(mockContext).getBean(JavadocTagSetterTool.class);
-            Mockito.verify(mockTool).execute();
+            Mockito.verify(mockTool).run(new String[] {});
             Mockito.verify(mockContext).close();
 
         }
@@ -1183,7 +1205,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 準正常系：引数がnullの場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1210,8 +1232,8 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             // ctx.getBeanの戻り値をモック化
             Mockito.when(mockContext.getBean(JavadocTagSetterTool.class)).thenReturn(mockTool);
 
-            // executeメソッドの戻り値をモック化
-            Mockito.when(mockTool.execute()).thenReturn(true);
+            // runメソッドの戻り値をモック化
+            Mockito.doNothing().when(mockTool).run(null);
 
             /* テスト対象の実行 */
             // mainメソッドを実際に呼び出し（null引数）
@@ -1225,7 +1247,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
 
             // モックが正しく呼び出されたことを検証
             Mockito.verify(mockContext).getBean(JavadocTagSetterTool.class);
-            Mockito.verify(mockTool).execute();
+            Mockito.verify(mockTool).run(null);
             Mockito.verify(mockContext).close();
 
         }
@@ -1235,7 +1257,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * messageSource フィールドのテスト - 正常系：メッセージソースが正しく注入される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1265,7 +1287,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * フィールドの型テスト - 正常系：messageSourceフィールドがKmgMessageSource型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMessageSourceType_normalKmgMessageSource() {
@@ -1300,7 +1322,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * フィールドの可視性テスト - 正常系：messageSourceフィールドがprivateで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMessageSourceVisibility_normalPrivate() {
@@ -1333,9 +1355,232 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     }
 
     /**
+     * run メソッドのテスト - 異常系：executeメソッドで例外が発生する場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testRun_errorExecuteException() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenThrow(new RuntimeException("テスト例外"));
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        localTestTarget.run(new String[] {
+            "arg1"
+        });
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        // runメソッドが例外を投げずに正常に実行されることを確認（executeメソッド内で例外が処理される）
+        Assertions.assertTrue(true, "executeメソッドで例外が発生してもrunメソッドは正常に実行されること");
+
+    }
+
+    /**
+     * run メソッドのテスト - 正常系：空の引数配列の場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testRun_normalEmptyArgs() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        localTestTarget.run(new String[] {});
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        // runメソッドが空の引数配列でも例外を投げずに正常に実行されることを確認
+        Assertions.assertTrue(true, "空の引数配列でもrunメソッドが正常に実行されること");
+
+    }
+
+    /**
+     * run メソッドのテスト - 正常系：引数がnullの場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testRun_normalNullArgs() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        localTestTarget.run(null);
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        // runメソッドがnull引数でも例外を投げずに正常に実行されることを確認
+        Assertions.assertTrue(true, "null引数でもrunメソッドが正常に実行されること");
+
+    }
+
+    /**
+     * run メソッドのテスト - 正常系：正常に実行される場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testRun_normalSuccess() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final JavadocTagSetterTool   localTestTarget      = new JavadocTagSetterTool();
+        final KmgReflectionModelImpl localReflectionModel = new KmgReflectionModelImpl(localTestTarget);
+        localReflectionModel.set("messageSource", this.mockMessageSource);
+        localReflectionModel.set("inputService", this.mockInputService);
+        localReflectionModel.set("jdtsService", this.mockJdtsService);
+        Mockito.when(this.mockInputService.initialize(ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockInputService.process()).thenReturn(true);
+        Mockito.when(this.mockInputService.getContent()).thenReturn("test/path");
+        Mockito.when(this.mockJdtsService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+        Mockito.when(this.mockJdtsService.process()).thenReturn(true);
+        Mockito.when(this.mockMessageSource.getGenMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("テストメッセージ");
+
+        /* テスト対象の実行 */
+        localTestTarget.run(new String[] {
+            "arg1", "arg2"
+        });
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        // runメソッドが例外を投げずに正常に実行されることを確認
+        Assertions.assertTrue(true, "runメソッドが正常に実行されること");
+
+    }
+
+    /**
+     * メソッドの戻り値型テスト - 正常系：runメソッドがvoidを返す場合
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testRunReturnType_normalVoid() {
+
+        /* 期待値の定義 */
+        final Class<?> expectedReturnType = void.class;
+
+        /* 準備 */
+        final JavadocTagSetterTool localTestTarget = new JavadocTagSetterTool();
+        final Class<?>             testClass       = localTestTarget.getClass();
+
+        /* テスト対象の実行 */
+        try {
+
+            final Method   method           = testClass.getDeclaredMethod("run", String[].class);
+            final Class<?> actualReturnType = method.getReturnType();
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertSame(expectedReturnType, actualReturnType, "runメソッドがvoidを返すこと");
+
+        } catch (final NoSuchMethodException e) {
+
+            Assertions.fail("runメソッドが見つかりません: " + e.getMessage());
+
+        }
+
+    }
+
+    /**
+     * メソッドの可視性テスト - 正常系：runメソッドがpublicで定義されている場合
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testRunVisibility_normalPublic() {
+
+        /* 期待値の定義 */
+        final int expectedModifiers = Modifier.PUBLIC;
+
+        /* 準備 */
+        final JavadocTagSetterTool localTestTarget = new JavadocTagSetterTool();
+        final Class<?>             testClass       = localTestTarget.getClass();
+
+        /* テスト対象の実行 */
+        try {
+
+            final Method method          = testClass.getDeclaredMethod("run", String[].class);
+            final int    actualModifiers = method.getModifiers();
+
+            /* 検証の準備 */
+            final int actualResult = actualModifiers & Modifier.PUBLIC;
+
+            /* 検証の実施 */
+            Assertions.assertEquals(expectedModifiers, actualResult, "runメソッドがpublicで定義されていること");
+
+        } catch (final NoSuchMethodException e) {
+
+            Assertions.fail("runメソッドが見つかりません: " + e.getMessage());
+
+        }
+
+    }
+
+    /**
      * setTargetPathFromInputFile メソッドのテスト - 正常系：対象パスが正常に設定される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1370,7 +1615,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * setTargetPathFromInputFile メソッドのテスト - 準正常系：入力ファイルの読み込みに失敗する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1401,7 +1646,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * setTargetPathFromInputFile メソッドのテスト - 準正常系：コンテンツがnullの場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1433,7 +1678,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * SpringBootApplication アノテーションのテスト - 正常系：アノテーションが正しく設定されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testSpringBootApplicationAnnotation_normalCorrect() {
@@ -1458,7 +1703,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * TOOL_NAME 定数のテスト - 正常系：ツール名が正しく定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1486,7 +1731,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * 定数の型テスト - 正常系：TOOL_NAME定数がString型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameType_normalString() {
@@ -1507,8 +1752,8 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -1521,7 +1766,7 @@ public class JavadocTagSetterToolTest extends AbstractKmgTest {
     /**
      * 定数の可視性テスト - 正常系：TOOL_NAME定数がprivate static finalで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameVisibility_normalPrivateStaticFinal() {

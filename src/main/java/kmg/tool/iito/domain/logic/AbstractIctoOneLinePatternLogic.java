@@ -22,7 +22,7 @@ import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 /**
  * 入力、中間、テンプレート、出力の1行パターンの抽象クラス
  */
-// TODO KenichiroArai 2025/07/06 中間の名称を考え直す
+// TODO KenichiroArai 2025/09/04 v0.1.1対応予定。中間の名称を考え直す
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
     /**
@@ -40,41 +40,79 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** 入力ファイルパス */
+    /**
+     * 入力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path inputPath;
 
-    /** 出力ファイルパス */
+    /**
+     * 出力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path outputPath;
 
-    /** 入力ファイルのBufferedReader */
+    /**
+     * 入力ファイルのBufferedReader
+     *
+     * @since 0.1.0
+     */
     private BufferedReader reader;
 
-    /** 出力ファイルのBufferedReader */
+    /**
+     * 出力ファイルのBufferedReader
+     *
+     * @since 0.1.0
+     */
     private BufferedWriter writer;
 
-    /** 読み込んだ１行データ */
+    /**
+     * 読み込んだ１行データ
+     *
+     * @since 0.1.0
+     */
     private String lineOfDataRead;
 
-    /** 変換後の1行データ */
+    /**
+     * 変換後の1行データ
+     *
+     * @since 0.1.0
+     */
     private String convertedLine;
 
-    /** 出力ファイルの区切り文字 */
+    /**
+     * 出力ファイルの区切り文字
+     *
+     * @since 0.1.0
+     */
     private KmgDelimiterTypes outputDelimiter;
 
-    /** 現在の行番号 */
+    /**
+     * 現在の行番号
+     *
+     * @since 0.1.0
+     */
     private int nowLineNumber;
 
-    /** 書き込み対象の行リスト */
+    /**
+     * 書き込み対象の行リスト
+     *
+     * @since 0.1.0
+     */
     private final List<List<String>> rows;
 
     /**
      * デフォルトコンストラクタ
+     *
+     * @since 0.1.0
      */
     public AbstractIctoOneLinePatternLogic() {
 
         this(LoggerFactory.getLogger(AbstractIctoOneLinePatternLogic.class));
 
-        // TODO KenichiroArai 2025/07/09 設定が選べるようにする。書き込みとそれの書き込みを一緒の設定が反映されるようにする。
+        // TODO KenichiroArai 2025/09/04 v0.1.1対応予定。設定が選べるようにする。書き込みとそれの書き込みを一緒の設定が反映されるようにする。
         this.outputDelimiter = KmgDelimiterTypes.COMMA;
 
     }
@@ -97,6 +135,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 書き込み対象に行を追加する。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      */
     @Override
@@ -114,6 +154,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /**
      * 処理中のデータをクリアする。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
@@ -134,6 +176,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 書き込み対象の行データのリストをクリアする。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      */
     @Override
@@ -151,6 +195,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * リソースをクローズする。
      *
+     * @since 0.1.0
+     *
      * @throws IOException
      *                     入出力例外
      */
@@ -164,6 +210,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /**
      * 変換後の1行データを返す。
+     *
+     * @since 0.1.0
      */
     @Override
     public String getConvertedLine() {
@@ -175,6 +223,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /**
      * 読み込んだ１行データを返す。
+     *
+     * @since 0.1.0
      *
      * @return 読み込んだ１行データ
      */
@@ -188,8 +238,6 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /**
      * 現在の行番号を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -206,6 +254,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 書き込み対象の行データのリストを返す。
      *
+     * @since 0.1.0
+     *
      * @return 書き込み対象の行データのリスト
      */
     @Override
@@ -218,6 +268,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /**
      * 初期化する。
+     *
+     * @since 0.1.0
      *
      * @param inputPath
      *                   入力ファイルパス
@@ -258,6 +310,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /**
      * 1行データを読み込む。
+     *
+     * @since 0.1.0
      *
      * @return true：データあり、false：データなし
      *
@@ -304,6 +358,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * <p>
      * 入力ファイルから指定の形式に変換して中間ファイルに出力する。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -359,6 +415,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 書き込み対象のデータの最後のリストにデータを追加する。
      *
+     * @since 0.1.0
+     *
      * @param data
      *             データ
      *
@@ -392,6 +450,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /**
      * 行から対象に該当する部分を置換値に置換する。
+     *
+     * @since 0.1.0
      *
      * @param target
      *                    対象
@@ -433,6 +493,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * リーダーリソースをクローズする。
      *
+     * @since 0.1.0
+     *
      * @throws IOException
      *                     入出力例外
      */
@@ -467,6 +529,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /**
      * ライターリソースをクローズする。
+     *
+     * @since 0.1.0
      *
      * @throws IOException
      *                     入出力例外
@@ -503,6 +567,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 入力ファイルを開く
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
@@ -527,6 +593,8 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
     /**
      * 出力ファイルを開く
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

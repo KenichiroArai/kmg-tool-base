@@ -20,6 +20,10 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
  * DirectoryChooserWrapperのテスト
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -28,22 +32,40 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 })
 public class DirectoryChooserWrapperTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private DirectoryChooserWrapper testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックDirectoryChooser */
+    /**
+     * モックDirectoryChooser
+     *
+     * @since 0.1.0
+     */
     @Mock
     private DirectoryChooser mockDirectoryChooser;
 
-    /** モックWindow */
+    /**
+     * モックWindow
+     *
+     * @since 0.1.0
+     */
     @Mock
     private Window mockWindow;
 
     /**
      * コンストラクタのテスト - 正常系：DirectoryChooserが正常に作成される
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -69,6 +91,8 @@ public class DirectoryChooserWrapperTest extends AbstractKmgTest {
 
     /**
      * setInitialDirectory メソッドのテスト - 正常系：初期ディレクトリが設定される
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -99,6 +123,8 @@ public class DirectoryChooserWrapperTest extends AbstractKmgTest {
     /**
      * setInitialDirectory メソッドのテスト - 準正常系：初期ディレクトリがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -126,6 +152,8 @@ public class DirectoryChooserWrapperTest extends AbstractKmgTest {
 
     /**
      * setTitle メソッドのテスト - 正常系：タイトルが設定される
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -156,6 +184,8 @@ public class DirectoryChooserWrapperTest extends AbstractKmgTest {
     /**
      * setTitle メソッドのテスト - 準正常系：タイトルが空文字の場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -185,6 +215,8 @@ public class DirectoryChooserWrapperTest extends AbstractKmgTest {
     /**
      * setTitle メソッドのテスト - 準正常系：タイトルがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -212,6 +244,8 @@ public class DirectoryChooserWrapperTest extends AbstractKmgTest {
 
     /**
      * showDialog メソッドのテスト - 正常系：ディレクトリが選択される
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -247,6 +281,8 @@ public class DirectoryChooserWrapperTest extends AbstractKmgTest {
     /**
      * showDialog メソッドのテスト - 準正常系：キャンセルされた場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -279,6 +315,8 @@ public class DirectoryChooserWrapperTest extends AbstractKmgTest {
 
     /**
      * showDialog メソッドのテスト - 準正常系：オーナーウィンドウがnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

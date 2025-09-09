@@ -18,6 +18,12 @@ import kmg.tool.simple.domain.service.SimpleInputService;
 
 /**
  * Javadoc行削除ツール
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SpringBootApplication(scanBasePackages = {
     "kmg"
@@ -29,23 +35,39 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
      * <p>
      * このツールの表示名を定義します。
      * </p>
+     *
+     * @since 0.1.0
      */
     private static final String TOOL_NAME = "Javadoc行削除ツール"; //$NON-NLS-1$
 
-    /** メッセージソース */
+    /**
+     * メッセージソース
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** シンプル入力サービス */
+    /**
+     * シンプル入力サービス
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private SimpleInputService inputService;
 
-    /** Javadoc行削除サービス */
+    /**
+     * Javadoc行削除サービス
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private JavadocLineRemoverService javadocLineRemoverService;
 
     /**
      * メインメソッド
+     *
+     * @since 0.1.0
      *
      * @param args
      *             引数
@@ -66,6 +88,8 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
 
     /**
      * 実行する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
@@ -132,6 +156,8 @@ public class JavadocLineRemoverTool extends AbstractInputTool {
 
     /**
      * 入力サービスを返す。
+     *
+     * @since 0.1.0
      *
      * @return 入力サービス
      */

@@ -29,6 +29,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * アクセサ作成ロジック実装テスト
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -37,21 +41,39 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private AccessorCreationLogicImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -70,6 +92,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -95,6 +119,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addItemToRows メソッドのテスト - 異常系：項目名がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -138,6 +164,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * addItemToRows メソッドのテスト - 正常系：項目名が設定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -170,6 +198,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addJavadocCommentToRows メソッドのテスト - 異常系：Javadocコメントがnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -213,6 +243,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * addJavadocCommentToRows メソッドのテスト - 正常系：Javadocコメントが設定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -246,6 +278,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * addOneLineOfDataToRows メソッドのテスト - 正常系：中間に新しい行を追加する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -274,6 +308,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addTypeToRows メソッドのテスト - 異常系：型がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -317,6 +353,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * addTypeToRows メソッドのテスト - 正常系：型が設定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -349,6 +387,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * clearProcessingData メソッドのテスト - 正常系：データをクリアする
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -386,6 +426,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * clearRows メソッドのテスト - 正常系：行データをクリアする
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -416,6 +458,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * close メソッドのテスト - 正常系：リソースをクローズする
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -443,6 +487,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertFields メソッドのテスト - 正常系：配列型のprivateフィールド宣言の場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -475,6 +521,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * convertFields メソッドのテスト - 正常系：privateフィールド宣言の場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -505,6 +553,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertFields メソッドのテスト - 正常系：ジェネリクス型のprivateフィールド宣言の場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -537,6 +587,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * convertFields メソッドのテスト - 準正常系：privateフィールド宣言ではない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -561,6 +613,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertJavadoc メソッドのテスト - 正常系：Javadoc解析中にJavadoc開始がある場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -590,6 +644,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertJavadoc メソッドのテスト - 正常系：複数行Javadocコメント開始の場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -621,6 +677,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * convertJavadoc メソッドのテスト - 正常系：1行Javadocコメントの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -633,7 +691,10 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
         /* 準備 */
         this.reflectionModel.set("convertedLine", "/** テストコメント */");
 
-        /* テスト対象の実行 */
+        /*
+         * テスト対象の実行
+         * @since 0.1.0
+         */
         final boolean testResult = this.testTarget.convertJavadoc();
 
         /* 検証の準備 */
@@ -650,6 +711,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertJavadoc メソッドのテスト - 準正常系：Javadoc解析中で複数行パターンではない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -677,6 +740,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * convertJavadoc メソッドのテスト - 準正常系：Javadocコメント開始ではない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -701,6 +766,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getConvertedLine メソッドのテスト - 正常系：変換後の行データを取得する
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -728,6 +795,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getItem メソッドのテスト - 正常系：項目名を取得する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -754,6 +823,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getJavadocComment メソッドのテスト - 正常系：Javadocコメントを取得する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -779,6 +850,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getLineOfDataRead メソッドのテスト - 正常系：読み込んだ行データを取得する
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -810,6 +883,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getNowLineNumber メソッドのテスト - 正常系：現在の行番号を取得する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -839,6 +914,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getRows メソッドのテスト - 正常系：中間データを取得する
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -873,6 +950,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getTyep メソッドのテスト - 正常系：型を取得する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -898,6 +977,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系：初期化が成功する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -926,6 +1007,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * isInJavadocParsing メソッドのテスト - 正常系：Javadoc解析中フラグがfalseの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -952,6 +1035,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * isInJavadocParsing メソッドのテスト - 正常系：Javadoc解析中フラグがtrueの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -977,6 +1062,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * readOneLineOfData メソッドのテスト - 正常系：データが読み込める場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1012,6 +1099,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * readOneLineOfData メソッドのテスト - 準正常系：ファイル終端に達した場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1039,6 +1128,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * removeModifier メソッドのテスト - 正常系：削除対象の修飾子がない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1068,6 +1159,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * removeModifier メソッドのテスト - 正常系：finalとstaticの修飾子を削除する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1095,6 +1188,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * removeModifier メソッドのテスト - 正常系：finalのみの修飾子を削除する
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1124,6 +1219,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * removeModifier メソッドのテスト - 正常系：staticのみの修飾子を削除する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1151,6 +1248,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * replaceInLine メソッドのテスト - 正常系：行内の文字列を置換する（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1180,6 +1279,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * replaceInLine メソッドのテスト - 準正常系：置換文字列がnullの場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1204,6 +1305,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * replaceInLine メソッドのテスト - 準正常系：対象文字列が見つからない場合（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1230,6 +1333,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     /**
      * replaceInLine メソッドのテスト - 準正常系：対象文字列がnullの場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1254,6 +1359,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * writeIntermediateFile メソッドのテスト - 正常系：中間ファイルに書き込む
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

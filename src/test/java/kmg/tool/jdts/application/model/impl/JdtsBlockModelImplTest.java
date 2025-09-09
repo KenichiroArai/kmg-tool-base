@@ -26,10 +26,18 @@ import kmg.tool.jdoc.domain.model.JavadocModel;
 })
 public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsBlockModelImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
     /**
@@ -204,12 +212,379 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * isJavadocInString メソッドのテスト - 正常系:ダブルクォートがあるがすべてのチェックがfalseの場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalAllChecksFalse() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        // モック用のサブクラスを作成
+        final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
+
+            /**
+             * 通常の文字列が終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
+            @Override
+            protected boolean isNormalStringEnd(final String currentPart) {
+
+                final boolean result = false;
+                return result;
+
+            }
+
+            /**
+             * テキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
+            @Override
+            protected boolean isTextBlockEnd(final String currentPart) {
+
+                final boolean result = false;
+                return result;
+
+            }
+
+            /**
+             * セミコロン後にテキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
+            @Override
+            protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+                final boolean result = false;
+                return result;
+
+            }
+        };
+
+        final KmgReflectionModelImpl mockReflectionModel = new KmgReflectionModelImpl(mockTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) mockReflectionModel.getMethod("isJavadocInString", "\"test\"");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "すべてのチェックがfalseの場合はfalseが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:isNormalStringEndがtrueを返す場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalIsNormalStringEndTrue() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        // モック用のサブクラスを作成
+        final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
+
+            /**
+             * 通常の文字列が終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return true
+             */
+            @Override
+            protected boolean isNormalStringEnd(final String currentPart) {
+
+                final boolean result = true;
+                return result;
+
+            }
+
+            /**
+             * テキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
+            @Override
+            protected boolean isTextBlockEnd(final String currentPart) {
+
+                final boolean result = false;
+                return result;
+
+            }
+
+            /**
+             * セミコロン後にテキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false
+             */
+            @Override
+            protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+                final boolean result = false;
+                return result;
+
+            }
+        };
+
+        final KmgReflectionModelImpl mockReflectionModel = new KmgReflectionModelImpl(mockTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) mockReflectionModel.getMethod("isJavadocInString", "\"test\"");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "isNormalStringEndがtrueの場合はtrueが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:isTextBlockEndがtrueを返す場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalIsTextBlockEndTrue() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        // モック用のサブクラスを作成
+        final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
+
+            /**
+             * 通常の文字列が終了しているかを判定する。
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false 常にfalseを返す
+             */
+            @Override
+            protected boolean isNormalStringEnd(final String currentPart) {
+
+                final boolean result = false;
+                return result;
+
+            }
+
+            /**
+             * テキストブロックが終了しているかを判定する。
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return true 常にtrueを返す
+             */
+            @Override
+            protected boolean isTextBlockEnd(final String currentPart) {
+
+                final boolean result = true;
+                return result;
+
+            }
+
+            /**
+             * セミコロンでテキストブロックが終了しているかを判定する。
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false 常にfalseを返す
+             */
+            @Override
+            protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+                final boolean result = false;
+                return result;
+
+            }
+        };
+
+        final KmgReflectionModelImpl mockReflectionModel = new KmgReflectionModelImpl(mockTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) mockReflectionModel.getMethod("isJavadocInString", "\"test\"");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "isTextBlockEndがtrueの場合はtrueが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:isTextBlockEndWithSemicolonがtrueを返す場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalIsTextBlockEndWithSemicolonTrue() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        // モック用のサブクラスを作成
+        final JdtsBlockModelImpl mockTarget = new JdtsBlockModelImpl(testBlock) {
+
+            /**
+             * 通常の文字列が終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false 常にfalseを返す
+             */
+            @Override
+            protected boolean isNormalStringEnd(final String currentPart) {
+
+                final boolean result = false;
+                return result;
+
+            }
+
+            /**
+             * テキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return false 常にfalseを返す
+             */
+            @Override
+            protected boolean isTextBlockEnd(final String currentPart) {
+
+                final boolean result = false;
+                return result;
+
+            }
+
+            /**
+             * セミコロン後にテキストブロックが終了しているかをチェックする
+             *
+             * @param currentPart
+             *                    現在の部分文字列
+             *
+             * @return true 常にtrueを返す
+             */
+            @Override
+            protected boolean isTextBlockEndWithSemicolon(final String currentPart) {
+
+                final boolean result = true;
+                return result;
+
+            }
+        };
+
+        final KmgReflectionModelImpl mockReflectionModel = new KmgReflectionModelImpl(mockTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) mockReflectionModel.getMethod("isJavadocInString", "\"test\"");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "isTextBlockEndWithSemicolonがtrueの場合はtrueが返されること");
+
+    }
+
+    /**
+     * isJavadocInString メソッドのテスト - 正常系:ダブルクォートがない場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsJavadocInString_normalNoDoubleQuote() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult
+            = (Boolean) this.reflectionModel.getMethod("isJavadocInString", "public class TestClass {");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ダブルクォートがない場合はfalseが返されること");
+
+    }
+
+    /**
      * parse メソッドのテスト - 異常系:アノテーションと空白のみのブロック
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalAnnotationsAndWhitespaceOnly() throws Exception {
@@ -234,10 +609,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:アノテーションのみでコードがないブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalAnnotationsOnly() throws Exception {
@@ -262,10 +637,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:コメントのみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalCommentsOnly() throws Exception {
@@ -290,10 +665,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:空のブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalEmptyBlock() throws Exception {
@@ -318,10 +693,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:コードブロックが空のブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalEmptyCodeBlock() throws Exception {
@@ -346,10 +721,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:不完全なメソッド定義のブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalIncompleteMethodDefinition() throws Exception {
@@ -374,10 +749,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:無効なJavaコードのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalInvalidJavaCode() throws Exception {
@@ -402,10 +777,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadoc終了記号が先頭にあるブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalJavadocEndAtBeginning() throws Exception {
@@ -430,10 +805,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadoc終了記号のみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalJavadocEndOnly() throws Exception {
@@ -458,10 +833,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadocブロックのみでコードブロックがない
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalJavadocOnly() throws Exception {
@@ -487,10 +862,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadoc開始記号のみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalJavadocStartOnly() throws Exception {
@@ -544,10 +919,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:nullブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalNullBlock() throws Exception {
@@ -559,21 +934,27 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
         this.testTarget = new JdtsBlockModelImpl(testBlock);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        final Exception actualException = Assertions.assertThrows(NullPointerException.class, () -> {
 
             this.testTarget.parse();
 
         }, "nullブロックではNullPointerExceptionが発生すること");
+
+        /* 検証の準備 */
+        final Exception expectedException = actualException;
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(expectedException, "NullPointerExceptionが発生すること");
 
     }
 
     /**
      * parse メソッドのテスト - 異常系:特殊文字を含むブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalSpecialCharactersInBlock() throws Exception {
@@ -598,10 +979,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:特殊文字のみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalSpecialCharactersOnly() throws Exception {
@@ -626,10 +1007,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:コードブロックが空白のみのブロック
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_abnormalWhitespaceOnlyCodeBlock() throws Exception {
@@ -654,10 +1035,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:アノテーション使用の区分でも解析は成功する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalAnnotationUsageButParseSuccess() throws Exception {
@@ -682,10 +1063,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:クラス定義の解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalClassDefinition() throws Exception {
@@ -718,10 +1099,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:空行を含むコードブロックのクラス定義解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalClassDefinitionWithBlankLines() throws Exception {
@@ -754,10 +1135,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:アノテーション付きクラス定義の解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalClassWithAnnotations() throws Exception {
@@ -795,10 +1176,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:空行を含むアノテーション付きクラス定義の解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalClassWithAnnotationsAndBlankLines() throws Exception {
@@ -836,10 +1217,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:無効なクラス定義でもJavadoc対象外として正常処理される
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalInvalidClassDefinition() throws Exception {
@@ -870,10 +1251,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:メソッド定義の解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMethodDefinition() throws Exception {
@@ -904,10 +1285,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:メソッド定義で空行を含む解析
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalMethodDefinitionWithBlankLines() throws Exception {
@@ -937,12 +1318,366 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 正常系:Javadoc対象外の区分
+     * parse メソッドのテスト - 正常系:アノテーションの複数行処理
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_normalMultilineAnnotation() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 3;
+        final String                  expectedAnnotation1     = "@Component";
+        final String                  expectedAnnotation2     = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api\",
+            "/v1\"
+            })""");
+        final String                  expectedAnnotation3     = "@Service";
+
+        /* 準備 */
+        final String testBlock = """
+            /** テストJavadoc */
+            @Component\n@RequestMapping({
+                \"/api\",
+                \"/v1\"
+            })
+            @Service
+            public class TestClass {
+                            """;
+
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation1, actualAnnotations.get(0), "1番目のアノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation2, actualAnnotations.get(1), "複数行のアノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation3, actualAnnotations.get(2), "複数行終了後のアノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの処理でcontinue文のカバレッジ
      *
      * @since 0.1.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationContinueCoverage() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 2;
+        final String                  expectedAnnotation1     = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api"
+            })""");
+        final String                  expectedAnnotation2     = "@Component";
+
+        /* 準備 */
+        // 複数行アノテーションの開始後、終了前に通常のアノテーションが来るケース
+        final String testBlock = """
+            /** テストJavadoc */
+            @RequestMapping({
+                "/api"
+            })
+            @Component
+            public class TestClass {""";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation1, actualAnnotations.get(0), "複数行アノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation2, actualAnnotations.get(1), "通常のアノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの終了記号が行の途中にある場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationEndInMiddleOfLine() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.ANNOTATION_USAGE;
+        final int                     expectedAnnotationCount = 0;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\"\n}) @Service";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がANNOTATION_USAGEであること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの後に通常のアノテーションが続く場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationFollowedByNormalAnnotation() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 2;
+        final String                  expectedAnnotation1     = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api"
+            })""");
+        final String                  expectedAnnotation2     = "@Service";
+
+        /* 準備 */
+        final String testBlock = """
+            /** テストJavadoc */
+            @RequestMapping({
+                "/api"
+            })
+            @Service
+            public class TestClass {""";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation1, actualAnnotations.get(0), "複数行の通常アノテーションが正しく取得されること");
+        Assertions.assertEquals(expectedAnnotation2, actualAnnotations.get(1), "複数行終了後の通常アノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの途中で終了する場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationIncomplete() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.ANNOTATION_USAGE;
+        final int                     expectedAnnotationCount = 0;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\"\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がANNOTATION_USAGEであること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションのみでコードがない場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationOnly() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.ANNOTATION_USAGE;
+        final int                     expectedAnnotationCount = 1;
+        final String                  expectedAnnotation      = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api",
+            "/v1"
+            })""");
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\",\n    \"/v1\"\n})";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がANNOTATION_USAGEであること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation, actualAnnotations.get(0), "複数行アノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーションの処理でannotationMultilineに追加されるがannotationsには追加されない
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationProcessing() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 1;
+        final String                  expectedAnnotation      = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api",
+            "/v1"
+            })""");
+
+        /* 準備 */
+        // 複数行アノテーションのみで、コードブロックに到達しないケース
+        final String testBlock
+            = "/** テストJavadoc */\n@RequestMapping({\n    \"/api\",\n    \"/v1\"\n})\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation, actualAnnotations.get(0), "複数行アノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:複数行アノテーション内に空行が含まれる場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_normalMultilineAnnotationWithBlankLines() throws Exception {
+
+        /* 期待値の定義 */
+        final JavaClassificationTypes expectedClassification  = JavaClassificationTypes.CLASS;
+        final String                  expectedElementName     = "TestClass";
+        final int                     expectedAnnotationCount = 1;
+        final String                  expectedAnnotation      = AbstractKmgTest.normalizeLineSeparators("""
+            @RequestMapping({
+            "/api",
+            "/v1"
+            })""");
+
+        /* 準備 */
+        final String testBlock
+            = "/** テストJavadoc */\n@RequestMapping({\n\n    \"/api\",\n\n    \"/v1\"\n\n})\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean                 actualResult         = testResult;
+        final JavaClassificationTypes actualClassification = this.testTarget.getClassification();
+        final String                  actualElementName    = this.testTarget.getElementName();
+        final List<String>            actualAnnotations    = this.testTarget.getAnnotations();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "解析が成功すること");
+        Assertions.assertEquals(expectedClassification, actualClassification, "区分がCLASSであること");
+        Assertions.assertEquals(expectedElementName, actualElementName, "要素名が正しく取得されること");
+        Assertions.assertEquals(expectedAnnotationCount, actualAnnotations.size(), "アノテーション数が正しいこと");
+        Assertions.assertEquals(expectedAnnotation, actualAnnotations.get(0), "複数行アノテーションが正しく取得されること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:Javadoc対象外の区分
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
      */
     @Test
     public void testParse_normalNonJavadocTarget() throws Exception {
@@ -972,10 +1707,10 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:Javadoc対象外の区分（NONE）でも解析は成功する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testParse_normalNonJavadocTargetButParseSuccess() throws Exception {

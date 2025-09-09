@@ -36,85 +36,171 @@ import kmg.tool.is.application.logic.IsDataSheetCreationLogic;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 @Service
 public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
-    /** 削除SQLテンプレート */
+    /**
+     * 削除SQLテンプレート
+     *
+     * @since 0.1.0
+     */
     private static final String DELETE_SQL_TEMPLATE = "DELETE FROM %s;"; //$NON-NLS-1$
 
-    /** 挿入SQLテンプレート */
+    /**
+     * 挿入SQLテンプレート
+     *
+     * @since 0.1.0
+     */
     private static final String INSERT_SQL_TEMPLATE = "INSERT INTO %s (%s) VALUES (%s);"; //$NON-NLS-1$
 
-    /** 無限小 */
+    /**
+     * 無限小
+     *
+     * @since 0.1.0
+     */
     private static final String NEGATIVE_INFINITY = "-infinity"; //$NON-NLS-1$
 
-    /** 無限大 */
+    /**
+     * 無限大
+     *
+     * @since 0.1.0
+     */
     private static final String POSITIVE_INFINITY = "infinity"; //$NON-NLS-1$
 
-    /** シングルクォート付き文字列フォーマット */
+    /**
+     * シングルクォート付き文字列フォーマット
+     *
+     * @since 0.1.0
+     */
     private static final String SINGLE_QUOTED_STRING_FORMAT = "'%s'"; //$NON-NLS-1$
 
-    /** レコード削除コメントフォーマット */
+    /**
+     * レコード削除コメントフォーマット
+     *
+     * @since 0.1.0
+     */
     private static final String DELETE_COMMENT_FORMAT = "-- %sのレコード削除"; //$NON-NLS-1$
 
-    /** レコード挿入コメントフォーマット */
+    /**
+     * レコード挿入コメントフォーマット
+     *
+     * @since 0.1.0
+     */
     private static final String INSERT_COMMENT_FORMAT = "-- %sのレコード挿入"; //$NON-NLS-1$
 
-    /** 出力ファイル名フォーマット */
+    /**
+     * 出力ファイル名フォーマット
+     *
+     * @since 0.1.0
+     */
     private static final String OUTPUT_FILENAME_FORMAT = "%s_insert_%s.sql"; //$NON-NLS-1$
 
-    /** KMG DBの種類 */
+    /**
+     * KMG DBの種類
+     *
+     * @since 0.1.0
+     */
     private KmgDbTypes kmgDbTypes;
 
-    /** 入力シート */
+    /**
+     * 入力シート
+     *
+     * @since 0.1.0
+     */
     private Sheet inputSheet;
 
-    /** SQLＩＤマップ */
+    /**
+     * SQLＩＤマップ
+     *
+     * @since 0.1.0
+     */
     private Map<String, String> sqlIdMap;
 
-    /** 出力パス */
+    /**
+     * 出力パス
+     *
+     * @since 0.1.0
+     */
     private Path outputPath;
 
-    /** テーブル論理名 */
+    /**
+     * テーブル論理名
+     *
+     * @since 0.1.0
+     */
     private String tableLogicName;
 
-    /** テーブル物理名 */
+    /**
+     * テーブル物理名
+     *
+     * @since 0.1.0
+     */
     private String tablePhysicsName;
 
-    /** SQLＩＤ */
+    /**
+     * SQLＩＤ
+     *
+     * @since 0.1.0
+     */
     private String sqlId;
 
-    /** 出力ファイルパス */
+    /**
+     * 出力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path outputFilePath;
 
-    /** 文字セット */
+    /**
+     * 文字セット
+     *
+     * @since 0.1.0
+     */
     private Charset charset;
 
-    /** 削除コメント */
+    /**
+     * 削除コメント
+     *
+     * @since 0.1.0
+     */
     private String deleteComment;
 
-    /** 削除SQL */
+    /**
+     * 削除SQL
+     *
+     * @since 0.1.0
+     */
     private String deleteSql;
 
-    /** カラム物理名リスト */
+    /**
+     * カラム物理名リスト
+     *
+     * @since 0.1.0
+     */
     private List<String> columnPhysicsNameList;
 
-    /** KMG DBデータ型リスト */
+    /**
+     * KMG DBデータ型リスト
+     *
+     * @since 0.1.0
+     */
     private List<KmgDbDataTypeTypes> dbDataTypeList;
 
-    /** 挿入コメント */
+    /**
+     * 挿入コメント
+     *
+     * @since 0.1.0
+     */
     private String insertComment;
 
     /**
      * 出力ファイルのディレクトリを作成する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -141,11 +227,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * 文字セットを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 文字セット
      */
@@ -177,11 +259,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * カラム数を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return カラム数
      */
@@ -196,11 +274,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * カラム物理名リストを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return カラム物理名リスト
      */
@@ -219,9 +293,12 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         final Row physicsNameRow = this.inputSheet.getRow(2);
 
-        for (short j = physicsNameRow.getFirstCellNum(); j <= physicsNameRow.getLastCellNum(); j++) {
+        final short firstCellNum = this.getFirstCellNum(physicsNameRow);
+        final short lastCellNum  = this.getLastCellNum(physicsNameRow);
 
-            final Cell physicsNameCell = physicsNameRow.getCell(j);
+        for (short i = firstCellNum; i <= lastCellNum; i++) {
+
+            final Cell physicsNameCell = physicsNameRow.getCell(i);
 
             if (KmgPoiUtils.isEmptyCell(physicsNameCell)) {
 
@@ -241,11 +318,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * 削除コメントを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 削除コメント
      */
@@ -269,11 +342,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * 削除SQLを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 削除SQL
      */
@@ -297,11 +366,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * 挿入コメントを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 挿入コメント
      */
@@ -325,11 +390,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * 挿入SQLを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param datasRow
      *                 データ行
@@ -393,11 +454,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * KMG DB型リストを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return KMG DB型リスト
      */
@@ -433,11 +490,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * 出力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 出力ファイルパス
      */
@@ -462,11 +515,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * SQLＩＤを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return SQLＩＤ
      */
@@ -490,11 +539,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * テーブル論理名を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return テーブル論理名
      */
@@ -518,11 +563,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * テーブル物理名を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return テーブル物理名
      */
@@ -547,11 +588,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * 初期化する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param kmgDbTypes
      *                   KMG DBの種類
@@ -575,13 +612,45 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     }
 
     /**
+     * 行の最初のセルの番号を返す。
+     *
+     * @since 0.1.0
+     *
+     * @param row
+     *            行
+     *
+     * @return 行の最初のセルの番号
+     */
+    @SuppressWarnings("static-method")
+    protected short getFirstCellNum(final Row row) {
+
+        final short result = row.getFirstCellNum();
+        return result;
+
+    }
+
+    /**
+     * 行の最後のセルの番号を返す。
+     *
+     * @since 0.1.0
+     *
+     * @param row
+     *            行
+     *
+     * @return 行の最後のセルの番号
+     */
+    @SuppressWarnings("static-method")
+    protected short getLastCellNum(final Row row) {
+
+        final short result = row.getLastCellNum();
+        return result;
+
+    }
+
+    /**
      * ＰｏｓｔｇｒｅSQLの出力データを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param dataCell
      *                      データセル
@@ -597,81 +666,87 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         String outputData = null;
 
-        switch (kmgDbDataType) {
+        outputData = switch (kmgDbDataType) {
 
-            case NONE:
+            case NONE -> {
+
                 // 指定無し
-                outputData = KmgPoiUtils.getStringValue(dataCell);
-                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
-                break;
+                final String tmp = KmgPoiUtils.getStringValue(dataCell);
+                yield String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, tmp);
 
-            case INTEGER:
-                // 4バイト整数
-            case LONG:
-                // 8バイト整数
-            case SMALLSERIAL:
-                // 自動4バイト
-            case SERIAL:
-                // 自動8バイト
-                outputData = String.valueOf((int) dataCell.getNumericCellValue());
-                break;
+            }
 
-            case FLOAT:
-                // 4バイト実数
-            case DOUBLE:
-                // 8バイト実数
-            case BIG_DECIMAL:
-                // 8バイト実数
-                outputData = String.valueOf(dataCell.getNumericCellValue());
-                break;
+            case INTEGER, LONG, SMALLSERIAL, SERIAL -> {
 
-            case DATE:
+                // 4バイト整数、8バイト整数、自動4バイト、自動8バイト
+                yield String.valueOf((int) dataCell.getNumericCellValue());
+
+            }
+
+            case FLOAT, DOUBLE, BIG_DECIMAL -> {
+
+                // 4バイト実数、8バイト実数、8バイト実数
+                yield String.valueOf(dataCell.getNumericCellValue());
+
+            }
+
+            case DATE -> {
+
                 // 日付型
                 final String dateStrTmp = KmgPoiUtils.getStringValue(dataCell);
+                String       tmp;
+
                 if (KmgString.equals(IsDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateStrTmp)) {
 
-                    outputData = dateStrTmp;
+                    tmp = dateStrTmp;
 
                 } else if (KmgString.equals(IsDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateStrTmp)) {
 
-                    outputData = dateStrTmp;
+                    tmp = dateStrTmp;
 
                 } else {
 
                     final Date date = dataCell.getDateCellValue();
-                    outputData = KmgLocalDateUtils.formatYyyyMmDd(date);
+                    tmp = KmgLocalDateUtils.formatYyyyMmDd(date);
 
                 }
-                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
-                break;
+                yield String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, tmp);
 
-            case TIME:
+            }
+
+            case TIME -> {
+
                 // 日時型
                 final String dateTimeStrTmp = KmgPoiUtils.getStringValue(dataCell);
+                String       tmp;
+
                 if (KmgString.equals(IsDataSheetCreationLogicImpl.NEGATIVE_INFINITY, dateTimeStrTmp)) {
 
-                    outputData = dateTimeStrTmp;
+                    tmp = dateTimeStrTmp;
 
                 } else if (KmgString.equals(IsDataSheetCreationLogicImpl.POSITIVE_INFINITY, dateTimeStrTmp)) {
 
-                    outputData = dateTimeStrTmp;
+                    tmp = dateTimeStrTmp;
 
                 } else {
 
                     final Date date = dataCell.getDateCellValue();
-                    outputData = KmgLocalDateTimeUtils.formatYyyyMmDdHhMmSsSss(date);
+                    tmp = KmgLocalDateTimeUtils.formatYyyyMmDdHhMmSsSss(date);
 
                 }
-                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
-                break;
+                yield String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, tmp);
 
-            case STRING:
+            }
+
+            case STRING -> {
+
                 // 文字列型
-                outputData = KmgPoiUtils.getStringValue(dataCell);
-                outputData = String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, outputData);
-                break;
+                final String tmp = KmgPoiUtils.getStringValue(dataCell);
+                yield String.format(IsDataSheetCreationLogicImpl.SINGLE_QUOTED_STRING_FORMAT, tmp);
 
-        }
+            }
+
+        };
 
         result = outputData;
         return result;

@@ -2,6 +2,7 @@ package kmg.tool.jdts.application.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdts.application.logic.JdtsIoLogic;
 
-// TODO KenichiroArai 2025/07/11 汎用化する。対象ファイルパスを読み込むようにする。拡張子の指定はオプション扱いにする。
+// TODO KenichiroArai 2025/09/04 v0.1.1対応予定。汎用化する。対象ファイルパスを読み込むようにする。拡張子の指定はオプション扱いにする。
 /**
  * Javadocタグ設定の入出力ロジック<br>
  * <p>
@@ -32,13 +33,15 @@ import kmg.tool.jdts.application.logic.JdtsIoLogic;
 @Service
 public class JdtsIoLogicImpl implements JdtsIoLogic {
 
-    /** 対象ファイルの拡張子 */
+    /**
+     * 対象ファイルの拡張子
+     *
+     * @since 0.1.0
+     */
     private static final String TARGET_FILE_EXTENSION = ".java"; //$NON-NLS-1$
 
     /**
      * 対象ファイルパス
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -47,8 +50,6 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * ファイルパスのリスト
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     private final List<Path> filePathList;
@@ -56,25 +57,35 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 現在のファイルインデックス
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     private int currentFileIndex;
 
     /**
      * 現在のファイルパス
+     *
+     * @since 0.1.0
      */
     private Path currentFilePath;
 
-    /** 読込んだ内容 */
+    /**
+     * 読込んだ内容
+     *
+     * @since 0.1.0
+     */
     private String readContent;
 
-    /** 書き込む内容 */
+    /**
+     * 書き込む内容
+     *
+     * @since 0.1.0
+     */
     private String writeContent;
 
     /**
      * デフォルトコンストラクタ
+     *
+     * @since 0.1.0
      */
     public JdtsIoLogicImpl() {
 
@@ -88,6 +99,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 現在のファイルパスを返す。
      *
+     * @since 0.1.0
+     *
      * @return 現在のファイルパス
      */
     @Override
@@ -100,8 +113,6 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
     /**
      * ファイルパスのリストを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -118,8 +129,6 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 読込んだ内容を返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 読込んだ内容
@@ -135,11 +144,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 対象ファイルパス
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      *
      * @return 対象ファイルパス
      */
@@ -153,6 +158,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @param targetPath
      *                   対象ファイルパス
@@ -186,6 +193,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * 対象ファイルパスから対象となるJavaファイルをリストにロードする。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -203,6 +212,14 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
             fileList = streamPath.filter(Files::isRegularFile)
                 .filter(path -> path.toString().endsWith(JdtsIoLogicImpl.TARGET_FILE_EXTENSION))
                 .collect(Collectors.toList());
+
+        } catch (final NoSuchFileException e) {
+
+            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
+            final Object[]           genMsgArgs  = {
+                this.targetPath.toString(),
+            };
+            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
 
         } catch (final IOException e) {
 
@@ -230,6 +247,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 内容を読み込む。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：データあり、false：データなし
      *
@@ -269,6 +288,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 次のファイルに進む。
      *
+     * @since 0.1.0
+     *
      * @return true：ファイルあり、false:ファイルなし
      *
      * @throws KmgToolMsgException
@@ -300,6 +321,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * currentFileIndexを0に設定し、currentFilePathを先頭のファイルに設定する。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -330,6 +353,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 書き込む内容を設定する。
      *
+     * @since 0.1.0
+     *
      * @param content
      *                内容
      */
@@ -342,6 +367,8 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
     /**
      * 内容を書き込む
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

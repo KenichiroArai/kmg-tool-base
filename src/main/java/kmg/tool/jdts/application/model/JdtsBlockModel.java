@@ -23,8 +23,6 @@ public interface JdtsBlockModel {
     /**
      * アノテーションリストを返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return アノテーションリスト
@@ -33,8 +31,6 @@ public interface JdtsBlockModel {
 
     /**
      * 区分を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -45,8 +41,6 @@ public interface JdtsBlockModel {
     /**
      * 要素名を返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 要素名
@@ -55,8 +49,6 @@ public interface JdtsBlockModel {
 
     /**
      * 識別子を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -67,8 +59,6 @@ public interface JdtsBlockModel {
     /**
      * Javadocモデルを返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return Javadocモデル
@@ -77,8 +67,6 @@ public interface JdtsBlockModel {
 
     /**
      * オリジナルブロックを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -89,7 +77,9 @@ public interface JdtsBlockModel {
     /**
      * 解析する
      *
-     * @return true：成功、false：失敗
+     * @since 0.1.0
+     *
+     * @return true：Javadocタグ設定のブロックモデルの対象である、false：Javadocタグ設定のブロックモデルの対象外である
      */
     boolean parse();
 

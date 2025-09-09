@@ -24,27 +24,49 @@ import kmg.tool.simple.application.service.SimpleTwo2OneService;
  * SimpleTwo2OneToolのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls", "static-method"
 })
 public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private SimpleTwo2OneTool testTarget;
 
-    /** モックシンプル2入力ファイルから1出力ファイルへの変換サービス */
+    /**
+     * モックシンプル2入力ファイルから1出力ファイルへの変換サービス
+     *
+     * @since 0.1.0
+     */
     private SimpleTwo2OneService mockSimpleTwo2OneService;
 
-    /** モックメッセージソース */
+    /**
+     * モックメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      */
     @BeforeEach
     public void setUp() {
@@ -57,6 +79,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      */
     @AfterEach
     public void tearDown() {
@@ -70,6 +94,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -93,6 +119,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * getDefaultTemplatePath メソッドのテスト - 正常系：優先パスが実際に存在する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -136,6 +164,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     /**
      * getDefaultTemplatePath メソッドのテスト - 正常系：優先パスが存在する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -163,6 +193,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * getDefaultTemplatePath メソッドのテスト - 準正常系：優先パスが実際に存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -195,6 +227,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     /**
      * getDefaultTemplatePath メソッドのテスト - 準正常系：優先パスが存在しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -223,6 +257,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     /**
      * getIoService メソッドのテスト - 正常系：シンプル2入力ファイルから1出力ファイルへの変換サービスを取得する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -250,6 +286,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -257,8 +295,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     public void testInitialize_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
-        final String expectedDomainMessage = "項目名がnullです。";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final String             expectedDomainMessage = "項目名がnullです。";
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -306,6 +344,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：初期化が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -340,6 +380,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 準正常系：初期化が失敗する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -373,6 +415,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
     /**
      * main メソッドのテスト - 正常系：mainメソッドが正常に実行される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

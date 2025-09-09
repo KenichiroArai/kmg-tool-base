@@ -25,33 +25,57 @@ public enum DtcKeyTypes implements KmgCmnTypes<String> {
     /**
      * 指定無し
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      */
     NONE("指定無し", "None", "指定無し"),
 
-    /** 中間プレースホルダー定義のキー */
+    /**
+     * 中間プレースホルダー定義のキー
+     *
+     * @since 0.1.0
+     */
     INTERMEDIATE_PLACEHOLDERS("中間プレースホルダー定義", "intermediatePlaceholders", "中間から直接取得するプレースホルダー定義のキー"),
 
-    /** 派生プレースホルダー定義のキー */
+    /**
+     * 派生プレースホルダー定義のキー
+     *
+     * @since 0.1.0
+     */
     DERIVED_PLACEHOLDERS("派生プレースホルダー定義", "derivedPlaceholders", "他のプレースホルダーから派生するプレースホルダー定義のキー"),
 
-    /** 表示名のキー */
+    /**
+     * 表示名のキー
+     *
+     * @since 0.1.0
+     */
     DISPLAY_NAME("表示名", "displayName", "表示名のキー"),
 
-    /** 置換パターンのキー */
+    /**
+     * 置換パターンのキー
+     *
+     * @since 0.1.0
+     */
     REPLACEMENT_PATTERN("置換パターン", "replacementPattern", "置換パターンのキー"),
 
-    /** ソースキーのキー */
+    /**
+     * ソースキーのキー
+     *
+     * @since 0.1.0
+     */
     SOURCE_KEY("ソースキー", "sourceKey", "変換元となるプレースホルダーのキー"),
 
-    /** 変換処理のキー */
+    /**
+     * 変換処理のキー
+     *
+     * @since 0.1.0
+     */
     TRANSFORMATION("変換処理", "transformation", "変換処理のキー"),
 
-    /** テンプレート内容のキー */
+    /**
+     * テンプレート内容のキー
+     *
+     * @since 0.1.0
+     */
     TEMPLATE_CONTENT("テンプレート内容", "templateContent", "テンプレート内容のキー"),
 
     /* 定義：終了 */

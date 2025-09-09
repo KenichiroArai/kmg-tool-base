@@ -21,7 +21,7 @@ JdtsConfigs:
           mode: "compliant"
           removeIfMisplaced: true
       insertPosition: "beginning"
-      overwrite: "ifLower"
+      overwrite: "always"
 
     - tagName: "version"
       tagValue: "0.1.0"
@@ -29,7 +29,7 @@ JdtsConfigs:
           mode: "compliant"
           removeIfMisplaced: true
       insertPosition: "beginning"
-      overwrite: "never"
+      overwrite: "always"
 # -----------------------------------
 # 設定の説明
 # -----------------------------------
@@ -91,4 +91,4 @@ JdtsConfigs:
 #       mode: "compliant"    # 自動配置モード
 #       removeIfMisplaced: true  # 指定外の場所にあるタグは削除
 #   insertPosition: "beginning"
-#   overwrite: "ifLower"     # 既存バージョン>上書きするバージョン場合のみ上書き
+#   overwrite: "ifLower"     # 既存より小さい場合のみ上書き

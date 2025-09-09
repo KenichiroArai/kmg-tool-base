@@ -32,6 +32,28 @@ public class KmgToolValMsgTypesTest {
     }
 
     /**
+     * get メソッドのテスト - 正常系:別の値の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGet_normalAnotherValue() {
+
+        /* 期待値の定義 */
+        final String expected = "KMGTOOL_VAL13001";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
+
+        /* テスト対象の実行 */
+        final String actual = testType.get();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "別の値の取得値が一致しません");
+
+    }
+
+    /**
      * get メソッドのテスト - 正常系:基本的な値の取得
      *
      * @since 0.1.0
@@ -50,6 +72,50 @@ public class KmgToolValMsgTypesTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "取得値が一致しません");
+
+    }
+
+    /**
+     * get メソッドのテスト - 正常系:NONEの値の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGet_normalNoneValue() {
+
+        /* 期待値の定義 */
+        final String expected = "NONE";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
+
+        /* テスト対象の実行 */
+        final String actual = testType.get();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "NONEの取得値が一致しません");
+
+    }
+
+    /**
+     * getCode メソッドのテスト - 正常系:別の値のコードの取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetCode_normalAnotherValue() {
+
+        /* 期待値の定義 */
+        final String expected = "KMGTOOL_VAL13001";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
+
+        /* テスト対象の実行 */
+        final String actual = testType.getCode();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "別の値のコードが一致しません");
 
     }
 
@@ -76,6 +142,28 @@ public class KmgToolValMsgTypesTest {
     }
 
     /**
+     * getCode メソッドのテスト - 正常系:NONEのコードの取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetCode_normalNoneCode() {
+
+        /* 期待値の定義 */
+        final String expected = "NONE";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
+
+        /* テスト対象の実行 */
+        final String actual = testType.getCode();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "NONEのコードが一致しません");
+
+    }
+
+    /**
      * getDefault メソッドのテスト - 正常系:デフォルト値の取得
      *
      * @since 0.1.0
@@ -91,6 +179,28 @@ public class KmgToolValMsgTypesTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "デフォルト値が一致しません");
+
+    }
+
+    /**
+     * getDetail メソッドのテスト - 正常系:別の値の詳細情報の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetDetail_normalAnotherValue() {
+
+        /* 期待値の定義 */
+        final String expected = "{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
+
+        /* テスト対象の実行 */
+        final String actual = testType.getDetail();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "別の値の詳細情報が一致しません");
 
     }
 
@@ -117,6 +227,50 @@ public class KmgToolValMsgTypesTest {
     }
 
     /**
+     * getDetail メソッドのテスト - 正常系:NONEの詳細情報の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetDetail_normalNoneDetail() {
+
+        /* 期待値の定義 */
+        final String expected = "指定無し";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
+
+        /* テスト対象の実行 */
+        final String actual = testType.getDetail();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "NONEの詳細情報が一致しません");
+
+    }
+
+    /**
+     * getDisplayName メソッドのテスト - 正常系:別の値の表示名の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetDisplayName_normalAnotherValue() {
+
+        /* 期待値の定義 */
+        final String expected = "{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
+
+        /* テスト対象の実行 */
+        final String actual = testType.getDisplayName();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "別の値の表示名が一致しません");
+
+    }
+
+    /**
      * getDisplayName メソッドのテスト - 正常系:表示名の取得
      *
      * @since 0.1.0
@@ -135,6 +289,50 @@ public class KmgToolValMsgTypesTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "表示名が一致しません");
+
+    }
+
+    /**
+     * getDisplayName メソッドのテスト - 正常系:NONEの表示名の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetDisplayName_normalNoneDisplayName() {
+
+        /* 期待値の定義 */
+        final String expected = "指定無し";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
+
+        /* テスト対象の実行 */
+        final String actual = testType.getDisplayName();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "NONEの表示名が一致しません");
+
+    }
+
+    /**
+     * getEnum メソッドのテスト - 正常系:別の存在する値の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetEnum_normalAnotherExistingValue() {
+
+        /* 期待値の定義 */
+        final KmgToolValMsgTypes expected = KmgToolValMsgTypes.KMGTOOL_VAL13001;
+
+        /* 準備 */
+        final String testValue = "KMGTOOL_VAL13001";
+
+        /* テスト対象の実行 */
+        final KmgToolValMsgTypes actual = KmgToolValMsgTypes.getEnum(testValue);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "別の存在する値が一致しません");
 
     }
 
@@ -161,6 +359,28 @@ public class KmgToolValMsgTypesTest {
     }
 
     /**
+     * getEnum メソッドのテスト - 準正常系:空文字列の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetEnum_semiEmptyStringValue() {
+
+        /* 期待値の定義 */
+        final KmgToolValMsgTypes expected = KmgToolValMsgTypes.NONE;
+
+        /* 準備 */
+        final String testValue = "";
+
+        /* テスト対象の実行 */
+        final KmgToolValMsgTypes actual = KmgToolValMsgTypes.getEnum(testValue);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "空文字列の場合の値が一致しません");
+
+    }
+
+    /**
      * getEnum メソッドのテスト - 準正常系:存在しない値の取得
      *
      * @since 0.1.0
@@ -179,6 +399,28 @@ public class KmgToolValMsgTypesTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "値が一致しません");
+
+    }
+
+    /**
+     * getEnum メソッドのテスト - 準正常系:null値の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetEnum_semiNullValue() {
+
+        /* 期待値の定義 */
+        final KmgToolValMsgTypes expected = KmgToolValMsgTypes.NONE;
+
+        /* 準備 */
+        final String testValue = null;
+
+        /* テスト対象の実行 */
+        final KmgToolValMsgTypes actual = KmgToolValMsgTypes.getEnum(testValue);
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "null値の場合の値が一致しません");
 
     }
 
@@ -202,68 +444,24 @@ public class KmgToolValMsgTypesTest {
     }
 
     /**
-     * getValue メソッドのテスト - 正常系:値の取得
+     * getKey メソッドのテスト - 正常系:別の値のキーの取得
      *
      * @since 0.1.0
      */
     @Test
-    public void testGetValue_normalBasicValue() {
+    public void testGetKey_normalAnotherValue() {
 
         /* 期待値の定義 */
-        final String expected = "YAMLデータが空です。";
+        final String expected = "KMGTOOL_VAL13001";
 
         /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13000;
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
 
         /* テスト対象の実行 */
-        final String actual = testType.getValue();
+        final String actual = testType.getKey();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "値が一致しません");
-
-    }
-
-    /**
-     * toString メソッドのテスト - 正常系:KMGTOOL_VAL13000の文字列表現
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testToString_normalKmgtoolVal13000() {
-
-        /* 期待値の定義 */
-        final String expected = "KMGTOOL_VAL13000";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13000;
-
-        /* テスト対象の実行 */
-        final String actual = testType.toString();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "KMGTOOL_VAL13000の場合、'KMGTOOL_VAL13000'が返されること");
-
-    }
-
-    /**
-     * toString メソッドのテスト - 正常系:NONEの文字列表現
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testToString_normalNone() {
-
-        /* 期待値の定義 */
-        final String expected = "NONE";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
-
-        /* テスト対象の実行 */
-        final String actual = testType.toString();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "NONEの場合、\"NONE\"が返されること");
+        Assertions.assertEquals(expected, actual, "別の値のキーが一致しません");
 
     }
 
@@ -312,24 +510,46 @@ public class KmgToolValMsgTypesTest {
     }
 
     /**
-     * getDisplayName メソッドのテスト - 正常系:NONEの表示名の取得
+     * getValue メソッドのテスト - 正常系:別の値の値の取得
      *
      * @since 0.1.0
      */
     @Test
-    public void testGetDisplayName_normalNoneDisplayName() {
+    public void testGetValue_normalAnotherValue() {
 
         /* 期待値の定義 */
-        final String expected = "指定無し";
+        final String expected = "{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]";
 
         /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
 
         /* テスト対象の実行 */
-        final String actual = testType.getDisplayName();
+        final String actual = testType.getValue();
 
         /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "NONEの表示名が一致しません");
+        Assertions.assertEquals(expected, actual, "別の値の値が一致しません");
+
+    }
+
+    /**
+     * getValue メソッドのテスト - 正常系:値の取得
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testGetValue_normalBasicValue() {
+
+        /* 期待値の定義 */
+        final String expected = "YAMLデータが空です。";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13000;
+
+        /* テスト対象の実行 */
+        final String actual = testType.getValue();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "値が一致しません");
 
     }
 
@@ -356,270 +576,6 @@ public class KmgToolValMsgTypesTest {
     }
 
     /**
-     * getDetail メソッドのテスト - 正常系:NONEの詳細情報の取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetDetail_normalNoneDetail() {
-
-        /* 期待値の定義 */
-        final String expected = "指定無し";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
-
-        /* テスト対象の実行 */
-        final String actual = testType.getDetail();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "NONEの詳細情報が一致しません");
-
-    }
-
-    /**
-     * get メソッドのテスト - 正常系:NONEの値の取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGet_normalNoneValue() {
-
-        /* 期待値の定義 */
-        final String expected = "NONE";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
-
-        /* テスト対象の実行 */
-        final String actual = testType.get();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "NONEの取得値が一致しません");
-
-    }
-
-    /**
-     * getCode メソッドのテスト - 正常系:NONEのコードの取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetCode_normalNoneCode() {
-
-        /* 期待値の定義 */
-        final String expected = "NONE";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
-
-        /* テスト対象の実行 */
-        final String actual = testType.getCode();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "NONEのコードが一致しません");
-
-    }
-
-    /**
-     * getEnum メソッドのテスト - 正常系:別の存在する値の取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetEnum_normalAnotherExistingValue() {
-
-        /* 期待値の定義 */
-        final KmgToolValMsgTypes expected = KmgToolValMsgTypes.KMGTOOL_VAL13001;
-
-        /* 準備 */
-        final String testValue = "KMGTOOL_VAL13001";
-
-        /* テスト対象の実行 */
-        final KmgToolValMsgTypes actual = KmgToolValMsgTypes.getEnum(testValue);
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "別の存在する値が一致しません");
-
-    }
-
-    /**
-     * getEnum メソッドのテスト - 準正常系:null値の取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetEnum_semiNullValue() {
-
-        /* 期待値の定義 */
-        final KmgToolValMsgTypes expected = KmgToolValMsgTypes.NONE;
-
-        /* 準備 */
-        final String testValue = null;
-
-        /* テスト対象の実行 */
-        final KmgToolValMsgTypes actual = KmgToolValMsgTypes.getEnum(testValue);
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "null値の場合の値が一致しません");
-
-    }
-
-    /**
-     * getEnum メソッドのテスト - 準正常系:空文字列の取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetEnum_semiEmptyStringValue() {
-
-        /* 期待値の定義 */
-        final KmgToolValMsgTypes expected = KmgToolValMsgTypes.NONE;
-
-        /* 準備 */
-        final String testValue = "";
-
-        /* テスト対象の実行 */
-        final KmgToolValMsgTypes actual = KmgToolValMsgTypes.getEnum(testValue);
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "空文字列の場合の値が一致しません");
-
-    }
-
-    /**
-     * getDisplayName メソッドのテスト - 正常系:別の値の表示名の取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetDisplayName_normalAnotherValue() {
-
-        /* 期待値の定義 */
-        final String expected = "{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
-
-        /* テスト対象の実行 */
-        final String actual = testType.getDisplayName();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "別の値の表示名が一致しません");
-
-    }
-
-    /**
-     * getValue メソッドのテスト - 正常系:別の値の値の取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetValue_normalAnotherValue() {
-
-        /* 期待値の定義 */
-        final String expected = "{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
-
-        /* テスト対象の実行 */
-        final String actual = testType.getValue();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "別の値の値が一致しません");
-
-    }
-
-    /**
-     * getDetail メソッドのテスト - 正常系:別の値の詳細情報の取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetDetail_normalAnotherValue() {
-
-        /* 期待値の定義 */
-        final String expected = "{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
-
-        /* テスト対象の実行 */
-        final String actual = testType.getDetail();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "別の値の詳細情報が一致しません");
-
-    }
-
-    /**
-     * get メソッドのテスト - 正常系:別の値の取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGet_normalAnotherValue() {
-
-        /* 期待値の定義 */
-        final String expected = "KMGTOOL_VAL13001";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
-
-        /* テスト対象の実行 */
-        final String actual = testType.get();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "別の値の取得値が一致しません");
-
-    }
-
-    /**
-     * getCode メソッドのテスト - 正常系:別の値のコードの取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetCode_normalAnotherValue() {
-
-        /* 期待値の定義 */
-        final String expected = "KMGTOOL_VAL13001";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
-
-        /* テスト対象の実行 */
-        final String actual = testType.getCode();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "別の値のコードが一致しません");
-
-    }
-
-    /**
-     * getKey メソッドのテスト - 正常系:別の値のキーの取得
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testGetKey_normalAnotherValue() {
-
-        /* 期待値の定義 */
-        final String expected = "KMGTOOL_VAL13001";
-
-        /* 準備 */
-        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13001;
-
-        /* テスト対象の実行 */
-        final String actual = testType.getKey();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expected, actual, "別の値のキーが一致しません");
-
-    }
-
-    /**
      * toString メソッドのテスト - 正常系:別の値の文字列表現
      *
      * @since 0.1.0
@@ -638,6 +594,50 @@ public class KmgToolValMsgTypesTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "別の値の文字列表現が一致しません");
+
+    }
+
+    /**
+     * toString メソッドのテスト - 正常系:KMGTOOL_VAL13000の文字列表現
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testToString_normalKmgtoolVal13000() {
+
+        /* 期待値の定義 */
+        final String expected = "KMGTOOL_VAL13000";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.KMGTOOL_VAL13000;
+
+        /* テスト対象の実行 */
+        final String actual = testType.toString();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "KMGTOOL_VAL13000の場合、'KMGTOOL_VAL13000'が返されること");
+
+    }
+
+    /**
+     * toString メソッドのテスト - 正常系:NONEの文字列表現
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testToString_normalNone() {
+
+        /* 期待値の定義 */
+        final String expected = "NONE";
+
+        /* 準備 */
+        final KmgToolValMsgTypes testType = KmgToolValMsgTypes.NONE;
+
+        /* テスト対象の実行 */
+        final String actual = testType.toString();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "NONEの場合、\"NONE\"が返されること");
 
     }
 

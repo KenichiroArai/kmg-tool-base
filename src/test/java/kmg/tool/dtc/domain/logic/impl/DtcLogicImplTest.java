@@ -39,6 +39,10 @@ import kmg.tool.dtc.domain.types.DtcKeyTypes;
  * DtcLogicImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -47,21 +51,39 @@ import kmg.tool.dtc.domain.types.DtcKeyTypes;
 })
 public class DtcLogicImplTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private DtcLogicImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -81,6 +103,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -106,6 +130,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * addOutputBufferContent メソッドのテスト - 正常系：1件分の内容をバッファに追加
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -134,6 +160,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * applyTemplateToInputFile メソッドのテスト - 正常系：テンプレート適用
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -170,6 +198,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * clearOutputBufferContent メソッドのテスト - 正常系：バッファクリア
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -195,6 +225,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * clearReadingData メソッドのテスト - 正常系：全データクリア
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -250,6 +282,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * close メソッドのテスト - 正常系：リソースをクローズする
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -278,6 +312,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * closeReader メソッドのテスト - 正常系：リーダーをクローズする場合（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -308,6 +344,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * closeReader メソッドのテスト - 正常系：リーダーがnullの場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -332,6 +370,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * closeWriter メソッドのテスト - 正常系：ライターをクローズする場合（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -362,6 +402,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * closeWriter メソッドのテスト - 正常系：ライターがnullの場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -386,6 +428,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * getContentsOfOneItem メソッドのテスト - 正常系：内容取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -413,6 +457,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 正常系：パス取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -438,6 +484,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * getOutputPath メソッドのテスト - 正常系：パス取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -465,6 +513,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * getTemplatePath メソッドのテスト - 正常系：パス取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -490,6 +540,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系：初期化が成功する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -520,6 +572,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：区切り文字指定で初期化が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -549,6 +603,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * loadDerivedPlaceholderDefinitions メソッドのテスト - 正常系：派生プレースホルダー定義がある場合（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -593,6 +649,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * loadDerivedPlaceholderDefinitions メソッドのテスト - 準正常系：派生プレースホルダー定義がない場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -619,6 +677,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * loadIntermediatePlaceholderDefinitions メソッドのテスト - 正常系：中間プレースホルダー定義がある場合（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -664,6 +724,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * loadIntermediatePlaceholderDefinitions メソッドのテスト - 準正常系：中間プレースホルダー定義がない場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -690,6 +752,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * loadTemplate メソッドのテスト - 異常系：YAML読み込みエラーの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -735,6 +799,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * loadTemplate メソッドのテスト - 正常系：テンプレート読み込みが成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -766,6 +832,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * loadTemplateContent メソッドのテスト - 正常系：テンプレートコンテンツを読み込む場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -794,6 +862,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * openInputFile メソッドのテスト - 異常系：入力ファイルが存在しない場合（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -839,6 +909,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * openInputFile メソッドのテスト - 正常系：入力ファイルを開く場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -865,6 +937,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * openOutputFile メソッドのテスト - 異常系：出力ファイルが作成できない場合（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -911,6 +985,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * openOutputFile メソッドのテスト - 正常系：出力ファイルを開く場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -936,6 +1012,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * processDerivedPlaceholders メソッドのテスト - 正常系：派生プレースホルダーを処理する場合（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -972,6 +1050,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * processDerivedPlaceholders メソッドのテスト - 準正常系：sourceValueがnullの場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1006,6 +1086,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * processPlaceholders メソッドのテスト - 異常系：中間行の列数が不足している場合（プライベートメソッド）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1060,6 +1142,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * processPlaceholders メソッドのテスト - 正常系：中間プレースホルダーを処理する場合（プライベートメソッド）
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1094,6 +1178,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * readOneLineOfData メソッドのテスト - 異常系：IOExceptionが発生した場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1168,6 +1254,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * readOneLineOfData メソッドのテスト - 正常系：データが読み込める場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1200,6 +1288,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     /**
      * readOneLineOfData メソッドのテスト - 準正常系：ファイル終端に達した場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -1228,6 +1318,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * writeOutputBuffer メソッドのテスト - 異常系：IOExceptionが発生した場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1291,6 +1383,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
 
     /**
      * writeOutputBuffer メソッドのテスト - 正常系：バッファ書き込みが成功する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

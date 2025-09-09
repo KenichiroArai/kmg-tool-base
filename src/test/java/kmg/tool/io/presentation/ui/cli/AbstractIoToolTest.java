@@ -20,6 +20,10 @@ import kmg.tool.io.domain.service.IoService;
  * AbstractIoToolのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -29,11 +33,17 @@ public class AbstractIoToolTest extends AbstractKmgTest {
     /** テスト用のAbstractIoTool実装クラス */
     private static class TestAbstractIoTool extends AbstractIoTool {
 
-        /** 入出力サービス */
+        /**
+         * 入出力サービス
+         *
+         * @since 0.1.0
+         */
         private final IoService ioService;
 
         /**
          * デフォルトコンストラクタ
+         *
+         * @since 0.1.0
          */
         public TestAbstractIoTool() {
 
@@ -44,6 +54,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
         /**
          * カスタム入出力サービスを使用するコンストラクタ
+         *
+         * @since 0.1.0
          *
          * @param ioService
          *                  入出力サービス
@@ -58,6 +70,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
         /**
          * 入出力サービスを取得します。
          *
+         * @since 0.1.0
+         *
          * @return 入出力サービス
          */
         @Override
@@ -69,21 +83,39 @@ public class AbstractIoToolTest extends AbstractKmgTest {
         }
     }
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private TestAbstractIoTool testTarget;
 
-    /** モック入出力サービス */
+    /**
+     * モック入出力サービス
+     *
+     * @since 0.1.0
+     */
     private IoService mockIoService;
 
-    /** モックメッセージソース */
+    /**
+     * モックメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      */
     @BeforeEach
     public void setUp() {
@@ -96,6 +128,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      */
     @AfterEach
     public void tearDown() {
@@ -109,6 +143,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：カスタム入出力サービスを使用するコンストラクタで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -134,6 +170,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
     /**
      * コンストラクタのテスト - 正常系：デフォルトコンストラクタで初期化する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -156,6 +194,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * execute メソッドのテスト - 異常系：例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -188,6 +228,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * execute メソッドのテスト - 異常系：RuntimeExceptionが発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -222,6 +264,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 正常系：処理が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -254,6 +298,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 準正常系：処理が失敗する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -285,6 +331,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * getBasePath メソッドのテスト - 正常系：優先パスが存在する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -326,6 +374,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * getBasePath メソッドのテスト - 正常系：優先パスが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -378,6 +428,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 正常系：優先パスに入力ファイルが存在する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -420,6 +472,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * getInputPath メソッドのテスト - 正常系：優先パスに入力ファイルが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -472,6 +526,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
     /**
      * getIoService メソッドのテスト - 正常系：デフォルトコンストラクタの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -495,6 +551,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * getIoService メソッドのテスト - 正常系：カスタム入出力サービスを設定した場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -520,6 +578,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * getOutputPath メソッドのテスト - 正常系：優先パスに出力ファイルが存在する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -563,6 +623,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * getOutputPath メソッドのテスト - 正常系：優先パスに出力ファイルが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -615,6 +677,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
     /**
      * getPrimaryBasePath メソッドのテスト - 正常系：優先パスの取得
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -639,6 +703,8 @@ public class AbstractIoToolTest extends AbstractKmgTest {
 
     /**
      * getSecondaryBasePath メソッドのテスト - 正常系：代替パスの取得
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

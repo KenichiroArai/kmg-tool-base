@@ -45,22 +45,48 @@ import kmg.tool.io.domain.service.IoService;
  * CustomIoTool tool = new CustomIoTool("カスタムツール", ioService);
  * boolean success = tool.execute();
  * </pre>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public abstract class AbstractIoTool extends AbstractTool {
 
-    /** 優先的に使用する基準パス */
+    /**
+     * 優先的に使用する基準パス
+     *
+     * @since 0.1.0
+     */
     private static final Path PRIMARY_BASE_PATH = Paths.get("work/io"); //$NON-NLS-1$
 
-    /** 代替の基準パス */
+    /**
+     * 代替の基準パス
+     *
+     * @since 0.1.0
+     */
     private static final Path SECONDARY_BASE_PATH = Paths.get("src/main/resources/tool/io"); //$NON-NLS-1$
 
-    /** 入力ファイル名 */
+    /**
+     * 入力ファイル名
+     *
+     * @since 0.1.0
+     */
     private static final Path INPUT_FILE_NAME = Paths.get("input.txt"); //$NON-NLS-1$
 
-    /** 出力ファイル名 */
+    /**
+     * 出力ファイル名
+     *
+     * @since 0.1.0
+     */
     private static final Path OUTPUT_FILE_NAME = Paths.get("output.txt"); //$NON-NLS-1$
 
-    /** メッセージソース */
+    /**
+     * メッセージソース
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private KmgMessageSource messageSource;
 
@@ -73,6 +99,8 @@ public abstract class AbstractIoTool extends AbstractTool {
 
     /**
      * 基準パスを返す。
+     *
+     * @since 0.1.0
      *
      * @return 基準パス
      */
@@ -95,6 +123,8 @@ public abstract class AbstractIoTool extends AbstractTool {
 
     /**
      * 入力ファイルパスを返す。 優先パスに入力ファイルが存在すればそちらを使用し、なければ代替パスを使用する。
+     *
+     * @since 0.1.0
      *
      * @return 入力ファイルパス
      */
@@ -123,6 +153,8 @@ public abstract class AbstractIoTool extends AbstractTool {
     /**
      * 出力ファイルパスを返す。 優先パスに出力ファイルが存在すればそちらを使用し、なければ代替パスを使用する。
      *
+     * @since 0.1.0
+     *
      * @return 出力ファイルパス
      */
     public static Path getOutputPath() {
@@ -150,9 +182,9 @@ public abstract class AbstractIoTool extends AbstractTool {
     /**
      * 優先的に使用する基準パスを取得します。
      *
-     * @return 優先的に使用する基準パス
-     *
      * @since 0.1.0
+     *
+     * @return 優先的に使用する基準パス
      */
     public static Path getPrimaryBasePath() {
 
@@ -164,9 +196,9 @@ public abstract class AbstractIoTool extends AbstractTool {
     /**
      * 代替の基準パスを取得します。
      *
-     * @return 代替の基準パス
-     *
      * @since 0.1.0
+     *
+     * @return 代替の基準パス
      */
     public static Path getSecondaryBasePath() {
 
@@ -178,10 +210,10 @@ public abstract class AbstractIoTool extends AbstractTool {
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
+     * @since 0.1.0
+     *
      * @param toolName
      *                 ツール名
-     *
-     * @since 0.1.0
      */
     public AbstractIoTool(final String toolName) {
 
@@ -191,6 +223,8 @@ public abstract class AbstractIoTool extends AbstractTool {
 
     /**
      * 実行する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
@@ -253,6 +287,8 @@ public abstract class AbstractIoTool extends AbstractTool {
 
     /**
      * 入出力サービスを返す。
+     *
+     * @since 0.1.0
      *
      * @return 入出力サービス
      */

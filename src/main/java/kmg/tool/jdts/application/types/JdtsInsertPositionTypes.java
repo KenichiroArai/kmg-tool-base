@@ -22,22 +22,42 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
 
     /* 定義：開始 */
 
-    /** 指定無し */
+    /**
+     * 指定無し
+     *
+     * @since 0.1.0
+     */
     NONE("指定無し", "None", "指定無し"),
 
-    /** Javadocタグの先頭 */
+    /**
+     * Javadocタグの先頭
+     *
+     * @since 0.1.0
+     */
     BEGINNING("Javadocタグの先頭", "beginning", "Javadocタグの先頭に挿入"),
 
-    /** Javadocタグの末尾 */
+    /**
+     * Javadocタグの末尾
+     *
+     * @since 0.1.0
+     */
     END("Javadocタグの末尾", "end", "Javadocタグの末尾に挿入"),
 
-    /** 現在の位置を維持 */
+    /**
+     * 現在の位置を維持
+     *
+     * @since 0.1.0
+     */
     PRESERVE("現在の位置を維持", "preserve", "既存のJavadocタグが存在する場合は現在の位置を維持"),
 
     /* 定義：終了 */
     ;
 
-    /** 種類のマップ */
+    /**
+     * 種類のマップ
+     *
+     * @since 0.1.0
+     */
     private static final Map<String, JdtsInsertPositionTypes> VALUES_MAP = new HashMap<>();
 
     static {
@@ -51,17 +71,31 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
 
     }
 
-    /** 表示名 */
+    /**
+     * 表示名
+     *
+     * @since 0.1.0
+     */
     private final String displayName;
 
-    /** キー */
+    /**
+     * キー
+     *
+     * @since 0.1.0
+     */
     private final String key;
 
-    /** 詳細情報 */
+    /**
+     * 詳細情報
+     *
+     * @since 0.1.0
+     */
     private final String detail;
 
     /**
      * デフォルトの種類を返す<br>
+     *
+     * @since 0.1.0
      *
      * @return デフォルト値
      */
@@ -77,6 +111,8 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
      * <p>
      * 但し、キーが存在しない場合は、指定無し（NONE）を返す。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param key
      *            キー
@@ -99,6 +135,8 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
     /**
      * 初期値の種類を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return 初期値
      */
     public static JdtsInsertPositionTypes getInitValue() {
@@ -110,6 +148,8 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
 
     /**
      * コンストラクタ<br>
+     *
+     * @since 0.1.0
      *
      * @param displayName
      *                    表示名
@@ -129,6 +169,8 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
     /**
      * キーを返す。<br>
      *
+     * @since 0.1.0
+     *
      * @return キー
      *
      * @see #getKey()
@@ -143,6 +185,8 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
 
     /**
      * 詳細情報を返す。<br>
+     *
+     * @since 0.1.0
      *
      * @return 詳細情報
      */
@@ -160,6 +204,8 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
      * 識別するための表示名を返す。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @return 表示名
      */
     @Override
@@ -173,6 +219,8 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
     /**
      * キーを返す。<br>
      *
+     * @since 0.1.0
+     *
      * @return キー
      */
     @Override
@@ -185,6 +233,8 @@ public enum JdtsInsertPositionTypes implements KmgCmnTypes<String> {
 
     /**
      * キーを返す。<br>
+     *
+     * @since 0.1.0
      *
      * @return キー
      *

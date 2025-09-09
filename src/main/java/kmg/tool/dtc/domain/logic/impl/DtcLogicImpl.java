@@ -36,54 +36,108 @@ import kmg.tool.dtc.domain.types.DtcTransformTypes;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @Service
 public class DtcLogicImpl implements DtcLogic {
 
-    /** 入力ファイルパス */
+    /**
+     * 入力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path inputPath;
 
-    /** テンプレートファイルパス */
+    /**
+     * テンプレートファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path templatePath;
 
-    /** 出力ファイルパス */
+    /**
+     * 出力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path outputPath;
 
-    /** 入力ファイルのBufferedReader */
+    /**
+     * 入力ファイルのBufferedReader
+     *
+     * @since 0.1.0
+     */
     private BufferedReader reader;
 
-    /** 出力ファイルのBufferedWriter */
+    /**
+     * 出力ファイルのBufferedWriter
+     *
+     * @since 0.1.0
+     */
     private BufferedWriter writer;
 
-    /** 読み込んだ1行データ */
+    /**
+     * 読み込んだ1行データ
+     *
+     * @since 0.1.0
+     */
     private String lineOfDataRead;
 
-    /** 変換後の1行データ */
+    /**
+     * 変換後の1行データ
+     *
+     * @since 0.1.0
+     */
     private String convertedLine;
 
-    /** 中間行の区切り文字 */
+    /**
+     * 中間行の区切り文字
+     *
+     * @since 0.1.0
+     */
     private KmgDelimiterTypes intermediateDelimiter;
 
-    /** 中間プレースホルダーの定義マップ */
+    /**
+     * 中間プレースホルダーの定義マップ
+     *
+     * @since 0.1.0
+     */
     private final Map<String, String> intermediatePlaceholderMap;
 
-    /** 派生プレースホルダーの定義リスト */
+    /**
+     * 派生プレースホルダーの定義リスト
+     *
+     * @since 0.1.0
+     */
     private final List<DtcDerivedPlaceholderModel> derivedPlaceholders;
 
-    /** テンプレートの内容 */
+    /**
+     * テンプレートの内容
+     *
+     * @since 0.1.0
+     */
     private String templateContent;
 
-    /** 1件分の内容 */
+    /**
+     * 1件分の内容
+     *
+     * @since 0.1.0
+     */
     private String contentsOfOneItem;
 
-    /** 出力バッファの内容 */
+    /**
+     * 出力バッファの内容
+     *
+     * @since 0.1.0
+     */
     private final StringBuilder outputBufferContent;
 
     /**
      * デフォルトコンストラクタ
+     *
+     * @since 0.1.0
      */
     public DtcLogicImpl() {
 
@@ -98,6 +152,8 @@ public class DtcLogicImpl implements DtcLogic {
      * <p>
      * 現在の1件分の内容（contentsOfOneItem）を出力バッファに追加します。 変換処理が完了したテンプレートの内容をバッファに蓄積するために使用します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -122,9 +178,7 @@ public class DtcLogicImpl implements DtcLogic {
      * 現在読み込まれている入力ファイルの1行データに対して、テンプレートを適用し変換処理を行います。 中間プレースホルダーと派生プレースホルダーの両方を処理します。
      * </p>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外 - 変換処理中にエラーが発生した場合
@@ -152,6 +206,8 @@ public class DtcLogicImpl implements DtcLogic {
      * 出力バッファの内容を空にします。新しい出力処理を開始する前に使用します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外 - バッファクリア中にエラーが発生した場合
      */
@@ -167,6 +223,8 @@ public class DtcLogicImpl implements DtcLogic {
      * <p>
      * 現在読み込まれているデータや変換状態をすべてクリアします。 新しい処理を開始する前に内部状態をリセットするために使用します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -197,6 +255,8 @@ public class DtcLogicImpl implements DtcLogic {
      * 入力ファイルリーダーと出力ファイルライターをクローズします。 リソースリークを防ぐために使用します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws IOException
      *                     入出力例外 - ファイルクローズ中にエラーが発生した場合
      */
@@ -213,8 +273,6 @@ public class DtcLogicImpl implements DtcLogic {
      * <p>
      * 現在処理中の1件分のテンプレート変換後の内容を返します。
      * </p>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -234,11 +292,7 @@ public class DtcLogicImpl implements DtcLogic {
      * 現在処理中の入力ファイルのパスを返します。
      * </p>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 入力ファイルパス - 処理対象の入力ファイルのパス
      */
@@ -256,11 +310,7 @@ public class DtcLogicImpl implements DtcLogic {
      * 現在処理中の出力ファイルのパスを返します。
      * </p>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 出力ファイルパス - 処理結果を書き込む出力ファイルのパス
      */
@@ -278,11 +328,7 @@ public class DtcLogicImpl implements DtcLogic {
      * 現在処理中のテンプレートファイルのパスを返します。
      * </p>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return テンプレートファイルパス - 変換に使用するテンプレートファイルのパス
      */
@@ -300,11 +346,7 @@ public class DtcLogicImpl implements DtcLogic {
      * 入力ファイル、テンプレートファイル、出力ファイルのパスを設定し、 処理に必要なリソースを初期化します。入力ファイルと出力ファイルを開きます。
      * </p>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param inputPath
      *                     入力ファイルパス - 処理対象の中間データファイルのパス
@@ -330,6 +372,8 @@ public class DtcLogicImpl implements DtcLogic {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @param inputPath
      *                              入力ファイルパス
@@ -379,9 +423,7 @@ public class DtcLogicImpl implements DtcLogic {
      * YAMLフォーマットのテンプレート定義ファイルを読み込み、 テンプレートコンテンツ、中間プレースホルダー定義、派生プレースホルダー定義を取得します。
      * </p>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -432,6 +474,8 @@ public class DtcLogicImpl implements DtcLogic {
      * 入力ファイルから1行のデータを読み込みます。 読み込んだデータは内部変数に保存され、後続の処理で使用されます。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @return true：データあり、false：データなし（ファイル終端に達した場合）
      *
      * @throws KmgToolMsgException
@@ -477,6 +521,8 @@ public class DtcLogicImpl implements DtcLogic {
      * 出力バッファに蓄積された内容を出力ファイルに書き込みます。 書き込み後は自動的に改行が追加されます。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -513,6 +559,8 @@ public class DtcLogicImpl implements DtcLogic {
      * 入力ファイルのBufferedReaderをクローズします。 リーダーがnullの場合は何もしません。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws IOException
      *                     入出力例外 - ファイルクローズ中にエラーが発生した場合
      */
@@ -534,6 +582,8 @@ public class DtcLogicImpl implements DtcLogic {
      * <p>
      * 出力ファイルのBufferedWriterをクローズします。 ライターがnullの場合は何もしません。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws IOException
      *                     入出力例外 - ファイルクローズ中にエラーが発生した場合
@@ -557,9 +607,7 @@ public class DtcLogicImpl implements DtcLogic {
      * YAMLデータから派生プレースホルダー定義を読み込み、内部リストに格納します。 派生プレースホルダー定義がない場合は何もしません。
      * </p>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param yamlData
      *                 YAMLデータ - テンプレート定義ファイルから読み込まれたデータ
@@ -609,9 +657,7 @@ public class DtcLogicImpl implements DtcLogic {
      * YAMLデータから中間プレースホルダー定義を読み込み、内部マップに格納します。 プレースホルダー定義がない場合は何もしません。
      * </p>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param yamlData
      *                 YAMLデータ - テンプレート定義ファイルから読み込まれたデータ
@@ -655,9 +701,7 @@ public class DtcLogicImpl implements DtcLogic {
      * YAMLデータからテンプレートコンテンツを読み込み、内部変数に格納します。 テンプレートコンテンツは変換処理の基本となるテキストです。
      * </p>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param yamlData
      *                 YAMLデータ - テンプレート定義ファイルから読み込まれたデータ
@@ -683,6 +727,8 @@ public class DtcLogicImpl implements DtcLogic {
      * <p>
      * 指定された入力ファイルパスからBufferedReaderを作成し、内部変数に格納します。 入力ファイルが存在しない場合や読み込めない場合は例外をスローします。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外 - ファイルオープン中にエラーが発生した場合
@@ -712,6 +758,8 @@ public class DtcLogicImpl implements DtcLogic {
      * 指定された出力ファイルパスからBufferedWriterを作成し、内部変数に格納します。 出力ファイルが作成できない場合や書き込めない場合は例外をスローします。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外 - ファイルオープン中にエラーが発生した場合
      */
@@ -739,6 +787,8 @@ public class DtcLogicImpl implements DtcLogic {
      * <p>
      * 中間プレースホルダー処理で得られた値を元に、派生プレースホルダーの変換処理を行います。 各派生プレースホルダーに対して、指定された変換タイプに基づいて値を変換し、 テンプレート内の対応するパターンを置換します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param intermediateValues
      *                           中間値を保存するマップ - キーはプレースホルダー名、値は中間から読み取った値
@@ -776,6 +826,8 @@ public class DtcLogicImpl implements DtcLogic {
      * <p>
      * 現在読み込まれている中間行データを解析し、中間プレースホルダーを対応する値で置換します。 置換された値は中間値を保存するマップに保存され、後続の派生プレースホルダー処理で使用されます。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param intermediateValues
      *                           中間値を保存するマップ - キーはプレースホルダー名、値は中間から読み取った値

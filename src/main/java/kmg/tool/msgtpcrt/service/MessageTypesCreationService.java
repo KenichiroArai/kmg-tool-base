@@ -10,9 +10,9 @@ import kmg.tool.iito.domain.service.IitoProcessorService;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 public interface MessageTypesCreationService extends IitoProcessorService {
 

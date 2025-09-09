@@ -30,9 +30,9 @@ import kmg.tool.fldcrt.application.logic.impl.FieldCreationLogicImpl;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -41,18 +41,32 @@ import kmg.tool.fldcrt.application.logic.impl.FieldCreationLogicImpl;
 })
 public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
-    /** テスト対象クラス */
+    /**
+     * テスト対象クラス
+     *
+     * @since 0.1.0
+     */
     private FieldCreationLogicImpl target;
 
-    /** 一時ディレクトリ */
+    /**
+     * 一時ディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * テスト前の準備
+     *
+     * @since 0.1.0
      */
     @SuppressWarnings("resource")
     @BeforeEach
@@ -67,6 +81,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -92,6 +108,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addCommentToRows メソッドのテスト - 異常系：コメント未設定時の例外
+     *
+     * @since 0.1.0
      */
     @Test
     public void testAddCommentToRows_errorCommentNotSet() {
@@ -127,6 +145,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addCommentToRows メソッドのテスト - 正常系：コメントが設定されている場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -167,6 +187,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addFieldToRows メソッドのテスト - 異常系：フィールド名未設定時の例外
+     *
+     * @since 0.1.0
      */
     @Test
     public void testAddFieldToRows_errorFieldNotSet() {
@@ -202,6 +224,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addFieldToRows メソッドのテスト - 正常系：フィールド名が設定されている場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -242,6 +266,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addTypeToRows メソッドのテスト - 異常系：型情報未設定時の例外
+     *
+     * @since 0.1.0
      */
     @Test
     public void testAddTypeToRows_errorTypeNotSet() {
@@ -277,6 +303,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addTypeToRows メソッドのテスト - 正常系：型情報が設定されている場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -317,6 +345,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertFields メソッドのテスト - 正常系：DBデータ型の変換
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -360,6 +390,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertFields メソッドのテスト - 正常系：未知の型情報の場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -405,6 +437,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     /**
      * convertFields メソッドのテスト - 準正常系：入力データが不正な場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
      */
@@ -439,6 +473,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertFields メソッドのテスト - 準正常系：入力データがnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -476,6 +512,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getComment メソッドのテスト - 正常系：コメントが設定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
      */
@@ -511,6 +549,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getComment メソッドのテスト - 準正常系：コメントが設定されていない場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetComment_semiCommentNotSet() {
@@ -533,6 +573,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getField メソッドのテスト - 正常系：フィールド名が設定されている場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -569,6 +611,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getField メソッドのテスト - 準正常系：フィールド名が設定されていない場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetField_semiFieldNotSet() {
@@ -591,6 +635,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getType メソッドのテスト - 正常系：型情報が設定されている場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時にエラーが発生した場合
@@ -627,6 +673,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getType メソッドのテスト - 準正常系：型情報が設定されていない場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetType_semiTypeNotSet() {

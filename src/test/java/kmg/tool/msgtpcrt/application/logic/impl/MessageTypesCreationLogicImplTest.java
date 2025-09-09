@@ -32,9 +32,9 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -43,21 +43,39 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private MessageTypesCreationLogicImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -76,6 +94,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -101,6 +121,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addItemNameToRows メソッドのテスト - 異常系：項目名がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -141,6 +163,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     /**
      * addItemNameToRows メソッドのテスト - 正常系：項目名が設定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -171,6 +195,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addItemToRows メソッドのテスト - 異常系：項目がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -211,6 +237,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     /**
      * addItemToRows メソッドのテスト - 正常系：項目が設定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -241,6 +269,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertMessageTypesDefinition メソッドのテスト - 異常系：分割数が不正な場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -284,6 +314,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     /**
      * convertMessageTypesDefinition メソッドのテスト - 正常系：メッセージ定義の変換
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -316,6 +348,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertMessageTypesDefinition メソッドのテスト - 正常系：複数のイコールが含まれる場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -350,6 +384,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getItem メソッドのテスト - 正常系：項目の取得
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -375,6 +411,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getItem メソッドのテスト - 正常系：項目がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -402,6 +440,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getItemName メソッドのテスト - 正常系：項目名の取得
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -427,6 +467,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getItemName メソッドのテスト - 正常系：項目名がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -454,6 +496,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     /**
      * setConvertedLine メソッドのテスト - 正常系：変換後行データの設定
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -476,6 +520,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * setConvertedLine メソッドのテスト - 正常系：変換後行データにnullを設定
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -500,6 +546,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     /**
      * setItem メソッドのテスト - 正常系：項目の設定
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -522,6 +570,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * setItem メソッドのテスト - 正常系：項目にnullを設定
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -546,6 +596,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     /**
      * setItemName メソッドのテスト - 正常系：項目名の設定
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -568,6 +620,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * setItemName メソッドのテスト - 正常系：項目名にnullを設定
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

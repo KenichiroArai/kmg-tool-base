@@ -25,9 +25,9 @@ import kmg.tool.dtc.presentation.ui.cli.AbstractDtcTool;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @SpringBootApplication(scanBasePackages = {
     "kmg"
@@ -39,6 +39,8 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <p>
      * このツールの表示名を定義します。
      * </p>
+     *
+     * @since 0.1.0
      */
     private static final String TOOL_NAME = "アクセサ作成ツール"; //$NON-NLS-1$
 
@@ -47,6 +49,8 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <p>
      * フィールド定義からアクセサメソッドを生成するためのサービスです。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Autowired
     private AccessorCreationService accessorCreationService;
@@ -73,6 +77,8 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <li>コンテキストのクローズ</li>
      * </ol>
      *
+     * @since 0.1.0
+     *
      * @param args
      *             コマンドライン引数。入力ファイルパス、テンプレートファイルパス、出力ファイルパスなどを指定できます。 <br>
      *             ※引数の詳細は親クラスのドキュメントを参照してください。
@@ -84,11 +90,7 @@ public class AccessorCreationTool extends AbstractDtcTool {
 
         final AccessorCreationTool tool = ctx.getBean(AccessorCreationTool.class);
 
-        /* 初期化 */
-        tool.initialize();
-
-        /* 実行 */
-        tool.execute();
+        tool.run(args);
 
         ctx.close();
 
@@ -102,10 +104,33 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <p>
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
+     *
+     * @since 0.1.0
      */
     public AccessorCreationTool() {
 
         super(AccessorCreationTool.TOOL_NAME);
+
+    }
+
+    /**
+     * <h3>ツール実行メソッド</h3>
+     * <p>
+     * ツールの初期化と実行を行います。
+     * </p>
+     *
+     * @since 0.1.0
+     *
+     * @param args
+     *             コマンドライン引数
+     */
+    public void run(final String[] args) {
+
+        /* 初期化 */
+        this.initialize();
+
+        /* 実行 */
+        this.execute();
 
     }
 
@@ -117,6 +142,8 @@ public class AccessorCreationTool extends AbstractDtcTool {
      * <p>
      * このメソッドは親クラスの処理から呼び出され、実際のアクセサ生成処理を担当する サービスを提供します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return アクセサ作成サービス このツールが使用するアクセサ作成サービスのインスタンス
      */

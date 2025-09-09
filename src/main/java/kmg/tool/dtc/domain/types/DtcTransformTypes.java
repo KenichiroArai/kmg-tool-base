@@ -26,21 +26,29 @@ public enum DtcTransformTypes implements KmgCmnTypes<String> {
     /**
      * 指定無し
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      */
     NONE("指定無し", "none", "指定無し"),
 
-    /** 文字列の最初の文字を大文字に変換 */
+    /**
+     * 文字列の最初の文字を大文字に変換
+     *
+     * @since 0.1.0
+     */
     CAPITALIZE("文字列の最初の文字を大文字に変換", "capitalize", "文字列の最初の文字を大文字に変換する"),
 
-    /** すべて大文字に変換 */
+    /**
+     * すべて大文字に変換
+     *
+     * @since 0.1.0
+     */
     TO_UPPER_CASE("すべて大文字に変換", "toUpperCase", "文字列のすべての文字を大文字に変換する"),
 
-    /** すべて小文字に変換 */
+    /**
+     * すべて小文字に変換
+     *
+     * @since 0.1.0
+     */
     TO_LOWER_CASE("すべて小文字に変換", "toLowerCase", "文字列のすべての文字を小文字に変換する"),
 
     /* 定義：終了 */
@@ -142,12 +150,12 @@ public enum DtcTransformTypes implements KmgCmnTypes<String> {
     /**
      * 文字列の最初の文字を大文字に変換<br>
      *
+     * @since 0.1.0
+     *
      * @param value
      *              変換対象の文字列
      *
      * @return 最初の文字を大文字に変換した値
-     *
-     * @since 0.1.0
      */
     private static String capitalize(final String value) {
 
@@ -267,12 +275,12 @@ public enum DtcTransformTypes implements KmgCmnTypes<String> {
     /**
      * 指定された文字列を変換する<br>
      *
+     * @since 0.1.0
+     *
      * @param value
      *              変換対象の文字列
      *
      * @return 変換後の文字列
-     *
-     * @since 0.1.0
      */
     public String transform(final String value) {
 

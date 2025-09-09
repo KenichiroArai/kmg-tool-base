@@ -17,14 +17,16 @@ import kmg.tool.jdocr.service.JavadocLineRemoverService;
  * Javadoc行削除サービス<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService {
 
     /**
      * ロガー
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -33,24 +35,28 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
     /**
      * KMGメッセージリソース
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** Javadoc行削除ロジック */
+    /**
+     * Javadoc行削除ロジック
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private JavadocLineRemoverLogic javadocLineRemoverLogic;
 
-    /** 入力ファイルのパス */
+    /**
+     * 入力ファイルのパス
+     *
+     * @since 0.1.0
+     */
     private Path inputPath;
 
     /**
      * 標準ロガーを使用して入出力ツールを初期化するコンストラクタ<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -62,8 +68,6 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
 
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -78,6 +82,8 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -101,6 +107,8 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
 
     /**
      * 処理する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

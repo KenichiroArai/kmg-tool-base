@@ -39,10 +39,18 @@ import kmg.tool.jdts.application.types.JdtsOverwriteTypes;
 })
 public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsTagConfigModelImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
     /**
@@ -61,10 +69,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:タグ名が空
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorEmptyTagName() throws Exception {
@@ -95,10 +103,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:タグ値が空
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorEmptyTagValue() throws Exception {
@@ -129,10 +137,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:無効な挿入位置
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorInvalidInsertPosition() throws Exception {
@@ -163,10 +171,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:配置場所の設定が無効
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorInvalidLocationConfig() throws Exception {
@@ -199,10 +207,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:無効な上書き設定
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorInvalidOverwrite() throws Exception {
@@ -233,10 +241,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 異常系:無効なタグ名
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_errorInvalidTagName() throws Exception {
@@ -267,10 +275,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系:タグの説明がnull
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalNullTagDescription() throws Exception {
@@ -302,10 +310,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系:正常に初期化
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalValidConfig() throws Exception {
@@ -348,10 +356,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * getInsertPosition メソッドのテスト - 正常系:挿入位置を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetInsertPosition_normalReturnInsertPosition() throws Exception {
@@ -384,10 +392,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * getLocation メソッドのテスト - 正常系:配置場所の設定を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetLocation_normalReturnLocation() throws Exception {
@@ -419,10 +427,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * getOverwrite メソッドのテスト - 正常系:上書き設定を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetOverwrite_normalReturnOverwrite() throws Exception {
@@ -455,10 +463,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * getTag メソッドのテスト - 正常系:タグを返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetTag_normalReturnTag() throws Exception {
@@ -491,10 +499,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * getTagDescription メソッドのテスト - 正常系:タグの説明を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetTagDescription_normalReturnTagDescription() throws Exception {
@@ -528,10 +536,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * getTagName メソッドのテスト - 正常系:タグ名を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetTagName_normalReturnTagName() throws Exception {
@@ -564,10 +572,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * getTagValue メソッドのテスト - 正常系:タグの指定値を返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testGetTagValue_normalReturnTagValue() throws Exception {
@@ -600,10 +608,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * isProperlyPlaced メソッドのテスト - 正常系:COMPLIANTモードで一致する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testIsProperlyPlaced_normalCompliantModeMatch() throws Exception {
@@ -635,10 +643,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * isProperlyPlaced メソッドのテスト - 正常系:COMPLIANTモードで一致しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testIsProperlyPlaced_normalCompliantModeNoMatch() throws Exception {
@@ -668,12 +676,47 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * isProperlyPlaced メソッドのテスト - 正常系:MANUALモードで一致する場合
+     * isProperlyPlaced メソッドのテスト - 正常系:COMPLIANTモードでJavaClassificationTypes.NONEを含むタグ（SUMMARY）の場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testIsProperlyPlaced_normalCompliantModeWithSummaryTag() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final Map<String, Object> testTagConfig = new HashMap<>();
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_NAME.get(), "@summary");
+        testTagConfig.put(JdtsConfigKeyTypes.TAG_VALUE.get(), "testValue");
+        testTagConfig.put(JdtsConfigKeyTypes.INSERT_POSITION.get(), "beginning");
+        testTagConfig.put(JdtsConfigKeyTypes.OVERWRITE.get(), "always");
+
+        final Map<String, Object> locationMap = new HashMap<>();
+        locationMap.put(JdtsConfigKeyTypes.MODE.get(), "compliant");
+        locationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
+        testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
+
+        this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.isProperlyPlaced(JavaClassificationTypes.METHOD);
+
+        /* 検証の実施 */
+        Assertions.assertTrue(testResult, "COMPLIANTモードでJavaClassificationTypes.NONEを含むタグの場合はtrueが返されること");
+
+    }
+
+    /**
+     * isProperlyPlaced メソッドのテスト - 正常系:MANUALモードで一致する場合
      *
      * @since 0.1.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
      */
     @Test
     public void testIsProperlyPlaced_normalManualModeMatch() throws Exception {
@@ -768,10 +811,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * isProperlyPlaced メソッドのテスト - 正常系:MANUALモードで一致しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testIsProperlyPlaced_normalManualModeNoMatch() throws Exception {
@@ -866,10 +909,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * isProperlyPlaced メソッドのテスト - 正常系:NONEモードでfalseを返す
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testIsProperlyPlaced_normalNoneMode() throws Exception {
@@ -901,10 +944,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * setupBasicItems メソッドのテスト - 異常系:タグ名がnull
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testSetupBasicItems_errorNullTagName() throws Exception {
@@ -934,10 +977,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * setupBasicItems メソッドのテスト - 異常系:タグ値がnull
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testSetupBasicItems_errorNullTagValue() throws Exception {
@@ -967,10 +1010,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * setupBasicItems メソッドのテスト - 正常系:基本項目の設定
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testSetupBasicItems_normalSetupBasicItems() throws Exception {
@@ -1006,10 +1049,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * setupInsertPosition メソッドのテスト - 異常系:挿入位置がnull
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testSetupInsertPosition_errorNullInsertPosition() throws Exception {
@@ -1040,10 +1083,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * setupInsertPosition メソッドのテスト - 正常系:挿入位置の設定
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testSetupInsertPosition_normalSetupInsertPosition() throws Exception {
@@ -1078,10 +1121,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * setupLocation メソッドのテスト - 正常系:配置場所の設定
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testSetupLocation_normalSetupLocation() throws Exception {
@@ -1116,10 +1159,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * setupOverwrite メソッドのテスト - 異常系:上書き設定がnull
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testSetupOverwrite_errorNullOverwrite() throws Exception {
@@ -1150,10 +1193,10 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
     /**
      * setupOverwrite メソッドのテスト - 正常系:上書き設定
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
-     *
-     * @since 0.1.0
      */
     @Test
     public void testSetupOverwrite_normalSetupOverwrite() throws Exception {

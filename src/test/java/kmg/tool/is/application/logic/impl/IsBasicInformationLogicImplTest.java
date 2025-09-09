@@ -17,6 +17,10 @@ import kmg.tool.is.application.logic.IsBasicInformationLogic;
  * 挿入SQL基本情報ロジック実装のテスト<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -25,6 +29,8 @@ public class IsBasicInformationLogicImplTest {
 
     /**
      * デフォルトコンストラクタ<br>
+     *
+     * @since 0.1.0
      */
     public IsBasicInformationLogicImplTest() {
 
@@ -36,6 +42,8 @@ public class IsBasicInformationLogicImplTest {
      * <p>
      * 設定シートの指定セルからMySQLの設定値が正しく取得されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外が発生した場合
@@ -76,6 +84,8 @@ public class IsBasicInformationLogicImplTest {
      * 設定シートの指定セルからPostgreSQLの設定値が正しく取得されることを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外が発生した場合
      */
@@ -115,6 +125,8 @@ public class IsBasicInformationLogicImplTest {
      * 設定シートの指定セルがnullの場合に、NONEが返されることを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外が発生した場合
      */
@@ -151,6 +163,8 @@ public class IsBasicInformationLogicImplTest {
      * <p>
      * 設定シートに存在しないDB種類が記載されている場合に、NONEが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外が発生した場合
@@ -191,6 +205,8 @@ public class IsBasicInformationLogicImplTest {
      * データ行が存在しない一覧シートの場合に、空のマップが返されることを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外が発生した場合
      */
@@ -227,6 +243,8 @@ public class IsBasicInformationLogicImplTest {
      * <p>
      * 一覧シートから複数のテーブル物理名とSQLIDの組み合わせが正しくマップされることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外が発生した場合
@@ -283,6 +301,8 @@ public class IsBasicInformationLogicImplTest {
      * テーブル物理名またはSQLIDセルがnullの行が存在する場合に、nullを含む情報が適切にマップされることを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外が発生した場合
      */
@@ -330,6 +350,8 @@ public class IsBasicInformationLogicImplTest {
      * <p>
      * nullワークブックで初期化した場合でも例外が発生しないことを確認します。 ただし、その後のメソッド呼び出しではNullPointerExceptionが発生することが期待されます。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testInitialize_normalNullWorkbookNoException() {
@@ -361,6 +383,8 @@ public class IsBasicInformationLogicImplTest {
      * <p>
      * 引数で指定されたワークブックが正しく内部フィールドに設定されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外が発生した場合

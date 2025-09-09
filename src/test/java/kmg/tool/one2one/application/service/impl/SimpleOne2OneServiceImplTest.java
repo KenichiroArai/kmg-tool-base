@@ -28,6 +28,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * SimpleOne2OneServiceImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -36,23 +40,45 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private SimpleOne2OneServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** テスト用入力ファイルパス */
+    /**
+     * テスト用入力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path testInputPath;
 
-    /** テスト用出力ファイルパス */
+    /**
+     * テスト用出力ファイルパス
+     *
+     * @since 0.1.0
+     */
     private Path testOutputPath;
 
-    /** テスト用入力ファイル内容 */
+    /**
+     * テスト用入力ファイル内容
+     *
+     * @since 0.1.0
+     */
     private String testInputContent;
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：標準コンストラクタでの初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public static void testConstructor_normalStandardConstructor() {
@@ -73,6 +99,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -96,6 +124,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -125,6 +155,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 正常系：入力ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -150,6 +182,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 準正常系：nullの入力ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -173,6 +207,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * getOutputPath メソッドのテスト - 正常系：出力ファイルパスの取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -199,6 +235,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     /**
      * getOutputPath メソッドのテスト - 準正常系：nullの出力ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -222,6 +260,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -253,6 +293,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：入力ファイルの読み込み権限がない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -261,7 +303,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
-        final String expectedMessage = "ファイル処理に失敗しました。";
+        final String             expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化（より確実に例外を発生させる）
@@ -296,6 +338,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：入力ファイルが存在しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -304,7 +348,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
-        final String expectedMessage = "ファイル処理に失敗しました。";
+        final String             expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化
@@ -339,6 +383,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：出力ディレクトリが存在しない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -347,7 +393,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
-        final String expectedMessage = "ファイル処理に失敗しました。";
+        final String             expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用入力ファイルを作成
@@ -385,6 +431,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：出力ファイルの書き込み権限がない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -393,7 +441,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN15000;
-        final String expectedMessage = "ファイル処理に失敗しました。";
+        final String             expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用入力ファイルを作成
@@ -430,6 +478,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 正常系：正常な処理
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -501,6 +551,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 準正常系：大量の行を含む入力ファイルの処理
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -544,6 +596,8 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 準正常系：1行のみの入力ファイルの処理
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

@@ -34,9 +34,9 @@ import kmg.tool.simple.domain.service.SimpleInputService;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -45,27 +45,49 @@ import kmg.tool.simple.domain.service.SimpleInputService;
 })
 public class JavadocLineRemoverToolTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     @InjectMocks
     private JavadocLineRemoverTool testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** KmgMessageSourceのモック */
+    /**
+     * KmgMessageSourceのモック
+     *
+     * @since 0.1.0
+     */
     @Mock
     private KmgMessageSource mockMessageSource;
 
-    /** SimpleInputServiceのモック */
+    /**
+     * SimpleInputServiceのモック
+     *
+     * @since 0.1.0
+     */
     @Mock
     private SimpleInputService mockSimpleInputService;
 
-    /** JavadocLineRemoverServiceのモック */
+    /**
+     * JavadocLineRemoverServiceのモック
+     *
+     * @since 0.1.0
+     */
     @Mock
     private JavadocLineRemoverService mockJavadocLineRemoverService;
 
     /**
      * 各テスト実行前のセットアップ処理。リフレクションモデルの初期化とモックの注入を行う。
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -83,7 +105,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -141,7 +163,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 異常系：処理に失敗する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -185,7 +207,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 正常系：正常に処理が完了する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -229,7 +251,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * execute メソッドのテスト - 準正常系：初期化に失敗する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -272,7 +294,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * getInputService メソッドのテスト - 正常系：入力サービスが正常に返される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -302,7 +324,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * getInputService メソッドのテスト - 準正常系：入力サービスがnullの場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -332,7 +354,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * メソッドの戻り値型テスト - 正常系：getInputServiceメソッドがSimpleInputServiceを返す場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetInputServiceReturnType_normalSimpleInputService() {
@@ -367,7 +389,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * メソッドの可視性テスト - 正常系：getInputServiceメソッドがpublicで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetInputServiceVisibility_normalPublic() {
@@ -388,8 +410,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & Modifier.PUBLIC;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult, "getInputServiceメソッドがpublicで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "getInputServiceメソッドがpublicで定義されていること");
 
         } catch (final NoSuchMethodException e) {
 
@@ -402,7 +424,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * 継承関係のテスト - 正常系：AbstractInputToolを正しく継承している場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testInheritance_normalExtendsAbstractInputTool() {
@@ -427,7 +449,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * inputService フィールドのテスト - 正常系：シンプル入力サービスが正しく注入される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -457,7 +479,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * フィールドの型テスト - 正常系：inputServiceフィールドがSimpleInputService型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testInputServiceType_normalSimpleInputService() {
@@ -478,8 +500,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult, "inputServiceフィールドがSimpleInputService型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult, "inputServiceフィールドがSimpleInputService型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -492,7 +514,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * フィールドの可視性テスト - 正常系：inputServiceフィールドがprivateで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testInputServiceVisibility_normalPrivate() {
@@ -513,8 +535,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & Modifier.PRIVATE;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult, "inputServiceフィールドがprivateで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "inputServiceフィールドがprivateで定義されていること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -527,7 +549,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * javadocLineRemoverService フィールドのテスト - 正常系：Javadoc行削除サービスが正しく注入される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -558,7 +580,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * フィールドの型テスト - 正常系：javadocLineRemoverServiceフィールドがJavadocLineRemoverService型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testJavadocLineRemoverServiceType_normalJavadocLineRemoverService() {
@@ -579,9 +601,9 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult,
-            "javadocLineRemoverServiceフィールドがJavadocLineRemoverService型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult,
+                "javadocLineRemoverServiceフィールドがJavadocLineRemoverService型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -594,7 +616,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * フィールドの可視性テスト - 正常系：javadocLineRemoverServiceフィールドがprivateで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testJavadocLineRemoverServiceVisibility_normalPrivate() {
@@ -615,9 +637,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & Modifier.PRIVATE;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult,
-            "javadocLineRemoverServiceフィールドがprivateで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "javadocLineRemoverServiceフィールドがprivateで定義されていること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -630,7 +651,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 異常系：SpringBootアプリケーションの起動に失敗する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMain_errorSpringBootStartupFailure() {
@@ -657,7 +678,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 正常系：メインメソッドが正常に実行される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMain_normalSuccess() {
@@ -682,7 +703,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 準正常系：引数がnullの場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMain_semiNullArgs() {
@@ -707,7 +728,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * messageSource フィールドのテスト - 正常系：メッセージソースが正しく注入される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -737,7 +758,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * フィールドの型テスト - 正常系：messageSourceフィールドがKmgMessageSource型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMessageSourceType_normalKmgMessageSource() {
@@ -758,8 +779,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult, "messageSourceフィールドがKmgMessageSource型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult, "messageSourceフィールドがKmgMessageSource型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -772,7 +793,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * フィールドの可視性テスト - 正常系：messageSourceフィールドがprivateで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMessageSourceVisibility_normalPrivate() {
@@ -793,8 +814,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & Modifier.PRIVATE;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult, "messageSourceフィールドがprivateで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "messageSourceフィールドがprivateで定義されていること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -807,7 +828,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * SpringBootApplication アノテーションのテスト - 正常系：アノテーションが正しく設定されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testSpringBootApplicationAnnotation_normalCorrect() {
@@ -832,7 +853,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * TOOL_NAME 定数のテスト - 正常系：ツール名が正しく定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -861,7 +882,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * 定数の型テスト - 正常系：TOOL_NAME定数がString型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameType_normalString() {
@@ -882,8 +903,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final Class<?> actualResult = actualFieldType;
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedFieldType, actualResult, "TOOL_NAME定数がString型であること");
 
         } catch (final NoSuchFieldException e) {
 
@@ -896,7 +917,7 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
     /**
      * 定数の可視性テスト - 正常系：TOOL_NAME定数がprivate static finalで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameVisibility_normalPrivateStaticFinal() {
@@ -917,8 +938,8 @@ public class JavadocLineRemoverToolTest extends AbstractKmgTest {
             /* 検証の準備 */
             final int actualResult = actualModifiers & (Modifier.PRIVATE | Modifier.STATIC | Modifier.FINAL);
 
-                    /* 検証の実施 */
-        Assertions.assertSame(expectedModifiers, actualResult, "TOOL_NAME定数がprivate static finalで定義されていること");
+            /* 検証の実施 */
+            Assertions.assertSame(expectedModifiers, actualResult, "TOOL_NAME定数がprivate static finalで定義されていること");
 
         } catch (final NoSuchFieldException e) {
 

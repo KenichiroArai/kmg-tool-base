@@ -10,17 +10,27 @@ import kmg.tool.dtc.domain.types.DtcTransformTypes;
  * DtcTransformModelImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls",
 })
 public class DtcTransformModelImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private DtcTransformModelImpl testTarget;
 
     /**
      * apply メソッドのテスト - 正常系：CAPITALIZE変換処理が適用される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testApply_normalCapitalizeTransformation() {
@@ -46,6 +56,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * apply メソッドのテスト - 正常系：NONE変換処理が適用される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testApply_normalNoneTransformation() {
@@ -71,6 +83,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * apply メソッドのテスト - 正常系：TO_LOWER_CASE変換処理が適用される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testApply_normalToLowerCaseTransformation() {
@@ -96,6 +110,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * apply メソッドのテスト - 正常系：TO_UPPER_CASE変換処理が適用される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testApply_normalToUpperCaseTransformation() {
@@ -121,6 +137,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * apply メソッドのテスト - 準正常系：空文字の値で変換処理が適用される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testApply_semiEmptyValue() {
@@ -146,6 +164,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * apply メソッドのテスト - 準正常系：nullの値で変換処理が適用される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testApply_semiNullValue() {
@@ -171,6 +191,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：正常にインスタンスが作成される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalCreateInstance() {
@@ -195,6 +217,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：空文字の値でインスタンスが作成される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalEmptyValue() {
@@ -219,6 +243,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 準正常系：nullの値でインスタンスが作成される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_semiNullValue() {
@@ -243,6 +269,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * getOriginalValue メソッドのテスト - 正常系：正常な値が取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOriginalValue_normalGetValue() {
@@ -268,6 +296,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * getOriginalValue メソッドのテスト - 準正常系：空文字の値が取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOriginalValue_semiEmptyValue() {
@@ -293,6 +323,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * getOriginalValue メソッドのテスト - 準正常系：nullの値が取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOriginalValue_semiNullValue() {
@@ -318,6 +350,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * getTransformedValue メソッドのテスト - 正常系：変換後の値が取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTransformedValue_normalGetValueAfterApply() {
@@ -344,6 +378,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * getTransformedValue メソッドのテスト - 正常系：変換前の値が取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTransformedValue_normalGetValueBeforeApply() {
@@ -369,6 +405,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * getTransformedValue メソッドのテスト - 準正常系：空文字の値が取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTransformedValue_semiEmptyValue() {
@@ -394,6 +432,8 @@ public class DtcTransformModelImplTest extends AbstractKmgTest {
 
     /**
      * getTransformedValue メソッドのテスト - 準正常系：nullの値が取得される場合
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTransformedValue_semiNullValue() {

@@ -40,41 +40,81 @@ import kmg.tool.jdts.application.types.JdtsInsertPositionTypes;
  *
  * @author KenichiroArai
  *
- * @version 0.1.0
- *
  * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @Service
 public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
-    /** Javadocタグの開始文字列 */
+    /**
+     * Javadocタグの開始文字列
+     *
+     * @since 0.1.0
+     */
     private static final String JAVADOC_TAG_START = "* @"; //$NON-NLS-1$
 
-    /** タグのフォーマット */
+    /**
+     * タグのフォーマット
+     *
+     * @since 0.1.0
+     */
     private static final String TAG_FORMAT = "* %s %s %s"; //$NON-NLS-1$
 
-    /** 構成モデル */
+    /**
+     * 構成モデル
+     *
+     * @since 0.1.0
+     */
     private JdtsConfigsModel configsModel;
 
-    /** 元のブロックモデル */
+    /**
+     * 元のブロックモデル
+     *
+     * @since 0.1.0
+     */
     private JdtsBlockModel srcBlockModel;
 
-    /** 先頭タグの位置オフセット */
+    /**
+     * 先頭タグの位置オフセット
+     *
+     * @since 0.1.0
+     */
     private int headTagPosOffset;
 
-    /** タグ構成のイテレータ */
+    /**
+     * タグ構成のイテレータ
+     *
+     * @since 0.1.0
+     */
     private Iterator<JdtsTagConfigModel> tagConfigIterator;
 
-    /** 現在のタグ構成モデル */
+    /**
+     * 現在のタグ構成モデル
+     *
+     * @since 0.1.0
+     */
     private JdtsTagConfigModel currentTagConfigModel;
 
-    /** 現在の元のJavadocタグ */
+    /**
+     * 現在の元のJavadocタグ
+     *
+     * @since 0.1.0
+     */
     private JavadocTagModel currentSrcJavadocTag;
 
-    /** 設定するタグの内容 */
+    /**
+     * 設定するタグの内容
+     *
+     * @since 0.1.0
+     */
     private String tagContentToApply;
 
-    /** 置換後のJavadocブロック */
+    /**
+     * 置換後のJavadocブロック
+     *
+     * @since 0.1.0
+     */
     private StringBuilder replacedJavadocBlock;
 
     /**
@@ -92,51 +132,69 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * このメソッドは、新しいタグの作成と追加を一度の操作で行います。 タグの内容は現在のタグ構成モデルから取得されます。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
+     *
+     * @return true：成功、false：失敗
      */
     @Override
-    public void addNewTagByPosition() {
+    public boolean addNewTagByPosition() {
+
+        final boolean result;
 
         /* 新しいタグの生成 */
         this.tagContentToApply = this.createTagContent();
 
         /* タグの挿入位置に基づく処理 */
-        switch (this.currentTagConfigModel.getInsertPosition()) {
+        final JdtsInsertPositionTypes insertPosition = this.currentTagConfigModel.getInsertPosition();
 
-            case BEGINNING:
+        final int insertLength = switch (insertPosition) {
+
+            case BEGINNING -> {
                 /* Javadocタグの先頭 */
 
-                // 先頭タグの位置が特定されているか確認
-                if (this.headTagPosOffset > -1) {
+                // 先頭タグの位置が特定されていないか確認
+                if (this.headTagPosOffset == -1) {
 
-                    // 特定されている場合は指定位置に挿入
-                    this.replacedJavadocBlock.insert(this.headTagPosOffset,
-                        KmgString.concat(this.tagContentToApply, KmgString.LINE_SEPARATOR));
+                    // 特定されていない場合
 
-                } else {
+                    // 挿入内容
+                    final String insertContent
+                        = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply, KmgString.LINE_SEPARATOR);
 
-                    // 特定されていない場合は末尾に追加
-                    this.replacedJavadocBlock
-                        .append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
+                    // 先頭タグの位置オフセットの-1分の+1+置換後のJavadocブロックの長さ+挿入内容の長さ
+                    final int insertContentLength
+                        = 1 + this.replacedJavadocBlock.toString().length() + insertContent.length();
+
+                    this.replacedJavadocBlock.append(insertContent);
+                    yield insertContentLength;
 
                 }
-                break;
 
-            case NONE:
-                /* 指定無し */
-            case END:
-                /* Javadocタグの末尾 */
-            case PRESERVE:
-                /* 現在の位置を維持（末尾に追加） */
-                this.replacedJavadocBlock.append(KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply));
-                break;
+                // 特定されている場合は指定位置に挿入
+                final String insertContent = KmgString.concat(this.tagContentToApply, KmgString.LINE_SEPARATOR);
+                this.replacedJavadocBlock.insert(this.headTagPosOffset, insertContent);
+                final int insertContentLength = insertContent.length();
+                yield insertContentLength;
 
-        }
+            }
+
+            case NONE, END, PRESERVE -> {
+                /* 指定無し 、 Javadocタグの末尾 、 現在の位置を維持 （ 末尾に追加） */
+
+                final String insertContent = KmgString.concat(KmgString.LINE_SEPARATOR, this.tagContentToApply);
+                this.replacedJavadocBlock.append(insertContent);
+                final int insertContentLength = insertContent.length();
+                yield insertContentLength;
+
+            }
+
+        };
 
         /* 先頭タグの位置オフセットを更新 */
-        this.headTagPosOffset += this.tagContentToApply.length();
+        this.headTagPosOffset += insertLength;
+
+        result = true;
+        return result;
 
     }
 
@@ -145,8 +203,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * <p>
      * 現在の設定で使用されている構成モデルを返します。 構成モデルには、タグの設定情報やその他の設定が含まれています。
      * </p>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -166,8 +222,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * 現在処理中の元のJavadocタグを返します。 このタグは、置換や更新の対象となるタグです。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 現在の元のJavadocタグ - 処理対象の元のJavadocタグ
@@ -185,8 +239,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * <p>
      * 現在処理中のタグ構成モデルを返します。 このモデルには、タグの設定情報や配置ルールが含まれています。
      * </p>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -206,8 +258,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * タグの追加、更新、削除などの操作が適用された後の Javadocブロックの内容を返します。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 置換後のJavadocブロック - 更新された完全なJavadocブロックの文字列
@@ -222,8 +272,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
 
     /**
      * 設定するタグの内容を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -243,8 +291,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * 現在のタグ構成モデルで指定されているタグが、 元のJavadocブロック内に存在するかどうかを確認します。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return true：存在する場合、false：存在しない場合
@@ -262,6 +308,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * <p>
      * ブロック置換ロジックの初期状態を設定します。 構成モデルと元のブロックモデルを設定し、 内部状態を初期化します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param configsModel
      *                      構成モデル - タグの設定情報を含むモデル
@@ -306,8 +354,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * タグ構成モデルの次のタグに移動し、 対応する元のJavadocタグを設定します。 すべてのタグを処理し終えた場合はfalseを返します。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return true：次のタグがある場合、false：次のタグがない場合
@@ -343,8 +389,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * <p>
      * 現在処理中のJavadocタグを元のブロックから削除します。 タグが存在しない場合は何も行わずfalseを返します。
      * </p>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -387,6 +431,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * <p>
      * このメソッドは、タグの配置ルールに従って不適切な位置にあるタグを 自動的に削除するために使用されます。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：タグを削除した場合、false：タグを削除しなかった場合
      */
@@ -433,8 +479,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * 置換は、タグの値とタグの説明を含む完全な置換となります。
      * </p>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return true：置換成功、false：置換失敗
@@ -471,8 +515,6 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * <p>
      * タグの位置が指定されている場合（BEGINNING、END）、 タグを削除して指定位置に再配置します。 位置指定がない場合（NONE、PRESERVE）は何も行いません。
      * </p>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -513,6 +555,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * 現在のタグ構成モデルと元のブロックモデルの状態に基づいて、 新しいタグを追加すべきかどうかを判断します。 この判断は、タグの配置ルールやJavaの区分に基づいて行われます。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @return true：追加する、false：追加しない
      */
     @Override
@@ -533,35 +577,25 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * <li>バージョン比較（IF_LOWERの場合）</li>
      * </ul>
      *
+     * @since 0.1.0
+     *
      * @return true：上書きする、false：上書きしない
      */
     @Override
     public boolean shouldOverwriteTag() {
 
-        boolean result = false;
+        boolean result;
 
         /* 上書き設定 */
-        switch (this.currentTagConfigModel.getOverwrite()) {
+        result = switch (this.currentTagConfigModel.getOverwrite()) {
 
-            case NONE:
-                /* 指定無し */
-            case NEVER:
-                /* 上書きしない */
-                return result;
+            case NONE, NEVER -> false;
 
-            case ALWAYS:
-                /* 常に上書き */
-                result = true;
-                break;
+            case ALWAYS -> true;
 
-            case IF_LOWER:
-                /* 既存バージョン>上書きするバージョン場合のみ上書き */
+            case IF_LOWER -> this.shouldOverwriteBasedOnVersion();
 
-                result = this.shouldOverwriteBasedOnVersion();
-
-                break;
-
-        }
+        };
 
         return result;
 
@@ -573,6 +607,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * 現在のタグ構成モデルの情報を使用して、 タグの内容を生成します。<br>
      * 生成される内容には、タグ、タグ値、タグの説明が含まれます。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return タグの内容 - フォーマットされたタグの文字列
      */
@@ -595,6 +631,8 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * <p>
      * 現在のタグと新しいタグのバージョンを比較し、 上書きが必要かどうかを判断します。 バージョンタグでない場合は常にtrueを返します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return true：上書きする、false：上書きしない
      */

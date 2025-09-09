@@ -36,32 +36,66 @@ import kmg.tool.jdts.application.types.JdtsOverwriteTypes;
  */
 public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
-    /** タグ設定 */
+    /**
+     * タグ設定
+     *
+     * @since 0.1.0
+     */
     private final Map<String, Object> tagConfig;
 
-    /** タグ */
+    /**
+     * タグ
+     *
+     * @since 0.1.0
+     */
     private KmgJavadocTagTypes tag;
 
-    /** タグ名 */
+    /**
+     * タグ名
+     *
+     * @since 0.1.0
+     */
     private String tagName;
 
-    /** タグの指定値 */
+    /**
+     * タグの指定値
+     *
+     * @since 0.1.0
+     */
     private String tagValue;
 
-    /** タグの説明 */
+    /**
+     * タグの説明
+     *
+     * @since 0.1.0
+     */
     private String tagDescription;
 
-    /** 配置場所の設定 */
+    /**
+     * 配置場所の設定
+     *
+     * @since 0.1.0
+     */
     private JdtsLocationConfigModel location;
 
-    /** タグの挿入位置 */
+    /**
+     * タグの挿入位置
+     *
+     * @since 0.1.0
+     */
     private JdtsInsertPositionTypes insertPosition;
 
-    /** 上書き設定 */
+    /**
+     * 上書き設定
+     *
+     * @since 0.1.0
+     */
     private JdtsOverwriteTypes overwrite;
 
     /**
      * コンストラクタ<br>
+     *
+     * @since 0.1.0
      *
      * @param tagConfig
      *                  タグ設定
@@ -102,6 +136,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * タグの挿入位置を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return タグの挿入位置
      */
     @Override
@@ -114,6 +150,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
     /**
      * 配置場所の設定を返す<br>
+     *
+     * @since 0.1.0
      *
      * @return 配置場所の設定
      */
@@ -128,6 +166,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * 上書き設定を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return 上書き設定
      */
     @Override
@@ -141,6 +181,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * タグを返す<br>
      *
+     * @since 0.1.0
+     *
      * @return タグ
      */
     @Override
@@ -153,8 +195,6 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
     /**
      * タグの説明を返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -171,8 +211,6 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * タグ名を返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return タグ名
@@ -188,6 +226,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * タグの指定値を返す<br>
      *
+     * @since 0.1.0
+     *
      * @return タグの指定値
      */
     @Override
@@ -200,6 +240,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
     /**
      * タグの配置がJava区分に一致するか<br>
+     *
+     * @since 0.1.0
      *
      * @param javaClassification
      *                           Java区分
@@ -244,6 +286,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
     /**
      * 基本項目の設定<br>
+     *
+     * @since 0.1.0
      *
      * @return バリデーションモデル
      */
@@ -305,6 +349,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * 挿入位置の設定<br>
      *
+     * @since 0.1.0
+     *
      * @return バリデーションモデル
      */
     protected KmgValsModel setupInsertPosition() {
@@ -331,6 +377,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
     /**
      * 配置場所の設定<br>
+     *
+     * @since 0.1.0
      *
      * @return バリデーションモデル
      */
@@ -359,6 +407,8 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
     /**
      * 上書き設定<br>
+     *
+     * @since 0.1.0
      *
      * @return バリデーションモデル
      */

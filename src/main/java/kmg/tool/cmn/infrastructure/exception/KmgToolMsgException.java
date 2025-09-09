@@ -97,6 +97,8 @@ public class KmgToolMsgException extends KmgFundMsgException {
     /**
      * メッセージを作成して返す。
      *
+     * @since 0.1.0
+     *
      * @return メッセージ
      */
     @Override
@@ -109,6 +111,8 @@ public class KmgToolMsgException extends KmgFundMsgException {
 
     /**
      * メッセージソースを作成する。
+     *
+     * @since 0.1.0
      */
     @Override
     protected void createMessageSource() {

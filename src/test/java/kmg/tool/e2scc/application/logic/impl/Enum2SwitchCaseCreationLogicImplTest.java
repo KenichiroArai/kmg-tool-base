@@ -28,6 +28,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * 列挙型からcase文作成ロジック実装テスト
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -36,21 +40,39 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private Enum2SwitchCaseCreationLogicImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -69,6 +91,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -94,6 +118,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addItemNameToRows メソッドのテスト - 異常系：項目名がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -134,6 +160,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
     /**
      * addItemNameToRows メソッドのテスト - 正常系：項目名が設定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -164,6 +192,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * addItemToRows メソッドのテスト - 異常系：項目がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -204,6 +234,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
     /**
      * addItemToRows メソッドのテスト - 正常系：項目が設定されている場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -234,6 +266,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * convertEnumDefinition メソッドのテスト - 正常系：列挙型定義が正しく変換される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -267,6 +301,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
     /**
      * convertEnumDefinition メソッドのテスト - 準正常系：列挙型定義ではない場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -293,6 +329,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getItem メソッドのテスト - 正常系：項目を取得する
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -318,6 +356,8 @@ public class Enum2SwitchCaseCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * getItemName メソッドのテスト - 正常系：項目名を取得する
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

@@ -31,6 +31,10 @@ import kmg.tool.dtc.domain.logic.DtcLogic;
  * DtcServiceImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -39,24 +43,46 @@ import kmg.tool.dtc.domain.logic.DtcLogic;
 })
 public class DtcServiceImplTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private DtcServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
-    /** モックDtcLogic */
+    /**
+     * モックDtcLogic
+     *
+     * @since 0.1.0
+     */
     private DtcLogic mockDtcLogic;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -82,6 +108,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -97,6 +125,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
     /**
      * closeDtcLogic メソッドのテスト - 異常系：IOException発生
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -153,6 +183,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * closeDtcLogic メソッドのテスト - 正常系：正常なクローズ処理
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws Exception
@@ -180,6 +212,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用した初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalCustomLogger() {
@@ -201,6 +235,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：標準ロガーを使用した初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalStandardLogger() {
@@ -222,6 +258,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
     /**
      * getInputPath メソッドのテスト - 正常系：入力ファイルパスを取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -249,6 +287,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 準正常系：nullの入力ファイルパスを取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -272,6 +312,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
     /**
      * getOutputPath メソッドのテスト - 正常系：出力ファイルパスを取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -299,6 +341,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * getOutputPath メソッドのテスト - 準正常系：nullの出力ファイルパスを取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -324,6 +368,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
     /**
      * getTemplatePath メソッドのテスト - 正常系：テンプレートファイルパスを取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -351,6 +397,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * getTemplatePath メソッドのテスト - 準正常系：nullのテンプレートファイルパスを取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -376,6 +424,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -411,6 +461,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：DtcLogicのcloseでIOException発生
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -480,6 +532,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：正常な処理実行
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
@@ -523,6 +577,8 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 準正常系：データなし（1行目で終了）
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

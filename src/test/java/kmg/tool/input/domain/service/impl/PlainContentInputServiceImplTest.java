@@ -29,6 +29,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * PlainContentInputServiceImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -37,18 +41,32 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 })
 public class PlainContentInputServiceImplTest extends AbstractKmgTest {
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private PlainContentInputServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -65,6 +83,8 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -80,6 +100,8 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタで初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public void testConstructor_normalDefaultConstructor() {
@@ -100,6 +122,8 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
 
     /**
      * getContent メソッドのテスト - 正常系：入力内容を取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -129,6 +153,8 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * getContent メソッドのテスト - 準正常系：nullの入力内容を取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
@@ -156,6 +182,8 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：IOException発生
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -206,6 +234,8 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：空ファイルの読み込み
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws IOException
@@ -240,6 +270,8 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：正常なファイル読み込み処理
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws IOException
@@ -273,6 +305,8 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 正常系：大きなファイルの読み込み
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

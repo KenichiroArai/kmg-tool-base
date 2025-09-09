@@ -28,6 +28,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * AbstractInputServiceのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -43,6 +47,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
 
         /**
          * デフォルトコンストラクタ
+         *
+         * @since 0.1.0
          */
         public TestAbstractInputService() {
 
@@ -50,6 +56,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
 
         /**
          * processメソッドをpublicでオーバーライド
+         *
+         * @since 0.1.0
          *
          * @return true：成功、false：失敗
          *
@@ -66,21 +74,39 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
 
     }
 
-    /** テンポラリディレクトリ */
+    /**
+     * テンポラリディレクトリ
+     *
+     * @since 0.1.0
+     */
     @TempDir
     private Path tempDir;
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private TestAbstractInputService testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
     /**
      * セットアップ
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -100,6 +126,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -116,6 +144,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
 
     /**
      * コンストラクタのテスト - 正常系：デフォルトコンストラクタで初期化する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -139,6 +169,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
 
     /**
      * getInputPath メソッドのテスト - 正常系：入力ファイルパスを取得する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -165,6 +197,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 異常系：inputPathが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -207,6 +241,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 異常系：inputPathがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -248,6 +284,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：初期化が成功する場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -275,6 +313,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 正常系：抽象メソッドが正常に実行される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

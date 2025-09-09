@@ -12,17 +12,27 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
  * KMGツールバリデーション例外テスト
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls",
 })
 public class KmgToolValExceptionTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private KmgToolValException testTarget;
 
     /**
      * getCause メソッドのテスト - 正常系：原因がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -49,6 +59,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
 
     /**
      * getCause メソッドのテスト - 正常系：原因が取得される場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -77,6 +89,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * getValidationsModel メソッドのテスト - 正常系：バリデーションモデルが取得される場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -103,6 +117,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * getValidationsModel メソッドのテスト - 正常系：バリデーションモデルがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -128,6 +144,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：原因がnullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -157,6 +175,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：モックバリデーションモデルの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -181,6 +201,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：モックバリデーションモデルと原因の場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -210,6 +232,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルと原因の場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -237,6 +261,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルと原因が両方nullの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -266,6 +292,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -290,6 +318,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルがnullで原因が設定されている場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -318,6 +348,8 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルのみの場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

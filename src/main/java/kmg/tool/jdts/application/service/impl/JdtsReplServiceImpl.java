@@ -36,8 +36,6 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * ロガー
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     private final Logger logger;
@@ -45,31 +43,51 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * KMGメッセージリソース
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** Javadocタグ設定のブロック置換ロジック */
+    /**
+     * Javadocタグ設定のブロック置換ロジック
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private JdtsBlockReplLogic jdtsBlockReplLogic;
 
-    /** Javadocタグ設定の構成モデル */
+    /**
+     * Javadocタグ設定の構成モデル
+     *
+     * @since 0.1.0
+     */
     private JdtsConfigsModel jdtsConfigsModel;
 
-    /** Javadocタグ設定のコードモデル */
+    /**
+     * Javadocタグ設定のコードモデル
+     *
+     * @since 0.1.0
+     */
     private JdtsCodeModel jdtsCodeModel;
 
-    /** 置換後のコード */
+    /**
+     * 置換後のコード
+     *
+     * @since 0.1.0
+     */
     private String replaceCode;
 
-    /** 合計置換数 */
+    /**
+     * 合計置換数
+     *
+     * @since 0.1.0
+     */
     private long totalReplaceCount;
 
     /**
      * デフォルトコンストラクタ
+     *
+     * @since 0.1.0
      */
     public JdtsReplServiceImpl() {
 
@@ -80,11 +98,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      *
      * @param logger
      *               ロガー
@@ -99,8 +113,6 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
     /**
      * Javadocタグ設定の構成モデルを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -117,8 +129,6 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * 置換後のコードを返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return 置換後のコード
@@ -134,6 +144,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * 合計置換数を返す。
      *
+     * @since 0.1.0
+     *
      * @return 合計置換数
      */
     @Override
@@ -146,6 +158,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @param jdtsConfigsModel
      *                         Javadocタグ設定の構成モデル
@@ -164,10 +178,15 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         boolean result = false;
 
-        /* 早期リターン：nullパラメータの場合 */
-        if ((jdtsConfigsModel == null) || (jdtsCodeModel == null)) {
+        /* パラメータがnullか */
+        if (jdtsConfigsModel == null) {
 
-            result = true;
+            return result;
+
+        }
+
+        if (jdtsCodeModel == null) {
+
             return result;
 
         }
@@ -187,11 +206,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * Javadocを置換する。<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
-     *
-     * @version 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -205,13 +220,32 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         /* 事前処理 */
 
-        // オリジナルコードのJavadocブロック部分を識別子に置換する
-        // 同じJavadocがある場合に異なる置換をさせないため、事前に一意となる識別子に置き換える
+        // オリジナルコード内のJavadocブロック部分を一意の識別子に一時的に置換する
+        // 同一内容のJavadocが複数存在する場合でも、異なる置換が行われないようにするため
+        // 置換は前回の置換位置以降から検索して実施する
+
+        int searchStartIdx = 0; // 次回検索開始位置
+
         for (final JdtsBlockModel jdtsBlockModel : this.jdtsCodeModel.getJdtsBlockModels()) {
 
-            // 複数該当する場合もあるため、最初の部分のみを置換する
-            this.replaceCode = this.replaceCode.replaceFirst(
-                Pattern.quote(jdtsBlockModel.getJavadocModel().getSrcJavadoc()), jdtsBlockModel.getId().toString());
+            final String target     = jdtsBlockModel.getJavadocModel().getSrcJavadoc();
+            final int    replaceIdx = this.replaceCode.indexOf(target, searchStartIdx);
+
+            if (replaceIdx == -1) {
+
+                continue;
+
+            }
+
+            // 置換対象の前後で分割し、Javadoc部分を識別子に置換
+            final String before = this.replaceCode.substring(0, replaceIdx);
+            final String after  = this.replaceCode.substring(replaceIdx).replaceFirst(Pattern.quote(target),
+                jdtsBlockModel.getId().toString());
+
+            this.replaceCode = KmgString.concat(before, after);
+
+            // 次回は今回置換した識別子の直後から検索を再開
+            searchStartIdx = replaceIdx + jdtsBlockModel.getId().toString().length();
 
         }
 
@@ -231,6 +265,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
     /**
      * 新しいタグ追加時のログを出力する
+     *
+     * @since 0.1.0
      *
      * @param targetBlockModel
      *                         対象のブロックモデル
@@ -257,6 +293,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * タグ削除時のログを出力する
      *
+     * @since 0.1.0
+     *
      * @param targetBlockModel
      *                         対象のブロックモデル
      */
@@ -277,6 +315,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
     /**
      * タグ置換時のログを出力する
+     *
+     * @since 0.1.0
      *
      * @param targetBlockModel
      *                         対象のブロックモデル
@@ -310,6 +350,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * タグ位置変更時のログを出力する
      *
+     * @since 0.1.0
+     *
      * @param targetBlockModel
      *                         対象のブロックモデル
      */
@@ -341,6 +383,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
     /**
      * ブロックごとのJavadoc置換処理を行う
+     *
+     * @since 0.1.0
      *
      * @param targetBlockModel
      *                         対象のブロックモデル

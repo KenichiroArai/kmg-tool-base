@@ -22,9 +22,9 @@ import kmg.tool.e2scc.service.Enum2SwitchCaseCreationService;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -36,7 +36,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * デフォルトコンストラクタ<br>
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     public Enum2SwitchCaseCreationToolTest() {
 
@@ -46,7 +46,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：デフォルトコンストラクタが正常に動作する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -75,7 +75,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * enum2SwitchCaseMakingService フィールドのテスト - 正常系：列挙型からcase文作成サービスが正しく注入される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -106,7 +106,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * フィールドの型テスト - 正常系：enum2SwitchCaseMakingServiceフィールドがEnum2SwitchCaseCreationService型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testEnum2SwitchCaseMakingServiceType_normalEnum2SwitchCaseCreationService() {
@@ -142,7 +142,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * フィールドの可視性テスト - 正常系：enum2SwitchCaseMakingServiceフィールドがprivateで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testEnum2SwitchCaseMakingServiceVisibility_normalPrivate() {
@@ -178,7 +178,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * getIoService メソッドのテスト - 正常系：列挙型からcase文作成サービスが正常に返される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -209,7 +209,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * getIoService メソッドのテスト - 準正常系：列挙型からcase文作成サービスがnullの場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -240,7 +240,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * メソッドの戻り値型テスト - 正常系：getIoServiceメソッドがEnum2SwitchCaseCreationServiceを返す場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetIoServiceReturnType_normalEnum2SwitchCaseCreationService() {
@@ -276,7 +276,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * メソッドの可視性テスト - 正常系：getIoServiceメソッドがprotectedで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testGetIoServiceVisibility_normalProtected() {
@@ -311,7 +311,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * 継承関係のテスト - 正常系：AbstractDtcToolを正しく継承している場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testInheritance_normalExtendsAbstractDtcTool() {
@@ -336,7 +336,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 異常系：SpringBootアプリケーションの起動に失敗する場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMain_errorSpringBootStartupFailure() {
@@ -363,7 +363,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 正常系：メインメソッドが正常に実行される場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMain_normalSuccess() {
@@ -388,13 +388,13 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * main メソッドのテスト - 準正常系：引数がnullの場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testMain_semiNullArgs() {
 
         /* 期待値の定義 */
-        final String[] expectedArgs = new String[0];
+        final String[] expectedArgs = {};
 
         /* 準備 */
         // 空の引数を準備
@@ -413,7 +413,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * SpringBootApplication アノテーションのテスト - 正常系：アノテーションが正しく設定されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testSpringBootApplicationAnnotation_normalCorrect() {
@@ -438,7 +438,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * TOOL_NAME 定数のテスト - 正常系：ツール名が正しく定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -467,7 +467,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * 定数の型テスト - 正常系：TOOL_NAME定数がString型の場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameType_normalString() {
@@ -502,7 +502,7 @@ public class Enum2SwitchCaseCreationToolTest extends AbstractKmgTest {
     /**
      * 定数の可視性テスト - 正常系：TOOL_NAME定数がprivate static finalで定義されている場合
      *
-     * @since 1.0.0
+     * @since 0.1.0
      */
     @Test
     public void testToolNameVisibility_normalPrivateStaticFinal() {

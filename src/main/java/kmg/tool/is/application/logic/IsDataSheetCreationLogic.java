@@ -20,20 +20,16 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @author KenichiroArai
  *
- * @since 1.0.0
+ * @since 0.1.0
  *
- * @version 1.0.0
+ * @version 0.1.0
  */
 public interface IsDataSheetCreationLogic {
 
     /**
      * 出力ファイルのディレクトリを作成する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -43,11 +39,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * 文字セットを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 文字セット
      */
@@ -56,11 +48,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * カラム数を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return カラム数
      */
@@ -69,11 +57,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * カラム物理名リストを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return カラム物理名リスト
      */
@@ -82,11 +66,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * 削除コメントを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 削除コメント
      */
@@ -95,11 +75,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * 削除SQLを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 削除SQL
      */
@@ -108,11 +84,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * 挿入コメントを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 挿入コメント
      */
@@ -121,11 +93,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * 挿入SQLを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param datasRow
      *                 データ行
@@ -137,11 +105,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * KMG DBデータ型リストを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return ＤＢデータ型リスト
      */
@@ -150,11 +114,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * 出力ファイルパスを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return 出力ファイルパス
      */
@@ -163,11 +123,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * SQLＩＤを返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return SQLＩＤ
      */
@@ -176,11 +132,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * テーブル論理名を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return テーブル論理名
      */
@@ -189,11 +141,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * テーブル物理名を返す<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @return テーブル物理名
      */
@@ -202,11 +150,7 @@ public interface IsDataSheetCreationLogic {
     /**
      * 初期化する<br>
      *
-     * @author KenichiroArai
-     *
-     * @since 1.0.0
-     *
-     * @version 1.0.0
+     * @since 0.1.0
      *
      * @param kmgDbTypes
      *                   KMG DBの種類

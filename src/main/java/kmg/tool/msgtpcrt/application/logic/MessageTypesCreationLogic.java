@@ -11,14 +11,16 @@ import kmg.tool.iito.domain.logic.IctoOneLinePatternLogic;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
 
     /**
      * 項目名を書き込み対象に追加する。
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -30,6 +32,8 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
     /**
      * 項目を書き込み対象に追加する。
      *
+     * @since 0.1.0
+     *
      * @return true：成功、false：失敗
      *
      * @throws KmgToolMsgException
@@ -39,6 +43,8 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
 
     /**
      * メッセージの種類定義から項目と項目名に変換する。
+     *
+     * @since 0.1.0
      *
      * @return true：変換あり、false：変換なし
      *
@@ -50,12 +56,16 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
     /**
      * 項目を返す。
      *
+     * @since 0.1.0
+     *
      * @return 項目
      */
     String getItem();
 
     /**
      * 項目名を返す。
+     *
+     * @since 0.1.0
      *
      * @return 項目名
      */

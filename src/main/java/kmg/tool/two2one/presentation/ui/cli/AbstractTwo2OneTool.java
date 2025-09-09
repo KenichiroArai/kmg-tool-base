@@ -16,13 +16,27 @@ import kmg.tool.two2one.domain.service.Two2OneService;
 
 /**
  * シンプル2入力ファイルから1出力ファイルへの変換ツールサービス抽象クラス
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
-    /** テンプレートファイルのパスのフォーマット */
+    /**
+     * テンプレートファイルのパスのフォーマット
+     *
+     * @since 0.1.0
+     */
     private static final String TEMPLATE_FILE_PATH_FORMAT = "template/%s.yml"; //$NON-NLS-1$
 
-    /** メッセージソース */
+    /**
+     * メッセージソース
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private KmgMessageSource messageSource;
 
@@ -33,16 +47,20 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
      */
     private final Logger logger;
 
-    /** テンプレートファイルパス */
+    /**
+     * テンプレートファイルパス
+     *
+     * @since 0.1.0
+     */
     private final Path templatePath;
 
     /**
      * 標準ロガーを使用して初期化するコンストラクタ<br>
      *
+     * @since 0.1.0
+     *
      * @param toolName
      *                 ツール名
-     *
-     * @since 0.1.0
      */
     public AbstractTwo2OneTool(final String toolName) {
 
@@ -71,6 +89,8 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
     /**
      * テンプレートファイルパス
      *
+     * @since 0.1.0
+     *
      * @return テンプレートファイルパス
      */
     public Path getTemplatePath() {
@@ -82,6 +102,8 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      */
@@ -113,6 +135,8 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
     /**
      * 2入力ファイルから1出力ファイルへの変換ツールサービスを返す。
      *
+     * @since 0.1.0
+     *
      * @return 2入力ファイルから1出力ファイルへの変換ツールサービス
      */
     @Override
@@ -120,6 +144,8 @@ public abstract class AbstractTwo2OneTool extends AbstractIoTool {
 
     /**
      * デフォルトテンプレートパスを返す。
+     *
+     * @since 0.1.0
      *
      * @return デフォルトテンプレートパス
      */

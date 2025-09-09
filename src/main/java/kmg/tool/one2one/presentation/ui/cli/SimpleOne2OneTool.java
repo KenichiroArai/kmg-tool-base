@@ -11,21 +11,35 @@ import kmg.tool.one2one.application.service.SimpleOne2OneService;
  * シンプル1入力ファイルから1出力ファイルへの変換ツール
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SpringBootApplication(scanBasePackages = {
     "kmg"
 })
 public class SimpleOne2OneTool extends AbstractOne2OneTool {
 
-    /** ツール名 */
+    /**
+     * ツール名
+     *
+     * @since 0.1.0
+     */
     private static final String TOOL_NAME = "シンプル1入力ファイルから1出力ファイルへの変換ツール"; //$NON-NLS-1$
 
-    /** シンプル1入力ファイルから1出力ファイルへの変換サービス */
+    /**
+     * シンプル1入力ファイルから1出力ファイルへの変換サービス
+     *
+     * @since 0.1.0
+     */
     @Autowired
     private SimpleOne2OneService simpleOne2OneService;
 
     /**
      * エントリポイント
+     *
+     * @since 0.1.0
      *
      * @param args
      *             オプション
@@ -49,6 +63,8 @@ public class SimpleOne2OneTool extends AbstractOne2OneTool {
 
     /**
      * コンストラクタ
+     *
+     * @since 0.1.0
      */
     public SimpleOne2OneTool() {
 
@@ -58,6 +74,8 @@ public class SimpleOne2OneTool extends AbstractOne2OneTool {
 
     /**
      * シンプル1入力ファイルから1出力ファイルへの変換サービスを返す。
+     *
+     * @since 0.1.0
      *
      * @return シンプル1入力ファイルから1出力ファイルへの変換サービス
      */

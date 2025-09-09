@@ -21,8 +21,6 @@ public interface JdtsCodeModel {
     /**
      * Javadocタグ設定のブロックモデルリストを返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return Javadocタグ設定のブロックモデルリスト
@@ -32,8 +30,6 @@ public interface JdtsCodeModel {
     /**
      * オリジナルコードを返す<br>
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
      * @return オリジナルコード
@@ -42,6 +38,8 @@ public interface JdtsCodeModel {
 
     /**
      * 解析する
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

@@ -10,11 +10,17 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolValException;
  * マッピング変換サービスインタフェース<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 public interface MapTransformService {
 
     /**
      * 対象ファイルパス
+     *
+     * @since 0.1.0
      *
      * @return 対象ファイルパス
      */
@@ -22,6 +28,8 @@ public interface MapTransformService {
 
     /**
      * 初期化する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *
@@ -38,6 +46,8 @@ public interface MapTransformService {
 
     /**
      * 処理する
+     *
+     * @since 0.1.0
      *
      * @return true：成功、false：失敗
      *

@@ -27,6 +27,10 @@ import kmg.tool.simple.domain.service.SimpleInputServiceImpl;
  * SimpleInputServiceImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -35,17 +39,31 @@ import kmg.tool.simple.domain.service.SimpleInputServiceImpl;
 })
 public class SimpleInputServiceImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private SimpleInputServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** テスト用入力パス */
+    /**
+     * テスト用入力パス
+     *
+     * @since 0.1.0
+     */
     private Path testInputPath;
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：標準ロガーを使用した初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public static void testConstructor_normalStandardLogger() {
@@ -67,6 +85,8 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
     /**
      * セットアップ
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -85,6 +105,8 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
     /**
      * クリーンアップ
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -100,6 +122,8 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
 
     /**
      * getInputPath メソッドのテスト - 正常系：入力ファイルパスの取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -126,6 +150,8 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
     /**
      * getInputPath メソッドのテスト - 準正常系：nullの入力ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -149,6 +175,8 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 異常系：入力パスが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -194,6 +222,8 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 異常系：入力パスがnullの場合
      *
+     * @since 0.1.0
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
@@ -232,6 +262,8 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -274,6 +306,8 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 正常系：正常な処理
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

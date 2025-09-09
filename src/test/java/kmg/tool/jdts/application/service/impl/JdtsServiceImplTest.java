@@ -13,11 +13,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.slf4j.Logger;
+import org.springframework.context.ApplicationContext;
 
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
@@ -32,6 +34,7 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.jdts.application.logic.JdtsIoLogic;
 import kmg.tool.jdts.application.model.JdtsCodeModel;
 import kmg.tool.jdts.application.model.JdtsConfigsModel;
+import kmg.tool.jdts.application.model.impl.JdtsCodeModelImpl;
 import kmg.tool.jdts.application.service.JdtsReplService;
 import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
 
@@ -39,6 +42,10 @@ import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
  * JdtsServiceImplのテストクラス
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -47,35 +54,80 @@ import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
 })
 public class JdtsServiceImplTest extends AbstractKmgTest {
 
-    /** テスト対象 */
+    /**
+     * テスト対象
+     *
+     * @since 0.1.0
+     */
     private JdtsServiceImpl testTarget;
 
-    /** リフレクションモデル */
+    /**
+     * リフレクションモデル
+     *
+     * @since 0.1.0
+     */
     private KmgReflectionModelImpl reflectionModel;
 
-    /** モックKMGメッセージソース */
+    /**
+     * モックKMGメッセージソース
+     *
+     * @since 0.1.0
+     */
     private KmgMessageSource mockMessageSource;
 
-    /** モックJdtsIoLogic */
+    /**
+     * モックJdtsIoLogic
+     *
+     * @since 0.1.0
+     */
     private JdtsIoLogic mockJdtsIoLogic;
 
-    /** モックJdtsReplService */
+    /**
+     * モックJdtsReplService
+     *
+     * @since 0.1.0
+     */
     private JdtsReplService mockJdtsReplService;
 
-    /** モックJdtsCodeModel */
+    /**
+     * モックJdtsCodeModel
+     *
+     * @since 0.1.0
+     */
     private JdtsCodeModel mockJdtsCodeModel;
 
-    /** モックJdtsConfigsModel */
+    /**
+     * モックJdtsConfigsModel
+     *
+     * @since 0.1.0
+     */
     private JdtsConfigsModel mockJdtsConfigsModel;
 
-    /** テスト用対象パス */
+    /**
+     * モックApplicationContext
+     *
+     * @since 0.1.0
+     */
+    private ApplicationContext mockApplicationContext;
+
+    /**
+     * テスト用対象パス
+     *
+     * @since 0.1.0
+     */
     private Path testTargetPath;
 
-    /** テスト用定義パス */
+    /**
+     * テスト用定義パス
+     *
+     * @since 0.1.0
+     */
     private Path testDefinitionPath;
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：カスタムロガーを使用した初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public static void testConstructor_normalCustomLogger() {
@@ -97,6 +149,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：標準ロガーを使用した初期化
+     *
+     * @since 0.1.0
      */
     @Test
     public static void testConstructor_normalStandardLogger() {
@@ -147,6 +201,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * セットアップ
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -163,11 +219,13 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         this.mockJdtsReplService = Mockito.mock(JdtsReplService.class);
         this.mockJdtsCodeModel = Mockito.mock(JdtsCodeModel.class);
         this.mockJdtsConfigsModel = Mockito.mock(JdtsConfigsModel.class);
+        this.mockApplicationContext = Mockito.mock(ApplicationContext.class);
 
         /* モックの設定 */
         this.reflectionModel.set("messageSource", this.mockMessageSource);
         this.reflectionModel.set("jdtsIoLogic", this.mockJdtsIoLogic);
         this.reflectionModel.set("jdtsReplService", this.mockJdtsReplService);
+        this.reflectionModel.set("applicationContext", this.mockApplicationContext);
 
         /* テスト用パスの設定 */
         this.testTargetPath = Paths.get("test/target");
@@ -177,6 +235,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * クリーンアップ
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -193,6 +253,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * createJdtsConfigsModel メソッドのテスト - 異常系：YAMLファイル読み込みで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -249,6 +311,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * createJdtsConfigsModel メソッドのテスト - 正常系：正常な構成モデル作成
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -282,6 +346,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * getDefinitionPath メソッドのテスト - 正常系：定義ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -307,6 +373,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * getDefinitionPath メソッドのテスト - 準正常系：nullの定義ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -330,6 +398,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * getTargetPath メソッドのテスト - 正常系：対象ファイルパスの取得
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -356,6 +426,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * getTargetPath メソッドのテスト - 準正常系：nullの対象ファイルパスの取得
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
@@ -379,6 +451,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * initialize メソッドのテスト - 異常系：JdtsIoLogicの初期化で例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
@@ -428,6 +502,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -457,6 +533,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * loadAndCreateCodeModel メソッドのテスト - 異常系：loadContentで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -510,6 +588,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * loadAndCreateCodeModel メソッドのテスト - 正常系：正常なコードモデル作成
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -520,7 +600,10 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         final String expectedContent = "public class TestClass {\n}";
 
         /* 準備 */
+        final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
         Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn(expectedContent);
+        Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+            ArgumentMatchers.eq(expectedContent))).thenReturn(mockJdtsCodeModelImpl);
 
         /* テスト対象の実行 */
         final JdtsCodeModel testResult = (JdtsCodeModel) this.reflectionModel.getMethod("loadAndCreateCodeModel");
@@ -530,11 +613,14 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertNotNull(testResult, "コードモデルが正しく作成されること");
         Mockito.verify(this.mockJdtsIoLogic).loadContent();
+        Mockito.verify(mockJdtsCodeModelImpl).parse();
 
     }
 
     /**
      * logFileEnd メソッドのテスト - 正常系：正常なファイル処理終了ログ出力
+     *
+     * @since 0.1.0
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -566,6 +652,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * logFileStart メソッドのテスト - 正常系：正常なファイル処理開始ログ出力
      *
+     * @since 0.1.0
+     *
      * @throws KmgReflectionException
      *                                リフレクション例外
      * @throws Exception
@@ -595,6 +683,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：createJdtsConfigsModelで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -647,6 +737,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 異常系：loadで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -701,7 +793,81 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * process メソッドのテスト - 異常系：nextFileで例外が発生する場合
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testProcess_errorNextFileException() throws Exception {
+
+        /* 期待値の定義 */
+        final List<Path> filePathList = new ArrayList<>();
+        filePathList.add(this.testTargetPath);
+
+        /* 準備 */
+        this.reflectionModel.set("definitionPath", this.testDefinitionPath);
+        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("test log message");
+        Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
+        Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
+        Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockJdtsReplService.getTotalReplaceCount()).thenReturn(1L);
+        Mockito.when(this.mockJdtsReplService.getReplaceCode()).thenReturn("replaced code");
+        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn(true);
+
+        // SpringApplicationContextHelperのモック化
+        try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
+            final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceForException = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForException);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceForException.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("テスト用の例外メッセージ");
+
+            // JdtsCodeModelのモック設定
+            final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
+            Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+                ArgumentMatchers.any())).thenReturn(mockJdtsCodeModelImpl);
+
+            // 例外を事前に作成
+            final KmgToolMsgException expectedException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+                    "test"
+                });
+
+            // nextFile()で例外を発生させる
+            Mockito.when(this.mockJdtsIoLogic.nextFile()).thenThrow(expectedException);
+
+            final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
+            mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.process();
+
+            });
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+
+        }
+
+    }
+
+    /**
      * process メソッドのテスト - 異常系：processFileで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -757,29 +923,48 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     }
 
     /**
-     * process メソッドのテスト - 正常系：正常な処理
+     * process メソッドのテスト - 正常系：複数ファイルの処理（do-whileループ）
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testProcess_normalProcess() throws Exception {
+    public void testProcess_normalMultipleFiles() throws Exception {
 
         /* 期待値の定義 */
         final List<Path> filePathList = new ArrayList<>();
         filePathList.add(this.testTargetPath);
+        filePathList.add(Paths.get("test/target2"));
+        filePathList.add(Paths.get("test/target3"));
 
         /* 準備 */
+        final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
         this.reflectionModel.set("definitionPath", this.testDefinitionPath);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
         Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
         Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
         Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+            ArgumentMatchers.eq("public class TestClass {\n}"))).thenReturn(mockJdtsCodeModelImpl);
         Mockito.when(this.mockJdtsReplService.getTotalReplaceCount()).thenReturn(2L);
         Mockito.when(this.mockJdtsReplService.getReplaceCode()).thenReturn("replaced code");
-        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
-            .thenReturn(true);
+        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.eq(this.mockJdtsConfigsModel),
+            ArgumentMatchers.eq(mockJdtsCodeModelImpl))).thenReturn(true);
+
+        // nextFile()の呼び出し回数を制御するためのカウンター
+        final int[] nextFileCallCount = {
+            0
+        };
+        Mockito.when(this.mockJdtsIoLogic.nextFile()).thenAnswer(invocation -> {
+
+            nextFileCallCount[0]++;
+            // 2回目までtrueを返し、3回目でfalseを返す（3つのファイルを処理）
+            return nextFileCallCount[0] < 3;
+
+        });
 
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
 
@@ -792,7 +977,74 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertTrue(testResult, "処理が正常に完了すること");
+            Assertions.assertTrue(testResult, "複数ファイルの処理が正常に完了すること");
+            // nextFile()が3回呼ばれることを確認（3つのファイルを処理するため）
+            Mockito.verify(this.mockJdtsIoLogic, Mockito.times(3)).nextFile();
+            // processFile()が3回呼ばれることを確認（3つのファイルを処理するため）
+            Mockito.verify(this.mockJdtsIoLogic, Mockito.times(3)).loadContent();
+
+        }
+
+    }
+
+    /**
+     * process メソッドのテスト - 正常系：単一ファイルの処理（do-whileループ）
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testProcess_normalSingleFile() throws Exception {
+
+        /* 期待値の定義 */
+        final List<Path> filePathList = new ArrayList<>();
+        filePathList.add(this.testTargetPath);
+
+        /* 準備 */
+        this.reflectionModel.set("definitionPath", this.testDefinitionPath);
+        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("test log message");
+        Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(filePathList);
+        Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
+        Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockJdtsReplService.getTotalReplaceCount()).thenReturn(1L);
+        Mockito.when(this.mockJdtsReplService.getReplaceCode()).thenReturn("replaced code");
+        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn(true);
+
+        // nextFile()は1回目でfalseを返す（単一ファイルのため）
+        Mockito.when(this.mockJdtsIoLogic.nextFile()).thenReturn(false);
+
+        try (final MockedStatic<KmgYamlUtils> mockStatic = Mockito.mockStatic(KmgYamlUtils.class);
+            final MockedStatic<SpringApplicationContextHelper> mockSpringHelper
+                = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final Map<String, Object> yamlData = JdtsServiceImplTest.createValidYamlData();
+            mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
+
+            // SpringApplicationContextHelperのモック化
+            final KmgMessageSource mockMessageSourceForSpring = Mockito.mock(KmgMessageSource.class);
+            mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceForSpring);
+
+            // ApplicationContextのモック設定
+            final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
+            Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+                ArgumentMatchers.any(String.class))).thenReturn(mockJdtsCodeModelImpl);
+
+            /* テスト対象の実行 */
+            final boolean testResult = this.testTarget.process();
+
+            /* 検証の準備 */
+
+            /* 検証の実施 */
+            Assertions.assertTrue(testResult, "単一ファイルの処理が正常に完了すること");
+            // nextFile()が1回呼ばれることを確認
+            Mockito.verify(this.mockJdtsIoLogic, Mockito.times(1)).nextFile();
+            // processFile()が1回呼ばれることを確認
+            Mockito.verify(this.mockJdtsIoLogic, Mockito.times(1)).loadContent();
 
         }
 
@@ -800,6 +1052,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * process メソッドのテスト - 準正常系：ファイルが存在しない場合
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -811,11 +1065,14 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         final List<Path> emptyFilePathList = new ArrayList<>();
 
         /* 準備 */
+        final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
         this.reflectionModel.set("definitionPath", this.testDefinitionPath);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
         Mockito.when(this.mockJdtsIoLogic.getFilePathList()).thenReturn(emptyFilePathList);
         Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+            ArgumentMatchers.eq("public class TestClass {\n}"))).thenReturn(mockJdtsCodeModelImpl);
 
         try (final var mockStatic = Mockito.mockStatic(KmgYamlUtils.class)) {
 
@@ -836,6 +1093,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * processFile メソッドのテスト - 異常系：loadAndCreateCodeModelで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -893,6 +1152,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * processFile メソッドのテスト - 正常系：正常なファイル処理
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -903,12 +1164,17 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
         final long expectedResult = 5L;
 
         /* 準備 */
+        final JdtsCodeModelImpl mockJdtsCodeModelImpl = Mockito.mock(JdtsCodeModelImpl.class);
         Mockito.when(this.mockJdtsIoLogic.getCurrentFilePath()).thenReturn(this.testTargetPath);
         Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
             .thenReturn("test log message");
         Mockito.when(this.mockJdtsIoLogic.getReadContent()).thenReturn("public class TestClass {\n}");
+        Mockito.when(this.mockApplicationContext.getBean(ArgumentMatchers.eq(JdtsCodeModelImpl.class),
+            ArgumentMatchers.eq("public class TestClass {\n}"))).thenReturn(mockJdtsCodeModelImpl);
         Mockito.when(this.mockJdtsReplService.getTotalReplaceCount()).thenReturn(expectedResult);
         Mockito.when(this.mockJdtsReplService.getReplaceCode()).thenReturn("replaced code");
+        Mockito.when(this.mockJdtsReplService.initialize(ArgumentMatchers.eq(this.mockJdtsConfigsModel),
+            ArgumentMatchers.eq(mockJdtsCodeModelImpl))).thenReturn(true);
 
         /* テスト対象の実行 */
         final long testResult = (Long) this.reflectionModel.getMethod("processFile");
@@ -923,6 +1189,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * replaceJavadoc メソッドのテスト - 異常系：initializeで例外が発生する場合
+     *
+     * @since 0.1.0
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -978,6 +1246,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
     /**
      * replaceJavadoc メソッドのテスト - 正常系：正常なJavadoc置換
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外

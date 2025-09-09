@@ -22,9 +22,9 @@ import kmg.tool.msgtpcrt.service.MessageTypesCreationService;
  *
  * @author KenichiroArai
  *
- * @version 1.0.0
+ * @since 0.1.0
  *
- * @since 1.0.0
+ * @version 0.1.0
  */
 @SpringBootApplication(scanBasePackages = {
     "kmg"
@@ -36,6 +36,8 @@ public class MessageTypesCreationTool extends AbstractDtcTool {
      * <p>
      * このツールの表示名を定義します。
      * </p>
+     *
+     * @since 0.1.0
      */
     private static final String TOOL_NAME = "メッセージの種類作成ツール"; //$NON-NLS-1$
 
@@ -44,6 +46,8 @@ public class MessageTypesCreationTool extends AbstractDtcTool {
      * <p>
      * メッセージ種類の定義を生成するためのサービスです。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Autowired
     private MessageTypesCreationService messageTypesCreationService;
@@ -69,6 +73,8 @@ public class MessageTypesCreationTool extends AbstractDtcTool {
      * <li>メイン処理の実行</li>
      * <li>コンテキストのクローズ</li>
      * </ol>
+     *
+     * @since 0.1.0
      *
      * @param args
      *             コマンドライン引数。入力ファイルパス、テンプレートファイルパス、出力ファイルパスなどを指定できます。 <br>
@@ -99,6 +105,8 @@ public class MessageTypesCreationTool extends AbstractDtcTool {
      * <p>
      * 親クラスのコンストラクタを呼び出し、ツール名を設定します。 このコンストラクタによって、デフォルトのテンプレートパスも設定されます。
      * </p>
+     *
+     * @since 0.1.0
      */
     public MessageTypesCreationTool() {
 
@@ -114,6 +122,8 @@ public class MessageTypesCreationTool extends AbstractDtcTool {
      * <p>
      * このメソッドは親クラスの処理から呼び出され、実際のメッセージ種類生成処理を担当する サービスを提供します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @return メッセージの種類作成サービス このツールが使用するメッセージの種類作成サービスのインスタンス
      */

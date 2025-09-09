@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
@@ -25,18 +27,34 @@ import kmg.tool.jdts.application.model.JdtsCodeModel;
  *
  * @version 0.1.0
  */
+@Component
+@Scope("prototype")
 public class JdtsCodeModelImpl implements JdtsCodeModel {
 
-    /** Javadocコメント開始文字列 */
+    /**
+     * Javadocコメント開始文字列
+     *
+     * @since 0.1.0
+     */
     private static final String JAVADOC_START = "/**"; //$NON-NLS-1$
 
-    /** Javadocブロック分割用の正規表現フォーマット */
-    private static final String JAVADOC_BLOCK_SPLIT_FORMAT = "%s\\s+"; //$NON-NLS-1$
+    /**
+     * Javadocブロック分割用の正規表現フォーマット
+     *
+     * @since 0.1.0
+     */
+    private static final String JAVADOC_BLOCK_SPLIT_FORMAT = "(^|\\s+)%s\\s+"; //$NON-NLS-1$
+
+    /**
+     * Javadocブロック分割用の正規表現パターン
+     *
+     * @since 0.1.0
+     */
+    private static final String JAVADOC_BLOCK_SPLIT_PATTERN
+        = String.format(JdtsCodeModelImpl.JAVADOC_BLOCK_SPLIT_FORMAT, Pattern.quote(JdtsCodeModelImpl.JAVADOC_START));
 
     /**
      * ロガー
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -45,21 +63,29 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
     /**
      * KMGメッセージリソース
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     @Autowired
     private KmgMessageSource messageSource;
 
-    /** オリジナルコード */
+    /**
+     * オリジナルコード
+     *
+     * @since 0.1.0
+     */
     private final String orgCode;
 
-    /** Javadocタグ設定のブロックモデルリスト */
+    /**
+     * Javadocタグ設定のブロックモデルリスト
+     *
+     * @since 0.1.0
+     */
     private final List<JdtsBlockModel> jdtsBlockModels;
 
     /**
      * コンストラクタ
+     *
+     * @since 0.1.0
      *
      * @param code
      *             コード
@@ -73,13 +99,10 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
     /**
      * カスタムロガーを使用して入出力ツールを初期化するコンストラクタ<br>
      *
-     * @param code
-     *             コード
-     *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      *
+     * @param code
+     *               コード
      * @param logger
      *               ロガー
      */
@@ -97,11 +120,11 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
      * Javadocタグ設定のブロックモデルリストを返す<br>
      * *
      *
+     * @since 0.1.0
+     *
      * @Override
      *
      * @author KenichiroArai
-     *
-     * @since 0.1.0
      *
      * @return Javadocタグ設定のブロックモデルリスト
      */
@@ -115,8 +138,6 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
 
     /**
      * オリジナルコードを返す<br>
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      *
@@ -132,27 +153,27 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
 
     /**
      * 解析する
+     *
+     * @since 0.1.0
      */
 
     @Override
     public void parse() {
 
         // 「/**」でブロックに分ける
-        final String[] blocks = this.orgCode.split(String.format(JdtsCodeModelImpl.JAVADOC_BLOCK_SPLIT_FORMAT,
-            Pattern.quote(JdtsCodeModelImpl.JAVADOC_START)));
+        final String[] blocks = this.orgCode.split(JdtsCodeModelImpl.JAVADOC_BLOCK_SPLIT_PATTERN);
 
         // ブロックの0番目はJavadocではないので、1番目から進める
         for (int i = 1; i < blocks.length; i++) {
 
             final JdtsBlockModel jdtsBlockModel = new JdtsBlockModelImpl(blocks[i]);
-            this.jdtsBlockModels.add(jdtsBlockModel);
 
             // ブロックモデルを解析する
             final boolean blockParseResult = jdtsBlockModel.parse();
 
-            // 解析に失敗したか
+            // 解析が対象外か
             if (!blockParseResult) {
-                // 解析に失敗した場合
+                // 対象外の場合
 
                 /* ログの出力 */
                 final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13000;
@@ -162,7 +183,11 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
                 final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
                 this.logger.warn(logMsg);
 
+                continue;
+
             }
+
+            this.jdtsBlockModels.add(jdtsBlockModel);
 
         }
 

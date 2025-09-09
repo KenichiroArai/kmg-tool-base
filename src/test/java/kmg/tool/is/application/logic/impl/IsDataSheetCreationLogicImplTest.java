@@ -35,6 +35,10 @@ import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
  * 挿入SQLデータシート作成ロジック実装のテスト<br>
  *
  * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -43,6 +47,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * デフォルトコンストラクタ<br>
+     *
+     * @since 0.1.0
      */
     public IsDataSheetCreationLogicImplTest() {
 
@@ -55,6 +61,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * ディレクトリ作成時にIOExceptionが発生した場合、適切にKmgToolMsgExceptionがスローされることを確認します。
      * Mockitoを使用してFiles.createDirectoriesをモックし、IOExceptionを発生させてテストします。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param tempDir
      *                一時ディレクトリ
@@ -119,6 +127,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * ディレクトリ作成時に権限不足によるIOExceptionが発生した場合の例外処理を確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @param tempDir
      *                一時ディレクトリ
      */
@@ -182,6 +192,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * 指定されたパスに出力ディレクトリが正しく作成されることを確認します。 Mockitoを使用してFiles.createDirectoriesの呼び出しを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @param tempDir
      *                一時ディレクトリ
      */
@@ -218,6 +230,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * 既に存在するディレクトリに対しても処理が正常に完了することを確認します。 Mockitoを使用してFiles.createDirectoriesの動作をシミュレートします。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @param tempDir
      *                一時ディレクトリ
@@ -257,6 +271,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * 既にキャッシュされた文字セットが返されることを確認します。
      * </p>
      *
+     * @since 0.1.0
+     *
      * @throws Exception
      *                   例外
      */
@@ -295,6 +311,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * MySQLの場合にUTF8文字セットが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetCharset_normalMySqlReturnsUtf8() {
@@ -327,6 +345,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * Oracleの場合にUTF8文字セットが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetCharset_normalOracleReturnsUtf8() {
@@ -359,6 +379,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * PostgreSQLの場合にMS932文字セットが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetCharset_normalPostgreSqlReturnsMs932() {
@@ -391,6 +413,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * SQLServerの場合にUTF8文字セットが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetCharset_normalSqlServerReturnsUtf8() {
@@ -423,6 +447,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * NONEの場合にnullが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetCharset_semiNoneReturnsNull() {
@@ -455,6 +481,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * シートから正しいカラム数が取得されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetColumnNum_normalCorrectColumnCount() {
@@ -485,8 +513,10 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     /**
      * getColumnPhysicsNameList メソッドのテスト - 正常系:カラム物理名リストが正しく取得されることの確認
      * <p>
-     * シートからカラム物理名のリストが正しく取得されることを確認します。
+     * シートからカラム物理名リストが正しく取得されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetColumnPhysicsNameList_normalCorrectPhysicsNameList() {
@@ -517,10 +547,65 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * getColumnPhysicsNameList メソッドのテスト - 正常系:開始と終了のセル番号が入れ替わった場合の処理確認
+     * <p>
+     * KmgReflectionModelImplを使ってスパイし、getFirstCellNumとgetLastCellNumの開始と終了の番号を入れ替えて テストカバレッジを100%にすることを確認します。
+     * </p>
+     *
+     * @since 0.1.0
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetColumnPhysicsNameList_normalReversedCellNumbers() throws Exception {
+
+        /* 期待値の定義 */
+        final String[] expectedPhysicsNames = {
+            // 開始と終了のセル番号が入れ替わった場合、forループが実行されず空のリストが返される
+        };
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成
+        final Sheet               testSheet      = this.createTestSheetWithColumns();
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        // スパイを使ってgetFirstCellNumとgetLastCellNumの値を入れ替える
+        final IsDataSheetCreationLogicImpl spiedTarget = Mockito.spy(testTarget);
+
+        // getFirstCellNumとgetLastCellNumをスパイして値を入れ替える
+        final Row physicsNameRow = testSheet.getRow(2);
+
+        // 元の値を取得
+        final short originalFirstCellNum = physicsNameRow.getFirstCellNum();
+        final short originalLastCellNum  = physicsNameRow.getLastCellNum();
+
+        // getFirstCellNumとgetLastCellNumをスパイして値を入れ替える
+        Mockito.when(spiedTarget.getFirstCellNum(physicsNameRow)).thenReturn(originalLastCellNum);
+        Mockito.when(spiedTarget.getLastCellNum(physicsNameRow)).thenReturn(originalFirstCellNum);
+
+        /* テスト対象の実行 */
+        final List<String> testResult = spiedTarget.getColumnPhysicsNameList();
+
+        /* 検証の準備 */
+        final String[] actualPhysicsNames = testResult.toArray(new String[0]);
+
+        /* 検証の実施 */
+        Assertions.assertArrayEquals(expectedPhysicsNames, actualPhysicsNames, "開始と終了のセル番号が入れ替わった場合でも正しく処理されること");
+
+    }
+
+    /**
      * getDeleteComment メソッドのテスト - 正常系:キャッシュされた削除コメントが返されることの確認
      * <p>
      * 既にキャッシュされた削除コメントが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -560,6 +645,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * テーブル論理名から削除コメントが正しく生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDeleteComment_normalCorrectDeleteComment() {
@@ -592,6 +679,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * 既にキャッシュされた削除SQLが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -631,6 +720,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * テーブル物理名から削除SQLが正しく生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetDeleteSql_normalCorrectDeleteSql() {
@@ -663,6 +754,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * 既にキャッシュされた挿入コメントが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -702,6 +795,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * テーブル論理名から挿入コメントが正しく生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetInsertComment_normalCorrectInsertComment() {
@@ -734,6 +829,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * 空データを含むデータ行から挿入SQLが正しく生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetInsertSql_normalInsertSqlWithEmptyData() {
@@ -770,6 +867,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * データ行から挿入SQLが正しく生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetInsertSql_normalPostgreSqlInsertSqlGenerated() {
@@ -806,6 +905,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * MySQL DBタイプの場合の処理を確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetInsertSql_semiMySqlDbTypeProcessed() {
@@ -842,6 +943,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * NONE DBタイプの場合の処理を確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetInsertSql_semiNoneDbTypeProcessed() {
@@ -878,6 +981,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * Oracle DBタイプの場合の処理を確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetInsertSql_semiOracleDbTypeProcessed() {
@@ -914,6 +1019,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * SQL Server DBタイプの場合の処理を確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetInsertSql_semiSqlServerDbTypeProcessed() {
@@ -950,6 +1057,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * 既にキャッシュされたデータ型リストが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -990,6 +1099,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * シートからデータ型のリストが正しく取得されることを確認します。適切なキーを使用して実際のデータ型を確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetKmgDbDataTypeList_normalCorrectDataTypeList() {
@@ -1035,6 +1146,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * BIG_DECIMALデータ型の場合に実数として出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalBigDecimalDataType() {
@@ -1071,6 +1184,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * DATEデータ型の場合に日付フォーマットでシングルクォート付きの出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalDateDataType() {
@@ -1112,6 +1227,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * DATEデータ型で-infinityが指定された場合に正しく出力されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalDateDataTypeNegativeInfinity() {
@@ -1149,6 +1266,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * DATEデータ型でinfinityが指定された場合に正しく出力されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalDateDataTypePositiveInfinity() {
@@ -1186,6 +1305,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * DOUBLEデータ型の場合に実数として出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalDoubleDataType() {
@@ -1222,6 +1343,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * FLOATデータ型の場合に実数として出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalFloatDataType() {
@@ -1258,6 +1381,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * INTEGERデータ型の場合に数値として出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalIntegerDataType() {
@@ -1294,6 +1419,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * LONGデータ型の場合に数値として出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalLongDataType() {
@@ -1330,6 +1457,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * NONEデータ型の場合にシングルクォート付きの文字列として出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalNoneDataType() {
@@ -1366,6 +1495,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * SERIALデータ型の場合に数値として出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalSerialDataType() {
@@ -1402,6 +1533,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * SMALLSERIALデータ型の場合に数値として出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalSmallSerialDataType() {
@@ -1438,6 +1571,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * STRINGデータ型の場合にシングルクォート付きの出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalStringDataType() {
@@ -1474,6 +1609,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * TIMEデータ型の場合に日時フォーマットでシングルクォート付きの出力データが生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalTimeDataType() {
@@ -1515,6 +1652,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * TIMEデータ型で-infinityが指定された場合に正しく出力されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalTimeDataTypeNegativeInfinity() {
@@ -1552,6 +1691,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * TIMEデータ型でinfinityが指定された場合に正しく出力されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputDataForPostgreSql_normalTimeDataTypePositiveInfinity() {
@@ -1589,6 +1730,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * 既にキャッシュされた出力ファイルパスが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1629,6 +1772,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * SQLIDとテーブル物理名から出力ファイルパスが正しく生成されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetOutputFilePath_normalCorrectOutputFilePath() {
@@ -1662,6 +1807,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * 既にキャッシュされたSQLIDが返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1702,6 +1849,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * SQLIDマップからSQLIDが正しく取得されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetSqlId_normalCorrectSqlId() {
@@ -1735,6 +1884,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * 既にキャッシュされたテーブル論理名が返されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      *
      * @throws Exception
      *                   例外
@@ -1774,6 +1925,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * シート名からテーブル論理名が正しく取得されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTableLogicName_normalCorrectTableLogicName() {
@@ -1806,6 +1959,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * セルからテーブル物理名が正しく取得されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testGetTablePhysicsName_normalCorrectTablePhysicsName() {
@@ -1838,6 +1993,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * <p>
      * 各パラメータが正しく設定されることを確認します。
      * </p>
+     *
+     * @since 0.1.0
      */
     @Test
     public void testInitialize_normalInitializationSuccess() {
@@ -1866,6 +2023,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     /**
      * テスト用のシートを作成する<br>
      *
+     * @since 0.1.0
+     *
      * @return テスト用シート
      */
     private Sheet createTestSheet() {
@@ -1893,6 +2052,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * カラム情報を持つテスト用シートを作成する<br>
+     *
+     * @since 0.1.0
      *
      * @return テスト用シート
      */
@@ -1930,6 +2091,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * データ型行にKmgDbDataTypeTypesの正しいキーを設定したテスト用シートを作成する<br>
+     *
+     * @since 0.1.0
      *
      * @return テスト用シート
      */
@@ -1986,6 +2149,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     /**
      * データを含むテスト用シートを作成する<br>
      *
+     * @since 0.1.0
+     *
      * @return テスト用シート
      */
     private Sheet createTestSheetWithData() {
@@ -2041,6 +2206,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     /**
      * データ型情報を持つテスト用シートを作成する<br>
      *
+     * @since 0.1.0
+     *
      * @return テスト用シート
      */
     private Sheet createTestSheetWithDataTypes() {
@@ -2086,6 +2253,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * 指定したデータ型と日付データを持つテスト用シートを作成する<br>
+     *
+     * @since 0.1.0
      *
      * @param dataType
      *                  データ型
@@ -2134,6 +2303,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * 空データを含むテスト用シートを作成する<br>
+     *
+     * @since 0.1.0
      *
      * @return テスト用シート
      */
@@ -2187,6 +2358,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     /**
      * 指定した名前のテスト用シートを作成する<br>
      *
+     * @since 0.1.0
+     *
      * @param sheetName
      *                  シート名
      *
@@ -2218,6 +2391,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     /**
      * テーブル物理名を持つテスト用シートを作成する<br>
      *
+     * @since 0.1.0
+     *
      * @param physicsName
      *                    テーブル物理名
      *
@@ -2248,6 +2423,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
     /**
      * 指定したデータ型と値を持つテスト用シートを作成する<br>
+     *
+     * @since 0.1.0
      *
      * @param dataType
      *                 データ型

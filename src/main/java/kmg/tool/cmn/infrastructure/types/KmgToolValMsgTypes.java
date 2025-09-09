@@ -27,16 +27,12 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * 指定無し
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     NONE("指定無し"),
 
     /**
      * YAMLデータが空です。
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -45,16 +41,12 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * {0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     KMGTOOL_VAL13001("{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]"),
 
     /**
      * [{0}]は、[{1}]の場合のみ指定可能です。
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -63,16 +55,12 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * [{0}]が指定可能な値ではありません。[{0}]=[{1}]
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     KMGTOOL_VAL13003("[{0}]が指定可能な値ではありません。[{0}]=[{1}]"),
 
     /**
      * [{0}]は対象要素を指定してください。
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -81,16 +69,12 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * [{0}]が指定されていません。[{0}]のキーワード=[{1}]
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     KMGTOOL_VAL13005("[{0}]が指定されていません。[{0}]のキーワード=[{1}]"),
 
     /**
      * [{0}]が存在しません。指定された[{0}]=[{1}]
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -99,16 +83,12 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * [{0}]が指定されいません。[{0}]のキーワード=[{1}]
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     KMGTOOL_VAL13007("[{0}]が指定されいません。[{0}]のキーワード=[{1}]"),
 
     /**
      * [{0}]が正しく設定されていません。[{0}]=[{1}]
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */
@@ -117,16 +97,12 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * [{0}]が正しく設定されていません。[{0}]=[{1}]
      *
-     * @author KenichiroArai
-     *
      * @since 0.1.0
      */
     KMGTOOL_VAL13009("[{0}]が正しく設定されていません。[{0}]=[{1}]"),
 
     /**
      * Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]
-     *
-     * @author KenichiroArai
      *
      * @since 0.1.0
      */

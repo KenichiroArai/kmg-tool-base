@@ -34,11 +34,17 @@ import kmg.tool.jdts.application.types.JdtsConfigKeyTypes;
  */
 public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
-    /** Javadoc追加のタグ設定モデルのリスト */
+    /**
+     * Javadoc追加のタグ設定モデルのリスト
+     *
+     * @since 0.1.0
+     */
     private final List<JdtsTagConfigModel> jdtsTagConfigModels;
 
     /**
      * コンストラクタ<br>
+     *
+     * @since 0.1.0
      *
      * @param yamlData
      *                 YAMLデータ
@@ -114,6 +120,8 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
     /**
      * Javadocタグ設定のタグ構成モデルのリストを返す<br>
+     *
+     * @since 0.1.0
      *
      * @return Javadocタグ設定のタグ構成モデルのリスト
      */
