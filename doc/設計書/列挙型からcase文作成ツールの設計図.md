@@ -1,4 +1,4 @@
-# 列挙型からcase文作成ツール設計書
+# 列挙型から case 文作成ツール設計書
 
 ## 1. クラス図
 
@@ -7,17 +7,18 @@ classDiagram
     %% 継承関係
     AbstractTool <|-- AbstractIoTool
     AbstractIoTool <|-- AbstractTwo2OneTool
-    AbstractTwo2OneTool <|-- AbstractDynamicTemplateConversionTool
-    AbstractDynamicTemplateConversionTool <|-- Enum2SwitchCaseCreationTool
+    AbstractTwo2OneTool <|-- AbstractDtcTool
+    AbstractDtcTool <|-- Enum2SwitchCaseCreationTool
 
     %% インターフェース実装関係
     IoService <|.. Two2OneService
+    Two2OneService <|.. IitoProcessorService
+    IitoProcessorService <|.. Enum2SwitchCaseCreationService
     Two2OneService <|.. DtcService
-    Two2OneService <|.. Enum2SwitchCaseCreationService
 
     %% サービス実装関係
-    AbstractIctoProcessorService ..|> Two2OneService
-    Enum2SwitchCaseCreationServiceImpl --|> AbstractIctoProcessorService
+    AbstractIitoProcessorService ..|> IitoProcessorService
+    Enum2SwitchCaseCreationServiceImpl --|> AbstractIitoProcessorService
     Enum2SwitchCaseCreationServiceImpl ..|> Enum2SwitchCaseCreationService
     DtcServiceImpl ..|> DtcService
 
@@ -51,8 +52,9 @@ classDiagram
         #abstract Two2OneService getIoService()
     }
 
-    class AbstractDynamicTemplateConversionTool {
-        +AbstractDynamicTemplateConversionTool(String toolName)
+    class AbstractDtcTool {
+        +AbstractDtcTool(String toolName)
+        #abstract IitoProcessorService getIoService()
     }
 
     class Enum2SwitchCaseCreationTool {
@@ -76,6 +78,10 @@ classDiagram
         +boolean initialize(Path inputPath, Path templatePath, Path outputPath)
     }
 
+    class IitoProcessorService {
+        <<interface>>
+    }
+
     class Enum2SwitchCaseCreationService {
         <<interface>>
     }
@@ -84,19 +90,19 @@ classDiagram
         <<interface>>
     }
 
-    class AbstractIctoProcessorService {
+    class AbstractIitoProcessorService {
         -Path inputPath
         -Path templatePath
         -Path outputPath
-        -Path csvPath
+        -Path intermediatePath
         -DtcService dtcService
-        +Path getCsvPath()
+        +Path getIntermediatePath()
         +Path getInputPath()
         +Path getOutputPath()
         +Path getTemplatePath()
         +boolean initialize(Path inputPath, Path templatePath, Path outputPath)
         +boolean process()
-        #abstract boolean writeCsvFile()
+        #abstract boolean writeIntermediateFile()
     }
 
     class Enum2SwitchCaseCreationServiceImpl {
@@ -104,24 +110,27 @@ classDiagram
         -KmgMessageSource messageSource
         -Enum2SwitchCaseCreationLogic enum2SwitchCaseMakingLogic
         +Enum2SwitchCaseCreationServiceImpl()
-        #boolean writeCsvFile()
+        #boolean writeIntermediateFile()
     }
 
     class DtcServiceImpl {
+        -Logger logger
+        -KmgMessageSource messageSource
+        -DtcLogic dtcLogic
+        -Path inputPath
+        -Path templatePath
+        -Path outputPath
         +boolean initialize(Path inputPath, Path templatePath, Path outputPath)
         +boolean process()
     }
 
     class Enum2SwitchCaseCreationLogic {
         <<interface>>
-        +boolean addItemToCsvRows()
-        +boolean addOneLineOfDataToCsvRows()
-        +boolean addValueToCsvRows()
-        +boolean clearCsvRows()
-        +boolean clearProcessingData()
-        +boolean convertEnumValues()
+        +boolean addItemNameToRows()
+        +boolean addItemToRows()
+        +boolean convertEnumDefinition()
         +String getItem()
-        +String getValue()
+        +String getItemName()
     }
 
     class DtcLogic {
@@ -131,6 +140,9 @@ classDiagram
         +void clearOutputBufferContent()
         +boolean clearReadingData()
         +String getContentsOfOneItem()
+        +boolean loadTemplate()
+        +boolean readOneLineOfData()
+        +boolean writeOutputBuffer()
     }
 
     class Enum2SwitchCaseCreationTool.yml {
@@ -149,12 +161,13 @@ sequenceDiagram
     participant AT2OT as AbstractTwo2OneTool
     participant AIT as AbstractIoTool
     participant ESCService as Enum2SwitchCaseCreationServiceImpl
-    participant AIPS as AbstractIctoProcessorService
+    participant AIPS as AbstractIitoProcessorService
     participant ESCLogic as Enum2SwitchCaseCreationLogicImpl
-    participant DtcService as DtcService
+    participant DtcService as DtcServiceImpl
+    participant DtcLogic as DtcLogic
     participant Template as Enum2SwitchCaseCreationTool.yml
     participant Input as input.txt
-    participant CSV as csv中間ファイル
+    participant Intermediate as 中間ファイル
     participant Output as output.txt
 
     User->>ESCT: アプリケーション起動
@@ -164,17 +177,17 @@ sequenceDiagram
     ESCT->>AT2OT: initialize()
     AT2OT->>ESCService: initialize(inputPath, templatePath, outputPath)
     ESCService->>AIPS: initialize(inputPath, templatePath, outputPath)
-    AIPS->>AIPS: createTempCsvFile()
+    AIPS->>AIPS: createTempIntermediateFile()
 
     ESCT->>AIT: execute()
     AIT->>ESCT: getIoService()
     ESCT-->>AIT: enum2SwitchCaseMakingService
     AIT->>ESCService: process()
     ESCService->>AIPS: process()
-    AIPS->>ESCService: writeCsvFile()
+    AIPS->>ESCService: writeIntermediateFile()
 
-    ESCService->>ESCLogic: initialize(inputPath, csvPath)
-    ESCService->>ESCLogic: addOneLineOfDataToCsvRows()
+    ESCService->>ESCLogic: initialize(inputPath, intermediatePath)
+    ESCService->>ESCLogic: addOneLineOfDataToRows()
 
     loop 入力ファイル処理
         ESCService->>ESCLogic: readOneLineOfData()
@@ -182,39 +195,39 @@ sequenceDiagram
 
         ESCService->>ESCService: processColumns()
 
-        ESCService->>ESCService: addNameColumn()
-        ESCService->>ESCLogic: convertEnumValues()
-        ESCLogic->>ESCLogic: 列挙定数抽出処理
+        ESCService->>ESCLogic: convertEnumDefinition()
+        ESCLogic->>ESCLogic: 列挙型定義抽出処理
 
-        ESCService->>ESCLogic: addValueToCsvRows()
-        ESCLogic->>CSV: CSVに列挙値追加
+        ESCService->>ESCLogic: addItemToRows()
+        ESCLogic->>Intermediate: 中間ファイルに項目追加
 
-        ESCService->>ESCLogic: addItemToCsvRows()
-        ESCLogic->>CSV: CSVに項目名追加
+        ESCService->>ESCLogic: addItemNameToRows()
+        ESCLogic->>Intermediate: 中間ファイルに項目名追加
 
-        ESCService->>ESCLogic: writeCsvFile()
-        ESCLogic->>CSV: CSVファイル書き込み
+        ESCService->>ESCLogic: writeIntermediateFile()
+        ESCLogic->>Intermediate: 中間ファイル書き込み
 
         ESCService->>ESCService: clearAndPrepareNextLine()
-        ESCService->>ESCLogic: clearCsvRows()
+        ESCService->>ESCLogic: clearRows()
         ESCService->>ESCLogic: clearProcessingData()
-        ESCService->>ESCLogic: addOneLineOfDataToCsvRows()
+        ESCService->>ESCLogic: addOneLineOfDataToRows()
     end
 
-    AIPS->>DtcService: initialize(csvPath, templatePath, outputPath)
+    AIPS->>DtcService: initialize(intermediatePath, templatePath, outputPath)
     AIPS->>DtcService: process()
-    DtcService->>Template: テンプレート読み込み
-    DtcService->>CSV: CSV読み込み
+    DtcService->>DtcLogic: initialize(intermediatePath, templatePath, outputPath)
+    DtcService->>DtcLogic: loadTemplate()
+    DtcLogic->>Template: テンプレート読み込み
 
     loop テンプレート適用処理
-        DtcService->>DtcService: readOneLineData()
-        DtcService->>DtcService: applyTemplateToInputFile()
-        DtcService->>DtcService: addOutputBufferContent()
-        DtcService->>DtcService: writeOutputBuffer()
-        DtcService->>DtcService: clearOutputBufferContent()
+        DtcService->>DtcLogic: readOneLineOfData()
+        DtcLogic-->>Intermediate: 中間ファイル読み込み
+        DtcService->>DtcLogic: applyTemplateToInputFile()
+        DtcService->>DtcLogic: addOutputBufferContent()
+        DtcService->>DtcLogic: writeOutputBuffer()
+        DtcLogic->>Output: 出力ファイル書き込み
+        DtcService->>DtcLogic: clearOutputBufferContent()
     end
-
-    DtcService->>Output: 出力ファイル生成
 
     ESCService->>ESCLogic: close()
     ESCLogic->>ESCLogic: closeReader()
@@ -225,35 +238,37 @@ sequenceDiagram
 
 ## 3. テンプレートファイル構造
 
-Enum2SwitchCaseCreationTool.ymlは以下の構造を持っています：
+Enum2SwitchCaseCreationTool.yml は以下の構造を持っています：
 
-1. **intermediatePlaceholders**: 中間から直接取得するプレースホルダー定義
+1. **intermediatePlaceholders**: 中間ファイルから直接取得するプレースホルダー定義
+
    - displayName: 画面表示用の名称
    - replacementPattern: 置換対象のパターン
 
-2. **derivedPlaceholders**: CSVから取得した値を変換して生成するプレースホルダー定義
+2. **derivedPlaceholders**: 中間ファイルから取得した値を変換して生成するプレースホルダー定義
+
    - displayName: 画面表示用の名称
    - replacementPattern: 置換対象のパターン
-   - sourceKey: 変換元となるCSVプレースホルダーのdisplayName
+   - sourceKey: 変換元となる中間プレースホルダーの displayName
    - transformation: 適用する変換処理
 
 3. **templateContent**: テンプレートの内容
-   - {item}, {value}のプレースホルダーが実際の値に置換される
+   - {item}, {itemName}のプレースホルダーが実際の値に置換される
 
 ## 4. 処理フロー詳細
 
 1. ユーザーがアプリケーションを起動
-2. SpringBootアプリケーションが起動し、Enum2SwitchCaseCreationToolのインスタンスが生成される
-3. AbstractTwo2OneToolのinitialize()メソッドが呼び出され、Enum2SwitchCaseCreationServiceが初期化される
-4. AbstractIoToolのexecute()メソッドが呼び出され、メイン処理が実行される
-5. Enum2SwitchCaseCreationServiceImplのwriteCsvFile()メソッドが実行され、入力ファイルの処理が開始される
-6. 入力ファイルから1行ずつデータを読み込み、以下の処理を行う：
-   - 列挙型定数の抽出と変換
-   - 列挙型の値と項目名の抽出
-   - CSV形式に変換して中間ファイルに書き込み
-7. 中間ファイル（CSV）の生成が完了したら、DtcService（テンプレートの動的変換サービス）を使用して：
+2. SpringBoot アプリケーションが起動し、Enum2SwitchCaseCreationTool のインスタンスが生成される
+3. AbstractTwo2OneTool の initialize()メソッドが呼び出され、Enum2SwitchCaseCreationService が初期化される
+4. AbstractIoTool の execute()メソッドが呼び出され、メイン処理が実行される
+5. Enum2SwitchCaseCreationServiceImpl の writeIntermediateFile()メソッドが実行され、入力ファイルの処理が開始される
+6. 入力ファイルから 1 行ずつデータを読み込み、以下の処理を行う：
+   - 列挙型定義の抽出と変換
+   - 列挙型の項目と項目名の抽出
+   - 中間ファイル形式に変換して中間ファイルに書き込み
+7. 中間ファイルの生成が完了したら、DtcService（テンプレートの動的変換サービス）を使用して：
    - テンプレートファイル（Enum2SwitchCaseCreationTool.yml）を読み込む
-   - 中間ファイル（CSV）のデータを読み込む
+   - 中間ファイルのデータを読み込む
    - テンプレートにデータを適用して出力ファイルを生成する
 8. リソースがクローズされ、処理が完了する
 
@@ -261,45 +276,51 @@ Enum2SwitchCaseCreationTool.ymlは以下の構造を持っています：
 
 ### Enum2SwitchCaseCreationTool
 
-- SpringBootApplicationとして動作するエントリーポイント
-- AbstractDynamicTemplateConversionToolを継承（さらにAbstractTwo2OneToolを継承）
-- Enum2SwitchCaseCreationServiceを使用してswitch-case文生成を実行
+- SpringBootApplication として動作するエントリーポイント
+- AbstractDtcTool を継承（さらに AbstractTwo2OneTool を継承）
+- Enum2SwitchCaseCreationService を使用して switch-case 文生成を実行
+
+### AbstractDtcTool
+
+- AbstractTwo2OneTool を継承
+- テンプレートの動的変換ツールの抽象クラス
+- IitoProcessorService を返す抽象メソッドを定義
 
 ### AbstractTwo2OneTool
 
-- AbstractIoToolを継承
+- AbstractIoTool を継承
 - テンプレートファイルパスの管理と初期化処理を担当
 
 ### Enum2SwitchCaseCreationServiceImpl
 
-- AbstractIctoProcessorServiceを継承
-- Enum2SwitchCaseCreationServiceインターフェースを実装
-- 入力ファイルの読み込みとCSV形式への変換を担当
+- AbstractIitoProcessorService を継承
+- Enum2SwitchCaseCreationService インターフェースを実装
+- 入力ファイルの読み込みと中間ファイル形式への変換を担当
 
 ### Enum2SwitchCaseCreationLogicImpl
 
-- switch-case文作成の実際のロジックを担当
-- 列挙型定義からswitch-case文に必要な情報を抽出
-- CSV形式の中間ファイルを生成
+- switch-case 文作成の実際のロジックを担当
+- 列挙型定義から switch-case 文に必要な情報を抽出
+- 中間ファイル形式の中間ファイルを生成
 
 ### DtcService（テンプレートの動的変換サービス）
 
-- テンプレートファイルとCSVデータを使用して最終的な出力ファイルを生成
+- テンプレートファイルと中間ファイルデータを使用して最終的な出力ファイルを生成
 - プレースホルダの置換処理を担当
 
 ### テンプレートファイル（Enum2SwitchCaseCreationTool.yml）
 
-- YAMLフォーマットで定義されたテンプレート設定ファイル
+- YAML フォーマットで定義されたテンプレート設定ファイル
 - 以下の主要セクションで構成：
-  - `intermediatePlaceholders`: 中間から直接取得するプレースホルダー定義
-  - `derivedPlaceholders`: CSVから取得した値を変換して生成するプレースホルダー定義
+  - `intermediatePlaceholders`: 中間ファイルから直接取得するプレースホルダー定義
+  - `derivedPlaceholders`: 中間ファイルから取得した値を変換して生成するプレースホルダー定義
   - `templateContent`: 実際のテンプレート内容
 
 #### intermediatePlaceholders
 
-- CSVファイルの各列から直接マッピングされるプレースホルダー
+- 中間ファイルの各列から直接マッピングされるプレースホルダー
   - `{item}`: 列挙型の項目名
-  - `{value}`: 列挙型の値
+  - `{itemName}`: 列挙型の表示名
 
 #### derivedPlaceholders
 
@@ -308,5 +329,5 @@ Enum2SwitchCaseCreationTool.ymlは以下の構造を持っています：
 
 #### templateContent
 
-- switch-case文のテンプレートを定義
-- 上記のプレースホルダーを使用して、列挙型の各項目に対応するcase文を生成
+- switch-case 文のテンプレートを定義
+- 上記のプレースホルダーを使用して、列挙型の各項目に対応する case 文を生成
