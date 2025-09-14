@@ -176,8 +176,8 @@ sequenceDiagram
 
    - `AbstractInputTool.getInputPath()`メソッドが呼び出される
    - 優先順位に従って入力ファイルパスを決定：
-     - 1. `work/io/input.txt`（存在する場合）
-     - 2. `src/main/resources/tool/io/input.txt`（代替）
+     1. `work/io/input.txt`（存在する場合）
+     2. `src/main/resources/tool/io/input.txt`（代替）
 
 3. **サービスの初期化**
 
@@ -248,7 +248,7 @@ sequenceDiagram
 
 入力ファイルは以下の形式で記述されます：
 
-```
+```text
 D:\path\to\file1.java:123
 D:\path\to\file2.java:456
 D:\path\to\file3.java:789
