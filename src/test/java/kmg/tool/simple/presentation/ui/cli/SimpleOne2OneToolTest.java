@@ -19,7 +19,6 @@ import kmg.tool.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.cmn.infrastructure.types.KmgToolLogMsgTypes;
 import kmg.tool.one2one.application.service.SimpleOne2OneService;
-import kmg.tool.simple.presentation.ui.cli.SimpleOne2OneTool;
 
 /**
  * SimpleOne2OneToolのテストクラス
