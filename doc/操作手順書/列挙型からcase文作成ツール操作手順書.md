@@ -41,33 +41,44 @@ kmg-tool/
 入力ファイル（`input.txt`）は Java 列挙型定義形式で列挙項目を記述する：
 
 ```text
-項目名, // コメント
-```
-
-または
-
-```text
-項目名("値"), // コメント
+/**
+ * Javadocコメント
+ */
+項目名("表示名", …),
 ```
 
 ### 3.2 入力ファイル例
 
 ```text
-APPLE, // りんご
-BANANA, // バナナ
-ORANGE, // オレンジ
-GRAPE("grape"), // ぶどう
-MELON("melon"), // メロン
+    /**
+     * 指定無し
+     *
+     * @since 0.1.0
+     */
+    NONE("指定無し",
+
+    /**
+     * クラス
+     *
+     * @since 0.1.0
+     */
+    CLASS("クラス",
+
+    /**
+     * 内部クラス
+     *
+     * @since 0.1.0
+     */
+    INNER_CLASS("内部クラス",
 ```
 
 ### 3.3 入力ファイルの注意事項
 
-- 各行は「項目名」で開始する
-- コメントは「//」で始まり、項目の説明を記述する
-- 項目名の後に値を指定する場合は、括弧内に記述する
-- カンマ（`,`）で項目を区切る
+- 各項目は Javadoc コメントブロック（`/** ... */`）で開始する
+- 項目名の後に表示名を括弧内に記述する（`項目名("表示名",`）
+- 正規表現パターンは `(項目名)\\("(表示名)",` の形式で項目名と表示名を抽出する
 - 空行は無視される
-- 列挙型の定義部分（`public enum` など）は含めない
+- 追加の値（識別子、説明など）がある場合も処理されるが、ツールでは最初の表示名のみが使用される
 
 ## 4. テンプレートファイルの設定
 
@@ -76,51 +87,9 @@ MELON("melon"), // メロン
 - **優先パス**: `work/io/template/Enum2SwitchCaseCreationTool.yml`
 - **代替パス**: `src/main/resources/tool/io/template/Enum2SwitchCaseCreationTool.yml`
 
-### 4.2 テンプレートファイルの内容
+### 4.2 テンプレートファイルの設定方法
 
-デフォルトのテンプレートファイルは以下の通り：
-
-```yaml
-# 中間から直接取得するプレースホルダー定義
-# displayName: 画面表示用の名称
-# replacementPattern: 置換対象のパターン
-intermediatePlaceholders:
-  - displayName: "項目"
-    replacementPattern: "{item}"
-  - displayName: "項目名"
-    replacementPattern: "{itemName}"
-
-# 中間から取得した値を変換して生成するプレースホルダー定義
-# displayName: 画面表示用の名称
-# replacementPattern: 置換対象のパターン
-# sourceKey: 変換元となる中間プレースホルダーのdisplayName
-# transformation: 適用する変換処理
-derivedPlaceholders: []
-
-# テンプレートの内容
-# {item}, {itemName}のプレースホルダーが実際の値に置換される
-templateContent: |
-  case {item}:
-      /* {itemName} */
-      break;
-```
-
-### 4.3 プレースホルダーの説明
-
-- `{item}`: 列挙型の項目名（例：APPLE）
-- `{itemName}`: 項目の説明（コメント部分、例：りんご）
-
-### 4.4 テンプレートファイルのカスタマイズ
-
-テンプレートファイルを編集することで、出力形式を変更できる。例：
-
-```yaml
-templateContent: |
-  case {item}:
-      // {itemName}の処理
-      handleItem({item});
-      break;
-```
+テンプレートファイルの詳細な構造や設定方法については、実際のテンプレートファイル（`Enum2SwitchCaseCreationTool.yml`）を参照してください。テンプレートファイルには、プレースホルダーの定義やテンプレート内容の設定方法が記載されています。
 
 ## 5. 実行手順
 
@@ -134,11 +103,26 @@ templateContent: |
 
    # 入力ファイルを作成
    cat > work/io/input.txt << 'EOF'
-   APPLE, // りんご
-   BANANA, // バナナ
-   ORANGE, // オレンジ
-   GRAPE("grape"), // ぶどう
-   MELON("melon"), // メロン
+       /**
+        * 指定無し
+        *
+        * @since 0.1.0
+        */
+       NONE("指定無し", ...),
+
+       /**
+        * クラス
+        *
+        * @since 0.1.0
+        */
+       CLASS("クラス", ...),
+
+       /**
+        * 内部クラス
+        *
+        * @since 0.1.0
+        */
+       INNER_CLASS("内部クラス", ...),
    EOF
    ```
 
@@ -175,12 +159,10 @@ templateContent: |
 [INFO] 入力ファイル: work/io/input.txt
 [INFO] テンプレートファイル: work/io/template/Enum2SwitchCaseCreationTool.yml
 [INFO] 出力ファイル: work/io/output.txt
-[DEBUG] 項目処理完了: APPLE - りんご
-[DEBUG] 項目処理完了: BANANA - バナナ
-[DEBUG] 項目処理完了: ORANGE - オレンジ
-[DEBUG] 項目処理完了: GRAPE - ぶどう
-[DEBUG] 項目処理完了: MELON - メロン
-[INFO] 処理完了: 5件の列挙項目を処理しました
+[DEBUG] 項目処理完了: NONE - 指定無し
+[DEBUG] 項目処理完了: CLASS - クラス
+[DEBUG] 項目処理完了: INNER_CLASS - 内部クラス
+[INFO] 処理完了: 3件の列挙項目を処理しました
 [INFO] 列挙型からcase文作成ツール終了
 ```
 
@@ -196,20 +178,14 @@ templateContent: |
 入力ファイルの例に対して、以下のような出力が生成される：
 
 ```java
-case APPLE:
-    /* りんご */
+case NONE:
+    /* 指定無し */
     break;
-case BANANA:
-    /* バナナ */
+case CLASS:
+    /* クラス */
     break;
-case ORANGE:
-    /* オレンジ */
-    break;
-case GRAPE:
-    /* ぶどう */
-    break;
-case MELON:
-    /* メロン */
+case INNER_CLASS:
+    /* 内部クラス */
     break;
 ```
 
@@ -218,25 +194,19 @@ case MELON:
 生成された case 文は、以下のように switch 文内で使用できる：
 
 ```java
-public void processItem(ItemType itemType) {
-    switch (itemType) {
-        case APPLE:
-            /* りんご */
+public void processClassificationType(JavaClassificationTypes classificationType) {
+    switch (classificationType) {
+        case NONE:
+            /* 指定無し */
             break;
-        case BANANA:
-            /* バナナ */
+        case CLASS:
+            /* クラス */
             break;
-        case ORANGE:
-            /* オレンジ */
-            break;
-        case GRAPE:
-            /* ぶどう */
-            break;
-        case MELON:
-            /* メロン */
+        case INNER_CLASS:
+            /* 内部クラス */
             break;
         default:
-            throw new IllegalArgumentException("未対応の項目: " + itemType);
+            throw new IllegalArgumentException("未対応の分類: " + classificationType);
     }
 }
 ```
@@ -277,10 +247,11 @@ public void processItem(ItemType itemType) {
 
 **対処法**:
 
-- 各行が「項目名, // コメント」の形式になっているか確認
-- カンマ（`,`）が正しく配置されているか確認
-- コメントが「//」で始まっているか確認
+- 各項目が Javadoc コメントブロック（`/** ... */`）で開始されているか確認
+- 項目名の後に表示名が括弧内に正しく記述されているか確認（`項目名("表示名",`）
+- 正規表現パターン `(\\w+)\\(\"(\\S+)\",` にマッチする形式になっているか確認
 - 不正な文字や余分な空白が含まれていないか確認
+- 表示名に空白文字が含まれていないか確認（`\\S+` パターンのため）
 
 #### エラー: 列挙項目の変換に失敗
 
@@ -300,19 +271,3 @@ public void processItem(ItemType itemType) {
 
 - `logs/kmg-tool/kmg-tool.log`
 - `logs/exceptions/kmg-core-exceptions.log`
-
-### 7.3 デバッグ方法
-
-1. **ログレベルの変更**
-
-   - `src/main/resources/logback-kmg-tool.xml` でログレベルを `DEBUG` に変更
-   - より詳細なログ出力を確認
-
-2. **中間ファイルの確認**
-
-   - ツール実行時に生成される中間ファイルを確認
-   - 入力ファイルから中間形式への変換が正しく行われているか確認
-
-3. **テンプレートファイルの検証**
-   - YAML ファイルの構文エラーがないか確認
-   - プレースホルダーが正しく定義されているか確認
