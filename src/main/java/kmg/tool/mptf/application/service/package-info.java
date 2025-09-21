@@ -1,0 +1,14 @@
+/**
+ * マッピング変換のサービスパッケージ<br>
+ * <p>
+ * マッピング変換機能のサービス層を提供します。<br>
+ * マッピングロジックとプレゼンテーション層を仲介するサービスの実装が含まれます。
+ * </p>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.1.0
+ *
+ * @version 0.1.0
+ */
+package kmg.tool.mptf.application.service;
