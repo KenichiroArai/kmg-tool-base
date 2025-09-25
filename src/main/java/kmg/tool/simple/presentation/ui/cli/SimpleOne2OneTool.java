@@ -1,4 +1,4 @@
-package kmg.tool.one2one.presentation.ui.cli;
+package kmg.tool.simple.presentation.ui.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import kmg.tool.one2one.application.service.SimpleOne2OneService;
+import kmg.tool.one2one.presentation.ui.cli.AbstractOne2OneTool;
 
 /**
  * シンプル1入力ファイルから1出力ファイルへの変換ツール
