@@ -1,4 +1,9 @@
-# KMG ツール（kmg-tool）について
+# KMG ツール（kmg-tool）
+
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
+[![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](https://github.com/your-username/kmg-tool)
 
 KMG ツールは、Java 開発における様々な自動化処理を提供するツール集です。
 
@@ -41,6 +46,28 @@ KMG ツールは、Java 開発の効率化を目的として開発されたツ�
 - **操作手順書**: 各ツールの使用方法と実行手順
 - **設計書**: システム設計図とアーキテクチャ
 
+## セットアップ
+
+### 前提条件
+
+- Java 21 以上
+- Maven 3.6 以上
+
+### インストール
+
+1. リポジトリをクローンします：
+
+   ```bash
+   git clone https://github.com/KenichiroArai/kmg-tool.git
+   cd kmg-tool
+   ```
+
+2. Maven を使用してビルドします：
+
+   ```bash
+   mvn clean install
+   ```
+
 ## 使用方法
 
 各ツールは個別に実行可能で、Maven を使用して以下のように実行できます：
@@ -51,6 +78,20 @@ mvn exec:java -Dexec.mainClass="kmg.tool.jdts.presentation.ui.cli.JavadocTagSett
 ```
 
 詳細な使用方法については、各ツールの操作手順書を参照してください。
+
+## 貢献
+
+プロジェクトへの貢献を歓迎します！以下の手順で貢献できます：
+
+1. このリポジトリをフォークします
+2. フィーチャーブランチを作成します (`git checkout -b feature/amazing-feature`)
+3. 変更をコミットします (`git commit -m 'Add some amazing feature'`)
+4. ブランチにプッシュします (`git push origin feature/amazing-feature`)
+5. プルリクエストを作成します
+
+## 問題の報告
+
+バグを発見した場合や機能要求がある場合は、[Issues](https://github.com/KenichiroArai/kmg-tool/issues) で報告してください。
 
 ## ライセンス
 
