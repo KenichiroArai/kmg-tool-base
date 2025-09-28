@@ -99,7 +99,3 @@ mvn exec:java -Dexec.mainClass="kmg.tool.jdts.presentation.ui.cli.JavadocTagSett
 ```
 
 詳細な使用方法については、各ツールの操作手順書を参照してください。
-
-## ライセンス
-
-このプロジェクトは MIT ライセンスの下で公開されています。詳細は[LICENSE](../LICENSE)ファイルを参照してください。
