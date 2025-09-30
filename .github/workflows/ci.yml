@@ -46,7 +46,13 @@ jobs:
           EOF
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -Dmaven.test.skip=false
+
+      - name: Generate dependency graph
+        run: |
+          mkdir -p target
+          export MAVEN_OPTS="-Xmx2g -XX:MaxMetaspaceSize=512m"
+          mvn -B dependency:tree -DoutputType=graphml -DoutputFile=target/dependency-graph.graphml -Dverbose=false
 
       - name: Run tests with JVM options
         run: mvn test -Djdk.instrument.traceUsage=true -DargLine="-XX:+EnableDynamicAgentLoading"
@@ -72,3 +78,7 @@ jobs:
         with:
           fail-on-severity: high
           deny-licenses: AGPL-1.0-or-later
+
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@v1
+        continue-on-error: true
