@@ -35,7 +35,7 @@ import kmg.tool.simple.domain.service.SimpleInputServiceImpl;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
-    "nls",
+    "nls", "static-method",
 })
 public class SimpleInputServiceImplTest extends AbstractKmgTest {
 
@@ -59,28 +59,6 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     private Path testInputPath;
-
-    /**
-     * コンストラクタ メソッドのテスト - 正常系：標準ロガーを使用した初期化
-     *
-     * @since 0.1.0
-     */
-    @Test
-    public void testConstructor_normalStandardLogger() {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        final SimpleInputServiceImpl testConstructor = new SimpleInputServiceImpl();
-
-        /* テスト対象の実行 */
-
-        /* 検証の準備 */
-
-        /* 検証の実施 */
-        Assertions.assertNotNull(testConstructor, "コンストラクタが正常に初期化されること");
-
-    }
 
     /**
      * セットアップ
@@ -117,6 +95,28 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
 
             // クリーンアップ処理
         }
+
+    }
+
+    /**
+     * コンストラクタ メソッドのテスト - 正常系：標準ロガーを使用した初期化
+     *
+     * @since 0.1.0
+     */
+    @Test
+    public void testConstructor_normalStandardLogger() {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        final SimpleInputServiceImpl testConstructor = new SimpleInputServiceImpl();
+
+        /* テスト対象の実行 */
+
+        /* 検証の準備 */
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(testConstructor, "コンストラクタが正常に初期化されること");
 
     }
 
