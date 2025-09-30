@@ -493,7 +493,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
             try (MockedStatic<Files> filesMock = Mockito.mockStatic(Files.class)) {
 
                 filesMock.when(() -> Files.walk(testNoSuchFilePath))
-                    .thenThrow(new java.nio.file.NoSuchFileException("mocked no such file error"));
+                    .thenThrow(new NoSuchFileException("mocked no such file error"));
 
                 final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
