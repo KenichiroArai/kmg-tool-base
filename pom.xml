@@ -46,17 +46,11 @@
             <groupId>kmg.core</groupId>
             <artifactId>kmg-core</artifactId>
             <version>0.2.0</version>
-            <scope>system</scope>
-            <!-- TODO KenichiroArai 2025/05/19 kmg-coreのv0.2.0がリリースするまで仮で直接指定 -->
-            <systemPath>${project.basedir}/../kmg-core/target/kmg-core-0.2.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>kmg.fund</groupId>
             <artifactId>kmg-fund</artifactId>
             <version>0.1.0</version>
-            <scope>system</scope>
-            <!-- TODO KenichiroArai 2025/05/19 kmg-cundのv0.2.0がリリースするまで仮で直接指定 -->
-            <systemPath>${project.basedir}/../kmg-fund/target/kmg-fund-0.1.0.jar</systemPath>
         </dependency>
 
         <!-- Spring -->
@@ -241,8 +235,6 @@
     <repositories>
 
         <!-- KMG シリーズ -->
-        <!-- TODO KenichiroArai 2025/05/19 kmg-coreのv0.2.0がリリースするまで仮で直接指定 -->
-        <!--
         <repository>
             <id>github-kmg-core</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
@@ -253,20 +245,16 @@
             <name>GitHub KenichiroArai Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/KenichiroArai/kmg-fund</url>
         </repository>
-        -->
     </repositories>
 
     <distributionManagement>
 
         <!-- KMG シリーズ -->
-        <!-- TODO KenichiroArai 2025/05/19 kmg-coreのv0.2.0がリリースするまで仮で直接指定 -->
-        <!--
         <repository>
             <id>github-kmg-tool</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/KenichiroArai/kmg-tool</url>
         </repository>
-        -->
     </distributionManagement>
 
 </project>
