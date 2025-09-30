@@ -66,7 +66,7 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
      * @since 0.1.0
      */
     @Test
-    public static void testConstructor_normalStandardLogger() {
+    public void testConstructor_normalStandardLogger() {
 
         /* 期待値の定義 */
 
