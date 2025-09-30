@@ -55,7 +55,7 @@ jobs:
       - name: Build with Maven
         run: |
           export DISPLAY=:99
-          mvn -B package --file pom.xml -Dmaven.test.skip=false
+          mvn -B package --file pom.xml
 
       - name: Generate dependency graph
         run: |
@@ -87,7 +87,7 @@ jobs:
           path: target/site/jacoco/
 
       - name: Dependency Review
-        uses: actions/dependency-review-action@v3
+        uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: high
           deny-licenses: AGPL-1.0-or-later
