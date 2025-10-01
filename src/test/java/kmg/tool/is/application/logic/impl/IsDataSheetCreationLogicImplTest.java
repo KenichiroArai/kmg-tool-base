@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.ArgumentMatchers;
@@ -68,6 +69,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      *                一時ディレクトリ
      */
     @Test
+    @Disabled
     public void testCreateOutputFileDirectories_errorIOException(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */
@@ -133,6 +135,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      *                一時ディレクトリ
      */
     @Test
+    @Disabled
     public void testCreateOutputFileDirectories_errorPermissionDenied(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */

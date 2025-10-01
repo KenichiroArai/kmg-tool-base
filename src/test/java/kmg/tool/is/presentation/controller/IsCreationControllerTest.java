@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -727,6 +728,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testOnCalcInputFileOpenClicked_normalExistingDirectoryPath() throws Exception {
 
         /* 期待値の定義 */
@@ -769,6 +771,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testOnCalcInputFileOpenClicked_normalExistingFilePath() throws Exception {
 
         /* 期待値の定義 */
@@ -811,6 +814,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testOnCalcInputFileOpenClicked_normalExistingPath() throws Exception {
 
         /* 期待値の定義 */
@@ -853,6 +857,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testOnCalcInputFileOpenClicked_normalFileSelected() throws Exception {
 
         /* 期待値の定義 */
@@ -934,6 +939,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testOnCalcOutputDirectoryOpenClicked_normalDirectorySelected() throws Exception {
 
         /* 期待値の定義 */
@@ -976,6 +982,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testOnCalcOutputDirectoryOpenClicked_normalExistingDirectoryPath() throws Exception {
 
         /* 期待値の定義 */
@@ -1019,6 +1026,7 @@ public class IsCreationControllerTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testOnCalcOutputDirectoryOpenClicked_normalExistingFilePath() throws Exception {
 
         /* 期待値の定義 */

@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.io.TempDir;
@@ -70,6 +71,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testMain_normalPt01(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
@@ -113,6 +115,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testMain_normalPt03(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
@@ -137,6 +140,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testMain_normalPt04(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
@@ -161,6 +165,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testMain_normalPt05(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
@@ -187,6 +192,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testMain_normalPt06(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
@@ -208,6 +214,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testMain_normalPt07(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);

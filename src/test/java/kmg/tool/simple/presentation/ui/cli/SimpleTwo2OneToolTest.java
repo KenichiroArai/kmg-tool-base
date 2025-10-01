@@ -129,7 +129,7 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     public void testGetDefaultTemplatePath_normalPrimaryPathActuallyExists() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTemplateFileName = "template\\SimpleTwo2OneTool.yml";
+        final String expectedTemplateFileName = "template/SimpleTwo2OneTool.yml";
 
         /* 準備 */
         // リフレクションを使用してprivateメソッドを呼び出し
@@ -146,18 +146,21 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
         // 優先パスが実際に存在する場合、そのパスが返されることを確認
         final String actualPath = actual.toString();
 
-        if (actualPath.contains("work\\io")) {
+        // パス区切り文字を統一（Windows環境でのバックスラッシュをスラッシュに変換）
+        final String normalizedPath = actualPath.replace("\\", "/");
+
+        if (normalizedPath.contains("work/io")) {
 
             // 優先パスが存在する場合
-            Assertions.assertTrue(actualPath.contains("work\\io"), "優先パスが使用されること");
+            Assertions.assertTrue(normalizedPath.contains("work/io"), "優先パスが使用されること");
 
         } else {
 
             // 優先パスが存在しない場合、代替パスが使用される
-            Assertions.assertTrue(actualPath.contains("src\\main\\resources\\tool\\io"), "代替パスが使用されること");
+            Assertions.assertTrue(normalizedPath.contains("src/main/resources/tool/io"), "代替パスが使用されること");
 
         }
-        Assertions.assertTrue(actualPath.endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
+        Assertions.assertTrue(normalizedPath.endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
 
     }
 
@@ -173,7 +176,7 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     public void testGetDefaultTemplatePath_normalPrimaryPathExists() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTemplateFileName = "template\\SimpleTwo2OneTool.yml";
+        final String expectedTemplateFileName = "template/SimpleTwo2OneTool.yml";
 
         /* 準備 */
         // リフレクションを使用してprivateメソッドを呼び出し
@@ -187,7 +190,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertNotNull(actual, "テンプレートパスが返されること");
-        Assertions.assertTrue(actual.toString().endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
+        final String normalizedPath = actual.toString().replace("\\", "/");
+        Assertions.assertTrue(normalizedPath.endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
 
     }
 
@@ -203,7 +207,7 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     public void testGetDefaultTemplatePath_semiPrimaryPathActuallyNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTemplateFileName = "template\\SimpleTwo2OneTool.yml";
+        final String expectedTemplateFileName = "template/SimpleTwo2OneTool.yml";
 
         /* 準備 */
         // リフレクションを使用してprivateメソッドを呼び出し
@@ -218,9 +222,10 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertNotNull(actual, "テンプレートパスが返されること");
         // 優先パスが存在しない場合、代替パスが使用されることを確認
-        final String actualPath = actual.toString();
-        Assertions.assertTrue(actualPath.contains("src\\main\\resources\\tool\\io"), "代替パスが使用されること");
-        Assertions.assertTrue(actualPath.endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
+        final String actualPath     = actual.toString();
+        final String normalizedPath = actualPath.replace("\\", "/");
+        Assertions.assertTrue(normalizedPath.contains("src/main/resources/tool/io"), "代替パスが使用されること");
+        Assertions.assertTrue(normalizedPath.endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
 
     }
 
@@ -236,7 +241,7 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
     public void testGetDefaultTemplatePath_semiPrimaryPathNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedTemplateFileName = "template\\SimpleTwo2OneTool.yml";
+        final String expectedTemplateFileName = "template/SimpleTwo2OneTool.yml";
 
         /* 準備 */
         // リフレクションを使用してprivateメソッドを呼び出し
@@ -250,7 +255,8 @@ public class SimpleTwo2OneToolTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertNotNull(actual, "テンプレートパスが返されること");
-        Assertions.assertTrue(actual.toString().endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
+        final String normalizedPath = actual.toString().replace("\\", "/");
+        Assertions.assertTrue(normalizedPath.endsWith(expectedTemplateFileName), "テンプレートファイル名が正しいこと");
 
     }
 

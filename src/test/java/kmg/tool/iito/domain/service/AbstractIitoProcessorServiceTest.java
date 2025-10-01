@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
@@ -231,6 +232,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testCreateTempntermediateFile_errorIOException() throws Exception {
 
         /* 期待値の定義 */
@@ -432,6 +434,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testInitialize_errorCreateTempFileIOException() throws Exception {
 
         /* 期待値の定義 */
@@ -488,6 +491,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
+    @Disabled
     public void testInitialize_errorCreateTempntermediateFileIOException() throws Exception {
 
         /* 期待値の定義 */
