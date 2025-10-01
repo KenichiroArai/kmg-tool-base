@@ -3,90 +3,100 @@
 name: Release and Publish
 
 on:
-    push:
-        tags:
-            - "v*"
-    release:
-        types: [created]
+  push:
+    tags:
+      - "v*"
+  release:
+    types: [created]
 
 permissions:
-    contents: write
-    packages: write
+  contents: write
+  packages: write
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            # ソースコードをチェックアウト
-            - uses: actions/checkout@v4
+    steps:
+      # ソースコードをチェックアウト
+      - uses: actions/checkout@v4
 
-            # Java開発環境のセットアップ
-            - name: Set up JDK 21
-              uses: actions/setup-java@v4
-              with:
-                  java-version: "21"
-                  distribution: "temurin"
-                  cache: maven
-                  server-id: github-kmg-tool
-                  settings-path: ${{ github.workspace }}
+      # Java開発環境のセットアップ
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: maven
+          server-id: github-kmg-tool
+          settings-path: ${{ github.workspace }}
 
-            # Maven設定の構成
-            - name: Configure Maven settings.xml
-              uses: s4u/maven-settings-action@v3.0.0
-              with:
-                  servers: |
-                      [{
-                        "id": "github-kmg-tool",
-                        "username": "${{ github.actor }}",
-                        "password": "${{ secrets.GITHUB_TOKEN }}"
-                      },
-                      {
-                        "id": "github-kmg-core",
-                        "username": "${{ github.actor }}",
-                        "password": "${{ secrets.GITHUB_TOKEN }}"
-                      }]
+      # Maven設定の構成
+      - name: Configure Maven settings.xml
+        uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [{
+              "id": "github-kmg-tool",
+              "username": "${{ github.actor }}",
+              "password": "${{ secrets.GITHUB_TOKEN }}"
+            },
+            {
+              "id": "github-kmg-core",
+              "username": "${{ github.actor }}",
+              "password": "${{ secrets.GITHUB_TOKEN }}"
+            }]
 
-            # バージョン情報の確認
-            - name: バージョン情報の確認
-              run: |
-                  echo "バージョン情報の確認を開始します..."
-                  mvn versions:display-property-updates
+      # JavaFXテスト用のXvfb設定
+      - name: Setup Xvfb for JavaFX tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 
-            # プロジェクトのビルドとテスト
-            - name: テストとビルド
-              run: |
-                  echo "Mavenビルドとテストプロセスを開始します..."
-                  mvn -B verify --file pom.xml
-                  echo "Mavenビルドとテストが完了しました"
+      # バージョン情報の確認
+      - name: バージョン情報の確認
+        run: |
+          echo "バージョン情報の確認を開始します..."
+          mvn versions:display-property-updates
 
-            # カバレッジレポートのアップロード
-            - name: カバレッジレポートのアップロード
-              uses: actions/upload-artifact@v4
-              with:
-                  name: jacoco-report
-                  path: target/site/jacoco/
-                  retention-days: 7
+      # プロジェクトのビルドとテスト
+      - name: テストとビルド
+        run: |
+          echo "Mavenビルドとテストプロセスを開始します..."
+          export DISPLAY=:99
+          mvn -B verify --file pom.xml -DargLine="-Djava.awt.headless=true"
+          echo "Mavenビルドとテストが完了しました"
 
-            # GitHub Packagesへの公開
-            - name: Publish to GitHub Packages
-              run: |
-                  echo "GitHub Packagesへの公開を開始します..."
-                  mvn deploy
-                  echo "パッケージの公開が完了しました"
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # カバレッジレポートのアップロード
+      - name: カバレッジレポートのアップロード
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+          retention-days: 7
 
-            # GitHubリリースの作成
-            - name: Create Release
-              uses: softprops/action-gh-release@v1
-              with:
-                  files: target/kmg-tool-*.jar
-                  generate_release_notes: true
-                  body: |
-                      ## 成果物
-                      - JARファイル: `target/kmg-tool-*.jar`
+      # GitHub Packagesへの公開
+      - name: Publish to GitHub Packages
+        run: |
+          echo "GitHub Packagesへの公開を開始します..."
+          export DISPLAY=:99
+          mvn deploy
+          echo "パッケージの公開が完了しました"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-                      ## テスト結果
-                      - JUnitテストレポート: `target/surefire-reports/`
-                      - カバレッジレポート: `target/site/jacoco/`
+      # GitHubリリースの作成
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: target/kmg-tool-*.jar
+          generate_release_notes: true
+          body: |
+            ## 成果物
+            - JARファイル: `target/kmg-tool-*.jar`
+
+            ## テスト結果
+            - JUnitテストレポート: `target/surefire-reports/`
+            - カバレッジレポート: `target/site/jacoco/`
