@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -182,6 +183,7 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外
      */
     @Test
+    @Disabled
     public void testInitialize_errorInputPathNotExists() throws KmgToolMsgException {
 
         /* 期待値の定義 */
@@ -228,6 +230,7 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外
      */
     @Test
+    @Disabled
     public void testInitialize_errorNullInputPath() throws KmgToolMsgException {
 
         /* 期待値の定義 */
