@@ -12,7 +12,7 @@
 
     <groupId>kmg.tool</groupId>
     <artifactId>kmg-tool-base</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <name>kmg-tool-base</name>
     <description>KMGツール</description>
     <packaging>jar</packaging>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>kmg.fund</groupId>
             <artifactId>kmg-fund</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </dependency>
 
         <!-- Spring -->
@@ -263,9 +263,9 @@
 
         <!-- KMG シリーズ -->
         <repository>
-            <id>github-kmg-tool</id>
+            <id>github-kmg-tool-base</id>
             <name>GitHub KenichiroArai Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/KenichiroArai/kmg-tool</url>
+            <url>https://maven.pkg.github.com/KenichiroArai/kmg-tool-base</url>
         </repository>
     </distributionManagement>
 
