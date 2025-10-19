@@ -11,9 +11,9 @@
     </parent>
 
     <groupId>kmg.tool</groupId>
-    <artifactId>kmg-tool</artifactId>
+    <artifactId>kmg-tool-base</artifactId>
     <version>0.1.0</version>
-    <name>kmg-tool</name>
+    <name>kmg-tool-base</name>
     <description>KMGツール</description>
     <packaging>jar</packaging>
 
