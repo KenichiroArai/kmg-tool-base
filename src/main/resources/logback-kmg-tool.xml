@@ -5,7 +5,7 @@
     <include resource="logback-kmg-spring-base.xml" />
 
     <!-- プロジェクト固有のロガー設定 -->
-    <logger name="kmg.tool" level="DEBUG" additivity="false">
+    <logger name="kmg.tool.base" level="DEBUG" additivity="false">
         <appender-ref ref="SPRING_STDOUT" />
         <appender-ref ref="SPRING_APPLIATION_LOG" />
     </logger>

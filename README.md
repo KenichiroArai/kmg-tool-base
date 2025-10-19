@@ -158,7 +158,7 @@ kmg-tool/
 
 ```bash
 # 例：Javadocタグ設定ツールの実行
-mvn exec:java -Dexec.mainClass="kmg.tool.jdts.presentation.ui.cli.JavadocTagSetterTool"
+mvn exec:java -Dexec.mainClass="kmg.tool.base.jdts.presentation.ui.cli.JavadocTagSetterTool"
 ```
 
 詳細な使用方法については、各ツールの操作手順書を参照してください。

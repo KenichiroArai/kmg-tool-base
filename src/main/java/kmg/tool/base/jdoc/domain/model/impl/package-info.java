@@ -1,0 +1,14 @@
+/**
+ * Javadoc処理のモデル実装パッケージ<br>
+ * <p>
+ * Javadoc処理機能のドメインモデルの実装を提供します。<br>
+ * モデルインターフェースの具体的な実装が含まれます。
+ * </p>
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.2.0
+ *
+ * @version 0.2.0
+ */
+package kmg.tool.base.jdoc.domain.model.impl;

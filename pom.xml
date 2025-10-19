@@ -10,7 +10,7 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>kmg.tool</groupId>
+    <groupId>kmg.tool.base</groupId>
     <artifactId>kmg-tool-base</artifactId>
     <version>0.2.0</version>
     <name>kmg-tool-base</name>
@@ -183,7 +183,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>kmg.tool.presentation.ui.gui.is.InsertionSqlCreationTool</mainClass>
+                    <mainClass>kmg.tool.base.presentation.ui.gui.is.InsertionSqlCreationTool</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -199,7 +199,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>kmg.tool.presentation.ui.gui.is.InsertionSqlCreationTool</mainClass>
+                    <mainClass>kmg.tool.base.presentation.ui.gui.is.InsertionSqlCreationTool</mainClass>
                     <arguments>
                         <argument>--module-path</argument>
                         <argument>${project.build.directory}/dependency</argument>

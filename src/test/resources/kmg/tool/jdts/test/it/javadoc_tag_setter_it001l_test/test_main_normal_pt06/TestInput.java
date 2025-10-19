@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.jdts.application.model.impl.JdtsBlockModelImpl;
+import kmg.tool.base.base.jdts.application.model.impl.JdtsBlockModelImpl;
 
 public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
     /**
      * parse メソッドのテスト - 正常系:アノテーションの複数行処理
      *
-     * @since 0.1.0
+     * @since 0.2.0
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
