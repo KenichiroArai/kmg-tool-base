@@ -15,7 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
-import kmg.tool.base.jdts.presentation.ui.cli.JavadocTagSetterTool;
 
 /*
  * TODO KenichiroArai 2025/09/04 v0.1.1対応予定。
@@ -31,7 +30,7 @@ import kmg.tool.base.jdts.presentation.ui.cli.JavadocTagSetterTool;
  *
  * @version 0.2.0
  */
-@SpringBootTest(classes = JavadocTagSetterTool.class)
+@SpringBootTest(classes = JdtsServiceImpl.class)
 @ActiveProfiles("test")
 @SuppressWarnings({
     "nls",
