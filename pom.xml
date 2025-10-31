@@ -44,12 +44,12 @@
         <dependency>
             <groupId>kmg.core</groupId>
             <artifactId>kmg-core</artifactId>
-            <version>0.2.0</version>
+            <version>0.2.2</version>
         </dependency>
         <dependency>
             <groupId>kmg.fund</groupId>
             <artifactId>kmg-fund</artifactId>
-            <version>0.1.1</version>
+            <version>0.2.1</version>
         </dependency>
 
         <!-- Spring -->
