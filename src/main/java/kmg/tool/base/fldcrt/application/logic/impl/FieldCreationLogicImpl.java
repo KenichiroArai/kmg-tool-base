@@ -80,6 +80,16 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     private String type;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public FieldCreationLogicImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * コメントを書き込み対象に追加する。 保持しているコメントを書き込み対象の中間の行に追加します。 コメントが設定されていない場合は例外をスローします。
      *
      * @since 0.2.0

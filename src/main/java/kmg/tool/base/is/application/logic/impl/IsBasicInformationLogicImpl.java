@@ -35,6 +35,16 @@ public class IsBasicInformationLogicImpl implements IsBasicInformationLogic {
     private Workbook inputWk;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public IsBasicInformationLogicImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * KMG DBの種類を返す<br>
      *
      * @since 0.2.0

@@ -82,6 +82,16 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     private String item;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public AccessorCreationLogicImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * 項目名を書き込み対象に追加する。
      *
      * @since 0.2.0

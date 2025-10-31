@@ -29,11 +29,11 @@ import kmg.tool.base.jdts.application.types.JdtsInsertPositionTypes;
  * </ul>
  * <p>
  * 略語の説明：
+ * </p>
  * <ul>
  * <li>Jdts: JavadocTagSetterの略</li>
  * <li>Repl: Replacementの略</li>
  * </ul>
- * </p>
  * <p>
  * このクラスは{@link JdtsBlockReplLogic}インタフェースを実装し、 Javadocタグの操作に関するすべてのメソッドを提供します。
  * </p>
@@ -116,6 +116,16 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * @since 0.2.0
      */
     private StringBuilder replacedJavadocBlock;
+
+    /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public JdtsBlockReplLogicImpl() {
+
+        // 処理なし
+    }
 
     /**
      * 新しいタグを作成して指定位置に追加する<br>

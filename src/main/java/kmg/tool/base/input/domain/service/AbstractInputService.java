@@ -28,6 +28,16 @@ public abstract class AbstractInputService implements InputService {
     private Path inputPath;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public AbstractInputService() {
+
+        // 処理なし
+    }
+
+    /**
      * 入力ファイルパスを返す<br>
      *
      * @since 0.2.0

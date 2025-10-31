@@ -18,6 +18,16 @@ import kmg.tool.base.input.domain.service.AbstractInputService;
 public class SimpleInputServiceImpl extends AbstractInputService implements SimpleInputService {
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public SimpleInputServiceImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * 処理する<br>
      *
      * @since 0.2.0

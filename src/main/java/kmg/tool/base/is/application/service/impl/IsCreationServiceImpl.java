@@ -55,6 +55,16 @@ public class IsCreationServiceImpl implements IsCreationService {
     private IsFileCreationService isFileCreationService;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public IsCreationServiceImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * 初期化する<br>
      *
      * @since 0.2.0

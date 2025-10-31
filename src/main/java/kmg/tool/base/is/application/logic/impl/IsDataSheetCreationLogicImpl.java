@@ -198,6 +198,16 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     private String insertComment;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public IsDataSheetCreationLogicImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * 出力ファイルのディレクトリを作成する<br>
      *
      * @since 0.2.0

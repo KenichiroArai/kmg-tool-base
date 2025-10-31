@@ -33,6 +33,16 @@ public class PlainContentInputServiceImpl extends AbstractInputService implement
     private String content;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public PlainContentInputServiceImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * 入力内容を返す<br>
      *
      * @since 0.2.0

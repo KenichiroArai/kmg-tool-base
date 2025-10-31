@@ -122,10 +122,6 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
      *
      * @since 0.2.0
      *
-     * @Override
-     *
-     * @author KenichiroArai
-     *
      * @return Javadocタグ設定のブロックモデルリスト
      */
     @Override

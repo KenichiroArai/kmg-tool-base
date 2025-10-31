@@ -16,6 +16,14 @@ import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
  */
 public class KmgToolValsModelImpl extends KmgValsModelImpl {
 
-    // 処理なし
+    /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public KmgToolValsModelImpl() {
+
+        // 処理なし
+    }
 
 }

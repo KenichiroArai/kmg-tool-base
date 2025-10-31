@@ -121,6 +121,16 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
     }
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public JavadocLineRemoverLogicImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * Javadoc行を削除する
      *
      * @since 0.2.0

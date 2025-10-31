@@ -76,6 +76,16 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
     private short threadNum;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public IsFileCreationServiceImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * 初期化する<br>
      *
      * @since 0.2.0

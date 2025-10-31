@@ -49,6 +49,16 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
     private String itemName;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public Enum2SwitchCaseCreationLogicImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * 項目名を書き込み対象に追加する。
      *
      * @since 0.2.0

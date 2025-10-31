@@ -20,11 +20,11 @@ import kmg.tool.base.jdts.application.model.JdtsTagConfigModel;
  * </ul>
  * <p>
  * 略語の説明：
+ * </p>
  * <ul>
  * <li>Jdts: JavadocTagSetterの略</li>
  * <li>Repl: Replacementの略</li>
  * </ul>
- * </p>
  * <p>
  * このインタフェースを実装するクラスは、Javadocタグの操作に関する すべてのメソッドを提供する必要があります。
  * </p>

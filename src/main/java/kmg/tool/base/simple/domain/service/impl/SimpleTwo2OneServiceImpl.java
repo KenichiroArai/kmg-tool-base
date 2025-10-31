@@ -55,6 +55,16 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
     private Path outputPath;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public SimpleTwo2OneServiceImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * 入力ファイルパスを返す<br>
      *
      * @since 0.2.0

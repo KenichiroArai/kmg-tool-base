@@ -47,6 +47,16 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
     private String itemName;
 
     /**
+     * デフォルトコンストラクタ
+     *
+     * @since 0.2.0
+     */
+    public MessageTypesCreationLogicImpl() {
+
+        // 処理なし
+    }
+
+    /**
      * 項目名を書き込み対象に追加する。
      *
      * @since 0.2.0

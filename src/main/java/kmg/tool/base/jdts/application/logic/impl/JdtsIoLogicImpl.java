@@ -246,7 +246,6 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
     /**
      * 内容を読み込む。
-     * </p>
      *
      * @since 0.2.0
      *
