@@ -22,16 +22,15 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.13.4</junit.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- JUnit BOM to ensure version alignment -->
+            <!-- JUnit BOMでバージョンを統一 -->
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>${junit.version}</version>
+                <version>5.12.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -45,6 +44,21 @@
             <groupId>kmg.core</groupId>
             <artifactId>kmg-core</artifactId>
             <version>0.2.2</version>
+            <exclusions>
+                <!-- kmg-coreが含むJUnit依存関係を除外し、Spring Bootが管理するバージョンを使用 -->
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>kmg.fund</groupId>
@@ -103,10 +117,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Eclipseでテストを実行するために必要 -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
             <scope>test</scope>
+            <!-- BOMでバージョン管理されるが、明示的に指定 -->
         </dependency>
 
         <!-- Mockito for mocking -->
