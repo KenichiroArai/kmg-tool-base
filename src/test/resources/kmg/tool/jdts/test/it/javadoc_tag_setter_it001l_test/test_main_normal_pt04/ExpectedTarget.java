@@ -1,4 +1,4 @@
-package kmg.tool.jdts.application.model.impl;
+package kmg.tool.base.base.jdts.application.model.impl;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.jdoc.domain.model.JavadocModel;
+import kmg.tool.base.base.jdoc.domain.model.JavadocModel;
 
 /**
  * Javadocタグ設定のブロックモデル実装のテスト<br>
  *
  * @author KenichiroArai
-* @since 0.1.0
-* @version 0.1.0
+* @since 0.2.0
+* @version 0.2.0
 
  *
  
@@ -32,7 +32,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * getAnnotations メソッドのテスト - 正常系:初期状態での空リスト取得
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     @Test

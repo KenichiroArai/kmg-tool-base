@@ -1,4 +1,4 @@
-package kmg.tool.jdts.application.model.impl;
+package kmg.tool.base.base.jdts.application.model.impl;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.jdoc.domain.model.JavadocModel;
+import kmg.tool.base.base.jdoc.domain.model.JavadocModel;
 
 /**
  * Javadocタグ設定のブロックモデル実装のテスト<br>
  *
  * @author KenichiroArai
-* @since 0.1.0
-* @version 0.1.0
+* @since 0.2.0
+* @version 0.2.0
 
  *
  
@@ -32,7 +32,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * テスト対象
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     private JdtsBlockModelImpl testTarget;
@@ -40,7 +40,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * リフレクションモデル
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     private KmgReflectionModelImpl reflectionModel;
@@ -48,7 +48,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * テスト前処理<br>
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     @BeforeEach
@@ -61,7 +61,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * getAnnotations メソッドのテスト - 正常系:初期状態での空リスト取得
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     @Test
@@ -89,7 +89,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * getClassification メソッドのテスト - 正常系:初期状態でのNONE取得
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     @Test
@@ -116,7 +116,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * getElementName メソッドのテスト - 正常系:初期状態でのnull取得
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     @Test
@@ -142,7 +142,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * getId メソッドのテスト - 正常系:一意な識別子取得
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     @Test
@@ -173,7 +173,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * getJavadocModel メソッドのテスト - 正常系:初期状態でのnull取得
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     @Test
@@ -199,7 +199,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * getOrgBlock メソッドのテスト - 正常系:オリジナルブロック取得
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      */
     @Test
@@ -226,7 +226,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:アノテーションと空白のみのブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -255,7 +255,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:アノテーションのみでコードがないブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -284,7 +284,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:コメントのみのブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -313,7 +313,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:空のブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -341,7 +341,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:コードブロックが空のブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -370,7 +370,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:不完全なメソッド定義のブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -399,7 +399,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:無効なJavaコードのブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -428,7 +428,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadoc終了記号が先頭にあるブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -457,7 +457,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadoc終了記号のみのブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -486,7 +486,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadocブロックのみでコードブロックがない
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -516,7 +516,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadoc開始記号のみのブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -545,7 +545,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系: *&#47; が含まれていないブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -575,7 +575,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:nullブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -602,7 +602,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:特殊文字を含むブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -631,7 +631,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:特殊文字のみのブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -660,7 +660,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:コードブロックが空白のみのブロック
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -689,7 +689,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:アノテーション使用の区分でも解析は成功する
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -718,7 +718,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:クラス定義の解析
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -755,7 +755,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:空行を含むコードブロックのクラス定義解析
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -792,7 +792,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:アノテーション付きクラス定義の解析
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -834,7 +834,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:空行を含むアノテーション付きクラス定義の解析
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -876,7 +876,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:無効なクラス定義でもJavadoc対象外として正常処理される
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -911,7 +911,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:メソッド定義の解析
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -946,7 +946,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:メソッド定義で空行を含む解析
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -982,7 +982,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:アノテーションの複数行処理
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1039,7 +1039,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの処理でcontinue文のカバレッジ
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1091,7 +1091,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの終了記号が行の途中にある場合
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1126,7 +1126,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの後に通常のアノテーションが続く場合
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1177,7 +1177,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの途中で終了する場合
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1212,7 +1212,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションのみでコードがない場合
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1253,7 +1253,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーションの処理でannotationMultilineに追加されるがannotationsには追加されない
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1299,7 +1299,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数行アノテーション内に空行が含まれる場合
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1344,7 +1344,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:Javadoc対象外の区分
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1378,7 +1378,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:Javadoc対象外の区分（NONE）でも解析は成功する
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1407,7 +1407,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * specifyClassification メソッドのテスト - 正常系:クラス定義の区分特定
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1446,7 +1446,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * specifyClassification メソッドのテスト - 正常系:無効なクラス定義でもNONE区分として正常処理される
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
@@ -1484,7 +1484,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * specifyClassification メソッドのテスト - 正常系:Javadoc対象外の区分
      *
-     * @since 0.1.0
+     * @since 0.2.0
 
      *
      * @throws Exception
