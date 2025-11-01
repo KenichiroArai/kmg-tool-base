@@ -4,10 +4,6 @@
 
 ```mermaid
 classDiagram
-    %% 継承関係
-    Application <|-- IsCreationTool
-    Initializable <|.. IsCreationController
-
     %% インターフェース実装関係
     IsCreationService <|.. IsCreationServiceImpl
     IsFileCreationService <|.. IsFileCreationServiceImpl
@@ -17,71 +13,10 @@ classDiagram
     IsDataSheetCreationLogic <|.. IsDataSheetCreationLogicImpl
 
     %% サービス関係
-    IsCreationTool --> IsCreationController : uses
-    IsCreationController --> IsCreationService : uses
     IsCreationServiceImpl --> IsFileCreationService : uses
     IsFileCreationServiceImpl --> IsBasicInformationLogic : uses
     IsFileCreationServiceImpl --> IslDataSheetCreationService : uses
     IsDataSheetCreationServiceImpl --> IsDataSheetCreationLogic : uses
-
-    %% GUI関連
-    IsCreationTool ..> IsCreationScreenGui.fxml : uses FXML
-    IsCreationController ..> IsCreationScreenGui.fxml : controls
-
-    class Application {
-        <<JavaFX>>
-        +void init()
-        +void start(Stage stage)
-        +void stop()
-        +static void launch(Class appClass, String[] args)
-    }
-
-    class IsCreationTool {
-        -static String STAGE_TITLE
-        -static String FXML_PATH
-        -Logger logger
-        -KmgMessageSource messageSource
-        -ConfigurableApplicationContext springContext
-        +static void main(String[] args)
-        +IsCreationTool()
-        +IsCreationTool(Logger logger)
-        +void init()
-        +void start(Stage stage)
-        +void stop()
-    }
-
-    class Initializable {
-        <<JavaFX>>
-        +void initialize(URL location, ResourceBundle resources)
-    }
-
-    class IsCreationController {
-        -static String FILE_CHOOSER_TITLE
-        -static String DIRECTORY_CHOOSER_TITLE
-        -static String DEFAULT_DIRECTORY_PATH
-        -Logger logger
-        -KmgMessageSource messageSource
-        -IsCreationService isCreationService
-        -FileChooserWrapper fileChooserWrapper
-        -DirectoryChooserWrapper directoryChooserWrapper
-        -TextField txtInputFile
-        -Button btnInputFileOpen
-        -TextField txtOutputDirectory
-        -Button btnOutputDirectoryOpen
-        -TextField txtThreadNum
-        -Button btnRun
-        -Label lblProcTime
-        -Label lblProcTimeUnit
-        +IsCreationController()
-        +IsCreationController(Logger logger)
-        +void initialize(URL location, ResourceBundle resources)
-        +void mainProc(Path inputPath, Path outputPath)
-        +void setDirectoryChooserWrapper(DirectoryChooserWrapper wrapper)
-        +void setFileChooserWrapper(FileChooserWrapper wrapper)
-        -void onCalcInputFileOpenClicked(ActionEvent event)
-        -void onCalcOutputDirectoryOpenClicked(ActionEvent event)
-        -void onCalcRunClicked(ActionEvent event)
-    }
 
     class IsCreationService {
         <<interface>>
@@ -203,23 +138,6 @@ classDiagram
         -String formatValueForSql(Object value, KmgDbDataTypeTypes dataType)
     }
 
-    class IsCreationScreenGui.fxml {
-        -AnchorPane root
-        -VBox mainContainer
-        -HBox inputFileSection
-        -HBox outputDirectorySection
-        -HBox processingInfoSection
-        -HBox buttonSection
-        -TextField txtInputFile
-        -Button btnInputFileOpen
-        -TextField txtOutputDirectory
-        -Button btnOutputDirectoryOpen
-        -TextField txtThreadNum
-        -Button btnRun
-        -Label lblProcTime
-        -Label lblProcTimeUnit
-    }
-
     class Workbook {
         <<Apache POI>>
         +int getNumberOfSheets()
@@ -253,8 +171,6 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant User as ユーザー
-    participant ICT as IsCreationTool
-    participant ICC as IsCreationController
     participant ICS as IsCreationService
     participant ICSImpl as IsCreationServiceImpl
     participant IFCS as IsFileCreationService
@@ -266,38 +182,10 @@ sequenceDiagram
     participant Excel as Excelファイル
     participant SQL as SQLファイル
 
-    User->>ICT: アプリケーション起動
-    Note over ICT: main(String[] args)
-    ICT->>ICT: Application.launch(IsCreationTool.class, args)
-    ICT->>ICT: init()
-    ICT->>ICT: SpringApplicationBuilder.run()
-
-    ICT->>ICT: start(Stage stage)
-    ICT->>ICT: FXMLLoader.load()
-    ICT->>ICC: initialize(URL location, ResourceBundle resources)
-    ICC->>ICC: デフォルトスレッド数設定
-
-    User->>ICC: 入力ファイル選択
-    ICC->>ICC: onCalcInputFileOpenClicked()
-    ICC->>User: ファイル選択ダイアログ表示
-    User-->>ICC: ファイルパス選択
-    ICC->>ICC: txtInputFile.setText()
-
-    User->>ICC: 出力ディレクトリ選択
-    ICC->>ICC: onCalcOutputDirectoryOpenClicked()
-    ICC->>User: ディレクトリ選択ダイアログ表示
-    User-->>ICC: ディレクトリパス選択
-    ICC->>ICC: txtOutputDirectory.setText()
-
-    User->>ICC: 実行ボタンクリック
-    ICC->>ICC: onCalcRunClicked()
-    ICC->>ICC: mainProc(inputPath, outputPath)
-
-    ICC->>ICS: initialize(inputPath, outputPath, threadNum)
+    User->>ICS: サービス呼び出し
     ICS->>ICSImpl: initialize(inputPath, outputPath, threadNum)
     ICSImpl->>ICSImpl: パラメータ保存
 
-    ICC->>ICS: outputInsertionSql()
     ICS->>ICSImpl: outputInsertionSql()
     ICSImpl->>IFCS: initialize(inputPath, outputPath, threadNum)
     IFCS->>IFCSImpl: initialize(inputPath, outputPath, threadNum)
@@ -360,47 +248,27 @@ sequenceDiagram
         IDSCSImpl->>SQL: BufferedWriterクローズ
     end
 
-    ICC->>ICC: 処理時間表示
-    ICC-->>User: 処理完了
+    ICSImpl-->>User: 処理完了
 ```
 
 ## 3. 処理フロー詳細
 
-1. **アプリケーション起動**
+1. **サービス初期化**
 
-   - ユーザーがアプリケーションを起動
-   - JavaFX Application として動作する IsCreationTool が初期化される
-   - Spring Boot アプリケーションコンテキストが構築される
+   - IsCreationService が初期化される
+   - 入力パス、出力パス、スレッド数が設定される
 
-2. **GUI 初期化**
+2. **挿入 SQL 出力処理開始**
 
-   - IsCreationTool が FXML ファイルを読み込み、IsCreationController を初期化
-   - デフォルトのスレッド数（CPU 論理プロセッサ数）が設定される
+   - IsCreationService の outputInsertionSql() メソッドが呼び出される
+   - IsFileCreationService が初期化される
 
-3. **入力ファイル選択**
-
-   - ユーザーがファイル選択ボタンをクリック
-   - ファイル選択ダイアログが表示され、Excel ファイルを選択
-   - 選択されたファイルパスがテキストボックスに設定される
-
-4. **出力ディレクトリ選択**
-
-   - ユーザーがディレクトリ選択ボタンをクリック
-   - ディレクトリ選択ダイアログが表示され、出力先ディレクトリを選択
-   - 選択されたディレクトリパスがテキストボックスに設定される
-
-5. **実行処理**
-
-   - ユーザーが実行ボタンをクリック
-   - 処理時間測定が開始される
-   - IsCreationService が初期化され、挿入 SQL 出力処理が開始される
-
-6. **Excel ファイル処理**
+3. **Excel ファイル処理**
 
    - Excel ファイル（Workbook）が読み込まれる
    - 基本情報ロジックが初期化され、設定情報から KMG DB の種類と SQL ID マップを取得
 
-7. **シート別処理**
+4. **シート別処理**
 
    - 各シートに対して並列処理が実行される（指定されたスレッド数で）
    - 設定シートと一覧シートはスキップされる
@@ -410,31 +278,18 @@ sequenceDiagram
      - 出力ディレクトリの作成
      - SQL ファイルの生成
 
-8. **SQL ファイル生成**
+5. **SQL ファイル生成**
 
    - 各シートごとに SQL ファイルが生成される
    - 削除 SQL（DELETE 文）が先に出力される
    - 挿入 SQL（INSERT 文）がデータ行ごとに出力される
    - データ値は各カラムのデータ型に応じて適切にフォーマットされる
 
-9. **処理完了**
+6. **処理完了**
    - 全シートの処理が完了
-   - 処理時間が表示される
    - リソースが適切にクローズされる
 
 ## 4. 主要コンポーネント
-
-### IsCreationTool
-
-- JavaFX Application として動作するエントリーポイント
-- Spring Boot アプリケーションコンテキストの管理
-- FXML ファイルの読み込みとステージの設定
-
-### IsCreationController
-
-- JavaFX GUI コントローラ
-- ファイル選択、ディレクトリ選択、実行処理の管理
-- ユーザーインターフェースの制御
 
 ### IsCreationService
 
@@ -504,22 +359,11 @@ sequenceDiagram
 - 設定シートからの基本情報抽出
 - データシートからのテーブル・カラム情報抽出
 
-### GUI 処理
-
-- JavaFX を使用したモダンなユーザーインターフェース
-- FXML による画面定義
-- ファイル選択、ディレクトリ選択ダイアログの提供
-
 ### エラーハンドリング
 
 - KmgToolMsgException による統一された例外処理
 - ログ出力による詳細なエラー情報の記録
 - ユーザーフレンドリーなエラーメッセージ
-
-### パフォーマンス測定
-
-- 処理時間の測定と表示
-- KmgPfaMeasModel による性能測定
 
 ## 6. 入力・出力仕様
 

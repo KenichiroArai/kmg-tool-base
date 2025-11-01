@@ -28,7 +28,7 @@ jobs:
           java-version: "21"
           distribution: "temurin"
           cache: maven
-          server-id: github-kmg-tool
+          server-id: github-kmg-tool-base
           settings-path: ${{ github.workspace }}
 
       # Maven設定の構成
@@ -37,7 +37,7 @@ jobs:
         with:
           servers: |
             [{
-              "id": "github-kmg-tool",
+              "id": "github-kmg-tool-base",
               "username": "${{ github.actor }}",
               "password": "${{ secrets.GITHUB_TOKEN }}"
             },
@@ -45,15 +45,12 @@ jobs:
               "id": "github-kmg-core",
               "username": "${{ github.actor }}",
               "password": "${{ secrets.GITHUB_TOKEN }}"
+            },
+            {
+              "id": "github-kmg-fund",
+              "username": "${{ github.actor }}",
+              "password": "${{ secrets.GITHUB_TOKEN }}"
             }]
-
-      # JavaFXテスト用のXvfb設定
-      - name: Setup Xvfb for JavaFX tests
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
-          export DISPLAY=:99
-          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 
       # バージョン情報の確認
       - name: バージョン情報の確認
@@ -65,8 +62,7 @@ jobs:
       - name: テストとビルド
         run: |
           echo "Mavenビルドとテストプロセスを開始します..."
-          export DISPLAY=:99
-          mvn -B verify --file pom.xml -DargLine="-Djava.awt.headless=true"
+          mvn -B verify --file pom.xml
           echo "Mavenビルドとテストが完了しました"
 
       # カバレッジレポートのアップロード
@@ -81,7 +77,6 @@ jobs:
       - name: Publish to GitHub Packages
         run: |
           echo "GitHub Packagesへの公開を開始します..."
-          export DISPLAY=:99
           mvn deploy
           echo "パッケージの公開が完了しました"
         env:
@@ -91,11 +86,11 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: target/kmg-tool-*.jar
+          files: target/kmg-tool-base-*.jar
           generate_release_notes: true
           body: |
             ## 成果物
-            - JARファイル: `target/kmg-tool-*.jar`
+            - JARファイル: `target/kmg-tool-base-*.jar`
 
             ## テスト結果
             - JUnitテストレポート: `target/surefire-reports/`
