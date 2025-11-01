@@ -28,7 +28,7 @@ jobs:
           java-version: "21"
           distribution: "temurin"
           cache: maven
-          server-id: github-kmg-tool
+          server-id: github-kmg-tool-base
           settings-path: ${{ github.workspace }}
 
       # Maven設定の構成
@@ -37,12 +37,17 @@ jobs:
         with:
           servers: |
             [{
-              "id": "github-kmg-tool",
+              "id": "github-kmg-tool-base",
               "username": "${{ github.actor }}",
               "password": "${{ secrets.GITHUB_TOKEN }}"
             },
             {
               "id": "github-kmg-core",
+              "username": "${{ github.actor }}",
+              "password": "${{ secrets.GITHUB_TOKEN }}"
+            },
+            {
+              "id": "github-kmg-fund",
               "username": "${{ github.actor }}",
               "password": "${{ secrets.GITHUB_TOKEN }}"
             }]
@@ -91,11 +96,11 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: target/kmg-tool-*.jar
+          files: target/kmg-tool-base-*.jar
           generate_release_notes: true
           body: |
             ## 成果物
-            - JARファイル: `target/kmg-tool-*.jar`
+            - JARファイル: `target/kmg-tool-base-*.jar`
 
             ## テスト結果
             - JUnitテストレポート: `target/surefire-reports/`
