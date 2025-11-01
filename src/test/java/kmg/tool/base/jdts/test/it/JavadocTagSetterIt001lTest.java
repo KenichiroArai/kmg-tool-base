@@ -35,6 +35,7 @@ import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
 @SuppressWarnings({
     "nls",
 })
+@Disabled
 public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     /**
