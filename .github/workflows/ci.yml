@@ -45,33 +45,20 @@ jobs:
           </settings>
           EOF
 
-      - name: Setup Xvfb for JavaFX tests
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
-          export DISPLAY=:99
-          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-
       - name: Build with Maven
-        run: |
-          export DISPLAY=:99
-          mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml
 
       - name: Generate dependency graph
         run: |
-          export DISPLAY=:99
           mkdir -p target
           export MAVEN_OPTS="-Xmx2g -XX:MaxMetaspaceSize=512m"
           mvn -B dependency:tree -DoutputType=graphml -DoutputFile=target/dependency-graph.graphml -Dverbose=false
 
       - name: Run tests with JVM options
-        run: |
-          export DISPLAY=:99
-          mvn test -Djdk.instrument.traceUsage=true -DargLine="-XX:+EnableDynamicAgentLoading -Djava.awt.headless=true"
+        run: mvn test -Djdk.instrument.traceUsage=true -DargLine="-XX:+EnableDynamicAgentLoading"
 
       - name: Check Test Coverage
         run: |
-          export DISPLAY=:99
           COVERAGE=$(mvn jacoco:report | grep -A 1 "Total.*class" | grep "[0-9]\{1,3\}%" | grep -o "[0-9]\{1,3\}%" | cut -d'%' -f1)
           if [ "$COVERAGE" -lt 100 ]; then
             echo "Test coverage is below 100%. Current coverage: $COVERAGE%"
