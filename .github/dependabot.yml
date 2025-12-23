@@ -1,0 +1,31 @@
+# Dependabot設定ファイル
+# 依存関係の自動更新を管理するための設定
+
+version: 2
+
+updates:
+  # Mavenパッケージの依存関係更新設定
+  - package-ecosystem: "maven"
+    # プロジェクトルートディレクトリを対象とする
+    directory: "/"
+    schedule:
+      # 週次で依存関係の更新をチェック
+      interval: "weekly"
+      # 月曜日の午前9時（JST）に実行
+      day: "monday"
+      time: "00:00"
+    # 更新されたPRをdevelopブランチに対して作成
+    target-branch: "develop"
+    # プルリクエストの設定
+    open-pull-requests-limit: 10
+    # ラベルの設定
+    labels:
+      - "dependencies"
+      - "automated"
+    # コミットメッセージの設定
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    # セキュリティ更新の優先度を上げる
+    allow:
+      - dependency-type: "all"
