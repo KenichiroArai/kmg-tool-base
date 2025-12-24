@@ -18,6 +18,19 @@ import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
 
 /**
  * Javadocタグ設定ツールの結合テスト001のテスト<br>
+ * <p>
+ * このテストクラスは、Javadocタグ設定ツールの基本的な動作を検証します。<br>
+ * テンプレート設定（TestTemplate.yml）では、以下の設定が行われています：<br>
+ * - authorタグ：常に上書き（overwrite: "always"）<br>
+ * - sinceタグ：常に上書き（overwrite: "always"）<br>
+ * - versionタグ：常に上書き（overwrite: "always"）<br>
+ * </p>
+ * <p>
+ * テスト内容：<br>
+ * - クラスのJavadocでタグが一つもない場合にタグを追加する<br>
+ * - 文字列内のJavadocコメント（「\/** XXXXX *\/」）を無視する<br>
+ * - テキストブロック内のJavadocコメントを無視する<br>
+ * </p>
  *
  * @author KenichiroArai
  *

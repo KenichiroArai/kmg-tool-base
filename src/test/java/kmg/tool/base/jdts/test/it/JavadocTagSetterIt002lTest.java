@@ -18,6 +18,18 @@ import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
 
 /**
  * Javadocタグ設定ツールの結合テスト002のテスト<br>
+ * <p>
+ * このテストクラスは、Javadocタグ設定ツールの上書き設定の動作を検証します。<br>
+ * テンプレート設定（TestTemplate.yml）では、以下の設定が行われています：<br>
+ * - authorタグ：常に上書き（overwrite: "always"）<br>
+ * - sinceタグ：上書きしない（overwrite: "never"）<br>
+ * - versionタグ：上書きしない（overwrite: "never"）<br>
+ * </p>
+ * <p>
+ * テスト内容：<br>
+ * - 内部クラスのJavadocに既存のタグがある場合の動作を検証<br>
+ * - authorタグは削除され、sinceタグとversionタグは保持されることを確認<br>
+ * </p>
  *
  * @author KenichiroArai
  *
