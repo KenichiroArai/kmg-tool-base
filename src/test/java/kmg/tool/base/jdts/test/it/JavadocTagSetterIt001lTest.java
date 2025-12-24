@@ -17,7 +17,7 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
 
 /*
- * TODO KenichiroArai 2025/09/04 v0.1.1対応予定。
+ * TODO KenichiroArai 2025/12/25 v0.2.2対応予定。
  * 結合テスト001の役割を明確にする。テンプレートごとにクラスを分ける。001は、パターン01～06のテンプレートは同じにする。002は、パターン06のテンプレートに関連したテストにする。
  */
 
@@ -54,7 +54,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     @TempDir
     private Path tempDir;
 
-    // TODO KenichiroArai 2025/09/04 v0.1.1対応予定。テンプレートはクラスの共通にする。
+    // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。テンプレートはクラスの共通にする。
 
     /**
      * main メソッドのテスト - 正常系：パターン01<br>
@@ -172,7 +172,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
-    // TODO KenichiroArai 2025/09/04 v0.1.1対応予定。executeJavadocTagSetterTestメソッドを共通化する。
+    // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。executeJavadocTagSetterTestメソッドを共通化する。
 
     /**
      * main メソッドのテスト - 正常系：パターン06<br>
@@ -221,7 +221,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
-    // TODO KenichiroArai 2025/09/04 v0.1.1対応予定。executeJavadocTagSetterTestメソッドを共通化する。
+    // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。executeJavadocTagSetterTestメソッドを共通化する。
     /**
      * Javadocタグ設定ツールのテスト実行共通処理<br>
      *
@@ -280,7 +280,7 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
-    // TODO KenichiroArai 2025/09/04 v0.1.1対応予定。executeJavadocTagSetterTestWithDefaultFilesメソッドを共通化する。
+    // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。executeJavadocTagSetterTestWithDefaultFilesメソッドを共通化する。
     /**
      * Javadocタグ設定ツールのテスト実行共通処理（デフォルトファイル使用）<br>
      *

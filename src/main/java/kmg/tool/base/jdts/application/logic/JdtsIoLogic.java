@@ -5,7 +5,7 @@ import java.util.List;
 
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 
-// TODO KenichiroArai 2025/09/04 v0.1.1対応予定。汎用化する。対象ファイルパスを読み込むようにする。拡張子の指定はオプション扱いにする。
+// TODO KenichiroArai 2025/12/25 v0.2.2対応予定。汎用化する。対象ファイルパスを読み込むようにする。拡張子の指定はオプション扱いにする。
 /**
  * Javadocタグ設定の入出力ロジックインタフェース<br>
  * <p>

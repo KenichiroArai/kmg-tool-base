@@ -22,7 +22,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
 /**
  * 入力、中間、テンプレート、出力の1行パターンの抽象クラス
  */
-// TODO KenichiroArai 2025/09/04 v0.1.1対応予定。中間の名称を考え直す
+// TODO KenichiroArai 2025/12/25 v0.2.2対応予定。中間の名称を考え直す
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
     /**
@@ -112,7 +112,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         this(LoggerFactory.getLogger(AbstractIctoOneLinePatternLogic.class));
 
-        // TODO KenichiroArai 2025/09/04 v0.1.1対応予定。設定が選べるようにする。書き込みとそれの書き込みを一緒の設定が反映されるようにする。
+        // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。設定が選べるようにする。書き込みとそれの書き込みを一緒の設定が反映されるようにする。
         this.outputDelimiter = KmgDelimiterTypes.COMMA;
 
     }
