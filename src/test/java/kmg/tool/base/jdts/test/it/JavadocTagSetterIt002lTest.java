@@ -50,7 +50,7 @@ public class JavadocTagSetterIt002lTest extends AbstractKmgTest {
     private Path tempDir;
 
     /**
-     * main メソッドのテスト - 正常系：パターン07<br>
+     * main メソッドのテスト - 正常系：パターン01<br>
      * <p>
      * 内部クラスのJavadocに「author」、「since」、「version」が設定された状態で、「author」は削除し、「since」と「version」はそのままであること。
      * </p>
@@ -65,7 +65,7 @@ public class JavadocTagSetterIt002lTest extends AbstractKmgTest {
      */
     @Test
     @Disabled
-    public void testMain_normalPt07(final TestInfo testInfo) throws Exception {
+    public void testMain_normalPt01(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
 
