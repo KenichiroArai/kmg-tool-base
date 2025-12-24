@@ -12,7 +12,7 @@
 
     <groupId>kmg.tool.base</groupId>
     <artifactId>kmg-tool-base</artifactId>
-    <version>0.2.1</version>
+    <version>0.2.2</version>
     <name>kmg-tool-base</name>
     <description>KMGツールベース</description>
     <packaging>jar</packaging>
