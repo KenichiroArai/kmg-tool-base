@@ -49,7 +49,6 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     @TempDir
     private Path tempDir;
 
-    // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。テンプレートはクラスの共通にする。
 
     /**
      * main メソッドのテスト - 正常系：パターン01<br>
@@ -167,8 +166,6 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
-    // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。executeJavadocTagSetterTestメソッドを共通化する。
-
     /**
      * main メソッドのテスト - 正常系：パターン06<br>
      * <p>
@@ -194,7 +191,6 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
-    // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。executeJavadocTagSetterTestメソッドを共通化する。
     /**
      * Javadocタグ設定ツールのテスト実行共通処理<br>
      *
@@ -229,8 +225,11 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
         // テスト入力ファイルパス
         final Path testInputPath = testMethodPath.resolve(inputFileName);
 
-        // テスト定義ファイルパス
-        final Path testDefinitionPath = testMethodPath.resolve(templateFileName);
+        // テストクラスパス（テンプレートはクラス共通）
+        final Path testClassPath = this.getCurrentTestClassPath();
+
+        // テスト定義ファイルパス（クラスパスから取得）
+        final Path testDefinitionPath = testClassPath.resolve(templateFileName);
 
         // テスト作業用入力ファイルパス（tempDirにコピーして使用）
         final Path testWorkInputPath = this.tempDir.resolve(testInputPath.getFileName());
@@ -253,7 +252,6 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
 
     }
 
-    // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。executeJavadocTagSetterTestWithDefaultFilesメソッドを共通化する。
     /**
      * Javadocタグ設定ツールのテスト実行共通処理（デフォルトファイル使用）<br>
      *

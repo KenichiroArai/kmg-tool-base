@@ -105,8 +105,11 @@ public class JavadocTagSetterIt002lTest extends AbstractKmgTest {
         // テスト入力ファイルパス
         final Path testInputPath = testMethodPath.resolve(inputFileName);
 
-        // テスト定義ファイルパス
-        final Path testDefinitionPath = testMethodPath.resolve(templateFileName);
+        // テストクラスパス（テンプレートはクラス共通）
+        final Path testClassPath = this.getCurrentTestClassPath();
+
+        // テスト定義ファイルパス（クラスパスから取得）
+        final Path testDefinitionPath = testClassPath.resolve(templateFileName);
 
         // テスト作業用入力ファイルパス（tempDirにコピーして使用）
         final Path testWorkInputPath = this.tempDir.resolve(testInputPath.getFileName());
