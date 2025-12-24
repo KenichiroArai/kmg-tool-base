@@ -16,11 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
 
-/*
- * TODO KenichiroArai 2025/12/25 v0.2.2対応予定。
- * 結合テスト001の役割を明確にする。テンプレートごとにクラスを分ける。001は、パターン01～06のテンプレートは同じにする。002は、パターン06のテンプレートに関連したテストにする。
- */
-
 /**
  * Javadocタグ設定ツールの結合テスト001のテスト<br>
  *
@@ -28,7 +23,7 @@ import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @SpringBootTest(classes = JdtsServiceImpl.class)
 @ActiveProfiles("test")
@@ -194,28 +189,6 @@ public class JavadocTagSetterIt001lTest extends AbstractKmgTest {
     @Test
     @Disabled
     public void testMain_normalPt06(final TestInfo testInfo) throws Exception {
-
-        this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
-
-    }
-
-    /**
-     * main メソッドのテスト - 正常系：パターン07<br>
-     * <p>
-     * 内部クラスのJavadocに「author」、「since」、「version」が設定された状態で、「author」は削除し、「since」と「version」はそのままであること。
-     * </p>
-     *
-     * @since 0.2.0
-     *
-     * @param testInfo
-     *                 テスト情報
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    @Disabled
-    public void testMain_normalPt07(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
 
