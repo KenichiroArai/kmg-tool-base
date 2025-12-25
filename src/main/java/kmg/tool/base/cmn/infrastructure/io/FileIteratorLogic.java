@@ -1,4 +1,4 @@
-package kmg.tool.base.jdts.application.logic;
+package kmg.tool.base.cmn.infrastructure.io;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -6,23 +6,23 @@ import java.util.List;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
- * Javadocタグ設定の入出力ロジックインタフェース<br>
+ * ファイルイテレーターロジックインタフェース<br>
  * <p>
- * Jdtsは、JavadocTagSetterの略。
+ * ディレクトリ内のファイルを順次処理するためのイテレーター機能を提供します。
  * </p>
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.2
  *
  * @version 0.2.2
  */
-public interface JdtsIoLogic {
+public interface FileIteratorLogic {
 
     /**
      * 現在のファイルパスを返す。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return 現在のファイルパス
      */
@@ -31,8 +31,7 @@ public interface JdtsIoLogic {
     /**
      * ファイルパスのリストを返す<br>
      *
-     * @since 0.2.0
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return ファイルのパス
      */
@@ -41,7 +40,7 @@ public interface JdtsIoLogic {
     /**
      * 読込んだ内容を返す<br>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return 読込んだ内容
      */
@@ -50,7 +49,7 @@ public interface JdtsIoLogic {
     /**
      * 対象ファイルパス
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return 対象ファイルパス
      */
@@ -62,7 +61,7 @@ public interface JdtsIoLogic {
      * 拡張子が指定されない場合は、デフォルトで".java"を対象とする。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @param targetPath
      *                   対象ファイルパス
@@ -100,7 +99,7 @@ public interface JdtsIoLogic {
      * 対象ファイルパスから対象となるファイルをリストにロードする。 拡張子が指定されている場合は、その拡張子のファイルのみを対象とする。 拡張子がnullの場合は、全ファイルを対象とする。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：成功、false：失敗
      *
@@ -112,7 +111,7 @@ public interface JdtsIoLogic {
     /**
      * 内容を読み込む。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：データあり、false：データなし
      *
@@ -124,7 +123,7 @@ public interface JdtsIoLogic {
     /**
      * 次のファイルに進む。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：ファイルあり、false:ファイルなし
      *
@@ -136,7 +135,7 @@ public interface JdtsIoLogic {
     /**
      * ファイルインデックスを初期化する。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：成功、false：失敗
      *
@@ -148,7 +147,7 @@ public interface JdtsIoLogic {
     /**
      * 書き込む内容を設定する。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @param content
      *                内容
@@ -158,7 +157,7 @@ public interface JdtsIoLogic {
     /**
      * 内容を書き込む
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：成功、false：失敗
      *

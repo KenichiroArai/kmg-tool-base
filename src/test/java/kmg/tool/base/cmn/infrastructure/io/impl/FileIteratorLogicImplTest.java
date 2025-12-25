@@ -1,4 +1,4 @@
-package kmg.tool.base.jdts.application.logic.impl;
+package kmg.tool.base.cmn.infrastructure.io.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,11 +28,11 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 
 /**
- * Javadocタグ設定の入出力ロジック実装のテスト<br>
+ * ファイルイテレーターロジック実装のテスト<br>
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.2
  *
  * @version 0.2.2
  */
@@ -41,40 +41,40 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class JdtsIoLogicImplTest extends AbstractKmgTest {
+public class FileIteratorLogicImplTest extends AbstractKmgTest {
 
     /**
      * テスト対象
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
-    private JdtsIoLogicImpl testTarget;
+    private FileIteratorLogicImpl testTarget;
 
     /**
      * テスト用一時ディレクトリ
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     private Path testTempDir;
 
     /**
      * テスト用Javaファイル
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     private Path testJavaFile;
 
     /**
      * テスト用空のディレクトリ
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     private Path testEmptyDir;
 
     /**
      * テスト前処理<br>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @throws IOException
      *                     入出力例外
@@ -82,11 +82,11 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     @BeforeEach
     public void setUp() throws IOException {
 
-        this.testTarget = new JdtsIoLogicImpl();
+        this.testTarget = new FileIteratorLogicImpl();
 
         /* テスト用一時ディレクトリの作成 */
-        this.testTempDir = Files.createTempDirectory("jdts_test");
-        this.testEmptyDir = Files.createTempDirectory("jdts_empty");
+        this.testTempDir = Files.createTempDirectory("file_iterator_test");
+        this.testEmptyDir = Files.createTempDirectory("file_iterator_empty");
 
         /* テスト用Javaファイルの作成 */
         this.testJavaFile = this.testTempDir.resolve("TestFile.java");
@@ -101,7 +101,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * テスト後処理<br>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @throws IOException
      *                     入出力例外
@@ -118,7 +118,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * getCurrentFilePath メソッドのテスト - 正常系:初期化後
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testGetCurrentFilePath_normalAfterInitialize() {
@@ -137,7 +137,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * getCurrentFilePath メソッドのテスト - 正常系:ロード後
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testGetCurrentFilePath_normalAfterLoad() {
@@ -168,7 +168,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * getFilePathList メソッドのテスト - 正常系:初期化後
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testGetFilePathList_normalAfterInitialize() {
@@ -187,7 +187,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * getFilePathList メソッドのテスト - 正常系:ロード後
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testGetFilePathList_normalAfterLoad() {
@@ -219,7 +219,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * getReadContent メソッドのテスト - 正常系:初期化後
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testGetReadContent_normalAfterInitialize() {
@@ -238,7 +238,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * getReadContent メソッドのテスト - 正常系:コンテンツロード後
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testGetReadContent_normalAfterLoadContent() {
@@ -270,7 +270,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * getTargetPath メソッドのテスト - 正常系:初期化後
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testGetTargetPath_normalAfterInitialize() {
@@ -300,7 +300,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系:初期化成功
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testInitialize_normalSuccess() {
@@ -405,7 +405,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * load メソッドのテスト - 異常系:深いディレクトリ階層の非存在パス
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     @Disabled
@@ -413,7 +413,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN13002] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[deep\\non\\existent\\path]";
+                                                       = "[KMGTOOL_GEN13002] 対象ファイルをロード中に例外が発生しました。対象ファイルパス=[deep\\non\\existent\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13002;
 
         final Path deepNonExistentPath = Paths.get("deep/non/existent/path");
@@ -463,7 +463,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * load メソッドのテスト - 異常系:存在しないディレクトリ
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     @Disabled
@@ -471,7 +471,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN13002] Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
+                                                       = "[KMGTOOL_GEN13002] 対象ファイルをロード中に例外が発生しました。対象ファイルパス=[non\\existent\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13002;
 
         final Path nonExistentPath = Paths.get("non/existent/path");
@@ -521,7 +521,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * load メソッドのテスト - 異常系:NoSuchFileException発生
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     @Disabled
@@ -530,7 +530,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = NoSuchFileException.class;
         final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN13009] Javadocタグ設定で対象ファイルが見つかりません。対象ファイルパス=[nosuchfile\\path]";
+                                                       = "[KMGTOOL_GEN13009] 対象ファイルが見つかりません。対象ファイルパス=[nosuchfile\\path]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13009;
 
         /* 準備 */
@@ -584,7 +584,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * load メソッドのテスト - 正常系:Javaファイルなし
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testLoad_normalNoJavaFiles() {
@@ -726,7 +726,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * load メソッドのテスト - 正常系:Javaファイルあり
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testLoad_normalWithJavaFiles() {
@@ -820,7 +820,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * loadContent メソッドのテスト - 異常系:ファイル読み込みエラー
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testLoadContent_errorFileReadError() {
@@ -854,15 +854,14 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * loadContent メソッドのテスト - 異常系:KmgToolMsgException発生
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     @Disabled
     public void testLoadContent_errorKmgToolMsgException() {
 
         final Class<?>           expectedCauseClass    = IOException.class;
-        final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN13001] Javadocタグ設定でファイル内容を読み込み中に例外が発生しました。対象ファイルパス=[%s]";
+        final String             expectedDomainMessage = "[KMGTOOL_GEN13001] ファイル内容を読み込み中に例外が発生しました。対象ファイルパス=[%s]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13001;
 
         /* 準備 */
@@ -907,7 +906,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * loadContent メソッドのテスト - 正常系:内容あり
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testLoadContent_normalWithContent() {
@@ -953,7 +952,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * loadContent メソッドのテスト - 準正常系:内容がブランク
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testLoadContent_semiBlankContent() {
@@ -1004,7 +1003,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * loadContent メソッドのテスト - 準正常系:内容が空
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testLoadContent_semiEmptyContent() {
@@ -1055,7 +1054,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * nextFile メソッドのテスト - 正常系:次のファイルあり
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testNextFile_normalHasNextFile() {
@@ -1105,7 +1104,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * nextFile メソッドのテスト - 準正常系:次のファイルなし
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testNextFile_semiNoNextFile() {
@@ -1146,7 +1145,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * resetFileIndex メソッドのテスト - 正常系:ファイルリストなし
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testResetFileIndex_normalNoFileList() {
@@ -1191,7 +1190,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * resetFileIndex メソッドのテスト - 正常系:ファイルリストあり
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testResetFileIndex_normalWithFileList() {
@@ -1243,7 +1242,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * setWriteContent メソッドのテスト - 正常系:書き込み内容設定
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testSetWriteContent_normalSetContent() {
@@ -1262,7 +1261,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * writeContent メソッドのテスト - 異常系:KmgToolMsgException発生
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     @Disabled
@@ -1270,7 +1269,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
 
         final Class<?>           expectedCauseClass    = IOException.class;
         final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN13000] Javadocタグ設定でファイル内容を書き込み中に例外が発生しました。対象ファイルパス=[%s] 書き込み内容=[%s]";
+                                                       = "[KMGTOOL_GEN13000] ファイル内容を書き込み中に例外が発生しました。対象ファイルパス=[%s] 書き込み内容=[%s]";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN13000;
         final String             testContent           = "Test content";
 
@@ -1319,7 +1318,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * writeContent メソッドのテスト - 異常系:書き込みエラー
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testWriteContent_errorWriteError() {
@@ -1355,7 +1354,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * writeContent メソッドのテスト - 正常系:書き込み成功
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     @Test
     public void testWriteContent_normalSuccess() {
@@ -1411,7 +1410,7 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     /**
      * ディレクトリを再帰的に削除する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @param directory
      *                  削除するディレクトリ

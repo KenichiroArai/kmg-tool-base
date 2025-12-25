@@ -1,4 +1,4 @@
-package kmg.tool.base.jdts.application.logic.impl;
+package kmg.tool.base.cmn.infrastructure.io.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,23 +14,23 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.io.FileIteratorLogic;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.jdts.application.logic.JdtsIoLogic;
 
 /**
- * Javadocタグ設定の入出力ロジック<br>
+ * ファイルイテレーターロジック実装<br>
  * <p>
- * Jdtsは、JavadocTagSetterの略。
+ * ディレクトリ内のファイルを順次処理するためのイテレーター機能を実装します。
  * </p>
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.2
  *
  * @version 0.2.2
  */
 @Service
-public class JdtsIoLogicImpl implements JdtsIoLogic {
+public class FileIteratorLogicImpl implements FileIteratorLogic {
 
     /**
      * 対象ファイルの拡張子
@@ -45,51 +45,51 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 対象ファイルパス
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     private Path targetPath;
 
     /**
      * ファイルパスのリスト
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     private final List<Path> filePathList;
 
     /**
      * 現在のファイルインデックス
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     private int currentFileIndex;
 
     /**
      * 現在のファイルパス
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     private Path currentFilePath;
 
     /**
      * 読込んだ内容
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     private String readContent;
 
     /**
      * 書き込む内容
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
     private String writeContent;
 
     /**
      * デフォルトコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
-    public JdtsIoLogicImpl() {
+    public FileIteratorLogicImpl() {
 
         this.filePathList = new ArrayList<>();
         this.currentFileIndex = 0;
@@ -102,7 +102,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 現在のファイルパスを返す。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return 現在のファイルパス
      */
@@ -117,7 +117,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * ファイルパスのリストを返す<br>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return ファイルのパス
      */
@@ -132,7 +132,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 読込んだ内容を返す<br>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return 読込んだ内容
      */
@@ -147,7 +147,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 対象ファイルパス
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return 対象ファイルパス
      */
@@ -165,7 +165,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * 拡張子が指定されない場合は、デフォルトで".java"を対象とする。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @param targetPath
      *                   対象ファイルパス
@@ -226,7 +226,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * 対象ファイルパスから対象となるファイルをリストにロードする。 拡張子が指定されている場合は、その拡張子のファイルのみを対象とする。 拡張子がnullの場合は、全ファイルを対象とする。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：成功、false：失敗
      *
@@ -287,7 +287,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 内容を読み込む。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：データあり、false：データなし
      *
@@ -327,7 +327,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 次のファイルに進む。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：ファイルあり、false:ファイルなし
      *
@@ -360,7 +360,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
      * currentFileIndexを0に設定し、currentFilePathを先頭のファイルに設定する。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：成功、false：失敗
      *
@@ -392,7 +392,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 書き込む内容を設定する。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @param content
      *                内容
@@ -407,7 +407,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * 内容を書き込む
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：成功、false：失敗
      *

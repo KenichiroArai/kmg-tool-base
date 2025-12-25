@@ -14,9 +14,9 @@ import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
+import kmg.tool.base.cmn.infrastructure.io.FileIteratorLogic;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
-import kmg.tool.base.jdts.application.logic.JdtsIoLogic;
 import kmg.tool.base.jdts.application.model.JdtsCodeModel;
 import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.base.jdts.application.model.impl.JdtsCodeModelImpl;
@@ -34,7 +34,7 @@ import kmg.tool.base.jdts.application.service.JdtsService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @Service
 public class JdtsServiceImpl implements JdtsService {
@@ -62,12 +62,12 @@ public class JdtsServiceImpl implements JdtsService {
     private JdtsConfigsModel jdtsConfigsModel;
 
     /**
-     * Javadocタグ設定の入出力ロジック
+     * ファイルイテレーターロジック
      *
      * @since 0.2.0
      */
     @Autowired
-    private JdtsIoLogic jdtsIoLogic;
+    private FileIteratorLogic fileIteratorLogic;
 
     /**
      * Javadocタグ設定の入出力サービス
@@ -178,8 +178,8 @@ public class JdtsServiceImpl implements JdtsService {
         this.targetPath = targetPath;
         this.definitionPath = definitionPath;
 
-        /* Javadocタグ設定の入出力ロジックの初期化 */
-        this.jdtsIoLogic.initialize(targetPath);
+        /* ファイルイテレーターロジックの初期化 */
+        this.fileIteratorLogic.initialize(targetPath);
 
         result = true;
         return result;
@@ -214,7 +214,7 @@ public class JdtsServiceImpl implements JdtsService {
         this.createJdtsConfigsModel();
 
         // Javaファイルのリストをロードする
-        this.jdtsIoLogic.load();
+        this.fileIteratorLogic.load();
 
         /* 次のJavaファイルがあるまでJavadocを置換する */
 
@@ -225,11 +225,11 @@ public class JdtsServiceImpl implements JdtsService {
 
             totalReplaceCount += this.processFile();
 
-        } while (this.jdtsIoLogic.nextFile());
+        } while (this.fileIteratorLogic.nextFile());
 
         final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13006;
         final Object[]           endLogMsgArgs  = {
-            this.jdtsIoLogic.getFilePathList().size(), totalReplaceCount,
+            this.fileIteratorLogic.getFilePathList().size(), totalReplaceCount,
         };
         final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
         this.logger.debug(endLogMsg);
@@ -299,9 +299,9 @@ public class JdtsServiceImpl implements JdtsService {
 
         JdtsCodeModel result;
 
-        this.jdtsIoLogic.loadContent();
+        this.fileIteratorLogic.loadContent();
 
-        final String readContent = this.jdtsIoLogic.getReadContent();
+        final String readContent = this.fileIteratorLogic.getReadContent();
         result = this.applicationContext.getBean(JdtsCodeModelImpl.class, readContent);
         result.parse();
 
@@ -318,7 +318,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         final KmgToolLogMsgTypes fileEndLogMsgTypes  = KmgToolLogMsgTypes.KMGTOOL_LOG13008;
         final Object[]           fileStartEndMsgArgs = {
-            this.jdtsIoLogic.getCurrentFilePath()
+            this.fileIteratorLogic.getCurrentFilePath()
         };
         final String             fileEndLogMsg       = this.messageSource.getLogMessage(fileEndLogMsgTypes,
             fileStartEndMsgArgs);
@@ -335,7 +335,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         final KmgToolLogMsgTypes fileStartLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13007;
         final Object[]           fileStartLogMsgArgs  = {
-            this.jdtsIoLogic.getCurrentFilePath()
+            this.fileIteratorLogic.getCurrentFilePath()
         };
         final String             fileStartLogMsg      = this.messageSource.getLogMessage(fileStartLogMsgTypes,
             fileStartLogMsgArgs);
@@ -389,8 +389,8 @@ public class JdtsServiceImpl implements JdtsService {
         final long   result         = this.jdtsReplService.getTotalReplaceCount();
         final String replaceContent = this.jdtsReplService.getReplaceCode();
 
-        this.jdtsIoLogic.setWriteContent(replaceContent);
-        this.jdtsIoLogic.writeContent();
+        this.fileIteratorLogic.setWriteContent(replaceContent);
+        this.fileIteratorLogic.writeContent();
 
         return result;
 
