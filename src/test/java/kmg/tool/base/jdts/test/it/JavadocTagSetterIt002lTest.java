@@ -50,5 +50,4 @@ public class JavadocTagSetterIt002lTest extends AbstractJavadocTagSetterItTest {
 
     }
 
-
 }

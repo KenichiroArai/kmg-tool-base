@@ -29,7 +29,6 @@ import org.junit.jupiter.api.TestInfo;
 @Disabled
 public class JavadocTagSetterIt001lTest extends AbstractJavadocTagSetterItTest {
 
-
     /**
      * main メソッドのテスト - 正常系：パターン01<br>
      * <p>
@@ -170,6 +169,5 @@ public class JavadocTagSetterIt001lTest extends AbstractJavadocTagSetterItTest {
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
 
     }
-
 
 }
