@@ -17,7 +17,6 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.base.jdts.application.logic.JdtsIoLogic;
 
-// TODO KenichiroArai 2025/12/25 v0.2.2対応予定。汎用化する。対象ファイルパスを読み込むようにする。拡張子の指定はオプション扱いにする。
 /**
  * Javadocタグ設定の入出力ロジック<br>
  * <p>
@@ -28,17 +27,20 @@ import kmg.tool.base.jdts.application.logic.JdtsIoLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @Service
 public class JdtsIoLogicImpl implements JdtsIoLogic {
 
     /**
      * 対象ファイルの拡張子
+     * <p>
+     * nullの場合は全ファイルを対象とする。
+     * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.2
      */
-    private static final String TARGET_FILE_EXTENSION = ".java"; //$NON-NLS-1$
+    private String fileExtension;
 
     /**
      * 対象ファイルパス
@@ -93,6 +95,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
         this.currentFileIndex = 0;
         this.currentFilePath = null;
         this.readContent = KmgString.EMPTY;
+        this.fileExtension = null;
 
     }
 
@@ -158,6 +161,9 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
     /**
      * 初期化する
+     * <p>
+     * 拡張子が指定されない場合は、デフォルトで".java"を対象とする。
+     * </p>
      *
      * @since 0.2.0
      *
@@ -173,9 +179,36 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     @Override
     public boolean initialize(final Path targetPath) throws KmgToolMsgException {
 
+        return this.initialize(targetPath, ".java"); //$NON-NLS-1$
+
+    }
+
+    /**
+     * 初期化する
+     * <p>
+     * 拡張子を指定して初期化する。fileExtensionがnullの場合は全ファイルを対象とする。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @param targetPath
+     *                      対象ファイルパス
+     * @param fileExtension
+     *                      対象ファイルの拡張子（nullの場合は全ファイルを対象）
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @SuppressWarnings("hiding")
+    @Override
+    public boolean initialize(final Path targetPath, final String fileExtension) throws KmgToolMsgException {
+
         boolean result = false;
 
         this.targetPath = targetPath;
+        this.fileExtension = fileExtension;
 
         this.filePathList.clear();
         this.currentFileIndex = 0;
@@ -190,7 +223,7 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
     /**
      * ロードする。
      * <p>
-     * 対象ファイルパスから対象となるJavaファイルをリストにロードする。
+     * 対象ファイルパスから対象となるファイルをリストにロードする。 拡張子が指定されている場合は、その拡張子のファイルのみを対象とする。 拡張子がnullの場合は、全ファイルを対象とする。
      * </p>
      *
      * @since 0.2.0
@@ -209,9 +242,16 @@ public class JdtsIoLogicImpl implements JdtsIoLogic {
 
         try (final Stream<Path> streamPath = Files.walk(this.targetPath)) {
 
-            fileList = streamPath.filter(Files::isRegularFile)
-                .filter(path -> path.toString().endsWith(JdtsIoLogicImpl.TARGET_FILE_EXTENSION))
-                .collect(Collectors.toList());
+            Stream<Path> filteredStream = streamPath.filter(Files::isRegularFile);
+
+            /* 拡張子が指定されている場合はフィルタリング */
+            if (this.fileExtension != null) {
+
+                filteredStream = filteredStream.filter(path -> path.toString().endsWith(this.fileExtension));
+
+            }
+
+            fileList = filteredStream.collect(Collectors.toList());
 
         } catch (final NoSuchFileException e) {
 

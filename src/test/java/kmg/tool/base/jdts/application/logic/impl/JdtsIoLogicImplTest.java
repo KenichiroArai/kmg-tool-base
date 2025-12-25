@@ -34,7 +34,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -337,6 +337,72 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * initialize メソッドのテスト - 正常系:拡張子を指定して初期化
+     *
+     * @since 0.2.2
+     */
+    @Test
+    public void testInitialize_normalWithExtension() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.initialize(this.testTempDir, ".java");
+
+        } catch (final Exception e) {
+
+            Assertions.fail("初期化で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final Path actualTargetPath = this.testTarget.getTargetPath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "初期化が成功すること");
+        Assertions.assertEquals(this.testTempDir, actualTargetPath, "対象パスが設定されること");
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 正常系:拡張子をnullにして全ファイル対象
+     *
+     * @since 0.2.2
+     */
+    @Test
+    public void testInitialize_normalWithNullExtension() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = true;
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.initialize(this.testTempDir, null);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("初期化で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final Path actualTargetPath = this.testTarget.getTargetPath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "初期化が成功すること");
+        Assertions.assertEquals(this.testTempDir, actualTargetPath, "対象パスが設定されること");
+
+    }
+
+    /**
      * load メソッドのテスト - 異常系:深いディレクトリ階層の非存在パス
      *
      * @since 0.2.0
@@ -563,6 +629,101 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * load メソッドのテスト - 正常系:異なる拡張子を指定してロード
+     *
+     * @since 0.2.2
+     */
+    @Test
+    public void testLoad_normalWithDifferentExtension() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult    = true;
+        final int     expectedFileCount = 1;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir, ".txt");
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("ロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final List<Path> actualFilePathList    = this.testTarget.getFilePathList();
+        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ロードが成功すること");
+        Assertions.assertEquals(expectedFileCount, actualFilePathList.size(), "txtファイルがロードされること");
+        Assertions.assertNotNull(actualCurrentFilePath, "カレントファイルが設定されること");
+        Assertions.assertTrue(actualCurrentFilePath.toString().endsWith(".txt"), "txtファイルがカレントファイルに設定されること");
+
+    }
+
+    /**
+     * load メソッドのテスト - 正常系:拡張子を指定してロード
+     *
+     * @since 0.2.2
+     */
+    @Test
+    public void testLoad_normalWithExtension() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult    = true;
+        final int     expectedFileCount = 1;
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir, ".java");
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("ロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final List<Path> actualFilePathList    = this.testTarget.getFilePathList();
+        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ロードが成功すること");
+        Assertions.assertEquals(expectedFileCount, actualFilePathList.size(), "Javaファイルがロードされること");
+        Assertions.assertEquals(this.testJavaFile, actualCurrentFilePath, "最初のJavaファイルがカレントファイルに設定されること");
+
+    }
+
+    /**
      * load メソッドのテスト - 正常系:Javaファイルあり
      *
      * @since 0.2.0
@@ -606,6 +767,53 @@ public class JdtsIoLogicImplTest extends AbstractKmgTest {
         Assertions.assertEquals(expectedResult, actualResult, "ロードが成功すること");
         Assertions.assertEquals(expectedFileCount, actualFilePathList.size(), "Javaファイルがロードされること");
         Assertions.assertEquals(this.testJavaFile, actualCurrentFilePath, "最初のJavaファイルがカレントファイルに設定されること");
+
+    }
+
+    /**
+     * load メソッドのテスト - 正常系:拡張子をnullにして全ファイルをロード
+     *
+     * @since 0.2.2
+     */
+    @Test
+    public void testLoad_normalWithNullExtension() {
+
+        /* 期待値の定義 */
+        final boolean expectedResult    = true;
+        final int     expectedFileCount = 2;   // .javaファイルと.txtファイル
+
+        /* 準備 */
+        try {
+
+            this.testTarget.initialize(this.testTempDir, null);
+
+        } catch (final Exception e) {
+
+            Assertions.fail("準備処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* テスト対象の実行 */
+        boolean actualResult = false;
+
+        try {
+
+            actualResult = this.testTarget.load();
+
+        } catch (final Exception e) {
+
+            Assertions.fail("ロード処理で例外が発生しました: " + e.getMessage());
+
+        }
+
+        /* 検証の準備 */
+        final List<Path> actualFilePathList    = this.testTarget.getFilePathList();
+        final Path       actualCurrentFilePath = this.testTarget.getCurrentFilePath();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "ロードが成功すること");
+        Assertions.assertEquals(expectedFileCount, actualFilePathList.size(), "全ファイルがロードされること");
+        Assertions.assertNotNull(actualCurrentFilePath, "カレントファイルが設定されること");
 
     }
 

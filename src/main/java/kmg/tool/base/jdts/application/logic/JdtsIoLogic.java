@@ -5,7 +5,6 @@ import java.util.List;
 
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 
-// TODO KenichiroArai 2025/12/25 v0.2.2対応予定。汎用化する。対象ファイルパスを読み込むようにする。拡張子の指定はオプション扱いにする。
 /**
  * Javadocタグ設定の入出力ロジックインタフェース<br>
  * <p>
@@ -16,7 +15,7 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 public interface JdtsIoLogic {
 
@@ -59,6 +58,9 @@ public interface JdtsIoLogic {
 
     /**
      * 初期化する
+     * <p>
+     * 拡張子が指定されない場合は、デフォルトで".java"を対象とする。
+     * </p>
      *
      * @since 0.2.0
      *
@@ -73,9 +75,29 @@ public interface JdtsIoLogic {
     boolean initialize(final Path targetPath) throws KmgToolMsgException;
 
     /**
+     * 初期化する
+     * <p>
+     * 拡張子を指定して初期化する。fileExtensionがnullの場合は全ファイルを対象とする。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @param targetPath
+     *                      対象ファイルパス
+     * @param fileExtension
+     *                      対象ファイルの拡張子（nullの場合は全ファイルを対象）
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    boolean initialize(final Path targetPath, final String fileExtension) throws KmgToolMsgException;
+
+    /**
      * ロードする。
      * <p>
-     * 対象ファイルパスから対象となるJavaファイルをリストにロードする。
+     * 対象ファイルパスから対象となるファイルをリストにロードする。 拡張子が指定されている場合は、その拡張子のファイルのみを対象とする。 拡張子がnullの場合は、全ファイルを対象とする。
      * </p>
      *
      * @since 0.2.0
