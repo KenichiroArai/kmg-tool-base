@@ -27,8 +27,8 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.io.FileIteratorLogic;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.io.domain.logic.FileIteratorLogic;
 
 /**
  * マッピング変換サービス実装テスト

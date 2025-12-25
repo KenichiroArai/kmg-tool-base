@@ -1,4 +1,4 @@
-package kmg.tool.base.cmn.infrastructure.io.impl;
+package kmg.tool.base.io.domain.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.io.FileIteratorLogic;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.io.domain.logic.FileIteratorLogic;
 
 /**
  * ファイルイテレーターロジック実装<br>

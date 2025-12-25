@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.base.cmn.infrastructure.io.FileIteratorLogic;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.io.domain.logic.FileIteratorLogic;
 import kmg.tool.base.mptf.application.service.MapTransformService;
 
 /**

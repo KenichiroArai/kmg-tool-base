@@ -1,4 +1,4 @@
-package kmg.tool.base.cmn.infrastructure.io.impl;
+package kmg.tool.base.io.domain.logic.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -1444,3 +1444,4 @@ public class FileIteratorLogicImplTest extends AbstractKmgTest {
     }
 
 }
+
