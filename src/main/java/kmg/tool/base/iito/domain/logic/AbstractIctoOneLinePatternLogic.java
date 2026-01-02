@@ -20,9 +20,15 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
 
 /**
- * 入力、中間、テンプレート、出力の1行パターンの抽象クラス
+ * 入力、中間、テンプレート、出力の1行パターンの抽象クラス<br>
+ * 「Iito」→「InputIntermediateTemplateOutput」の略。
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.2.0
+ *
+ * @version 0.2.0
  */
-// TODO KenichiroArai 2025/12/25 v0.2.2対応予定。中間の名称を考え直す
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
     /**
