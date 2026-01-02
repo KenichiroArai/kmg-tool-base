@@ -24,14 +24,13 @@ import org.springframework.context.ApplicationContext;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.fund.domain.logic.FileIteratorLogic;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
+import kmg.fund.infrastructure.types.msg.KmgFundGenMsgTypes;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.io.domain.logic.FileIteratorLogic;
 import kmg.tool.base.jdts.application.model.JdtsCodeModel;
 import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.base.jdts.application.model.impl.JdtsCodeModelImpl;
@@ -45,7 +44,7 @@ import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.3
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -256,7 +255,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      *
      * @since 0.2.0
      *
-     * @throws KmgToolMsgException
+     * @throws KmgFundMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgToolValException
      *                                KMGツールバリデーション例外
@@ -265,7 +264,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      */
     @Test
     public void testCreateJdtsConfigsModel_errorYamlLoadException()
-        throws KmgToolMsgException, KmgToolValException, KmgReflectionException {
+        throws KmgFundMsgException, KmgToolValException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -286,14 +285,14 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
             // 例外を事前に作成
             final KmgFundMsgException expectedException
-                = new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
+                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13003, new Object[] {
                     "test"
                 });
 
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenThrow(expectedException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgFundMsgException testException = Assertions.assertThrows(KmgFundMsgException.class, () -> {
 
                 this.reflectionModel.getMethod("createJdtsConfigsModel");
 
@@ -302,7 +301,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(testException, "KmgFundMsgExceptionが正しく発生すること");
 
         }
 
@@ -454,11 +453,11 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      *
      * @since 0.2.0
      *
-     * @throws KmgToolMsgException
+     * @throws KmgFundMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testInitialize_errorJdtsIoLogicException() throws KmgToolMsgException {
+    public void testInitialize_errorJdtsIoLogicException() throws KmgFundMsgException {
 
         /* 期待値の定義 */
 
@@ -475,8 +474,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgToolMsgException expectedException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            final KmgFundMsgException expectedException
+                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13001, new Object[] {
                     "test"
                 });
 
@@ -484,7 +483,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenThrow(expectedException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgFundMsgException testException = Assertions.assertThrows(KmgFundMsgException.class, () -> {
 
                 this.testTarget.initialize(this.testTargetPath, this.testDefinitionPath);
 
@@ -493,7 +492,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(testException, "KmgFundMsgExceptionが正しく発生すること");
 
         }
 
@@ -536,7 +535,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      *
      * @since 0.2.0
      *
-     * @throws KmgToolMsgException
+     * @throws KmgFundMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgToolValException
      *                                KMGツールバリデーション例外
@@ -545,7 +544,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      */
     @Test
     public void testLoadAndCreateCodeModel_errorLoadContentException()
-        throws KmgToolMsgException, KmgToolValException, KmgReflectionException {
+        throws KmgFundMsgException, KmgToolValException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -562,15 +561,15 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgToolMsgException expectedException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            final KmgFundMsgException expectedException
+                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13001, new Object[] {
                     "test"
                 });
 
             Mockito.when(this.mockFileIteratorLogic.loadContent()).thenThrow(expectedException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgFundMsgException testException = Assertions.assertThrows(KmgFundMsgException.class, () -> {
 
                 this.reflectionModel.getMethod("loadAndCreateCodeModel");
 
@@ -579,7 +578,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(testException, "KmgFundMsgExceptionが正しく発生すること");
 
         }
 
@@ -713,14 +712,14 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
 
             // 例外を事前に作成
             final KmgFundMsgException expectedException
-                = new KmgFundMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13003, new Object[] {
+                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13003, new Object[] {
                     "test"
                 });
 
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenThrow(expectedException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgFundMsgException testException = Assertions.assertThrows(KmgFundMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -729,7 +728,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(testException, "KmgFundMsgExceptionが正しく発生すること");
 
         }
 
@@ -766,8 +765,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgToolMsgException expectedException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13002, new Object[] {
+            final KmgFundMsgException expectedException
+                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13002, new Object[] {
                     "test"
                 });
 
@@ -777,7 +776,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgFundMsgException actualException = Assertions.assertThrows(KmgFundMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -786,7 +785,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(actualException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(actualException, "KmgFundMsgExceptionが正しく発生すること");
 
         }
 
@@ -837,8 +836,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 ArgumentMatchers.any())).thenReturn(mockJdtsCodeModelImpl);
 
             // 例外を事前に作成
-            final KmgToolMsgException expectedException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            final KmgFundMsgException expectedException
+                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13001, new Object[] {
                     "test"
                 });
 
@@ -849,7 +848,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgFundMsgException testException = Assertions.assertThrows(KmgFundMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -858,7 +857,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(testException, "KmgFundMsgExceptionが正しく発生すること");
 
         }
 
@@ -896,8 +895,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgToolMsgException expectedException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            final KmgFundMsgException expectedException
+                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13001, new Object[] {
                     "test"
                 });
 
@@ -907,7 +906,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             mockStatic.when(() -> KmgYamlUtils.load(ArgumentMatchers.any(Path.class))).thenReturn(yamlData);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgFundMsgException testException = Assertions.assertThrows(KmgFundMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -916,7 +915,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(testException, "KmgFundMsgExceptionが正しく発生すること");
 
         }
 
@@ -1096,7 +1095,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      *
      * @since 0.2.0
      *
-     * @throws KmgToolMsgException
+     * @throws KmgFundMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgToolValException
      *                                KMGツールバリデーション例外
@@ -1105,7 +1104,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      */
     @Test
     public void testProcessFile_errorLoadAndCreateCodeModelException()
-        throws KmgToolMsgException, KmgToolValException, KmgReflectionException {
+        throws KmgFundMsgException, KmgToolValException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -1126,15 +1125,15 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgToolMsgException expectedException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            final KmgFundMsgException expectedException
+                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13001, new Object[] {
                     "test"
                 });
 
             Mockito.when(this.mockFileIteratorLogic.loadContent()).thenThrow(expectedException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgFundMsgException testException = Assertions.assertThrows(KmgFundMsgException.class, () -> {
 
                 this.reflectionModel.getMethod("processFile");
 
@@ -1143,7 +1142,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(testException, "KmgFundMsgExceptionが正しく発生すること");
 
         }
 
@@ -1192,7 +1191,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      *
      * @since 0.2.0
      *
-     * @throws KmgToolMsgException
+     * @throws KmgFundMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgToolValException
      *                                KMGツールバリデーション例外
@@ -1201,7 +1200,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      */
     @Test
     public void testReplaceJavadoc_errorInitializeException()
-        throws KmgToolMsgException, KmgToolValException, KmgReflectionException {
+        throws KmgFundMsgException, KmgToolValException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -1220,8 +1219,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgToolMsgException expectedException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN13001, new Object[] {
+            final KmgFundMsgException expectedException
+                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13001, new Object[] {
                     "test"
                 });
 
@@ -1229,7 +1228,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenThrow(expectedException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgFundMsgException testException = Assertions.assertThrows(KmgFundMsgException.class, () -> {
 
                 this.reflectionModel.getMethod("replaceJavadoc", this.mockJdtsCodeModel);
 
@@ -1238,7 +1237,7 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
             /* 検証の準備 */
 
             /* 検証の実施 */
-            Assertions.assertNotNull(testException, "KmgToolMsgExceptionが正しく発生すること");
+            Assertions.assertNotNull(testException, "KmgFundMsgExceptionが正しく発生すること");
 
         }
 

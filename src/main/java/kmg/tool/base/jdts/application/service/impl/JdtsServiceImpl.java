@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import kmg.fund.domain.logic.FileIteratorLogic;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
@@ -16,7 +17,6 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
-import kmg.tool.base.io.domain.logic.FileIteratorLogic;
 import kmg.tool.base.jdts.application.model.JdtsCodeModel;
 import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.base.jdts.application.model.impl.JdtsCodeModelImpl;
@@ -34,7 +34,7 @@ import kmg.tool.base.jdts.application.service.JdtsService;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.3
  */
 @Service
 public class JdtsServiceImpl implements JdtsService {
@@ -166,12 +166,15 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @return true：成功、false：失敗
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path targetPath, final Path definitionPath) throws KmgToolMsgException {
+    public boolean initialize(final Path targetPath, final Path definitionPath)
+        throws KmgFundMsgException, KmgToolMsgException {
 
         boolean result = false;
 
@@ -193,13 +196,15 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @return true：成功、false：失敗
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws KmgToolValException
      *                             KMGツールバリデーション例外
      */
     @Override
-    public boolean process() throws KmgToolMsgException, KmgToolValException {
+    public boolean process() throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
 
         boolean result = false;
 
@@ -290,12 +295,15 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @return 解析済みのコードモデル
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws KmgToolValException
      *                             KMGツールバリデーション例外
      */
-    private JdtsCodeModel loadAndCreateCodeModel() throws KmgToolMsgException, KmgToolValException {
+    private JdtsCodeModel loadAndCreateCodeModel()
+        throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
 
         JdtsCodeModel result;
 
@@ -350,12 +358,14 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @return 置換数
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws KmgToolValException
      *                             KMGツールバリデーション例外
      */
-    private long processFile() throws KmgToolMsgException, KmgToolValException {
+    private long processFile() throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
 
         this.logFileStart();
         final JdtsCodeModel jdtsCodeModel = this.loadAndCreateCodeModel();
@@ -376,12 +386,15 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @return 置換数
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws KmgToolValException
      *                             KMGツールバリデーション例外
      */
-    private long replaceJavadoc(final JdtsCodeModel jdtsCodeModel) throws KmgToolMsgException, KmgToolValException {
+    private long replaceJavadoc(final JdtsCodeModel jdtsCodeModel)
+        throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
 
         this.jdtsReplService.initialize(this.jdtsConfigsModel, jdtsCodeModel);
         this.jdtsReplService.replace();

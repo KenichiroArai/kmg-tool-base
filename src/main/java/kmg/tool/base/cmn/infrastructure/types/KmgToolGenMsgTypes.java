@@ -17,7 +17,7 @@ import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnGenMsg;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.3
  */
 @SuppressWarnings("nls")
 public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
@@ -340,27 +340,6 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN12005("Javadoc行削除中にエラーが発生しました。"),
 
     /**
-     * Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13000("Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]"),
-
-    /**
-     * Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13001("Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]"),
-
-    /**
-     * Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13002("Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]"),
-
-    /**
      * 定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]
      *
      * @since 0.2.0
@@ -401,13 +380,6 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      * @since 0.2.0
      */
     KMGTOOL_GEN13008("実行時例外が発生しました。"),
-
-    /**
-     * Javadocタグ設定で対象ファイルが見つかりません。対象ファイルパス=[{0}]
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13009("Javadocタグ設定で対象ファイルが見つかりません。対象ファイルパス=[{0}]"),
 
     /**
      * 項目名がnullです。

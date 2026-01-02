@@ -24,11 +24,11 @@ import org.slf4j.LoggerFactory;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.fund.domain.logic.FileIteratorLogic;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.io.domain.logic.FileIteratorLogic;
 
 /**
  * マッピング変換サービス実装テスト
@@ -37,7 +37,7 @@ import kmg.tool.base.io.domain.logic.FileIteratorLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.3
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)

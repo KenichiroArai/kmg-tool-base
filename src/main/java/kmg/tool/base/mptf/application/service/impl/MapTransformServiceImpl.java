@@ -9,12 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kmg.fund.domain.logic.FileIteratorLogic;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
-import kmg.tool.base.io.domain.logic.FileIteratorLogic;
 import kmg.tool.base.mptf.application.service.MapTransformService;
 
 /**
@@ -24,7 +25,7 @@ import kmg.tool.base.mptf.application.service.MapTransformService;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.3
  */
 @Service
 public class MapTransformServiceImpl implements MapTransformService {
@@ -127,13 +128,15 @@ public class MapTransformServiceImpl implements MapTransformService {
      *
      * @return true：成功、false：失敗
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path targetPath, final Map<String, String> targetValueToReplacementValueMapping)
-        throws KmgToolMsgException {
+        throws KmgFundMsgException, KmgToolMsgException {
 
         boolean result;
 
@@ -155,13 +158,15 @@ public class MapTransformServiceImpl implements MapTransformService {
      *
      * @return true：成功、false：失敗
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws KmgToolValException
      *                             KMGツールバリデーション例外
      */
     @Override
-    public boolean process() throws KmgToolMsgException, KmgToolValException {
+    public boolean process() throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
 
         boolean result;
 
@@ -230,10 +235,12 @@ public class MapTransformServiceImpl implements MapTransformService {
      *
      * @return 置換数
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private long replaceTargetValuesWithUuid() throws KmgToolMsgException {
+    private long replaceTargetValuesWithUuid() throws KmgFundMsgException, KmgToolMsgException {
 
         long result = 0;
 
@@ -279,10 +286,12 @@ public class MapTransformServiceImpl implements MapTransformService {
      *
      * @return 置換数
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private long replaceUuidWithReplacementValues() throws KmgToolMsgException {
+    private long replaceUuidWithReplacementValues() throws KmgFundMsgException, KmgToolMsgException {
 
         long result = 0;
 
