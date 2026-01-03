@@ -322,6 +322,25 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         boolean result;
 
+        /* パラメータのチェック */
+        if (outputDelimiter == null) {
+            // NULLの場合
+
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07007;
+            final Object[]           messageArgs  = {};
+            throw new KmgToolMsgException(messageTypes, messageArgs);
+
+        }
+
+        if (outputDelimiter == KmgDelimiterTypes.NONE) {
+            // NONEの場合
+
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07008;
+            final Object[]           messageArgs  = {};
+            throw new KmgToolMsgException(messageTypes, messageArgs);
+
+        }
+
         this.inputPath = inputPath;
         this.outputPath = outputPath;
         this.outputDelimiter = outputDelimiter;
