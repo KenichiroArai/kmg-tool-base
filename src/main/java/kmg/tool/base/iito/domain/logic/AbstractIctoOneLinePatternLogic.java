@@ -27,7 +27,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
@@ -118,7 +118,6 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         this(LoggerFactory.getLogger(AbstractIctoOneLinePatternLogic.class));
 
-        // TODO KenichiroArai 2025/12/25 v0.2.2対応予定。設定が選べるようにする。書き込みとそれの書き込みを一緒の設定が反映されるようにする。
         this.outputDelimiter = KmgDelimiterTypes.COMMA;
 
     }
@@ -291,10 +290,41 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     @Override
     public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
 
-        boolean result = false;
+        final boolean result = this.initialize(inputPath, outputPath, KmgDelimiterTypes.COMMA);
+        return result;
+
+    }
+
+    /**
+     * 初期化する。<br>
+     * <p>
+     * 出力ファイルの区切り文字を指定して初期化します。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @param inputPath
+     *                        入力ファイルパス
+     * @param outputPath
+     *                        出力ファイルパス
+     * @param outputDelimiter
+     *                        出力ファイルの区切り文字
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @SuppressWarnings("hiding")
+    @Override
+    public boolean initialize(final Path inputPath, final Path outputPath, final KmgDelimiterTypes outputDelimiter)
+        throws KmgToolMsgException {
+
+        boolean result;
 
         this.inputPath = inputPath;
         this.outputPath = outputPath;
+        this.outputDelimiter = outputDelimiter;
 
         /* データのクリア */
         this.clearProcessingData();
