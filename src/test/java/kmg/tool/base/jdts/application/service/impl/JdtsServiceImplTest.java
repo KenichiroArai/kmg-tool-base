@@ -30,7 +30,9 @@ import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.types.msg.KmgFundGenMsgTypes;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.base.jdts.application.model.JdtsCodeModel;
 import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.base.jdts.application.model.impl.JdtsCodeModelImpl;
@@ -1219,8 +1221,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgFundMsgException expectedException
-                = new KmgFundMsgException(KmgFundGenMsgTypes.KMGFUND_GEN13001, new Object[] {
+            final KmgToolMsgException expectedException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN03001, new Object[] {
                     "test"
                 });
 
