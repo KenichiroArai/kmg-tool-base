@@ -920,23 +920,85 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testInitialize_errorWithNullDelimiter() throws Exception {
 
         /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN07007] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN07007;
+        final Class<?>           expectedCauseClass    = null;
 
-        /* 準備 */
-        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
-        final Path testOutputFile = this.tempDir.resolve("test_output.txt");
-        Files.write(testInputFile, "test content".getBytes());
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-        /* テスト対象の実行 */
-        final NullPointerException actualException = Assertions.assertThrows(NullPointerException.class, () -> {
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
 
-            this.testTarget.initialize(testInputFile, testOutputFile, null);
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
 
-        }, "outputDelimiterがnullの場合は例外が発生すること");
+            /* 準備 */
+            final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+            final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+            Files.write(testInputFile, "test content".getBytes());
 
-        /* 検証の準備 */
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-        /* 検証の実施 */
-        Assertions.assertNotNull(actualException, "例外が発生すること");
+                this.testTarget.initialize(testInputFile, testOutputFile, null);
+
+            }, "outputDelimiterがnullの場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 異常系：NONEパラメータ（outputDelimiter）で初期化する場合
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testInitialize_errorWithNoneDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN07008] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN07008;
+        final Class<?>           expectedCauseClass    = null;
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* 準備 */
+            final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+            final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+            Files.write(testInputFile, "test content".getBytes());
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.initialize(testInputFile, testOutputFile, KmgDelimiterTypes.NONE);
+
+            }, "outputDelimiterがNONEの場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
 
     }
 
