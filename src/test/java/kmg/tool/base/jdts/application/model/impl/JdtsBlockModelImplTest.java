@@ -861,35 +861,6 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
-     * parse メソッドのテスト - 異常系:Javadocブロックのみでコードブロックがない
-     *
-     * @since 0.2.0
-     *
-     * @throws Exception
-     *                   テスト実行時に発生する可能性のある例外
-     */
-    @Test
-    public void testParse_abnormalJavadocOnly() throws Exception {
-
-        /* 期待値の定義 */
-
-        /* 準備 */
-        // Javadocブロックのみでコードブロックがない
-        final String testBlock = "/** テストJavadoc */";
-        this.testTarget = new JdtsBlockModelImpl(testBlock);
-
-        /* テスト対象の実行 */
-        final boolean testResult = this.testTarget.parse();
-
-        /* 検証の準備 */
-        final boolean actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertFalse(actualResult, "Javadocブロックのみでは解析が失敗すること");
-
-    }
-
-    /**
      * parse メソッドのテスト - 異常系:Javadocが文字列中にある場合（isNormalStringEndがtrue）
      *
      * @since 0.2.3
@@ -980,6 +951,35 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "Javadocがセミコロン後のテキストブロック中にある場合は解析が失敗すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:Javadocブロックのみでコードブロックがない
+     *
+     * @since 0.2.0
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_abnormalJavadocOnly() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        // Javadocブロックのみでコードブロックがない
+        final String testBlock = "/** テストJavadoc */";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertFalse(actualResult, "Javadocブロックのみでは解析が失敗すること");
 
     }
 

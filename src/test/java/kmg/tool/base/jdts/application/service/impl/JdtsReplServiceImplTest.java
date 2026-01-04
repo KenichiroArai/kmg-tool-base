@@ -1559,9 +1559,9 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     public void testReplace_semiJavadocNotFound() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String originalCode   = "test original code";
-        final String javadocContent = "/** test javadoc */";
-        final UUID   blockId        = UUID.randomUUID();
+        final String originalCode         = "test original code";
+        final String javadocContent       = "/** test javadoc */";
+        final UUID   blockId              = UUID.randomUUID();
         final String replacedJavadocBlock = "/** replaced javadoc */";
 
         /* 準備 */

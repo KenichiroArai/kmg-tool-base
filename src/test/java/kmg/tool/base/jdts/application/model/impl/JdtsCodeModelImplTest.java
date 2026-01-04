@@ -327,6 +327,102 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * parse メソッドのテスト - 正常系:解析が対象外のブロックが含まれる場合（Javadocブロックのみ）
+     *
+     * @since 0.2.3
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     */
+    @Test
+    public void testParse_normalBlockParseResultFalseJavadocOnly() throws KmgReflectionException, KmgToolMsgException {
+
+        /* 期待値の定義 */
+        final int expectedJdtsBlockModelsSize = 1;
+
+        /* 準備 */
+        // Javadocブロックのみでコードブロックがないブロックを含むコード
+        // 最初のブロックは対象外（Javadocブロックのみ）、2番目のブロックは正常
+        final String testCode = "/** テストJavadoc1 */\n\n/**\n * テストクラス\n */\npublic class TestClass {}";
+        this.testTarget = new JdtsCodeModelImpl(testCode);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* モックの初期化 */
+        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+
+        /* モックの設定 */
+        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000),
+            ArgumentMatchers.any())).thenReturn("テストログメッセージ");
+
+        this.reflectionModel.set("messageSource", this.mockMessageSource);
+
+        /* テスト対象の実行 */
+        this.testTarget.parse();
+
+        /* 検証の準備 */
+        final List<JdtsBlockModel> actualJdtsBlockModels = this.testTarget.getJdtsBlockModels();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedJdtsBlockModelsSize, actualJdtsBlockModels.size(),
+            "対象外のブロックはスキップされ、正常なブロックのみが解析されること");
+        // ログメッセージが呼ばれたことを確認
+        Mockito.verify(this.mockMessageSource, Mockito.times(1))
+            .getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000), ArgumentMatchers.any());
+
+    }
+
+    /**
+     * parse メソッドのテスト - 正常系:解析が対象外のブロックが含まれる場合（Javadoc終了記号なし）
+     *
+     * @since 0.2.3
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     */
+    @Test
+    public void testParse_normalBlockParseResultFalseNoJavadocEndMarker()
+        throws KmgReflectionException, KmgToolMsgException {
+
+        /* 期待値の定義 */
+        final int expectedJdtsBlockModelsSize = 1;
+
+        /* 準備 */
+        // 「*/」が含まれていないブロックを含むコード
+        // 最初のブロックは対象外（Javadoc終了記号なし）、2番目のブロックは正常
+        final String testCode
+            = "/** テストJavadoc1\npublic class Test1 {\n\n/**\n * テストクラス\n */\npublic class TestClass {}";
+        this.testTarget = new JdtsCodeModelImpl(testCode);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* モックの初期化 */
+        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
+
+        /* モックの設定 */
+        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000),
+            ArgumentMatchers.any())).thenReturn("テストログメッセージ");
+
+        this.reflectionModel.set("messageSource", this.mockMessageSource);
+
+        /* テスト対象の実行 */
+        this.testTarget.parse();
+
+        /* 検証の準備 */
+        final List<JdtsBlockModel> actualJdtsBlockModels = this.testTarget.getJdtsBlockModels();
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedJdtsBlockModelsSize, actualJdtsBlockModels.size(),
+            "対象外のブロックはスキップされ、正常なブロックのみが解析されること");
+        // ログメッセージが呼ばれたことを確認
+        Mockito.verify(this.mockMessageSource, Mockito.times(1))
+            .getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000), ArgumentMatchers.any());
+
+    }
+
+    /**
      * parse メソッドのテスト - 正常系:連続するJavadocブロックの解析
      *
      * @since 0.2.0
@@ -575,100 +671,6 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
         /* 検証の実施 */
         Assertions.assertEquals(expectedJdtsBlockModelsSize, actualJdtsBlockModels.size(), "1つのJavadocブロックが解析されること");
         Assertions.assertNotNull(actualJdtsBlockModels.get(0), "Javadocブロックモデルが生成されること");
-
-    }
-
-    /**
-     * parse メソッドのテスト - 正常系:解析が対象外のブロックが含まれる場合（Javadocブロックのみ）
-     *
-     * @since 0.2.3
-     *
-     * @throws KmgReflectionException
-     *                                リフレクション例外
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
-     */
-    @Test
-    public void testParse_normalBlockParseResultFalseJavadocOnly() throws KmgReflectionException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final int expectedJdtsBlockModelsSize = 1;
-
-        /* 準備 */
-        // Javadocブロックのみでコードブロックがないブロックを含むコード
-        // 最初のブロックは対象外（Javadocブロックのみ）、2番目のブロックは正常
-        final String testCode = "/** テストJavadoc1 */\n\n/**\n * テストクラス\n */\npublic class TestClass {}";
-        this.testTarget = new JdtsCodeModelImpl(testCode);
-        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
-
-        /* モックの初期化 */
-        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
-
-        /* モックの設定 */
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000),
-            ArgumentMatchers.any())).thenReturn("テストログメッセージ");
-
-        this.reflectionModel.set("messageSource", this.mockMessageSource);
-
-        /* テスト対象の実行 */
-        this.testTarget.parse();
-
-        /* 検証の準備 */
-        final List<JdtsBlockModel> actualJdtsBlockModels = this.testTarget.getJdtsBlockModels();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedJdtsBlockModelsSize, actualJdtsBlockModels.size(),
-            "対象外のブロックはスキップされ、正常なブロックのみが解析されること");
-        // ログメッセージが呼ばれたことを確認
-        Mockito.verify(this.mockMessageSource, Mockito.times(1)).getLogMessage(
-            ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000), ArgumentMatchers.any());
-
-    }
-
-    /**
-     * parse メソッドのテスト - 正常系:解析が対象外のブロックが含まれる場合（Javadoc終了記号なし）
-     *
-     * @since 0.2.3
-     *
-     * @throws KmgReflectionException
-     *                                リフレクション例外
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
-     */
-    @Test
-    public void testParse_normalBlockParseResultFalseNoJavadocEndMarker() throws KmgReflectionException, KmgToolMsgException {
-
-        /* 期待値の定義 */
-        final int expectedJdtsBlockModelsSize = 1;
-
-        /* 準備 */
-        // 「*/」が含まれていないブロックを含むコード
-        // 最初のブロックは対象外（Javadoc終了記号なし）、2番目のブロックは正常
-        final String testCode = "/** テストJavadoc1\npublic class Test1 {\n\n/**\n * テストクラス\n */\npublic class TestClass {}";
-        this.testTarget = new JdtsCodeModelImpl(testCode);
-        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
-
-        /* モックの初期化 */
-        this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
-
-        /* モックの設定 */
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000),
-            ArgumentMatchers.any())).thenReturn("テストログメッセージ");
-
-        this.reflectionModel.set("messageSource", this.mockMessageSource);
-
-        /* テスト対象の実行 */
-        this.testTarget.parse();
-
-        /* 検証の準備 */
-        final List<JdtsBlockModel> actualJdtsBlockModels = this.testTarget.getJdtsBlockModels();
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedJdtsBlockModelsSize, actualJdtsBlockModels.size(),
-            "対象外のブロックはスキップされ、正常なブロックのみが解析されること");
-        // ログメッセージが呼ばれたことを確認
-        Mockito.verify(this.mockMessageSource, Mockito.times(1)).getLogMessage(
-            ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000), ArgumentMatchers.any());
 
     }
 
