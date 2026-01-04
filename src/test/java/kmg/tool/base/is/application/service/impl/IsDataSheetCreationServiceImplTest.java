@@ -14,7 +14,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
@@ -47,7 +46,7 @@ import kmg.tool.base.is.application.logic.IsDataSheetCreationLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.3
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -276,7 +275,6 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
      *                             KMGツールメッセージ例外
      */
     @Test
-    @Disabled
     public void testOutputInsertionSql_errorIOException() throws KmgToolMsgException {
 
         /* 期待値の定義 */
@@ -356,11 +354,10 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
      *                                リフレクション例外
      */
     @Test
-    @Disabled
     public void testOutputInsertionSql_errorNotInitialized() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN10006] 入力ファイルパスがnullです。";
+        final String             expectedDomainMessage = "[KMGTOOL_GEN10006] 入力シートはnullです。";
         final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10006;
         final Class<?>           expectedCauseClass    = null;
 
@@ -554,7 +551,6 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
      *                                リフレクション例外
      */
     @Test
-    @Disabled
     public void testRun_errorKmgToolMsgException() throws KmgToolMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
