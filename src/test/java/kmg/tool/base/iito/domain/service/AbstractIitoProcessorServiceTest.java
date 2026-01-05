@@ -90,11 +90,21 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
         }
 
+        /**
+         * 中間ファイルの区切り文字を返す。<br>
+         * <p>
+         * AbstractIitoProcessorServiceのgetIntermediateDelimiter()を実装します。
+         * </p>
+         *
+         * @since 0.2.3
+         *
+         * @return 中間ファイルの区切り文字
+         */
         @Override
         protected KmgDelimiterTypes getIntermediateDelimiter() {
 
-            // TODO 自動生成されたメソッド・スタブ
-            return null;
+            final KmgDelimiterTypes result = KmgDelimiterTypes.COMMA;
+            return result;
 
         }
 
@@ -349,6 +359,33 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expected, actual, "入力ファイルパスが正しいこと");
+
+    }
+
+    /**
+     * getIntermediateDelimiter メソッドのテスト - 正常系：中間ファイルの区切り文字を取得する場合
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetIntermediateDelimiter_normalGet() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expected = KmgDelimiterTypes.COMMA;
+
+        /* 準備 */
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult = this.testTarget.getIntermediateDelimiter();
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "中間ファイルの区切り文字が正しく取得されること");
 
     }
 
@@ -704,6 +741,71 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "処理が成功すること");
+
+    }
+
+    /**
+     * process メソッドのテスト - 正常系：区切り文字が正しくDtcServiceに渡される場合
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testProcess_normalWithDelimiterPassing() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expectedDelimiter = KmgDelimiterTypes.TAB;
+
+        // モックメッセージソースの設定
+        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn("test log message");
+
+        /* 準備 */
+        final Path testInputFile    = this.tempDir.resolve("test_input.txt");
+        final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
+        final Path testOutputFile   = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+
+        // テスト用のサービスで区切り文字を変更
+        final TestAbstractIitoProcessorService delimiterTestTarget      = new TestAbstractIitoProcessorService() {
+
+                                                                            @Override
+                                                                            protected KmgDelimiterTypes getIntermediateDelimiter() {
+
+                                                                                return expectedDelimiter;
+
+                                                                            }
+
+                                                                        };
+        final KmgReflectionModelImpl           delimiterReflectionModel = new KmgReflectionModelImpl(
+            delimiterTestTarget);
+        delimiterReflectionModel.set("messageSource", this.mockMessageSource);
+        delimiterReflectionModel.set("dtcService", this.mockDtcService);
+
+        delimiterTestTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+        final Path intermediatePath = delimiterTestTarget.getIntermediatePath();
+
+        // DTCサービスのモック設定（区切り文字が正しく渡されることを検証）
+        Mockito.when(
+            this.mockDtcService.initialize(ArgumentMatchers.eq(intermediatePath), ArgumentMatchers.eq(testTemplateFile),
+                ArgumentMatchers.eq(testOutputFile), ArgumentMatchers.eq(expectedDelimiter)))
+            .thenReturn(true);
+        Mockito.when(this.mockDtcService.process()).thenReturn(true);
+
+        /* テスト対象の実行 */
+        final boolean testResult = delimiterTestTarget.process();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "処理が成功すること");
+        // モックが正しい引数で呼ばれたことを検証
+        Mockito.verify(this.mockDtcService, Mockito.times(1)).initialize(ArgumentMatchers.eq(intermediatePath),
+            ArgumentMatchers.eq(testTemplateFile), ArgumentMatchers.eq(testOutputFile),
+            ArgumentMatchers.eq(expectedDelimiter));
 
     }
 
