@@ -1,5 +1,9 @@
 package kmg.tool.base.dtc.domain.service;
 
+import java.nio.file.Path;
+
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.two2one.domain.service.Two2OneService;
 
 /**
@@ -12,10 +16,33 @@ import kmg.tool.base.two2one.domain.service.Two2OneService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.3
  */
 public interface DtcService extends Two2OneService {
 
-    // 処理なし
+    /**
+     * 初期化する<br>
+     * <p>
+     * 中間ファイルの区切り文字を指定して初期化します。
+     * </p>
+     *
+     * @since 0.2.3
+     *
+     * @param inputPath
+     *                              入力ファイルパス（中間ファイルパス）
+     * @param templatePath
+     *                              テンプレートファイルパス
+     * @param outputPath
+     *                              出力ファイルパス
+     * @param intermediateDelimiter
+     *                              中間ファイルの区切り文字
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    boolean initialize(Path inputPath, Path templatePath, Path outputPath, KmgDelimiterTypes intermediateDelimiter)
+        throws KmgToolMsgException;
 
 }

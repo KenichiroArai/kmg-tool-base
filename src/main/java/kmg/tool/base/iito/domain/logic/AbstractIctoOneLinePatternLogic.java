@@ -27,7 +27,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.3
  */
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
@@ -252,6 +252,21 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     public int getNowLineNumber() {
 
         final int result = this.nowLineNumber;
+        return result;
+
+    }
+
+    /**
+     * 出力ファイルの区切り文字を返す。<br>
+     *
+     * @since 0.2.3
+     *
+     * @return 出力ファイルの区切り文字
+     */
+    @Override
+    public KmgDelimiterTypes getOutputDelimiter() {
+
+        final KmgDelimiterTypes result = this.outputDelimiter;
         return result;
 
     }

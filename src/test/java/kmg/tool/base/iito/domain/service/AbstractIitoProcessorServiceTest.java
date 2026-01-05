@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
@@ -86,6 +87,14 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
             final boolean result = true;
             return result;
+
+        }
+
+        @Override
+        protected KmgDelimiterTypes getIntermediateDelimiter() {
+
+            // TODO 自動生成されたメソッド・スタブ
+            return null;
 
         }
 

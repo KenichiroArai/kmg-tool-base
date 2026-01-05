@@ -14,7 +14,7 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.3
  */
 public interface IctoOneLinePatternLogic extends Closeable {
 
@@ -71,6 +71,15 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @return 現在の行番号
      */
     int getNowLineNumber();
+
+    /**
+     * 出力ファイルの区切り文字を返す。<br>
+     *
+     * @since 0.2.3
+     *
+     * @return 出力ファイルの区切り文字
+     */
+    KmgDelimiterTypes getOutputDelimiter();
 
     /**
      * 書き込み対象の行データのリストを返す。

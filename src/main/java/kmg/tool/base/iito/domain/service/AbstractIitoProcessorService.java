@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
@@ -23,7 +24,7 @@ import kmg.tool.base.dtc.domain.service.DtcService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.3
  */
 public abstract class AbstractIitoProcessorService implements IitoProcessorService {
 
@@ -242,7 +243,9 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
         }
 
         /* テンプレートの動的変換サービスで出力ファイルに出力する */
-        result = this.dtcService.initialize(this.getIntermediatePath(), this.templatePath, this.outputPath);
+        final KmgDelimiterTypes intermediateDelimiter = this.getIntermediateDelimiter();
+        result = this.dtcService.initialize(this.getIntermediatePath(), this.templatePath, this.outputPath,
+            intermediateDelimiter);
         result = this.dtcService.process();
 
         return result;
@@ -284,6 +287,18 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
         return result;
 
     }
+
+    /**
+     * 中間ファイルの区切り文字を返す。<br>
+     * <p>
+     * 中間ファイルの書き込み時に使用した区切り文字を返します。
+     * </p>
+     *
+     * @since 0.2.3
+     *
+     * @return 中間ファイルの区切り文字
+     */
+    protected abstract KmgDelimiterTypes getIntermediateDelimiter();
 
     /**
      * 中間ファイルに書き込む。
