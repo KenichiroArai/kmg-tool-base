@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
@@ -34,7 +35,7 @@ import kmg.tool.base.dtc.domain.logic.DtcLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.3
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -460,6 +461,49 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * initialize メソッドのテスト - 正常系：区切り文字を指定して正常な初期化
+     *
+     * @since 0.2.3
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testInitialize_normalInitializationWithDelimiter() throws KmgToolMsgException, KmgReflectionException {
+
+        /* 期待値の定義 */
+        final Path              expectedInputPath             = this.tempDir.resolve("input.txt");
+        final Path              expectedTemplatePath          = this.tempDir.resolve("template.yml");
+        final Path              expectedOutputPath            = this.tempDir.resolve("output.txt");
+        final KmgDelimiterTypes expectedIntermediateDelimiter = KmgDelimiterTypes.TAB;
+
+        /* 準備 */
+        // 準備なし
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.initialize(expectedInputPath, expectedTemplatePath,
+            expectedOutputPath, expectedIntermediateDelimiter);
+
+        /* 検証の準備 */
+        final boolean           actualResult                = testResult;
+        final Path              actualInputPath             = this.testTarget.getInputPath();
+        final Path              actualTemplatePath          = this.testTarget.getTemplatePath();
+        final Path              actualOutputPath            = this.testTarget.getOutputPath();
+        final KmgDelimiterTypes actualIntermediateDelimiter = (KmgDelimiterTypes) this.reflectionModel
+            .get("intermediateDelimiter");
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "初期化が成功すること");
+        Assertions.assertEquals(expectedInputPath, actualInputPath, "入力ファイルパスが正しく設定されること");
+        Assertions.assertEquals(expectedTemplatePath, actualTemplatePath, "テンプレートファイルパスが正しく設定されること");
+        Assertions.assertEquals(expectedOutputPath, actualOutputPath, "出力ファイルパスが正しく設定されること");
+        Assertions.assertEquals(expectedIntermediateDelimiter, actualIntermediateDelimiter, "中間ファイルの区切り文字が正しく設定されること");
+
+    }
+
+    /**
      * process メソッドのテスト - 異常系：DtcLogicのcloseでIOException発生
      *
      * @since 0.2.0
@@ -572,6 +616,100 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertEquals(expectedResult, actualResult, "処理が成功すること");
+
+    }
+
+    /**
+     * process メソッドのテスト - 正常系：区切り文字が指定されている場合にDtcLogicに渡されること
+     *
+     * @since 0.2.3
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testProcess_normalWithIntermediateDelimiter() throws KmgToolMsgException, KmgReflectionException {
+
+        /* 期待値の定義 */
+        final boolean           expectedResult                = true;
+        final String            expectedStartLogMsg           = "処理開始ログメッセージ";
+        final String            expectedEndLogMsg             = "処理終了ログメッセージ";
+        final KmgDelimiterTypes expectedIntermediateDelimiter = KmgDelimiterTypes.TAB;
+
+        /* 準備 */
+        final Path inputPath    = this.tempDir.resolve("input.txt");
+        final Path templatePath = this.tempDir.resolve("template.yml");
+        final Path outputPath   = this.tempDir.resolve("output.txt");
+
+        this.testTarget.initialize(inputPath, templatePath, outputPath, expectedIntermediateDelimiter);
+
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03000, new Object[] {}))
+            .thenReturn(expectedStartLogMsg);
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03001, new Object[] {}))
+            .thenReturn(expectedEndLogMsg);
+
+        Mockito.when(this.mockDtcLogic.readOneLineOfData()).thenReturn(false);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.process();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "処理が成功すること");
+        // DtcLogicのinitializeが区切り文字付きで呼ばれたことを検証
+        Mockito.verify(this.mockDtcLogic, Mockito.times(1)).initialize(inputPath, templatePath, outputPath,
+            expectedIntermediateDelimiter);
+
+    }
+
+    /**
+     * process メソッドのテスト - 正常系：区切り文字が指定されていない場合にデフォルト（COMMA）が使用されること
+     *
+     * @since 0.2.3
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @Test
+    public void testProcess_normalWithoutIntermediateDelimiter() throws KmgToolMsgException {
+
+        /* 期待値の定義 */
+        final boolean expectedResult      = true;
+        final String  expectedStartLogMsg = "処理開始ログメッセージ";
+        final String  expectedEndLogMsg   = "処理終了ログメッセージ";
+
+        /* 準備 */
+        final Path inputPath    = this.tempDir.resolve("input.txt");
+        final Path templatePath = this.tempDir.resolve("template.yml");
+        final Path outputPath   = this.tempDir.resolve("output.txt");
+
+        // 区切り文字を指定しないinitializeを呼び出す
+        this.testTarget.initialize(inputPath, templatePath, outputPath);
+
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03000, new Object[] {}))
+            .thenReturn(expectedStartLogMsg);
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03001, new Object[] {}))
+            .thenReturn(expectedEndLogMsg);
+
+        Mockito.when(this.mockDtcLogic.readOneLineOfData()).thenReturn(false);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.process();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "処理が成功すること");
+        // DtcLogicのinitializeが区切り文字なし（3引数）で呼ばれたことを検証
+        Mockito.verify(this.mockDtcLogic, Mockito.times(1)).initialize(inputPath, templatePath, outputPath);
+        // 区切り文字付き（4引数）では呼ばれていないことを検証
+        Mockito.verify(this.mockDtcLogic, Mockito.never()).initialize(ArgumentMatchers.any(), ArgumentMatchers.any(),
+            ArgumentMatchers.any(), ArgumentMatchers.any());
 
     }
 

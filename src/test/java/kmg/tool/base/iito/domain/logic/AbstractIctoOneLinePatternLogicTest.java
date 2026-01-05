@@ -879,6 +879,96 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     }
 
     /**
+     * getOutputDelimiter メソッドのテスト - 正常系：デフォルトの区切り文字（COMMA）を取得する場合
+     *
+     * @since 0.2.3
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testGetOutputDelimiter_normalGetDefaultDelimiter() throws KmgReflectionException {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expected = KmgDelimiterTypes.COMMA;
+
+        /* 準備 */
+        // デフォルトコンストラクタで初期化するとCOMMAが設定される
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult = this.testTarget.getOutputDelimiter();
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "デフォルトの区切り文字（COMMA）が取得されること");
+
+    }
+
+    /**
+     * getOutputDelimiter メソッドのテスト - 正常系：指定した区切り文字（TAB）を取得する場合
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetOutputDelimiter_normalGetSpecifiedDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expected = KmgDelimiterTypes.TAB;
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+        this.testTarget.initialize(testInputFile, testOutputFile, expected);
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult = this.testTarget.getOutputDelimiter();
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "指定した区切り文字（TAB）が取得されること");
+
+    }
+
+    /**
+     * getOutputDelimiter メソッドのテスト - 正常系：指定した区切り文字（VERTICAL_BAR）を取得する場合
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetOutputDelimiter_normalGetVerticalBarDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expected = KmgDelimiterTypes.VERTICAL_BAR;
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+        this.testTarget.initialize(testInputFile, testOutputFile, expected);
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult = this.testTarget.getOutputDelimiter();
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "指定した区切り文字（VERTICAL_BAR）が取得されること");
+
+    }
+
+    /**
      * getRows メソッドのテスト - 正常系：書き込み対象の行データのリストを取得する場合
      *
      * @since 0.2.0
