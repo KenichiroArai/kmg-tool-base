@@ -40,7 +40,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -881,7 +881,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * getOutputDelimiter メソッドのテスト - 正常系：デフォルトの区切り文字（COMMA）を取得する場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -909,7 +909,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * getOutputDelimiter メソッドのテスト - 正常系：指定した区切り文字（TAB）を取得する場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
@@ -940,7 +940,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * getOutputDelimiter メソッドのテスト - 正常系：指定した区切り文字（VERTICAL_BAR）を取得する場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
@@ -1001,7 +1001,7 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 異常系：NONEパラメータ（outputDelimiter）で初期化する場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外

@@ -23,7 +23,7 @@ import kmg.tool.base.iito.domain.service.AbstractIitoProcessorService;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @Service
 public class AccessorCreationServiceImpl extends AbstractIitoProcessorService implements AccessorCreationService {
@@ -82,7 +82,7 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
      * AbstractIitoProcessorServiceのgetIntermediateDelimiter()を実装します。
      * </p>
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @return 中間ファイルの区切り文字
      */

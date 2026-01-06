@@ -35,7 +35,7 @@ import kmg.tool.base.dtc.domain.service.DtcService;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -96,7 +96,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
          * AbstractIitoProcessorServiceのgetIntermediateDelimiter()を実装します。
          * </p>
          *
-         * @since 0.2.3
+         * @since 0.2.2
          *
          * @return 中間ファイルの区切り文字
          */
@@ -341,7 +341,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * createTempntermediateFile メソッドのテスト - 正常系：tempIntermediateFileSuffixExtensionがnullの場合（デフォルト値を使用）
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
@@ -406,7 +406,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * getIntermediateDelimiter メソッドのテスト - 正常系：中間ファイルの区切り文字を取得する場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
@@ -611,7 +611,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：tempIntermediateFileSuffixExtensionがnullの場合（デフォルト値を使用）
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
@@ -655,7 +655,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：tempIntermediateFileSuffixExtensionが指定された場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
@@ -877,7 +877,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：区切り文字が正しくDtcServiceに渡される場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外

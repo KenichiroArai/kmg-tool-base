@@ -19,7 +19,7 @@ import kmg.tool.base.jdoc.domain.model.JavadocModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @SuppressWarnings({
     "nls",
@@ -581,7 +581,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * isTextBlockEndWithSemicolon メソッドのテスト - 正常系:セミコロンがない場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   リフレクション操作で発生する可能性のある例外
@@ -863,7 +863,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadocが文字列中にある場合（isNormalStringEndがtrue）
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -895,7 +895,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadocが文字列中にある場合（isTextBlockEndがtrue）
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外
@@ -926,7 +926,7 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 異常系:Javadocが文字列中にある場合（isTextBlockEndWithSemicolonがtrue）
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   テスト実行時に発生する可能性のある例外

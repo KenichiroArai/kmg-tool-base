@@ -35,7 +35,7 @@ import kmg.tool.base.fldcrt.application.logic.FieldCreationLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -343,7 +343,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * getIntermediateDelimiter メソッドのテスト - 正常系：正常に区切り文字を取得する場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
@@ -809,7 +809,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：processColumnsでKmgToolMsgException発生
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -885,7 +885,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：readOneLineDataでKmgToolMsgException発生
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -959,7 +959,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：writeIntermediateFileLineでKmgToolMsgException発生
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外

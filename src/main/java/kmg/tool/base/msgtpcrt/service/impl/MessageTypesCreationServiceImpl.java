@@ -26,7 +26,7 @@ import kmg.tool.base.msgtpcrt.service.MessageTypesCreationService;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @Service
 public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorService
@@ -86,7 +86,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
      * AbstractIitoProcessorServiceのgetIntermediateDelimiter()を実装します。
      * </p>
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @return 中間ファイルの区切り文字
      */

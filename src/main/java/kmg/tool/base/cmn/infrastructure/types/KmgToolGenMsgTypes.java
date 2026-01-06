@@ -17,7 +17,7 @@ import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnGenMsg;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @SuppressWarnings("nls")
 public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
@@ -209,14 +209,14 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     /**
      * 入力、中間、テンプレート、出力の1行パターンの抽象クラスの初期処理で出力ファイルの区切り文字が「null」です。
      *
-     * @since 0.2.3
+     * @since 0.2.2
      */
     KMGTOOL_GEN07007("入力、中間、テンプレート、出力の1行パターンの抽象クラスの初期処理で出力ファイルの区切り文字が「null」です。"),
 
     /**
      * 入力、中間、テンプレート、出力の1行パターンの抽象クラスの初期処理で出力ファイルの区切り文字が「NONE」です。
      *
-     * @since 0.2.3
+     * @since 0.2.2
      */
     KMGTOOL_GEN07008("入力、中間、テンプレート、出力の1行パターンの抽象クラスの初期処理で出力ファイルの区切り文字が「NONE」です。"),
 

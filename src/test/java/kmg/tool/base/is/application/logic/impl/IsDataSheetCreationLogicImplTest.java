@@ -38,7 +38,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -552,7 +552,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      * カラム物理名行に空セルが含まれる場合、空セルでbreakして処理を終了することを確認します。
      * </p>
      *
-     * @since 0.2.3
+     * @since 0.2.2
      */
     @Test
     public void testGetColumnPhysicsNameList_normalEmptyCellBreak() {
@@ -2340,7 +2340,7 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     /**
      * 空セルを含むカラム情報を持つテスト用シートを作成する<br>
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @return テスト用シート
      */

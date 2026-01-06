@@ -24,7 +24,7 @@ import kmg.tool.base.dtc.domain.service.DtcService;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 public abstract class AbstractIitoProcessorService implements IitoProcessorService {
 
@@ -81,7 +81,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 一時中間ファイルのサフィックスと拡張子
      *
-     * @since 0.2.3
+     * @since 0.2.2
      */
     private String tempIntermediateFileSuffixExtension;
 
@@ -206,7 +206,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 初期化する
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @return true：成功、false：失敗
      *
@@ -343,7 +343,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      * 中間ファイルの書き込み時に使用した区切り文字を返します。
      * </p>
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @return 中間ファイルの区切り文字
      */

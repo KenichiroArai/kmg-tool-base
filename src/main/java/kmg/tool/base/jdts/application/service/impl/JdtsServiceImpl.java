@@ -34,7 +34,7 @@ import kmg.tool.base.jdts.application.service.JdtsService;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @Service
 public class JdtsServiceImpl implements JdtsService {

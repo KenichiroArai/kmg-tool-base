@@ -16,7 +16,7 @@ import kmg.tool.base.two2one.domain.service.Two2OneService;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 public interface DtcService extends Two2OneService {
 
@@ -26,7 +26,7 @@ public interface DtcService extends Two2OneService {
      * 中間ファイルの区切り文字を指定して初期化します。
      * </p>
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @param inputPath
      *                              入力ファイルパス（中間ファイルパス）

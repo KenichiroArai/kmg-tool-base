@@ -23,7 +23,7 @@ import kmg.tool.base.jdts.application.model.JdtsBlockModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @SuppressWarnings({
     "nls", "static-method",
@@ -47,7 +47,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * モックKMGメッセージソース
      *
-     * @since 0.2.3
+     * @since 0.2.2
      */
     private KmgMessageSource mockMessageSource;
 
@@ -329,7 +329,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:解析が対象外のブロックが含まれる場合（Javadocブロックのみ）
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgReflectionException
      *                                リフレクション例外
@@ -376,7 +376,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:解析が対象外のブロックが含まれる場合（Javadoc終了記号なし）
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgReflectionException
      *                                リフレクション例外

@@ -38,7 +38,7 @@ import kmg.tool.base.jdts.application.model.JdtsTagConfigModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -1548,7 +1548,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
     /**
      * replace メソッドのテスト - 準正常系：Javadocが見つからない場合の処理（replaceIdx == -1）
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外

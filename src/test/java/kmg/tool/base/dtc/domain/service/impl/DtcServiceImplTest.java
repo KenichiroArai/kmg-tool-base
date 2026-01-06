@@ -35,7 +35,7 @@ import kmg.tool.base.dtc.domain.logic.DtcLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -463,7 +463,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：区切り文字を指定して正常な初期化
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -622,7 +622,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：区切り文字が指定されている場合にDtcLogicに渡されること
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgToolMsgException
      *                                KMGツールメッセージ例外
@@ -669,7 +669,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：区切り文字が指定されていない場合にデフォルト（COMMA）が使用されること
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外

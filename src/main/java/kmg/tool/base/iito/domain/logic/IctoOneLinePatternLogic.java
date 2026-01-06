@@ -14,7 +14,7 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 public interface IctoOneLinePatternLogic extends Closeable {
 
@@ -75,7 +75,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
     /**
      * 出力ファイルの区切り文字を返す。<br>
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @return 出力ファイルの区切り文字
      */

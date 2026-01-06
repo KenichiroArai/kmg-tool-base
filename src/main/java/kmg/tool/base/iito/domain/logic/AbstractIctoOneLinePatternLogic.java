@@ -27,7 +27,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
@@ -259,7 +259,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 出力ファイルの区切り文字を返す。<br>
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @return 出力ファイルの区切り文字
      */

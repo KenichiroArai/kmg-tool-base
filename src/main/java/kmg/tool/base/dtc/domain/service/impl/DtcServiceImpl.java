@@ -26,7 +26,7 @@ import kmg.tool.base.dtc.domain.service.DtcService;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @Service
 public class DtcServiceImpl implements DtcService {
@@ -57,7 +57,7 @@ public class DtcServiceImpl implements DtcService {
     /**
      * 中間ファイルの区切り文字
      *
-     * @since 0.2.3
+     * @since 0.2.2
      */
     private KmgDelimiterTypes intermediateDelimiter;
 
@@ -190,7 +190,7 @@ public class DtcServiceImpl implements DtcService {
      * 中間ファイルの区切り文字を指定して初期化します。
      * </p>
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @param inputPath
      *                              入力ファイルパス（中間ファイルパス）

@@ -36,7 +36,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.3
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -418,7 +418,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * getIntermediateDelimiter メソッドのテスト - 正常系：正常に区切り文字を取得する場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
@@ -690,7 +690,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     /**
      * readOneLineData メソッドのテスト - 準正常系：読み込み終了（falseを返す）場合
      *
-     * @since 0.2.3
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
