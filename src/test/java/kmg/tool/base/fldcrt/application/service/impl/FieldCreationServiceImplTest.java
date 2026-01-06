@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
@@ -34,7 +35,7 @@ import kmg.tool.base.fldcrt.application.logic.FieldCreationLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.3
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -336,6 +337,35 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertNull(testResult, "nullの入力ファイルパスが正しく取得されること");
+
+    }
+
+    /**
+     * getIntermediateDelimiter メソッドのテスト - 正常系：正常に区切り文字を取得する場合
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetIntermediateDelimiter_normalSuccess() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expectedResult = KmgDelimiterTypes.COMMA;
+
+        /* 準備 */
+        Mockito.when(this.mockFieldCreationLogic.getOutputDelimiter()).thenReturn(expectedResult);
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult
+            = (KmgDelimiterTypes) this.reflectionModel.getMethod("getIntermediateDelimiter");
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
 
     }
 
@@ -760,6 +790,235 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.writeIntermediateFile();
+
+            });
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
+
+    }
+
+    /**
+     * writeIntermediateFile メソッドのテスト - 異常系：processColumnsでKmgToolMsgException発生
+     *
+     * @since 0.2.3
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testWriteIntermediateFile_errorProcessColumnsException()
+        throws KmgToolMsgException, KmgReflectionException {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
+        final Class<?>           expectedCauseClass    = null;
+
+        /* 準備 */
+        final Path inputPath        = this.tempDir.resolve("input.txt");
+        final Path intermediatePath = this.tempDir.resolve("intermediate.tmp");
+
+        this.reflectionModel.set("inputPath", inputPath);
+        this.reflectionModel.set("intermediatePath", intermediatePath);
+
+        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath, intermediatePath)).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(true);
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+            Mockito.when(mockMessageSourceTestMethod.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("test log message");
+
+            // KmgToolMsgExceptionの作成
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
+            Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
+            Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenThrow(testException);
+
+            try {
+
+                Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+
+            } catch (final IOException e) {
+
+                // テスト用の例外なので無視
+                e.printStackTrace();
+
+            }
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.writeIntermediateFile();
+
+            });
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
+
+    }
+
+    /**
+     * writeIntermediateFile メソッドのテスト - 異常系：readOneLineDataでKmgToolMsgException発生
+     *
+     * @since 0.2.3
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testWriteIntermediateFile_errorReadOneLineDataException()
+        throws KmgToolMsgException, KmgReflectionException {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
+        final Class<?>           expectedCauseClass    = null;
+
+        /* 準備 */
+        final Path inputPath        = this.tempDir.resolve("input.txt");
+        final Path intermediatePath = this.tempDir.resolve("intermediate.tmp");
+
+        this.reflectionModel.set("inputPath", inputPath);
+        this.reflectionModel.set("intermediatePath", intermediatePath);
+
+        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath, intermediatePath)).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+            Mockito.when(mockMessageSourceTestMethod.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("test log message");
+
+            // KmgToolMsgExceptionの作成
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
+            Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenThrow(testException);
+
+            try {
+
+                Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+
+            } catch (final IOException e) {
+
+                // テスト用の例外なので無視
+                e.printStackTrace();
+
+            }
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.writeIntermediateFile();
+
+            });
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
+
+    }
+
+    /**
+     * writeIntermediateFile メソッドのテスト - 異常系：writeIntermediateFileLineでKmgToolMsgException発生
+     *
+     * @since 0.2.3
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testWriteIntermediateFile_errorWriteIntermediateFileLineException()
+        throws KmgToolMsgException, KmgReflectionException {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
+        final Class<?>           expectedCauseClass    = null;
+
+        /* 準備 */
+        final Path inputPath        = this.tempDir.resolve("input.txt");
+        final Path intermediatePath = this.tempDir.resolve("intermediate.tmp");
+
+        this.reflectionModel.set("inputPath", inputPath);
+        this.reflectionModel.set("intermediatePath", intermediatePath);
+
+        Mockito.when(this.mockFieldCreationLogic.initialize(inputPath, intermediatePath)).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addOneLineOfDataToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addFieldToRows()).thenReturn(true);
+        Mockito.when(this.mockFieldCreationLogic.addTypeToRows()).thenReturn(true);
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            final KmgMessageSource mockMessageSourceTestMethod = Mockito.mock(KmgMessageSource.class);
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(mockMessageSourceTestMethod);
+
+            // モックメッセージソースの設定
+            Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+            Mockito.when(mockMessageSourceTestMethod.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn("test log message");
+
+            // KmgToolMsgExceptionの作成
+            final KmgToolMsgException testException
+                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
+            Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenThrow(testException);
+
+            try {
+
+                Mockito.doNothing().when(this.mockFieldCreationLogic).close();
+
+            } catch (final IOException e) {
+
+                // テスト用の例外なので無視
+                e.printStackTrace();
+
+            }
 
             /* テスト対象の実行 */
             final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {

@@ -314,9 +314,9 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
         final String intermediateFileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
         // tempIntermediateFileSuffixExtensionがnullの場合はデフォルト値を使用
-        final String suffixExtension = (this.tempIntermediateFileSuffixExtension != null)
-            ? this.tempIntermediateFileSuffixExtension
-            : AbstractIitoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
+        final String suffixExtension
+            = (this.tempIntermediateFileSuffixExtension != null) ? this.tempIntermediateFileSuffixExtension
+                : AbstractIitoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
 
         try {
 

@@ -339,6 +339,43 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     }
 
     /**
+     * createTempntermediateFile メソッドのテスト - 正常系：tempIntermediateFileSuffixExtensionがnullの場合（デフォルト値を使用）
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testCreateTempntermediateFile_normalCreateWithNullSuffixExtension() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedSuffixExtension = "Temp.tmp";
+
+        /* 準備 */
+        final Path testInputFile = this.tempDir.resolve("test_input.txt");
+        Files.write(testInputFile, "test content".getBytes());
+        this.reflectionModel.set("inputPath", testInputFile);
+        // tempIntermediateFileSuffixExtensionをnullに設定（デフォルト値を使用）
+        this.reflectionModel.set("tempIntermediateFileSuffixExtension", null);
+
+        /* テスト対象の実行 */
+        final Path testResult = (Path) this.reflectionModel.getMethod("createTempntermediateFile");
+
+        /* 検証の準備 */
+        final Path    actualResult           = testResult;
+        final boolean actualExists           = Files.exists(actualResult);
+        final String  actualFileName         = actualResult.getFileName().toString();
+        final boolean actualHasCorrectSuffix = actualFileName.endsWith(expectedSuffixExtension);
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualResult, "一時ファイルが作成されること");
+        Assertions.assertTrue(actualExists, "作成されたファイルが存在すること");
+        Assertions.assertTrue(actualHasCorrectSuffix, "ファイル名がデフォルトのサフィックスを持つこと");
+
+    }
+
+    /**
      * getInputPath メソッドのテスト - 正常系：入力ファイルパスを取得する場合
      *
      * @since 0.2.0
@@ -568,6 +605,95 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
         Assertions.assertEquals(testTemplateFile, actualTemplatePath, "テンプレートファイルパスが正しく設定されること");
         Assertions.assertEquals(testOutputFile, actualOutputPath, "出力ファイルパスが正しく設定されること");
         Assertions.assertNotNull(actualIntermediatePath, "中間ファイルパスが作成されること");
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 正常系：tempIntermediateFileSuffixExtensionがnullの場合（デフォルト値を使用）
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testInitialize_normalWithNullSuffixExtension() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedSuffixExtension = "Temp.tmp";
+
+        /* 準備 */
+        final Path testInputFile    = this.tempDir.resolve("test_input.txt");
+        final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
+        final Path testOutputFile   = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile, null);
+
+        /* 検証の準備 */
+        final boolean actualResult                     = testResult;
+        final Path    actualInputPath                  = (Path) this.reflectionModel.get("inputPath");
+        final Path    actualTemplatePath               = (Path) this.reflectionModel.get("templatePath");
+        final Path    actualOutputPath                 = (Path) this.reflectionModel.get("outputPath");
+        final Path    actualIntermediatePath           = (Path) this.reflectionModel.get("intermediatePath");
+        final String  actualTempIntermediateFileSuffix = (String) this.reflectionModel
+            .get("tempIntermediateFileSuffixExtension");
+        final String  actualFileName                   = actualIntermediatePath.getFileName().toString();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "初期化が成功すること");
+        Assertions.assertEquals(testInputFile, actualInputPath, "入力ファイルパスが正しく設定されること");
+        Assertions.assertEquals(testTemplateFile, actualTemplatePath, "テンプレートファイルパスが正しく設定されること");
+        Assertions.assertEquals(testOutputFile, actualOutputPath, "出力ファイルパスが正しく設定されること");
+        Assertions.assertNotNull(actualIntermediatePath, "中間ファイルパスが作成されること");
+        Assertions.assertEquals(expectedSuffixExtension, actualTempIntermediateFileSuffix, "デフォルトのサフィックスと拡張子が設定されること");
+        Assertions.assertTrue(actualFileName.endsWith(expectedSuffixExtension), "作成されたファイル名がデフォルトのサフィックスを持つこと");
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 正常系：tempIntermediateFileSuffixExtensionが指定された場合
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testInitialize_normalWithSpecifiedSuffixExtension() throws Exception {
+
+        /* 期待値の定義 */
+        final String expectedSuffixExtension = ".custom";
+
+        /* 準備 */
+        final Path testInputFile    = this.tempDir.resolve("test_input.txt");
+        final Path testTemplateFile = this.tempDir.resolve("test_template.txt");
+        final Path testOutputFile   = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+
+        /* テスト対象の実行 */
+        final boolean testResult
+            = this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile, expectedSuffixExtension);
+
+        /* 検証の準備 */
+        final boolean actualResult                     = testResult;
+        final Path    actualInputPath                  = (Path) this.reflectionModel.get("inputPath");
+        final Path    actualTemplatePath               = (Path) this.reflectionModel.get("templatePath");
+        final Path    actualOutputPath                 = (Path) this.reflectionModel.get("outputPath");
+        final Path    actualIntermediatePath           = (Path) this.reflectionModel.get("intermediatePath");
+        final String  actualTempIntermediateFileSuffix = (String) this.reflectionModel
+            .get("tempIntermediateFileSuffixExtension");
+        final String  actualFileName                   = actualIntermediatePath.getFileName().toString();
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "初期化が成功すること");
+        Assertions.assertEquals(testInputFile, actualInputPath, "入力ファイルパスが正しく設定されること");
+        Assertions.assertEquals(testTemplateFile, actualTemplatePath, "テンプレートファイルパスが正しく設定されること");
+        Assertions.assertEquals(testOutputFile, actualOutputPath, "出力ファイルパスが正しく設定されること");
+        Assertions.assertNotNull(actualIntermediatePath, "中間ファイルパスが作成されること");
+        Assertions.assertEquals(expectedSuffixExtension, actualTempIntermediateFileSuffix, "指定されたサフィックスと拡張子が設定されること");
+        Assertions.assertTrue(actualFileName.endsWith(expectedSuffixExtension), "作成されたファイル名が指定されたサフィックスを持つこと");
 
     }
 

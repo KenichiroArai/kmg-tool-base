@@ -416,6 +416,35 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * getIntermediateDelimiter メソッドのテスト - 正常系：正常に区切り文字を取得する場合
+     *
+     * @since 0.2.3
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetIntermediateDelimiter_normalSuccess() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expectedResult = KmgDelimiterTypes.COMMA;
+
+        /* 準備 */
+        Mockito.when(this.mockAccessorCreationLogic.getOutputDelimiter()).thenReturn(expectedResult);
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult
+            = (KmgDelimiterTypes) this.reflectionModel.getMethod("getIntermediateDelimiter");
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+
+    }
+
+    /**
      * processColumns メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
      *
      * @since 0.2.0
@@ -1050,35 +1079,6 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
                 "writeIntermediateFileLineメソッドが正常に実行されること");
 
         }
-
-    }
-
-    /**
-     * getIntermediateDelimiter メソッドのテスト - 正常系：正常に区切り文字を取得する場合
-     *
-     * @since 0.2.3
-     *
-     * @throws Exception
-     *                   例外
-     */
-    @Test
-    public void testGetIntermediateDelimiter_normalSuccess() throws Exception {
-
-        /* 期待値の定義 */
-        final KmgDelimiterTypes expectedResult = KmgDelimiterTypes.COMMA;
-
-        /* 準備 */
-        Mockito.when(this.mockAccessorCreationLogic.getOutputDelimiter()).thenReturn(expectedResult);
-
-        /* テスト対象の実行 */
-        final KmgDelimiterTypes testResult
-            = (KmgDelimiterTypes) this.reflectionModel.getMethod("getIntermediateDelimiter");
-
-        /* 検証の準備 */
-        final KmgDelimiterTypes actualResult = testResult;
-
-        /* 検証の実施 */
-        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
 
     }
 
