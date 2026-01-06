@@ -41,6 +41,11 @@ jobs:
                 <username>${{ github.actor }}</username>
                 <password>${{ secrets.GITHUB_TOKEN }}</password>
               </server>
+              <server>
+                <id>github-kmg-tool-base</id>
+                <username>${{ github.actor }}</username>
+                <password>${{ secrets.GITHUB_TOKEN }}</password>
+              </server>
             </servers>
           </settings>
           EOF
