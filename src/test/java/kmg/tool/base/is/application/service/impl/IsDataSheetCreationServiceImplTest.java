@@ -290,27 +290,7 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
         final Path                testOutputPath     = this.tempDir.resolve("output.sql");
         final Path                testOutputFilePath = this.tempDir.resolve("test_insert_test_table.sql");
 
-        this.testTarget.initialize(testKmgDbTypes, testInputSheet, testSqlIdMap, testOutputPath);
-
-        // IsDataSheetCreationLogicのモック設定（IOExceptionを発生させる）
-        Mockito.doNothing().when(this.mockIsDataSheetCreationLogic).initialize(ArgumentMatchers.any(),
-            ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any());
-        Mockito.doNothing().when(this.mockIsDataSheetCreationLogic).createOutputFileDirectories();
-        Mockito.when(this.mockIsDataSheetCreationLogic.getOutputFilePath()).thenReturn(testOutputFilePath);
-        Mockito.when(this.mockIsDataSheetCreationLogic.getCharset())
-            .thenReturn(java.nio.charset.StandardCharsets.UTF_8);
-        Mockito.when(this.mockIsDataSheetCreationLogic.getDeleteComment()).thenReturn("-- テスト");
-        Mockito.when(this.mockIsDataSheetCreationLogic.getDeleteSql()).thenReturn("DELETE FROM test;");
-        Mockito.when(this.mockIsDataSheetCreationLogic.getInsertComment()).thenReturn("-- テスト");
-        Mockito.when(this.mockIsDataSheetCreationLogic.getInsertSql(ArgumentMatchers.any(Row.class)))
-            .thenReturn("INSERT INTO test VALUES ('test');");
-
-        // inputSheetのモック設定
-        final Row mockRow = Mockito.mock(Row.class);
-        Mockito.when(testInputSheet.getLastRowNum()).thenReturn(4);
-        Mockito.when(testInputSheet.getRow(4)).thenReturn(mockRow);
-
-        // SpringApplicationContextHelperのモック化
+        // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
@@ -321,6 +301,26 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
+
+            this.testTarget.initialize(testKmgDbTypes, testInputSheet, testSqlIdMap, testOutputPath);
+
+            // IsDataSheetCreationLogicのモック設定（IOExceptionを発生させる）
+            Mockito.doNothing().when(this.mockIsDataSheetCreationLogic).initialize(ArgumentMatchers.any(),
+                ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any());
+            Mockito.doNothing().when(this.mockIsDataSheetCreationLogic).createOutputFileDirectories();
+            Mockito.when(this.mockIsDataSheetCreationLogic.getOutputFilePath()).thenReturn(testOutputFilePath);
+            Mockito.when(this.mockIsDataSheetCreationLogic.getCharset())
+                .thenReturn(java.nio.charset.StandardCharsets.UTF_8);
+            Mockito.when(this.mockIsDataSheetCreationLogic.getDeleteComment()).thenReturn("-- テスト");
+            Mockito.when(this.mockIsDataSheetCreationLogic.getDeleteSql()).thenReturn("DELETE FROM test;");
+            Mockito.when(this.mockIsDataSheetCreationLogic.getInsertComment()).thenReturn("-- テスト");
+            Mockito.when(this.mockIsDataSheetCreationLogic.getInsertSql(ArgumentMatchers.any(Row.class)))
+                .thenReturn("INSERT INTO test VALUES ('test');");
+
+            // inputSheetのモック設定
+            final Row mockRow = Mockito.mock(Row.class);
+            Mockito.when(testInputSheet.getLastRowNum()).thenReturn(4);
+            Mockito.when(testInputSheet.getRow(4)).thenReturn(mockRow);
 
             // ファイル書き込みでIOExceptionを発生させる
             try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
@@ -364,7 +364,7 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
         /* 準備 */
         // 初期化しない
 
-        // SpringApplicationContextHelperのモック化
+        // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
@@ -565,13 +565,7 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
 
         this.testTarget.initialize(testKmgDbTypes, testInputSheet, testSqlIdMap, testOutputPath);
 
-        // messageSourceのモック設定
-        Mockito
-            .when(
-                this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(expectedLogMsgTypes), ArgumentMatchers.any()))
-            .thenReturn(expectedLogMessage);
-
-        // SpringApplicationContextHelperのモック化
+        // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
             = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
@@ -582,6 +576,12 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
             // モックメッセージソースの設定
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テスト用の例外メッセージ");
+
+            // messageSourceのモック設定
+            Mockito
+                .when(
+                    this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(expectedLogMsgTypes), ArgumentMatchers.any()))
+                .thenReturn(expectedLogMessage);
 
             // testTargetをスパイしてoutputInsertionSqlメソッドでKmgToolMsgExceptionを発生させる
             final IsDataSheetCreationServiceImpl spyTarget = Mockito.spy(this.testTarget);
