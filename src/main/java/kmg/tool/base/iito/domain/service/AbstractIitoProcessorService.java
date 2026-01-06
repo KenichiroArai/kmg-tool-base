@@ -79,6 +79,13 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     private Path intermediatePath;
 
     /**
+     * 一時中間ファイルのサフィックスと拡張子
+     *
+     * @since 0.2.3
+     */
+    private String tempIntermediateFileSuffixExtension;
+
+    /**
      * テンプレートの動的変換サービス
      *
      * @since 0.2.0
@@ -192,11 +199,50 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
         throws KmgToolMsgException {
 
+        return this.initialize(inputPath, templatePath, outputPath, null);
+
+    }
+
+    /**
+     * 初期化する
+     *
+     * @since 0.2.3
+     *
+     * @return true：成功、false：失敗
+     *
+     * @param inputPath
+     *                                            入力ファイルパス
+     * @param templatePath
+     *                                            テンプレートファイルパス
+     * @param outputPath
+     *                                            出力ファイルパス
+     * @param tempIntermediateFileSuffixExtension
+     *                                            一時中間ファイルのサフィックスと拡張子（nullの場合はデフォルト値を使用）
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @SuppressWarnings("hiding")
+    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath,
+        final String tempIntermediateFileSuffixExtension) throws KmgToolMsgException {
+
         boolean result = false;
 
         this.inputPath = inputPath;
         this.templatePath = templatePath;
         this.outputPath = outputPath;
+
+        // 一時中間ファイルのサフィックスと拡張子を設定（nullの場合はデフォルト値を使用）
+        if (tempIntermediateFileSuffixExtension == null) {
+
+            this.tempIntermediateFileSuffixExtension
+                = AbstractIitoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
+
+        } else {
+
+            this.tempIntermediateFileSuffixExtension = tempIntermediateFileSuffixExtension;
+
+        }
 
         // 一時ファイルの作成
         this.intermediatePath = this.createTempntermediateFile();
@@ -267,7 +313,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
         Path result = null;
 
         final String intermediateFileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
-        final String suffixExtension          = AbstractIitoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
+        final String suffixExtension          = this.tempIntermediateFileSuffixExtension;
 
         try {
 
