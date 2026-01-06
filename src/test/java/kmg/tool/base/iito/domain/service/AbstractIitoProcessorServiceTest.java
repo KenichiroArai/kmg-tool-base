@@ -289,8 +289,30 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
                 }, "Files.createTempFileでIOExceptionが発生した場合は例外が発生すること");
 
                 /* 検証の準備 */
-                Assertions.assertInstanceOf(KmgToolMsgException.class, actualException, "KmgToolMsgExceptionが発生すること");
-                final KmgToolMsgException actualKmgToolMsgException = (KmgToolMsgException) actualException;
+                // RuntimeExceptionにラップされている可能性があるため、原因を確認
+                Throwable causeToCheck = actualException;
+
+                if ((causeToCheck instanceof RuntimeException) && (causeToCheck.getCause() != null)) {
+
+                    causeToCheck = causeToCheck.getCause();
+
+                }
+
+                // KmgToolMsgExceptionがラップされている場合を確認
+                final KmgToolMsgException actualKmgToolMsgException;
+
+                if (causeToCheck instanceof KmgToolMsgException) {
+
+                    actualKmgToolMsgException = (KmgToolMsgException) causeToCheck;
+
+                } else {
+
+                    // 直接KmgToolMsgExceptionが投げられた場合
+                    Assertions.assertInstanceOf(KmgToolMsgException.class, actualException,
+                        "KmgToolMsgExceptionが発生すること");
+                    actualKmgToolMsgException = (KmgToolMsgException) actualException;
+
+                }
 
                 /* 検証の実施 */
                 this.verifyKmgMsgException(actualKmgToolMsgException, expectedCauseClass, expectedDomainMessage,

@@ -591,7 +591,7 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
             final Logger                 testLogger         = LoggerFactory.getLogger("TestLogger");
             spyReflectionModel.set("logger", testLogger);
 
-            // KmgToolMsgExceptionを発生させる
+            // KmgToolMsgExceptionを発生させる（SpringApplicationContextHelperのモック化後に作成）
             final KmgToolGenMsgTypes  genMsgTypes   = KmgToolGenMsgTypes.KMGTOOL_GEN10003;
             final Object[]            genMsgArgs    = {
                 "test_file.sql"
