@@ -272,6 +272,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
             final Path testInputFile = this.tempDir.resolve("test_input.txt");
             Files.write(testInputFile, "test content".getBytes());
             this.reflectionModel.set("inputPath", testInputFile);
+            // tempIntermediateFileSuffixExtensionを初期化
+            this.reflectionModel.set("tempIntermediateFileSuffixExtension", "Temp.tmp");
 
             // Files.createTempFileでIOExceptionを発生させるモック
             try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
@@ -317,6 +319,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
         final Path testInputFile = this.tempDir.resolve("test_input.txt");
         Files.write(testInputFile, "test content".getBytes());
         this.reflectionModel.set("inputPath", testInputFile);
+        // tempIntermediateFileSuffixExtensionを初期化
+        this.reflectionModel.set("tempIntermediateFileSuffixExtension", "Temp.tmp");
 
         /* テスト対象の実行 */
         final Path testResult = (Path) this.reflectionModel.getMethod("createTempntermediateFile");
