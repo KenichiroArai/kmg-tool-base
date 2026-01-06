@@ -95,13 +95,16 @@ classDiagram
         -Path templatePath
         -Path outputPath
         -Path intermediatePath
+        -String tempIntermediateFileSuffixExtension
         -DtcService dtcService
         +Path getIntermediatePath()
         +Path getInputPath()
         +Path getOutputPath()
         +Path getTemplatePath()
         +boolean initialize(Path inputPath, Path templatePath, Path outputPath)
+        +boolean initialize(Path inputPath, Path templatePath, Path outputPath, String tempIntermediateFileSuffixExtension)
         +boolean process()
+        #abstract KmgDelimiterTypes getIntermediateDelimiter()
         #abstract boolean writeIntermediateFile()
     }
 
@@ -110,6 +113,7 @@ classDiagram
         -KmgMessageSource messageSource
         -Enum2SwitchCaseCreationLogic enum2SwitchCaseMakingLogic
         +Enum2SwitchCaseCreationServiceImpl()
+        #KmgDelimiterTypes getIntermediateDelimiter()
         #boolean writeIntermediateFile()
     }
 

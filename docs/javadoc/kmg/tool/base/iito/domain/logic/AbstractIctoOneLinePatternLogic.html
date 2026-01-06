@@ -101,7 +101,16 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractIctoOneLinePatternLogic</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a>
 implements <a href="IctoOneLinePatternLogic.html" title="kmg.tool.base.iito.domain.logic内のインタフェース">IctoOneLinePatternLogic</a></span></div>
-<div class="block">入力、中間、テンプレート、出力の1行パターンの抽象クラス</div>
+<div class="block">入力、中間、テンプレート、出力の1行パターンの抽象クラス<br>
+ 「Iito」→「InputIntermediateTemplateOutput」の略。</div>
+<dl class="notes">
+<dt>導入されたバージョン:</dt>
+<dd>0.2.0</dd>
+<dt>バージョン:</dt>
+<dd>0.2.2</dd>
+<dt>作成者:</dt>
+<dd>KenichiroArai</dd>
+</dl>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -255,14 +264,26 @@ implements <a href="IctoOneLinePatternLogic.html" title="kmg.tool.base.iito.doma
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">現在の行番号を返す<br></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>&gt;&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRows()" class="member-name-link">getRows</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>kmg.core.infrastructure.types.KmgDelimiterTypes</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutputDelimiter()" class="member-name-link">getOutputDelimiter</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">出力ファイルの区切り文字を返す。</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRows()" class="member-name-link">getRows</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">書き込み対象の行データのリストを返す。</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize(java.nio.file.Path,java.nio.file.Path)" class="member-name-link">initialize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize(java.nio.file.Path,java.nio.file.Path)" class="member-name-link">initialize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">初期化する。</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize(java.nio.file.Path,java.nio.file.Path,kmg.core.infrastructure.types.KmgDelimiterTypes)" class="member-name-link">initialize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath,
+ kmg.core.infrastructure.types.KmgDelimiterTypes&nbsp;outputDelimiter)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">初期化する。</div>
 </div>
@@ -580,6 +601,21 @@ implements <a href="IctoOneLinePatternLogic.html" title="kmg.tool.base.iito.doma
 </section>
 </li>
 <li>
+<section class="detail" id="getOutputDelimiter()">
+<h3>getOutputDelimiter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">kmg.core.infrastructure.types.KmgDelimiterTypes</span>&nbsp;<span class="element-name">getOutputDelimiter</span>()</div>
+<div class="block">出力ファイルの区切り文字を返す。<br></div>
+<dl class="notes">
+<dt>定義:</dt>
+<dd><code><a href="IctoOneLinePatternLogic.html#getOutputDelimiter()">getOutputDelimiter</a></code>&nbsp;インタフェース内&nbsp;<code><a href="IctoOneLinePatternLogic.html" title="kmg.tool.base.iito.domain.logic内のインタフェース">IctoOneLinePatternLogic</a></code></dd>
+<dt>戻り値:</dt>
+<dd>出力ファイルの区切り文字</dd>
+<dt>導入されたバージョン:</dt>
+<dd>0.2.2</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getRows()">
 <h3>getRows</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>&gt;&gt;</span>&nbsp;<span class="element-name">getRows</span>()</div>
@@ -613,6 +649,33 @@ implements <a href="IctoOneLinePatternLogic.html" title="kmg.tool.base.iito.doma
 <dd><code><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="initialize(java.nio.file.Path,java.nio.file.Path,kmg.core.infrastructure.types.KmgDelimiterTypes)">
+<h3>initialize</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">initialize</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath,
+ kmg.core.infrastructure.types.KmgDelimiterTypes&nbsp;outputDelimiter)</span>
+                   throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+<div class="block">初期化する。<br>
+ <p>
+ 出力ファイルの区切り文字を指定して初期化します。
+ </p></div>
+<dl class="notes">
+<dt>定義:</dt>
+<dd><code><a href="IctoOneLinePatternLogic.html#initialize(java.nio.file.Path,java.nio.file.Path,kmg.core.infrastructure.types.KmgDelimiterTypes)">initialize</a></code>&nbsp;インタフェース内&nbsp;<code><a href="IctoOneLinePatternLogic.html" title="kmg.tool.base.iito.domain.logic内のインタフェース">IctoOneLinePatternLogic</a></code></dd>
+<dt>パラメータ:</dt>
+<dd><code>inputPath</code> - 入力ファイルパス</dd>
+<dd><code>outputPath</code> - 出力ファイルパス</dd>
+<dd><code>outputDelimiter</code> - 出力ファイルの区切り文字</dd>
+<dt>戻り値:</dt>
+<dd>true：成功、false：失敗</dd>
+<dt>例外:</dt>
+<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dt>導入されたバージョン:</dt>
+<dd>0.2.2</dd>
 </dl>
 </section>
 </li>

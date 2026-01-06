@@ -9,12 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kmg.fund.domain.logic.FileIteratorLogic;
 import kmg.fund.infrastructure.context.KmgMessageSource;
+import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
-import kmg.tool.base.jdts.application.logic.JdtsIoLogic;
 import kmg.tool.base.mptf.application.service.MapTransformService;
 
 /**
@@ -24,7 +25,7 @@ import kmg.tool.base.mptf.application.service.MapTransformService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @Service
 public class MapTransformServiceImpl implements MapTransformService {
@@ -45,12 +46,12 @@ public class MapTransformServiceImpl implements MapTransformService {
     private KmgMessageSource messageSource;
 
     /**
-     * Javadocタグ設定の入出力ロジック
+     * ファイルイテレーターロジック
      *
      * @since 0.2.0
      */
     @Autowired
-    private JdtsIoLogic jdtsIoLogic;
+    private FileIteratorLogic fileIteratorLogic;
 
     /**
      * 対象ファイルパス
@@ -127,21 +128,23 @@ public class MapTransformServiceImpl implements MapTransformService {
      *
      * @return true：成功、false：失敗
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path targetPath, final Map<String, String> targetValueToReplacementValueMapping)
-        throws KmgToolMsgException {
+        throws KmgFundMsgException, KmgToolMsgException {
 
         boolean result;
 
         this.targetPath = targetPath;
         this.targetValueToReplacementValueMapping.putAll(targetValueToReplacementValueMapping);
 
-        /* Javadocタグ設定の入出力ロジックの初期化 */
-        this.jdtsIoLogic.initialize(targetPath);
+        /* ファイルイテレーターロジックの初期化 */
+        this.fileIteratorLogic.initialize(targetPath);
 
         result = true;
         return result;
@@ -155,13 +158,15 @@ public class MapTransformServiceImpl implements MapTransformService {
      *
      * @return true：成功、false：失敗
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws KmgToolValException
      *                             KMGツールバリデーション例外
      */
     @Override
-    public boolean process() throws KmgToolMsgException, KmgToolValException {
+    public boolean process() throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
 
         boolean result;
 
@@ -173,7 +178,7 @@ public class MapTransformServiceImpl implements MapTransformService {
         /* 準備 */
 
         // Javaファイルのリストをロードする
-        this.jdtsIoLogic.load();
+        this.fileIteratorLogic.load();
 
         /* 対象値からUUIDに置き換える */
 
@@ -184,10 +189,10 @@ public class MapTransformServiceImpl implements MapTransformService {
 
             uuidReplaceCount += this.replaceTargetValuesWithUuid();
 
-        } while (this.jdtsIoLogic.nextFile());
+        } while (this.fileIteratorLogic.nextFile());
 
         // Javaファイルのカレントをリセットする
-        this.jdtsIoLogic.resetFileIndex();
+        this.fileIteratorLogic.resetFileIndex();
 
         /* UUIDから置換値に置き換える */
 
@@ -198,7 +203,7 @@ public class MapTransformServiceImpl implements MapTransformService {
 
             replaceValueReplaceCount += this.replaceUuidWithReplacementValues();
 
-        } while (this.jdtsIoLogic.nextFile());
+        } while (this.fileIteratorLogic.nextFile());
 
         /* 置換数の確認 */
         if (uuidReplaceCount != replaceValueReplaceCount) {
@@ -213,7 +218,7 @@ public class MapTransformServiceImpl implements MapTransformService {
 
         final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG19001;
         final Object[]           endLogMsgArgs  = {
-            this.jdtsIoLogic.getFilePathList().size(), uuidReplaceCount,
+            this.fileIteratorLogic.getFilePathList().size(), uuidReplaceCount,
         };
         final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
         this.logger.debug(endLogMsg);
@@ -230,21 +235,23 @@ public class MapTransformServiceImpl implements MapTransformService {
      *
      * @return 置換数
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private long replaceTargetValuesWithUuid() throws KmgToolMsgException {
+    private long replaceTargetValuesWithUuid() throws KmgFundMsgException, KmgToolMsgException {
 
         long result = 0;
 
         // ファイルの内容を読み込む
-        if (!this.jdtsIoLogic.loadContent()) {
+        if (!this.fileIteratorLogic.loadContent()) {
 
             return result;
 
         }
 
-        String content = this.jdtsIoLogic.getReadContent();
+        String content = this.fileIteratorLogic.getReadContent();
 
         // 対象値からUUIDに置換する
         for (final Map.Entry<String, String> entry : this.targetValueToReplacementValueMapping.entrySet()) {
@@ -263,10 +270,10 @@ public class MapTransformServiceImpl implements MapTransformService {
         }
 
         // 置換後の内容を設定
-        this.jdtsIoLogic.setWriteContent(content);
+        this.fileIteratorLogic.setWriteContent(content);
 
         // ファイルに書き込む
-        this.jdtsIoLogic.writeContent();
+        this.fileIteratorLogic.writeContent();
 
         return result;
 
@@ -279,21 +286,23 @@ public class MapTransformServiceImpl implements MapTransformService {
      *
      * @return 置換数
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    private long replaceUuidWithReplacementValues() throws KmgToolMsgException {
+    private long replaceUuidWithReplacementValues() throws KmgFundMsgException, KmgToolMsgException {
 
         long result = 0;
 
         // ファイルの内容を読み込む
-        if (!this.jdtsIoLogic.loadContent()) {
+        if (!this.fileIteratorLogic.loadContent()) {
 
             return result;
 
         }
 
-        String content = this.jdtsIoLogic.getReadContent();
+        String content = this.fileIteratorLogic.getReadContent();
 
         // UUIDから置換値に置換する
         for (final Map.Entry<String, String> entry : this.uuidToReplacementValueMapping.entrySet()) {
@@ -315,10 +324,10 @@ public class MapTransformServiceImpl implements MapTransformService {
         }
 
         // 置換後の内容を設定
-        this.jdtsIoLogic.setWriteContent(content);
+        this.fileIteratorLogic.setWriteContent(content);
 
         // ファイルに書き込む
-        this.jdtsIoLogic.writeContent();
+        this.fileIteratorLogic.writeContent();
 
         return result;
 

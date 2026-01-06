@@ -20,9 +20,15 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
 
 /**
- * 入力、中間、テンプレート、出力の1行パターンの抽象クラス
+ * 入力、中間、テンプレート、出力の1行パターンの抽象クラス<br>
+ * 「Iito」→「InputIntermediateTemplateOutput」の略。
+ *
+ * @author KenichiroArai
+ *
+ * @since 0.2.0
+ *
+ * @version 0.2.2
  */
-// TODO KenichiroArai 2025/09/04 v0.1.1対応予定。中間の名称を考え直す
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
     /**
@@ -112,7 +118,6 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         this(LoggerFactory.getLogger(AbstractIctoOneLinePatternLogic.class));
 
-        // TODO KenichiroArai 2025/09/04 v0.1.1対応予定。設定が選べるようにする。書き込みとそれの書き込みを一緒の設定が反映されるようにする。
         this.outputDelimiter = KmgDelimiterTypes.COMMA;
 
     }
@@ -252,6 +257,21 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     }
 
     /**
+     * 出力ファイルの区切り文字を返す。<br>
+     *
+     * @since 0.2.2
+     *
+     * @return 出力ファイルの区切り文字
+     */
+    @Override
+    public KmgDelimiterTypes getOutputDelimiter() {
+
+        final KmgDelimiterTypes result = this.outputDelimiter;
+        return result;
+
+    }
+
+    /**
      * 書き込み対象の行データのリストを返す。
      *
      * @since 0.2.0
@@ -285,10 +305,60 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     @Override
     public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
 
-        boolean result = false;
+        final boolean result = this.initialize(inputPath, outputPath, KmgDelimiterTypes.COMMA);
+        return result;
+
+    }
+
+    /**
+     * 初期化する。<br>
+     * <p>
+     * 出力ファイルの区切り文字を指定して初期化します。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @param inputPath
+     *                        入力ファイルパス
+     * @param outputPath
+     *                        出力ファイルパス
+     * @param outputDelimiter
+     *                        出力ファイルの区切り文字
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @SuppressWarnings("hiding")
+    @Override
+    public boolean initialize(final Path inputPath, final Path outputPath, final KmgDelimiterTypes outputDelimiter)
+        throws KmgToolMsgException {
+
+        boolean result;
+
+        /* パラメータのチェック */
+        if (outputDelimiter == null) {
+            // NULLの場合
+
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07007;
+            final Object[]           messageArgs  = {};
+            throw new KmgToolMsgException(messageTypes, messageArgs);
+
+        }
+
+        if (outputDelimiter == KmgDelimiterTypes.NONE) {
+            // NONEの場合
+
+            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07008;
+            final Object[]           messageArgs  = {};
+            throw new KmgToolMsgException(messageTypes, messageArgs);
+
+        }
 
         this.inputPath = inputPath;
         this.outputPath = outputPath;
+        this.outputDelimiter = outputDelimiter;
 
         /* データのクリア */
         this.clearProcessingData();

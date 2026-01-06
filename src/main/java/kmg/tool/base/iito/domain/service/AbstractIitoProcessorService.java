@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
@@ -23,7 +24,7 @@ import kmg.tool.base.dtc.domain.service.DtcService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 public abstract class AbstractIitoProcessorService implements IitoProcessorService {
 
@@ -76,6 +77,13 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      * @since 0.2.0
      */
     private Path intermediatePath;
+
+    /**
+     * 一時中間ファイルのサフィックスと拡張子
+     *
+     * @since 0.2.2
+     */
+    private String tempIntermediateFileSuffixExtension;
 
     /**
      * テンプレートの動的変換サービス
@@ -191,11 +199,50 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
         throws KmgToolMsgException {
 
+        return this.initialize(inputPath, templatePath, outputPath, null);
+
+    }
+
+    /**
+     * 初期化する
+     *
+     * @since 0.2.2
+     *
+     * @return true：成功、false：失敗
+     *
+     * @param inputPath
+     *                                            入力ファイルパス
+     * @param templatePath
+     *                                            テンプレートファイルパス
+     * @param outputPath
+     *                                            出力ファイルパス
+     * @param tempIntermediateFileSuffixExtension
+     *                                            一時中間ファイルのサフィックスと拡張子（nullの場合はデフォルト値を使用）
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @SuppressWarnings("hiding")
+    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath,
+        final String tempIntermediateFileSuffixExtension) throws KmgToolMsgException {
+
         boolean result = false;
 
         this.inputPath = inputPath;
         this.templatePath = templatePath;
         this.outputPath = outputPath;
+
+        // 一時中間ファイルのサフィックスと拡張子を設定（nullの場合はデフォルト値を使用）
+        if (tempIntermediateFileSuffixExtension == null) {
+
+            this.tempIntermediateFileSuffixExtension
+                = AbstractIitoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
+
+        } else {
+
+            this.tempIntermediateFileSuffixExtension = tempIntermediateFileSuffixExtension;
+
+        }
 
         // 一時ファイルの作成
         this.intermediatePath = this.createTempntermediateFile();
@@ -242,7 +289,9 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
         }
 
         /* テンプレートの動的変換サービスで出力ファイルに出力する */
-        result = this.dtcService.initialize(this.getIntermediatePath(), this.templatePath, this.outputPath);
+        final KmgDelimiterTypes intermediateDelimiter = this.getIntermediateDelimiter();
+        result = this.dtcService.initialize(this.getIntermediatePath(), this.templatePath, this.outputPath,
+            intermediateDelimiter);
         result = this.dtcService.process();
 
         return result;
@@ -264,7 +313,10 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
         Path result = null;
 
         final String intermediateFileNameOnly = KmgPathUtils.getFileNameOnly(this.getInputPath());
-        final String suffixExtension          = AbstractIitoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
+        // tempIntermediateFileSuffixExtensionがnullの場合はデフォルト値を使用
+        final String suffixExtension
+            = (this.tempIntermediateFileSuffixExtension != null) ? this.tempIntermediateFileSuffixExtension
+                : AbstractIitoProcessorService.TEMP_INTERMEDIATE_FILE_SUFFIX_EXTENSION;
 
         try {
 
@@ -284,6 +336,18 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
         return result;
 
     }
+
+    /**
+     * 中間ファイルの区切り文字を返す。<br>
+     * <p>
+     * 中間ファイルの書き込み時に使用した区切り文字を返します。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @return 中間ファイルの区切り文字
+     */
+    protected abstract KmgDelimiterTypes getIntermediateDelimiter();
 
     /**
      * 中間ファイルに書き込む。

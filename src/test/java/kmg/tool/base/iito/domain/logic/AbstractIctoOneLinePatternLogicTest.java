@@ -40,7 +40,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -879,6 +879,96 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     }
 
     /**
+     * getOutputDelimiter メソッドのテスト - 正常系：デフォルトの区切り文字（COMMA）を取得する場合
+     *
+     * @since 0.2.2
+     *
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testGetOutputDelimiter_normalGetDefaultDelimiter() throws KmgReflectionException {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expected = KmgDelimiterTypes.COMMA;
+
+        /* 準備 */
+        // デフォルトコンストラクタで初期化するとCOMMAが設定される
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult = this.testTarget.getOutputDelimiter();
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "デフォルトの区切り文字（COMMA）が取得されること");
+
+    }
+
+    /**
+     * getOutputDelimiter メソッドのテスト - 正常系：指定した区切り文字（TAB）を取得する場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetOutputDelimiter_normalGetSpecifiedDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expected = KmgDelimiterTypes.TAB;
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+        this.testTarget.initialize(testInputFile, testOutputFile, expected);
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult = this.testTarget.getOutputDelimiter();
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "指定した区切り文字（TAB）が取得されること");
+
+    }
+
+    /**
+     * getOutputDelimiter メソッドのテスト - 正常系：指定した区切り文字（VERTICAL_BAR）を取得する場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetOutputDelimiter_normalGetVerticalBarDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expected = KmgDelimiterTypes.VERTICAL_BAR;
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+        this.testTarget.initialize(testInputFile, testOutputFile, expected);
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult = this.testTarget.getOutputDelimiter();
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actual = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expected, actual, "指定した区切り文字（VERTICAL_BAR）が取得されること");
+
+    }
+
+    /**
      * getRows メソッドのテスト - 正常系：書き込み対象の行データのリストを取得する場合
      *
      * @since 0.2.0
@@ -909,6 +999,133 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     }
 
     /**
+     * initialize メソッドのテスト - 異常系：NONEパラメータ（outputDelimiter）で初期化する場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testInitialize_errorWithNoneDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN07008] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN07008;
+        final Class<?>           expectedCauseClass    = null;
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* 準備 */
+            final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+            final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+            Files.write(testInputFile, "test content".getBytes());
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.initialize(testInputFile, testOutputFile, KmgDelimiterTypes.NONE);
+
+            }, "outputDelimiterがNONEの場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 異常系：nullパラメータ（outputDelimiter）で初期化する場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testInitialize_errorWithNullDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final String             expectedDomainMessage = "[KMGTOOL_GEN07007] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN07007;
+        final Class<?>           expectedCauseClass    = null;
+
+        // SpringApplicationContextHelperのモック化
+        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+
+            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                .thenReturn(this.mockMessageSource);
+
+            // モックメッセージソースの設定
+            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                .thenReturn(expectedDomainMessage);
+
+            /* 準備 */
+            final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+            final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+            Files.write(testInputFile, "test content".getBytes());
+
+            /* テスト対象の実行 */
+            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+
+                this.testTarget.initialize(testInputFile, testOutputFile, null);
+
+            }, "outputDelimiterがnullの場合は例外が発生すること");
+
+            /* 検証の実施 */
+            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                expectedMessageTypes);
+
+        }
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 異常系：nullパラメータ（inputPath、outputPath）で初期化する場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testInitialize_errorWithNullPaths() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+
+        /* テスト対象の実行 */
+        final NullPointerException actualException = Assertions.assertThrows(NullPointerException.class, () -> {
+
+            this.testTarget.initialize(null, null, KmgDelimiterTypes.COMMA);
+
+        }, "nullパラメータの場合は例外が発生すること");
+
+        /* 検証の準備 */
+        final Path actualInputPath  = (Path) this.reflectionModel.get("inputPath");
+        final Path actualOutputPath = (Path) this.reflectionModel.get("outputPath");
+
+        /* 検証の実施 */
+        Assertions.assertNotNull(actualException, "例外が発生すること");
+        Assertions.assertNull(actualInputPath, "inputPathがnullに設定されること");
+        Assertions.assertNull(actualOutputPath, "outputPathがnullに設定されること");
+
+    }
+
+    /**
      * initialize メソッドのテスト - 正常系：初期化が成功する場合
      *
      * @since 0.2.0
@@ -934,6 +1151,113 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "初期化が成功すること");
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 正常系：異なる区切り文字（COMMA）を指定して初期化が成功する場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testInitialize_normalInitializationWithCommaDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expectedOutputDelimiter = KmgDelimiterTypes.COMMA;
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.initialize(testInputFile, testOutputFile, expectedOutputDelimiter);
+
+        /* 検証の準備 */
+        final boolean           actualResult          = testResult;
+        final KmgDelimiterTypes actualOutputDelimiter = (KmgDelimiterTypes) this.reflectionModel.get("outputDelimiter");
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "初期化が成功すること");
+        Assertions.assertEquals(expectedOutputDelimiter, actualOutputDelimiter, "出力区切り文字が正しく設定されること");
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 正常系：区切り文字を指定して初期化が成功する場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testInitialize_normalInitializationWithDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expectedOutputDelimiter = KmgDelimiterTypes.TAB;
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.initialize(testInputFile, testOutputFile, expectedOutputDelimiter);
+
+        /* 検証の準備 */
+        final boolean           actualResult          = testResult;
+        final KmgDelimiterTypes actualOutputDelimiter = (KmgDelimiterTypes) this.reflectionModel.get("outputDelimiter");
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "初期化が成功すること");
+        Assertions.assertEquals(expectedOutputDelimiter, actualOutputDelimiter, "出力区切り文字が正しく設定されること");
+
+    }
+
+    /**
+     * initialize メソッドのテスト - 正常系：区切り文字を指定して初期化後、writeIntermediateFileで正しい区切り文字が使用されること
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testInitialize_normalInitializationWithDelimiterAndWrite() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expectedOutputDelimiter = KmgDelimiterTypes.TAB;
+        final String            expectedContent         = "data1\tdata2" + System.lineSeparator();
+
+        /* 準備 */
+        final Path testInputFile  = this.tempDir.resolve("test_input.txt");
+        final Path testOutputFile = this.tempDir.resolve("test_output.txt");
+        Files.write(testInputFile, "test content".getBytes());
+        this.testTarget.initialize(testInputFile, testOutputFile, expectedOutputDelimiter);
+
+        // 行データを追加
+        this.testTarget.addOneLineOfDataToRows();
+        @SuppressWarnings("unchecked")
+        final List<List<String>> rows = (List<List<String>>) this.reflectionModel.get("rows");
+        rows.get(0).add("data1");
+        rows.get(0).add("data2");
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.writeIntermediateFile();
+
+        /* 検証の準備 */
+        final boolean actualResult       = testResult;
+        final boolean isOutputFileExists = Files.exists(testOutputFile);
+        final String  actualContent      = Files.readString(testOutputFile);
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "中間ファイルへの書き込みが成功すること");
+        Assertions.assertTrue(isOutputFileExists, "出力ファイルが作成されていること");
+        Assertions.assertEquals(expectedContent, actualContent, "指定した区切り文字（TAB）で書き込まれていること");
 
     }
 

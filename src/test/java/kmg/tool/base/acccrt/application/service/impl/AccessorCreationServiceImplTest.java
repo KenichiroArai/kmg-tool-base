@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.base.acccrt.application.logic.AccessorCreationLogic;
@@ -35,7 +36,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -415,6 +416,35 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * getIntermediateDelimiter メソッドのテスト - 正常系：正常に区切り文字を取得する場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetIntermediateDelimiter_normalSuccess() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expectedResult = KmgDelimiterTypes.COMMA;
+
+        /* 準備 */
+        Mockito.when(this.mockAccessorCreationLogic.getOutputDelimiter()).thenReturn(expectedResult);
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult
+            = (KmgDelimiterTypes) this.reflectionModel.getMethod("getIntermediateDelimiter");
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "戻り値が正しいこと");
+
+    }
+
+    /**
      * processColumns メソッドのテスト - 異常系：KmgToolMsgExceptionが発生する場合
      *
      * @since 0.2.0
@@ -654,6 +684,31 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "戻り値が正しいこと");
+
+    }
+
+    /**
+     * readOneLineData メソッドのテスト - 準正常系：読み込み終了（falseを返す）場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testReadOneLineData_semiReadEnd() throws Exception {
+
+        /* 準備 */
+        Mockito.when(this.mockAccessorCreationLogic.readOneLineOfData()).thenReturn(false);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("readOneLineData");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertFalse(actualResult, "戻り値が正しいこと");
 
     }
 

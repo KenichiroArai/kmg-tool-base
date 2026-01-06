@@ -15,7 +15,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.ArgumentMatchers;
@@ -39,7 +38,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -69,7 +68,6 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      *                一時ディレクトリ
      */
     @Test
-    @Disabled
     public void testCreateOutputFileDirectories_errorIOException(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */
@@ -135,7 +133,6 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      *                一時ディレクトリ
      */
     @Test
-    @Disabled
     public void testCreateOutputFileDirectories_errorPermissionDenied(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */
@@ -546,6 +543,42 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertArrayEquals(expectedPhysicsNames, actualPhysicsNames, "カラム物理名リストが正しく取得されること");
+
+    }
+
+    /**
+     * getColumnPhysicsNameList メソッドのテスト - 正常系:空セルが見つかった場合のbreak処理の確認
+     * <p>
+     * カラム物理名行に空セルが含まれる場合、空セルでbreakして処理を終了することを確認します。
+     * </p>
+     *
+     * @since 0.2.2
+     */
+    @Test
+    public void testGetColumnPhysicsNameList_normalEmptyCellBreak() {
+
+        /* 期待値の定義 */
+        final String[] expectedPhysicsNames = {
+            "id", "name"
+        };
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成（空セルを含む）
+        final Sheet               testSheet      = this.createTestSheetWithEmptyCell();
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        /* テスト対象の実行 */
+        final List<String> testResult = testTarget.getColumnPhysicsNameList();
+
+        /* 検証の準備 */
+        final String[] actualPhysicsNames = testResult.toArray(new String[0]);
+
+        /* 検証の実施 */
+        Assertions.assertArrayEquals(expectedPhysicsNames, actualPhysicsNames, "空セルが見つかった場合にbreakして処理を終了すること");
 
     }
 
@@ -2293,6 +2326,46 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
             final Row  row4    = result.createRow(4);
             final Cell cell4_0 = row4.createCell(0);
             cell4_0.setCellValue(dateValue);
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 空セルを含むカラム情報を持つテスト用シートを作成する<br>
+     *
+     * @since 0.2.2
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithEmptyCell() {
+
+        final Sheet result;
+
+        try (final Workbook workbook = new XSSFWorkbook()) {
+
+            result = workbook.createSheet("テストシート");
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            // 3行目（インデックス2）にカラム物理名を設定（2つ目と3つ目の間に空セルを含む）
+            final Row  row2    = result.createRow(2);
+            final Cell cell2_0 = row2.createCell(0);
+            cell2_0.setCellValue("id");
+            final Cell cell2_1 = row2.createCell(1);
+            cell2_1.setCellValue("name");
+            // cell2_2は空のまま（空セルとして扱われる）
+            final Cell cell2_3 = row2.createCell(3);
+            cell2_3.setCellValue("value");
 
         } catch (final Exception e) {
 

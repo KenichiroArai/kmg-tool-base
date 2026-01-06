@@ -19,7 +19,7 @@ import kmg.tool.base.jdoc.domain.model.JavadocModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @SuppressWarnings({
     "nls",
@@ -579,6 +579,36 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
     }
 
     /**
+     * isTextBlockEndWithSemicolon メソッドのテスト - 正常系:セミコロンがない場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   リフレクション操作で発生する可能性のある例外
+     */
+    @Test
+    public void testIsTextBlockEndWithSemicolon_normalNoSemicolon() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        final String testBlock = "/** テストJavadoc */\npublic class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+        this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
+
+        /* テスト対象の実行 */
+        final boolean testResult = (Boolean) this.reflectionModel.getMethod("isTextBlockEndWithSemicolon", "test");
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "セミコロンがない場合はfalseが返されること");
+
+    }
+
+    /**
      * parse メソッドのテスト - 異常系:アノテーションと空白のみのブロック
      *
      * @since 0.2.0
@@ -827,6 +857,100 @@ public class JdtsBlockModelImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertFalse(actualResult, "Javadoc終了記号のみのブロックでは解析が失敗すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:Javadocが文字列中にある場合（isNormalStringEndがtrue）
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_abnormalJavadocInStringNormalStringEnd() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        // 文字列内にJavadoc終了記号があるケース
+        // コードブロックが「";」で始まるようにする（ダブルクォートで分割した後の部分が「;」で始まる）
+        // JAVADOC_BLOCK_SPLIT_REGEXは「*/\\s+」なので、*/の後に空白が必要
+        final String testBlock = "/** テストJavadoc */ \"; public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "Javadocが文字列中にある場合は解析が失敗すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:Javadocが文字列中にある場合（isTextBlockEndがtrue）
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_abnormalJavadocInStringTextBlockEnd() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        // テキストブロック内にJavadoc終了記号があるケース（複数のダブルクォートの後にセミコロン）
+        // コードブロックが「""";」で始まるようにする
+        final String testBlock = "/** テストJavadoc */ \"\"\"; public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "Javadocがテキストブロック中にある場合は解析が失敗すること");
+
+    }
+
+    /**
+     * parse メソッドのテスト - 異常系:Javadocが文字列中にある場合（isTextBlockEndWithSemicolonがtrue）
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   テスト実行時に発生する可能性のある例外
+     */
+    @Test
+    public void testParse_abnormalJavadocInStringTextBlockEndWithSemicolon() throws Exception {
+
+        /* 期待値の定義 */
+        final boolean expectedResult = false;
+
+        /* 準備 */
+        // セミコロン後にテキストブロックが終了しているケース
+        // コードブロックが「"";」で始まり、セミコロンで分割した最初の部分が「""」で終わる
+        final String testBlock = "/** テストJavadoc */ \"\"; public class TestClass {";
+        this.testTarget = new JdtsBlockModelImpl(testBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.parse();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "Javadocがセミコロン後のテキストブロック中にある場合は解析が失敗すること");
 
     }
 

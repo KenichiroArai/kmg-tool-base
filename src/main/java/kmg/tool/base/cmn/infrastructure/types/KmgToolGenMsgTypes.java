@@ -17,7 +17,7 @@ import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnGenMsg;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @SuppressWarnings("nls")
 public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
@@ -207,6 +207,20 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN07006("一時的な中間ファイルの作成に失敗しました。中間ファイル名のみ=[{0}]、サフィックスと拡張子=[{1}]"),
 
     /**
+     * 入力、中間、テンプレート、出力の1行パターンの抽象クラスの初期処理で出力ファイルの区切り文字が「null」です。
+     *
+     * @since 0.2.2
+     */
+    KMGTOOL_GEN07007("入力、中間、テンプレート、出力の1行パターンの抽象クラスの初期処理で出力ファイルの区切り文字が「null」です。"),
+
+    /**
+     * 入力、中間、テンプレート、出力の1行パターンの抽象クラスの初期処理で出力ファイルの区切り文字が「NONE」です。
+     *
+     * @since 0.2.2
+     */
+    KMGTOOL_GEN07008("入力、中間、テンプレート、出力の1行パターンの抽象クラスの初期処理で出力ファイルの区切り文字が「NONE」です。"),
+
+    /**
      * 入力ファイルパスがnullです。
      *
      * @since 0.2.0
@@ -340,27 +354,6 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN12005("Javadoc行削除中にエラーが発生しました。"),
 
     /**
-     * Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13000("Javadocタグ設定で現在のファイルに内容を書き込み中に例外が発生しました。現在のファイルパス=[{0}]、書き込む内容=[{1}]"),
-
-    /**
-     * Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13001("Javadocタグ設定で現在のファイルをロード中に例外が発生しました。現在のファイルパス=[{0}]"),
-
-    /**
-     * Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13002("Javadocタグ設定で対象ファイルをロード中に例外が発生しました。対象ファイルパス=[{0}]"),
-
-    /**
      * 定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]
      *
      * @since 0.2.0
@@ -401,13 +394,6 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      * @since 0.2.0
      */
     KMGTOOL_GEN13008("実行時例外が発生しました。"),
-
-    /**
-     * Javadocタグ設定で対象ファイルが見つかりません。対象ファイルパス=[{0}]
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13009("Javadocタグ設定で対象ファイルが見つかりません。対象ファイルパス=[{0}]"),
 
     /**
      * 項目名がnullです。

@@ -107,7 +107,7 @@ implements <a href="IitoProcessorService.html" title="kmg.tool.base.iito.domain.
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
 <dt>バージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.2</dd>
 <dt>作成者:</dt>
 <dd>KenichiroArai</dd>
 </dl>
@@ -158,9 +158,14 @@ implements <a href="IitoProcessorService.html" title="kmg.tool.base.iito.domain.
 <div class="col-last even-row-color">
 <div class="block">一時中間ファイルのサフィックスと拡張子</div>
 </div>
-<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#templatePath" class="member-name-link">templatePath</a></code></div>
+<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#tempIntermediateFileSuffixExtension" class="member-name-link">tempIntermediateFileSuffixExtension</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">一時中間ファイルのサフィックスと拡張子</div>
+</div>
+<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
+<div class="col-second even-row-color"><code><a href="#templatePath" class="member-name-link">templatePath</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">テンプレートファイルパス</div>
 </div>
 </div>
@@ -209,25 +214,38 @@ implements <a href="IitoProcessorService.html" title="kmg.tool.base.iito.domain.
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">入力ファイルパスを返す<br></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIntermediatePath()" class="member-name-link">getIntermediatePath</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">中間ファイルパスを返す<br></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract kmg.core.infrastructure.types.KmgDelimiterTypes</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIntermediateDelimiter()" class="member-name-link">getIntermediateDelimiter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">中間ファイルの区切り文字を返す。</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutputPath()" class="member-name-link">getOutputPath</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIntermediatePath()" class="member-name-link">getIntermediatePath</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">出力ファイルパスを返す<br></div>
+<div class="block">中間ファイルパスを返す<br></div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTemplatePath()" class="member-name-link">getTemplatePath</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutputPath()" class="member-name-link">getOutputPath</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">出力ファイルパスを返す<br></div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTemplatePath()" class="member-name-link">getTemplatePath</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">テンプレートファイルパスを返す<br></div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize(java.nio.file.Path,java.nio.file.Path,java.nio.file.Path)" class="member-name-link">initialize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize(java.nio.file.Path,java.nio.file.Path,java.nio.file.Path)" class="member-name-link">initialize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;templatePath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">初期化する</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize(java.nio.file.Path,java.nio.file.Path,java.nio.file.Path,java.lang.String)" class="member-name-link">initialize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;templatePath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>&nbsp;tempIntermediateFileSuffixExtension)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">初期化する</div>
 </div>
@@ -339,6 +357,17 @@ implements <a href="IitoProcessorService.html" title="kmg.tool.base.iito.domain.
 <dl class="notes">
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="tempIntermediateFileSuffixExtension">
+<h3>tempIntermediateFileSuffixExtension</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></span>&nbsp;<span class="element-name">tempIntermediateFileSuffixExtension</span></div>
+<div class="block">一時中間ファイルのサフィックスと拡張子</div>
+<dl class="notes">
+<dt>導入されたバージョン:</dt>
+<dd>0.2.2</dd>
 </dl>
 </section>
 </li>
@@ -477,6 +506,30 @@ implements <a href="IitoProcessorService.html" title="kmg.tool.base.iito.domain.
 </section>
 </li>
 <li>
+<section class="detail" id="initialize(java.nio.file.Path,java.nio.file.Path,java.nio.file.Path,java.lang.String)">
+<h3>initialize</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">initialize</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;templatePath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>&nbsp;tempIntermediateFileSuffixExtension)</span>
+                   throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+<div class="block">初期化する</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>inputPath</code> - 入力ファイルパス</dd>
+<dd><code>templatePath</code> - テンプレートファイルパス</dd>
+<dd><code>outputPath</code> - 出力ファイルパス</dd>
+<dd><code>tempIntermediateFileSuffixExtension</code> - 一時中間ファイルのサフィックスと拡張子（nullの場合はデフォルト値を使用）</dd>
+<dt>戻り値:</dt>
+<dd>true：成功、false：失敗</dd>
+<dt>例外:</dt>
+<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dt>導入されたバージョン:</dt>
+<dd>0.2.2</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="process()">
 <h3>process</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">process</span>()
@@ -507,6 +560,22 @@ implements <a href="IitoProcessorService.html" title="kmg.tool.base.iito.domain.
 <dd><code><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getIntermediateDelimiter()">
+<h3>getIntermediateDelimiter</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">kmg.core.infrastructure.types.KmgDelimiterTypes</span>&nbsp;<span class="element-name">getIntermediateDelimiter</span>()</div>
+<div class="block">中間ファイルの区切り文字を返す。<br>
+ <p>
+ 中間ファイルの書き込み時に使用した区切り文字を返します。
+ </p></div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>中間ファイルの区切り文字</dd>
+<dt>導入されたバージョン:</dt>
+<dd>0.2.2</dd>
 </dl>
 </section>
 </li>

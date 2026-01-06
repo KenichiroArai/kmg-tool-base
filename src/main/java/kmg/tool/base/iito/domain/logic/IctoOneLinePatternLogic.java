@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.nio.file.Path;
 import java.util.List;
 
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 
 /**
@@ -13,7 +14,7 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 public interface IctoOneLinePatternLogic extends Closeable {
 
@@ -72,6 +73,15 @@ public interface IctoOneLinePatternLogic extends Closeable {
     int getNowLineNumber();
 
     /**
+     * 出力ファイルの区切り文字を返す。<br>
+     *
+     * @since 0.2.2
+     *
+     * @return 出力ファイルの区切り文字
+     */
+    KmgDelimiterTypes getOutputDelimiter();
+
+    /**
      * 書き込み対象の行データのリストを返す。
      *
      * @since 0.2.0
@@ -85,17 +95,39 @@ public interface IctoOneLinePatternLogic extends Closeable {
      *
      * @since 0.2.0
      *
-     * @return true：成功、false：失敗
-     *
      * @param inputPath
      *                   入力ファイルパス
      * @param outputPath
      *                   出力ファイルパス
      *
+     * @return true：成功、false：失敗
+     *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
     boolean initialize(Path inputPath, Path outputPath) throws KmgToolMsgException;
+
+    /**
+     * 初期化する。<br>
+     * <p>
+     * 出力ファイルの区切り文字を指定して初期化します。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @param inputPath
+     *                        入力ファイルパス
+     * @param outputPath
+     *                        出力ファイルパス
+     * @param outputDelimiter
+     *                        出力ファイルの区切り文字
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    boolean initialize(Path inputPath, Path outputPath, KmgDelimiterTypes outputDelimiter) throws KmgToolMsgException;
 
     /**
      * 1行データを読み込む。
