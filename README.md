@@ -1,15 +1,15 @@
-# KMG ツール基盤（kmg-tool-base）
+# KMG ツールベース（kmg-tool-base）
 
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](https://github.com/KenichiroArai/kmg-tool-base)
 
-KMG ツール基盤（kmg-tool-base）は、Java 開発における様々な自動化処理を提供するツール集の基盤ライブラリです。
+KMG ツールベース（kmg-tool-base）は、Java 開発における様々な自動化処理を提供するツール集の基盤ライブラリです。
 
 ## 概要
 
-KMG ツール基盤は、Java 開発の効率化を目的として開発されたツール群の基盤となるライブラリです。Javadoc の自動生成、アクセサメソッドの作成、フィールド定義の自動生成など、開発者が日常的に行う作業を自動化するための共通機能を提供します。
+KMG ツールベースは、Java 開発の効率化を目的として開発されたツール群の基盤となるライブラリです。Javadoc の自動生成、アクセサメソッドの作成、フィールド定義の自動生成など、開発者が日常的に行う作業を自動化するための共通機能を提供します。
 
 ## ドキュメント
 
