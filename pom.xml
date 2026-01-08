@@ -43,7 +43,7 @@
         <dependency>
             <groupId>kmg.core</groupId>
             <artifactId>kmg-core</artifactId>
-            <version>0.2.5</version>
+            <version>0.2.6</version>
             <exclusions>
                 <!-- kmg-coreが含むJUnit依存関係を除外し、Spring Bootが管理するバージョンを使用 -->
                 <exclusion>

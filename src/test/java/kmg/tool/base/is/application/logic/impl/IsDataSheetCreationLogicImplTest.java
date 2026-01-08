@@ -26,6 +26,7 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgCharsetTypes;
 import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
+import kmg.core.infrastructure.utils.KmgMessageUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
@@ -84,41 +85,47 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
         final Sheet               testSheet    = this.createTestSheet();
         final Map<String, String> testSqlIdMap = new HashMap<>();
 
-        // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
-        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        // KmgMessageUtilsの静的メソッドをモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+        try (final MockedStatic<KmgMessageUtils> mockedKmgMessageUtils = this.setupKmgMessageUtilsMock()) {
 
-            // SpringApplicationContextHelperのモック化
-            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSource);
+            // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+            try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+                = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            // モックメッセージソースの設定
-            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+                // SpringApplicationContextHelperのモック化
+                final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+                mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                    .thenReturn(mockMessageSource);
 
-            testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
+                // モックメッセージソースの設定
+                Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                    .thenReturn(expectedDomainMessage);
 
-            /* テスト実行 */
-            try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+                testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
 
-                // Files.createDirectoriesがIOExceptionをスローするように設定
-                final IOException testException = new IOException("Disk full");
-                mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
+                /* テスト実行 */
+                try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-                /* テスト対象の実行 */
-                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                    // Files.createDirectoriesがIOExceptionをスローするように設定
+                    final IOException testException = new IOException("Disk full");
+                    mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
-                    testTarget.createOutputFileDirectories();
+                    /* テスト対象の実行 */
+                    final KmgToolMsgException actualException
+                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                });
+                            testTarget.createOutputFileDirectories();
 
-                /* 検証の実施 */
-                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                    expectedMessageTypes);
+                        });
 
-                // モックの呼び出し確認
-                mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+                    /* 検証の実施 */
+                    this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                        expectedMessageTypes);
+
+                    // モックの呼び出し確認
+                    mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+
+                }
 
             }
 
@@ -154,41 +161,47 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
         final Sheet               testSheet    = this.createTestSheet();
         final Map<String, String> testSqlIdMap = new HashMap<>();
 
-        // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
-        try (MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        // KmgMessageUtilsの静的メソッドをモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+        try (final MockedStatic<KmgMessageUtils> mockedKmgMessageUtils = this.setupKmgMessageUtilsMock()) {
 
-            // SpringApplicationContextHelperのモック化
-            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSource);
+            // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+            try (MockedStatic<SpringApplicationContextHelper> mockedStatic
+                = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            // モックメッセージソースの設定
-            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+                // SpringApplicationContextHelperのモック化
+                final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+                mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                    .thenReturn(mockMessageSource);
 
-            testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
+                // モックメッセージソースの設定
+                Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                    .thenReturn(expectedDomainMessage);
 
-            /* テスト実行 */
-            try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+                testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
 
-                // 権限不足のIOExceptionをスロー
-                final IOException testException = new IOException("Access denied");
-                mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
+                /* テスト実行 */
+                try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-                /* テスト対象の実行 */
-                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                    // 権限不足のIOExceptionをスロー
+                    final IOException testException = new IOException("Access denied");
+                    mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
-                    testTarget.createOutputFileDirectories();
+                    /* テスト対象の実行 */
+                    final KmgToolMsgException actualException
+                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                });
+                            testTarget.createOutputFileDirectories();
 
-                /* 検証の実施 */
-                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                    expectedMessageTypes);
+                        });
 
-                // モックの呼び出し確認
-                mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+                    /* 検証の実施 */
+                    this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                        expectedMessageTypes);
+
+                    // モックの呼び出し確認
+                    mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+
+                }
 
             }
 
@@ -2063,6 +2076,31 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertNotNull(actualOutputPath, "初期化が正しく実行されること");
+
+    }
+
+    /**
+     * KmgMessageUtilsの静的メソッドをモック化する<br>
+     * <p>
+     * テストでKmgToolMsgExceptionなどの例外クラスのコンストラクタが呼び出される前に、 KmgMessageUtilsの静的メソッドをモック化することで、静的初期化ブロックの失敗を回避します。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @return MockedStatic&lt;KmgMessageUtils&gt; モック化されたKmgMessageUtils（try-with-resourcesで管理すること）
+     */
+    @Override
+    protected MockedStatic<KmgMessageUtils> setupKmgMessageUtilsMock() {
+
+        final MockedStatic<KmgMessageUtils> result = Mockito.mockStatic(KmgMessageUtils.class);
+
+        // getExcMessageをモック化（任意の引数で空文字列を返す）
+        result.when(() -> KmgMessageUtils.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn("");
+
+        // getMessageArgsCountは実際のメソッドを呼び出す（メッセージ引数の数の検証のため）
+        result.when(() -> KmgMessageUtils.getMessageArgsCount(ArgumentMatchers.anyString())).thenCallRealMethod();
+
+        return result;
 
     }
 

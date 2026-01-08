@@ -22,6 +22,7 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.core.infrastructure.utils.KmgMessageUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
@@ -264,33 +265,40 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
         // tempIntermediateFileSuffixExtensionを初期化
         this.reflectionModel.set("tempIntermediateFileSuffixExtension", "Temp.tmp");
 
-        // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
-        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        // KmgMessageUtilsの静的メソッドをモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+        try (final MockedStatic<KmgMessageUtils> mockedKmgMessageUtils = this.setupKmgMessageUtilsMock()) {
 
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(this.mockMessageSource);
+            // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+            try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+                = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            // モックメッセージソースの設定
-            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+                mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                    .thenReturn(this.mockMessageSource);
 
-            // Files.createTempFileでIOExceptionを発生させるモック
-            try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+                // モックメッセージソースの設定
+                Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                    .thenReturn(expectedDomainMessage);
 
-                mockedFiles.when(() -> Files.createTempFile(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
-                    .thenThrow(new IOException("Test IOException"));
+                // Files.createTempFileでIOExceptionを発生させるモック
+                try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-                /* テスト対象の実行 */
-                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                    mockedFiles
+                        .when(() -> Files.createTempFile(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
+                        .thenThrow(new IOException("Test IOException"));
 
-                    this.reflectionModel.getMethod("createTempntermediateFile");
+                    /* テスト対象の実行 */
+                    final KmgToolMsgException actualException
+                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                }, "Files.createTempFileでIOExceptionが発生した場合は例外が発生すること");
+                            this.reflectionModel.getMethod("createTempntermediateFile");
 
-                /* 検証の実施 */
-                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                    expectedMessageTypes);
+                        }, "Files.createTempFileでIOExceptionが発生した場合は例外が発生すること");
+
+                    /* 検証の実施 */
+                    this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                        expectedMessageTypes);
+
+                }
 
             }
 
@@ -532,33 +540,40 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
         final Path testOutputFile   = this.tempDir.resolve("test_output.txt");
         Files.write(testInputFile, "test content".getBytes());
 
-        // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
-        try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
-            = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        // KmgMessageUtilsの静的メソッドをモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+        try (final MockedStatic<KmgMessageUtils> mockedKmgMessageUtils = this.setupKmgMessageUtilsMock()) {
 
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(this.mockMessageSource);
+            // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+            try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
+                = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            // モックメッセージソースの設定
-            Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+                mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                    .thenReturn(this.mockMessageSource);
 
-            // Files.createTempFileでIOExceptionを発生させるモック
-            try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+                // モックメッセージソースの設定
+                Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                    .thenReturn(expectedDomainMessage);
 
-                mockedFiles.when(() -> Files.createTempFile(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
-                    .thenThrow(new IOException("Test IOException"));
+                // Files.createTempFileでIOExceptionを発生させるモック
+                try (final MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-                /* テスト対象の実行 */
-                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                    mockedFiles
+                        .when(() -> Files.createTempFile(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
+                        .thenThrow(new IOException("Test IOException"));
 
-                    this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
+                    /* テスト対象の実行 */
+                    final KmgToolMsgException actualException
+                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                }, "createTempntermediateFileでIOExceptionが発生した場合は例外が発生すること");
+                            this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
 
-                /* 検証の実施 */
-                this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                    expectedMessageTypes);
+                        }, "createTempntermediateFileでIOExceptionが発生した場合は例外が発生すること");
+
+                    /* 検証の実施 */
+                    this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                        expectedMessageTypes);
+
+                }
 
             }
 
@@ -958,6 +973,31 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "抽象メソッドが正常に実行されること");
+
+    }
+
+    /**
+     * KmgMessageUtilsの静的メソッドをモック化する<br>
+     * <p>
+     * テストでKmgToolMsgExceptionなどの例外クラスのコンストラクタが呼び出される前に、 KmgMessageUtilsの静的メソッドをモック化することで、静的初期化ブロックの失敗を回避します。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @return MockedStatic&lt;KmgMessageUtils&gt; モック化されたKmgMessageUtils（try-with-resourcesで管理すること）
+     */
+    @Override
+    protected MockedStatic<KmgMessageUtils> setupKmgMessageUtilsMock() {
+
+        final MockedStatic<KmgMessageUtils> result = Mockito.mockStatic(KmgMessageUtils.class);
+
+        // getExcMessageをモック化（任意の引数で空文字列を返す）
+        result.when(() -> KmgMessageUtils.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn("");
+
+        // getMessageArgsCountは実際のメソッドを呼び出す（メッセージ引数の数の検証のため）
+        result.when(() -> KmgMessageUtils.getMessageArgsCount(ArgumentMatchers.anyString())).thenCallRealMethod();
+
+        return result;
 
     }
 
