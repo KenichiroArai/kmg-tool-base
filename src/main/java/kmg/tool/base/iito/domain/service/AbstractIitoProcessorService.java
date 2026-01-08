@@ -346,8 +346,11 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      * @since 0.2.2
      *
      * @return 中間ファイルの区切り文字
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
-    protected abstract KmgDelimiterTypes getIntermediateDelimiter();
+    protected abstract KmgDelimiterTypes getIntermediateDelimiter() throws KmgToolMsgException;
 
     /**
      * 中間ファイルに書き込む。

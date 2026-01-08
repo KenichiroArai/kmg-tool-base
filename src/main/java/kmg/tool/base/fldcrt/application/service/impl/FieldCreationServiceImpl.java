@@ -85,9 +85,12 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
      * @since 0.2.2
      *
      * @return 中間ファイルの区切り文字
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
      */
     @Override
-    protected KmgDelimiterTypes getIntermediateDelimiter() {
+    protected KmgDelimiterTypes getIntermediateDelimiter() throws KmgToolMsgException {
 
         final KmgDelimiterTypes result = this.fieldCreationLogic.getOutputDelimiter();
         return result;

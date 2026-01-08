@@ -41,21 +41,22 @@ public interface JdtsService {
     /**
      * 初期化する
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return true：成功、false：失敗
      *
      * @param targetPath
-     *                     対象ファイルパス
-     * @param templatePath
-     *                     テンプレートファイルパス
+     *                       対象ファイルパス
+     * @param definitionPath
+     *                       定義ファイルのパス
      *
      * @throws KmgFundMsgException
      *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean initialize(final Path targetPath, final Path templatePath) throws KmgFundMsgException, KmgToolMsgException;
+    boolean initialize(final Path targetPath, final Path definitionPath)
+        throws KmgFundMsgException, KmgToolMsgException;
 
     /**
      * 処理する

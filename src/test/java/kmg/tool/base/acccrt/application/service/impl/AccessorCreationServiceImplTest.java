@@ -416,6 +416,65 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
+     * getIntermediateDelimiter メソッドのテスト - 準正常系：getOutputDelimiterがNONEを返す場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetIntermediateDelimiter_errorNoneDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+        final KmgDelimiterTypes expectedResult = KmgDelimiterTypes.NONE;
+
+        /* 準備 */
+        // getOutputDelimiterがNONEを返すように設定
+        Mockito.when(this.mockAccessorCreationLogic.getOutputDelimiter()).thenReturn(KmgDelimiterTypes.NONE);
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult
+            = (KmgDelimiterTypes) this.reflectionModel.getMethod("getIntermediateDelimiter");
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertEquals(expectedResult, actualResult, "戻り値がNONEであること");
+
+    }
+
+    /**
+     * getIntermediateDelimiter メソッドのテスト - 準正常系：getOutputDelimiterがnullを返す場合
+     *
+     * @since 0.2.2
+     *
+     * @throws Exception
+     *                   例外
+     */
+    @Test
+    public void testGetIntermediateDelimiter_errorNullDelimiter() throws Exception {
+
+        /* 期待値の定義 */
+
+        /* 準備 */
+        // getOutputDelimiterがnullを返すように設定
+        Mockito.when(this.mockAccessorCreationLogic.getOutputDelimiter()).thenReturn(null);
+
+        /* テスト対象の実行 */
+        final KmgDelimiterTypes testResult
+            = (KmgDelimiterTypes) this.reflectionModel.getMethod("getIntermediateDelimiter");
+
+        /* 検証の準備 */
+        final KmgDelimiterTypes actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertNull(actualResult, "戻り値がnullであること");
+
+    }
+
+    /**
      * getIntermediateDelimiter メソッドのテスト - 正常系：正常に区切り文字を取得する場合
      *
      * @since 0.2.2
