@@ -327,7 +327,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
         this.reflectionModel.set("tempIntermediateFileSuffixExtension", "Temp.tmp");
 
         /* テスト対象の実行 */
-        final Path testResult = (Path) this.reflectionModel.getMethod("createTempntermediateFile");
+        final Path testResult = (Path) this.reflectionModel.getMethod("createTempIntermediateFile");
 
         /* 検証の準備 */
         final Path    actualResult           = testResult;
