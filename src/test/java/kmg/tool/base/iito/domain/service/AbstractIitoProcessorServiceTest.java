@@ -243,15 +243,15 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     }
 
     /**
-     * createTempntermediateFile メソッドのテスト - 異常系：Files.createTempFileでIOExceptionが発生する場合（protectedメソッド）
+     * createTempIntermediateFile メソッドのテスト - 異常系：Files.createTempFileでIOExceptionが発生する場合（protectedメソッド）
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @throws Exception
      *                   例外
      */
     @Test
-    public void testCreateTempntermediateFile_errorIOException() throws Exception {
+    public void testCreateTempIntermediateFile_errorIOException() throws Exception {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage = "[KMGTOOL_GEN07006] ";
@@ -290,7 +290,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
                     final KmgToolMsgException actualException
                         = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-                            this.reflectionModel.getMethod("createTempntermediateFile");
+                            this.reflectionModel.getMethod("createTempIntermediateFile");
 
                         }, "Files.createTempFileでIOExceptionが発生した場合は例外が発生すること");
 
@@ -307,7 +307,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     }
 
     /**
-     * createTempntermediateFile メソッドのテスト - 正常系：一時ファイルが正常に作成される場合（protectedメソッド）
+     * createTempIntermediateFile メソッドのテスト - 正常系：一時ファイルが正常に作成される場合（protectedメソッド）
      *
      * @since 0.2.0
      *
@@ -315,7 +315,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
-    public void testCreateTempntermediateFile_normalCreate() throws Exception {
+    public void testCreateTempIntermediateFile_normalCreate() throws Exception {
 
         /* 期待値の定義 */
 
@@ -343,7 +343,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     }
 
     /**
-     * createTempntermediateFile メソッドのテスト - 正常系：tempIntermediateFileSuffixExtensionがnullの場合（デフォルト値を使用）
+     * createTempIntermediateFile メソッドのテスト - 正常系：tempIntermediateFileSuffixExtensionがnullの場合（デフォルト値を使用）
      *
      * @since 0.2.2
      *
@@ -351,7 +351,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
      *                   例外
      */
     @Test
-    public void testCreateTempntermediateFile_normalCreateWithNullSuffixExtension() throws Exception {
+    public void testCreateTempIntermediateFile_normalCreateWithNullSuffixExtension() throws Exception {
 
         /* 期待値の定義 */
         final String expectedSuffixExtension = "Temp.tmp";
@@ -364,7 +364,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
         this.reflectionModel.set("tempIntermediateFileSuffixExtension", null);
 
         /* テスト対象の実行 */
-        final Path testResult = (Path) this.reflectionModel.getMethod("createTempntermediateFile");
+        final Path testResult = (Path) this.reflectionModel.getMethod("createTempIntermediateFile");
 
         /* 検証の準備 */
         final Path    actualResult           = testResult;
@@ -519,7 +519,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     }
 
     /**
-     * initialize メソッドのテスト - 異常系：createTempntermediateFileでIOExceptionが発生する場合
+     * initialize メソッドのテスト - 異常系：createTempIntermediateFileでIOExceptionが発生する場合
      *
      * @since 0.2.0
      *
@@ -567,7 +567,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
 
                             this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
 
-                        }, "createTempntermediateFileでIOExceptionが発生した場合は例外が発生すること");
+                        }, "createTempIntermediateFileでIOExceptionが発生した場合は例外が発生すること");
 
                     /* 検証の実施 */
                     this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,

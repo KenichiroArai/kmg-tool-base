@@ -245,7 +245,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
         }
 
         // 一時ファイルの作成
-        this.intermediatePath = this.createTempntermediateFile();
+        this.intermediatePath = this.createTempIntermediateFile();
 
         result = true;
         return result;
@@ -301,14 +301,14 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 一時的な中間ファイルを作成する。
      *
-     * @since 0.2.0
+     * @since 0.2.2
      *
      * @return 中間ファイルパス
      *
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    protected Path createTempntermediateFile() throws KmgToolMsgException {
+    protected Path createTempIntermediateFile() throws KmgToolMsgException {
 
         Path result = null;
 
