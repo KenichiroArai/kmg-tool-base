@@ -41,7 +41,7 @@ public interface JdtsService {
     /**
      * 初期化する
      *
-     * @since 0.2.2
+     * @since 0.2.0
      *
      * @return true：成功、false：失敗
      *
