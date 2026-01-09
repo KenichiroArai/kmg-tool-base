@@ -15,7 +15,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.ArgumentMatchers;
@@ -27,6 +26,7 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgCharsetTypes;
 import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
+import kmg.core.infrastructure.utils.KmgMessageUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
@@ -39,7 +39,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -69,7 +69,6 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      *                一時ディレクトリ
      */
     @Test
-    @Disabled
     public void testCreateOutputFileDirectories_errorIOException(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */
@@ -85,39 +84,50 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
         // 初期化
         final Sheet               testSheet    = this.createTestSheet();
         final Map<String, String> testSqlIdMap = new HashMap<>();
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
 
-        /* テスト実行 */
-        try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class);
-            MockedStatic<SpringApplicationContextHelper> mockedStatic
+        // KmgMessageUtilsの静的メソッドをモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+        try (final MockedStatic<KmgMessageUtils> mockedKmgMessageUtils = this.setupKmgMessageUtilsMock()) {
+
+            // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+            try (MockedStatic<SpringApplicationContextHelper> mockedStatic
                 = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            // SpringApplicationContextHelperのモック化
-            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSource);
+                // SpringApplicationContextHelperのモック化
+                final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+                mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                    .thenReturn(mockMessageSource);
 
-            // モックメッセージソースの設定
-            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+                // モックメッセージソースの設定
+                Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                    .thenReturn(expectedDomainMessage);
 
-            // Files.createDirectoriesがIOExceptionをスローするように設定
-            final IOException testException = new IOException("Disk full");
-            mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
+                testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                /* テスト実行 */
+                try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-                testTarget.createOutputFileDirectories();
+                    // Files.createDirectoriesがIOExceptionをスローするように設定
+                    final IOException testException = new IOException("Disk full");
+                    mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
-            });
+                    /* テスト対象の実行 */
+                    final KmgToolMsgException actualException
+                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+                            testTarget.createOutputFileDirectories();
 
-            // モックの呼び出し確認
-            mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+                        });
+
+                    /* 検証の実施 */
+                    this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                        expectedMessageTypes);
+
+                    // モックの呼び出し確認
+                    mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+
+                }
+
+            }
 
         }
 
@@ -135,7 +145,6 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
      *                一時ディレクトリ
      */
     @Test
-    @Disabled
     public void testCreateOutputFileDirectories_errorPermissionDenied(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */
@@ -151,39 +160,50 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
         // 初期化
         final Sheet               testSheet    = this.createTestSheet();
         final Map<String, String> testSqlIdMap = new HashMap<>();
-        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
 
-        /* テスト実行 */
-        try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class);
-            MockedStatic<SpringApplicationContextHelper> mockedStatic
+        // KmgMessageUtilsの静的メソッドをモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+        try (final MockedStatic<KmgMessageUtils> mockedKmgMessageUtils = this.setupKmgMessageUtilsMock()) {
+
+            // SpringApplicationContextHelperのモック化（KmgToolMsgExceptionのコンストラクタが呼ばれる前に必要）
+            try (MockedStatic<SpringApplicationContextHelper> mockedStatic
                 = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
-            // SpringApplicationContextHelperのモック化
-            final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
-            mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
-                .thenReturn(mockMessageSource);
+                // SpringApplicationContextHelperのモック化
+                final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
+                mockedStatic.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
+                    .thenReturn(mockMessageSource);
 
-            // モックメッセージソースの設定
-            Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(expectedDomainMessage);
+                // モックメッセージソースの設定
+                Mockito.when(mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+                    .thenReturn(expectedDomainMessage);
 
-            // 権限不足のIOExceptionをスロー
-            final IOException testException = new IOException("Access denied");
-            mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
+                testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, outputPath);
 
-            /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                /* テスト実行 */
+                try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
 
-                testTarget.createOutputFileDirectories();
+                    // 権限不足のIOExceptionをスロー
+                    final IOException testException = new IOException("Access denied");
+                    mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
-            });
+                    /* テスト対象の実行 */
+                    final KmgToolMsgException actualException
+                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
 
-            /* 検証の実施 */
-            this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
-                expectedMessageTypes);
+                            testTarget.createOutputFileDirectories();
 
-            // モックの呼び出し確認
-            mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+                        });
+
+                    /* 検証の実施 */
+                    this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
+                        expectedMessageTypes);
+
+                    // モックの呼び出し確認
+                    mockedFiles.verify(() -> Files.createDirectories(outputPath), Mockito.times(1));
+
+                }
+
+            }
 
         }
 
@@ -546,6 +566,42 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertArrayEquals(expectedPhysicsNames, actualPhysicsNames, "カラム物理名リストが正しく取得されること");
+
+    }
+
+    /**
+     * getColumnPhysicsNameList メソッドのテスト - 正常系:空セルが見つかった場合のbreak処理の確認
+     * <p>
+     * カラム物理名行に空セルが含まれる場合、空セルでbreakして処理を終了することを確認します。
+     * </p>
+     *
+     * @since 0.2.2
+     */
+    @Test
+    public void testGetColumnPhysicsNameList_normalEmptyCellBreak() {
+
+        /* 期待値の定義 */
+        final String[] expectedPhysicsNames = {
+            "id", "name"
+        };
+
+        /* 準備 */
+        final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
+
+        // テストシートの作成（空セルを含む）
+        final Sheet               testSheet      = this.createTestSheetWithEmptyCell();
+        final Map<String, String> testSqlIdMap   = new HashMap<>();
+        final Path                testOutputPath = Paths.get("test");
+        testTarget.initialize(KmgDbTypes.POSTGRE_SQL, testSheet, testSqlIdMap, testOutputPath);
+
+        /* テスト対象の実行 */
+        final List<String> testResult = testTarget.getColumnPhysicsNameList();
+
+        /* 検証の準備 */
+        final String[] actualPhysicsNames = testResult.toArray(new String[0]);
+
+        /* 検証の実施 */
+        Assertions.assertArrayEquals(expectedPhysicsNames, actualPhysicsNames, "空セルが見つかった場合にbreakして処理を終了すること");
 
     }
 
@@ -2024,6 +2080,31 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     }
 
     /**
+     * KmgMessageUtilsの静的メソッドをモック化する<br>
+     * <p>
+     * テストでKmgToolMsgExceptionなどの例外クラスのコンストラクタが呼び出される前に、 KmgMessageUtilsの静的メソッドをモック化することで、静的初期化ブロックの失敗を回避します。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @return MockedStatic&lt;KmgMessageUtils&gt; モック化されたKmgMessageUtils（try-with-resourcesで管理すること）
+     */
+    @Override
+    protected MockedStatic<KmgMessageUtils> setupKmgMessageUtilsMock() {
+
+        final MockedStatic<KmgMessageUtils> result = Mockito.mockStatic(KmgMessageUtils.class);
+
+        // getExcMessageをモック化（任意の引数で空文字列を返す）
+        result.when(() -> KmgMessageUtils.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn("");
+
+        // getMessageArgsCountは実際のメソッドを呼び出す（メッセージ引数の数の検証のため）
+        result.when(() -> KmgMessageUtils.getMessageArgsCount(ArgumentMatchers.anyString())).thenCallRealMethod();
+
+        return result;
+
+    }
+
+    /**
      * テスト用のシートを作成する<br>
      *
      * @since 0.2.0
@@ -2293,6 +2374,46 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
             final Row  row4    = result.createRow(4);
             final Cell cell4_0 = row4.createCell(0);
             cell4_0.setCellValue(dateValue);
+
+        } catch (final Exception e) {
+
+            throw new RuntimeException("テスト用シートの作成に失敗しました", e);
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 空セルを含むカラム情報を持つテスト用シートを作成する<br>
+     *
+     * @since 0.2.2
+     *
+     * @return テスト用シート
+     */
+    private Sheet createTestSheetWithEmptyCell() {
+
+        final Sheet result;
+
+        try (final Workbook workbook = new XSSFWorkbook()) {
+
+            result = workbook.createSheet("テストシート");
+
+            // 1行目にテーブル物理名を設定
+            final Row  row0    = result.createRow(0);
+            final Cell cell0_0 = row0.createCell(0);
+            cell0_0.setCellValue("test_table");
+
+            // 3行目（インデックス2）にカラム物理名を設定（2つ目と3つ目の間に空セルを含む）
+            final Row  row2    = result.createRow(2);
+            final Cell cell2_0 = row2.createCell(0);
+            cell2_0.setCellValue("id");
+            final Cell cell2_1 = row2.createCell(1);
+            cell2_1.setCellValue("name");
+            // cell2_2は空のまま（空セルとして扱われる）
+            final Cell cell2_3 = row2.createCell(3);
+            cell2_3.setCellValue("value");
 
         } catch (final Exception e) {
 

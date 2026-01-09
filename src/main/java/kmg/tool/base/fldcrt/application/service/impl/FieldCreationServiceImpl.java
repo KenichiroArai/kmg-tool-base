@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
@@ -22,7 +23,7 @@ import kmg.tool.base.iito.domain.service.AbstractIitoProcessorService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @Service
 public class FieldCreationServiceImpl extends AbstractIitoProcessorService implements FieldCreationService {
@@ -72,6 +73,27 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
     protected FieldCreationServiceImpl(final Logger logger) {
 
         this.logger = logger;
+
+    }
+
+    /**
+     * 中間ファイルの区切り文字を返す。<br>
+     * <p>
+     * AbstractIitoProcessorServiceのgetIntermediateDelimiter()を実装します。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @return 中間ファイルの区切り文字
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @Override
+    protected KmgDelimiterTypes getIntermediateDelimiter() throws KmgToolMsgException {
+
+        final KmgDelimiterTypes result = this.fieldCreationLogic.getOutputDelimiter();
+        return result;
 
     }
 

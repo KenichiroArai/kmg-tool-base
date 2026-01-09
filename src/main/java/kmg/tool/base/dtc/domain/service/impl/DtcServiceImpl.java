@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
@@ -25,7 +26,7 @@ import kmg.tool.base.dtc.domain.service.DtcService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @Service
 public class DtcServiceImpl implements DtcService {
@@ -52,6 +53,13 @@ public class DtcServiceImpl implements DtcService {
      */
     @Autowired
     private DtcLogic dtcLogic;
+
+    /**
+     * 中間ファイルの区切り文字
+     *
+     * @since 0.2.2
+     */
+    private KmgDelimiterTypes intermediateDelimiter;
 
     /**
      * 入力ファイルパス
@@ -177,6 +185,39 @@ public class DtcServiceImpl implements DtcService {
     }
 
     /**
+     * 初期化する<br>
+     * <p>
+     * 中間ファイルの区切り文字を指定して初期化します。
+     * </p>
+     *
+     * @since 0.2.2
+     *
+     * @param inputPath
+     *                              入力ファイルパス（中間ファイルパス）
+     * @param templatePath
+     *                              テンプレートファイルパス
+     * @param outputPath
+     *                              出力ファイルパス
+     * @param intermediateDelimiter
+     *                              中間ファイルの区切り文字
+     *
+     * @return true：成功、false：失敗
+     *
+     * @throws KmgToolMsgException
+     *                             KMGツールメッセージ例外
+     */
+    @SuppressWarnings("hiding")
+    @Override
+    public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath,
+        final KmgDelimiterTypes intermediateDelimiter) throws KmgToolMsgException {
+
+        final boolean result = this.initialize(inputPath, templatePath, outputPath);
+        this.intermediateDelimiter = intermediateDelimiter;
+        return result;
+
+    }
+
+    /**
      * 処理する
      *
      * @since 0.2.0
@@ -199,7 +240,18 @@ public class DtcServiceImpl implements DtcService {
         try {
 
             /* テンプレートの動的変換ロジックの初期化 */
-            this.dtcLogic.initialize(this.getInputPath(), this.getTemplatePath(), this.getOutputPath());
+            if (this.intermediateDelimiter != null) {
+                // 区切り文字が指定されている場合
+
+                this.dtcLogic.initialize(this.getInputPath(), this.getTemplatePath(), this.getOutputPath(),
+                    this.intermediateDelimiter);
+
+            } else {
+                // 区切り文字が指定されていない場合（デフォルト）
+
+                this.dtcLogic.initialize(this.getInputPath(), this.getTemplatePath(), this.getOutputPath());
+
+            }
 
             /* テンプレートの読み込む */
             this.dtcLogic.loadTemplate();

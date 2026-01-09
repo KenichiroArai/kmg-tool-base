@@ -106,7 +106,7 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
 <dt>バージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.2</dd>
 <dt>作成者:</dt>
 <dd>KenichiroArai</dd>
 </dl>
@@ -132,15 +132,15 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <div class="col-last odd-row-color">
 <div class="block">定義ファイルのパス</div>
 </div>
-<div class="col-first even-row-color"><code>private <a href="../../model/JdtsConfigsModel.html" title="kmg.tool.base.jdts.application.model内のインタフェース">JdtsConfigsModel</a></code></div>
-<div class="col-second even-row-color"><code><a href="#jdtsConfigsModel" class="member-name-link">jdtsConfigsModel</a></code></div>
+<div class="col-first even-row-color"><code>private kmg.fund.domain.logic.FileIteratorLogic</code></div>
+<div class="col-second even-row-color"><code><a href="#fileIteratorLogic" class="member-name-link">fileIteratorLogic</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Javadocタグ設定の構成モデル</div>
+<div class="block">ファイルイテレーターロジック</div>
 </div>
-<div class="col-first odd-row-color"><code>private <a href="../../logic/JdtsIoLogic.html" title="kmg.tool.base.jdts.application.logic内のインタフェース">JdtsIoLogic</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#jdtsIoLogic" class="member-name-link">jdtsIoLogic</a></code></div>
+<div class="col-first odd-row-color"><code>private <a href="../../model/JdtsConfigsModel.html" title="kmg.tool.base.jdts.application.model内のインタフェース">JdtsConfigsModel</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#jdtsConfigsModel" class="member-name-link">jdtsConfigsModel</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Javadocタグ設定の入出力ロジック</div>
+<div class="block">Javadocタグ設定の構成モデル</div>
 </div>
 <div class="col-first even-row-color"><code>private <a href="../JdtsReplService.html" title="kmg.tool.base.jdts.application.service内のインタフェース">JdtsReplService</a></code></div>
 <div class="col-second even-row-color"><code><a href="#jdtsReplService" class="member-name-link">jdtsReplService</a></code></div>
@@ -301,11 +301,11 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 </section>
 </li>
 <li>
-<section class="detail" id="jdtsIoLogic">
-<h3>jdtsIoLogic</h3>
+<section class="detail" id="fileIteratorLogic">
+<h3>fileIteratorLogic</h3>
 <div class="member-signature"><span class="annotations">@Autowired
-</span><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../../logic/JdtsIoLogic.html" title="kmg.tool.base.jdts.application.logic内のインタフェース">JdtsIoLogic</a></span>&nbsp;<span class="element-name">jdtsIoLogic</span></div>
-<div class="block">Javadocタグ設定の入出力ロジック</div>
+</span><span class="modifiers">private</span>&nbsp;<span class="return-type">kmg.fund.domain.logic.FileIteratorLogic</span>&nbsp;<span class="element-name">fileIteratorLogic</span></div>
+<div class="block">ファイルイテレーターロジック</div>
 <dl class="notes">
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
@@ -433,7 +433,8 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <h3>initialize</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">initialize</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;targetPath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;definitionPath)</span>
-                   throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                   throws <span class="exceptions">kmg.fund.infrastructure.exception.KmgFundMsgException,
+<a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
 <div class="block">初期化する</div>
 <dl class="notes">
 <dt>定義:</dt>
@@ -444,6 +445,7 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
+<dd><code>kmg.fund.infrastructure.exception.KmgFundMsgException</code> - KMG基盤メッセージ例外</dd>
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
@@ -454,7 +456,8 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <section class="detail" id="process()">
 <h3>process</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">process</span>()
-                throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a>,
+                throws <span class="exceptions">kmg.fund.infrastructure.exception.KmgFundMsgException,
+<a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a>,
 <a href="../../../../cmn/infrastructure/exception/KmgToolValException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolValException</a></span></div>
 <div class="block">処理する</div>
 <dl class="notes">
@@ -463,6 +466,7 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
+<dd><code>kmg.fund.infrastructure.exception.KmgFundMsgException</code> - KMG基盤メッセージ例外</dd>
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolValException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolValException</a></code> - KMGツールバリデーション例外</dd>
 <dt>導入されたバージョン:</dt>
@@ -495,13 +499,15 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <section class="detail" id="loadAndCreateCodeModel()">
 <h3>loadAndCreateCodeModel</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../../model/JdtsCodeModel.html" title="kmg.tool.base.jdts.application.model内のインタフェース">JdtsCodeModel</a></span>&nbsp;<span class="element-name">loadAndCreateCodeModel</span>()
-                                      throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a>,
+                                      throws <span class="exceptions">kmg.fund.infrastructure.exception.KmgFundMsgException,
+<a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a>,
 <a href="../../../../cmn/infrastructure/exception/KmgToolValException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolValException</a></span></div>
 <div class="block">内容を読み込み、コードモデルを作成・解析する</div>
 <dl class="notes">
 <dt>戻り値:</dt>
 <dd>解析済みのコードモデル</dd>
 <dt>例外:</dt>
+<dd><code>kmg.fund.infrastructure.exception.KmgFundMsgException</code> - KMG基盤メッセージ例外</dd>
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolValException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolValException</a></code> - KMGツールバリデーション例外</dd>
 <dt>導入されたバージョン:</dt>
@@ -535,13 +541,15 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <section class="detail" id="processFile()">
 <h3>processFile</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">processFile</span>()
-                  throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a>,
+                  throws <span class="exceptions">kmg.fund.infrastructure.exception.KmgFundMsgException,
+<a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a>,
 <a href="../../../../cmn/infrastructure/exception/KmgToolValException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolValException</a></span></div>
 <div class="block">ファイルを処理する</div>
 <dl class="notes">
 <dt>戻り値:</dt>
 <dd>置換数</dd>
 <dt>例外:</dt>
+<dd><code>kmg.fund.infrastructure.exception.KmgFundMsgException</code> - KMG基盤メッセージ例外</dd>
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolValException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolValException</a></code> - KMGツールバリデーション例外</dd>
 <dt>導入されたバージョン:</dt>
@@ -553,7 +561,8 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <section class="detail" id="replaceJavadoc(kmg.tool.base.jdts.application.model.JdtsCodeModel)">
 <h3>replaceJavadoc</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">replaceJavadoc</span><wbr><span class="parameters">(<a href="../../model/JdtsCodeModel.html" title="kmg.tool.base.jdts.application.model内のインタフェース">JdtsCodeModel</a>&nbsp;jdtsCodeModel)</span>
-                     throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a>,
+                     throws <span class="exceptions">kmg.fund.infrastructure.exception.KmgFundMsgException,
+<a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a>,
 <a href="../../../../cmn/infrastructure/exception/KmgToolValException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolValException</a></span></div>
 <div class="block">Javadocを置換し、結果をファイルに書き込む</div>
 <dl class="notes">
@@ -562,6 +571,7 @@ implements <a href="../JdtsService.html" title="kmg.tool.base.jdts.application.s
 <dt>戻り値:</dt>
 <dd>置換数</dd>
 <dt>例外:</dt>
+<dd><code>kmg.fund.infrastructure.exception.KmgFundMsgException</code> - KMG基盤メッセージ例外</dd>
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolValException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolValException</a></code> - KMGツールバリデーション例外</dd>
 <dt>導入されたバージョン:</dt>

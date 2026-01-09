@@ -38,7 +38,7 @@ import kmg.tool.base.jdts.application.model.JdtsTagConfigModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -1476,6 +1476,8 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         final String javadocContent       = "/** test javadoc */";
         final UUID   blockId              = UUID.randomUUID();
         final String replacedJavadocBlock = "/** replaced javadoc */";
+        // replaceCodeにはjavadocContentが含まれている（見つかる状態）
+        final String replaceCodeWithJavadoc = originalCode + javadocContent;
 
         /* 準備 */
         final List<JdtsBlockModel> blockModels = new ArrayList<>();
@@ -1483,7 +1485,7 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
         blockModels.add(blockModel);
 
         this.reflectionModel.set("jdtsCodeModel", this.mockJdtsCodeModel);
-        this.reflectionModel.set("replaceCode", originalCode);
+        this.reflectionModel.set("replaceCode", replaceCodeWithJavadoc);
         this.reflectionModel.set("totalReplaceCount", 0L);
 
         Mockito.when(this.mockJdtsCodeModel.getJdtsBlockModels()).thenReturn(blockModels);
@@ -1540,6 +1542,56 @@ public class JdtsReplServiceImplTest extends AbstractKmgTest {
 
         /* 検証の実施 */
         Assertions.assertTrue(actualResult, "空のブロックモデルリストでも置換処理が正常に完了すること");
+
+    }
+
+    /**
+     * replace メソッドのテスト - 準正常系：Javadocが見つからない場合の処理（replaceIdx == -1）
+     *
+     * @since 0.2.2
+     *
+     * @throws KmgToolMsgException
+     *                                KMGツールメッセージ例外
+     * @throws KmgReflectionException
+     *                                リフレクション例外
+     */
+    @Test
+    public void testReplace_semiJavadocNotFound() throws KmgToolMsgException, KmgReflectionException {
+
+        /* 期待値の定義 */
+        final String originalCode         = "test original code";
+        final String javadocContent       = "/** test javadoc */";
+        final UUID   blockId              = UUID.randomUUID();
+        final String replacedJavadocBlock = "/** replaced javadoc */";
+
+        /* 準備 */
+        final List<JdtsBlockModel> blockModels = new ArrayList<>();
+        final JdtsBlockModel       blockModel  = Mockito.mock(JdtsBlockModel.class);
+        blockModels.add(blockModel);
+
+        this.reflectionModel.set("jdtsCodeModel", this.mockJdtsCodeModel);
+        // replaceCodeにはjavadocContentが含まれていない（見つからない状態）
+        this.reflectionModel.set("replaceCode", originalCode);
+        this.reflectionModel.set("totalReplaceCount", 0L);
+
+        Mockito.when(this.mockJdtsCodeModel.getJdtsBlockModels()).thenReturn(blockModels);
+        Mockito.when(this.mockJavadocModel.getSrcJavadoc()).thenReturn(javadocContent);
+        Mockito.when(blockModel.getJavadocModel()).thenReturn(this.mockJavadocModel);
+        Mockito.when(blockModel.getId()).thenReturn(blockId);
+        Mockito.when(blockModel.getClassification()).thenReturn(JavaClassificationTypes.CLASS);
+        Mockito.when(blockModel.getElementName()).thenReturn("TestClass");
+        Mockito.when(this.mockJdtsBlockReplLogic.initialize(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn(true);
+        Mockito.when(this.mockJdtsBlockReplLogic.getReplacedJavadocBlock()).thenReturn(replacedJavadocBlock);
+
+        /* テスト対象の実行 */
+        final boolean testResult = this.testTarget.replace();
+
+        /* 検証の準備 */
+        final boolean actualResult = testResult;
+
+        /* 検証の実施 */
+        Assertions.assertTrue(actualResult, "Javadocが見つからない場合でも置換処理が正常に完了すること");
 
     }
 

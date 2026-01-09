@@ -106,7 +106,7 @@ implements <a href="../DtcService.html" title="kmg.tool.base.dtc.domain.service�
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
 <dt>バージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.2</dd>
 <dt>作成者:</dt>
 <dd>KenichiroArai</dd>
 </dl>
@@ -132,24 +132,29 @@ implements <a href="../DtcService.html" title="kmg.tool.base.dtc.domain.service�
 <div class="col-last odd-row-color">
 <div class="block">入力ファイルパス</div>
 </div>
-<div class="col-first even-row-color"><code>private final org.slf4j.Logger</code></div>
-<div class="col-second even-row-color"><code><a href="#logger" class="member-name-link">logger</a></code></div>
+<div class="col-first even-row-color"><code>private kmg.core.infrastructure.types.KmgDelimiterTypes</code></div>
+<div class="col-second even-row-color"><code><a href="#intermediateDelimiter" class="member-name-link">intermediateDelimiter</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">中間ファイルの区切り文字</div>
+</div>
+<div class="col-first odd-row-color"><code>private final org.slf4j.Logger</code></div>
+<div class="col-second odd-row-color"><code><a href="#logger" class="member-name-link">logger</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">ロガー</div>
 </div>
-<div class="col-first odd-row-color"><code>private kmg.fund.infrastructure.context.KmgMessageSource</code></div>
-<div class="col-second odd-row-color"><code><a href="#messageSource" class="member-name-link">messageSource</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>private kmg.fund.infrastructure.context.KmgMessageSource</code></div>
+<div class="col-second even-row-color"><code><a href="#messageSource" class="member-name-link">messageSource</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">KMGメッセージリソース</div>
 </div>
-<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
-<div class="col-second even-row-color"><code><a href="#outputPath" class="member-name-link">outputPath</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#outputPath" class="member-name-link">outputPath</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">出力ファイルパス</div>
 </div>
-<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#templatePath" class="member-name-link">templatePath</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a></code></div>
+<div class="col-second even-row-color"><code><a href="#templatePath" class="member-name-link">templatePath</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">テンプレートファイルパス</div>
 </div>
 </div>
@@ -216,8 +221,16 @@ implements <a href="../DtcService.html" title="kmg.tool.base.dtc.domain.service�
 <div class="block">初期化する<br></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#process()" class="member-name-link">process</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize(java.nio.file.Path,java.nio.file.Path,java.nio.file.Path,kmg.core.infrastructure.types.KmgDelimiterTypes)" class="member-name-link">initialize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;templatePath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath,
+ kmg.core.infrastructure.types.KmgDelimiterTypes&nbsp;intermediateDelimiter)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">初期化する<br></div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#process()" class="member-name-link">process</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">処理する</div>
 </div>
 </div>
@@ -269,6 +282,17 @@ implements <a href="../DtcService.html" title="kmg.tool.base.dtc.domain.service�
 <dl class="notes">
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="intermediateDelimiter">
+<h3>intermediateDelimiter</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">kmg.core.infrastructure.types.KmgDelimiterTypes</span>&nbsp;<span class="element-name">intermediateDelimiter</span></div>
+<div class="block">中間ファイルの区切り文字</div>
+<dl class="notes">
+<dt>導入されたバージョン:</dt>
+<dd>0.2.2</dd>
 </dl>
 </section>
 </li>
@@ -411,6 +435,35 @@ implements <a href="../DtcService.html" title="kmg.tool.base.dtc.domain.service�
 <dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="initialize(java.nio.file.Path,java.nio.file.Path,java.nio.file.Path,kmg.core.infrastructure.types.KmgDelimiterTypes)">
+<h3>initialize</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">initialize</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;templatePath,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath,
+ kmg.core.infrastructure.types.KmgDelimiterTypes&nbsp;intermediateDelimiter)</span>
+                   throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+<div class="block">初期化する<br>
+ <p>
+ 中間ファイルの区切り文字を指定して初期化します。
+ </p></div>
+<dl class="notes">
+<dt>定義:</dt>
+<dd><code><a href="../DtcService.html#initialize(java.nio.file.Path,java.nio.file.Path,java.nio.file.Path,kmg.core.infrastructure.types.KmgDelimiterTypes)">initialize</a></code>&nbsp;インタフェース内&nbsp;<code><a href="../DtcService.html" title="kmg.tool.base.dtc.domain.service内のインタフェース">DtcService</a></code></dd>
+<dt>パラメータ:</dt>
+<dd><code>inputPath</code> - 入力ファイルパス（中間ファイルパス）</dd>
+<dd><code>templatePath</code> - テンプレートファイルパス</dd>
+<dd><code>outputPath</code> - 出力ファイルパス</dd>
+<dd><code>intermediateDelimiter</code> - 中間ファイルの区切り文字</dd>
+<dt>戻り値:</dt>
+<dd>true：成功、false：失敗</dd>
+<dt>例外:</dt>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dt>導入されたバージョン:</dt>
+<dd>0.2.2</dd>
 </dl>
 </section>
 </li>

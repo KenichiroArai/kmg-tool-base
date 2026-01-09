@@ -2,6 +2,7 @@ package kmg.tool.base.jdts.application.service;
 
 import java.nio.file.Path;
 
+import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
 import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
 
@@ -15,7 +16,7 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.2
  */
 public interface JdtsService {
 
@@ -45,14 +46,17 @@ public interface JdtsService {
      * @return true：成功、false：失敗
      *
      * @param targetPath
-     *                     対象ファイルパス
-     * @param templatePath
-     *                     テンプレートファイルパス
+     *                       対象ファイルパス
+     * @param definitionPath
+     *                       定義ファイルのパス
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean initialize(final Path targetPath, final Path templatePath) throws KmgToolMsgException;
+    boolean initialize(final Path targetPath, final Path definitionPath)
+        throws KmgFundMsgException, KmgToolMsgException;
 
     /**
      * 処理する
@@ -61,11 +65,13 @@ public interface JdtsService {
      *
      * @return true：成功、false：失敗
      *
+     * @throws KmgFundMsgException
+     *                             KMG基盤メッセージ例外
      * @throws KmgToolMsgException
      *                             KMGツールメッセージ例外
      * @throws KmgToolValException
      *                             KMGツールバリデーション例外
      */
-    boolean process() throws KmgToolMsgException, KmgToolValException;
+    boolean process() throws KmgFundMsgException, KmgToolMsgException, KmgToolValException;
 
 }
