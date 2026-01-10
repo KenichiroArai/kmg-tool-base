@@ -37,7 +37,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.3
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -273,7 +273,11 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
+            final Object[]            genMsgArgs    = {
+                0L, 0L
+            };
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19004,
+                genMsgArgs);
 
             Mockito.when(this.mockFileIteratorLogic.initialize(ArgumentMatchers.any())).thenThrow(testException);
 
@@ -337,8 +341,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorJdtsIoLogicLoadException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN19000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN19004] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19004;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -358,7 +362,11 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
+            final Object[]            genMsgArgs    = {
+                0L, 0L
+            };
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19004,
+                genMsgArgs);
 
             Mockito.when(this.mockFileIteratorLogic.load()).thenThrow(testException);
 
@@ -390,8 +398,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorJdtsIoLogicNextFileException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN19000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN19004] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19004;
 
         /* 準備 */
         final List<Path> filePathList = new ArrayList<>();
@@ -414,7 +422,11 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
+            final Object[]            genMsgArgs    = {
+                0L, 0L
+            };
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19004,
+                genMsgArgs);
 
             Mockito.when(this.mockFileIteratorLogic.load()).thenReturn(true);
             Mockito.when(this.mockFileIteratorLogic.getFilePathList()).thenReturn(filePathList);
@@ -448,8 +460,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorJdtsIoLogicResetFileIndexException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN19000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN19004] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19004;
 
         /* 準備 */
         final List<Path> filePathList = new ArrayList<>();
@@ -472,7 +484,11 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
+            final Object[]            genMsgArgs    = {
+                0L, 0L
+            };
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19004,
+                genMsgArgs);
 
             Mockito.when(this.mockFileIteratorLogic.load()).thenReturn(true);
             Mockito.when(this.mockFileIteratorLogic.getFilePathList()).thenReturn(filePathList);
@@ -634,8 +650,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     public void testReplaceTargetValuesWithUuid_errorLoadContentException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN19000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN19004] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19004;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -651,7 +667,11 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
+            final Object[]            genMsgArgs    = {
+                0L, 0L
+            };
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19004,
+                genMsgArgs);
 
             Mockito.when(this.mockFileIteratorLogic.loadContent()).thenThrow(testException);
 
@@ -699,8 +719,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     public void testReplaceTargetValuesWithUuid_errorWriteContentException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN19000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN19004] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19004;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -716,7 +736,11 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
+            final Object[]            genMsgArgs    = {
+                0L, 0L
+            };
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19004,
+                genMsgArgs);
 
             Mockito.when(this.mockFileIteratorLogic.loadContent()).thenReturn(true);
             Mockito.when(this.mockFileIteratorLogic.getReadContent()).thenReturn("oldValue");
@@ -835,8 +859,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     public void testReplaceUuidWithReplacementValues_errorLoadContentException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN19000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN19004] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19004;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -852,7 +876,11 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
+            final Object[]            genMsgArgs    = {
+                0L, 0L
+            };
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19004,
+                genMsgArgs);
 
             Mockito.when(this.mockFileIteratorLogic.loadContent()).thenThrow(testException);
 
@@ -900,8 +928,8 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
     public void testReplaceUuidWithReplacementValues_errorWriteContentException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN19000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19000;
+        final String             expectedDomainMessage = "[KMGTOOL_GEN19004] ";
+        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN19004;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -917,7 +945,11 @@ public class MapTransformServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19000);
+            final Object[]            genMsgArgs    = {
+                0L, 0L
+            };
+            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN19004,
+                genMsgArgs);
 
             Mockito.when(this.mockFileIteratorLogic.loadContent()).thenReturn(true);
             Mockito.when(this.mockFileIteratorLogic.getReadContent()).thenReturn("uuid1");

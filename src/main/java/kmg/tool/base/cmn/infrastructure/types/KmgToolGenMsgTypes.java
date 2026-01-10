@@ -17,7 +17,7 @@ import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnGenMsg;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.3
  */
 @SuppressWarnings("nls")
 public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
@@ -242,27 +242,6 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN08002("入力ファイルの読み込みに失敗しました。入力ファイルパス=[{0}]"),
 
     /**
-     * 失敗
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN09000("失敗"),
-
-    /**
-     * 成功
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN09001("成功"),
-
-    /**
-     * 例外発生
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN09002("例外発生"),
-
-    /**
      * 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[{0}]
      *
      * @since 0.2.0
@@ -333,67 +312,11 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
     KMGTOOL_GEN12002("入力ファイルの読み込み中にエラーが発生しました。ファイル=[{0}]"),
 
     /**
-     * Javadoc行削除の初期化に失敗しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN12003("Javadoc行削除の初期化に失敗しました。"),
-
-    /**
-     * Javadoc行削除が正常に完了しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN12004("Javadoc行削除が正常に完了しました。"),
-
-    /**
-     * Javadoc行削除中にエラーが発生しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN12005("Javadoc行削除中にエラーが発生しました。"),
-
-    /**
      * 定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]
      *
      * @since 0.2.0
      */
     KMGTOOL_GEN13003("定義ファイルの読み込みに失敗しました。定義ファイル=[{0}]"),
-
-    /**
-     * 入力ファイルから対象パスを設定に失敗しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13004("入力ファイルから対象パスを設定に失敗しました。"),
-
-    /**
-     * 実行が成功しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13005("実行が成功しました。"),
-
-    /**
-     * 実行中に例外が発生しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13006("実行中に例外が発生しました。"),
-
-    /**
-     * バリデーションエラーが発生しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13007("バリデーションエラーが発生しました。"),
-
-    /**
-     * 実行時例外が発生しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN13008("実行時例外が発生しました。"),
 
     /**
      * 項目名がnullです。
@@ -443,34 +366,6 @@ public enum KmgToolGenMsgTypes implements KmgToolCmnGenMsg, KmgToolCmnExcMsg {
      * @since 0.2.0
      */
     KMGTOOL_GEN16001("テンプレートファイルの取得に失敗しました。テンプレートファイルパス=[{0}]"),
-
-    /**
-     * 入力ファイルから対象パスを設定に失敗しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN19000("入力ファイルから対象パスを設定に失敗しました。"),
-
-    /**
-     * 実行が成功しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN19001("実行が成功しました。"),
-
-    /**
-     * 実行中に例外が発生しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN19002("実行中に例外が発生しました。"),
-
-    /**
-     * バリデーションエラーが発生しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_GEN19003("バリデーションエラーが発生しました。"),
 
     /**
      * 対象値からUUIDへの置換数とUUIDから置換値への置換数が一致しません。対象値からUUIDへの置換数：[{0}]、UUIDから置換値への置換数：[{1}]
