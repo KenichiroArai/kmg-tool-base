@@ -15,7 +15,7 @@ import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnLogMsg;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.3
  */
 @SuppressWarnings("nls")
 public enum KmgToolLogMsgTypes implements KmgToolCmnLogMsg {
@@ -182,20 +182,6 @@ public enum KmgToolLogMsgTypes implements KmgToolCmnLogMsg {
      * @since 0.2.0
      */
     KMGTOOL_LOG10000("挿入SQL出力に失敗しました。"),
-
-    /**
-     * 挿入SQL作成画面の実行ボタンの処理に失敗しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_LOG10001("挿入SQL作成画面の実行ボタンの処理に失敗しました。"),
-
-    /**
-     * 挿入SQL作成ツールの開始に失敗しました。
-     *
-     * @since 0.2.0
-     */
-    KMGTOOL_LOG10002("挿入SQL作成ツールの開始に失敗しました。"),
 
     /**
      * 削除した行数=[{0}] Javadoc行の削除が完了しました。
