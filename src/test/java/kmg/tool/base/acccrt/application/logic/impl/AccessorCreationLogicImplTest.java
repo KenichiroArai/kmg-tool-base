@@ -22,8 +22,8 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 
 /**
  * アクセサ作成ロジック実装テスト
@@ -32,7 +32,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -129,8 +129,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddItemToRows_abnormalItemNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -148,7 +148,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
             this.testTarget.addOneLineOfDataToRows();
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.addItemToRows();
 
@@ -208,8 +208,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddJavadocCommentToRows_abnormalJavadocNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN01002] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01002] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01002;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -227,7 +227,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
             this.testTarget.addOneLineOfDataToRows();
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.addJavadocCommentToRows();
 
@@ -318,8 +318,8 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddTypeToRows_abnormalTypeNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN01003] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01003] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01003;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -337,7 +337,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
             this.testTarget.addOneLineOfDataToRows();
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.addTypeToRows();
 

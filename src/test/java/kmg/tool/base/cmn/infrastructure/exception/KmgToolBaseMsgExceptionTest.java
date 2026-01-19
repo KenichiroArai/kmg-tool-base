@@ -14,50 +14,50 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnExcMsg;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.msg.KmgToolBaseCmnExcMsg;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 
 /**
- * KMGツールメッセージ例外テスト
+ * KMGツールベースメッセージ例外テスト
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.4
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls",
 })
-public class KmgToolMsgExceptionTest extends AbstractKmgTest {
+public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
 
     /**
      * テスト対象
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    private KmgToolMsgException testTarget;
+    private KmgToolBaseMsgException testTarget;
 
     /**
      * リフレクションモデル
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private KmgReflectionModelImpl reflectionModel;
 
     /**
      * モックKMGメッセージソース
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private KmgMessageSource mockMessageSource;
 
     /**
      * createMessage メソッドのテスト - 正常系：メッセージが作成される場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -66,8 +66,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testCreateMessage_normalCreateMessage() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] 項目名がnullです。";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01001] 項目名がnullです。";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         /* 準備 */
 
@@ -83,7 +83,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
 
-            this.testTarget = new KmgToolMsgException(expectedMessageTypes);
+            this.testTarget = new KmgToolBaseMsgException(expectedMessageTypes);
 
             /* テスト対象の実行 */
             this.testTarget.getMessage();
@@ -100,7 +100,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * createMessageSource メソッドのテスト - 正常系：メッセージソースが作成される場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -109,8 +109,8 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testCreateMessageSource_normalCreateMessageSource() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN01001] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         /* 準備 */
 
@@ -126,7 +126,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(expectedDomainMessage);
 
-            this.testTarget = new KmgToolMsgException(expectedMessageTypes);
+            this.testTarget = new KmgToolBaseMsgException(expectedMessageTypes);
             this.reflectionModel = new KmgReflectionModelImpl(this.testTarget);
 
             /* テスト対象の実行 */
@@ -146,7 +146,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * getCause メソッドのテスト - 正常系：原因がnullの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -155,7 +155,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testGetCause_normalCauseNull() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final KmgToolBaseCmnExcMsg messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         /* 準備 */
 
@@ -169,9 +169,9 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+                .thenReturn("[KMGTOOLBASE_GEN01001] テストメッセージ");
 
-            this.testTarget = new KmgToolMsgException(messageTypes);
+            this.testTarget = new KmgToolBaseMsgException(messageTypes);
 
             /* テスト対象の実行 */
             final Throwable testResult = this.testTarget.getCause();
@@ -189,7 +189,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * getCause メソッドのテスト - 正常系：原因が取得される場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -198,7 +198,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testGetCause_normalGetCause() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg messageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final KmgToolBaseCmnExcMsg messageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
         final Throwable        expectedCause = new RuntimeException("テスト例外");
 
         /* 準備 */
@@ -213,9 +213,9 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+                .thenReturn("[KMGTOOLBASE_GEN01001] テストメッセージ");
 
-            this.testTarget = new KmgToolMsgException(messageTypes, expectedCause);
+            this.testTarget = new KmgToolBaseMsgException(messageTypes, expectedCause);
 
             /* テスト対象の実行 */
             final Throwable testResult = this.testTarget.getCause();
@@ -233,7 +233,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * getMessageArgs メソッドのテスト - 正常系：メッセージ引数が取得される場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -242,7 +242,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testGetMessageArgs_normalGetMessageArgs() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg messageTypes        = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final KmgToolBaseCmnExcMsg messageTypes        = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
         final Object[]         expectedMessageArgs = {
             "arg1", "arg2"
         };
@@ -259,9 +259,9 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+                .thenReturn("[KMGTOOLBASE_GEN01001] テストメッセージ");
 
-            this.testTarget = new KmgToolMsgException(messageTypes, expectedMessageArgs);
+            this.testTarget = new KmgToolBaseMsgException(messageTypes, expectedMessageArgs);
 
             /* テスト対象の実行 */
             final Object[] testResult = this.testTarget.getMessageArgs();
@@ -279,7 +279,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * getMessageArgs メソッドのテスト - 正常系：メッセージ引数がnullの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -288,7 +288,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testGetMessageArgs_normalMessageArgsNull() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final KmgToolBaseCmnExcMsg messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         /* 準備 */
 
@@ -302,9 +302,9 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+                .thenReturn("[KMGTOOLBASE_GEN01001] テストメッセージ");
 
-            this.testTarget = new KmgToolMsgException(messageTypes);
+            this.testTarget = new KmgToolBaseMsgException(messageTypes);
 
             /* テスト対象の実行 */
             final Object[] testResult = this.testTarget.getMessageArgs();
@@ -322,7 +322,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * getMessageTypes メソッドのテスト - 正常系：メッセージタイプが取得される場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -331,7 +331,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testGetMessageTypes_normalGetMessageTypes() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final KmgToolBaseCmnExcMsg expectedMessageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         /* 準備 */
 
@@ -345,15 +345,15 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+                .thenReturn("[KMGTOOLBASE_GEN01001] テストメッセージ");
 
-            this.testTarget = new KmgToolMsgException(expectedMessageTypes);
+            this.testTarget = new KmgToolBaseMsgException(expectedMessageTypes);
 
             /* テスト対象の実行 */
-            final KmgToolCmnExcMsg testResult = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+            final KmgToolBaseCmnExcMsg testResult = (KmgToolBaseCmnExcMsg) this.testTarget.getMessageTypes();
 
             /* 検証の準備 */
-            final KmgToolCmnExcMsg actualMessageTypes = testResult;
+            final KmgToolBaseCmnExcMsg actualMessageTypes = testResult;
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく取得されること");
@@ -365,7 +365,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：メッセージタイプとメッセージ引数の場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -374,7 +374,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testKmgToolMsgException_normalMessageTypesAndArgs() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final KmgToolBaseCmnExcMsg expectedMessageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
         final Object[]         expectedMessageArgs  = {
             "arg1", "arg2"
         };
@@ -391,13 +391,13 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+                .thenReturn("[KMGTOOLBASE_GEN01001] テストメッセージ");
 
             /* テスト対象の実行 */
-            this.testTarget = new KmgToolMsgException(expectedMessageTypes, expectedMessageArgs);
+            this.testTarget = new KmgToolBaseMsgException(expectedMessageTypes, expectedMessageArgs);
 
             /* 検証の準備 */
-            final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+            final KmgToolBaseCmnExcMsg actualMessageTypes = (KmgToolBaseCmnExcMsg) this.testTarget.getMessageTypes();
             final Object[]         actualMessageArgs  = this.testTarget.getMessageArgs();
 
             /* 検証の実施 */
@@ -411,7 +411,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：メッセージタイプとメッセージ引数と原因の場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -420,7 +420,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testKmgToolMsgException_normalMessageTypesAndArgsAndCause() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final KmgToolBaseCmnExcMsg expectedMessageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
         final Object[]         expectedMessageArgs  = {
             "arg1", "arg2"
         };
@@ -438,13 +438,13 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+                .thenReturn("[KMGTOOLBASE_GEN01001] テストメッセージ");
 
             /* テスト対象の実行 */
-            this.testTarget = new KmgToolMsgException(expectedMessageTypes, expectedMessageArgs, expectedCause);
+            this.testTarget = new KmgToolBaseMsgException(expectedMessageTypes, expectedMessageArgs, expectedCause);
 
             /* 検証の準備 */
-            final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+            final KmgToolBaseCmnExcMsg actualMessageTypes = (KmgToolBaseCmnExcMsg) this.testTarget.getMessageTypes();
             final Object[]         actualMessageArgs  = this.testTarget.getMessageArgs();
             final Throwable        actualCause        = this.testTarget.getCause();
 
@@ -460,7 +460,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：メッセージタイプと原因の場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -469,7 +469,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testKmgToolMsgException_normalMessageTypesAndCause() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final KmgToolBaseCmnExcMsg expectedMessageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
         final Throwable        expectedCause        = new RuntimeException("テスト例外");
 
         /* 準備 */
@@ -484,13 +484,13 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+                .thenReturn("[KMGTOOLBASE_GEN01001] テストメッセージ");
 
             /* テスト対象の実行 */
-            this.testTarget = new KmgToolMsgException(expectedMessageTypes, expectedCause);
+            this.testTarget = new KmgToolBaseMsgException(expectedMessageTypes, expectedCause);
 
             /* 検証の準備 */
-            final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+            final KmgToolBaseCmnExcMsg actualMessageTypes = (KmgToolBaseCmnExcMsg) this.testTarget.getMessageTypes();
             final Throwable        actualCause        = this.testTarget.getCause();
 
             /* 検証の実施 */
@@ -504,7 +504,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：メッセージタイプのみの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -513,7 +513,7 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
     public void testKmgToolMsgException_normalMessageTypesOnly() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolCmnExcMsg expectedMessageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+        final KmgToolBaseCmnExcMsg expectedMessageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         /* 準備 */
 
@@ -527,13 +527,13 @@ public class KmgToolMsgExceptionTest extends AbstractKmgTest {
 
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn("[KMGTOOL_GEN01001] テストメッセージ");
+                .thenReturn("[KMGTOOLBASE_GEN01001] テストメッセージ");
 
             /* テスト対象の実行 */
-            this.testTarget = new KmgToolMsgException(expectedMessageTypes);
+            this.testTarget = new KmgToolBaseMsgException(expectedMessageTypes);
 
             /* 検証の準備 */
-            final KmgToolCmnExcMsg actualMessageTypes = (KmgToolCmnExcMsg) this.testTarget.getMessageTypes();
+            final KmgToolBaseCmnExcMsg actualMessageTypes = (KmgToolBaseCmnExcMsg) this.testTarget.getMessageTypes();
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
