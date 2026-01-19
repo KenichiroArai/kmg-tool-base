@@ -22,8 +22,8 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 
 /**
  * PlainContentInputServiceImplのテストクラス
@@ -32,7 +32,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -123,15 +123,15 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * getContent メソッドのテスト - 正常系：入力内容を取得
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
-    public void testGetContent_normalGetContent() throws KmgToolMsgException, KmgReflectionException {
+    public void testGetContent_normalGetContent() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
         final String expectedContent = "テストコンテンツ";
@@ -153,15 +153,15 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * getContent メソッドのテスト - 準正常系：nullの入力内容を取得
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
-    public void testGetContent_semiNullContent() throws KmgToolMsgException, KmgReflectionException {
+    public void testGetContent_semiNullContent() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
         final String expectedContent = null;
@@ -183,19 +183,19 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：IOException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
-    public void testProcess_errorIOException() throws KmgToolMsgException, KmgReflectionException {
+    public void testProcess_errorIOException() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN08002] テストメッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08002;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN08002] テストメッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08002;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         /* 準備 */
@@ -217,7 +217,7 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -234,15 +234,15 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：空ファイルの読み込み
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      * @throws IOException
      *                             入出力例外
      */
     @Test
-    public void testProcess_normalEmptyFileRead() throws KmgToolMsgException, IOException {
+    public void testProcess_normalEmptyFileRead() throws KmgToolBaseMsgException, IOException {
 
         /* 期待値の定義 */
         final boolean expectedResult  = true;
@@ -270,15 +270,15 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：正常なファイル読み込み処理
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      * @throws IOException
      *                             入出力例外
      */
     @Test
-    public void testProcess_normalFileRead() throws KmgToolMsgException, IOException {
+    public void testProcess_normalFileRead() throws KmgToolBaseMsgException, IOException {
 
         /* 期待値の定義 */
         final boolean expectedResult  = true;
@@ -306,15 +306,15 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：大きなファイルの読み込み
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      * @throws IOException
      *                             入出力例外
      */
     @Test
-    public void testProcess_normalLargeFileRead() throws KmgToolMsgException, IOException {
+    public void testProcess_normalLargeFileRead() throws KmgToolBaseMsgException, IOException {
 
         /* 期待値の定義 */
         final boolean       expectedResult         = true;

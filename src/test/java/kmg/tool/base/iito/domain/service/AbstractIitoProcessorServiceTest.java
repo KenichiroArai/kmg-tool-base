@@ -25,8 +25,8 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgMessageUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.dtc.domain.service.DtcService;
 
 /**
@@ -36,7 +36,7 @@ import kmg.tool.base.dtc.domain.service.DtcService;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -76,15 +76,15 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
         /**
          * writeIntermediateFileメソッドをpublicでオーバーライド
          *
-         * @since 0.2.0
+         * @since 0.2.4
          *
          * @return true：成功、false：失敗
          *
-         * @throws KmgToolMsgException
+         * @throws KmgToolBaseMsgException
          *                             KMGツールメッセージ例外
          */
         @Override
-        public boolean writeIntermediateFile() throws KmgToolMsgException {
+        public boolean writeIntermediateFile() throws KmgToolBaseMsgException {
 
             final boolean result = true;
             return result;
@@ -254,8 +254,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     public void testCreateTempIntermediateFile_errorIOException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN07006] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN07006;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07006] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07006;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         /* 準備 */
@@ -287,8 +287,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
                         .thenThrow(new IOException("Test IOException"));
 
                     /* テスト対象の実行 */
-                    final KmgToolMsgException actualException
-                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                    final KmgToolBaseMsgException actualException
+                        = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                             this.reflectionModel.getMethod("createTempIntermediateFile");
 
@@ -530,8 +530,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     public void testInitialize_errorCreateTempFileIOException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN07006] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN07006;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07006] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07006;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         /* 準備 */
@@ -562,8 +562,8 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
                         .thenThrow(new IOException("Test IOException"));
 
                     /* テスト対象の実行 */
-                    final KmgToolMsgException actualException
-                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                    final KmgToolBaseMsgException actualException
+                        = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                             this.testTarget.initialize(testInputFile, testTemplateFile, testOutputFile);
 
@@ -819,7 +819,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
         final TestAbstractIitoProcessorService exceptionTestTarget = new TestAbstractIitoProcessorService() {
 
             @Override
-            public boolean writeIntermediateFile() throws KmgToolMsgException {
+            public boolean writeIntermediateFile() throws KmgToolBaseMsgException {
 
                 throw new RuntimeException("Test exception");
 
