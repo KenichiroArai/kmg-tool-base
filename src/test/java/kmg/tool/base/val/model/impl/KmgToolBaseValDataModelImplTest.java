@@ -14,42 +14,42 @@ import kmg.core.infrastructure.cmn.msg.KmgCmnValMsgTypes;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolValMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseValMsgTypes;
 
 /**
- * KMGツールバリデーションデータモデル実装クラスのテスト
+ * KMGツールベースバリデーションデータモデル実装クラスのテスト
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.4
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @SuppressWarnings({
     "nls",
 })
-public class KmgToolValDataModelImplTest extends AbstractKmgTest {
+public class KmgToolBaseValDataModelImplTest extends AbstractKmgTest {
 
     /**
      * テスト対象クラス
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    private KmgToolValDataModelImpl target;
+    private KmgToolBaseValDataModelImpl target;
 
     /**
      * モックKMGメッセージソース
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private KmgMessageSource mockMessageSource;
 
     /**
      * コンストラクタ メソッドのテスト - 正常系：null引数でインスタンス作成
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testConstructor_normalNullArgs() {
@@ -59,8 +59,8 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
         /* 準備 */
         this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
-        final KmgToolValMsgTypes testMessageTypes = null;
-        final Object[]           testMessageArgs  = null;
+        final KmgToolBaseValMsgTypes testMessageTypes = null;
+        final Object[]               testMessageArgs  = null;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -74,7 +74,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
                 .thenReturn("テストメッセージ");
 
             /* テスト対象の実行 */
-            this.target = new KmgToolValDataModelImpl(testMessageTypes, testMessageArgs);
+            this.target = new KmgToolBaseValDataModelImpl(testMessageTypes, testMessageArgs);
 
             /* 検証の準備 */
             final KmgCmnValMsgTypes actualMessageTypes = this.target.getMessageTypes();
@@ -91,14 +91,14 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：正常な引数でインスタンス作成
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testConstructor_normalValidArgs() {
 
         /* 期待値の定義 */
-        final KmgToolValMsgTypes expectedMessageTypes = KmgToolValMsgTypes.KMGTOOL_VAL13000;
-        final Object[]           expectedMessageArgs  = {
+        final KmgToolBaseValMsgTypes expectedMessageTypes = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13000;
+        final Object[]               expectedMessageArgs  = {
             "test"
         };
 
@@ -117,7 +117,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
                 .thenReturn("テストメッセージ");
 
             /* テスト対象の実行 */
-            this.target = new KmgToolValDataModelImpl(expectedMessageTypes, expectedMessageArgs);
+            this.target = new KmgToolBaseValDataModelImpl(expectedMessageTypes, expectedMessageArgs);
 
             /* 検証の準備 */
             final KmgCmnValMsgTypes actualMessageTypes = this.target.getMessageTypes();
@@ -133,14 +133,16 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
 
     /**
      * createMessage メソッドのテスト - 正常系：空文字メッセージ作成
+     *
+     * @since 0.2.4
      */
     @Test
     public void testCreateMessage_normalEmptyMessage() {
 
         /* 期待値の定義 */
-        final String             expectedMessage = "";
-        final KmgToolValMsgTypes messageTypes    = KmgToolValMsgTypes.KMGTOOL_VAL13000;
-        final Object[]           messageArgs     = {
+        final String                 expectedMessage = "";
+        final KmgToolBaseValMsgTypes messageTypes    = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13000;
+        final Object[]               messageArgs     = {
             "test"
         };
 
@@ -157,7 +159,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(messageTypes, messageArgs)).thenReturn(expectedMessage);
 
-            this.target = new KmgToolValDataModelImpl(messageTypes, messageArgs);
+            this.target = new KmgToolBaseValDataModelImpl(messageTypes, messageArgs);
 
             /* テスト対象の実行 */
             final String testResult = this.target.createMessage();
@@ -175,14 +177,14 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     /**
      * createMessage メソッドのテスト - 正常系：nullメッセージ作成
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testCreateMessage_normalNullMessage() {
 
         /* 期待値の定義 */
-        final KmgToolValMsgTypes messageTypes = KmgToolValMsgTypes.KMGTOOL_VAL13000;
-        final Object[]           messageArgs  = {
+        final KmgToolBaseValMsgTypes messageTypes = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13000;
+        final Object[]               messageArgs  = {
             "test"
         };
 
@@ -200,7 +202,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(messageTypes, messageArgs)).thenReturn(testMessage);
 
-            this.target = new KmgToolValDataModelImpl(messageTypes, messageArgs);
+            this.target = new KmgToolBaseValDataModelImpl(messageTypes, messageArgs);
 
             /* テスト対象の実行 */
             final String testResult = this.target.createMessage();
@@ -218,15 +220,15 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     /**
      * createMessage メソッドのテスト - 正常系：正常なメッセージ作成
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testCreateMessage_normalValidMessage() {
 
         /* 期待値の定義 */
-        final String             expectedMessage = "テストメッセージ";
-        final KmgToolValMsgTypes messageTypes    = KmgToolValMsgTypes.KMGTOOL_VAL13000;
-        final Object[]           messageArgs     = {
+        final String                 expectedMessage = "テストメッセージ";
+        final KmgToolBaseValMsgTypes messageTypes    = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13000;
+        final Object[]               messageArgs     = {
             "test"
         };
 
@@ -243,7 +245,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(messageTypes, messageArgs)).thenReturn(expectedMessage);
 
-            this.target = new KmgToolValDataModelImpl(messageTypes, messageArgs);
+            this.target = new KmgToolBaseValDataModelImpl(messageTypes, messageArgs);
 
             /* テスト対象の実行 */
             final String testResult = this.target.createMessage();
@@ -261,14 +263,14 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     /**
      * createMessageSource メソッドのテスト - 正常系：メッセージソース作成
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testCreateMessageSource_normalCreateMessageSource() {
 
         /* 期待値の定義 */
-        final KmgToolValMsgTypes messageTypes = KmgToolValMsgTypes.KMGTOOL_VAL13000;
-        final Object[]           messageArgs  = {
+        final KmgToolBaseValMsgTypes messageTypes = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13000;
+        final Object[]               messageArgs  = {
             "test"
         };
 
@@ -286,7 +288,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テストメッセージ");
 
-            this.target = new KmgToolValDataModelImpl(messageTypes, messageArgs);
+            this.target = new KmgToolBaseValDataModelImpl(messageTypes, messageArgs);
 
             /* テスト対象の実行 */
             this.target.createMessageSource();
@@ -306,15 +308,15 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     /**
      * getMessage メソッドのテスト - 正常系：メッセージ取得
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testGetMessage_normalGetMessage() {
 
         /* 期待値の定義 */
-        final String             expectedMessage = "テストメッセージ";
-        final KmgToolValMsgTypes messageTypes    = KmgToolValMsgTypes.KMGTOOL_VAL13000;
-        final Object[]           messageArgs     = {
+        final String                 expectedMessage = "テストメッセージ";
+        final KmgToolBaseValMsgTypes messageTypes    = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13000;
+        final Object[]               messageArgs     = {
             "test"
         };
 
@@ -331,7 +333,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
             // モックメッセージソースの設定
             Mockito.when(this.mockMessageSource.getExcMessage(messageTypes, messageArgs)).thenReturn(expectedMessage);
 
-            this.target = new KmgToolValDataModelImpl(messageTypes, messageArgs);
+            this.target = new KmgToolBaseValDataModelImpl(messageTypes, messageArgs);
 
             /* テスト対象の実行 */
             final String testResult = this.target.getMessage();
@@ -349,16 +351,16 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     /**
      * getMessageArgs メソッドのテスト - 正常系：メッセージ引数取得
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testGetMessageArgs_normalGetMessageArgs() {
 
         /* 期待値の定義 */
-        final Object[]           expectedMessageArgs = {
+        final Object[]               expectedMessageArgs = {
             "test", "arg2"
         };
-        final KmgToolValMsgTypes messageTypes        = KmgToolValMsgTypes.KMGTOOL_VAL13000;
+        final KmgToolBaseValMsgTypes messageTypes        = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13000;
 
         /* 準備 */
         this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
@@ -374,7 +376,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テストメッセージ");
 
-            this.target = new KmgToolValDataModelImpl(messageTypes, expectedMessageArgs);
+            this.target = new KmgToolBaseValDataModelImpl(messageTypes, expectedMessageArgs);
 
             /* テスト対象の実行 */
             final Object[] testResult = this.target.getMessageArgs();
@@ -392,14 +394,14 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
     /**
      * getMessageTypes メソッドのテスト - 正常系：メッセージタイプ取得
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testGetMessageTypes_normalGetMessageTypes() {
 
         /* 期待値の定義 */
-        final KmgToolValMsgTypes expectedMessageTypes = KmgToolValMsgTypes.KMGTOOL_VAL13001;
-        final Object[]           messageArgs          = {
+        final KmgToolBaseValMsgTypes expectedMessageTypes = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13001;
+        final Object[]               messageArgs          = {
             "test"
         };
 
@@ -417,7 +419,7 @@ public class KmgToolValDataModelImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageSource.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テストメッセージ");
 
-            this.target = new KmgToolValDataModelImpl(expectedMessageTypes, messageArgs);
+            this.target = new KmgToolBaseValDataModelImpl(expectedMessageTypes, messageArgs);
 
             /* テスト対象の実行 */
             final KmgCmnValMsgTypes testResult = this.target.getMessageTypes();
