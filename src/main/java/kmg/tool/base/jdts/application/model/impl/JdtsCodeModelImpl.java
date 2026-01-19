@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.jdts.application.model.JdtsBlockModel;
 import kmg.tool.base.jdts.application.model.JdtsCodeModel;
 
@@ -25,7 +25,7 @@ import kmg.tool.base.jdts.application.model.JdtsCodeModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Component
 @Scope("prototype")
@@ -172,7 +172,7 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
                 // 対象外の場合
 
                 /* ログの出力 */
-                final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13000;
+                final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000;
                 final Object[]           logMsgArgs  = {
                     jdtsBlockModel.getId(), jdtsBlockModel.getOrgBlock(),
                 };

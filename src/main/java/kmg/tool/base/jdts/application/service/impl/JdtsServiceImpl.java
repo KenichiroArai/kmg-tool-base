@@ -13,10 +13,10 @@ import kmg.fund.domain.logic.FileIteratorLogic;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseValException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.jdts.application.model.JdtsCodeModel;
 import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.base.jdts.application.model.impl.JdtsCodeModelImpl;
@@ -34,7 +34,7 @@ import kmg.tool.base.jdts.application.service.JdtsService;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @Service
 public class JdtsServiceImpl implements JdtsService {
@@ -157,7 +157,7 @@ public class JdtsServiceImpl implements JdtsService {
     /**
      * 初期化する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param targetPath
      *                       対象ファイルパス
@@ -168,13 +168,13 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @throws KmgFundMsgException
      *                             KMG基盤メッセージ例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path targetPath, final Path definitionPath)
-        throws KmgFundMsgException, KmgToolMsgException {
+        throws KmgFundMsgException, KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -192,23 +192,23 @@ public class JdtsServiceImpl implements JdtsService {
     /**
      * 処理する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
      * @throws KmgFundMsgException
      *                             KMG基盤メッセージ例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                             KMGツールバリデーション例外
      */
     @Override
-    public boolean process() throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
+    public boolean process() throws KmgFundMsgException, KmgToolBaseMsgException, KmgToolBaseValException {
 
         boolean result = false;
 
-        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13005;
+        final KmgToolBaseLogMsgTypes startLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13005;
         final Object[]           startLogMsgArgs  = {};
         final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
         this.logger.debug(startLogMsg);
@@ -232,7 +232,7 @@ public class JdtsServiceImpl implements JdtsService {
 
         } while (this.fileIteratorLogic.nextFile());
 
-        final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13006;
+        final KmgToolBaseLogMsgTypes endLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13006;
         final Object[]           endLogMsgArgs  = {
             this.fileIteratorLogic.getFilePathList().size(), totalReplaceCount,
         };
@@ -250,16 +250,16 @@ public class JdtsServiceImpl implements JdtsService {
      * YAMLファイルを読み込み、Javadocタグ設定の構成モデルを作成する。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                             KMGツールバリデーション例外
      */
-    private boolean createJdtsConfigsModel() throws KmgToolMsgException, KmgToolValException {
+    private boolean createJdtsConfigsModel() throws KmgToolBaseMsgException, KmgToolBaseValException {
 
         final boolean result;
 
@@ -272,11 +272,11 @@ public class JdtsServiceImpl implements JdtsService {
 
         } catch (final KmgFundMsgException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN13003;
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN13003;
             final Object[]           genMsgArgs  = {
                 this.definitionPath.toString(),
             };
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -291,19 +291,19 @@ public class JdtsServiceImpl implements JdtsService {
     /**
      * 内容を読み込み、コードモデルを作成・解析する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return 解析済みのコードモデル
      *
      * @throws KmgFundMsgException
      *                             KMG基盤メッセージ例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                             KMGツールバリデーション例外
      */
     private JdtsCodeModel loadAndCreateCodeModel()
-        throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
+        throws KmgFundMsgException, KmgToolBaseMsgException, KmgToolBaseValException {
 
         JdtsCodeModel result;
 
@@ -324,7 +324,7 @@ public class JdtsServiceImpl implements JdtsService {
      */
     private void logFileEnd() {
 
-        final KmgToolLogMsgTypes fileEndLogMsgTypes  = KmgToolLogMsgTypes.KMGTOOL_LOG13008;
+        final KmgToolBaseLogMsgTypes fileEndLogMsgTypes  = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13008;
         final Object[]           fileStartEndMsgArgs = {
             this.fileIteratorLogic.getCurrentFilePath()
         };
@@ -341,7 +341,7 @@ public class JdtsServiceImpl implements JdtsService {
      */
     private void logFileStart() {
 
-        final KmgToolLogMsgTypes fileStartLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13007;
+        final KmgToolBaseLogMsgTypes fileStartLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13007;
         final Object[]           fileStartLogMsgArgs  = {
             this.fileIteratorLogic.getCurrentFilePath()
         };
@@ -354,18 +354,18 @@ public class JdtsServiceImpl implements JdtsService {
     /**
      * ファイルを処理する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return 置換数
      *
      * @throws KmgFundMsgException
      *                             KMG基盤メッセージ例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                             KMGツールバリデーション例外
      */
-    private long processFile() throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
+    private long processFile() throws KmgFundMsgException, KmgToolBaseMsgException, KmgToolBaseValException {
 
         this.logFileStart();
         final JdtsCodeModel jdtsCodeModel = this.loadAndCreateCodeModel();
@@ -379,7 +379,7 @@ public class JdtsServiceImpl implements JdtsService {
     /**
      * Javadocを置換し、結果をファイルに書き込む
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param jdtsCodeModel
      *                      コードモデル
@@ -388,13 +388,13 @@ public class JdtsServiceImpl implements JdtsService {
      *
      * @throws KmgFundMsgException
      *                             KMG基盤メッセージ例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                             KMGツールバリデーション例外
      */
     private long replaceJavadoc(final JdtsCodeModel jdtsCodeModel)
-        throws KmgFundMsgException, KmgToolMsgException, KmgToolValException {
+        throws KmgFundMsgException, KmgToolBaseMsgException, KmgToolBaseValException {
 
         this.jdtsReplService.initialize(this.jdtsConfigsModel, jdtsCodeModel);
         this.jdtsReplService.replace();

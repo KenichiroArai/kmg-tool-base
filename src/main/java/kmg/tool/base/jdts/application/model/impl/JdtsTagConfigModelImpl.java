@@ -14,8 +14,8 @@ import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolValMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseValException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseValMsgTypes;
 import kmg.tool.base.jdts.application.model.JdtsLocationConfigModel;
 import kmg.tool.base.jdts.application.model.JdtsTagConfigModel;
 import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
@@ -32,7 +32,7 @@ import kmg.tool.base.jdts.application.types.JdtsOverwriteTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
@@ -95,15 +95,15 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tagConfig
      *                  タグ設定
      *
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                             KMGツールバリデーション例外
      */
-    public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) throws KmgToolValException {
+    public JdtsTagConfigModelImpl(final Map<String, Object> tagConfig) throws KmgToolBaseValException {
 
         this.tagConfig = tagConfig;
 
@@ -127,7 +127,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (valsModel.isNotEmpty()) {
 
-            throw new KmgToolValException(valsModel);
+            throw new KmgToolBaseValException(valsModel);
 
         }
 
@@ -301,7 +301,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (KmgString.isEmpty(this.tagName)) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13005;
+            final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13005;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.TAG_NAME.getDisplayName(), JdtsConfigKeyTypes.TAG_NAME.getKey(),
             };
@@ -315,7 +315,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (this.tag == KmgJavadocTagTypes.NONE) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13006;
+            final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13006;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.TAG_NAME.getDisplayName(), this.tag,
             };
@@ -329,7 +329,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (KmgString.isEmpty(this.tagValue)) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13007;
+            final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13007;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.TAG_VALUE.getDisplayName(), JdtsConfigKeyTypes.TAG_VALUE.getKey(),
             };
@@ -362,7 +362,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (this.insertPosition == JdtsInsertPositionTypes.NONE) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13008;
+            final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13008;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.INSERT_POSITION.getDisplayName(), this.insertPosition,
             };
@@ -395,7 +395,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
             // 配置場所の設定の生成
             this.location = new JdtsLocationConfigModelImpl(locationMap);
 
-        } catch (final KmgToolValException e) {
+        } catch (final KmgToolBaseValException e) {
 
             result.merge(e.getValidationsModel());
 
@@ -420,7 +420,7 @@ public class JdtsTagConfigModelImpl implements JdtsTagConfigModel {
 
         if (this.overwrite == JdtsOverwriteTypes.NONE) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13009;
+            final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13009;
             final Object[]           valMsgArgs   = {
                 JdtsConfigKeyTypes.OVERWRITE.getDisplayName(), this.overwrite,
             };
