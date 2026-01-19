@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseValException;
 import kmg.tool.base.jdts.application.model.JdtsTagConfigModel;
 import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
 
@@ -21,7 +21,7 @@ import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @SuppressWarnings({
     "nls",
@@ -94,7 +94,7 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
         testYamlData.put(JdtsConfigKeyTypes.JDTS_CONFIGS.get(), configs);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsConfigsModelImpl(testYamlData);
 
@@ -121,7 +121,7 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
         testYamlData.put(JdtsConfigKeyTypes.JDTS_CONFIGS.get(), emptyConfigs);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsConfigsModelImpl(testYamlData);
 
@@ -146,7 +146,7 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
         final Map<String, Object> testYamlData = new HashMap<>();
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsConfigsModelImpl(testYamlData);
 
@@ -172,7 +172,7 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
         testYamlData.put(JdtsConfigKeyTypes.JDTS_CONFIGS.get(), null);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsConfigsModelImpl(testYamlData);
 
@@ -197,7 +197,7 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
         final Map<String, Object> testYamlData = null;
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsConfigsModelImpl(testYamlData);
 
@@ -238,7 +238,7 @@ public class JdtsConfigsModelImplTest extends AbstractKmgTest {
         testYamlData.put(JdtsConfigKeyTypes.JDTS_CONFIGS.get(), configs);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsConfigsModelImpl(testYamlData);
 

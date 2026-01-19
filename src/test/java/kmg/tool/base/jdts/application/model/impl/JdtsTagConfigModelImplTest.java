@@ -19,7 +19,7 @@ import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseValException;
 import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
 import kmg.tool.base.jdts.application.types.JdtsInsertPositionTypes;
 import kmg.tool.base.jdts.application.types.JdtsLocationModeTypes;
@@ -32,7 +32,7 @@ import kmg.tool.base.jdts.application.types.JdtsOverwriteTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @SuppressWarnings({
     "nls",
@@ -92,7 +92,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -126,7 +126,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -160,7 +160,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -196,7 +196,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -230,7 +230,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -264,7 +264,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -999,7 +999,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -1072,7 +1072,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 
@@ -1182,7 +1182,7 @@ public class JdtsTagConfigModelImplTest extends AbstractKmgTest {
         testTagConfig.put(JdtsConfigKeyTypes.LOCATION.get(), locationMap);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsTagConfigModelImpl(testTagConfig);
 

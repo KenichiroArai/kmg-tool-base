@@ -24,8 +24,8 @@ import org.mockito.quality.Strictness;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 
 /**
  * Javadoc行削除ロジック実装のテスト<br>
@@ -34,7 +34,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -245,19 +245,19 @@ public class JavadocLineRemoverLogicImplTest {
      * 存在するJavaファイルから指定した行番号の行が正しく削除されることを確認します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tempDir
      *                一時ディレクトリ
      *
      * @throws IOException
      *                             入出力例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     public void testDeleteJavadocLines_normalDeleteSpecifiedLines(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+        throws IOException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int      expectedDeletedLinesCount = 3;
@@ -300,13 +300,13 @@ public class JavadocLineRemoverLogicImplTest {
      * 空のマップが渡された場合に、削除された行数として0が返されることを確認します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testDeleteJavadocLines_normalEmptyMapReturnsZero() throws KmgToolMsgException {
+    public void testDeleteJavadocLines_normalEmptyMapReturnsZero() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedDeletedLinesCount = 0;
@@ -333,19 +333,19 @@ public class JavadocLineRemoverLogicImplTest {
      * カスタムMapを使用してcontainsKeyが常にfalseを返すケースをシミュレートします。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tempDir
      *                一時ディレクトリ
      *
      * @throws IOException
      *                             入出力例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     public void testDeleteJavadocLines_normalInputMapContainsKeyCheck(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+        throws IOException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedDeletedLinesCount = 0; // containsKeyがfalseなので削除されない
@@ -401,19 +401,19 @@ public class JavadocLineRemoverLogicImplTest {
      * 0以下や範囲外の行番号が指定された場合に、その行番号がスキップされることを確認します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tempDir
      *                一時ディレクトリ
      *
      * @throws IOException
      *                             入出力例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     public void testDeleteJavadocLines_normalInvalidLineNumbersSkipped(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+        throws IOException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int      expectedDeletedLinesCount = 1;
@@ -456,19 +456,19 @@ public class JavadocLineRemoverLogicImplTest {
      * 降順でない行番号のセットが渡された場合でも、正しく行が削除されることを確認します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tempDir
      *                一時ディレクトリ
      *
      * @throws IOException
      *                             入出力例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     public void testDeleteJavadocLines_normalUnorderedLineNumbers(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+        throws IOException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int      expectedDeletedLinesCount = 3;
@@ -519,7 +519,7 @@ public class JavadocLineRemoverLogicImplTest {
 
         /* 期待値の定義 */
         final Path               nonExistentFile = Paths.get("nonexistent.java");
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12001;
+        final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12001;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -542,14 +542,14 @@ public class JavadocLineRemoverLogicImplTest {
             final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
 
             /* テスト対象の実行と検証の実施 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 testTarget.deleteJavadocLines(testInputMap);
 
             }, "存在しないファイルの場合は例外が発生すること");
 
             /* 検証の準備 */
-            final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+            final KmgToolBaseGenMsgTypes actualMsgType = (KmgToolBaseGenMsgTypes) testException.getMessageTypes();
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");
@@ -577,7 +577,7 @@ public class JavadocLineRemoverLogicImplTest {
         throws IOException {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
+        final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12000;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -609,14 +609,14 @@ public class JavadocLineRemoverLogicImplTest {
             final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
 
             /* テスト対象の実行と検証の実施 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 testTarget.deleteJavadocLines(testInputMap);
 
             }, "読み込み専用ファイルの書き込み時は例外が発生すること");
 
             /* 検証の準備 */
-            final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+            final KmgToolBaseGenMsgTypes actualMsgType = (KmgToolBaseGenMsgTypes) testException.getMessageTypes();
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");
@@ -631,19 +631,19 @@ public class JavadocLineRemoverLogicImplTest {
      * 空の入力ファイルが指定された場合に、空のマップが返されることを確認します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tempDir
      *                一時ディレクトリ
      *
      * @throws IOException
      *                             入出力例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalEmptyInputFileReturnsEmptyMap(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+        throws IOException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedMapSize = 0;
@@ -671,19 +671,19 @@ public class JavadocLineRemoverLogicImplTest {
      * 同一ファイルの行番号が降順でソートされることを確認します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tempDir
      *                一時ディレクトリ
      *
      * @throws IOException
      *                             入出力例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalLineNumbersSortedDescending(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+        throws IOException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final Path      expectedPath        = Paths.get("D:\\test\\Sample.java");
@@ -719,19 +719,19 @@ public class JavadocLineRemoverLogicImplTest {
      * convertLineToPathLineEntryがnullを返す行と有効なエントリを返す行が混在する場合に、 nullエントリが正しくフィルタリングされ、有効なエントリのみが処理されることを確認します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tempDir
      *                一時ディレクトリ
      *
      * @throws IOException
      *                             入出力例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalMixedValidAndInvalidEntries(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+        throws IOException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final Path expectedPath            = Paths.get("D:\\test\\Sample.java");
@@ -775,19 +775,19 @@ public class JavadocLineRemoverLogicImplTest {
      * Javaファイル拡張子を含まない行が適切にフィルタされることを確認します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tempDir
      *                一時ディレクトリ
      *
      * @throws IOException
      *                             入出力例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalNonJavaFileLinesFiltered(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+        throws IOException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int  expectedMapSize = 1;
@@ -822,19 +822,19 @@ public class JavadocLineRemoverLogicImplTest {
      * Javaファイルの行を含む入力ファイルから、正しくパスと行番号のマップが生成されることを確認します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param tempDir
      *                一時ディレクトリ
      *
      * @throws IOException
      *                             入出力例外
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalValidInputFileProcessing(@TempDir final Path tempDir)
-        throws IOException, KmgToolMsgException {
+        throws IOException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final Path expectedPath1 = Paths.get("D:\\test\\Sample1.java");
@@ -886,7 +886,7 @@ public class JavadocLineRemoverLogicImplTest {
 
         /* 期待値の定義 */
         final Path               nonExistentInputFile = Paths.get("nonexistent_input.txt");
-        final KmgToolGenMsgTypes expectedMsgType      = KmgToolGenMsgTypes.KMGTOOL_GEN12002;
+        final KmgToolBaseGenMsgTypes expectedMsgType      = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12002;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -904,14 +904,14 @@ public class JavadocLineRemoverLogicImplTest {
             final JavadocLineRemoverLogicImpl testTarget = new JavadocLineRemoverLogicImpl();
 
             /* テスト対象の実行と検証の実施 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 testTarget.getInputMap(nonExistentInputFile);
 
             }, "存在しない入力ファイルの場合は例外が発生すること");
 
             /* 検証の準備 */
-            final KmgToolGenMsgTypes actualMsgType = (KmgToolGenMsgTypes) testException.getMessageTypes();
+            final KmgToolBaseGenMsgTypes actualMsgType = (KmgToolBaseGenMsgTypes) testException.getMessageTypes();
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedMsgType, actualMsgType, "期待されるメッセージタイプの例外が発生すること");

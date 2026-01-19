@@ -30,9 +30,9 @@ import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
 import kmg.fund.infrastructure.types.msg.KmgFundGenMsgTypes;
 import kmg.fund.infrastructure.utils.KmgYamlUtils;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseValException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.jdts.application.model.JdtsCodeModel;
 import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.base.jdts.application.model.impl.JdtsCodeModelImpl;
@@ -46,7 +46,7 @@ import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -255,18 +255,18 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * createJdtsConfigsModel メソッドのテスト - 異常系：YAMLファイル読み込みで例外が発生する場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws KmgFundMsgException
      *                                KMGツールメッセージ例外
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                                KMGツールバリデーション例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
     public void testCreateJdtsConfigsModel_errorYamlLoadException()
-        throws KmgFundMsgException, KmgToolValException, KmgReflectionException {
+        throws KmgFundMsgException, KmgToolBaseValException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -535,18 +535,18 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * loadAndCreateCodeModel メソッドのテスト - 異常系：loadContentで例外が発生する場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws KmgFundMsgException
      *                                KMGツールメッセージ例外
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                                KMGツールバリデーション例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
     public void testLoadAndCreateCodeModel_errorLoadContentException()
-        throws KmgFundMsgException, KmgToolValException, KmgReflectionException {
+        throws KmgFundMsgException, KmgToolBaseValException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -1095,18 +1095,18 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * processFile メソッドのテスト - 異常系：loadAndCreateCodeModelで例外が発生する場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws KmgFundMsgException
      *                                KMGツールメッセージ例外
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                                KMGツールバリデーション例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
     public void testProcessFile_errorLoadAndCreateCodeModelException()
-        throws KmgFundMsgException, KmgToolValException, KmgReflectionException {
+        throws KmgFundMsgException, KmgToolBaseValException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -1191,18 +1191,18 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
     /**
      * replaceJavadoc メソッドのテスト - 異常系：initializeで例外が発生する場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws KmgFundMsgException
      *                                KMGツールメッセージ例外
-     * @throws KmgToolValException
+     * @throws KmgToolBaseValException
      *                                KMGツールバリデーション例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
     public void testReplaceJavadoc_errorInitializeException()
-        throws KmgFundMsgException, KmgToolValException, KmgReflectionException {
+        throws KmgFundMsgException, KmgToolBaseValException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -1221,8 +1221,8 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             // 例外を事前に作成
-            final KmgToolMsgException expectedException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN03001, new Object[] {
+            final KmgToolBaseMsgException expectedException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03001, new Object[] {
                     "test"
                 });
 
