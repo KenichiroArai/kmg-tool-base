@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.fldcrt.application.logic.FieldCreationLogic;
 import kmg.tool.base.iito.domain.logic.AbstractIctoOneLinePatternLogic;
 
@@ -18,7 +18,7 @@ import kmg.tool.base.iito.domain.logic.AbstractIctoOneLinePatternLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic implements FieldCreationLogic {
@@ -92,24 +92,24 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     /**
      * コメントを書き込み対象に追加する。 保持しているコメントを書き込み対象の中間の行に追加します。 コメントが設定されていない場合は例外をスローします。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             コメントが設定されていない場合
      */
     @Override
-    public boolean addCommentToRows() throws KmgToolMsgException {
+    public boolean addCommentToRows() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
         /* コメントの存在チェック */
         if (this.comment == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN05000;
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05000;
             final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
@@ -124,24 +124,24 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     /**
      * フィールドを書き込み対象に追加する。 保持しているフィールド名を書き込み対象の中間の行に追加します。 フィールド名が設定されていない場合は例外をスローします。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             フィールド名が設定されていない場合
      */
     @Override
-    public boolean addFieldToRows() throws KmgToolMsgException {
+    public boolean addFieldToRows() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
         /* フィールド名の存在チェック */
         if (this.field == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
             final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
@@ -156,24 +156,24 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
     /**
      * 型を書き込み対象に追加する。 保持している型情報を書き込み対象の中間の行に追加します。 型情報が設定されていない場合は例外をスローします。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             型情報が設定されていない場合
      */
     @Override
-    public boolean addTypeToRows() throws KmgToolMsgException {
+    public boolean addTypeToRows() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
         /* 型情報の存在チェック */
         if (this.type == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN05002;
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05002;
             final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
@@ -191,15 +191,15 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * 入力された行データをコメント、フィールド名、型情報に分解して保持します。 フィールド名はキャメルケースに変換され、型情報はパッケージ名が除去されます。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：変換成功、false：変換失敗（入力データが不正な場合）
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             データ変換時にエラーが発生した場合
      */
     @Override
-    public boolean convertFields() throws KmgToolMsgException {
+    public boolean convertFields() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
