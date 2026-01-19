@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgJavadocTagTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 import kmg.tool.base.jdoc.domain.model.JavadocTagModel;
 
 /**
@@ -18,7 +18,7 @@ import kmg.tool.base.jdoc.domain.model.JavadocTagModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @SuppressWarnings({
     "nls",
@@ -73,13 +73,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * constructor メソッドのテスト - 正常系:空文字列のJavadocでのコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testConstructor_normalEmptyJavadoc() throws KmgToolMsgException {
+    public void testConstructor_normalEmptyJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedTagCount = 0;
@@ -102,13 +102,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * constructor メソッドのテスト - 正常系:無効なタグのJavadocでのコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testConstructor_normalInvalidTagJavadoc() throws KmgToolMsgException {
+    public void testConstructor_normalInvalidTagJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int                expectedTagCount = 1;
@@ -135,13 +135,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * constructor メソッドのテスト - 正常系:複数行の説明付きタグのJavadocでのコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testConstructor_normalMultiLineDescriptionJavadoc() throws KmgToolMsgException {
+    public void testConstructor_normalMultiLineDescriptionJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int                expectedTagCount    = 1;
@@ -170,13 +170,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * constructor メソッドのテスト - 正常系:複数タグのJavadocでのコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testConstructor_normalMultipleTagsJavadoc() throws KmgToolMsgException {
+    public void testConstructor_normalMultipleTagsJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedTagCount = 1;
@@ -198,13 +198,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * constructor メソッドのテスト - 正常系:nullのJavadocでのコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testConstructor_normalNullJavadoc() throws KmgToolMsgException {
+    public void testConstructor_normalNullJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedTagCount = 0;
@@ -227,13 +227,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * constructor メソッドのテスト - 正常系:単一タグのJavadocでのコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testConstructor_normalSingleTagJavadoc() throws KmgToolMsgException {
+    public void testConstructor_normalSingleTagJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int                expectedTagCount = 1;
@@ -260,13 +260,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * constructor メソッドのテスト - 正常系:タグのみのJavadocでのコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testConstructor_normalTagOnlyJavadoc() throws KmgToolMsgException {
+    public void testConstructor_normalTagOnlyJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int                expectedTagCount = 1;
@@ -293,13 +293,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * constructor メソッドのテスト - 正常系:説明付きタグのJavadocでのコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testConstructor_normalTagWithDescriptionJavadoc() throws KmgToolMsgException {
+    public void testConstructor_normalTagWithDescriptionJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int                expectedTagCount    = 1;
@@ -328,13 +328,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * constructor メソッドのテスト - 正常系:説明なしタグのJavadocでのコンストラクタ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testConstructor_normalTagWithoutDescriptionJavadoc() throws KmgToolMsgException {
+    public void testConstructor_normalTagWithoutDescriptionJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int                expectedTagCount = 1;
@@ -386,13 +386,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * findByTag メソッドのテスト - 正常系:存在するタグでの検索
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testFindByTag_normalExistingTag() throws KmgToolMsgException {
+    public void testFindByTag_normalExistingTag() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final KmgJavadocTagTypes expectedTag   = KmgJavadocTagTypes.AUTHOR;
@@ -419,13 +419,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * findByTag メソッドのテスト - 正常系:存在しないタグでの検索
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testFindByTag_normalNonExistingTag() throws KmgToolMsgException {
+    public void testFindByTag_normalNonExistingTag() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
 
@@ -448,13 +448,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * findByTag メソッドのテスト - 準正常系:nullのタグでの検索
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testFindByTag_semiNullTag() throws KmgToolMsgException {
+    public void testFindByTag_semiNullTag() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
 
@@ -477,13 +477,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * getJavadocTagModelList メソッドのテスト - 正常系:複雑なJavadocでのリスト取得
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testGetJavadocTagModelList_normalComplexJavadoc() throws KmgToolMsgException {
+    public void testGetJavadocTagModelList_normalComplexJavadoc() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedTagCount = 2;
@@ -534,13 +534,13 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
     /**
      * getJavadocTagModelList メソッドのテスト - 正常系:複数タグのリストでのリスト取得
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testGetJavadocTagModelList_normalMultipleTagsList() throws KmgToolMsgException {
+    public void testGetJavadocTagModelList_normalMultipleTagsList() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedTagCount = 1;

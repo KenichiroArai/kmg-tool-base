@@ -22,8 +22,8 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.is.application.service.IsFileCreationService;
 
 /**
@@ -33,7 +33,7 @@ import kmg.tool.base.is.application.service.IsFileCreationService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -188,8 +188,8 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorNotInitialized() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN08000] 入力ファイルパスがnullです。";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN08000] 入力ファイルパスがnullです。";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08000;
         final Class<?>           expectedCauseClass    = null;
 
         /* 準備 */
@@ -208,7 +208,7 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.outputInsertionSql();
 
@@ -225,13 +225,13 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     /**
      * outputInsertionSql メソッドのテスト - 正常系：正常な実行
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testOutputInsertionSql_normalExecution() throws KmgToolMsgException {
+    public void testOutputInsertionSql_normalExecution() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");
