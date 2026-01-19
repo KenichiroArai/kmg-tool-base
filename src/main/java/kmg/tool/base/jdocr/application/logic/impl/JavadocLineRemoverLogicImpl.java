@@ -18,8 +18,8 @@ import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.jdocr.application.logic.JavadocLineRemoverLogic;
 
 /**
@@ -29,7 +29,7 @@ import kmg.tool.base.jdocr.application.logic.JavadocLineRemoverLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
@@ -133,18 +133,18 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
     /**
      * Javadoc行を削除する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param inputMap
      *                 パスと行番号のマップ
      *
      * @return 削除した行数
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public int deleteJavadocLines(final Map<Path, Set<Integer>> inputMap) throws KmgToolMsgException {
+    public int deleteJavadocLines(final Map<Path, Set<Integer>> inputMap) throws KmgToolBaseMsgException {
 
         int result = 0;
 
@@ -167,11 +167,11 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
             } catch (final IOException e) {
 
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12001;
+                final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12001;
                 final Object[]           genMsgArgs  = {
                     javaFile.toString(),
                 };
-                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+                throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
             }
 
@@ -209,11 +209,11 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
             } catch (final IOException e) {
 
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12000;
+                final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12000;
                 final Object[]           genMsgArgs  = {
                     javaFile.toString(),
                 };
-                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+                throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
             }
 
@@ -226,16 +226,18 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
     /**
      * 入力ファイルからパスと行番号のマップを取得する
      *
+     * @since 0.2.4
+     *
      * @param inputPath
      *                  入力ファイルのパス
      *
      * @return パスと行番号の降順のセットのマップ
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public Map<Path, Set<Integer>> getInputMap(final Path inputPath) throws KmgToolMsgException {
+    public Map<Path, Set<Integer>> getInputMap(final Path inputPath) throws KmgToolBaseMsgException {
 
         final Map<Path, Set<Integer>> result;
 
@@ -268,11 +270,11 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN12002;
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12002;
             final Object[]           genMsgArgs  = {
                 inputPath.toString(),
             };
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
