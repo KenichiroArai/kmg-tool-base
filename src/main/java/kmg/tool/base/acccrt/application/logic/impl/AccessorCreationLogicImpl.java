@@ -9,8 +9,8 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgJavaKeywordTypes;
 import kmg.tool.base.acccrt.application.logic.AccessorCreationLogic;
 import kmg.tool.base.acccrt.application.types.AccessorRegexGroupTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.iito.domain.logic.AbstractIctoOneLinePatternLogic;
 
 /**
@@ -20,7 +20,7 @@ import kmg.tool.base.iito.domain.logic.AbstractIctoOneLinePatternLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic implements AccessorCreationLogic {
@@ -94,23 +94,23 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     /**
      * 項目名を書き込み対象に追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemToRows() throws KmgToolMsgException {
+    public boolean addItemToRows() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
         if (this.item == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01001;
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
             final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
@@ -124,23 +124,23 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     /**
      * Javadocコメントを書き込み対象に追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addJavadocCommentToRows() throws KmgToolMsgException {
+    public boolean addJavadocCommentToRows() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
         if (this.javadocComment == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01002;
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01002;
             final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
@@ -154,23 +154,23 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     /**
      * 型情報を書き込み対象に追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean addTypeToRows() throws KmgToolMsgException {
+    public boolean addTypeToRows() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
         if (this.type == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01003;
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01003;
             final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
@@ -205,15 +205,15 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
     /**
      * フィールド宣言から型、項目名、先頭大文字項目に変換する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean convertFields() throws KmgToolMsgException {
+    public boolean convertFields() throws KmgToolBaseMsgException {
 
         boolean result = false;
 

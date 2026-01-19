@@ -11,9 +11,9 @@ import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.base.acccrt.application.logic.AccessorCreationLogic;
 import kmg.tool.base.acccrt.application.service.AccessorCreationService;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.iito.domain.service.AbstractIitoProcessorService;
 
 /**
@@ -23,7 +23,7 @@ import kmg.tool.base.iito.domain.service.AbstractIitoProcessorService;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @Service
 public class AccessorCreationServiceImpl extends AbstractIitoProcessorService implements AccessorCreationService {
@@ -100,15 +100,15 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
      * 入力ファイルから中間形式に変換して中間ファイルに出力する。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    protected boolean writeIntermediateFile() throws KmgToolMsgException {
+    protected boolean writeIntermediateFile() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -164,14 +164,14 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
     /**
      * 1行分の中間を格納するリストにカラム1：名称を追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：追加した、false：追加していない
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private boolean addNameColumn() throws KmgToolMsgException {
+    private boolean addNameColumn() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -195,14 +195,14 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
     /**
      * 1行分の中間を格納するリストに残りのカラムを追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：追加した、false：追加していない
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private boolean addRemainingColumns() throws KmgToolMsgException {
+    private boolean addRemainingColumns() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -253,12 +253,12 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
     /**
      * アクセサ作成ロジックをクローズする。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private void closeAccessorCreationLogic() throws KmgToolMsgException {
+    private void closeAccessorCreationLogic() throws KmgToolBaseMsgException {
 
         try {
 
@@ -266,9 +266,9 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN01000;
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01000;
             final Object[]           genMsgArgs  = {};
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -277,14 +277,14 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
     /**
      * カラムを処理する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：処理成功、false：処理スキップ
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private boolean processColumns() throws KmgToolMsgException {
+    private boolean processColumns() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -313,9 +313,9 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
             }
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01003;
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG01003;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -332,14 +332,14 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
     /**
      * 1行データを読み込む。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：読み込み成功、false：読み込み終了
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private boolean readOneLineData() throws KmgToolMsgException {
+    private boolean readOneLineData() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -347,9 +347,9 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
             result = this.accessorCreationLogic.readOneLineOfData();
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01004;
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG01004;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -365,20 +365,20 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
     /**
      * 中間ファイルに行を書き込む。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private void writeIntermediateFileLine() throws KmgToolMsgException {
+    private void writeIntermediateFileLine() throws KmgToolBaseMsgException {
 
         try {
 
             this.accessorCreationLogic.writeIntermediateFile();
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01000;
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG01000;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -386,7 +386,7 @@ public class AccessorCreationServiceImpl extends AbstractIitoProcessorService im
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG01001;
+        final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG01001;
         final Object[]           logMsgArgs  = {
             this.accessorCreationLogic.getJavadocComment(), this.accessorCreationLogic.getItem(),
         };
