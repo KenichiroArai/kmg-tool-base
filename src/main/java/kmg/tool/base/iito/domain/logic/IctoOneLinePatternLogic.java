@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 
 /**
  * 入力、中間、テンプレート、出力の1行パターンインタフェース
@@ -14,7 +14,7 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 public interface IctoOneLinePatternLogic extends Closeable {
 
@@ -93,7 +93,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
     /**
      * 初期化する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param inputPath
      *                   入力ファイルパス
@@ -102,10 +102,10 @@ public interface IctoOneLinePatternLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean initialize(Path inputPath, Path outputPath) throws KmgToolMsgException;
+    boolean initialize(Path inputPath, Path outputPath) throws KmgToolBaseMsgException;
 
     /**
      * 初期化する。<br>
@@ -113,7 +113,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * 出力ファイルの区切り文字を指定して初期化します。
      * </p>
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @param inputPath
      *                        入力ファイルパス
@@ -124,22 +124,22 @@ public interface IctoOneLinePatternLogic extends Closeable {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean initialize(Path inputPath, Path outputPath, KmgDelimiterTypes outputDelimiter) throws KmgToolMsgException;
+    boolean initialize(Path inputPath, Path outputPath, KmgDelimiterTypes outputDelimiter) throws KmgToolBaseMsgException;
 
     /**
      * 1行データを読み込む。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：データあり、false：データなし
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean readOneLineOfData() throws KmgToolMsgException;
+    boolean readOneLineOfData() throws KmgToolBaseMsgException;
 
     /**
      * 中間ファイルに書き込む。<br>
@@ -147,12 +147,12 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * 入力ファイルから指定の形式に変換して中間ファイルに出力する。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean writeIntermediateFile() throws KmgToolMsgException;
+    boolean writeIntermediateFile() throws KmgToolBaseMsgException;
 }
