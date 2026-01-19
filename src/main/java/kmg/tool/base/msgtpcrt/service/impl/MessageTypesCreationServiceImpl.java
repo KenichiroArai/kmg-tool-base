@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.iito.domain.service.AbstractIitoProcessorService;
 import kmg.tool.base.msgtpcrt.application.logic.MessageTypesCreationLogic;
 import kmg.tool.base.msgtpcrt.service.MessageTypesCreationService;
@@ -26,7 +26,7 @@ import kmg.tool.base.msgtpcrt.service.MessageTypesCreationService;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @Service
 public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorService
@@ -86,15 +86,15 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
      * AbstractIitoProcessorServiceのgetIntermediateDelimiter()を実装します。
      * </p>
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @return 中間ファイルの区切り文字
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    protected KmgDelimiterTypes getIntermediateDelimiter() throws KmgToolMsgException {
+    protected KmgDelimiterTypes getIntermediateDelimiter() throws KmgToolBaseMsgException {
 
         final KmgDelimiterTypes result = this.messageTypesCreationLogic.getOutputDelimiter();
         return result;
@@ -107,15 +107,15 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
      * 入力ファイルから中間形式に変換して中間ファイルに出力する。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    protected boolean writeIntermediateFile() throws KmgToolMsgException {
+    protected boolean writeIntermediateFile() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -189,12 +189,12 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
     /**
      * メッセージの種類作成ロジックをクローズする。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private void closeMessageTypesCreationLogic() throws KmgToolMsgException {
+    private void closeMessageTypesCreationLogic() throws KmgToolBaseMsgException {
 
         try {
 
@@ -202,9 +202,9 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN14003;
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14003;
             final Object[]           genMsgArgs  = {};
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -213,14 +213,14 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
     /**
      * カラムを処理する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：処理成功、false：処理スキップ
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private boolean processColumns() throws KmgToolMsgException {
+    private boolean processColumns() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -242,9 +242,9 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
             // 項目名を書き込み対象に追加する
             this.messageTypesCreationLogic.addItemNameToRows();
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG14001;
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG14001;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -261,14 +261,14 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
     /**
      * 1行データを読み込む。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：読み込み成功、false：読み込み終了
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private boolean readOneLineData() throws KmgToolMsgException {
+    private boolean readOneLineData() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -276,9 +276,9 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
 
             result = this.messageTypesCreationLogic.readOneLineOfData();
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG14002;
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG14002;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -294,20 +294,20 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
     /**
      * 中間ファイルに行を書き込む。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    private void writeIntermediateFileLine() throws KmgToolMsgException {
+    private void writeIntermediateFileLine() throws KmgToolBaseMsgException {
 
         try {
 
             this.messageTypesCreationLogic.writeIntermediateFile();
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG14003;
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG14003;
             final Object[]           logMsgArgs  = {};
             final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
@@ -316,7 +316,7 @@ public class MessageTypesCreationServiceImpl extends AbstractIitoProcessorServic
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG14004;
+        final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG14004;
         final Object[]           logMsgArgs  = {
             this.messageTypesCreationLogic.getItem(), this.messageTypesCreationLogic.getItemName(),
         };
