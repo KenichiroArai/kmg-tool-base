@@ -2,7 +2,7 @@ package kmg.tool.base.io.domain.service;
 
 import java.nio.file.Path;
 
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 
 /**
  * 入出力サービスインタフェース
@@ -11,7 +11,7 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public interface IoService {
 
@@ -36,13 +36,13 @@ public interface IoService {
     /**
      * 処理する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
-    boolean process() throws KmgToolMsgException;
+    boolean process() throws KmgToolBaseMsgException;
 
 }

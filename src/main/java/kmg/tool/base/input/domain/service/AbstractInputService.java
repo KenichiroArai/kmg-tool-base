@@ -5,8 +5,8 @@ import java.nio.file.Path;
 
 import org.springframework.stereotype.Service;
 
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 
 /**
  * 抽象入力サービス
@@ -15,7 +15,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public abstract class AbstractInputService implements InputService {
@@ -55,40 +55,40 @@ public abstract class AbstractInputService implements InputService {
     /**
      * 初期化する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param inputPath
      *                  入力ファイルパス
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath) throws KmgToolMsgException {
+    public boolean initialize(final Path inputPath) throws KmgToolBaseMsgException {
 
         boolean result = false;
 
         // 入力パスの検証
         if (inputPath == null) {
 
-            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+            final KmgToolBaseGenMsgTypes genType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08000;
             final Object[]           messageArgs = {};
 
-            throw new KmgToolMsgException(genType, messageArgs);
+            throw new KmgToolBaseMsgException(genType, messageArgs);
 
         }
 
         if (!Files.exists(inputPath)) {
 
-            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN08001;
+            final KmgToolBaseGenMsgTypes genType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08001;
             final Object[]           messageArgs = {
                 inputPath.toString()
             };
 
-            throw new KmgToolMsgException(genType, messageArgs);
+            throw new KmgToolBaseMsgException(genType, messageArgs);
 
         }
 
@@ -103,14 +103,14 @@ public abstract class AbstractInputService implements InputService {
     /**
      * 処理する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public abstract boolean process() throws KmgToolMsgException;
+    public abstract boolean process() throws KmgToolBaseMsgException;
 
 }

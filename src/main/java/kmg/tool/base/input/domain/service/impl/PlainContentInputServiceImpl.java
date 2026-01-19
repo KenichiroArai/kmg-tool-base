@@ -5,8 +5,8 @@ import java.nio.file.Files;
 
 import org.springframework.stereotype.Service;
 
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.input.domain.service.AbstractInputService;
 import kmg.tool.base.input.domain.service.PlainContentInputServic;
 
@@ -20,7 +20,7 @@ import kmg.tool.base.input.domain.service.PlainContentInputServic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class PlainContentInputServiceImpl extends AbstractInputService implements PlainContentInputServic {
@@ -45,15 +45,15 @@ public class PlainContentInputServiceImpl extends AbstractInputService implement
     /**
      * 入力内容を返す<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return 入力内容
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public String getContent() throws KmgToolMsgException {
+    public String getContent() throws KmgToolBaseMsgException {
 
         final String result = this.content;
         return result;
@@ -63,15 +63,15 @@ public class PlainContentInputServiceImpl extends AbstractInputService implement
     /**
      * 処理する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolMsgException {
+    public boolean process() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -82,12 +82,12 @@ public class PlainContentInputServiceImpl extends AbstractInputService implement
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genType     = KmgToolGenMsgTypes.KMGTOOL_GEN08002;
+            final KmgToolBaseGenMsgTypes genType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08002;
             final Object[]           messageArgs = {
                 this.getInputPath(),
             };
 
-            throw new KmgToolMsgException(genType, messageArgs, e);
+            throw new KmgToolBaseMsgException(genType, messageArgs, e);
 
         }
 
