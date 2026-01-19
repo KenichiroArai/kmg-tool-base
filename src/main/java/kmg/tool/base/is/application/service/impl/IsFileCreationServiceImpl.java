@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.is.application.logic.IsBasicInformationLogic;
 import kmg.tool.base.is.application.service.IsFileCreationService;
 import kmg.tool.base.is.application.service.IslDataSheetCreationService;
@@ -33,7 +33,7 @@ import kmg.tool.base.is.application.service.IslDataSheetCreationService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class IsFileCreationServiceImpl implements IsFileCreationService {
@@ -110,13 +110,13 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
     /**
      * 挿入SQLを出力する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public void outputInsertionSql() throws KmgToolMsgException {
+    public void outputInsertionSql() throws KmgToolBaseMsgException {
 
         /* ワークブック読み込み */
         try (final FileInputStream is = new FileInputStream(this.inputPath.toFile());) {
@@ -127,37 +127,37 @@ public class IsFileCreationServiceImpl implements IsFileCreationService {
 
             } catch (final EmptyFileException e) {
 
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10004;
+                final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10004;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };
-                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+                throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
             } catch (final EncryptedDocumentException e) {
 
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10001;
+                final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10001;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };
-                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+                throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
             } catch (final IOException e) {
 
-                final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10005;
+                final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10005;
                 final Object[]           genMsgArgs  = {
                     this.inputPath,
                 };
-                throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+                throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
             }
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10002;
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10002;
             final Object[]           genMsgArgs  = {
                 this.inputPath,
             };
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 

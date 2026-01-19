@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.is.application.logic.IsDataSheetCreationLogic;
 import kmg.tool.base.is.application.service.IslDataSheetCreationService;
 
@@ -32,7 +32,7 @@ import kmg.tool.base.is.application.service.IslDataSheetCreationService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationService {
@@ -142,20 +142,20 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
     /**
      * 挿入SQLを出力する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Override
-    public void outputInsertionSql() throws KmgToolMsgException {
+    public void outputInsertionSql() throws KmgToolBaseMsgException {
 
         /* 初期化チェック */
         if (this.inputSheet == null) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10006;
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10006;
             final Object[]           genMsgArgs  = {};
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs);
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs);
 
         }
 
@@ -204,11 +204,11 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10003;
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10003;
             final Object[]           genMsgArgs  = {
                 outputFilePath,
             };
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -217,7 +217,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
     /**
      * 挿入SQL出力を実行する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Override
     public void run() {
@@ -226,10 +226,10 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
 
             this.outputInsertionSql();
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
             // ログの出力
-            final KmgToolLogMsgTypes logType     = KmgToolLogMsgTypes.KMGTOOL_LOG10000;
+            final KmgToolBaseLogMsgTypes logType     = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG10000;
             final Object[]           messageArgs = {};
             final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);
