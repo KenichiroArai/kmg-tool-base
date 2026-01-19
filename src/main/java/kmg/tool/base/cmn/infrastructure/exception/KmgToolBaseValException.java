@@ -4,32 +4,32 @@ import kmg.core.infrastructure.model.val.KmgValsModel;
 import kmg.fund.infrastructure.exception.KmgFundValException;
 
 /**
- * KMGツールバリデーション例外<br>
+ * KMGツールベースバリデーション例外<br>
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.4
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
-public class KmgToolValException extends KmgFundValException {
+public class KmgToolBaseValException extends KmgFundValException {
 
     /**
      * デフォルトシリアルバージョンＵＩＤ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private static final long serialVersionUID = 1L;
 
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param validationsModel
      *                         KMGバリデーション集合モデル
      */
-    public KmgToolValException(final KmgValsModel validationsModel) {
+    public KmgToolBaseValException(final KmgValsModel validationsModel) {
 
         this(validationsModel, null);
 
@@ -38,14 +38,14 @@ public class KmgToolValException extends KmgFundValException {
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param validationsModel
      *                         KMGバリデーション集合モデル
      * @param cause
      *                         原因
      */
-    public KmgToolValException(final KmgValsModel validationsModel, final Throwable cause) {
+    public KmgToolBaseValException(final KmgValsModel validationsModel, final Throwable cause) {
 
         super(validationsModel, cause);
 
