@@ -23,9 +23,9 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.dtc.domain.logic.DtcLogic;
 
 /**
@@ -35,7 +35,7 @@ import kmg.tool.base.dtc.domain.logic.DtcLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -127,19 +127,19 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * closeDtcLogic メソッドのテスト - 異常系：IOException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      * @throws Exception
      *                             例外
      */
     @Test
-    public void testCloseDtcLogic_errorIOException() throws KmgToolMsgException, Exception {
+    public void testCloseDtcLogic_errorIOException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN03006] テストメッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03006;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN03006] テストメッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03006;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         /* 準備 */
@@ -167,7 +167,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.reflectionModel.getMethod("closeDtcLogic");
 
@@ -184,15 +184,15 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * closeDtcLogic メソッドのテスト - 正常系：正常なクローズ処理
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      * @throws Exception
      *                             例外
      */
     @Test
-    public void testCloseDtcLogic_normalClose() throws KmgToolMsgException, Exception {
+    public void testCloseDtcLogic_normalClose() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = true;
@@ -426,13 +426,13 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testInitialize_normalInitialization() throws KmgToolMsgException {
+    public void testInitialize_normalInitialization() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final Path expectedInputPath    = this.tempDir.resolve("input.txt");
@@ -463,15 +463,15 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：区切り文字を指定して正常な初期化
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
-    public void testInitialize_normalInitializationWithDelimiter() throws KmgToolMsgException, KmgReflectionException {
+    public void testInitialize_normalInitializationWithDelimiter() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
         final Path              expectedInputPath             = this.tempDir.resolve("input.txt");
@@ -506,19 +506,19 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 異常系：DtcLogicのcloseでIOException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testProcess_errorCloseIOException() throws KmgToolMsgException {
+    public void testProcess_errorCloseIOException() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final String             expectedStartLogMsg   = "処理開始ログメッセージ";
         final String             expectedEndLogMsg     = "処理終了ログメッセージ";
-        final String             expectedDomainMessage = "[KMGTOOL_GEN03006] テストメッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03006;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN03006] テストメッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03006;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         /* 準備 */
@@ -528,9 +528,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
         this.testTarget.initialize(inputPath, templatePath, outputPath);
 
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03000, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03000, new Object[] {}))
             .thenReturn(expectedStartLogMsg);
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03001, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03001, new Object[] {}))
             .thenReturn(expectedEndLogMsg);
 
         Mockito.when(this.mockDtcLogic.readOneLineOfData()).thenReturn(false);
@@ -559,7 +559,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -576,14 +576,14 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：正常な処理実行
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @SuppressWarnings("resource")
     @Test
-    public void testProcess_normalProcess() throws KmgToolMsgException {
+    public void testProcess_normalProcess() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final boolean expectedResult      = true;
@@ -597,9 +597,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
         this.testTarget.initialize(inputPath, templatePath, outputPath);
 
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03000, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03000, new Object[] {}))
             .thenReturn(expectedStartLogMsg);
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03001, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03001, new Object[] {}))
             .thenReturn(expectedEndLogMsg);
 
         Mockito.when(this.mockDtcLogic.readOneLineOfData()).thenReturn(true, true, false);
@@ -622,15 +622,15 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：区切り文字が指定されている場合にDtcLogicに渡されること
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
-    public void testProcess_normalWithIntermediateDelimiter() throws KmgToolMsgException, KmgReflectionException {
+    public void testProcess_normalWithIntermediateDelimiter() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
         final boolean           expectedResult                = true;
@@ -645,9 +645,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
         this.testTarget.initialize(inputPath, templatePath, outputPath, expectedIntermediateDelimiter);
 
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03000, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03000, new Object[] {}))
             .thenReturn(expectedStartLogMsg);
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03001, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03001, new Object[] {}))
             .thenReturn(expectedEndLogMsg);
 
         Mockito.when(this.mockDtcLogic.readOneLineOfData()).thenReturn(false);
@@ -669,13 +669,13 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：区切り文字が指定されていない場合にデフォルト（COMMA）が使用されること
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testProcess_normalWithoutIntermediateDelimiter() throws KmgToolMsgException {
+    public void testProcess_normalWithoutIntermediateDelimiter() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final boolean expectedResult      = true;
@@ -690,9 +690,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
         // 区切り文字を指定しないinitializeを呼び出す
         this.testTarget.initialize(inputPath, templatePath, outputPath);
 
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03000, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03000, new Object[] {}))
             .thenReturn(expectedStartLogMsg);
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03001, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03001, new Object[] {}))
             .thenReturn(expectedEndLogMsg);
 
         Mockito.when(this.mockDtcLogic.readOneLineOfData()).thenReturn(false);
@@ -716,13 +716,13 @@ public class DtcServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 準正常系：データなし（1行目で終了）
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testProcess_semiNoData() throws KmgToolMsgException {
+    public void testProcess_semiNoData() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final boolean expectedResult      = true;
@@ -736,9 +736,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
 
         this.testTarget.initialize(inputPath, templatePath, outputPath);
 
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03000, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03000, new Object[] {}))
             .thenReturn(expectedStartLogMsg);
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG03001, new Object[] {}))
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03001, new Object[] {}))
             .thenReturn(expectedEndLogMsg);
 
         Mockito.when(this.mockDtcLogic.readOneLineOfData()).thenReturn(false);

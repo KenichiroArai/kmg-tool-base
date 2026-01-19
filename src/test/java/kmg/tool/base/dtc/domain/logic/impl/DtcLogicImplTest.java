@@ -31,8 +31,8 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.dtc.domain.model.impl.DtcDerivedPlaceholderModelImpl;
 import kmg.tool.base.dtc.domain.types.DtcKeyTypes;
 import kmg.tool.base.dtc.domain.types.DtcTransformTypes;
@@ -44,7 +44,7 @@ import kmg.tool.base.dtc.domain.types.DtcTransformTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -764,8 +764,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     public void testLoadTemplate_errorYamlLoad() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN03000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03000;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN03000] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03000;
         final Class<?>           expectedCauseClass    = kmg.fund.infrastructure.exception.KmgFundMsgException.class;
 
         // SpringApplicationContextHelperのモック化
@@ -784,7 +784,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             this.reflectionModel.set("templatePath", testTemplateFile);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.loadTemplate();
 
@@ -874,8 +874,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     public void testOpenInputFile_errorFileNotFound() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN03003] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03003;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN03003] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03003;
         final Class<?>           expectedCauseClass    = NoSuchFileException.class;
 
         // SpringApplicationContextHelperのモック化
@@ -894,7 +894,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             this.reflectionModel.set("inputPath", testInputFile);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.reflectionModel.getMethod("openInputFile");
 
@@ -949,8 +949,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     public void testOpenOutputFile_errorCannotCreate() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN03004] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03004;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN03004] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03004;
         final Class<?>           expectedCauseClass    = NoSuchFileException.class;
 
         // SpringApplicationContextHelperのモック化
@@ -970,7 +970,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             this.reflectionModel.set("outputPath", testOutputFile);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.reflectionModel.getMethod("openOutputFile");
 
@@ -1098,8 +1098,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
     public void testProcessPlaceholders_errorInsufficientColumns() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN03005] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03005;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN03005] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03005;
         final Class<?>           expectedCauseClass    = ArrayIndexOutOfBoundsException.class;
 
         // SpringApplicationContextHelperのモック化
@@ -1127,7 +1127,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             final Map<String, String> intermediateValues = new HashMap<>();
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.reflectionModel.getMethod("processPlaceholders", intermediateValues);
 
@@ -1194,8 +1194,8 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         final Path               testTemplateFile      = this.tempDir.resolve("test_template.txt");
         final Path               testOutputFile        = this.tempDir.resolve("test_output.tmp");
         final String             expectedDomainMessage = KmgString
-            .concat("[KMGTOOL_GEN03001] 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス=[", testInputFile.toString(), "]");
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03001;
+            .concat("[KMGTOOLBASE_GEN03001] 入力ファイルの読み込み中にエラーが発生しました。入力ファイルパス=[", testInputFile.toString(), "]");
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03001;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
@@ -1239,7 +1239,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.readOneLineOfData();
 
@@ -1334,10 +1334,10 @@ public class DtcLogicImplTest extends AbstractKmgTest {
         final Path               testInputFile         = this.tempDir.resolve("test_input.txt");
         final Path               testTemplateFile      = this.tempDir.resolve("test_template.txt");
         final Path               testOutputFile        = this.tempDir.resolve("test_output.tmp");
-        final String             expectedDomainMessage = "[KMGTOOL_GEN03002] 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス=["
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN03002] 出力バッファの書き込み中にエラーが発生しました。入力ファイルパス=["
             + testInputFile.toString() + "]、 テンプレートパス=[" + testTemplateFile.toString() + "]、 出力ファイルパス=["
             + testOutputFile.toString() + "]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN03002;
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03002;
         final Class<?>           expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
@@ -1369,7 +1369,7 @@ public class DtcLogicImplTest extends AbstractKmgTest {
             this.reflectionModel.set("outputPath", testOutputFile);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.writeOutputBuffer();
 
