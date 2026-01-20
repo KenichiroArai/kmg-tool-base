@@ -285,8 +285,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testCloseAccessorCreationLogic_errorIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = IOException.class;
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01000] ";
+        final Class<?>               expectedCauseClass    = IOException.class;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01000] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01000;
 
         /* 準備 */
@@ -304,27 +304,28 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                try {
+                    try {
 
-                    this.reflectionModel.getMethod("closeAccessorCreationLogic");
+                        this.reflectionModel.getMethod("closeAccessorCreationLogic");
 
-                } catch (final KmgReflectionException e) {
+                    } catch (final KmgReflectionException e) {
 
-                    // KmgReflectionExceptionの原因となった例外を再投げする
-                    final Throwable cause = e.getCause();
+                        // KmgReflectionExceptionの原因となった例外を再投げする
+                        final Throwable cause = e.getCause();
 
-                    if (cause instanceof KmgToolBaseMsgException) {
+                        if (cause instanceof KmgToolBaseMsgException) {
 
-                        throw (KmgToolBaseMsgException) cause;
+                            throw (KmgToolBaseMsgException) cause;
+
+                        }
+                        throw e;
 
                     }
-                    throw e;
 
-                }
-
-            });
+                });
 
             /* 検証の準備 */
 
@@ -515,7 +516,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testProcessColumns_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         // SpringApplicationContextHelperのモック化
@@ -534,32 +535,34 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(this.mockAccessorCreationLogic.convertJavadoc()).thenReturn(true);
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolBaseMsgException testException = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001);
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001);
 
             Mockito.when(this.mockAccessorCreationLogic.addJavadocCommentToRows()).thenThrow(testException);
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                try {
+                    try {
 
-                    this.reflectionModel.getMethod("processColumns");
+                        this.reflectionModel.getMethod("processColumns");
 
-                } catch (final KmgReflectionException e) {
+                    } catch (final KmgReflectionException e) {
 
-                    // KmgReflectionExceptionの原因となった例外を再投げする
-                    final Throwable cause = e.getCause();
+                        // KmgReflectionExceptionの原因となった例外を再投げする
+                        final Throwable cause = e.getCause();
 
-                    if (cause instanceof KmgToolBaseMsgException) {
+                        if (cause instanceof KmgToolBaseMsgException) {
 
-                        throw (KmgToolBaseMsgException) cause;
+                            throw (KmgToolBaseMsgException) cause;
+
+                        }
+                        throw e;
 
                     }
-                    throw e;
 
-                }
-
-            });
+                });
 
             /* 検証の準備 */
 
@@ -669,7 +672,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testReadOneLineData_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         // SpringApplicationContextHelperのモック化
@@ -685,32 +688,34 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
             /* 準備 */
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolBaseMsgException testException = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001);
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001);
 
             Mockito.when(this.mockAccessorCreationLogic.readOneLineOfData()).thenThrow(testException);
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                try {
+                    try {
 
-                    this.reflectionModel.getMethod("readOneLineData");
+                        this.reflectionModel.getMethod("readOneLineData");
 
-                } catch (final KmgReflectionException e) {
+                    } catch (final KmgReflectionException e) {
 
-                    // KmgReflectionExceptionの原因となった例外を再投げする
-                    final Throwable cause = e.getCause();
+                        // KmgReflectionExceptionの原因となった例外を再投げする
+                        final Throwable cause = e.getCause();
 
-                    if (cause instanceof KmgToolBaseMsgException) {
+                        if (cause instanceof KmgToolBaseMsgException) {
 
-                        throw (KmgToolBaseMsgException) cause;
+                            throw (KmgToolBaseMsgException) cause;
+
+                        }
+                        throw e;
 
                     }
-                    throw e;
 
-                }
-
-            });
+                });
 
             /* 検証の準備 */
 
@@ -783,8 +788,8 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFile_errorCloseIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = IOException.class;
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01000] ";
+        final Class<?>               expectedCauseClass    = IOException.class;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01000] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01000;
 
         /* 準備 */
@@ -1046,7 +1051,7 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         // SpringApplicationContextHelperのモック化
@@ -1062,32 +1067,34 @@ public class AccessorCreationServiceImplTest extends AbstractKmgTest {
 
             /* 準備 */
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolBaseMsgException testException = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001);
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001);
 
             Mockito.doThrow(testException).when(this.mockAccessorCreationLogic).writeIntermediateFile();
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                try {
+                    try {
 
-                    this.reflectionModel.getMethod("writeIntermediateFileLine");
+                        this.reflectionModel.getMethod("writeIntermediateFileLine");
 
-                } catch (final KmgReflectionException e) {
+                    } catch (final KmgReflectionException e) {
 
-                    // KmgReflectionExceptionの原因となった例外を再投げする
-                    final Throwable cause = e.getCause();
+                        // KmgReflectionExceptionの原因となった例外を再投げする
+                        final Throwable cause = e.getCause();
 
-                    if (cause instanceof KmgToolBaseMsgException) {
+                        if (cause instanceof KmgToolBaseMsgException) {
 
-                        throw (KmgToolBaseMsgException) cause;
+                            throw (KmgToolBaseMsgException) cause;
+
+                        }
+                        throw e;
 
                     }
-                    throw e;
 
-                }
-
-            });
+                });
 
             /* 検証の準備 */
 

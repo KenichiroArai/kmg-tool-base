@@ -97,7 +97,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             コメントが設定されていない場合
+     *                                 コメントが設定されていない場合
      */
     @Override
     public boolean addCommentToRows() throws KmgToolBaseMsgException {
@@ -108,7 +108,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         if (this.comment == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05000;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -129,7 +129,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             フィールド名が設定されていない場合
+     *                                 フィールド名が設定されていない場合
      */
     @Override
     public boolean addFieldToRows() throws KmgToolBaseMsgException {
@@ -140,7 +140,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         if (this.field == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -161,7 +161,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             型情報が設定されていない場合
+     *                                 型情報が設定されていない場合
      */
     @Override
     public boolean addTypeToRows() throws KmgToolBaseMsgException {
@@ -172,7 +172,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
         if (this.type == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05002;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -196,7 +196,7 @@ public class FieldCreationLogicImpl extends AbstractIctoOneLinePatternLogic impl
      * @return true：変換成功、false：変換失敗（入力データが不正な場合）
      *
      * @throws KmgToolBaseMsgException
-     *                             データ変換時にエラーが発生した場合
+     *                                 データ変換時にエラーが発生した場合
      */
     @Override
     public boolean convertFields() throws KmgToolBaseMsgException {

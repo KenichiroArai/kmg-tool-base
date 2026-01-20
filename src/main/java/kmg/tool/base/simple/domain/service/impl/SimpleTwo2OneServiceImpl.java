@@ -145,7 +145,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolBaseMsgException {
@@ -164,7 +164,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
             // 例外をスローする
             final KmgToolBaseGenMsgTypes msgType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16001;
-            final Object[]           messageArgs = {
+            final Object[]               messageArgs = {
                 this.templatePath.toString()
             };
             throw new KmgToolBaseMsgException(msgType, messageArgs, e);
@@ -193,7 +193,7 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
 
             // 例外をスローする
             final KmgToolBaseGenMsgTypes msgType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
-            final Object[]           messageArgs = {};
+            final Object[]               messageArgs = {};
             throw new KmgToolBaseMsgException(msgType, messageArgs, e);
 
         }

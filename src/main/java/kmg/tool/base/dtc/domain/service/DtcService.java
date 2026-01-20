@@ -40,7 +40,7 @@ public interface DtcService extends Two2OneService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean initialize(Path inputPath, Path templatePath, Path outputPath, KmgDelimiterTypes intermediateDelimiter)
         throws KmgToolBaseMsgException;

@@ -50,7 +50,7 @@ public class PlainContentInputServiceImpl extends AbstractInputService implement
      * @return 入力内容
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public String getContent() throws KmgToolBaseMsgException {
@@ -68,7 +68,7 @@ public class PlainContentInputServiceImpl extends AbstractInputService implement
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolBaseMsgException {
@@ -83,7 +83,7 @@ public class PlainContentInputServiceImpl extends AbstractInputService implement
         } catch (final IOException e) {
 
             final KmgToolBaseGenMsgTypes genType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08002;
-            final Object[]           messageArgs = {
+            final Object[]               messageArgs = {
                 this.getInputPath(),
             };
 

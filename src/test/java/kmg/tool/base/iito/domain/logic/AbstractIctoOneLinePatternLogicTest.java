@@ -221,9 +221,9 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testAddRow_errorEmptyRows() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07005] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07005] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07005;
-        final Class<?>           expectedCauseClass    = NoSuchElementException.class;
+        final Class<?>               expectedCauseClass    = NoSuchElementException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -240,11 +240,12 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             this.reflectionModel.set("rows", new ArrayList<>());
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("addRow", "test data");
+                    this.reflectionModel.getMethod("addRow", "test data");
 
-            }, "行リストが空の場合は例外が発生すること");
+                }, "行リストが空の場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -1010,9 +1011,9 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testInitialize_errorWithNoneDelimiter() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07008] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07008] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07008;
-        final Class<?>           expectedCauseClass    = null;
+        final Class<?>               expectedCauseClass    = null;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -1031,11 +1032,12 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             Files.write(testInputFile, "test content".getBytes());
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.initialize(testInputFile, testOutputFile, KmgDelimiterTypes.NONE);
+                    this.testTarget.initialize(testInputFile, testOutputFile, KmgDelimiterTypes.NONE);
 
-            }, "outputDelimiterがNONEの場合は例外が発生すること");
+                }, "outputDelimiterがNONEの場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -1057,9 +1059,9 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testInitialize_errorWithNullDelimiter() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07007] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07007] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07007;
-        final Class<?>           expectedCauseClass    = null;
+        final Class<?>               expectedCauseClass    = null;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -1078,11 +1080,12 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             Files.write(testInputFile, "test content".getBytes());
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.initialize(testInputFile, testOutputFile, null);
+                    this.testTarget.initialize(testInputFile, testOutputFile, null);
 
-            }, "outputDelimiterがnullの場合は例外が発生すること");
+                }, "outputDelimiterがnullの場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -1306,9 +1309,9 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testOpenInputFile_errorFileNotFound() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07003] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07003] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07003;
-        final Class<?>           expectedCauseClass    = NoSuchFileException.class;
+        final Class<?>               expectedCauseClass    = NoSuchFileException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -1326,11 +1329,12 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             this.reflectionModel.set("inputPath", testInputFile);
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("openInputFile");
+                    this.reflectionModel.getMethod("openInputFile");
 
-            }, "入力ファイルが存在しない場合は例外が発生すること");
+                }, "入力ファイルが存在しない場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -1381,9 +1385,9 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testOpenOutputFile_errorCannotCreate() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07004] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07004] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07004;
-        final Class<?>           expectedCauseClass    = NoSuchFileException.class;
+        final Class<?>               expectedCauseClass    = NoSuchFileException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -1402,11 +1406,12 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
             this.reflectionModel.set("outputPath", testOutputFile);
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("openOutputFile");
+                    this.reflectionModel.getMethod("openOutputFile");
 
-            }, "出力ファイルが作成できない場合は例外が発生すること");
+                }, "出力ファイルが作成できない場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -1456,11 +1461,11 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testReadOneLineOfData_errorIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Path               testInputFile         = this.tempDir.resolve("test_input.txt");
-        final Path               testOutputFile        = this.tempDir.resolve("test_output.txt");
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07000] ";
+        final Path                   testInputFile         = this.tempDir.resolve("test_input.txt");
+        final Path                   testOutputFile        = this.tempDir.resolve("test_output.txt");
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07000] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07000;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -1484,11 +1489,12 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
                 this.reflectionModel.set("reader", mockReader);
 
                 /* テスト対象の実行 */
-                final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+                final KmgToolBaseMsgException actualException
+                    = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                    this.testTarget.readOneLineOfData();
+                        this.testTarget.readOneLineOfData();
 
-                }, "IOExceptionが発生した場合は例外が発生すること");
+                    }, "IOExceptionが発生した場合は例外が発生すること");
 
                 /* 検証の実施 */
                 this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -1818,11 +1824,11 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testWriteIntermediateFile_errorFlushIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Path               testInputFile         = this.tempDir.resolve("test_input.txt");
-        final Path               testOutputFile        = this.tempDir.resolve("test_output.txt");
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07002] ";
+        final Path                   testInputFile         = this.tempDir.resolve("test_input.txt");
+        final Path                   testOutputFile        = this.tempDir.resolve("test_output.txt");
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07002] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07002;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -1853,11 +1859,12 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
                 this.reflectionModel.set("outputPath", testOutputFile);
 
                 /* テスト対象の実行 */
-                final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+                final KmgToolBaseMsgException actualException
+                    = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                    this.testTarget.writeIntermediateFile();
+                        this.testTarget.writeIntermediateFile();
 
-                }, "flushでIOExceptionが発生した場合は例外が発生すること");
+                    }, "flushでIOExceptionが発生した場合は例外が発生すること");
 
                 /* 検証の実施 */
                 this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -1882,11 +1889,11 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
     public void testWriteIntermediateFile_errorIOException() throws Exception {
 
         /* 期待値の定義 */
-        final Path               testInputFile         = this.tempDir.resolve("test_input.txt");
-        final Path               testOutputFile        = this.tempDir.resolve("test_output.txt");
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07001] ";
+        final Path                   testInputFile         = this.tempDir.resolve("test_input.txt");
+        final Path                   testOutputFile        = this.tempDir.resolve("test_output.txt");
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07001] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07001;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -1918,11 +1925,12 @@ public class AbstractIctoOneLinePatternLogicTest extends AbstractKmgTest {
                 this.reflectionModel.set("outputPath", testOutputFile);
 
                 /* テスト対象の実行 */
-                final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+                final KmgToolBaseMsgException actualException
+                    = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                    this.testTarget.writeIntermediateFile();
+                        this.testTarget.writeIntermediateFile();
 
-                }, "IOExceptionが発生した場合は例外が発生すること");
+                    }, "IOExceptionが発生した場合は例外が発生すること");
 
                 /* 検証の実施 */
                 this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,

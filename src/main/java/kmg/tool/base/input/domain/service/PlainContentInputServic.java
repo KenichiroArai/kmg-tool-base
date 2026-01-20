@@ -24,7 +24,7 @@ public interface PlainContentInputServic extends InputService {
      * @return 入力内容
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     String getContent() throws KmgToolBaseMsgException;
 

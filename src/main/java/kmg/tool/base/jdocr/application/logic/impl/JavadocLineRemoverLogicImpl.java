@@ -141,7 +141,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
      * @return 削除した行数
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public int deleteJavadocLines(final Map<Path, Set<Integer>> inputMap) throws KmgToolBaseMsgException {
@@ -168,7 +168,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
             } catch (final IOException e) {
 
                 final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12001;
-                final Object[]           genMsgArgs  = {
+                final Object[]               genMsgArgs  = {
                     javaFile.toString(),
                 };
                 throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
@@ -210,7 +210,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
             } catch (final IOException e) {
 
                 final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12000;
-                final Object[]           genMsgArgs  = {
+                final Object[]               genMsgArgs  = {
                     javaFile.toString(),
                 };
                 throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
@@ -234,7 +234,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
      * @return パスと行番号の降順のセットのマップ
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public Map<Path, Set<Integer>> getInputMap(final Path inputPath) throws KmgToolBaseMsgException {
@@ -271,7 +271,7 @@ public class JavadocLineRemoverLogicImpl implements JavadocLineRemoverLogic {
         } catch (final IOException e) {
 
             final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12002;
-            final Object[]           genMsgArgs  = {
+            final Object[]               genMsgArgs  = {
                 inputPath.toString(),
             };
             throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);

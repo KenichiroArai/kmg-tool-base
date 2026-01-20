@@ -145,7 +145,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public void outputInsertionSql() throws KmgToolBaseMsgException {
@@ -154,7 +154,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
         if (this.inputSheet == null) {
 
             final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10006;
-            final Object[]           genMsgArgs  = {};
+            final Object[]               genMsgArgs  = {};
             throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs);
 
         }
@@ -205,7 +205,7 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
         } catch (final IOException e) {
 
             final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10003;
-            final Object[]           genMsgArgs  = {
+            final Object[]               genMsgArgs  = {
                 outputFilePath,
             };
             throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
@@ -230,8 +230,8 @@ public class IsDataSheetCreationServiceImpl implements IslDataSheetCreationServi
 
             // ログの出力
             final KmgToolBaseLogMsgTypes logType     = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG10000;
-            final Object[]           messageArgs = {};
-            final String             msg         = this.messageSource.getLogMessage(logType, messageArgs);
+            final Object[]               messageArgs = {};
+            final String                 msg         = this.messageSource.getLogMessage(logType, messageArgs);
             this.logger.error(msg, e);
 
         }

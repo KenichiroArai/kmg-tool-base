@@ -92,7 +92,7 @@ public class IsCreationServiceImpl implements IsCreationService {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public void outputInsertionSql() throws KmgToolBaseMsgException {
@@ -101,7 +101,7 @@ public class IsCreationServiceImpl implements IsCreationService {
         if (this.inputPath == null) {
 
             final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08000;
-            final Object[]           genMsgArgs  = {};
+            final Object[]               genMsgArgs  = {};
             throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs);
 
         }

@@ -66,7 +66,7 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
     public void testCreateMessage_normalCreateMessage() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01001] 項目名がnullです。";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01001] 項目名がnullです。";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         /* 準備 */
@@ -109,7 +109,7 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
     public void testCreateMessageSource_normalCreateMessageSource() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         /* 準備 */
@@ -199,7 +199,7 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseCmnExcMsg messageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
-        final Throwable        expectedCause = new RuntimeException("テスト例外");
+        final Throwable            expectedCause = new RuntimeException("テスト例外");
 
         /* 準備 */
 
@@ -243,7 +243,7 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseCmnExcMsg messageTypes        = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
-        final Object[]         expectedMessageArgs = {
+        final Object[]             expectedMessageArgs = {
             "arg1", "arg2"
         };
 
@@ -375,7 +375,7 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseCmnExcMsg expectedMessageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
-        final Object[]         expectedMessageArgs  = {
+        final Object[]             expectedMessageArgs  = {
             "arg1", "arg2"
         };
 
@@ -398,7 +398,7 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
 
             /* 検証の準備 */
             final KmgToolBaseCmnExcMsg actualMessageTypes = (KmgToolBaseCmnExcMsg) this.testTarget.getMessageTypes();
-            final Object[]         actualMessageArgs  = this.testTarget.getMessageArgs();
+            final Object[]             actualMessageArgs  = this.testTarget.getMessageArgs();
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
@@ -421,10 +421,10 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseCmnExcMsg expectedMessageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
-        final Object[]         expectedMessageArgs  = {
+        final Object[]             expectedMessageArgs  = {
             "arg1", "arg2"
         };
-        final Throwable        expectedCause        = new RuntimeException("テスト例外");
+        final Throwable            expectedCause        = new RuntimeException("テスト例外");
 
         /* 準備 */
 
@@ -445,8 +445,8 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
 
             /* 検証の準備 */
             final KmgToolBaseCmnExcMsg actualMessageTypes = (KmgToolBaseCmnExcMsg) this.testTarget.getMessageTypes();
-            final Object[]         actualMessageArgs  = this.testTarget.getMessageArgs();
-            final Throwable        actualCause        = this.testTarget.getCause();
+            final Object[]             actualMessageArgs  = this.testTarget.getMessageArgs();
+            final Throwable            actualCause        = this.testTarget.getCause();
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");
@@ -470,7 +470,7 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseCmnExcMsg expectedMessageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
-        final Throwable        expectedCause        = new RuntimeException("テスト例外");
+        final Throwable            expectedCause        = new RuntimeException("テスト例外");
 
         /* 準備 */
 
@@ -491,7 +491,7 @@ public class KmgToolBaseMsgExceptionTest extends AbstractKmgTest {
 
             /* 検証の準備 */
             final KmgToolBaseCmnExcMsg actualMessageTypes = (KmgToolBaseCmnExcMsg) this.testTarget.getMessageTypes();
-            final Throwable        actualCause        = this.testTarget.getCause();
+            final Throwable            actualCause        = this.testTarget.getCause();
 
             /* 検証の実施 */
             Assertions.assertEquals(expectedMessageTypes, actualMessageTypes, "メッセージタイプが正しく設定されていること");

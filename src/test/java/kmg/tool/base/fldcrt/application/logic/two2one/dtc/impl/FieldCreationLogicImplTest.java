@@ -115,7 +115,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     public void testAddCommentToRows_errorCommentNotSet() {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN05000] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05000] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05000;
 
         /* 準備 */
@@ -194,7 +194,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     public void testAddFieldToRows_errorFieldNotSet() {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN05001] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05001] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
 
         /* 準備 */
@@ -273,7 +273,7 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     public void testAddTypeToRows_errorTypeNotSet() {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN05002] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05002] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05002;
 
         /* 準備 */

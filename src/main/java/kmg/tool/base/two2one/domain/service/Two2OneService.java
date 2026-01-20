@@ -40,7 +40,8 @@ public interface Two2OneService extends IoService {
      *                     出力ファイルパス
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
-    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) throws KmgToolBaseMsgException;
+    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
+        throws KmgToolBaseMsgException;
 }

@@ -126,9 +126,9 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testGetContent_normalGetContent() throws KmgToolBaseMsgException, KmgReflectionException {
@@ -156,9 +156,9 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testGetContent_semiNullContent() throws KmgToolBaseMsgException, KmgReflectionException {
@@ -186,17 +186,17 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testProcess_errorIOException() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN08002] テストメッセージ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN08002] テストメッセージ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08002;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         final Path inputPath = this.tempDir.resolve("non_existent_file.txt");
@@ -217,11 +217,12 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.process();
+                    this.testTarget.process();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -237,9 +238,9 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      */
     @Test
     public void testProcess_normalEmptyFileRead() throws KmgToolBaseMsgException, IOException {
@@ -273,9 +274,9 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      */
     @Test
     public void testProcess_normalFileRead() throws KmgToolBaseMsgException, IOException {
@@ -309,9 +310,9 @@ public class PlainContentInputServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      */
     @Test
     public void testProcess_normalLargeFileRead() throws KmgToolBaseMsgException, IOException {

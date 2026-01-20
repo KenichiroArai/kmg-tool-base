@@ -129,7 +129,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddItemToRows_abnormalItemNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01001] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
 
         // SpringApplicationContextHelperのモック化
@@ -148,11 +148,12 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
             this.testTarget.addOneLineOfDataToRows();
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.addItemToRows();
+                    this.testTarget.addItemToRows();
 
-            }, "項目名がnullの場合は例外が発生すること");
+                }, "項目名がnullの場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
@@ -208,7 +209,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddJavadocCommentToRows_abnormalJavadocNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01002] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01002] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01002;
 
         // SpringApplicationContextHelperのモック化
@@ -227,11 +228,12 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
             this.testTarget.addOneLineOfDataToRows();
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.addJavadocCommentToRows();
+                    this.testTarget.addJavadocCommentToRows();
 
-            }, "Javadocコメントがnullの場合は例外が発生すること");
+                }, "Javadocコメントがnullの場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
@@ -318,7 +320,7 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
     public void testAddTypeToRows_abnormalTypeNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN01003] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN01003] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01003;
 
         // SpringApplicationContextHelperのモック化
@@ -337,11 +339,12 @@ public class AccessorCreationLogicImplTest extends AbstractKmgTest {
             this.testTarget.addOneLineOfDataToRows();
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.addTypeToRows();
+                    this.testTarget.addTypeToRows();
 
-            }, "型がnullの場合は例外が発生すること");
+                }, "型がnullの場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);

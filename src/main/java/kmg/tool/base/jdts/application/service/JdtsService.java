@@ -51,9 +51,9 @@ public interface JdtsService {
      *                       定義ファイルのパス
      *
      * @throws KmgFundMsgException
-     *                             KMG基盤メッセージ例外
+     *                                 KMG基盤メッセージ例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean initialize(final Path targetPath, final Path definitionPath)
         throws KmgFundMsgException, KmgToolBaseMsgException;
@@ -66,11 +66,11 @@ public interface JdtsService {
      * @return true：成功、false：失敗
      *
      * @throws KmgFundMsgException
-     *                             KMG基盤メッセージ例外
+     *                                 KMG基盤メッセージ例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgToolBaseValException
-     *                             KMGツールバリデーション例外
+     *                                 KMGツールバリデーション例外
      */
     boolean process() throws KmgFundMsgException, KmgToolBaseMsgException, KmgToolBaseValException;
 

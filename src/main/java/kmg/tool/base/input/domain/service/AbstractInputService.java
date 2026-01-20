@@ -63,7 +63,7 @@ public abstract class AbstractInputService implements InputService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -75,7 +75,7 @@ public abstract class AbstractInputService implements InputService {
         if (inputPath == null) {
 
             final KmgToolBaseGenMsgTypes genType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08000;
-            final Object[]           messageArgs = {};
+            final Object[]               messageArgs = {};
 
             throw new KmgToolBaseMsgException(genType, messageArgs);
 
@@ -84,7 +84,7 @@ public abstract class AbstractInputService implements InputService {
         if (!Files.exists(inputPath)) {
 
             final KmgToolBaseGenMsgTypes genType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08001;
-            final Object[]           messageArgs = {
+            final Object[]               messageArgs = {
                 inputPath.toString()
             };
 
@@ -108,7 +108,7 @@ public abstract class AbstractInputService implements InputService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public abstract boolean process() throws KmgToolBaseMsgException;

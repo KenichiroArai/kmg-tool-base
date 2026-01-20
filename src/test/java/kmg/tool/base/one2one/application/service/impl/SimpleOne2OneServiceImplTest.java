@@ -264,9 +264,9 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testInitialize_normalInitialization() throws KmgToolBaseMsgException, KmgReflectionException {
@@ -303,7 +303,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN15000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化（より確実に例外を発生させる）
@@ -348,7 +348,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN15000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // 存在しない入力ファイルパスで初期化
@@ -393,7 +393,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN15000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用入力ファイルを作成
@@ -441,7 +441,7 @@ public class SimpleOne2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN15000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用入力ファイルを作成

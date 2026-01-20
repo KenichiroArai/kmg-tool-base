@@ -35,7 +35,7 @@ public interface InputService {
      *                  入力ファイルパス
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean initialize(final Path inputPath) throws KmgToolBaseMsgException;
 
@@ -47,7 +47,7 @@ public interface InputService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean process() throws KmgToolBaseMsgException;
 

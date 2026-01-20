@@ -91,7 +91,7 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
      *                  入力ファイルのパス
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -113,7 +113,7 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolBaseMsgException {
@@ -129,10 +129,10 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
 
         /* ログの出力 */
         final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000;
-        final Object[]           logMsgArgs  = {
+        final Object[]               logMsgArgs  = {
             lineCount,
         };
-        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
         this.logger.debug(logMsg);
 
         return result;

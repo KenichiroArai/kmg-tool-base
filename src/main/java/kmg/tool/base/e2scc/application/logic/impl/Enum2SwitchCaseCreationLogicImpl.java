@@ -66,7 +66,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean addItemNameToRows() throws KmgToolBaseMsgException {
@@ -76,7 +76,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
         if (this.itemName == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04000;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -96,7 +96,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean addItemToRows() throws KmgToolBaseMsgException {
@@ -106,7 +106,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
         if (this.item == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -126,7 +126,7 @@ public class Enum2SwitchCaseCreationLogicImpl extends AbstractIctoOneLinePattern
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean convertEnumDefinition() throws KmgToolBaseMsgException {

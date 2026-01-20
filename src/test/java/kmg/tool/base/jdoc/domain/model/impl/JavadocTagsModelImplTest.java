@@ -76,7 +76,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testConstructor_normalEmptyJavadoc() throws KmgToolBaseMsgException {
@@ -105,7 +105,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testConstructor_normalInvalidTagJavadoc() throws KmgToolBaseMsgException {
@@ -138,7 +138,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testConstructor_normalMultiLineDescriptionJavadoc() throws KmgToolBaseMsgException {
@@ -173,7 +173,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testConstructor_normalMultipleTagsJavadoc() throws KmgToolBaseMsgException {
@@ -201,7 +201,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testConstructor_normalNullJavadoc() throws KmgToolBaseMsgException {
@@ -230,7 +230,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testConstructor_normalSingleTagJavadoc() throws KmgToolBaseMsgException {
@@ -263,7 +263,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testConstructor_normalTagOnlyJavadoc() throws KmgToolBaseMsgException {
@@ -296,7 +296,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testConstructor_normalTagWithDescriptionJavadoc() throws KmgToolBaseMsgException {
@@ -331,7 +331,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testConstructor_normalTagWithoutDescriptionJavadoc() throws KmgToolBaseMsgException {
@@ -389,7 +389,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testFindByTag_normalExistingTag() throws KmgToolBaseMsgException {
@@ -422,7 +422,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testFindByTag_normalNonExistingTag() throws KmgToolBaseMsgException {
@@ -451,7 +451,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testFindByTag_semiNullTag() throws KmgToolBaseMsgException {
@@ -480,7 +480,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testGetJavadocTagModelList_normalComplexJavadoc() throws KmgToolBaseMsgException {
@@ -537,7 +537,7 @@ public class JavadocTagsModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testGetJavadocTagModelList_normalMultipleTagsList() throws KmgToolBaseMsgException {

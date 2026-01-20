@@ -374,7 +374,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用テンプレートファイルを作成
@@ -422,7 +422,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用テンプレートファイルを作成
@@ -470,7 +470,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用ファイルを作成
@@ -519,7 +519,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用ファイルを作成
@@ -568,7 +568,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16001;
-        final String             expectedMessage = "テンプレートファイルの読み込みに失敗しました。";
+        final String                 expectedMessage = "テンプレートファイルの読み込みに失敗しました。";
 
         /* 準備 */
         // 存在しないテンプレートファイルパスで初期化（より確実に例外を発生させる）
@@ -613,7 +613,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16001;
-        final String             expectedMessage = "テンプレートファイルの読み込みに失敗しました。";
+        final String                 expectedMessage = "テンプレートファイルの読み込みに失敗しました。";
 
         /* 準備 */
         // 存在しないテンプレートファイルパスで初期化

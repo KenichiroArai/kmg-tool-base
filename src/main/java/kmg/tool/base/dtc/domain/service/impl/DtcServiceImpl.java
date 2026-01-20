@@ -167,7 +167,7 @@ public class DtcServiceImpl implements DtcService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -204,7 +204,7 @@ public class DtcServiceImpl implements DtcService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -225,7 +225,7 @@ public class DtcServiceImpl implements DtcService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolBaseMsgException {
@@ -233,8 +233,9 @@ public class DtcServiceImpl implements DtcService {
         boolean result = false;
 
         final KmgToolBaseLogMsgTypes startLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03000;
-        final Object[]           startLogMsgArgs  = {};
-        final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
+        final Object[]               startLogMsgArgs  = {};
+        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+            startLogMsgArgs);
         this.logger.debug(startLogMsg);
 
         try {
@@ -295,8 +296,8 @@ public class DtcServiceImpl implements DtcService {
             } finally {
 
                 final KmgToolBaseLogMsgTypes endLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03001;
-                final Object[]           endLogMsgArgs  = {};
-                final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
+                final Object[]               endLogMsgArgs  = {};
+                final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
                     endLogMsgArgs);
                 this.logger.debug(endLogMsg);
 
@@ -314,7 +315,7 @@ public class DtcServiceImpl implements DtcService {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     private void closeDtcLogic() throws KmgToolBaseMsgException {
 
@@ -325,7 +326,7 @@ public class DtcServiceImpl implements DtcService {
         } catch (final IOException e) {
 
             final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03006;
-            final Object[]           genMsgArgs  = {};
+            final Object[]               genMsgArgs  = {};
             throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }

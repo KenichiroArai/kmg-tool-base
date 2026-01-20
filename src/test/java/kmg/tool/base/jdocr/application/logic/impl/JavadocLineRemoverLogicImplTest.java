@@ -251,9 +251,9 @@ public class JavadocLineRemoverLogicImplTest {
      *                一時ディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testDeleteJavadocLines_normalDeleteSpecifiedLines(@TempDir final Path tempDir)
@@ -303,7 +303,7 @@ public class JavadocLineRemoverLogicImplTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testDeleteJavadocLines_normalEmptyMapReturnsZero() throws KmgToolBaseMsgException {
@@ -339,9 +339,9 @@ public class JavadocLineRemoverLogicImplTest {
      *                一時ディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testDeleteJavadocLines_normalInputMapContainsKeyCheck(@TempDir final Path tempDir)
@@ -407,9 +407,9 @@ public class JavadocLineRemoverLogicImplTest {
      *                一時ディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testDeleteJavadocLines_normalInvalidLineNumbersSkipped(@TempDir final Path tempDir)
@@ -462,9 +462,9 @@ public class JavadocLineRemoverLogicImplTest {
      *                一時ディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testDeleteJavadocLines_normalUnorderedLineNumbers(@TempDir final Path tempDir)
@@ -518,7 +518,7 @@ public class JavadocLineRemoverLogicImplTest {
     public void testDeleteJavadocLines_semiNonExistentFileThrowsException() {
 
         /* 期待値の定義 */
-        final Path               nonExistentFile = Paths.get("nonexistent.java");
+        final Path                   nonExistentFile = Paths.get("nonexistent.java");
         final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12001;
 
         /* 準備 */
@@ -637,9 +637,9 @@ public class JavadocLineRemoverLogicImplTest {
      *                一時ディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalEmptyInputFileReturnsEmptyMap(@TempDir final Path tempDir)
@@ -677,9 +677,9 @@ public class JavadocLineRemoverLogicImplTest {
      *                一時ディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalLineNumbersSortedDescending(@TempDir final Path tempDir)
@@ -725,9 +725,9 @@ public class JavadocLineRemoverLogicImplTest {
      *                一時ディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalMixedValidAndInvalidEntries(@TempDir final Path tempDir)
@@ -781,9 +781,9 @@ public class JavadocLineRemoverLogicImplTest {
      *                一時ディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalNonJavaFileLinesFiltered(@TempDir final Path tempDir)
@@ -828,9 +828,9 @@ public class JavadocLineRemoverLogicImplTest {
      *                一時ディレクトリ
      *
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testGetInputMap_normalValidInputFileProcessing(@TempDir final Path tempDir)
@@ -885,7 +885,7 @@ public class JavadocLineRemoverLogicImplTest {
     public void testGetInputMap_semiNonExistentInputFileThrowsException() {
 
         /* 期待値の定義 */
-        final Path               nonExistentInputFile = Paths.get("nonexistent_input.txt");
+        final Path                   nonExistentInputFile = Paths.get("nonexistent_input.txt");
         final KmgToolBaseGenMsgTypes expectedMsgType      = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN12002;
 
         /* 準備 */

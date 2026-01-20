@@ -173,10 +173,10 @@ public class JdtsCodeModelImpl implements JdtsCodeModel {
 
                 /* ログの出力 */
                 final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000;
-                final Object[]           logMsgArgs  = {
+                final Object[]               logMsgArgs  = {
                     jdtsBlockModel.getId(), jdtsBlockModel.getOrgBlock(),
                 };
-                final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+                final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
                 this.logger.warn(logMsg);
 
                 continue;

@@ -26,7 +26,7 @@ public interface JavadocLineRemoverService {
      *                  入力ファイルのパス
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean initialize(final Path inputPath) throws KmgToolBaseMsgException;
 
@@ -38,7 +38,7 @@ public interface JavadocLineRemoverService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean process() throws KmgToolBaseMsgException;
 }

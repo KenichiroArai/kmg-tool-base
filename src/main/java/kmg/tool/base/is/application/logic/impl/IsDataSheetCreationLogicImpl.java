@@ -213,7 +213,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public void createOutputFileDirectories() throws KmgToolBaseMsgException {
@@ -225,7 +225,7 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
         } catch (final IOException e) {
 
             final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10000;
-            final Object[]           genMsgArgs  = {
+            final Object[]               genMsgArgs  = {
                 this.outputPath,
             };
             throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);

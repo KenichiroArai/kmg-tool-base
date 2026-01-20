@@ -103,7 +103,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean initialize(Path inputPath, Path outputPath) throws KmgToolBaseMsgException;
 
@@ -125,9 +125,10 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
-    boolean initialize(Path inputPath, Path outputPath, KmgDelimiterTypes outputDelimiter) throws KmgToolBaseMsgException;
+    boolean initialize(Path inputPath, Path outputPath, KmgDelimiterTypes outputDelimiter)
+        throws KmgToolBaseMsgException;
 
     /**
      * 1行データを読み込む。
@@ -137,7 +138,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean readOneLineOfData() throws KmgToolBaseMsgException;
 
@@ -152,7 +153,7 @@ public interface IctoOneLinePatternLogic extends Closeable {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean writeIntermediateFile() throws KmgToolBaseMsgException;
 }

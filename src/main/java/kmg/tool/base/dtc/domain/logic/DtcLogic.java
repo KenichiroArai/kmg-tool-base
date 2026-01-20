@@ -29,7 +29,7 @@ public interface DtcLogic extends Closeable {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean addOutputBufferContent() throws KmgToolBaseMsgException;
 
@@ -39,7 +39,7 @@ public interface DtcLogic extends Closeable {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             入出力処理に失敗した場合
+     *                                 入出力処理に失敗した場合
      */
     void applyTemplateToInputFile() throws KmgToolBaseMsgException;
 
@@ -49,7 +49,7 @@ public interface DtcLogic extends Closeable {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     void clearOutputBufferContent() throws KmgToolBaseMsgException;
 
@@ -61,7 +61,7 @@ public interface DtcLogic extends Closeable {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean clearReadingData() throws KmgToolBaseMsgException;
 
@@ -125,11 +125,12 @@ public interface DtcLogic extends Closeable {
      *                     出力ファイルパス
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      *
      * @return true：成功、false：失敗
      */
-    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) throws KmgToolBaseMsgException;
+    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
+        throws KmgToolBaseMsgException;
 
     /**
      * 初期化する
@@ -146,7 +147,7 @@ public interface DtcLogic extends Closeable {
      *                              中間行の区切り文字
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      *
      * @return true：成功、false：失敗
      */
@@ -161,7 +162,7 @@ public interface DtcLogic extends Closeable {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             テンプレートの読み込みに失敗した場合
+     *                                 テンプレートの読み込みに失敗した場合
      */
     boolean loadTemplate() throws KmgToolBaseMsgException;
 
@@ -173,7 +174,7 @@ public interface DtcLogic extends Closeable {
      * @return true：データあり、false：データなし
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean readOneLineOfData() throws KmgToolBaseMsgException;
 
@@ -185,7 +186,7 @@ public interface DtcLogic extends Closeable {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean writeOutputBuffer() throws KmgToolBaseMsgException;
 }

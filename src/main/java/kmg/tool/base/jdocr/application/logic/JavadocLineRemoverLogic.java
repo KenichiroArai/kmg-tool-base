@@ -28,7 +28,7 @@ public interface JavadocLineRemoverLogic {
      * @return 削除した行数
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     int deleteJavadocLines(final Map<Path, Set<Integer>> inputMap) throws KmgToolBaseMsgException;
 
@@ -43,7 +43,7 @@ public interface JavadocLineRemoverLogic {
      * @return パスと行番号の降順のセットのマップ
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     Map<Path, Set<Integer>> getInputMap(final Path inputPath) throws KmgToolBaseMsgException;
 

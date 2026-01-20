@@ -159,7 +159,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testGetJdtsBlockModels_normalAfterParse() throws KmgToolBaseMsgException {
@@ -332,12 +332,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      * @throws KmgToolBaseMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalBlockParseResultFalseJavadocOnly() throws KmgReflectionException, KmgToolBaseMsgException {
+    public void testParse_normalBlockParseResultFalseJavadocOnly()
+        throws KmgReflectionException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 1;
@@ -353,8 +354,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
         this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
         /* モックの設定 */
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000),
-            ArgumentMatchers.any())).thenReturn("テストログメッセージ");
+        Mockito.when(this.mockMessageSource
+            .getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000), ArgumentMatchers.any()))
+            .thenReturn("テストログメッセージ");
 
         this.reflectionModel.set("messageSource", this.mockMessageSource);
 
@@ -379,9 +381,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      * @throws KmgToolBaseMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalBlockParseResultFalseNoJavadocEndMarker()
@@ -402,8 +404,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
         this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
         /* モックの設定 */
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000),
-            ArgumentMatchers.any())).thenReturn("テストログメッセージ");
+        Mockito.when(this.mockMessageSource
+            .getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000), ArgumentMatchers.any()))
+            .thenReturn("テストログメッセージ");
 
         this.reflectionModel.set("messageSource", this.mockMessageSource);
 
@@ -428,7 +431,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalConsecutiveJavadocBlocks() throws KmgToolBaseMsgException {
@@ -458,7 +461,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalEmptyString() throws KmgToolBaseMsgException {
@@ -487,7 +490,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalJavadocStartOnly() throws KmgToolBaseMsgException {
@@ -517,7 +520,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalJavadocStartWithoutWhitespace() throws KmgToolBaseMsgException {
@@ -547,7 +550,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalMultipleJavadocBlocks() throws KmgToolBaseMsgException {
@@ -579,7 +582,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalNoJavadocBlocks() throws KmgToolBaseMsgException {
@@ -609,7 +612,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalParseAfterGetJdtsBlockModels() throws KmgToolBaseMsgException {
@@ -650,7 +653,7 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalSingleJavadocBlock() throws KmgToolBaseMsgException {

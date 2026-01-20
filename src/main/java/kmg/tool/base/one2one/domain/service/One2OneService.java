@@ -29,7 +29,7 @@ public interface One2OneService extends IoService {
      *                   出力ファイルパス
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean initialize(Path inputPath, Path outputPath) throws KmgToolBaseMsgException;
 }

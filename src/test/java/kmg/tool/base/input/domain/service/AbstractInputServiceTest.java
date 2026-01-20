@@ -62,7 +62,7 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
          * @return true：成功、false：失敗
          *
          * @throws KmgToolBaseMsgException
-         *                             KMGツールメッセージ例外
+         *                                 KMGツールメッセージ例外
          */
         @Override
         public boolean process() throws KmgToolBaseMsgException {
@@ -207,7 +207,7 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
     public void testInitialize_errorInputPathNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN08001] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN08001] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08001;
 
         // SpringApplicationContextHelperのモック化
@@ -225,11 +225,12 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
             final Path testInputPath = this.tempDir.resolve("non_existent_file.txt");
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.initialize(testInputPath);
+                    this.testTarget.initialize(testInputPath);
 
-            }, "inputPathが存在しない場合は例外が発生すること");
+                }, "inputPathが存在しない場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
@@ -250,7 +251,7 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
     public void testInitialize_errorInputPathNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN08000] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN08000] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08000;
 
         // SpringApplicationContextHelperのモック化
@@ -268,11 +269,12 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
             final Path testInputPath = null;
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.initialize(testInputPath);
+                    this.testTarget.initialize(testInputPath);
 
-            }, "inputPathがnullの場合は例外が発生すること");
+                }, "inputPathがnullの場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);

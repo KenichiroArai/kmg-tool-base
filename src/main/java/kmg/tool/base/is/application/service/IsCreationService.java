@@ -38,7 +38,7 @@ public interface IsCreationService {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     void outputInsertionSql() throws KmgToolBaseMsgException;
 }

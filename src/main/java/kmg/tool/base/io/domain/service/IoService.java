@@ -41,7 +41,7 @@ public interface IoService {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean process() throws KmgToolBaseMsgException;
 

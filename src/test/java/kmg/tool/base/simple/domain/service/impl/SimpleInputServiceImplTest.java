@@ -180,7 +180,7 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     @Disabled
@@ -227,7 +227,7 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     @Disabled
@@ -313,7 +313,7 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testProcess_normalProcess() throws KmgToolBaseMsgException {

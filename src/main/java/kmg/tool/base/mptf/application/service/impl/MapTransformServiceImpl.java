@@ -129,9 +129,9 @@ public class MapTransformServiceImpl implements MapTransformService {
      * @return true：成功、false：失敗
      *
      * @throws KmgFundMsgException
-     *                             KMG基盤メッセージ例外
+     *                                 KMG基盤メッセージ例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
@@ -159,11 +159,11 @@ public class MapTransformServiceImpl implements MapTransformService {
      * @return true：成功、false：失敗
      *
      * @throws KmgFundMsgException
-     *                             KMG基盤メッセージ例外
+     *                                 KMG基盤メッセージ例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgToolBaseValException
-     *                             KMGツールバリデーション例外
+     *                                 KMGツールバリデーション例外
      */
     @Override
     public boolean process() throws KmgFundMsgException, KmgToolBaseMsgException, KmgToolBaseValException {
@@ -171,8 +171,9 @@ public class MapTransformServiceImpl implements MapTransformService {
         boolean result;
 
         final KmgToolBaseLogMsgTypes startLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG19000;
-        final Object[]           startLogMsgArgs  = {};
-        final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
+        final Object[]               startLogMsgArgs  = {};
+        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+            startLogMsgArgs);
         this.logger.debug(startLogMsg);
 
         /* 準備 */
@@ -209,7 +210,7 @@ public class MapTransformServiceImpl implements MapTransformService {
         if (uuidReplaceCount != replaceValueReplaceCount) {
 
             final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN19004;
-            final Object[]           genMsgArgs  = {
+            final Object[]               genMsgArgs  = {
                 uuidReplaceCount, replaceValueReplaceCount
             };
             throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs);
@@ -217,10 +218,10 @@ public class MapTransformServiceImpl implements MapTransformService {
         }
 
         final KmgToolBaseLogMsgTypes endLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG19001;
-        final Object[]           endLogMsgArgs  = {
+        final Object[]               endLogMsgArgs  = {
             this.fileIteratorLogic.getFilePathList().size(), uuidReplaceCount,
         };
-        final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
+        final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
         this.logger.debug(endLogMsg);
 
         result = true;
@@ -236,9 +237,9 @@ public class MapTransformServiceImpl implements MapTransformService {
      * @return 置換数
      *
      * @throws KmgFundMsgException
-     *                             KMG基盤メッセージ例外
+     *                                 KMG基盤メッセージ例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     private long replaceTargetValuesWithUuid() throws KmgFundMsgException, KmgToolBaseMsgException {
 
@@ -287,9 +288,9 @@ public class MapTransformServiceImpl implements MapTransformService {
      * @return 置換数
      *
      * @throws KmgFundMsgException
-     *                             KMG基盤メッセージ例外
+     *                                 KMG基盤メッセージ例外
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     private long replaceUuidWithReplacementValues() throws KmgFundMsgException, KmgToolBaseMsgException {
 

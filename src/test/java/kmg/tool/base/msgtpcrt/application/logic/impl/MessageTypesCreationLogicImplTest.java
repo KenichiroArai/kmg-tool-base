@@ -131,7 +131,7 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testaddItemNameToRows_errorItemNameNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14000] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN14000] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14000;
 
         /* 準備 */
@@ -205,7 +205,7 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testaddItemToRows_errorItemNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14001] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN14001] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001;
 
         /* 準備 */
@@ -279,7 +279,7 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertMessageTypesDefinition_errorInvalidSplitCount() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14002] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN14002] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14002;
 
         /* 準備 */

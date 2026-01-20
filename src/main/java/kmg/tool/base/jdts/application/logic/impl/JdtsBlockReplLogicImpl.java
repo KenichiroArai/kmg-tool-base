@@ -329,7 +329,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
+     *                                 KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
     @SuppressWarnings("hiding")
     @Override

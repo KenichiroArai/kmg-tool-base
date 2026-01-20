@@ -22,7 +22,7 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean addCommentToRows() throws KmgToolBaseMsgException;
 
@@ -34,7 +34,7 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean addFieldToRows() throws KmgToolBaseMsgException;
 
@@ -46,7 +46,7 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean addTypeToRows() throws KmgToolBaseMsgException;
 
@@ -58,7 +58,7 @@ public interface FieldCreationLogic extends IctoOneLinePatternLogic {
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean convertFields() throws KmgToolBaseMsgException;
 

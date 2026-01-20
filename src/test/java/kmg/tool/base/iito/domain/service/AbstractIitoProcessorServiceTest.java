@@ -81,7 +81,7 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
          * @return true：成功、false：失敗
          *
          * @throws KmgToolBaseMsgException
-         *                             KMGツールメッセージ例外
+         *                                 KMGツールメッセージ例外
          */
         @Override
         public boolean writeIntermediateFile() throws KmgToolBaseMsgException {
@@ -254,9 +254,9 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     public void testCreateTempIntermediateFile_errorIOException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07006] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07006] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07006;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         final Path testInputFile = this.tempDir.resolve("test_input.txt");
@@ -530,9 +530,9 @@ public class AbstractIitoProcessorServiceTest extends AbstractKmgTest {
     public void testInitialize_errorCreateTempFileIOException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN07006] ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN07006] ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07006;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         final Path testInputFile    = this.tempDir.resolve("test_input.txt");

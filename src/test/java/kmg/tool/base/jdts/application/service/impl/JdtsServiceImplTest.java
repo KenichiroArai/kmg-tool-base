@@ -258,11 +258,11 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgFundMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgToolBaseValException
-     *                                KMGツールバリデーション例外
+     *                                 KMGツールバリデーション例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testCreateJdtsConfigsModel_errorYamlLoadException()
@@ -538,11 +538,11 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgFundMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgToolBaseValException
-     *                                KMGツールバリデーション例外
+     *                                 KMGツールバリデーション例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testLoadAndCreateCodeModel_errorLoadContentException()
@@ -1098,11 +1098,11 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgFundMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgToolBaseValException
-     *                                KMGツールバリデーション例外
+     *                                 KMGツールバリデーション例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testProcessFile_errorLoadAndCreateCodeModelException()
@@ -1194,11 +1194,11 @@ public class JdtsServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgFundMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgToolBaseValException
-     *                                KMGツールバリデーション例外
+     *                                 KMGツールバリデーション例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testReplaceJavadoc_errorInitializeException()

@@ -25,7 +25,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean addItemNameToRows() throws KmgToolBaseMsgException;
 
@@ -37,7 +37,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean addItemToRows() throws KmgToolBaseMsgException;
 
@@ -49,7 +49,7 @@ public interface MessageTypesCreationLogic extends IctoOneLinePatternLogic {
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     boolean convertMessageTypesDefinition() throws KmgToolBaseMsgException;
 

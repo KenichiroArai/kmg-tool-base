@@ -64,7 +64,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean addItemNameToRows() throws KmgToolBaseMsgException {
@@ -74,7 +74,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         if (this.itemName == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14000;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -94,7 +94,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean addItemToRows() throws KmgToolBaseMsgException {
@@ -104,7 +104,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         if (this.item == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -124,7 +124,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean convertMessageTypesDefinition() throws KmgToolBaseMsgException {
@@ -140,7 +140,7 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
             // 分かれない場合
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14002;
-            final Object[]           messageArgs  = {
+            final Object[]               messageArgs  = {
                 this.getNowLineNumber(), this.getLineOfDataRead(),
             };
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);

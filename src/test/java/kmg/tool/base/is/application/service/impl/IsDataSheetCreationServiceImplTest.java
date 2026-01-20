@@ -273,16 +273,16 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testOutputInsertionSql_errorIOException() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage
-                                                       = "[KMGTOOLBASE_GEN10003] 出力ファイルへの書き込みに失敗しました。出力ファイルパス=[test_insert_test_table.sql]";
+        final String                 expectedDomainMessage
+                                                           = "[KMGTOOLBASE_GEN10003] 出力ファイルへの書き込みに失敗しました。出力ファイルパス=[test_insert_test_table.sql]";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10003;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         final KmgDbTypes          testKmgDbTypes     = KmgDbTypes.POSTGRE_SQL;
@@ -364,9 +364,9 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorNotInitialized() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN10006] 入力シートはnullです。";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN10006] 入力シートはnullです。";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10006;
-        final Class<?>           expectedCauseClass    = null;
+        final Class<?>               expectedCauseClass    = null;
 
         /* 準備 */
         // 初期化しない
@@ -387,11 +387,12 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
                     .thenReturn(expectedDomainMessage);
 
                 /* テスト対象の実行 */
-                final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+                final KmgToolBaseMsgException actualException
+                    = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                    this.testTarget.outputInsertionSql();
+                        this.testTarget.outputInsertionSql();
 
-                });
+                    });
 
                 /* 検証の実施 */
                 this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -409,9 +410,9 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      */
     @Test
     public void testOutputInsertionSql_normalExecution() throws KmgToolBaseMsgException, IOException {
@@ -482,9 +483,9 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws IOException
-     *                             入出力例外
+     *                                 入出力例外
      */
     @Test
     public void testOutputInsertionSql_normalExecutionWithNullRows() throws KmgToolBaseMsgException, IOException {
@@ -558,15 +559,15 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testRun_errorKmgToolMsgException() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedLogMessage  = "テスト用のログメッセージ";
+        final String                 expectedLogMessage  = "テスト用のログメッセージ";
         final KmgToolBaseLogMsgTypes expectedLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG10000;
 
         /* 準備 */
@@ -606,7 +607,7 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
 
                 // KmgToolMsgExceptionを発生させる（SpringApplicationContextHelperのモック化後に作成）
                 final KmgToolBaseGenMsgTypes  genMsgTypes   = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10003;
-                final Object[]            genMsgArgs    = {
+                final Object[]                genMsgArgs    = {
                     "test_file.sql"
                 };
                 final KmgToolBaseMsgException testException = new KmgToolBaseMsgException(genMsgTypes, genMsgArgs);
@@ -635,7 +636,7 @@ public class IsDataSheetCreationServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testRun_normalExecution() throws KmgToolBaseMsgException {

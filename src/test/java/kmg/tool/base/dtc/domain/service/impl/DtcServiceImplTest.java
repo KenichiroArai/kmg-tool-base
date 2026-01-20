@@ -130,17 +130,17 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
     public void testCloseDtcLogic_errorIOException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN03006] テストメッセージ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN03006] テストメッセージ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03006;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         try {
@@ -167,11 +167,12 @@ public class DtcServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("closeDtcLogic");
+                    this.reflectionModel.getMethod("closeDtcLogic");
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -187,9 +188,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
     public void testCloseDtcLogic_normalClose() throws KmgToolBaseMsgException, Exception {
@@ -429,7 +430,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testInitialize_normalInitialization() throws KmgToolBaseMsgException {
@@ -466,12 +467,13 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
-    public void testInitialize_normalInitializationWithDelimiter() throws KmgToolBaseMsgException, KmgReflectionException {
+    public void testInitialize_normalInitializationWithDelimiter()
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
         final Path              expectedInputPath             = this.tempDir.resolve("input.txt");
@@ -509,17 +511,17 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testProcess_errorCloseIOException() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
-        final String             expectedStartLogMsg   = "処理開始ログメッセージ";
-        final String             expectedEndLogMsg     = "処理終了ログメッセージ";
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN03006] テストメッセージ";
+        final String                 expectedStartLogMsg   = "処理開始ログメッセージ";
+        final String                 expectedEndLogMsg     = "処理終了ログメッセージ";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN03006] テストメッセージ";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03006;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         final Path inputPath    = this.tempDir.resolve("input.txt");
@@ -559,11 +561,12 @@ public class DtcServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.process();
+                    this.testTarget.process();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -579,7 +582,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("resource")
     @Test
@@ -625,9 +628,9 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                                KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testProcess_normalWithIntermediateDelimiter() throws KmgToolBaseMsgException, KmgReflectionException {
@@ -672,7 +675,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testProcess_normalWithoutIntermediateDelimiter() throws KmgToolBaseMsgException {
@@ -719,7 +722,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testProcess_semiNoData() throws KmgToolBaseMsgException {

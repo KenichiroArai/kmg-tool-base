@@ -188,9 +188,9 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorNotInitialized() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN08000] 入力ファイルパスがnullです。";
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN08000] 入力ファイルパスがnullです。";
         final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08000;
-        final Class<?>           expectedCauseClass    = null;
+        final Class<?>               expectedCauseClass    = null;
 
         /* 準備 */
         // 初期化しない
@@ -208,11 +208,12 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.outputInsertionSql();
+                    this.testTarget.outputInsertionSql();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -228,7 +229,7 @@ public class IsCreationServiceImplTest extends AbstractKmgTest {
      * @since 0.2.4
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testOutputInsertionSql_normalExecution() throws KmgToolBaseMsgException {

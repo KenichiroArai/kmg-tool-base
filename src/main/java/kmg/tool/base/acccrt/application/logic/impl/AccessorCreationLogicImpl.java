@@ -99,7 +99,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean addItemToRows() throws KmgToolBaseMsgException {
@@ -109,7 +109,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
         if (this.item == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01001;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -129,7 +129,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean addJavadocCommentToRows() throws KmgToolBaseMsgException {
@@ -139,7 +139,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
         if (this.javadocComment == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01002;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -159,7 +159,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean addTypeToRows() throws KmgToolBaseMsgException {
@@ -169,7 +169,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
         if (this.type == null) {
 
             final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN01003;
-            final Object[]           messageArgs  = {};
+            final Object[]               messageArgs  = {};
             throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
@@ -210,7 +210,7 @@ public class AccessorCreationLogicImpl extends AbstractIctoOneLinePatternLogic i
      * @return true：変換あり、false：変換なし
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean convertFields() throws KmgToolBaseMsgException {

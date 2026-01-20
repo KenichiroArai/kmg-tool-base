@@ -35,7 +35,7 @@ public class SimpleInputServiceImpl extends AbstractInputService implements Simp
      * @return true：成功、false：失敗
      *
      * @throws KmgToolBaseMsgException
-     *                             KMGツールメッセージ例外
+     *                                 KMGツールメッセージ例外
      */
     @Override
     public boolean process() throws KmgToolBaseMsgException {
