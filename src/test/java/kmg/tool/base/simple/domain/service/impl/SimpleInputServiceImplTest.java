@@ -21,7 +21,7 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 import kmg.tool.base.simple.domain.service.SimpleInputServiceImpl;
 
 /**
@@ -31,7 +31,7 @@ import kmg.tool.base.simple.domain.service.SimpleInputServiceImpl;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -177,14 +177,14 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 異常系：入力パスが存在しない場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     @Disabled
-    public void testInitialize_errorInputPathNotExists() throws KmgToolMsgException {
+    public void testInitialize_errorInputPathNotExists() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final Path nonExistentPath = Paths.get("non/existent/path");
@@ -206,7 +206,7 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
             mockFiles.when(() -> Files.exists(ArgumentMatchers.any(Path.class))).thenReturn(false);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.initialize(nonExistentPath);
 
@@ -224,14 +224,14 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 異常系：入力パスがnullの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
     @Disabled
-    public void testInitialize_errorNullInputPath() throws KmgToolMsgException {
+    public void testInitialize_errorNullInputPath() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
 
@@ -248,7 +248,7 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
                 .thenReturn("テスト用の例外メッセージ");
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.initialize(null);
 
@@ -310,13 +310,13 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
     /**
      * process メソッドのテスト - 正常系：正常な処理
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                             KMGツールメッセージ例外
      */
     @Test
-    public void testProcess_normalProcess() throws KmgToolMsgException {
+    public void testProcess_normalProcess() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
 

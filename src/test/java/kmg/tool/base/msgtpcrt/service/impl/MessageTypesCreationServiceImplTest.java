@@ -25,8 +25,8 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.msgtpcrt.application.logic.MessageTypesCreationLogic;
 
 /**
@@ -36,7 +36,7 @@ import kmg.tool.base.msgtpcrt.application.logic.MessageTypesCreationLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -181,8 +181,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = IOException.class;
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14003] メッセージの種類作成ロジックをクローズ中にエラーが発生しました。";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14003;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14003] メッセージの種類作成ロジックをクローズ中にエラーが発生しました。";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14003;
 
         /* 準備 */
         Mockito.doThrow(new IOException("テスト例外")).when(this.mockMessageTypesCreationLogic).close();
@@ -199,7 +199,7 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 try {
 
@@ -210,9 +210,9 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
                     // KmgReflectionExceptionの原因となった例外を再投げする
                     final Throwable cause = e.getCause();
 
-                    if (cause instanceof KmgToolMsgException) {
+                    if (cause instanceof KmgToolBaseMsgException) {
 
-                        throw (KmgToolMsgException) cause;
+                        throw (KmgToolBaseMsgException) cause;
 
                     }
                     throw e;
@@ -351,8 +351,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     public void testProcessColumns_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14001] 項目がnullです。";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14001;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14001] 項目がnullです。";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -372,12 +372,12 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageTypesCreationLogic.convertMessageTypesDefinition()).thenReturn(true);
 
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN14001);
+            final KmgToolBaseMsgException testException = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001);
 
             Mockito.when(this.mockMessageTypesCreationLogic.addItemToRows()).thenThrow(testException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 try {
 
@@ -388,9 +388,9 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
                     // KmgReflectionExceptionの原因となった例外を再投げする
                     final Throwable cause = e.getCause();
 
-                    if (cause instanceof KmgToolMsgException) {
+                    if (cause instanceof KmgToolBaseMsgException) {
 
-                        throw (KmgToolMsgException) cause;
+                        throw (KmgToolBaseMsgException) cause;
 
                     }
                     throw e;
@@ -473,8 +473,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final String             expectedDomainMessage
-                                                       = "[KMGTOOL_GEN14002] 項目と項目名に分かれていません。「項目=項目名」の設定にしてください。行番号=[{0}]、行データ=[{1}]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14002;
+                                                       = "[KMGTOOLBASE_GEN14002] 項目と項目名に分かれていません。「項目=項目名」の設定にしてください。行番号=[{0}]、行データ=[{1}]";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14002;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -494,13 +494,13 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
             final Object[]            messageArgs   = {
                 1, "test data"
             };
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN14002,
+            final KmgToolBaseMsgException testException = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14002,
                 messageArgs);
 
             Mockito.when(this.mockMessageTypesCreationLogic.readOneLineOfData()).thenThrow(testException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 try {
 
@@ -511,9 +511,9 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
                     // KmgReflectionExceptionの原因となった例外を再投げする
                     final Throwable cause = e.getCause();
 
-                    if (cause instanceof KmgToolMsgException) {
+                    if (cause instanceof KmgToolBaseMsgException) {
 
-                        throw (KmgToolMsgException) cause;
+                        throw (KmgToolBaseMsgException) cause;
 
                     }
                     throw e;
@@ -569,8 +569,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final Class<?>           expectedCauseClass    = IOException.class;
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14003] メッセージの種類作成ロジックをクローズ中にエラーが発生しました。";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14003;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14003] メッセージの種類作成ロジックをクローズ中にエラーが発生しました。";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14003;
 
         /* 準備 */
         final Path testInputFile = this.tempDir.resolve("test_input.txt");
@@ -592,8 +592,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
             Mockito.doThrow(new IOException("テスト例外")).when(this.mockMessageTypesCreationLogic).close();
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.writeIntermediateFile());
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> this.testTarget.writeIntermediateFile());
 
             /* 検証の準備 */
 
@@ -608,20 +608,20 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：processColumnsでKmgToolMsgException発生
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
     public void testWriteIntermediateFile_errorProcessColumnsException()
-        throws KmgToolMsgException, KmgReflectionException {
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14001;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001;
         final Class<?>           expectedCauseClass    = null;
 
         /* 準備 */
@@ -650,8 +650,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn("test log message");
 
             // KmgToolMsgExceptionの作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN14001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001, new Object[] {});
             Mockito.when(this.mockMessageTypesCreationLogic.convertMessageTypesDefinition()).thenReturn(true);
             Mockito.when(this.mockMessageTypesCreationLogic.addItemToRows()).thenThrow(testException);
 
@@ -667,7 +667,7 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.writeIntermediateFile();
 
@@ -684,20 +684,20 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：readOneLineDataでKmgToolMsgException発生
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
     public void testWriteIntermediateFile_errorReadOneLineDataException()
-        throws KmgToolMsgException, KmgReflectionException {
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14001;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001;
         final Class<?>           expectedCauseClass    = null;
 
         /* 準備 */
@@ -725,8 +725,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn("test log message");
 
             // KmgToolMsgExceptionの作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN14001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001, new Object[] {});
             Mockito.when(this.mockMessageTypesCreationLogic.readOneLineOfData()).thenThrow(testException);
 
             try {
@@ -741,7 +741,7 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.writeIntermediateFile();
 
@@ -758,20 +758,20 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：writeIntermediateFileLineでKmgToolMsgException発生
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
+     * @throws KmgToolBaseMsgException
      *                                KMGツールメッセージ例外
      * @throws KmgReflectionException
      *                                リフレクション例外
      */
     @Test
     public void testWriteIntermediateFile_errorWriteIntermediateFileLineException()
-        throws KmgToolMsgException, KmgReflectionException {
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14001;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001;
         final Class<?>           expectedCauseClass    = null;
 
         /* 準備 */
@@ -803,8 +803,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn("test log message");
 
             // KmgToolMsgExceptionの作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN14001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001, new Object[] {});
             Mockito.when(this.mockMessageTypesCreationLogic.writeIntermediateFile()).thenThrow(testException);
 
             try {
@@ -819,7 +819,7 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.writeIntermediateFile();
 
@@ -847,7 +847,7 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
         /* 準備 */
         final Path testInputFile = this.tempDir.resolve("test_input.txt");
         this.tempDir.resolve("test_output.tmp");
-        Files.write(testInputFile, "KMGTOOL_GEN14000=メッセージの種類が指定されていません。".getBytes());
+        Files.write(testInputFile, "KMGTOOLBASE_GEN14000=メッセージの種類が指定されていません。".getBytes());
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -865,7 +865,7 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(this.mockMessageTypesCreationLogic.convertMessageTypesDefinition()).thenReturn(true);
             Mockito.when(this.mockMessageTypesCreationLogic.addItemToRows()).thenReturn(true);
             Mockito.when(this.mockMessageTypesCreationLogic.addItemNameToRows()).thenReturn(true);
-            Mockito.when(this.mockMessageTypesCreationLogic.getItem()).thenReturn("KMGTOOL_GEN14000");
+            Mockito.when(this.mockMessageTypesCreationLogic.getItem()).thenReturn("KMGTOOLBASE_GEN14000");
             Mockito.when(this.mockMessageTypesCreationLogic.getItemName()).thenReturn("メッセージの種類が指定されていません。");
 
             /* テスト対象の実行 */
@@ -895,7 +895,7 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
         /* 準備 */
         final Path testInputFile = this.tempDir.resolve("test_input.txt");
         this.tempDir.resolve("test_output.tmp");
-        Files.write(testInputFile, "KMGTOOL_GEN14000=メッセージの種類が指定されていません。".getBytes());
+        Files.write(testInputFile, "KMGTOOLBASE_GEN14000=メッセージの種類が指定されていません。".getBytes());
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -942,8 +942,8 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
     public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14003] メッセージの種類作成ロジックをクローズ中にエラーが発生しました。";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14003;
+        final String             expectedDomainMessage = "[KMGTOOLBASE_GEN14003] メッセージの種類作成ロジックをクローズ中にエラーが発生しました。";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14003;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -960,12 +960,12 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
             /* 準備 */
             // 例外を事前に作成して、モック設定を完了させる
-            final KmgToolMsgException testException = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN14003);
+            final KmgToolBaseMsgException testException = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14003);
 
             Mockito.doThrow(testException).when(this.mockMessageTypesCreationLogic).writeIntermediateFile();
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 try {
 
@@ -976,9 +976,9 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
                     // KmgReflectionExceptionの原因となった例外を再投げする
                     final Throwable cause = e.getCause();
 
-                    if (cause instanceof KmgToolMsgException) {
+                    if (cause instanceof KmgToolBaseMsgException) {
 
-                        throw (KmgToolMsgException) cause;
+                        throw (KmgToolBaseMsgException) cause;
 
                     }
                     throw e;
@@ -1011,7 +1011,7 @@ public class MessageTypesCreationServiceImplTest extends AbstractKmgTest {
 
         /* 準備 */
         Mockito.when(this.mockMessageTypesCreationLogic.writeIntermediateFile()).thenReturn(true);
-        Mockito.when(this.mockMessageTypesCreationLogic.getItem()).thenReturn("KMGTOOL_GEN14000");
+        Mockito.when(this.mockMessageTypesCreationLogic.getItem()).thenReturn("KMGTOOLBASE_GEN14000");
         Mockito.when(this.mockMessageTypesCreationLogic.getItemName()).thenReturn("メッセージの種類が指定されていません。");
 
         // SpringApplicationContextHelperのモック化
