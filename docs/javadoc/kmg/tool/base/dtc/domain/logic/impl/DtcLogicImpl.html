@@ -109,7 +109,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
 <dt>バージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 <dt>作成者:</dt>
 <dd>KenichiroArai</dd>
 </dl>
@@ -530,7 +530,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="addOutputBufferContent()">
 <h3>addOutputBufferContent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addOutputBufferContent</span>()
-                               throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                               throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">出力バッファに追加する<br>
  <p>
  現在の1件分の内容（contentsOfOneItem）を出力バッファに追加します。 変換処理が完了したテンプレートの内容をバッファに蓄積するために使用します。
@@ -541,9 +541,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - バッファ操作中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - バッファ操作中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -551,7 +551,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="applyTemplateToInputFile()">
 <h3>applyTemplateToInputFile</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">applyTemplateToInputFile</span>()
-                              throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                              throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">入力ファイルからテンプレートに基づいて変換する。<br>
  <p>
  現在読み込まれている入力ファイルの1行データに対して、テンプレートを適用し変換処理を行います。 中間プレースホルダーと派生プレースホルダーの両方を処理します。
@@ -560,9 +560,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>定義:</dt>
 <dd><code><a href="../DtcLogic.html#applyTemplateToInputFile()">applyTemplateToInputFile</a></code>&nbsp;インタフェース内&nbsp;<code><a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内のインタフェース">DtcLogic</a></code></dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - 変換処理中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - 変換処理中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -570,7 +570,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="clearOutputBufferContent()">
 <h3>clearOutputBufferContent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearOutputBufferContent</span>()
-                              throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                              throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">出力バッファコンテンツをクリアする<br>
  <p>
  出力バッファの内容を空にします。新しい出力処理を開始する前に使用します。
@@ -579,9 +579,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>定義:</dt>
 <dd><code><a href="../DtcLogic.html#clearOutputBufferContent()">clearOutputBufferContent</a></code>&nbsp;インタフェース内&nbsp;<code><a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内のインタフェース">DtcLogic</a></code></dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - バッファクリア中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - バッファクリア中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -589,7 +589,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="clearReadingData()">
 <h3>clearReadingData</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">clearReadingData</span>()
-                         throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                         throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">読み込み中のデータをクリアする。<br>
  <p>
  現在読み込まれているデータや変換状態をすべてクリアします。 新しい処理を開始する前に内部状態をリセットするために使用します。
@@ -600,9 +600,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - データクリア中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - データクリア中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -707,7 +707,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">initialize</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;templatePath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath)</span>
-                   throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                   throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">初期化する<br>
  <p>
  入力ファイル、テンプレートファイル、出力ファイルのパスを設定し、 処理に必要なリソースを初期化します。入力ファイルと出力ファイルを開きます。
@@ -722,9 +722,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - 初期化処理中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - 初期化処理中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -735,7 +735,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;templatePath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath,
  kmg.core.infrastructure.types.KmgDelimiterTypes&nbsp;intermediateDelimiter)</span>
-                   throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                   throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">初期化する</div>
 <dl class="notes">
 <dt>定義:</dt>
@@ -748,9 +748,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -758,7 +758,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="loadTemplate()">
 <h3>loadTemplate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">loadTemplate</span>()
-                     throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                     throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">テンプレートファイルを読み込む<br>
  <p>
  YAMLフォーマットのテンプレート定義ファイルを読み込み、 テンプレートコンテンツ、中間プレースホルダー定義、派生プレースホルダー定義を取得します。
@@ -769,9 +769,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - テンプレートの読み込みに失敗した場合 - ファイルが存在しない、フォーマットが不正など</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - テンプレートの読み込みに失敗した場合 - ファイルが存在しない、フォーマットが不正など</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -779,7 +779,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="readOneLineOfData()">
 <h3>readOneLineOfData</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">readOneLineOfData</span>()
-                          throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                          throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">1行データを読み込む。<br>
  <p>
  入力ファイルから1行のデータを読み込みます。 読み込んだデータは内部変数に保存され、後続の処理で使用されます。
@@ -790,9 +790,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：データあり、false：データなし（ファイル終端に達した場合）</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - 読み込み処理中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - 読み込み処理中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -800,7 +800,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="writeOutputBuffer()">
 <h3>writeOutputBuffer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">writeOutputBuffer</span>()
-                          throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                          throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">出力バッファを書き込む<br>
  <p>
  出力バッファに蓄積された内容を出力ファイルに書き込みます。 書き込み後は自動的に改行が追加されます。
@@ -811,9 +811,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - 書き込み処理中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - 書き込み処理中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -855,7 +855,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="loadDerivedPlaceholderDefinitions(java.util.Map)">
 <h3>loadDerivedPlaceholderDefinitions</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">loadDerivedPlaceholderDefinitions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a>&gt;&nbsp;yamlData)</span>
-                                           throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                                           throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">派生プレースホルダー定義を読み込む<br>
  <p>
  YAMLデータから派生プレースホルダー定義を読み込み、内部リストに格納します。 派生プレースホルダー定義がない場合は何もしません。
@@ -866,9 +866,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗（派生プレースホルダー定義がない場合）</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -876,7 +876,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="loadIntermediatePlaceholderDefinitions(java.util.Map)">
 <h3>loadIntermediatePlaceholderDefinitions</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">loadIntermediatePlaceholderDefinitions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a>&gt;&nbsp;yamlData)</span>
-                                                throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                                                throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">中間プレースホルダー定義を読み込む<br>
  <p>
  YAMLデータから中間プレースホルダー定義を読み込み、内部マップに格納します。 プレースホルダー定義がない場合は何もしません。
@@ -887,9 +887,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗（プレースホルダー定義がない場合）</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - テンプレートの読み込みに失敗した場合 - YAMLデータの形式が不正など</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -897,7 +897,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="loadTemplateContent(java.util.Map)">
 <h3>loadTemplateContent</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">loadTemplateContent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a>&gt;&nbsp;yamlData)</span>
-                             throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                             throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">テンプレートコンテンツを読み込む<br>
  <p>
  YAMLデータからテンプレートコンテンツを読み込み、内部変数に格納します。 テンプレートコンテンツは変換処理の基本となるテキストです。
@@ -908,9 +908,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - テンプレートコンテンツの読み込みに失敗した場合 - YAMLデータの形式が不正など</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - テンプレートコンテンツの読み込みに失敗した場合 - YAMLデータの形式が不正など</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -918,16 +918,16 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="openInputFile()">
 <h3>openInputFile</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">openInputFile</span>()
-                    throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                    throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">入力ファイルを開く<br>
  <p>
  指定された入力ファイルパスからBufferedReaderを作成し、内部変数に格納します。 入力ファイルが存在しない場合や読み込めない場合は例外をスローします。
  </p></div>
 <dl class="notes">
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - ファイルオープン中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - ファイルオープン中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -935,16 +935,16 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="openOutputFile()">
 <h3>openOutputFile</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">openOutputFile</span>()
-                     throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                     throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">出力ファイルを開く<br>
  <p>
  指定された出力ファイルパスからBufferedWriterを作成し、内部変数に格納します。 出力ファイルが作成できない場合や書き込めない場合は例外をスローします。
  </p></div>
 <dl class="notes">
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - ファイルオープン中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - ファイルオープン中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -952,7 +952,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="processDerivedPlaceholders(java.util.Map)">
 <h3>processDerivedPlaceholders</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processDerivedPlaceholders</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>&gt;&nbsp;intermediateValues)</span>
-                                 throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                                 throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">派生プレースホルダーを処理する<br>
  <p>
  中間プレースホルダー処理で得られた値を元に、派生プレースホルダーの変換処理を行います。 各派生プレースホルダーに対して、指定された変換タイプに基づいて値を変換し、 テンプレート内の対応するパターンを置換します。
@@ -961,9 +961,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>パラメータ:</dt>
 <dd><code>intermediateValues</code> - 中間値を保存するマップ - キーはプレースホルダー名、値は中間から読み取った値</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - 変換処理中にエラーが発生した場合</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - 変換処理中にエラーが発生した場合</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -971,7 +971,7 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <section class="detail" id="processPlaceholders(java.util.Map)">
 <h3>processPlaceholders</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processPlaceholders</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>&gt;&nbsp;intermediateValues)</span>
-                          throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                          throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">中間プレースホルダーを処理する<br>
  <p>
  現在読み込まれている中間行データを解析し、中間プレースホルダーを対応する値で置換します。 置換された値は中間値を保存するマップに保存され、後続の派生プレースホルダー処理で使用されます。
@@ -980,9 +980,9 @@ implements <a href="../DtcLogic.html" title="kmg.tool.base.dtc.domain.logic内�
 <dt>パラメータ:</dt>
 <dd><code>intermediateValues</code> - 中間値を保存するマップ - キーはプレースホルダー名、値は中間から読み取った値</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外 - 中間行の列数が不足している場合など</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外 - 中間行の列数が不足している場合など</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
