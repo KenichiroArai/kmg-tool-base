@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.fldcrt.application.logic.FieldCreationLogic;
 import kmg.tool.base.fldcrt.application.service.FieldCreationService;
 import kmg.tool.base.iito.domain.service.AbstractIitoProcessorService;
@@ -23,7 +23,7 @@ import kmg.tool.base.iito.domain.service.AbstractIitoProcessorService;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @Service
 public class FieldCreationServiceImpl extends AbstractIitoProcessorService implements FieldCreationService {
@@ -82,15 +82,15 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
      * AbstractIitoProcessorServiceのgetIntermediateDelimiter()を実装します。
      * </p>
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @return 中間ファイルの区切り文字
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    protected KmgDelimiterTypes getIntermediateDelimiter() throws KmgToolMsgException {
+    protected KmgDelimiterTypes getIntermediateDelimiter() throws KmgToolBaseMsgException {
 
         final KmgDelimiterTypes result = this.fieldCreationLogic.getOutputDelimiter();
         return result;
@@ -98,12 +98,12 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
     }
 
     /**
-     * {@inheritDoc}
+     * 中間ファイルに書き込む。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Override
-    protected boolean writeIntermediateFile() throws KmgToolMsgException {
+    protected boolean writeIntermediateFile() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -177,12 +177,12 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
     /**
      * フィールド作成ロジックをクローズする
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    private void closeFieldCreationLogic() throws KmgToolMsgException {
+    private void closeFieldCreationLogic() throws KmgToolBaseMsgException {
 
         try {
 
@@ -190,9 +190,9 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN05003;
-            final Object[]           genMsgArgs  = {};
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05003;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 
@@ -201,14 +201,14 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
     /**
      * カラムを処理する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：処理成功、false：処理スキップ
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    private boolean processColumns() throws KmgToolMsgException {
+    private boolean processColumns() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -228,11 +228,11 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
             this.fieldCreationLogic.addFieldToRows();
             this.fieldCreationLogic.addTypeToRows();
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05001;
-            final Object[]           logMsgArgs  = {};
-            final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG05001;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
 
             throw e;
@@ -247,14 +247,14 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
     /**
      * 1行データを読み込む
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：読み込み成功、false：読み込み終了
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    private boolean readOneLineData() throws KmgToolMsgException {
+    private boolean readOneLineData() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -262,11 +262,11 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
 
             result = this.fieldCreationLogic.readOneLineOfData();
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05002;
-            final Object[]           logMsgArgs  = {};
-            final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG05002;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
 
             throw e;
@@ -280,32 +280,32 @@ public class FieldCreationServiceImpl extends AbstractIitoProcessorService imple
     /**
      * 中間ファイルに行を書き込む
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    private void writeIntermediateFileLine() throws KmgToolMsgException {
+    private void writeIntermediateFileLine() throws KmgToolBaseMsgException {
 
         try {
 
             this.fieldCreationLogic.writeIntermediateFile();
 
-        } catch (final KmgToolMsgException e) {
+        } catch (final KmgToolBaseMsgException e) {
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05003;
-            final Object[]           logMsgArgs  = {};
-            final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG05003;
+            final Object[]               logMsgArgs  = {};
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
             throw e;
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG05004;
-        final Object[]           logMsgArgs  = {
+        final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG05004;
+        final Object[]               logMsgArgs  = {
             this.fieldCreationLogic.getComment(),
         };
-        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
         this.logger.debug(logMsg);
 
     }

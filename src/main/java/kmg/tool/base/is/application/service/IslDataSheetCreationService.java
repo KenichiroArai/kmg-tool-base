@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 
 /**
  * 挿入SQLデータシート作成サービスインタフェース<br>
@@ -18,7 +18,7 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public interface IslDataSheetCreationService extends Runnable {
 
@@ -41,10 +41,10 @@ public interface IslDataSheetCreationService extends Runnable {
     /**
      * 挿入SQLを出力する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    void outputInsertionSql() throws KmgToolMsgException;
+    void outputInsertionSql() throws KmgToolBaseMsgException;
 }

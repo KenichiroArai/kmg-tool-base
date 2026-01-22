@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.simple.application.service.SimpleTwo2OneService;
 
 /**
@@ -21,7 +21,7 @@ import kmg.tool.base.simple.application.service.SimpleTwo2OneService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
@@ -140,15 +140,15 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
     /**
      * 処理する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolMsgException {
+    public boolean process() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -163,11 +163,11 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
         } catch (final IOException e) {
 
             // 例外をスローする
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN16001;
-            final Object[]           messageArgs = {
+            final KmgToolBaseGenMsgTypes msgType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16001;
+            final Object[]               messageArgs = {
                 this.templatePath.toString()
             };
-            throw new KmgToolMsgException(msgType, messageArgs, e);
+            throw new KmgToolBaseMsgException(msgType, messageArgs, e);
 
         }
 
@@ -192,9 +192,9 @@ public class SimpleTwo2OneServiceImpl implements SimpleTwo2OneService {
         } catch (final IOException e) {
 
             // 例外をスローする
-            final KmgToolGenMsgTypes msgType     = KmgToolGenMsgTypes.KMGTOOL_GEN16000;
-            final Object[]           messageArgs = {};
-            throw new KmgToolMsgException(msgType, messageArgs, e);
+            final KmgToolBaseGenMsgTypes msgType     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
+            final Object[]               messageArgs = {};
+            throw new KmgToolBaseMsgException(msgType, messageArgs, e);
 
         }
 

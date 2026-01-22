@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.core.infrastructure.utils.KmgPathUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.dtc.domain.service.DtcService;
 
 /**
@@ -24,7 +24,7 @@ import kmg.tool.base.dtc.domain.service.DtcService;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 public abstract class AbstractIitoProcessorService implements IitoProcessorService {
 
@@ -180,7 +180,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 初期化する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
@@ -191,13 +191,13 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      * @param outputPath
      *                     出力ファイルパス
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
-        throws KmgToolMsgException {
+        throws KmgToolBaseMsgException {
 
         return this.initialize(inputPath, templatePath, outputPath, null);
 
@@ -206,7 +206,7 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 初期化する
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
@@ -219,12 +219,12 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      * @param tempIntermediateFileSuffixExtension
      *                                            一時中間ファイルのサフィックスと拡張子（nullの場合はデフォルト値を使用）
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath,
-        final String tempIntermediateFileSuffixExtension) throws KmgToolMsgException {
+        final String tempIntermediateFileSuffixExtension) throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -255,15 +255,15 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 処理する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolMsgException {
+    public boolean process() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -271,9 +271,9 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
         try {
 
-            final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG07002;
-            final Object[]           startLogMsgArgs  = {};
-            final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+            final KmgToolBaseLogMsgTypes startLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG07002;
+            final Object[]               startLogMsgArgs  = {};
+            final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
                 startLogMsgArgs);
             this.logger.debug(startLogMsg);
 
@@ -281,9 +281,10 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
         } finally {
 
-            final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG07003;
-            final Object[]           endLogMsgArgs  = {};
-            final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes, endLogMsgArgs);
+            final KmgToolBaseLogMsgTypes endLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG07003;
+            final Object[]               endLogMsgArgs  = {};
+            final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
+                endLogMsgArgs);
             this.logger.debug(endLogMsg);
 
         }
@@ -301,14 +302,14 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
     /**
      * 一時的な中間ファイルを作成する。
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @return 中間ファイルパス
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    protected Path createTempIntermediateFile() throws KmgToolMsgException {
+    protected Path createTempIntermediateFile() throws KmgToolBaseMsgException {
 
         Path result = null;
 
@@ -325,11 +326,11 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN07006;
-            final Object[]           getMsgArgs = {
+            final KmgToolBaseGenMsgTypes genMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07006;
+            final Object[]               getMsgArgs = {
                 intermediateFileNameOnly, suffixExtension,
             };
-            throw new KmgToolMsgException(genMsgType, getMsgArgs, e);
+            throw new KmgToolBaseMsgException(genMsgType, getMsgArgs, e);
 
         }
 
@@ -343,25 +344,25 @@ public abstract class AbstractIitoProcessorService implements IitoProcessorServi
      * 中間ファイルの書き込み時に使用した区切り文字を返します。
      * </p>
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @return 中間ファイルの区切り文字
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    protected abstract KmgDelimiterTypes getIntermediateDelimiter() throws KmgToolMsgException;
+    protected abstract KmgDelimiterTypes getIntermediateDelimiter() throws KmgToolBaseMsgException;
 
     /**
      * 中間ファイルに書き込む。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    protected abstract boolean writeIntermediateFile() throws KmgToolMsgException;
+    protected abstract boolean writeIntermediateFile() throws KmgToolBaseMsgException;
 
 }

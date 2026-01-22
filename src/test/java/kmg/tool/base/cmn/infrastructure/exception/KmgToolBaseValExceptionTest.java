@@ -9,30 +9,30 @@ import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 
 /**
- * KMGツールバリデーション例外テスト
+ * KMGツールベースバリデーション例外テスト
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.4
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @SuppressWarnings({
     "nls",
 })
-public class KmgToolValExceptionTest extends AbstractKmgTest {
+public class KmgToolBaseValExceptionTest extends AbstractKmgTest {
 
     /**
      * テスト対象
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    private KmgToolValException testTarget;
+    private KmgToolBaseValException testTarget;
 
     /**
      * getCause メソッドのテスト - 正常系：原因がnullの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -44,7 +44,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         final KmgValsModel expectedValidationsModel = new KmgValsModelImpl();
 
         /* 準備 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel);
 
         /* テスト対象の実行 */
         final Throwable testResult = this.testTarget.getCause();
@@ -60,7 +60,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * getCause メソッドのテスト - 正常系：原因が取得される場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -73,7 +73,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         final Throwable    expectedCause            = new RuntimeException("テスト例外");
 
         /* 準備 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel, expectedCause);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel, expectedCause);
 
         /* テスト対象の実行 */
         final Throwable testResult = this.testTarget.getCause();
@@ -89,7 +89,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * getValidationsModel メソッドのテスト - 正常系：バリデーションモデルが取得される場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -101,7 +101,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         final KmgValsModel expectedValidationsModel = new KmgValsModelImpl();
 
         /* 準備 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel);
 
         /* テスト対象の実行 */
         final KmgValsModel testResult = this.testTarget.getValidationsModel();
@@ -117,7 +117,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * getValidationsModel メソッドのテスト - 正常系：バリデーションモデルがnullの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -129,7 +129,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         final KmgValsModel expectedValidationsModel = null;
 
         /* 準備 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel);
 
         /* テスト対象の実行 */
         final KmgValsModel testResult = this.testTarget.getValidationsModel();
@@ -145,7 +145,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：原因がnullの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -160,7 +160,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         /* 準備 */
 
         /* テスト対象の実行 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel, expectedCause);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel, expectedCause);
 
         /* 検証の準備 */
         final KmgValsModel actualValidationsModel = this.testTarget.getValidationsModel();
@@ -175,7 +175,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：モックバリデーションモデルの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -189,7 +189,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         /* 準備 */
 
         /* テスト対象の実行 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel);
 
         /* 検証の準備 */
         final KmgValsModel actualValidationsModel = this.testTarget.getValidationsModel();
@@ -202,7 +202,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：モックバリデーションモデルと原因の場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -217,7 +217,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         /* 準備 */
 
         /* テスト対象の実行 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel, expectedCause);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel, expectedCause);
 
         /* 検証の準備 */
         final KmgValsModel actualValidationsModel = this.testTarget.getValidationsModel();
@@ -232,7 +232,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルと原因の場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -247,7 +247,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         /* 準備 */
 
         /* テスト対象の実行 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel, expectedCause);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel, expectedCause);
 
         /* 検証の準備 */
         final KmgValsModel actualValidationsModel = this.testTarget.getValidationsModel();
@@ -262,7 +262,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルと原因が両方nullの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -277,7 +277,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         /* 準備 */
 
         /* テスト対象の実行 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel, expectedCause);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel, expectedCause);
 
         /* 検証の準備 */
         final KmgValsModel actualValidationsModel = this.testTarget.getValidationsModel();
@@ -292,7 +292,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルがnullの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -306,7 +306,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         /* 準備 */
 
         /* テスト対象の実行 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel);
 
         /* 検証の準備 */
         final KmgValsModel actualValidationsModel = this.testTarget.getValidationsModel();
@@ -319,7 +319,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルがnullで原因が設定されている場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -334,7 +334,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         /* 準備 */
 
         /* テスト対象の実行 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel, expectedCause);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel, expectedCause);
 
         /* 検証の準備 */
         final KmgValsModel actualValidationsModel = this.testTarget.getValidationsModel();
@@ -349,7 +349,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
     /**
      * コンストラクタ メソッドのテスト - 正常系：バリデーションモデルのみの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @throws Exception
      *                   例外
@@ -363,7 +363,7 @@ public class KmgToolValExceptionTest extends AbstractKmgTest {
         /* 準備 */
 
         /* テスト対象の実行 */
-        this.testTarget = new KmgToolValException(expectedValidationsModel);
+        this.testTarget = new KmgToolBaseValException(expectedValidationsModel);
 
         /* 検証の準備 */
         final KmgValsModel actualValidationsModel = this.testTarget.getValidationsModel();

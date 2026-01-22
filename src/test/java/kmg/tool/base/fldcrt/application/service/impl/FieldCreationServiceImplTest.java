@@ -23,9 +23,9 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.fldcrt.application.logic.FieldCreationLogic;
 
 /**
@@ -35,7 +35,7 @@ import kmg.tool.base.fldcrt.application.logic.FieldCreationLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -156,20 +156,20 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * closeFieldCreationLogic メソッドのテスト - 異常系：IOException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testCloseFieldCreationLogic_errorIOException() throws KmgToolMsgException, Exception {
+    public void testCloseFieldCreationLogic_errorIOException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05003] テストメッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05003;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05003] テストメッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05003;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         try {
@@ -196,11 +196,12 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("closeFieldCreationLogic");
+                    this.reflectionModel.getMethod("closeFieldCreationLogic");
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -213,15 +214,15 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * closeFieldCreationLogic メソッドのテスト - 正常系：正常なクローズ処理
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testCloseFieldCreationLogic_normalClose() throws KmgToolMsgException, Exception {
+    public void testCloseFieldCreationLogic_normalClose() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
 
@@ -482,13 +483,13 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * initialize メソッドのテスト - 正常系：正常な初期化
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testInitialize_normalInitialization() throws KmgToolMsgException {
+    public void testInitialize_normalInitialization() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final Path expectedInputPath    = this.tempDir.resolve("input.txt");
@@ -519,20 +520,20 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 異常系：KmgToolMsgException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testProcessColumns_errorKmgToolMsgException() throws KmgToolMsgException, Exception {
+    public void testProcessColumns_errorKmgToolMsgException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
-        final Class<?>           expectedCauseClass    = null;                               // 原因はnull（直接再スローされるため）
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
+        final Class<?>               expectedCauseClass    = null;                                       // 原因はnull（直接再スローされるため）
 
         /* 準備 */
         Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
@@ -550,16 +551,17 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // KmgToolMsgExceptionの作成（モック設定後に作成）
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001, new Object[] {});
             Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenThrow(testException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("processColumns");
+                    this.reflectionModel.getMethod("processColumns");
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -572,15 +574,15 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 正常系：正常な処理実行
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testProcessColumns_normalProcess() throws KmgToolMsgException, Exception {
+    public void testProcessColumns_normalProcess() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
 
@@ -604,15 +606,15 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 準正常系：変換なし（スキップ）
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testProcessColumns_semiNoConversion() throws KmgToolMsgException, Exception {
+    public void testProcessColumns_semiNoConversion() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
 
@@ -633,20 +635,20 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * readOneLineData メソッドのテスト - 異常系：KmgToolMsgException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testReadOneLineData_errorKmgToolMsgException() throws KmgToolMsgException, Exception {
+    public void testReadOneLineData_errorKmgToolMsgException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
-        final Class<?>           expectedCauseClass    = null;                               // 原因はnull（直接再スローされるため）
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
+        final Class<?>               expectedCauseClass    = null;                                       // 原因はnull（直接再スローされるため）
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -662,16 +664,17 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // KmgToolMsgExceptionの作成（モック設定後に作成）
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001, new Object[] {});
             Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenThrow(testException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("readOneLineData");
+                    this.reflectionModel.getMethod("readOneLineData");
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -684,15 +687,15 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * readOneLineData メソッドのテスト - 正常系：正常な読み込み
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testReadOneLineData_normalRead() throws KmgToolMsgException, Exception {
+    public void testReadOneLineData_normalRead() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
 
@@ -713,15 +716,15 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * readOneLineData メソッドのテスト - 準正常系：読み込み終了
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testReadOneLineData_semiEndOfData() throws KmgToolMsgException, Exception {
+    public void testReadOneLineData_semiEndOfData() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
 
@@ -742,20 +745,21 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：closeFieldCreationLogicでIOException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
-    public void testWriteIntermediateFile_errorCloseIOException() throws KmgToolMsgException, KmgReflectionException {
+    public void testWriteIntermediateFile_errorCloseIOException()
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05003] テストメッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05003;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05003] テストメッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05003;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         final Path inputPath        = this.tempDir.resolve("input.txt");
@@ -792,11 +796,12 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.writeIntermediateFile();
+                    this.testTarget.writeIntermediateFile();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -809,21 +814,21 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：processColumnsでKmgToolMsgException発生
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testWriteIntermediateFile_errorProcessColumnsException()
-        throws KmgToolMsgException, KmgReflectionException {
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
-        final Class<?>           expectedCauseClass    = null;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
+        final Class<?>               expectedCauseClass    = null;
 
         /* 準備 */
         final Path inputPath        = this.tempDir.resolve("input.txt");
@@ -851,8 +856,8 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn("test log message");
 
             // KmgToolMsgExceptionの作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001, new Object[] {});
             Mockito.when(this.mockFieldCreationLogic.convertFields()).thenReturn(true);
             Mockito.when(this.mockFieldCreationLogic.addCommentToRows()).thenThrow(testException);
 
@@ -868,11 +873,12 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.writeIntermediateFile();
+                    this.testTarget.writeIntermediateFile();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -885,21 +891,21 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：readOneLineDataでKmgToolMsgException発生
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testWriteIntermediateFile_errorReadOneLineDataException()
-        throws KmgToolMsgException, KmgReflectionException {
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
-        final Class<?>           expectedCauseClass    = null;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
+        final Class<?>               expectedCauseClass    = null;
 
         /* 準備 */
         final Path inputPath        = this.tempDir.resolve("input.txt");
@@ -926,8 +932,8 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn("test log message");
 
             // KmgToolMsgExceptionの作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001, new Object[] {});
             Mockito.when(this.mockFieldCreationLogic.readOneLineOfData()).thenThrow(testException);
 
             try {
@@ -942,11 +948,12 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.writeIntermediateFile();
+                    this.testTarget.writeIntermediateFile();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -959,21 +966,21 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：writeIntermediateFileLineでKmgToolMsgException発生
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testWriteIntermediateFile_errorWriteIntermediateFileLineException()
-        throws KmgToolMsgException, KmgReflectionException {
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
-        final Class<?>           expectedCauseClass    = null;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
+        final Class<?>               expectedCauseClass    = null;
 
         /* 準備 */
         final Path inputPath        = this.tempDir.resolve("input.txt");
@@ -1005,8 +1012,8 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn("test log message");
 
             // KmgToolMsgExceptionの作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001, new Object[] {});
             Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenThrow(testException);
 
             try {
@@ -1021,11 +1028,12 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.writeIntermediateFile();
+                    this.testTarget.writeIntermediateFile();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -1036,25 +1044,17 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     }
 
     /**
-     * process メソッドのテスト - 正常系：正常な処理実行
-     *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
-     * @throws KmgReflectionException
-     *                                リフレクション例外
-     */
-    /**
      * writeIntermediateFile メソッドのテスト - 正常系：正常な処理実行
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
-    public void testWriteIntermediateFile_normalProcess() throws KmgToolMsgException, KmgReflectionException {
+    public void testWriteIntermediateFile_normalProcess() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -1102,15 +1102,15 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 準正常系：データなし（1行目で終了）
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
-    public void testWriteIntermediateFile_semiNoData() throws KmgToolMsgException, KmgReflectionException {
+    public void testWriteIntermediateFile_semiNoData() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -1150,15 +1150,15 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 準正常系：処理スキップ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
-    public void testWriteIntermediateFile_semiProcessSkip() throws KmgToolMsgException, KmgReflectionException {
+    public void testWriteIntermediateFile_semiProcessSkip() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
 
@@ -1205,20 +1205,20 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFileLine メソッドのテスト - 異常系：KmgToolMsgException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws KmgToolMsgException, Exception {
+    public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
-        final Class<?>           expectedCauseClass    = null;                               // 原因はnull（直接再スローされるため）
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
+        final Class<?>               expectedCauseClass    = null;                                       // 原因はnull（直接再スローされるため）
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -1234,16 +1234,17 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             // KmgToolMsgExceptionの作成（モック設定後に作成）
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN05001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001, new Object[] {});
             Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenThrow(testException);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("writeIntermediateFileLine");
+                    this.reflectionModel.getMethod("writeIntermediateFileLine");
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -1256,15 +1257,15 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFileLine メソッドのテスト - 正常系：正常な書き込み
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testWriteIntermediateFileLine_normalWrite() throws KmgToolMsgException, Exception {
+    public void testWriteIntermediateFileLine_normalWrite() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
         final String expectedComment = "テストコメント";
@@ -1273,7 +1274,7 @@ public class FieldCreationServiceImplTest extends AbstractKmgTest {
         /* 準備 */
         Mockito.when(this.mockFieldCreationLogic.writeIntermediateFile()).thenReturn(true);
         Mockito.when(this.mockFieldCreationLogic.getComment()).thenReturn(expectedComment);
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG05004, new Object[] {
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG05004, new Object[] {
             expectedComment
         })).thenReturn(expectedLogMsg);
 

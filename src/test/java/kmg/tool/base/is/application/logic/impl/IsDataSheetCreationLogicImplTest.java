@@ -29,8 +29,8 @@ import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.core.infrastructure.utils.KmgMessageUtils;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 
 /**
  * 挿入SQLデータシート作成ロジック実装のテスト<br>
@@ -39,7 +39,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @SuppressWarnings({
     "nls", "static-method"
@@ -72,11 +72,11 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     public void testCreateOutputFileDirectories_errorIOException(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = IOException.class;
-        final Path               outputPath            = tempDir.resolve("output").toAbsolutePath();
-        final String             expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
-            "KMGTOOL_GEN10000", outputPath);
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10000;
+        final Class<?>               expectedCauseClass    = IOException.class;
+        final Path                   outputPath            = tempDir.resolve("output").toAbsolutePath();
+        final String                 expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
+            "KMGTOOLBASE_GEN10000", outputPath);
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10000;
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
@@ -111,8 +111,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
                     mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
                     /* テスト対象の実行 */
-                    final KmgToolMsgException actualException
-                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                    final KmgToolBaseMsgException actualException
+                        = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                             testTarget.createOutputFileDirectories();
 
@@ -148,11 +148,11 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
     public void testCreateOutputFileDirectories_errorPermissionDenied(@TempDir final Path tempDir) {
 
         /* 期待値の定義 */
-        final Class<?>           expectedCauseClass    = IOException.class;
-        final Path               outputPath            = tempDir.resolve("restricted").toAbsolutePath();
-        final String             expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
-            "KMGTOOL_GEN10000", outputPath);
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10000;
+        final Class<?>               expectedCauseClass    = IOException.class;
+        final Path                   outputPath            = tempDir.resolve("restricted").toAbsolutePath();
+        final String                 expectedDomainMessage = String.format("[%s] 出力ファイルのディレクトリの作成に失敗しました。出力ファイルパス=[%s]",
+            "KMGTOOLBASE_GEN10000", outputPath);
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10000;
 
         /* 準備 */
         final IsDataSheetCreationLogicImpl testTarget = new IsDataSheetCreationLogicImpl();
@@ -187,8 +187,8 @@ public class IsDataSheetCreationLogicImplTest extends AbstractKmgTest {
                     mockedFiles.when(() -> Files.createDirectories(outputPath)).thenThrow(testException);
 
                     /* テスト対象の実行 */
-                    final KmgToolMsgException actualException
-                        = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                    final KmgToolBaseMsgException actualException
+                        = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                             testTarget.createOutputFileDirectories();
 

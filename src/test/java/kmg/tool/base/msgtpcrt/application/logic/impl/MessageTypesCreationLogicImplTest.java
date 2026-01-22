@@ -21,8 +21,8 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 
 /**
  * <h2>メッセージの種類作成ロジック実装クラスのテスト</h2>
@@ -34,7 +34,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -131,8 +131,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testaddItemNameToRows_errorItemNameNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14000;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN14000] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14000;
 
         /* 準備 */
         this.reflectionModel.set("itemName", null);
@@ -149,8 +149,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemNameToRows());
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> this.testTarget.addItemNameToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "メッセージが正しいこと");
@@ -205,8 +205,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testaddItemToRows_errorItemNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14001] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14001;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN14001] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001;
 
         /* 準備 */
         this.reflectionModel.set("item", null);
@@ -223,8 +223,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.testTarget.addItemToRows());
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> this.testTarget.addItemToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "メッセージが正しいこと");
@@ -279,8 +279,8 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testConvertMessageTypesDefinition_errorInvalidSplitCount() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN14002] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN14002;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN14002] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14002;
 
         /* 準備 */
         final String testLine = "INVALID_FORMAT";
@@ -300,7 +300,7 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class,
+            final KmgToolBaseMsgException actualException = Assertions.assertThrows(KmgToolBaseMsgException.class,
                 () -> this.testTarget.convertMessageTypesDefinition());
 
             /* 検証の実施 */
@@ -324,11 +324,11 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final boolean expectedResult   = true;
-        final String  expectedItem     = "KMGTOOL_GEN14000";
+        final String  expectedItem     = "KMGTOOLBASE_GEN14000";
         final String  expectedItemName = "メッセージの種類が指定されていません。";
 
         /* 準備 */
-        final String testLine = "KMGTOOL_GEN14000=メッセージの種類が指定されていません。";
+        final String testLine = "KMGTOOLBASE_GEN14000=メッセージの種類が指定されていません。";
         this.reflectionModel.set("convertedLine", testLine);
 
         /* テスト対象の実行 */
@@ -359,11 +359,11 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
 
         /* 期待値の定義 */
         final boolean expectedResult   = true;
-        final String  expectedItem     = "KMGTOOL_GEN14000";
+        final String  expectedItem     = "KMGTOOLBASE_GEN14000";
         final String  expectedItemName = "メッセージの種類が指定されていません。値={0}";
 
         /* 準備 */
-        final String testLine = "KMGTOOL_GEN14000=メッセージの種類が指定されていません。値={0}";
+        final String testLine = "KMGTOOLBASE_GEN14000=メッセージの種類が指定されていません。値={0}";
         this.reflectionModel.set("convertedLine", testLine);
 
         /* テスト対象の実行 */
@@ -505,7 +505,7 @@ public class MessageTypesCreationLogicImplTest extends AbstractKmgTest {
     public void testSetConvertedLine_normalSetConvertedLine() throws Exception {
 
         /* 期待値の定義 */
-        final String expectedConvertedLine = "KMGTOOL_GEN14000=メッセージの種類が指定されていません。";
+        final String expectedConvertedLine = "KMGTOOLBASE_GEN14000=メッセージの種類が指定されていません。";
 
         /* テスト対象の実行 */
         this.reflectionModel.set("convertedLine", expectedConvertedLine);

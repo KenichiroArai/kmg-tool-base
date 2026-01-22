@@ -7,26 +7,26 @@ import org.junit.jupiter.api.Test;
 
 import kmg.core.infrastructure.cmn.msg.KmgCmnValMsgTypes;
 import kmg.core.infrastructure.model.val.KmgValDataModel;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolValMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseValMsgTypes;
 
 /**
- * KMGツールバリデーション集合モデルのテスト<br>
+ * KMGツールベースバリデーション集合モデルのテスト<br>
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.4
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @SuppressWarnings({
     "nls", "static-method"
 })
-public class KmgToolValsModelImplTest {
+public class KmgToolBaseValsModelImplTest {
 
     /**
      * 基本的な動作確認のテスト - 正常系：データの追加と取得が正常に動作する場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testBasicOperation_normalAddAndGetData() {
@@ -35,7 +35,7 @@ public class KmgToolValsModelImplTest {
         final int expectedSize = 1;
 
         /* 準備 */
-        final KmgToolValsModelImpl testTarget = new KmgToolValsModelImpl();
+        final KmgToolBaseValsModelImpl testTarget = new KmgToolBaseValsModelImpl();
         // Springに依存しないテスト用のデータモデルを作成
         final KmgValDataModel testData = new KmgValDataModel() {
 
@@ -60,7 +60,7 @@ public class KmgToolValsModelImplTest {
             @Override
             public KmgCmnValMsgTypes getMessageTypes() {
 
-                final KmgToolValMsgTypes result = KmgToolValMsgTypes.NONE;
+                final KmgToolBaseValMsgTypes result = KmgToolBaseValMsgTypes.NONE;
                 return result;
 
             }
@@ -82,7 +82,7 @@ public class KmgToolValsModelImplTest {
     /**
      * コンストラクタのテスト - 正常系：正常にインスタンスが作成される場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Test
     public void testConstructor_normal() {
@@ -90,7 +90,7 @@ public class KmgToolValsModelImplTest {
         /* 期待値の定義 */
 
         /* テスト対象の実行 */
-        final KmgToolValsModelImpl testTarget = new KmgToolValsModelImpl();
+        final KmgToolBaseValsModelImpl testTarget = new KmgToolBaseValsModelImpl();
 
         /* 検証の準備 */
         final boolean               actualIsEmpty = testTarget.isEmpty();

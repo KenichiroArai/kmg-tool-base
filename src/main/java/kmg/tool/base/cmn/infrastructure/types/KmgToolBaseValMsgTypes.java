@@ -3,11 +3,11 @@ package kmg.tool.base.cmn.infrastructure.types;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnExcMsg;
-import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnValMsg;
+import kmg.tool.base.cmn.infrastructure.msg.KmgToolBaseCmnExcMsg;
+import kmg.tool.base.cmn.infrastructure.msg.KmgToolBaseCmnValMsg;
 
 /**
- * KMGツールバリデーションメッセージの種類<br>
+ * KMGツールベースバリデーションメッセージの種類<br>
  * <p>
  * Valは、Validationの略。<br>
  * Msgは、Messageの略。
@@ -15,98 +15,98 @@ import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnValMsg;
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.4
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @SuppressWarnings("nls")
-public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
+public enum KmgToolBaseValMsgTypes implements KmgToolBaseCmnValMsg, KmgToolBaseCmnExcMsg {
 
     /* 定義：開始 */
 
     /**
      * 指定無し
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     NONE("指定無し"),
 
     /**
      * YAMLデータが空です。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13000("YAMLデータが空です。"),
+    KMGTOOLBASE_VAL13000("YAMLデータが空です。"),
 
     /**
      * {0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13001("{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]"),
+    KMGTOOLBASE_VAL13001("{0}が空ありません。Javadocタグ設定の構成のキーワード=[{1}]"),
 
     /**
      * [{0}]は、[{1}]の場合のみ指定可能です。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13002("[{0}]は、[{1}]の場合のみ指定可能です。"),
+    KMGTOOLBASE_VAL13002("[{0}]は、[{1}]の場合のみ指定可能です。"),
 
     /**
      * [{0}]が指定可能な値ではありません。[{0}]=[{1}]
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13003("[{0}]が指定可能な値ではありません。[{0}]=[{1}]"),
+    KMGTOOLBASE_VAL13003("[{0}]が指定可能な値ではありません。[{0}]=[{1}]"),
 
     /**
      * [{0}]は対象要素を指定してください。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13004("[{0}]は対象要素を指定してください。"),
+    KMGTOOLBASE_VAL13004("[{0}]は対象要素を指定してください。"),
 
     /**
      * [{0}]が指定されていません。[{0}]のキーワード=[{1}]
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13005("[{0}]が指定されていません。[{0}]のキーワード=[{1}]"),
+    KMGTOOLBASE_VAL13005("[{0}]が指定されていません。[{0}]のキーワード=[{1}]"),
 
     /**
      * [{0}]が存在しません。指定された[{0}]=[{1}]
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13006("[{0}]が存在しません。指定された[{0}]=[{1}]"),
+    KMGTOOLBASE_VAL13006("[{0}]が存在しません。指定された[{0}]=[{1}]"),
 
     /**
      * [{0}]が指定されいません。[{0}]のキーワード=[{1}]
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13007("[{0}]が指定されいません。[{0}]のキーワード=[{1}]"),
+    KMGTOOLBASE_VAL13007("[{0}]が指定されいません。[{0}]のキーワード=[{1}]"),
 
     /**
      * [{0}]が正しく設定されていません。[{0}]=[{1}]
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13008("[{0}]が正しく設定されていません。[{0}]=[{1}]"),
+    KMGTOOLBASE_VAL13008("[{0}]が正しく設定されていません。[{0}]=[{1}]"),
 
     /**
      * [{0}]が正しく設定されていません。[{0}]=[{1}]
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13009("[{0}]が正しく設定されていません。[{0}]=[{1}]"),
+    KMGTOOLBASE_VAL13009("[{0}]が正しく設定されていません。[{0}]=[{1}]"),
 
     /**
      * Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    KMGTOOL_VAL13010("Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]"),
+    KMGTOOLBASE_VAL13010("Java区分から要素名が取得できません。コード行=[{0}]、Java区分=[{1}]"),
 
     /* 定義：終了 */
 
@@ -115,16 +115,16 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * 種類のマップ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
-    private static final Map<String, KmgToolValMsgTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, KmgToolBaseValMsgTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final KmgToolValMsgTypes type : KmgToolValMsgTypes.values()) {
+        for (final KmgToolBaseValMsgTypes type : KmgToolBaseValMsgTypes.values()) {
 
-            KmgToolValMsgTypes.VALUES_MAP.put(type.get(), type);
+            KmgToolBaseValMsgTypes.VALUES_MAP.put(type.get(), type);
 
         }
 
@@ -133,41 +133,41 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * 表示名
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private final String displayName;
 
     /**
      * メッセージのキー
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private final String key;
 
     /**
      * メッセージの値
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private final String value;
 
     /**
      * 詳細情報
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private final String detail;
 
     /**
      * デフォルトの種類を返す<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return デフォルト値
      */
-    public static KmgToolValMsgTypes getDefault() {
+    public static KmgToolBaseValMsgTypes getDefault() {
 
-        final KmgToolValMsgTypes result = NONE;
+        final KmgToolBaseValMsgTypes result = NONE;
         return result;
 
     }
@@ -178,16 +178,16 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
      * 但し、キーが存在しない場合は、指定無し（NONE）を返す。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param key
      *            キー
      *
      * @return 種類。指定無し（NONE）：キーが存在しない場合。
      */
-    public static KmgToolValMsgTypes getEnum(final String key) {
+    public static KmgToolBaseValMsgTypes getEnum(final String key) {
 
-        KmgToolValMsgTypes result = KmgToolValMsgTypes.VALUES_MAP.get(key);
+        KmgToolBaseValMsgTypes result = KmgToolBaseValMsgTypes.VALUES_MAP.get(key);
 
         if (result == null) {
 
@@ -201,13 +201,13 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * 初期値の種類を返す<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return 初期値
      */
-    public static KmgToolValMsgTypes getInitValue() {
+    public static KmgToolBaseValMsgTypes getInitValue() {
 
-        final KmgToolValMsgTypes result = NONE;
+        final KmgToolBaseValMsgTypes result = NONE;
         return result;
 
     }
@@ -215,12 +215,12 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param displayName
      *                    表示名
      */
-    KmgToolValMsgTypes(final String displayName) {
+    KmgToolBaseValMsgTypes(final String displayName) {
 
         this.displayName = displayName;
         this.key = super.name();
@@ -232,7 +232,7 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * メッセージのキーを返す。<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return メッセージのキー
      *
@@ -249,7 +249,7 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * メッセージのキーを返す。<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return メッセージのキー
      *
@@ -266,7 +266,7 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * 詳細情報を返す。<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return 詳細情報
      */
@@ -284,7 +284,7 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
      * 識別するための表示名を返す。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return 表示名
      */
@@ -299,7 +299,7 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * メッセージのキーを返す。<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return メッセージのキー
      */
@@ -314,7 +314,7 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * メッセージの値を返す。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return メッセージの値
      */
@@ -329,7 +329,7 @@ public enum KmgToolValMsgTypes implements KmgToolCmnValMsg, KmgToolCmnExcMsg {
     /**
      * メッセージのキーを返す。<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return メッセージのキー
      *

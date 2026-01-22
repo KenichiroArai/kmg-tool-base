@@ -1,6 +1,6 @@
 package kmg.tool.base.jdts.application.logic;
 
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 import kmg.tool.base.jdoc.domain.model.JavadocTagModel;
 import kmg.tool.base.jdts.application.model.JdtsBlockModel;
 import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
@@ -33,7 +33,7 @@ import kmg.tool.base.jdts.application.model.JdtsTagConfigModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public interface JdtsBlockReplLogic {
 
@@ -133,7 +133,7 @@ public interface JdtsBlockReplLogic {
      * ブロック置換ロジックの初期状態を設定します。 構成モデルと元のブロックモデルを設定し、 内部状態を初期化します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param configsModel
      *                      構成モデル - タグの設定情報を含むモデル
@@ -142,11 +142,11 @@ public interface JdtsBlockReplLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
     boolean initialize(final JdtsConfigsModel configsModel, final JdtsBlockModel srcBlockModel)
-        throws KmgToolMsgException;
+        throws KmgToolBaseMsgException;
 
     /**
      * 次のJavadocタグに進む<br>

@@ -21,8 +21,8 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 
 /**
  * SimpleTwo2OneServiceImplのテストクラス
@@ -31,7 +31,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -373,8 +373,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorInputFileNoReadPermission() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN16000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用テンプレートファイルを作成
@@ -396,7 +396,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -421,8 +421,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorInputFileNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN16000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用テンプレートファイルを作成
@@ -444,7 +444,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -469,8 +469,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorOutputDirectoryNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN16000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用ファイルを作成
@@ -493,7 +493,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -518,8 +518,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorOutputFileNoWritePermission() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN16000;
-        final String             expectedMessage = "ファイル処理に失敗しました。";
+        final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16000;
+        final String                 expectedMessage = "ファイル処理に失敗しました。";
 
         /* 準備 */
         // テスト用ファイルを作成
@@ -542,7 +542,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -567,8 +567,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorTemplateFileNoReadPermission() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN16001;
-        final String             expectedMessage = "テンプレートファイルの読み込みに失敗しました。";
+        final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16001;
+        final String                 expectedMessage = "テンプレートファイルの読み込みに失敗しました。";
 
         /* 準備 */
         // 存在しないテンプレートファイルパスで初期化（より確実に例外を発生させる）
@@ -587,7 +587,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.process();
 
@@ -612,8 +612,8 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
     public void testProcess_errorTemplateFileNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final KmgToolGenMsgTypes expectedMsgType = KmgToolGenMsgTypes.KMGTOOL_GEN16001;
-        final String             expectedMessage = "テンプレートファイルの読み込みに失敗しました。";
+        final KmgToolBaseGenMsgTypes expectedMsgType = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN16001;
+        final String                 expectedMessage = "テンプレートファイルの読み込みに失敗しました。";
 
         /* 準備 */
         // 存在しないテンプレートファイルパスで初期化
@@ -632,7 +632,7 @@ public class SimpleTwo2OneServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException testException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException testException = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
                 this.testTarget.process();
 

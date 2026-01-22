@@ -2,7 +2,7 @@ package kmg.tool.base.is.application.service;
 
 import java.nio.file.Path;
 
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 
 /**
  * 挿入SQL作成サービスインタフェース<br>
@@ -14,7 +14,7 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public interface IsCreationService {
 
@@ -35,10 +35,10 @@ public interface IsCreationService {
     /**
      * 挿入SQLを出力する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    void outputInsertionSql() throws KmgToolMsgException;
+    void outputInsertionSql() throws KmgToolBaseMsgException;
 }

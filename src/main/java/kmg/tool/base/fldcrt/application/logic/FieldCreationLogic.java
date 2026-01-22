@@ -1,6 +1,6 @@
 package kmg.tool.base.fldcrt.application.logic;
 
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 import kmg.tool.base.iito.domain.logic.IctoOneLinePatternLogic;
 
 /**
@@ -10,57 +10,57 @@ import kmg.tool.base.iito.domain.logic.IctoOneLinePatternLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public interface FieldCreationLogic extends IctoOneLinePatternLogic {
 
     /**
      * コメントを書き込み対象に追加する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean addCommentToRows() throws KmgToolMsgException;
+    boolean addCommentToRows() throws KmgToolBaseMsgException;
 
     /**
      * フィールドを書き込み対象に追加する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean addFieldToRows() throws KmgToolMsgException;
+    boolean addFieldToRows() throws KmgToolBaseMsgException;
 
     /**
      * 型を書き込み対象に追加する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean addTypeToRows() throws KmgToolMsgException;
+    boolean addTypeToRows() throws KmgToolBaseMsgException;
 
     /**
      * フィールドデータを変換する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean convertFields() throws KmgToolMsgException;
+    boolean convertFields() throws KmgToolBaseMsgException;
 
     /**
      * コメントを返す

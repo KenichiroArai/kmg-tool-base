@@ -2,7 +2,7 @@ package kmg.tool.base.two2one.domain.service;
 
 import java.nio.file.Path;
 
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 import kmg.tool.base.io.domain.service.IoService;
 
 /**
@@ -12,7 +12,7 @@ import kmg.tool.base.io.domain.service.IoService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public interface Two2OneService extends IoService {
 
@@ -28,7 +28,7 @@ public interface Two2OneService extends IoService {
     /**
      * 初期化する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
@@ -39,8 +39,9 @@ public interface Two2OneService extends IoService {
      * @param outputPath
      *                     出力ファイルパス
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath) throws KmgToolMsgException;
+    boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
+        throws KmgToolBaseMsgException;
 }

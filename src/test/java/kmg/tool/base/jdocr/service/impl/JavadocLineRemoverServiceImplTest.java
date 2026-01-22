@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.jdocr.application.logic.JavadocLineRemoverLogic;
 
 /**
@@ -33,7 +33,7 @@ import kmg.tool.base.jdocr.application.logic.JavadocLineRemoverLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -386,8 +386,10 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
             .thenReturn(testInputMap);
         Mockito.when(this.mockJavadocLineRemoverLogic.deleteJavadocLines(ArgumentMatchers.any(Map.class)))
             .thenReturn(expectedLineCount);
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG12000),
-            ArgumentMatchers.any(Object[].class))).thenReturn(expectedLogMessage);
+        Mockito
+            .when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000),
+                ArgumentMatchers.any(Object[].class)))
+            .thenReturn(expectedLogMessage);
 
         // inputPathを設定
         this.reflectionModel.set("inputPath", testInputPath);
@@ -404,8 +406,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
         // モックの呼び出しを検証
         Mockito.verify(this.mockJavadocLineRemoverLogic).getInputMap(testInputPath);
         Mockito.verify(this.mockJavadocLineRemoverLogic).deleteJavadocLines(testInputMap);
-        Mockito.verify(this.mockMessageSource).getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG12000),
-            ArgumentMatchers.any(Object[].class));
+        Mockito.verify(this.mockMessageSource).getLogMessage(
+            ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000), ArgumentMatchers.any(Object[].class));
         Mockito.verify(this.mockLogger).debug(expectedLogMessage);
 
     }
@@ -433,8 +435,10 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
             .thenReturn(testInputMap);
         Mockito.when(this.mockJavadocLineRemoverLogic.deleteJavadocLines(ArgumentMatchers.any(Map.class)))
             .thenReturn(expectedLineCount);
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG12000),
-            ArgumentMatchers.any(Object[].class))).thenReturn(expectedLogMessage);
+        Mockito
+            .when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000),
+                ArgumentMatchers.any(Object[].class)))
+            .thenReturn(expectedLogMessage);
 
         // inputPathを設定
         this.reflectionModel.set("inputPath", testInputPath);
@@ -451,8 +455,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
         // モックの呼び出しを検証
         Mockito.verify(this.mockJavadocLineRemoverLogic).getInputMap(testInputPath);
         Mockito.verify(this.mockJavadocLineRemoverLogic).deleteJavadocLines(testInputMap);
-        Mockito.verify(this.mockMessageSource).getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG12000),
-            ArgumentMatchers.any(Object[].class));
+        Mockito.verify(this.mockMessageSource).getLogMessage(
+            ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000), ArgumentMatchers.any(Object[].class));
         Mockito.verify(this.mockLogger).debug(expectedLogMessage);
 
     }
@@ -479,8 +483,10 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
             .thenReturn(testInputMap);
         Mockito.when(this.mockJavadocLineRemoverLogic.deleteJavadocLines(ArgumentMatchers.any(Map.class)))
             .thenReturn(expectedLineCount);
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG12000),
-            ArgumentMatchers.any(Object[].class))).thenReturn(expectedLogMessage);
+        Mockito
+            .when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000),
+                ArgumentMatchers.any(Object[].class)))
+            .thenReturn(expectedLogMessage);
 
         // inputPathをnullに設定
         this.reflectionModel.set("inputPath", null);
@@ -497,8 +503,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
         // モックの呼び出しを検証
         Mockito.verify(this.mockJavadocLineRemoverLogic).getInputMap(null);
         Mockito.verify(this.mockJavadocLineRemoverLogic).deleteJavadocLines(testInputMap);
-        Mockito.verify(this.mockMessageSource).getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG12000),
-            ArgumentMatchers.any(Object[].class));
+        Mockito.verify(this.mockMessageSource).getLogMessage(
+            ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000), ArgumentMatchers.any(Object[].class));
         Mockito.verify(this.mockLogger).debug(expectedLogMessage);
 
     }
@@ -528,8 +534,10 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
             .thenReturn(testInputMap);
         Mockito.when(this.mockJavadocLineRemoverLogic.deleteJavadocLines(ArgumentMatchers.any(Map.class)))
             .thenReturn(expectedLineCount);
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG12000),
-            ArgumentMatchers.any(Object[].class))).thenReturn(expectedLogMessage);
+        Mockito
+            .when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000),
+                ArgumentMatchers.any(Object[].class)))
+            .thenReturn(expectedLogMessage);
 
         // inputPathを設定
         this.reflectionModel.set("inputPath", testInputPath);
@@ -546,8 +554,8 @@ public class JavadocLineRemoverServiceImplTest extends AbstractKmgTest {
         // モックの呼び出しを検証
         Mockito.verify(this.mockJavadocLineRemoverLogic).getInputMap(testInputPath);
         Mockito.verify(this.mockJavadocLineRemoverLogic).deleteJavadocLines(testInputMap);
-        Mockito.verify(this.mockMessageSource).getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG12000),
-            ArgumentMatchers.any(Object[].class));
+        Mockito.verify(this.mockMessageSource).getLogMessage(
+            ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000), ArgumentMatchers.any(Object[].class));
         Mockito.verify(this.mockLogger).debug(expectedLogMessage);
 
     }

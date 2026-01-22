@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import kmg.core.infrastructure.types.KmgDbDataTypeTypes;
 import kmg.core.infrastructure.types.KmgDbTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 
 /**
  * 挿入SQLデータシート作成ロジックインタフェース<br>
@@ -22,19 +22,19 @@ import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public interface IsDataSheetCreationLogic {
 
     /**
      * 出力ファイルのディレクトリを作成する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    void createOutputFileDirectories() throws KmgToolMsgException;
+    void createOutputFileDirectories() throws KmgToolBaseMsgException;
 
     /**
      * 文字セットを返す<br>

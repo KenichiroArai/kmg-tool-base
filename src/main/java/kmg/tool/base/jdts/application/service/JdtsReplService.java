@@ -1,6 +1,6 @@
 package kmg.tool.base.jdts.application.service;
 
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 import kmg.tool.base.jdts.application.model.JdtsCodeModel;
 import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
 
@@ -15,7 +15,7 @@ import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public interface JdtsReplService {
 
@@ -49,7 +49,7 @@ public interface JdtsReplService {
     /**
      * 初期化する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param jdtsConfigsModel
      *                         Javadocタグ設定の構成モデル
@@ -58,20 +58,20 @@ public interface JdtsReplService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsCodeModel jdtsCodeModel) throws KmgToolMsgException;
+    boolean initialize(JdtsConfigsModel jdtsConfigsModel, JdtsCodeModel jdtsCodeModel) throws KmgToolBaseMsgException;
 
     /**
      * Javadocを置換する。<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean replace() throws KmgToolMsgException;
+    boolean replace() throws KmgToolBaseMsgException;
 }

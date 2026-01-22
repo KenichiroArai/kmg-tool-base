@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseValException;
 import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
 import kmg.tool.base.jdts.application.types.JdtsLocationModeTypes;
 
@@ -22,7 +22,7 @@ import kmg.tool.base.jdts.application.types.JdtsLocationModeTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @SuppressWarnings({
     "nls",
@@ -71,7 +71,7 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
         testLocationMap.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), targetElements);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsLocationConfigModelImpl(testLocationMap);
 
@@ -101,7 +101,7 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
         testLocationMap.put(JdtsConfigKeyTypes.TARGET_ELEMENTS.get(), targetElements);
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsLocationConfigModelImpl(testLocationMap);
 
@@ -128,7 +128,7 @@ public class JdtsLocationConfigModelImplTest extends AbstractKmgTest {
         testLocationMap.put(JdtsConfigKeyTypes.REMOVE_IF_MISPLACED.get(), "true");
 
         /* テスト対象の実行と検証 */
-        Assertions.assertThrows(KmgToolValException.class, () -> {
+        Assertions.assertThrows(KmgToolBaseValException.class, () -> {
 
             this.testTarget = new JdtsLocationConfigModelImpl(testLocationMap);
 

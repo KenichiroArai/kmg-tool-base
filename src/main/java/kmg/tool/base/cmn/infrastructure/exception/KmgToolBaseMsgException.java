@@ -3,42 +3,42 @@ package kmg.tool.base.cmn.infrastructure.exception;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
 import kmg.fund.infrastructure.exception.KmgFundMsgException;
-import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnExcMsg;
+import kmg.tool.base.cmn.infrastructure.msg.KmgToolBaseCmnExcMsg;
 
 /**
- * KMGツールメッセージ例外<br>
+ * KMGツールベースメッセージ例外<br>
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.4
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
-public class KmgToolMsgException extends KmgFundMsgException {
+public class KmgToolBaseMsgException extends KmgFundMsgException {
 
     /**
      * デフォルトシリアルバージョンＵＩＤ
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private static final long serialVersionUID = 1L;
 
     /**
      * KMGメッセージリソース
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private KmgMessageSource messageSource;
 
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param messageTypes
      *                     メッセージの種類
      */
-    public KmgToolMsgException(final KmgToolCmnExcMsg messageTypes) {
+    public KmgToolBaseMsgException(final KmgToolBaseCmnExcMsg messageTypes) {
 
         this(messageTypes, null, null);
 
@@ -47,14 +47,14 @@ public class KmgToolMsgException extends KmgFundMsgException {
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param messageTypes
      *                     メッセージの種類
      * @param messageArgs
      *                     メッセージの引数
      */
-    public KmgToolMsgException(final KmgToolCmnExcMsg messageTypes, final Object[] messageArgs) {
+    public KmgToolBaseMsgException(final KmgToolBaseCmnExcMsg messageTypes, final Object[] messageArgs) {
 
         this(messageTypes, messageArgs, null);
 
@@ -63,7 +63,7 @@ public class KmgToolMsgException extends KmgFundMsgException {
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param messageTypes
      *                     メッセージの種類
@@ -72,7 +72,8 @@ public class KmgToolMsgException extends KmgFundMsgException {
      * @param cause
      *                     原因
      */
-    public KmgToolMsgException(final KmgToolCmnExcMsg messageTypes, final Object[] messageArgs, final Throwable cause) {
+    public KmgToolBaseMsgException(final KmgToolBaseCmnExcMsg messageTypes, final Object[] messageArgs,
+        final Throwable cause) {
 
         super(messageTypes, messageArgs, cause);
 
@@ -81,14 +82,14 @@ public class KmgToolMsgException extends KmgFundMsgException {
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param messageTypes
      *                     メッセージの種類
      * @param cause
      *                     原因
      */
-    public KmgToolMsgException(final KmgToolCmnExcMsg messageTypes, final Throwable cause) {
+    public KmgToolBaseMsgException(final KmgToolBaseCmnExcMsg messageTypes, final Throwable cause) {
 
         this(messageTypes, null, cause);
 
@@ -97,7 +98,7 @@ public class KmgToolMsgException extends KmgFundMsgException {
     /**
      * メッセージを作成して返す。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return メッセージ
      */
@@ -112,7 +113,7 @@ public class KmgToolMsgException extends KmgFundMsgException {
     /**
      * メッセージソースを作成する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Override
     protected void createMessageSource() {

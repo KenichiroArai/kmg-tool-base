@@ -13,8 +13,8 @@ import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
 import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgMapUtils;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolValMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseValException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseValMsgTypes;
 import kmg.tool.base.jdts.application.model.JdtsConfigsModel;
 import kmg.tool.base.jdts.application.model.JdtsTagConfigModel;
 import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
@@ -30,7 +30,7 @@ import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
@@ -44,15 +44,15 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param yamlData
      *                 YAMLデータ
      *
-     * @throws KmgToolValException
-     *                             KMGツールバリデーション例外
+     * @throws KmgToolBaseValException
+     *                                 KMGツールバリデーション例外
      */
-    public JdtsConfigsModelImpl(final Map<String, Object> yamlData) throws KmgToolValException {
+    public JdtsConfigsModelImpl(final Map<String, Object> yamlData) throws KmgToolBaseValException {
 
         this.jdtsTagConfigModels = new ArrayList<>();
 
@@ -60,12 +60,12 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         if (KmgMapUtils.isEmpty(yamlData)) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13000;
-            final Object[]           valMsgArgs   = {};
-            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13000;
+            final Object[]               valMsgArgs   = {};
+            final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);
 
-            throw new KmgToolValException(valsModel);
+            throw new KmgToolBaseValException(valsModel);
 
         }
 
@@ -76,14 +76,14 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
         if (KmgListUtils.isEmpty(javadocTags)) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13001;
-            final Object[]           valMsgArgs   = {
+            final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13001;
+            final Object[]               valMsgArgs   = {
                 JdtsConfigKeyTypes.JDTS_CONFIGS.getDisplayName(), JdtsConfigKeyTypes.JDTS_CONFIGS.get(),
             };
-            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);
 
-            throw new KmgToolValException(valsModel);
+            throw new KmgToolBaseValException(valsModel);
 
         }
 
@@ -97,7 +97,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
 
                 model = new JdtsTagConfigModelImpl(tagConfig);
 
-            } catch (final KmgToolValException e) {
+            } catch (final KmgToolBaseValException e) {
 
                 valsModel.merge(e.getValidationsModel());
                 continue;
@@ -112,7 +112,7 @@ public class JdtsConfigsModelImpl implements JdtsConfigsModel {
         /* バリデーションをマージする */
         if (valsModel.isNotEmpty()) {
 
-            throw new KmgToolValException(valsModel);
+            throw new KmgToolBaseValException(valsModel);
 
         }
 

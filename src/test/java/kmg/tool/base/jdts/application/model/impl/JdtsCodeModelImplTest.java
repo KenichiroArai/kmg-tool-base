@@ -12,8 +12,8 @@ import kmg.core.infrastructure.exception.KmgReflectionException;
 import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.jdts.application.model.JdtsBlockModel;
 
 /**
@@ -23,7 +23,7 @@ import kmg.tool.base.jdts.application.model.JdtsBlockModel;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @SuppressWarnings({
     "nls", "static-method",
@@ -156,13 +156,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * getJdtsBlockModels メソッドのテスト - 正常系:parse後の状態でのリスト取得
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testGetJdtsBlockModels_normalAfterParse() throws KmgToolMsgException {
+    public void testGetJdtsBlockModels_normalAfterParse() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedSize = 2;
@@ -329,15 +329,16 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:解析が対象外のブロックが含まれる場合（Javadocブロックのみ）
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @throws KmgReflectionException
-     *                                リフレクション例外
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     *                                 リフレクション例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalBlockParseResultFalseJavadocOnly() throws KmgReflectionException, KmgToolMsgException {
+    public void testParse_normalBlockParseResultFalseJavadocOnly()
+        throws KmgReflectionException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 1;
@@ -353,8 +354,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
         this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
         /* モックの設定 */
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000),
-            ArgumentMatchers.any())).thenReturn("テストログメッセージ");
+        Mockito.when(this.mockMessageSource
+            .getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000), ArgumentMatchers.any()))
+            .thenReturn("テストログメッセージ");
 
         this.reflectionModel.set("messageSource", this.mockMessageSource);
 
@@ -369,23 +371,23 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
             "対象外のブロックはスキップされ、正常なブロックのみが解析されること");
         // ログメッセージが呼ばれたことを確認
         Mockito.verify(this.mockMessageSource, Mockito.times(1))
-            .getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000), ArgumentMatchers.any());
+            .getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000), ArgumentMatchers.any());
 
     }
 
     /**
      * parse メソッドのテスト - 正常系:解析が対象外のブロックが含まれる場合（Javadoc終了記号なし）
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @throws KmgReflectionException
-     *                                リフレクション例外
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     *                                 リフレクション例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
     public void testParse_normalBlockParseResultFalseNoJavadocEndMarker()
-        throws KmgReflectionException, KmgToolMsgException {
+        throws KmgReflectionException, KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 1;
@@ -402,8 +404,9 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
         this.mockMessageSource = Mockito.mock(KmgMessageSource.class);
 
         /* モックの設定 */
-        Mockito.when(this.mockMessageSource.getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000),
-            ArgumentMatchers.any())).thenReturn("テストログメッセージ");
+        Mockito.when(this.mockMessageSource
+            .getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000), ArgumentMatchers.any()))
+            .thenReturn("テストログメッセージ");
 
         this.reflectionModel.set("messageSource", this.mockMessageSource);
 
@@ -418,20 +421,20 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
             "対象外のブロックはスキップされ、正常なブロックのみが解析されること");
         // ログメッセージが呼ばれたことを確認
         Mockito.verify(this.mockMessageSource, Mockito.times(1))
-            .getLogMessage(ArgumentMatchers.eq(KmgToolLogMsgTypes.KMGTOOL_LOG13000), ArgumentMatchers.any());
+            .getLogMessage(ArgumentMatchers.eq(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13000), ArgumentMatchers.any());
 
     }
 
     /**
      * parse メソッドのテスト - 正常系:連続するJavadocブロックの解析
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalConsecutiveJavadocBlocks() throws KmgToolMsgException {
+    public void testParse_normalConsecutiveJavadocBlocks() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 3;
@@ -455,13 +458,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:空文字列の解析
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalEmptyString() throws KmgToolMsgException {
+    public void testParse_normalEmptyString() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 0;
@@ -484,13 +487,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:Javadocブロック開始記号のみの解析
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalJavadocStartOnly() throws KmgToolMsgException {
+    public void testParse_normalJavadocStartOnly() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 0;
@@ -514,13 +517,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:Javadocブロック開始タグが含まれるが、空白文字での分割結果が1つの場合
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalJavadocStartWithoutWhitespace() throws KmgToolMsgException {
+    public void testParse_normalJavadocStartWithoutWhitespace() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 0;
@@ -544,13 +547,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:複数Javadocブロックの解析
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalMultipleJavadocBlocks() throws KmgToolMsgException {
+    public void testParse_normalMultipleJavadocBlocks() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 2;
@@ -576,13 +579,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:Javadocブロックなしの解析
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalNoJavadocBlocks() throws KmgToolMsgException {
+    public void testParse_normalNoJavadocBlocks() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 0;
@@ -606,13 +609,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:parseメソッド実行後のJdtsBlockModelsリストの状態確認
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalParseAfterGetJdtsBlockModels() throws KmgToolMsgException {
+    public void testParse_normalParseAfterGetJdtsBlockModels() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 1;
@@ -647,13 +650,13 @@ public class JdtsCodeModelImplTest extends AbstractKmgTest {
     /**
      * parse メソッドのテスト - 正常系:単一Javadocブロックの解析
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Test
-    public void testParse_normalSingleJavadocBlock() throws KmgToolMsgException {
+    public void testParse_normalSingleJavadocBlock() throws KmgToolBaseMsgException {
 
         /* 期待値の定義 */
         final int expectedJdtsBlockModelsSize = 1;
