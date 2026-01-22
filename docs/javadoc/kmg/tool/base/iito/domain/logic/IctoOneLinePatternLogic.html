@@ -106,7 +106,7 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
 <dt>バージョン:</dt>
-<dd>0.2.2</dd>
+<dd>0.2.4</dd>
 <dt>作成者:</dt>
 <dd>KenichiroArai</dd>
 </dl>
@@ -313,7 +313,7 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <h3>initialize</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">initialize</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath)</span>
-            throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+            throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">初期化する。</div>
 <dl class="notes">
 <dt>パラメータ:</dt>
@@ -322,9 +322,9 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -334,7 +334,7 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">initialize</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;outputPath,
  kmg.core.infrastructure.types.KmgDelimiterTypes&nbsp;outputDelimiter)</span>
-            throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+            throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">初期化する。<br>
  <p>
  出力ファイルの区切り文字を指定して初期化します。
@@ -347,9 +347,9 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.2</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -357,15 +357,15 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <section class="detail" id="readOneLineOfData()">
 <h3>readOneLineOfData</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">readOneLineOfData</span>()
-                   throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                   throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">1行データを読み込む。</div>
 <dl class="notes">
 <dt>戻り値:</dt>
 <dd>true：データあり、false：データなし</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -373,7 +373,7 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <section class="detail" id="writeIntermediateFile()">
 <h3>writeIntermediateFile</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">writeIntermediateFile</span>()
-                       throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                       throws <span class="exceptions"><a href="../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">中間ファイルに書き込む。<br>
  <p>
  入力ファイルから指定の形式に変換して中間ファイルに出力する。
@@ -382,9 +382,9 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <dt>戻り値:</dt>
 <dd>true：成功、false：失敗</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dd><code><a href="../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>

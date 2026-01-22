@@ -103,7 +103,7 @@ implements <a href="../JavadocLineRemoverLogic.html" title="kmg.tool.base.jdocr.
 <dt>導入されたバージョン:</dt>
 <dd>0.2.0</dd>
 <dt>バージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 <dt>作成者:</dt>
 <dd>KenichiroArai</dd>
 </dl>
@@ -312,7 +312,7 @@ implements <a href="../JavadocLineRemoverLogic.html" title="kmg.tool.base.jdocr.
 <section class="detail" id="deleteJavadocLines(java.util.Map)">
 <h3>deleteJavadocLines</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">deleteJavadocLines</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="java.util内のクラスまたはインタフェース" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Integer</a>&gt;&gt;&nbsp;inputMap)</span>
-                       throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                       throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">Javadoc行を削除する</div>
 <dl class="notes">
 <dt>定義:</dt>
@@ -322,9 +322,9 @@ implements <a href="../JavadocLineRemoverLogic.html" title="kmg.tool.base.jdocr.
 <dt>戻り値:</dt>
 <dd>削除した行数</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外</dd>
 <dt>導入されたバージョン:</dt>
-<dd>0.2.0</dd>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>
@@ -332,7 +332,7 @@ implements <a href="../JavadocLineRemoverLogic.html" title="kmg.tool.base.jdocr.
 <section class="detail" id="getInputMap(java.nio.file.Path)">
 <h3>getInputMap</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="java.util内のクラスまたはインタフェース" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Integer</a>&gt;&gt;</span>&nbsp;<span class="element-name">getInputMap</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="java.nio.file内のクラスまたはインタフェース" class="external-link">Path</a>&nbsp;inputPath)</span>
-                                   throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></span></div>
+                                   throws <span class="exceptions"><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></span></div>
 <div class="block">入力ファイルからパスと行番号のマップを取得する</div>
 <dl class="notes">
 <dt>定義:</dt>
@@ -342,7 +342,9 @@ implements <a href="../JavadocLineRemoverLogic.html" title="kmg.tool.base.jdocr.
 <dt>戻り値:</dt>
 <dd>パスと行番号の降順のセットのマップ</dd>
 <dt>例外:</dt>
-<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dd><code><a href="../../../../cmn/infrastructure/exception/KmgToolBaseMsgException.html" title="kmg.tool.base.cmn.infrastructure.exception内のクラス">KmgToolBaseMsgException</a></code> - KMGツールメッセージ例外</dd>
+<dt>導入されたバージョン:</dt>
+<dd>0.2.4</dd>
 </dl>
 </section>
 </li>

@@ -1,6 +1,6 @@
 package kmg.tool.base.acccrt.application.logic;
 
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 import kmg.tool.base.iito.domain.logic.IctoOneLinePatternLogic;
 
 /**
@@ -10,57 +10,57 @@ import kmg.tool.base.iito.domain.logic.IctoOneLinePatternLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public interface AccessorCreationLogic extends IctoOneLinePatternLogic {
 
     /**
      * 項目名を書き込み対象に追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean addItemToRows() throws KmgToolMsgException;
+    boolean addItemToRows() throws KmgToolBaseMsgException;
 
     /**
      * Javadocコメントを書き込み対象に追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean addJavadocCommentToRows() throws KmgToolMsgException;
+    boolean addJavadocCommentToRows() throws KmgToolBaseMsgException;
 
     /**
      * 型情報を書き込み対象に追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean addTypeToRows() throws KmgToolMsgException;
+    boolean addTypeToRows() throws KmgToolBaseMsgException;
 
     /**
      * フィールド宣言から型、項目名、先頭大文字項目に変換する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    boolean convertFields() throws KmgToolMsgException;
+    boolean convertFields() throws KmgToolBaseMsgException;
 
     /**
      * Javadocの変換を行う。

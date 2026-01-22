@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.jdocr.application.logic.JavadocLineRemoverLogic;
 import kmg.tool.base.jdocr.service.JavadocLineRemoverService;
 
@@ -20,7 +20,7 @@ import kmg.tool.base.jdocr.service.JavadocLineRemoverService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService {
@@ -83,19 +83,19 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
     /**
      * 初期化する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
      * @param inputPath
      *                  入力ファイルのパス
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath) throws KmgToolMsgException {
+    public boolean initialize(final Path inputPath) throws KmgToolBaseMsgException {
 
         final boolean result = false;
 
@@ -108,15 +108,15 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
     /**
      * 処理する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolMsgException {
+    public boolean process() throws KmgToolBaseMsgException {
 
         final boolean result = true;
 
@@ -128,11 +128,11 @@ public class JavadocLineRemoverServiceImpl implements JavadocLineRemoverService 
         final int lineCount = this.javadocLineRemoverLogic.deleteJavadocLines(inputMap);
 
         /* ログの出力 */
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG12000;
-        final Object[]           logMsgArgs  = {
+        final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG12000;
+        final Object[]               logMsgArgs  = {
             lineCount,
         };
-        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
         this.logger.debug(logMsg);
 
         return result;

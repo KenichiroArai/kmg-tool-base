@@ -3,40 +3,40 @@ package kmg.tool.base.val.model.impl;
 import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.msg.KmgToolCmnValMsg;
+import kmg.tool.base.cmn.infrastructure.msg.KmgToolBaseCmnValMsg;
 
 /**
- * KMGツールバリデーションデータモデル<br>
+ * KMGツールベースバリデーションデータモデル<br>
  * <p>
  * Valは、Validationの略。
  * </p>
  *
  * @author KenichiroArai
  *
- * @since 0.2.0
+ * @since 0.2.4
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
-public class KmgToolValDataModelImpl extends KmgValDataModelImpl {
+public class KmgToolBaseValDataModelImpl extends KmgValDataModelImpl {
 
     /**
      * KMGメッセージリソース
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     private KmgMessageSource messageSource;
 
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param messageTypes
      *                     メッセージの種類
      * @param messageArgs
      *                     メッセージの引数
      */
-    public KmgToolValDataModelImpl(final KmgToolCmnValMsg messageTypes, final Object[] messageArgs) {
+    public KmgToolBaseValDataModelImpl(final KmgToolBaseCmnValMsg messageTypes, final Object[] messageArgs) {
 
         super(messageTypes, messageArgs);
 
@@ -45,7 +45,7 @@ public class KmgToolValDataModelImpl extends KmgValDataModelImpl {
     /**
      * メッセージを作成して返す。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return メッセージ
      */
@@ -60,7 +60,7 @@ public class KmgToolValDataModelImpl extends KmgValDataModelImpl {
     /**
      * メッセージソースを作成する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      */
     @Override
     protected void createMessageSource() {

@@ -24,8 +24,8 @@ import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateTimeUtils;
 import kmg.core.infrastructure.utils.KmgLocalDateUtils;
 import kmg.fund.infrastructure.utils.KmgPoiUtils;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.is.application.logic.IsDataSheetCreationLogic;
 
 /**
@@ -38,7 +38,7 @@ import kmg.tool.base.is.application.logic.IsDataSheetCreationLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
@@ -210,13 +210,13 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
     /**
      * 出力ファイルのディレクトリを作成する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public void createOutputFileDirectories() throws KmgToolMsgException {
+    public void createOutputFileDirectories() throws KmgToolBaseMsgException {
 
         try {
 
@@ -224,11 +224,11 @@ public class IsDataSheetCreationLogicImpl implements IsDataSheetCreationLogic {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN10000;
-            final Object[]           genMsgArgs  = {
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10000;
+            final Object[]               genMsgArgs  = {
                 this.outputPath,
             };
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 

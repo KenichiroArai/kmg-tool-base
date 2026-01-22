@@ -21,8 +21,8 @@ import kmg.core.infrastructure.model.impl.KmgReflectionModelImpl;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 
 /**
  * AbstractInputServiceのテストクラス
@@ -31,7 +31,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -57,15 +57,15 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
         /**
          * processメソッドをpublicでオーバーライド
          *
-         * @since 0.2.0
+         * @since 0.2.4
          *
          * @return true：成功、false：失敗
          *
-         * @throws KmgToolMsgException
-         *                             KMGツールメッセージ例外
+         * @throws KmgToolBaseMsgException
+         *                                 KMGツールメッセージ例外
          */
         @Override
-        public boolean process() throws KmgToolMsgException {
+        public boolean process() throws KmgToolBaseMsgException {
 
             final boolean result = true;
             return result;
@@ -207,8 +207,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
     public void testInitialize_errorInputPathNotExists() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN08001] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08001;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN08001] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08001;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -225,11 +225,12 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
             final Path testInputPath = this.tempDir.resolve("non_existent_file.txt");
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.initialize(testInputPath);
+                    this.testTarget.initialize(testInputPath);
 
-            }, "inputPathが存在しない場合は例外が発生すること");
+                }, "inputPathが存在しない場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);
@@ -250,8 +251,8 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
     public void testInitialize_errorInputPathNull() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN08000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN08000;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN08000] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN08000;
 
         // SpringApplicationContextHelperのモック化
         try (final MockedStatic<SpringApplicationContextHelper> mockedStatic
@@ -268,11 +269,12 @@ public class AbstractInputServiceTest extends AbstractKmgTest {
             final Path testInputPath = null;
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.initialize(testInputPath);
+                    this.testTarget.initialize(testInputPath);
 
-            }, "inputPathがnullの場合は例外が発生すること");
+                }, "inputPathがnullの場合は例外が発生すること");
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedDomainMessage, expectedMessageTypes);

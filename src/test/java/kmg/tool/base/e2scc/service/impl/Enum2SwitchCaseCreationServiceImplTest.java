@@ -23,9 +23,9 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.e2scc.application.logic.Enum2SwitchCaseCreationLogic;
 
 /**
@@ -35,7 +35,7 @@ import kmg.tool.base.e2scc.application.logic.Enum2SwitchCaseCreationLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -158,20 +158,20 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * closeEnum2SwitchCaseCreationLogic メソッドのテスト - 異常系：IOException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testCloseEnum2SwitchCaseCreationLogic_errorIOException() throws KmgToolMsgException, Exception {
+    public void testCloseEnum2SwitchCaseCreationLogic_errorIOException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN04002] テストメッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN04002;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN04002] テストメッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04002;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         try {
@@ -198,11 +198,12 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("closeEnum2SwitchCaseCreationLogic");
+                    this.reflectionModel.getMethod("closeEnum2SwitchCaseCreationLogic");
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -215,15 +216,15 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * closeEnum2SwitchCaseCreationLogic メソッドのテスト - 正常系：正常なクローズ処理
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testCloseEnum2SwitchCaseCreationLogic_normalClose() throws KmgToolMsgException, Exception {
+    public void testCloseEnum2SwitchCaseCreationLogic_normalClose() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = true;
@@ -320,20 +321,20 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 異常系：KmgToolMsgException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testProcessColumns_errorKmgToolMsgException() throws KmgToolMsgException, Exception {
+    public void testProcessColumns_errorKmgToolMsgException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedLogMsg         = "テストログメッセージ";
-        final KmgToolLogMsgTypes expectedLogMsgTypes    = KmgToolLogMsgTypes.KMGTOOL_LOG04001;
-        final Class<?>           expectedExceptionClass = KmgToolMsgException.class;
+        final String                 expectedLogMsg         = "テストログメッセージ";
+        final KmgToolBaseLogMsgTypes expectedLogMsgTypes    = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG04001;
+        final Class<?>               expectedExceptionClass = KmgToolBaseMsgException.class;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -348,18 +349,19 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テストメッセージ");
 
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001, new Object[] {});
             Mockito.when(this.mockEnum2SwitchCaseCreationLogic.convertEnumDefinition()).thenThrow(testException);
             Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
                 .thenReturn(expectedLogMsg);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("processColumns");
+                    this.reflectionModel.getMethod("processColumns");
 
-            });
+                });
 
             /* 検証の準備 */
 
@@ -373,15 +375,15 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 正常系：正常な処理実行
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testProcessColumns_normalProcess() throws KmgToolMsgException, Exception {
+    public void testProcessColumns_normalProcess() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = true;
@@ -405,15 +407,15 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * processColumns メソッドのテスト - 準正常系：変換失敗
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testProcessColumns_semiConvertFailure() throws KmgToolMsgException, Exception {
+    public void testProcessColumns_semiConvertFailure() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = false;
@@ -435,20 +437,20 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * readOneLineData メソッドのテスト - 異常系：KmgToolMsgException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testReadOneLineData_errorKmgToolMsgException() throws KmgToolMsgException, Exception {
+    public void testReadOneLineData_errorKmgToolMsgException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedLogMsg         = "テストログメッセージ";
-        final KmgToolLogMsgTypes expectedLogMsgTypes    = KmgToolLogMsgTypes.KMGTOOL_LOG04002;
-        final Class<?>           expectedExceptionClass = KmgToolMsgException.class;
+        final String                 expectedLogMsg         = "テストログメッセージ";
+        final KmgToolBaseLogMsgTypes expectedLogMsgTypes    = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG04002;
+        final Class<?>               expectedExceptionClass = KmgToolBaseMsgException.class;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -463,18 +465,19 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テストメッセージ");
 
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001, new Object[] {});
             Mockito.when(this.mockEnum2SwitchCaseCreationLogic.readOneLineOfData()).thenThrow(testException);
             Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
                 .thenReturn(expectedLogMsg);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("readOneLineData");
+                    this.reflectionModel.getMethod("readOneLineData");
 
-            });
+                });
 
             /* 検証の準備 */
 
@@ -488,15 +491,15 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * readOneLineData メソッドのテスト - 正常系：正常な読み込み
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testReadOneLineData_normalRead() throws KmgToolMsgException, Exception {
+    public void testReadOneLineData_normalRead() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = true;
@@ -518,15 +521,15 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * readOneLineData メソッドのテスト - 準正常系：読み込み終了
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testReadOneLineData_semiReadEnd() throws KmgToolMsgException, Exception {
+    public void testReadOneLineData_semiReadEnd() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
         final boolean expectedResult = false;
@@ -550,20 +553,20 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
      *
      * @since 0.2.0
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
     public void testWriteIntermediateFile_errorCloseIOException() throws Exception {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage    = "[KMGTOOL_GEN04002] テストメッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes     = KmgToolGenMsgTypes.KMGTOOL_GEN04002;
-        final Class<?>           expectedCauseClass       = IOException.class;
-        final Path               expectedInputPath        = this.tempDir.resolve("input.txt");
-        final Path               expectedIntermediatePath = this.tempDir.resolve("intermediate.txt");
+        final String                 expectedDomainMessage    = "[KMGTOOLBASE_GEN04002] テストメッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes     = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04002;
+        final Class<?>               expectedCauseClass       = IOException.class;
+        final Path                   expectedInputPath        = this.tempDir.resolve("input.txt");
+        final Path                   expectedIntermediatePath = this.tempDir.resolve("intermediate.txt");
 
         /* 準備 */
         this.reflectionModel.set("inputPath", expectedInputPath);
@@ -598,11 +601,12 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.writeIntermediateFile();
+                    this.testTarget.writeIntermediateFile();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -615,21 +619,21 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：processColumnsでKmgToolMsgException発生
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testWriteIntermediateFile_errorProcessColumnsException()
-        throws KmgToolMsgException, KmgReflectionException {
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN04001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN04001;
-        final Class<?>           expectedCauseClass    = null;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN04001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001;
+        final Class<?>               expectedCauseClass    = null;
 
         /* 準備 */
         final Path inputPath        = this.tempDir.resolve("input.txt");
@@ -657,8 +661,8 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn("test log message");
 
             // KmgToolMsgExceptionの作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001, new Object[] {});
             Mockito.when(this.mockEnum2SwitchCaseCreationLogic.convertEnumDefinition()).thenReturn(true);
             Mockito.when(this.mockEnum2SwitchCaseCreationLogic.addItemToRows()).thenThrow(testException);
 
@@ -674,11 +678,12 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.writeIntermediateFile();
+                    this.testTarget.writeIntermediateFile();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -691,21 +696,21 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：readOneLineDataでKmgToolMsgException発生
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testWriteIntermediateFile_errorReadOneLineDataException()
-        throws KmgToolMsgException, KmgReflectionException {
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN04001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN04001;
-        final Class<?>           expectedCauseClass    = null;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN04001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001;
+        final Class<?>               expectedCauseClass    = null;
 
         /* 準備 */
         final Path inputPath        = this.tempDir.resolve("input.txt");
@@ -732,8 +737,8 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn("test log message");
 
             // KmgToolMsgExceptionの作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001, new Object[] {});
             Mockito.when(this.mockEnum2SwitchCaseCreationLogic.readOneLineOfData()).thenThrow(testException);
 
             try {
@@ -748,11 +753,12 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.writeIntermediateFile();
+                    this.testTarget.writeIntermediateFile();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -765,21 +771,21 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFile メソッドのテスト - 異常系：writeIntermediateFileLineでKmgToolMsgException発生
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @Test
     public void testWriteIntermediateFile_errorWriteIntermediateFileLineException()
-        throws KmgToolMsgException, KmgReflectionException {
+        throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN04001] テスト例外メッセージ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN04001;
-        final Class<?>           expectedCauseClass    = null;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN04001] テスト例外メッセージ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001;
+        final Class<?>               expectedCauseClass    = null;
 
         /* 準備 */
         final Path inputPath        = this.tempDir.resolve("input.txt");
@@ -810,8 +816,8 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn("test log message");
 
             // KmgToolMsgExceptionの作成
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001, new Object[] {});
             Mockito.when(this.mockEnum2SwitchCaseCreationLogic.writeIntermediateFile()).thenThrow(testException);
 
             try {
@@ -826,11 +832,12 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
             }
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.writeIntermediateFile();
+                    this.testTarget.writeIntermediateFile();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -966,20 +973,20 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
     /**
      * writeIntermediateFileLine メソッドのテスト - 異常系：KmgToolMsgException発生
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws Exception
-     *                             例外
+     *                                 例外
      */
     @Test
-    public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws KmgToolMsgException, Exception {
+    public void testWriteIntermediateFileLine_errorKmgToolMsgException() throws KmgToolBaseMsgException, Exception {
 
         /* 期待値の定義 */
-        final String             expectedLogMsg         = "テストログメッセージ";
-        final KmgToolLogMsgTypes expectedLogMsgTypes    = KmgToolLogMsgTypes.KMGTOOL_LOG04003;
-        final Class<?>           expectedExceptionClass = KmgToolMsgException.class;
+        final String                 expectedLogMsg         = "テストログメッセージ";
+        final KmgToolBaseLogMsgTypes expectedLogMsgTypes    = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG04003;
+        final Class<?>               expectedExceptionClass = KmgToolBaseMsgException.class;
 
         /* 準備 */
         // SpringApplicationContextHelperのモック化
@@ -994,18 +1001,19 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
             Mockito.when(mockMessageSourceTestMethod.getExcMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn("テストメッセージ");
 
-            final KmgToolMsgException testException
-                = new KmgToolMsgException(KmgToolGenMsgTypes.KMGTOOL_GEN04001, new Object[] {});
+            final KmgToolBaseMsgException testException
+                = new KmgToolBaseMsgException(KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN04001, new Object[] {});
             Mockito.when(this.mockEnum2SwitchCaseCreationLogic.writeIntermediateFile()).thenThrow(testException);
             Mockito.when(this.mockMessageSource.getLogMessage(expectedLogMsgTypes, new Object[] {}))
                 .thenReturn(expectedLogMsg);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.reflectionModel.getMethod("writeIntermediateFileLine");
+                    this.reflectionModel.getMethod("writeIntermediateFileLine");
 
-            });
+                });
 
             /* 検証の準備 */
 
@@ -1036,7 +1044,7 @@ public class Enum2SwitchCaseCreationServiceImplTest extends AbstractKmgTest {
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.writeIntermediateFile()).thenReturn(true);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.getItem()).thenReturn(expectedItem);
         Mockito.when(this.mockEnum2SwitchCaseCreationLogic.getItemName()).thenReturn(expectedItemName);
-        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolLogMsgTypes.KMGTOOL_LOG04004, new Object[] {
+        Mockito.when(this.mockMessageSource.getLogMessage(KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG04004, new Object[] {
             expectedItem, expectedItemName
         })).thenReturn(expectedLogMsg);
 

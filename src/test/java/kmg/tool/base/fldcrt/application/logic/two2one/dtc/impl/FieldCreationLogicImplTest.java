@@ -21,8 +21,8 @@ import org.mockito.quality.Strictness;
 import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.fldcrt.application.logic.impl.FieldCreationLogicImpl;
 
 /**
@@ -32,7 +32,7 @@ import kmg.tool.base.fldcrt.application.logic.impl.FieldCreationLogicImpl;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -115,8 +115,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     public void testAddCommentToRows_errorCommentNotSet() {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05000] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05000;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05000] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05000;
 
         /* 準備 */
 
@@ -132,8 +132,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addCommentToRows());
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> this.target.addCommentToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "例外メッセージが一致しません");
@@ -194,8 +194,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     public void testAddFieldToRows_errorFieldNotSet() {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05001] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05001;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05001] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05001;
 
         /* 準備 */
 
@@ -211,8 +211,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addFieldToRows());
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> this.target.addFieldToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "例外メッセージが一致しません");
@@ -273,8 +273,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
     public void testAddTypeToRows_errorTypeNotSet() {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN05002] ";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN05002;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN05002] ";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN05002;
 
         /* 準備 */
 
@@ -290,8 +290,8 @@ public class FieldCreationLogicImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException
-                = Assertions.assertThrows(KmgToolMsgException.class, () -> this.target.addTypeToRows());
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> this.target.addTypeToRows());
 
             /* 検証の実施 */
             Assertions.assertTrue(actualException.getMessage().startsWith(expectedDomainMessage), "例外メッセージが一致しません");

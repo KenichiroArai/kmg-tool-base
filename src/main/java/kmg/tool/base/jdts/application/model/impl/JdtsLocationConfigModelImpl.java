@@ -12,8 +12,8 @@ import kmg.core.infrastructure.model.val.KmgValsModel;
 import kmg.core.infrastructure.model.val.impl.KmgValDataModelImpl;
 import kmg.core.infrastructure.model.val.impl.KmgValsModelImpl;
 import kmg.core.infrastructure.types.JavaClassificationTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolValException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolValMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseValException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseValMsgTypes;
 import kmg.tool.base.jdts.application.model.JdtsLocationConfigModel;
 import kmg.tool.base.jdts.application.types.JdtsConfigKeyTypes;
 import kmg.tool.base.jdts.application.types.JdtsLocationModeTypes;
@@ -28,7 +28,7 @@ import kmg.tool.base.jdts.application.types.JdtsLocationModeTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
@@ -56,15 +56,15 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
     /**
      * コンストラクタ<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param locationMap
      *                    配置場所の設定マップ
      *
-     * @throws KmgToolValException
-     *                             KMGツールバリデーション例外
+     * @throws KmgToolBaseValException
+     *                                 KMGツールバリデーション例外
      */
-    public JdtsLocationConfigModelImpl(final Map<String, Object> locationMap) throws KmgToolValException {
+    public JdtsLocationConfigModelImpl(final Map<String, Object> locationMap) throws KmgToolBaseValException {
 
         final KmgValsModel valsModel = new KmgValsModelImpl();
 
@@ -86,11 +86,11 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
             if (this.mode != JdtsLocationModeTypes.MANUAL) {
 
-                final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13002;
-                final Object[]           valMsgArgs   = {
+                final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13002;
+                final Object[]               valMsgArgs   = {
                     JdtsConfigKeyTypes.TARGET_ELEMENTS.getDisplayName(), JdtsLocationModeTypes.MANUAL.getDisplayName(),
                 };
-                final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+                final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
                 valsModel.addData(valDataModel);
 
             }
@@ -101,11 +101,11 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
                 if (type == JavaClassificationTypes.NONE) {
 
-                    final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13003;
-                    final Object[]           valMsgArgs   = {
+                    final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13003;
+                    final Object[]               valMsgArgs   = {
                         JdtsConfigKeyTypes.TARGET_ELEMENTS.getDisplayName(),
                     };
-                    final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+                    final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
                     valsModel.addData(valDataModel);
 
                 }
@@ -116,11 +116,11 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
 
         } else if (this.mode == JdtsLocationModeTypes.MANUAL) {
 
-            final KmgToolValMsgTypes valMsgTypes  = KmgToolValMsgTypes.KMGTOOL_VAL13004;
-            final Object[]           valMsgArgs   = {
+            final KmgToolBaseValMsgTypes valMsgTypes  = KmgToolBaseValMsgTypes.KMGTOOLBASE_VAL13004;
+            final Object[]               valMsgArgs   = {
                 JdtsLocationModeTypes.MANUAL.getDisplayName(), JdtsConfigKeyTypes.TARGET_ELEMENTS.getDisplayName(),
             };
-            final KmgValDataModel    valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
+            final KmgValDataModel        valDataModel = new KmgValDataModelImpl(valMsgTypes, valMsgArgs);
             valsModel.addData(valDataModel);
 
         }
@@ -128,7 +128,7 @@ public class JdtsLocationConfigModelImpl implements JdtsLocationConfigModel {
         /* バリデーションをマージする */
         if (valsModel.isNotEmpty()) {
 
-            throw new KmgToolValException(valsModel);
+            throw new KmgToolBaseValException(valsModel);
 
         }
 

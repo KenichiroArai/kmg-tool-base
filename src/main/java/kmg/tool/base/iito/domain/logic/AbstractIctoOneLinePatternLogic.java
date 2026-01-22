@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 
 /**
  * 入力、中間、テンプレート、出力の1行パターンの抽象クラス<br>
@@ -27,7 +27,7 @@ import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatternLogic {
 
@@ -289,7 +289,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 初期化する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param inputPath
      *                   入力ファイルパス
@@ -298,12 +298,12 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
-    public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolMsgException {
+    public boolean initialize(final Path inputPath, final Path outputPath) throws KmgToolBaseMsgException {
 
         final boolean result = this.initialize(inputPath, outputPath, KmgDelimiterTypes.COMMA);
         return result;
@@ -316,7 +316,7 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * 出力ファイルの区切り文字を指定して初期化します。
      * </p>
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @param inputPath
      *                        入力ファイルパス
@@ -327,13 +327,13 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path outputPath, final KmgDelimiterTypes outputDelimiter)
-        throws KmgToolMsgException {
+        throws KmgToolBaseMsgException {
 
         boolean result;
 
@@ -341,18 +341,18 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
         if (outputDelimiter == null) {
             // NULLの場合
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07007;
-            final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07007;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
         if (outputDelimiter == KmgDelimiterTypes.NONE) {
             // NONEの場合
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07008;
-            final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07008;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
@@ -381,15 +381,15 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 1行データを読み込む。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：データあり、false：データなし
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean readOneLineOfData() throws KmgToolMsgException {
+    public boolean readOneLineOfData() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -402,9 +402,9 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07000;
-            final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs, e);
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07000;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs, e);
 
         }
 
@@ -429,15 +429,15 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
      * 入力ファイルから指定の形式に変換して中間ファイルに出力する。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean writeIntermediateFile() throws KmgToolMsgException {
+    public boolean writeIntermediateFile() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -452,11 +452,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             } catch (final IOException e) {
 
-                final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07001;
-                final Object[]           messageArgs  = {
+                final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07001;
+                final Object[]               messageArgs  = {
                     this.outputPath.toString()
                 };
-                throw new KmgToolMsgException(messageTypes, messageArgs, e);
+                throw new KmgToolBaseMsgException(messageTypes, messageArgs, e);
 
             }
 
@@ -469,11 +469,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07002;
-            final Object[]           messageArgs  = {
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07002;
+            final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
-            throw new KmgToolMsgException(messageTypes, messageArgs, e);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs, e);
 
         }
 
@@ -485,17 +485,17 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 書き込み対象のデータの最後のリストにデータを追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param data
      *             データ
      *
      * @return true：追加成功、false：追加失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    protected boolean addRow(final String data) throws KmgToolMsgException {
+    protected boolean addRow(final String data) throws KmgToolBaseMsgException {
 
         boolean result;
 
@@ -507,9 +507,9 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final NoSuchElementException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07005;
-            final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs, e);
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07005;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs, e);
 
         }
         result = row.add(data);
@@ -584,11 +584,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.reader = null;
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG07000;
-            final Object[]           logMsgArgs  = {
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG07000;
+            final Object[]               logMsgArgs  = {
                 this.inputPath.toString(),
             };
-            final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
 
             throw e;
@@ -621,11 +621,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
             this.writer = null;
 
-            final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG07001;
-            final Object[]           logMsgArgs  = {
+            final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG07001;
+            final Object[]               logMsgArgs  = {
                 this.outputPath.toString(),
             };
-            final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+            final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
             this.logger.error(logMsg, e);
 
             throw e;
@@ -637,13 +637,13 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 入力ファイルを開く
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("resource")
-    private void openInputFile() throws KmgToolMsgException {
+    private void openInputFile() throws KmgToolBaseMsgException {
 
         try {
 
@@ -651,11 +651,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07003;
-            final Object[]           messageArgs  = {
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07003;
+            final Object[]               messageArgs  = {
                 this.inputPath.toString()
             };
-            throw new KmgToolMsgException(messageTypes, messageArgs, e);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs, e);
 
         }
 
@@ -664,13 +664,13 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
     /**
      * 出力ファイルを開く
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("resource")
-    private void openOutputFile() throws KmgToolMsgException {
+    private void openOutputFile() throws KmgToolBaseMsgException {
 
         try {
 
@@ -678,11 +678,11 @@ public abstract class AbstractIctoOneLinePatternLogic implements IctoOneLinePatt
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN07004;
-            final Object[]           messageArgs  = {
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN07004;
+            final Object[]               messageArgs  = {
                 this.outputPath.toString()
             };
-            throw new KmgToolMsgException(messageTypes, messageArgs, e);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs, e);
 
         }
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
 import kmg.tool.base.jdoc.domain.model.JavadocTagModel;
 import kmg.tool.base.jdts.application.logic.JdtsBlockReplLogic;
 import kmg.tool.base.jdts.application.model.JdtsBlockModel;
@@ -42,7 +42,7 @@ import kmg.tool.base.jdts.application.types.JdtsInsertPositionTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
@@ -319,7 +319,7 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      * ブロック置換ロジックの初期状態を設定します。 構成モデルと元のブロックモデルを設定し、 内部状態を初期化します。
      * </p>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param configsModel
      *                      構成モデル - タグの設定情報を含むモデル
@@ -328,13 +328,13 @@ public class JdtsBlockReplLogicImpl implements JdtsBlockReplLogic {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外 - 初期化中にエラーが発生した場合
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final JdtsConfigsModel configsModel, final JdtsBlockModel srcBlockModel)
-        throws KmgToolMsgException {
+        throws KmgToolBaseMsgException {
 
         boolean result = false;
 

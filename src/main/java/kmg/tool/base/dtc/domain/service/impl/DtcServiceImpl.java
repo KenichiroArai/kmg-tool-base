@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.dtc.domain.logic.DtcLogic;
 import kmg.tool.base.dtc.domain.service.DtcService;
 
@@ -26,7 +26,7 @@ import kmg.tool.base.dtc.domain.service.DtcService;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.4
  */
 @Service
 public class DtcServiceImpl implements DtcService {
@@ -155,7 +155,7 @@ public class DtcServiceImpl implements DtcService {
     /**
      * 初期化する<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param inputPath
      *                     入力ファイルパス
@@ -166,13 +166,13 @@ public class DtcServiceImpl implements DtcService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath)
-        throws KmgToolMsgException {
+        throws KmgToolBaseMsgException {
 
         final boolean result = true;
 
@@ -190,7 +190,7 @@ public class DtcServiceImpl implements DtcService {
      * 中間ファイルの区切り文字を指定して初期化します。
      * </p>
      *
-     * @since 0.2.2
+     * @since 0.2.4
      *
      * @param inputPath
      *                              入力ファイルパス（中間ファイルパス）
@@ -203,13 +203,13 @@ public class DtcServiceImpl implements DtcService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final Path inputPath, final Path templatePath, final Path outputPath,
-        final KmgDelimiterTypes intermediateDelimiter) throws KmgToolMsgException {
+        final KmgDelimiterTypes intermediateDelimiter) throws KmgToolBaseMsgException {
 
         final boolean result = this.initialize(inputPath, templatePath, outputPath);
         this.intermediateDelimiter = intermediateDelimiter;
@@ -220,21 +220,22 @@ public class DtcServiceImpl implements DtcService {
     /**
      * 処理する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean process() throws KmgToolMsgException {
+    public boolean process() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
-        final KmgToolLogMsgTypes startLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG03000;
-        final Object[]           startLogMsgArgs  = {};
-        final String             startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes, startLogMsgArgs);
+        final KmgToolBaseLogMsgTypes startLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03000;
+        final Object[]               startLogMsgArgs  = {};
+        final String                 startLogMsg      = this.messageSource.getLogMessage(startLogMsgTypes,
+            startLogMsgArgs);
         this.logger.debug(startLogMsg);
 
         try {
@@ -294,9 +295,9 @@ public class DtcServiceImpl implements DtcService {
 
             } finally {
 
-                final KmgToolLogMsgTypes endLogMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG03001;
-                final Object[]           endLogMsgArgs  = {};
-                final String             endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
+                final KmgToolBaseLogMsgTypes endLogMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG03001;
+                final Object[]               endLogMsgArgs  = {};
+                final String                 endLogMsg      = this.messageSource.getLogMessage(endLogMsgTypes,
                     endLogMsgArgs);
                 this.logger.debug(endLogMsg);
 
@@ -311,12 +312,12 @@ public class DtcServiceImpl implements DtcService {
     /**
      * テンプレートの動的変換ロジックをクローズする。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    private void closeDtcLogic() throws KmgToolMsgException {
+    private void closeDtcLogic() throws KmgToolBaseMsgException {
 
         try {
 
@@ -324,9 +325,9 @@ public class DtcServiceImpl implements DtcService {
 
         } catch (final IOException e) {
 
-            final KmgToolGenMsgTypes genMsgTypes = KmgToolGenMsgTypes.KMGTOOL_GEN03006;
-            final Object[]           genMsgArgs  = {};
-            throw new KmgToolMsgException(genMsgTypes, genMsgArgs, e);
+            final KmgToolBaseGenMsgTypes genMsgTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN03006;
+            final Object[]               genMsgArgs  = {};
+            throw new KmgToolBaseMsgException(genMsgTypes, genMsgArgs, e);
 
         }
 

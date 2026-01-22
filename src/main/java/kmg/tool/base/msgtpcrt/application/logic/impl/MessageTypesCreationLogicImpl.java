@@ -3,8 +3,8 @@ package kmg.tool.base.msgtpcrt.application.logic.impl;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.types.KmgDelimiterTypes;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.iito.domain.logic.AbstractIctoOneLinePatternLogic;
 import kmg.tool.base.msgtpcrt.application.logic.MessageTypesCreationLogic;
 import kmg.tool.base.two2one.application.types.MessageTypesRegexGroupTypes;
@@ -19,7 +19,7 @@ import kmg.tool.base.two2one.application.types.MessageTypesRegexGroupTypes;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLogic
@@ -59,23 +59,23 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
     /**
      * 項目名を書き込み対象に追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemNameToRows() throws KmgToolMsgException {
+    public boolean addItemNameToRows() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
         if (this.itemName == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN14000;
-            final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14000;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
@@ -89,23 +89,23 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
     /**
      * 項目を書き込み対象に追加する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean addItemToRows() throws KmgToolMsgException {
+    public boolean addItemToRows() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
         if (this.item == null) {
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN14001;
-            final Object[]           messageArgs  = {};
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14001;
+            final Object[]               messageArgs  = {};
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 
@@ -119,19 +119,19 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
     /**
      * メッセージの種類定義から項目と項目名に変換する。
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：変換あり、false：変換なし
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean convertMessageTypesDefinition() throws KmgToolMsgException {
+    public boolean convertMessageTypesDefinition() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
-        // 項目と項目名に分ける（例：KMGTOOL_GEN14000=メッセージの種類が指定されていません。）
+        // 項目と項目名に分ける（例：KMGTOOLBASE_GEN14000=メッセージの種類が指定されていません。）
         final String[] inputDatas = KmgDelimiterTypes.HALF_EQUAL.split(this.getConvertedLine(),
             MessageTypesCreationLogicImpl.MESSAGE_TYPE_SPLIT_COUNT);
 
@@ -139,11 +139,11 @@ public class MessageTypesCreationLogicImpl extends AbstractIctoOneLinePatternLog
         if (inputDatas.length != MessageTypesCreationLogicImpl.MESSAGE_TYPE_SPLIT_COUNT) {
             // 分かれない場合
 
-            final KmgToolGenMsgTypes messageTypes = KmgToolGenMsgTypes.KMGTOOL_GEN14002;
-            final Object[]           messageArgs  = {
+            final KmgToolBaseGenMsgTypes messageTypes = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN14002;
+            final Object[]               messageArgs  = {
                 this.getNowLineNumber(), this.getLineOfDataRead(),
             };
-            throw new KmgToolMsgException(messageTypes, messageArgs);
+            throw new KmgToolBaseMsgException(messageTypes, messageArgs);
 
         }
 

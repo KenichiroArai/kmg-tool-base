@@ -12,7 +12,7 @@
 
     <groupId>kmg.tool.base</groupId>
     <artifactId>kmg-tool-base</artifactId>
-    <version>0.2.3</version>
+    <version>0.2.4</version>
     <name>kmg-tool-base</name>
     <description>KMGツールベース</description>
     <packaging>jar</packaging>
@@ -30,7 +30,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>6.0.1</version>
+                <version>6.0.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

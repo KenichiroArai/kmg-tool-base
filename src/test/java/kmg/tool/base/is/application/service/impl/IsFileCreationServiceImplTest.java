@@ -32,8 +32,8 @@ import kmg.core.infrastructure.test.AbstractKmgTest;
 import kmg.core.infrastructure.types.KmgDbTypes;
 import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.fund.infrastructure.context.SpringApplicationContextHelper;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolGenMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseGenMsgTypes;
 import kmg.tool.base.is.application.logic.IsBasicInformationLogic;
 import kmg.tool.base.is.application.service.IslDataSheetCreationService;
 
@@ -44,7 +44,7 @@ import kmg.tool.base.is.application.service.IslDataSheetCreationService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -321,9 +321,9 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorEmptyFileException() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN10004] 入力ファイルが空です。入力ファイルパス=[test.xlsx]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10004;
-        final Class<?>           expectedCauseClass    = EmptyFileException.class;
+        final String                 expectedDomainMessage = "[KMGTOOLBASE_GEN10004] 入力ファイルが空です。入力ファイルパス=[test.xlsx]";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10004;
+        final Class<?>               expectedCauseClass    = EmptyFileException.class;
 
         /* 準備 */
         final Path testInputPath = this.tempDir.resolve("test.xlsx");
@@ -359,11 +359,12 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
                     .create(ArgumentMatchers.any(java.io.InputStream.class))).thenThrow(new EmptyFileException());
 
                 /* テスト対象の実行 */
-                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                final KmgToolBaseMsgException actualException
+                    = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                    this.testTarget.outputInsertionSql();
+                        this.testTarget.outputInsertionSql();
 
-                });
+                    });
 
                 /* 検証の実施 */
                 this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -387,9 +388,10 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorEncryptedDocumentException() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN10001] 入力ファイルが暗号化されています。入力ファイルパス=[test.xlsx]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10001;
-        final Class<?>           expectedCauseClass    = EncryptedDocumentException.class;
+        final String                 expectedDomainMessage
+                                                           = "[KMGTOOLBASE_GEN10001] 入力ファイルが暗号化されています。入力ファイルパス=[test.xlsx]";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10001;
+        final Class<?>               expectedCauseClass    = EncryptedDocumentException.class;
 
         /* 準備 */
         final Path testInputPath = this.tempDir.resolve("test.xlsx");
@@ -427,11 +429,12 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
                     .thenThrow(new EncryptedDocumentException("テスト用のEncryptedDocumentException"));
 
                 /* テスト対象の実行 */
-                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                final KmgToolBaseMsgException actualException
+                    = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                    this.testTarget.outputInsertionSql();
+                        this.testTarget.outputInsertionSql();
 
-                });
+                    });
 
                 /* 検証の実施 */
                 this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -455,9 +458,10 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorIOExceptionInFileInputStream() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN10002] 入力ファイルが見つかりません。入力ファイルパス=[test.xlsx]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10002;
-        final Class<?>           expectedCauseClass    = java.io.FileNotFoundException.class;
+        final String                 expectedDomainMessage
+                                                           = "[KMGTOOLBASE_GEN10002] 入力ファイルが見つかりません。入力ファイルパス=[test.xlsx]";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10002;
+        final Class<?>               expectedCauseClass    = java.io.FileNotFoundException.class;
 
         /* 準備 */
         final Path testInputPath = this.tempDir.resolve("test.xlsx");
@@ -477,11 +481,12 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
                 .thenReturn(expectedDomainMessage);
 
             /* テスト対象の実行 */
-            final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+            final KmgToolBaseMsgException actualException
+                = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                this.testTarget.outputInsertionSql();
+                    this.testTarget.outputInsertionSql();
 
-            });
+                });
 
             /* 検証の実施 */
             this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -503,9 +508,10 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
     public void testOutputInsertionSql_errorIOExceptionInWorkbookFactory() throws KmgReflectionException {
 
         /* 期待値の定義 */
-        final String             expectedDomainMessage = "[KMGTOOL_GEN10005] 入力ファイルの読み込みに失敗しました。入力ファイルパス=[test.xlsx]";
-        final KmgToolGenMsgTypes expectedMessageTypes  = KmgToolGenMsgTypes.KMGTOOL_GEN10005;
-        final Class<?>           expectedCauseClass    = IOException.class;
+        final String                 expectedDomainMessage
+                                                           = "[KMGTOOLBASE_GEN10005] 入力ファイルの読み込みに失敗しました。入力ファイルパス=[test.xlsx]";
+        final KmgToolBaseGenMsgTypes expectedMessageTypes  = KmgToolBaseGenMsgTypes.KMGTOOLBASE_GEN10005;
+        final Class<?>               expectedCauseClass    = IOException.class;
 
         /* 準備 */
         final Path testInputPath = this.tempDir.resolve("test.xlsx");
@@ -543,11 +549,12 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
                     .thenThrow(new IOException("テスト用のIOException"));
 
                 /* テスト対象の実行 */
-                final KmgToolMsgException actualException = Assertions.assertThrows(KmgToolMsgException.class, () -> {
+                final KmgToolBaseMsgException actualException
+                    = Assertions.assertThrows(KmgToolBaseMsgException.class, () -> {
 
-                    this.testTarget.outputInsertionSql();
+                        this.testTarget.outputInsertionSql();
 
-                });
+                    });
 
                 /* 検証の実施 */
                 this.verifyKmgMsgException(actualException, expectedCauseClass, expectedDomainMessage,
@@ -562,16 +569,16 @@ public class IsFileCreationServiceImplTest extends AbstractKmgTest {
     /**
      * outputInsertionSql メソッドのテスト - 正常系：正常な実行
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
-     * @throws KmgToolMsgException
-     *                                KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      * @throws KmgReflectionException
-     *                                リフレクション例外
+     *                                 リフレクション例外
      */
     @SuppressWarnings("resource")
     @Test
-    public void testOutputInsertionSql_normalExecution() throws KmgToolMsgException, KmgReflectionException {
+    public void testOutputInsertionSql_normalExecution() throws KmgToolBaseMsgException, KmgReflectionException {
 
         /* 期待値の定義 */
         final Path  expectedInputPath  = this.tempDir.resolve("input.xlsx");

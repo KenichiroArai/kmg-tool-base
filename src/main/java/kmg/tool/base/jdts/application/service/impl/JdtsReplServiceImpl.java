@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgString;
 import kmg.fund.infrastructure.context.KmgMessageSource;
-import kmg.tool.base.cmn.infrastructure.exception.KmgToolMsgException;
-import kmg.tool.base.cmn.infrastructure.types.KmgToolLogMsgTypes;
+import kmg.tool.base.cmn.infrastructure.exception.KmgToolBaseMsgException;
+import kmg.tool.base.cmn.infrastructure.types.KmgToolBaseLogMsgTypes;
 import kmg.tool.base.jdts.application.logic.JdtsBlockReplLogic;
 import kmg.tool.base.jdts.application.model.JdtsBlockModel;
 import kmg.tool.base.jdts.application.model.JdtsCodeModel;
@@ -28,7 +28,7 @@ import kmg.tool.base.jdts.application.service.JdtsReplService;
  *
  * @since 0.2.0
  *
- * @version 0.2.0
+ * @version 0.2.4
  */
 @Service
 public class JdtsReplServiceImpl implements JdtsReplService {
@@ -159,7 +159,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * 初期化する
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param jdtsConfigsModel
      *                         Javadocタグ設定の構成モデル
@@ -168,13 +168,13 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @SuppressWarnings("hiding")
     @Override
     public boolean initialize(final JdtsConfigsModel jdtsConfigsModel, final JdtsCodeModel jdtsCodeModel)
-        throws KmgToolMsgException {
+        throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -206,15 +206,15 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * Javadocを置換する。<br>
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @return true：成功、false：失敗
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
     @Override
-    public boolean replace() throws KmgToolMsgException {
+    public boolean replace() throws KmgToolBaseMsgException {
 
         boolean result = false;
 
@@ -280,12 +280,12 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13001;
-        final Object[]           logMsgArgs  = {
+        final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13001;
+        final Object[]               logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTag().getDisplayName(),
         };
-        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
         this.logger.debug(logMsg);
 
     }
@@ -300,15 +300,15 @@ public class JdtsReplServiceImpl implements JdtsReplService {
      */
     private void logRemoveTag(final JdtsBlockModel targetBlockModel) {
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13002;
-        final Object[]           logMsgArgs  = {
+        final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13002;
+        final Object[]               logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getValue(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getDescription(),
         };
-        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
         this.logger.debug(logMsg);
 
     }
@@ -330,8 +330,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13004;
-        final Object[]           logMsgArgs  = {
+        final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13004;
+        final Object[]               logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
@@ -342,7 +342,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription(),
         };
-        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
         this.logger.debug(logMsg);
 
     }
@@ -364,8 +364,8 @@ public class JdtsReplServiceImpl implements JdtsReplService {
 
         }
 
-        final KmgToolLogMsgTypes logMsgTypes = KmgToolLogMsgTypes.KMGTOOL_LOG13003;
-        final Object[]           logMsgArgs  = {
+        final KmgToolBaseLogMsgTypes logMsgTypes = KmgToolBaseLogMsgTypes.KMGTOOLBASE_LOG13003;
+        final Object[]               logMsgArgs  = {
             targetBlockModel.getClassification().getDisplayName(), targetBlockModel.getElementName(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTargetStr(),
             this.jdtsBlockReplLogic.getCurrentSrcJavadocTag().getTag().getDisplayName(),
@@ -376,7 +376,7 @@ public class JdtsReplServiceImpl implements JdtsReplService {
             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagValue(),
             this.jdtsBlockReplLogic.getCurrentTagConfigModel().getTagDescription(),
         };
-        final String             logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
+        final String                 logMsg      = this.messageSource.getLogMessage(logMsgTypes, logMsgArgs);
         this.logger.debug(logMsg);
 
     }
@@ -384,15 +384,15 @@ public class JdtsReplServiceImpl implements JdtsReplService {
     /**
      * ブロックごとのJavadoc置換処理を行う
      *
-     * @since 0.2.0
+     * @since 0.2.4
      *
      * @param targetBlockModel
      *                         対象のブロックモデル
      *
-     * @throws KmgToolMsgException
-     *                             KMGツールメッセージ例外
+     * @throws KmgToolBaseMsgException
+     *                                 KMGツールメッセージ例外
      */
-    private void processBlock(final JdtsBlockModel targetBlockModel) throws KmgToolMsgException {
+    private void processBlock(final JdtsBlockModel targetBlockModel) throws KmgToolBaseMsgException {
 
         /* ブロックごとの置換の処理の準備 */
 
