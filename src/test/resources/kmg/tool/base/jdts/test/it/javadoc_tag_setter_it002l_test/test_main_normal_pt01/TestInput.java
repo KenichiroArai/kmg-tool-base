@@ -12,4 +12,3 @@ public class KmgReflectionModelImplTest extends AbstractKmgTest {
     private static class TestClass {
     }
 }
-

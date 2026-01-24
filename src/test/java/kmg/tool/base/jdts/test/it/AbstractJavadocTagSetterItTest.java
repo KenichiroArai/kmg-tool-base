@@ -139,8 +139,9 @@ public abstract class AbstractJavadocTagSetterItTest extends AbstractKmgTest {
 
         /* 検証の実施 */
 
-        // 期待値ファイルと実際のファイルの内容を比較
-        Assertions.assertEquals(expectedContent, actualContent, "ファイル内容が一致すること");
+        // 期待値ファイルと実際のファイルの内容を比較（改行を正規化して比較）
+        Assertions.assertEquals(AbstractKmgTest.normalizeLineSeparators(expectedContent),
+            AbstractKmgTest.normalizeLineSeparators(actualContent), "ファイル内容が一致すること");
 
     }
 

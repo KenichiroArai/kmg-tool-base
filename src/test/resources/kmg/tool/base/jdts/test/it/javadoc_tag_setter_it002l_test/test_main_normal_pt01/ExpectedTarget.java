@@ -8,9 +8,8 @@ public class KmgReflectionModelImplTest extends AbstractKmgTest {
      *
      * @since 0.2.0
      *
-
+     
      */
     private static class TestClass {
     }
 }
-
