@@ -5,13 +5,19 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import kmg.core.infrastructure.test.AbstractKmgTest;
+import kmg.core.infrastructure.type.KmgString;
+import kmg.fund.infrastructure.context.KmgMessageSource;
 import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
 
 /**
@@ -24,14 +30,25 @@ import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
  *
  * @since 0.2.2
  *
- * @version 0.2.2
+ * @version 0.2.5
  */
-@SpringBootTest(classes = JdtsServiceImpl.class)
+@SpringBootTest()
 @ActiveProfiles("test")
 @SuppressWarnings({
     "nls",
 })
 public abstract class AbstractJavadocTagSetterItTest extends AbstractKmgTest {
+
+    /**
+     * KmgMessageSourceのモック<br>
+     * <p>
+     * kmg-fundのKmgMessageSourceはMessageSource等の追加設定が必要なため、結合テストではモックを使用する。
+     * </p>
+     *
+     * @since 0.2.5
+     */
+    @MockitoBean
+    private KmgMessageSource messageSource;
 
     /**
      * テスト対象
@@ -48,6 +65,23 @@ public abstract class AbstractJavadocTagSetterItTest extends AbstractKmgTest {
      */
     @TempDir
     private Path tempDir;
+
+    /**
+     * 各テスト前の準備<br>
+     * <p>
+     * KmgMessageSourceのモックに対するgetLogMessageのスタブを設定する。JdtsServiceImplのprocess実行時にログメッセージ取得で呼ばれる。
+     * </p>
+     *
+     * @since 0.2.5
+     */
+    @BeforeEach
+    public void setUpMessageSourceMock() {
+
+        Mockito.when(this.messageSource.getLogMessage(ArgumentMatchers.any())).thenReturn(KmgString.EMPTY);
+        Mockito.when(this.messageSource.getLogMessage(ArgumentMatchers.any(), ArgumentMatchers.any()))
+            .thenReturn(KmgString.EMPTY);
+
+    }
 
     /**
      * Javadocタグ設定ツールのテスト実行共通処理<br>

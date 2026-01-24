@@ -1,8 +1,14 @@
 package kmg.tool.base.jdts.test.it;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import kmg.fund.domain.logic.impl.FileIteratorLogicImpl;
+import kmg.tool.base.jdts.application.logic.impl.JdtsBlockReplLogicImpl;
+import kmg.tool.base.jdts.application.model.impl.JdtsCodeModelImpl;
+import kmg.tool.base.jdts.application.service.impl.JdtsReplServiceImpl;
+import kmg.tool.base.jdts.application.service.impl.JdtsServiceImpl;
 
 /**
  * Javadocタグ設定ツールの結合テスト001のテスト<br>
@@ -24,9 +30,12 @@ import org.junit.jupiter.api.TestInfo;
  *
  * @since 0.2.0
  *
- * @version 0.2.2
+ * @version 0.2.5
  */
-@Disabled
+@SpringBootTest(classes = {
+    JdtsServiceImpl.class, JdtsReplServiceImpl.class, JdtsBlockReplLogicImpl.class, JdtsCodeModelImpl.class,
+    FileIteratorLogicImpl.class,
+})
 public class JavadocTagSetterIt001lTest extends AbstractJavadocTagSetterItTest {
 
     /**
@@ -44,7 +53,6 @@ public class JavadocTagSetterIt001lTest extends AbstractJavadocTagSetterItTest {
      *                   例外
      */
     @Test
-    @Disabled
     public void testMain_normalPt01(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
@@ -88,7 +96,6 @@ public class JavadocTagSetterIt001lTest extends AbstractJavadocTagSetterItTest {
      *                   例外
      */
     @Test
-    @Disabled
     public void testMain_normalPt03(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
@@ -113,7 +120,6 @@ public class JavadocTagSetterIt001lTest extends AbstractJavadocTagSetterItTest {
      *                   例外
      */
     @Test
-    @Disabled
     public void testMain_normalPt04(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
@@ -138,7 +144,6 @@ public class JavadocTagSetterIt001lTest extends AbstractJavadocTagSetterItTest {
      *                   例外
      */
     @Test
-    @Disabled
     public void testMain_normalPt05(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);
@@ -163,7 +168,6 @@ public class JavadocTagSetterIt001lTest extends AbstractJavadocTagSetterItTest {
      *                   例外
      */
     @Test
-    @Disabled
     public void testMain_normalPt06(final TestInfo testInfo) throws Exception {
 
         this.executeJavadocTagSetterTestWithDefaultFiles(testInfo);

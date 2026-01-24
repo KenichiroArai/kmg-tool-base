@@ -16,7 +16,7 @@ JdtsConfigs:
       overwrite: "always"
 
     - tagName: "since"
-      tagValue: "0.1.0"
+      tagValue: "0.2.0"
       location:
           mode: "compliant"
           removeIfMisplaced: true
@@ -24,7 +24,7 @@ JdtsConfigs:
       overwrite: "always"
 
     - tagName: "version"
-      tagValue: "0.1.0"
+      tagValue: "0.2.0"
       location:
           mode: "compliant"
           removeIfMisplaced: true
