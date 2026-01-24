@@ -188,8 +188,9 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
         final Path nonExistentPath = Paths.get("non/existent/path");
 
         /* 準備 */
-        // SpringApplicationContextHelperのモック化
-        try (final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class);
+        // KmgMessageUtilsの静的メソッドをモック化（KmgToolBaseMsgExceptionのコンストラクタが呼ばれる前に必要）
+        try (final var mockKmgMessageUtils = this.setupKmgMessageUtilsMock();
+            final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class);
             final var mockFiles = Mockito.mockStatic(Files.class)) {
 
             final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
@@ -233,8 +234,9 @@ public class SimpleInputServiceImplTest extends AbstractKmgTest {
         /* 期待値の定義 */
 
         /* 準備 */
-        // SpringApplicationContextHelperのモック化
-        try (final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
+        // KmgMessageUtilsの静的メソッドをモック化（KmgToolBaseMsgExceptionのコンストラクタが呼ばれる前に必要）
+        try (final var mockKmgMessageUtils = this.setupKmgMessageUtilsMock();
+            final var mockSpringHelper = Mockito.mockStatic(SpringApplicationContextHelper.class)) {
 
             final KmgMessageSource mockMessageSource = Mockito.mock(KmgMessageSource.class);
             mockSpringHelper.when(() -> SpringApplicationContextHelper.getBean(KmgMessageSource.class))
