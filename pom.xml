@@ -6,13 +6,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.0.2</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>kmg.tool.base</groupId>
     <artifactId>kmg-tool-base</artifactId>
-    <version>0.2.6</version>
+    <version>0.2.7</version>
     <name>kmg-tool-base</name>
     <description>KMGツールベース</description>
     <packaging>jar</packaging>

@@ -15,7 +15,7 @@ import kmg.tool.base.cmn.infrastructure.msg.KmgToolBaseCmnLogMsg;
  *
  * @since 0.2.4
  *
- * @version 0.2.4
+ * @version 0.2.7
  */
 @SuppressWarnings("nls")
 public enum KmgToolBaseLogMsgTypes implements KmgToolBaseCmnLogMsg {
@@ -291,27 +291,6 @@ public enum KmgToolBaseLogMsgTypes implements KmgToolBaseCmnLogMsg {
      * @since 0.2.4
      */
     KMGTOOLBASE_LOG14004("中間ファイルに書き込み完了。項目=[{0}]、項目名=[{1}]"),
-
-    /**
-     * 初期化の失敗
-     *
-     * @since 0.2.4
-     */
-    KMGTOOLBASE_LOG15000("初期化の失敗"),
-
-    /**
-     * 初期化で例外が発生しました。
-     *
-     * @since 0.2.4
-     */
-    KMGTOOLBASE_LOG15001("初期化で例外が発生しました。"),
-
-    /**
-     * 初期化の失敗
-     *
-     * @since 0.2.4
-     */
-    KMGTOOLBASE_LOG17000("初期化の失敗"),
 
     /**
      * マッピング変換処理を開始します。
