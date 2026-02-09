@@ -35,7 +35,7 @@ import kmg.tool.base.dtc.domain.logic.DtcLogic;
  *
  * @since 0.2.0
  *
- * @version 0.2.4
+ * @version 0.2.8
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -632,6 +632,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @throws KmgReflectionException
      *                                 リフレクション例外
      */
+    @SuppressWarnings("resource")
     @Test
     public void testProcess_normalWithIntermediateDelimiter() throws KmgToolBaseMsgException, KmgReflectionException {
 
@@ -677,6 +678,7 @@ public class DtcServiceImplTest extends AbstractKmgTest {
      * @throws KmgToolBaseMsgException
      *                                 KMGツールメッセージ例外
      */
+    @SuppressWarnings("resource")
     @Test
     public void testProcess_normalWithoutIntermediateDelimiter() throws KmgToolBaseMsgException {
 
