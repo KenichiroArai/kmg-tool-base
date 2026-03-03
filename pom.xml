@@ -12,13 +12,13 @@
 
     <groupId>kmg.tool.base</groupId>
     <artifactId>kmg-tool-base</artifactId>
-    <version>0.2.8</version>
+    <version>0.3.0</version>
     <name>kmg-tool-base</name>
     <description>KMGツールベース</description>
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>kmg.core</groupId>
             <artifactId>kmg-core</artifactId>
-            <version>0.2.7</version>
+            <version>0.3.1</version>
             <exclusions>
                 <!-- kmg-coreが含むJUnit依存関係を除外し、Spring Bootが管理するバージョンを使用 -->
                 <exclusion>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>kmg.fund</groupId>
             <artifactId>kmg-fund</artifactId>
-            <version>0.2.6</version>
+            <version>0.3.1</version>
         </dependency>
 
         <!-- Spring -->

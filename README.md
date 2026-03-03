@@ -1,6 +1,6 @@
 # KMG ツールベース（kmg-tool-base）
 
-[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
+[![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](https://github.com/KenichiroArai/kmg-tool-base)
@@ -206,8 +206,8 @@ kmg-tool-base/
 
 ### 前提条件
 
-- Java 21 以上
-- Maven 3.6 以上
+- Java 25 以上
+- Maven 3.9 以上
 
 ### インストール
 

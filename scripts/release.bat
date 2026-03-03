@@ -9,14 +9,14 @@ REM 前提条件：
 REM - GitHub アカウントを持っていること
 REM - リポジトリへのプッシュ権限があること
 REM - 以下がインストールされていること：
-REM   - Java 21
+REM   - Java 25
 REM   - Maven
 REM   - Git
 REM   - GitHub CLI（オプション：プルリクエストの自動作成に必要）
 REM
 REM 使用方法：
 REM   release.bat [作業ブランチ] [リリースブランチ] [バージョン]
-REM   例：release.bat features/main main 1.0.0
+REM   例：release.bat features/main main v1.0.0
 REM
 REM 機能：
 REM - 指定したバージョンでのリリース作成を自動化
